@@ -6,7 +6,7 @@
 # Main CMakeLists.txt file.
 # ===========================================================================
 
-project (mikan_base)
+project (mikans)
 
 # ===========================================================================
 # We require CMake 2.8.2.  Since it is available in the currently stable
@@ -20,11 +20,11 @@ cmake_minimum_required (VERSION 2.8.2)
 # turn on SeqAn instrumentation for experimental data collection
 # ===========================================================================
 
-if (EXISTS ${CMAKE_SOURCE_DIR}/INST OR EXISTS ${CMAKE_SOURCE_DIR}/SUA OR EXISTS ${CMAKE_SOURCE_DIR}/../SUA)
+if (EXISTS ${CMAKE_SOURCE_DIR}/INST OR EXISTS ${CMAKE_SOURCE_DIR}/SUA OR EXISTS ${CMAKE_SOURCE_DIR}/SUA)
   set (SEQAN_INSTRUMENTATION YES)
-else (EXISTS ${CMAKE_SOURCE_DIR}/INST OR EXISTS ${CMAKE_SOURCE_DIR}/SUA OR EXISTS ${CMAKE_SOURCE_DIR}/../SUA)
+else (EXISTS ${CMAKE_SOURCE_DIR}/INST OR EXISTS ${CMAKE_SOURCE_DIR}/SUA OR EXISTS ${CMAKE_SOURCE_DIR}/SUA)
   set (SEQAN_INSTRUMENTATION NO)
-endif (EXISTS ${CMAKE_SOURCE_DIR}/INST OR EXISTS ${CMAKE_SOURCE_DIR}/SUA OR EXISTS ${CMAKE_SOURCE_DIR}/../SUA)
+endif (EXISTS ${CMAKE_SOURCE_DIR}/INST OR EXISTS ${CMAKE_SOURCE_DIR}/SUA OR EXISTS ${CMAKE_SOURCE_DIR}/SUA)
 
 
 # ===========================================================================
@@ -113,7 +113,7 @@ set (SEQAN_USE_SEQAN_BUILD_SYSTEM TRUE CACHE INTERNAL "Use SeqAn build system." 
 include (SeqAnBuildSystem)
 set (SEQAN_ROOT_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}" CACHE INTERNAL "Root source directory." FORCE)
 seqan_build_system_init ()
-seqan_get_repository_info ()
+#seqan_get_repository_info ()
 
 # ===========================================================================
 # Include Subdirectories
@@ -146,4 +146,4 @@ include (FeatureSummary)
 # Setup Common Tool Description for Generic Workflow Nodes
 # ===========================================================================
 
-include (SeqAnCtdSetup)
+#include (SeqAnCtdSetup)
