@@ -43,12 +43,12 @@ int TM1RawFeatures<TRNAString>::add_features(
 
     mSeedTypes.add_features(pMiRNASeq, pMRNASeqs, pSeedSites.mEffectiveSites, pSeedSites);
     mSitePos.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, sitePos);
-    mDistance.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mSitePos, pSortedSites);
-    mAURich.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mSitePos, mDistance);
-    mSingleFreqs.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mSitePos);
-    mSingleFreqFlanks.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mSitePos, mDistance);
-    mDiFreqs.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mSitePos);
-    mDiFreqFlanks.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mSitePos, mDistance);
+    mDistance.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, pSortedSites);
+    mAURich.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mDistance);
+    mSingleFreqs.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites);
+    mSingleFreqFlanks.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mDistance);
+    mDiFreqs.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites);
+    mDiFreqFlanks.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mDistance);
     mSingleMatches.add_features(pMiRNASeq, pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mSitePos);
     mTwoMatches.add_features(pMiRNASeq, pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mSitePos);
 
@@ -173,7 +173,6 @@ int TM1FeatSitePos<TRNAString>::add_features(
 {
     int seqLen;
     float relStartPos, relEndPos;
-    int relStartPosI, relEndPosI;
     unsigned lenToCDS, startPos, endPos;
 
     resize_features(length(pMRNAPos));
@@ -256,7 +255,6 @@ int TM1FeatDistance<TRNAString>::add_features(
         String<bool> &pEffectiveSites,
         TSitePos const &pMRNAPos,
         TM1SeedSites<TRNAString> &pSeedSites,
-        TM1FeatSitePos<TRNAString> &pSeedPos,
         TM1SortedSitePos<TRNAString> &pSortedSites)
 {
     const StringSet<String<unsigned> >& sortedSites = pSortedSites.get_sorted_mrna_pos();
@@ -350,7 +348,6 @@ int TM1FeatAURich<TRNAString>::add_features(
         String<bool> &pEffectiveSites,
         TSitePos const &pMRNAPos,
         TM1SeedSites<TRNAString> &pSeedSites,
-        TM1FeatSitePos<TRNAString> &pSeedPos,
         TM1FeatDistance<TRNAString> &pDistance)
 {
     int seqLen, startU, endU, startD, endD;
@@ -451,8 +448,7 @@ int TM1FeatSingleFreq<TRNAString>::add_features(
         TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         TSitePos const &pMRNAPos,
-        TM1SeedSites<TRNAString> &pSeedSites,
-        TM1FeatSitePos<TRNAString> &pSeedPos)
+        TM1SeedSites<TRNAString> &pSeedSites)
 {
     int seedStart, seedEnd, curpos, seqLen;
 
@@ -534,7 +530,6 @@ int TM1FeatSingleFreqFlank<TRNAString>::add_features(
         String<bool> &pEffectiveSites,
         TSitePos const &pMRNAPos,
         TM1SeedSites<TRNAString> &pSeedSites,
-        TM1FeatSitePos<TRNAString> &pSeedPos,
         TM1FeatDistance<TRNAString> &pDistance)
 {
     int seqLen, startU, endU, startD, endD;
@@ -634,8 +629,7 @@ int TM1FeatDiFreq<TRNAString>::add_features(
         TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         TSitePos const &pMRNAPos,
-        TM1SeedSites<TRNAString> &pSeedSites,
-        TM1FeatSitePos<TRNAString> &pSeedPos)
+        TM1SeedSites<TRNAString> &pSeedSites)
 {
     int seedStart, seedEnd, seqLen, curpos1, curpos2;
 
@@ -748,7 +742,6 @@ int TM1FeatDiFreqFlank<TRNAString>::add_features(
         String<bool> &pEffectiveSites,
         TSitePos const &pMRNAPos,
         TM1SeedSites<TRNAString> &pSeedSites,
-        TM1FeatSitePos<TRNAString> &pSeedPos,
         TM1FeatDistance<TRNAString> &pDistance)
 {
     int seqLen, startU, endU, startD, endD, lenUp, lenDown;
