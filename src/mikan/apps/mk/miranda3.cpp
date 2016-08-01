@@ -1,7 +1,4 @@
 #include <mikan/lib/miranda3/include/mr3_core.hpp>          // MR3CoreInput, MR3Core
-#include <mikan/lib/miranda3/include/mr3_inst_template.hpp> // TRNATYPE
-#include <mikan/lib/miranda3/include/mr3_option.hpp>        // MR3Options
-#include <seqan/arg_parse.h>
 
 int main(int argc, char const ** argv)
 {

@@ -1,12 +1,10 @@
 #include <cmath>                  // roundf
 #include <iostream>
-#include <string>                 // string
 //#define SEQAN_ENABLE_DEBUG 1
 #if SEQAN_ENABLE_DEBUG
 #include <ctime>                  // clock_t, clock, CLOCKS_PER_SEC
 #endif
 #include <seqan/arg_parse.h>
-#include <seqan/sequence.h>
 #include <mikan/lib/miranda3/include/mr3_inst_template.hpp>  // TRNATYPE
 #include <mikan/lib/miranda3/include/mr3_option.hpp>         // MR3Options
 #include <mikan/lib/miranda3/include/mr3_seed_site.hpp>      // MR3Sequences, MR3SeedSites
@@ -101,7 +99,7 @@ int MR3Core<TRNAString, SEEDLEN>::open_output_file()
     mOFile1.open(toCString(mOFileSite), std::ofstream::out);
     if (!mOFile1.good())
     {
-        std::cerr << "ERROR: Could not open output file " << mOFileSite << std::endl;
+        std::cerr << "ERROR: Could not open output file " << toCString(mOFileSite) << std::endl;
         return seqan::ArgumentParser::PARSE_ERROR;
     }
 
@@ -109,7 +107,7 @@ int MR3Core<TRNAString, SEEDLEN>::open_output_file()
     mOFile2.open(toCString(mOFileTotal), std::ofstream::out);
     if (!mOFile2.good())
     {
-        std::cerr << "ERROR: Could not open output file " << mOFileTotal << std::endl;
+        std::cerr << "ERROR: Could not open output file " << toCString(mOFileTotal) << std::endl;
         return seqan::ArgumentParser::PARSE_ERROR;
     }
 
@@ -131,12 +129,13 @@ int MR3Core<TRNAString, SEEDLEN>::calculate_all_scores()
         retVal = calculate_mirna_scores(i);
         if (retVal != 0)
         {
-            std::cerr << "ERROR: Score calculation failed for " << mMiRNAIds[i] << "." << std::endl;
+            std::cerr << "ERROR: Score calculation failed for ";
+            std::cerr << toCString((seqan::CharString)mMiRNAIds[i]) << "." << std::endl;
             return 1;
         }
 
 #if SEQAN_ENABLE_DEBUG
-        std::cout << mMiRNAIds[i] << ": ";
+        std::cout << toCString((seqan::CharString)mMiRNAIds[i]) << ": ";
         std::cout << double( clock() - startTime ) / (double)CLOCKS_PER_SEC << " seconds." << std::endl;
 #endif
 
@@ -273,15 +272,15 @@ int MR3Core<TRNAString, SEEDLEN>::write_site_score(seqan::CharString const &pMiR
 
         seedStart = sitePos[posIdx];
         scoreAlign =  mSiteScores.get_align_score(posIdx);
-        scoreAlign = roundf(scoreAlign * 100.0) / 100.0;
+        scoreAlign = roundf(scoreAlign * 100.0f) / 100.0f;
         scoreEn =  mSiteScores.get_energy_score(posIdx);
-        scoreEn = roundf(scoreEn * 100.0) / 100.0;
+        scoreEn = roundf(scoreEn * 100.0f) / 100.0f;
 
-        mOFile1 << pMiRNAId << "\t";
-        mOFile1 << mMRNAIds[mRNAPos[posIdx]] << "\t";
+        mOFile1 << toCString(pMiRNAId) << "\t";
+        mOFile1 << toCString((seqan::CharString)mMRNAIds[mRNAPos[posIdx]]) << "\t";
         mOFile1 << seedStart + 1  << "\t";
         mOFile1 << seedStart + 1 + INDEXED_SEQ_LEN << "\t";
-        mOFile1 << seedTypes[posIdx]  << "\t";
+        mOFile1 << toCString((seqan::CharString)seedTypes[posIdx]) << "\t";
         mOFile1 << scoreAlign << "\t";
         mOFile1 << scoreEn << "\t";
         mOFile1 << std::endl;
@@ -301,8 +300,8 @@ int MR3Core<TRNAString, SEEDLEN>::write_total_score(seqan::CharString const &pMi
     for (unsigned i = 0; i < length(mRNAPos); ++i)
     {
 
-        mOFile2 << pMiRNAId << "\t";
-        mOFile2 << mMRNAIds[mRNAPos[i]] << "\t";
+        mOFile2 << toCString(pMiRNAId) << "\t";
+        mOFile2 << toCString((seqan::CharString)mMRNAIds[mRNAPos[i]]) << "\t";
         mOFile2 << totalAlignScores[i] << "\t";
         mOFile2 << siteNum[i] << "\t";
         mOFile2 << totalEnScores[i] << "\t";
@@ -337,15 +336,15 @@ int MR3Core<TRNAString, SEEDLEN>::write_alignment(seqan::CharString const &pMiRN
 
         seedStart = sitePos[posIdx];
         align_score = mSiteScores.get_align_score(posIdx);
-        align_score = roundf(align_score * 100.0) / 100.0;
+        align_score = roundf(align_score * 100.0f) / 100.0f;
         energy_score = mSiteScores.get_energy_score(posIdx);
-        energy_score = roundf(energy_score * 100.0) / 100.0;
+        energy_score = roundf(energy_score * 100.0f) / 100.0f;
 
-        std::cout << "### " << count+1 << ": " << pMiRNAId <<" ###" << std::endl;
+        std::cout << "### " << count+1 << ": " << toCString(pMiRNAId) <<" ###" << std::endl;
         mSiteScores.print_alignment(posIdx);
-        std::cout << "  miRNA:           " << pMiRNAId << std::endl;
-        std::cout << "  mRNA:            " << mMRNAIds[mRNAPos[posIdx]] << std::endl;
-        std::cout << "  seed type:       " << seedTypes[posIdx] << std::endl;
+        std::cout << "  miRNA:           " << toCString(pMiRNAId) << std::endl;
+        std::cout << "  mRNA:            " << toCString((seqan::CharString)mMRNAIds[mRNAPos[posIdx]]) << std::endl;
+        std::cout << "  seed type:       " << toCString((seqan::CharString)seedTypes[posIdx]) << std::endl;
         std::cout << "  position(start): " << seedStart + 1 << std::endl;
         std::cout << "  position(end):   " << seedStart + 1 + INDEXED_SEQ_LEN << std::endl;
         std::cout << "  alignment score: " << align_score << std::endl;
@@ -365,4 +364,3 @@ template class MR3CoreInput<TRNATYPE>;
 template class MR3Core<TRNATYPE>;
 
 } // namespace mr3as
-

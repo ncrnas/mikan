@@ -159,7 +159,7 @@ int get_seed(RnaString const &mirna, RnaString &seed)
 int search_by_bruteforce(
         std::ofstream &ofile,
         StringSet<CharString> const &mirna_ids,
-        StringSet<RnaString> &mirnas,
+        StringSet<RnaString> const &mirnas,
         StringSet<CharString> const &mrna_ids,
         StringSet<RnaString> &mrnas)
 {
@@ -196,7 +196,7 @@ int search_by_bruteforce(
 int search_by_horspool(
         std::ofstream &ofile,
         StringSet<CharString> const &mirna_ids,
-        StringSet<RnaString> &mirnas,
+        StringSet<RnaString> const &mirnas,
         StringSet<CharString> const &mrna_ids,
         StringSet<RnaString> &mrnas)
 {
@@ -232,7 +232,7 @@ int search_by_horspool(
 int search_by_suffixarray(
         std::ofstream &ofile,
         StringSet<CharString> const &mirna_ids,
-        StringSet<RnaString> &mirnas,
+        StringSet<RnaString> const &mirnas,
         StringSet<CharString> const &mrna_ids,
         StringSet<RnaString> &mrnas)
 {
@@ -274,7 +274,7 @@ int search_by_suffixarray(
 int search_by_ngram(
         std::ofstream &ofile,
         StringSet<CharString> const &mirna_ids,
-        StringSet<RnaString> &mirnas,
+        StringSet<RnaString> const &mirnas,
         StringSet<CharString> const &mrna_ids,
         StringSet<RnaString> &mrnas)
 {
