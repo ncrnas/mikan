@@ -1,12 +1,6 @@
 #include <mikan/lib/pita_ddg/include/pita_inst_template.hpp> // TRNATYPE
 #include <mikan/lib/pita_ddg/include/pita_score.hpp>         // PITAMFEScores
-#include <mikan/lib/pita_ddg/include/pita_seed_site.hpp>     // PITASeedSites
 #include <mikan/lib/pita_ddg/include/pita_site_cluster.hpp>  // PITAOverlap, PITASortedSitePos
-#include <set>                    // set
-#include <map>                    // multimap
-#include <utility>                // pair
-#include <iostream>
-#include <seqan/sequence.h>
 
 using namespace seqan;
 
@@ -35,8 +29,8 @@ void PITASiteCluster<TRNAString>::cluster_site_pos(
         {
             continue;
         }
-        mRNAPosSet.insert(mRNAPos[i]);
-        mSiteMap.insert(TPosPair(mRNAPos[i], i));
+        mRNAPosSet.insert((unsigned)mRNAPos[i]);
+        mSiteMap.insert(TPosPair((unsigned)mRNAPos[i], i));
         ++mSiteCount;
     }
 }
@@ -55,7 +49,6 @@ int PITAOverlap<TRNAString>::filter_overlapped_sites(PITASeedSites<TRNAString> &
 {
     TItSet itSet;
     TItRetPair ret;
-    TItMap itMap;
     TItMap itMap2;
 
     mSiteCluster.cluster_site_pos(pSeedSites);
@@ -76,10 +69,11 @@ int PITAOverlap<TRNAString>::filter_overlapped_sites(PITASeedSites<TRNAString> &
         ret = siteMap.equal_range(*itSet);
         for (itMap2 = ret.first; itMap2 != ret.second; ++itMap2)
         {
-            startPos.insert(TPosPair(sitePos[(*itMap2).second], (*itMap2).second));
+            startPos.insert(TPosPair((unsigned)sitePos[(*itMap2).second], (*itMap2).second));
         }
 
         prevPos = 0;
+        prevIdx = 0;
         for (itStart = startPos.begin(); itStart != startPos.end(); ++itStart)
         {
             curPos = (*itStart).first;
@@ -222,7 +216,7 @@ int PITASortedSitePos<TRNAString>::generate_sorted_mrna_pos(
         ret = siteMap.equal_range((*itSet));
         for (itMap = ret.first; itMap != ret.second; ++itMap)
         {
-            startPos.insert(TPosPair(sitePos[(*itMap).second], (*itMap).second));
+            startPos.insert(TPosPair((unsigned)sitePos[(*itMap).second], (*itMap).second));
         }
 
         for (itStart = startPos.begin(); itStart != startPos.end(); ++itStart)

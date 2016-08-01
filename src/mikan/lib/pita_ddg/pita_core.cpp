@@ -1,12 +1,10 @@
 #include <cmath>                  // roundf
 #include <iostream>
-#include <string>                 // string
 //#define SEQAN_ENABLE_DEBUG 1
 #if SEQAN_ENABLE_DEBUG
 #include <ctime>                  // clock_t, clock, CLOCKS_PER_SEC
 #endif
 #include <seqan/arg_parse.h>
-#include <seqan/sequence.h>
 #include <mikan/lib/pita_ddg/include/pita_inst_template.hpp> // TRNATYPE
 #include <mikan/lib/pita_ddg/include/pita_option.hpp>        // PITAOptions
 #include <mikan/lib/pita_ddg/include/pita_seed_site.hpp>     // PITASequences, PITASeedSites
@@ -98,7 +96,7 @@ int PITACore<TRNAString, SEEDLEN>::open_output_file()
     mOFile1.open(toCString(mOFileDDG), std::ofstream::out);
     if (!mOFile1.good())
     {
-        std::cerr << "ERROR: Could not open output file " << mOFileDDG << std::endl;
+        std::cerr << "ERROR: Could not open output file " << toCString(mOFileDDG) << std::endl;
         return seqan::ArgumentParser::PARSE_ERROR;
     }
 
@@ -106,7 +104,7 @@ int PITACore<TRNAString, SEEDLEN>::open_output_file()
     mOFile2.open(toCString(mOFileTotal), std::ofstream::out);
     if (!mOFile2.good())
     {
-        std::cerr << "ERROR: Could not open output file " << mOFileTotal << std::endl;
+        std::cerr << "ERROR: Could not open output file " << toCString(mOFileTotal) << std::endl;
         return seqan::ArgumentParser::PARSE_ERROR;
     }
 
@@ -128,12 +126,13 @@ int PITACore<TRNAString, SEEDLEN>::calculate_all_scores()
         retVal = calculate_mirna_scores(i);
         if (retVal != 0)
         {
-            std::cerr << "ERROR: Score calculation failed for " << mMiRNAIds[i] << "." << std::endl;
+            std::cerr << "ERROR: Score calculation failed for " << toCString((seqan::CharString)mMiRNAIds[i]);
+            std::cerr << "." << std::endl;
             return 1;
         }
 
 #if SEQAN_ENABLE_DEBUG
-        std::cout << mMiRNAIds[i] << ": ";
+        std::cout << toCString((seqan::CharString)(mMiRNAIds[i])) << ": ";
         std::cout << double( clock() - startTime ) / (double)CLOCKS_PER_SEC << " seconds." << std::endl;
 #endif
 
@@ -268,13 +267,13 @@ int PITACore<TRNAString, SEEDLEN>::write_ddg_score(seqan::CharString const &pMiR
 
         seedStart = sitePos[posIdx];
         score =  mDDGScores.get_score(posIdx);
-        score = roundf(score * 100.0) / 100.0;
+        score = roundf(score * 100.0f) / 100.0f;
 
-        mOFile1 << pMiRNAId << "\t";
-        mOFile1 << mMRNAIds[mRNAPos[posIdx]] << "\t";
+        mOFile1 << toCString(pMiRNAId) << "\t";
+        mOFile1 << toCString((seqan::CharString)(mMRNAIds[mRNAPos[posIdx]])) << "\t";
         mOFile1 << seedStart + 1  << "\t";
         mOFile1 << seedStart + 1 + INDEXED_SEQ_LEN << "\t";
-        mOFile1 << seedTypes[posIdx]  << "\t";
+        mOFile1 << toCString((seqan::CharString)(seedTypes[posIdx])) << "\t";
         mOFile1 << score << "\t";
         mOFile1 << std::endl;
     }
@@ -293,10 +292,10 @@ int PITACore<TRNAString, SEEDLEN>::write_total_score(seqan::CharString const &pM
     for (unsigned i = 0; i < length(mRNAPos); ++i)
     {
         score = totalScores[i];
-        score = roundf(score * 100.0) / 100.0;
+        score = roundf(score * 100.0f) / 100.0f;
 
-        mOFile2 << pMiRNAId << "\t";
-        mOFile2 << mMRNAIds[mRNAPos[i]] << "\t";
+        mOFile2 << toCString(pMiRNAId) << "\t";
+        mOFile2 << toCString((seqan::CharString)(mMRNAIds[mRNAPos[i]])) << "\t";
         mOFile2 << score << "\t";
         mOFile2 << siteNum[i] << "\t";
         mOFile2 << std::endl;
@@ -336,26 +335,27 @@ int PITACore<TRNAString, SEEDLEN>::write_alignment(seqan::CharString const &pMiR
 
         seedStart = sitePos[posIdx];
         score =  mDDGScores.get_score(posIdx);
-        score = roundf(score * 100.0) / 100.0;
+        score = roundf(score * 100.0f) / 100.0f;
 
-        dGduplex = mDDGScores.get_dgall(posIdx);
-        dGduplex = roundf(dGduplex * 100.0) / 100.0;
-        dG5 = mDDGScores.get_dg5(posIdx);
-        dG5 = roundf(dG5 * 100.0) / 100.0;
-        dG3 = mDDGScores.get_dg3(posIdx);
-        dG3 = roundf(dG3 * 100.0) / 100.0;
-        dGopen = mDDGScores.get_dg0(posIdx) - mDDGScores.get_dg1(posIdx);
-        dGopen = roundf(dGopen * 100.0) / 100.0;
-        dG0 = mDDGScores.get_dg0(posIdx);
-        dG0 = roundf(dG0 * 100.0) / 100.0;
-        dG1 = mDDGScores.get_dg1(posIdx);
-        dG1 = roundf(dG1 * 100.0) / 100.0;
+        dGduplex = (float)mDDGScores.get_dgall(posIdx);
+        dGduplex = roundf(dGduplex * 100.0f) / 100.0f;
+        dG5 = (float)mDDGScores.get_dg5(posIdx);
+        dG5 = roundf(dG5 * 100.0f) / 100.0f;
+        dG3 = (float)mDDGScores.get_dg3(posIdx);
+        dG3 = roundf(dG3 * 100.0f) / 100.0f;
+        dGopen = (float)mDDGScores.get_dg0(posIdx) - (float)mDDGScores.get_dg1(posIdx);
+        dGopen = roundf(dGopen * 100.0f) / 100.0f;
+        dG0 = (float)mDDGScores.get_dg0(posIdx);
+        dG0 = roundf(dG0 * 100.0f) / 100.0f;
+        dG1 = (float)mDDGScores.get_dg1(posIdx);
+        dG1 = roundf(dG1 * 100.0f) / 100.0f;
 
-        std::cout << "### " << count+1 << ": " << pMiRNAId <<" ###" << std::endl;
+        std::cout << "### " << count+1 << ": " << toCString(pMiRNAId) <<" ###" << std::endl;
         mDDGScores.print_alignment(posIdx);
-        std::cout << "  miRNA:               " << pMiRNAId << std::endl;
-        std::cout << "  mRNA:                " << mMRNAIds[mRNAPos[posIdx]] << std::endl;
-        std::cout << "  seed type:           " << seedTypes[posIdx] << std::endl;
+        std::cout << "  miRNA:               " << toCString(pMiRNAId) << std::endl;
+        std::cout << "  mRNA:                " << toCString((seqan::CharString)(mMRNAIds[mRNAPos[posIdx]]));
+        std::cout << std::endl;
+        std::cout << "  seed type:           " << toCString((seqan::CharString)(seedTypes[posIdx])) << std::endl;
         std::cout << "  position(start):     " << seedStart + 1 << std::endl;
         std::cout << "  position(end):       " << seedStart + 1 + INDEXED_SEQ_LEN << std::endl;
         std::cout << "  ddG:                 " << score << std::endl;
