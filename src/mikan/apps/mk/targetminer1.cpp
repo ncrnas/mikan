@@ -1,7 +1,4 @@
 #include <mikan/lib/targetminer1/include/tm1_core.hpp>          // TM1CoreInput, TM1Core
-#include <mikan/lib/targetminer1/include/tm1_inst_template.hpp> // TRNATYPE
-#include <mikan/lib/targetminer1/include/tm1_option.hpp>        // TM1CSOptions
-#include <seqan/arg_parse.h>
 
 int main(int argc, char const ** argv)
 {

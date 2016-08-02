@@ -1,12 +1,5 @@
 #include <mikan/lib/targetminer1/include/tm1_inst_template.hpp> // TRNATYPE
 #include <mikan/lib/targetminer1/include/tm1_mrna_feature.hpp>  // TM1ScaledFeatures, TM1RawMRNAures, TM1MRNASeedType, TM1MRNASiteCount,
-#include <mikan/lib/targetminer1/include/tm1_seed_site.hpp>     // TM1SeedSites
-#include <mikan/lib/targetminer1/include/tm1_site_cluster.hpp>  // TM1SortedSitePos
-#include <mikan/lib/targetminer1/include/tm1_site_feature.hpp>  // TM1RawFeatures
-#include <cmath>                 // min, max
-#include <seqan/sequence.h>
-                                 // TM1MRNAAURich, TM1MRNASingleFreq, TM1MRNASingleFreqFlank, TM1MRNADiFreq,
-                                 // TM1MRNADiFreqFlank, TM1MRNASingleMatch, TM1MRNATwoConsecMatch
 
 using namespace seqan;
 
@@ -124,7 +117,7 @@ int TM1ScaledFeatures<TRNAString>::scale_features(
 {
     const String<unsigned>& mRNAIDs = pSortedSites.get_mrna_ids();
 
-    resize_features(length(mRNAIDs));
+    resize_features((unsigned)length(mRNAIDs));
     for (unsigned i = 0; i < length(mRNAIDs); ++i)
     {
         mMRNAIDs[i] = mRNAIDs[i];
@@ -263,7 +256,7 @@ int TM1MRNAFeatures<TRNAString>::add_features(
     const String<unsigned>& mRNAIDs = pSortedSites.get_mrna_ids();
     unsigned idx;
 
-    resize_features(length(mRNAIDs));
+    resize_features((unsigned)length(mRNAIDs));
 
     for (unsigned i = 0; i < length(mRNAIDs); ++i)
     {
@@ -393,8 +386,6 @@ int TM1MRNASiteCount<TRNAString>::add_features(
         TM1SeedSites<TRNAString> &pSeedSites,
         TM1RawFeatures<TRNAString> &)
 {
-    CharString seedType;
-
     for (unsigned i = 0; i < length(pSortedSites); ++i)
     {
         if (!pSeedSites.mEffectiveSites[pSortedSites[i]])
@@ -538,7 +529,7 @@ int TM1MRNASingleFreq<TRNAString>::add_features(
 
     for (unsigned i = 0; i < length(pSortedSites); ++i)
     {
-        idx = length(pSortedSites) - 1 - i;
+        idx = (unsigned)length(pSortedSites) - 1 - i;
 
         if (!pSeedSites.mEffectiveSites[pSortedSites[idx]])
         {
@@ -624,7 +615,7 @@ int TM1MRNASingleFreqFlank<TRNAString>::add_features(
 
     for (unsigned i = 0; i < length(pSortedSites); ++i)
     {
-        idx = length(pSortedSites) - 1 - i;
+        idx = (unsigned)length(pSortedSites) - 1 - i;
 
         if (!pSeedSites.mEffectiveSites[pSortedSites[idx]])
         {
@@ -707,7 +698,7 @@ int TM1MRNADiFreq<TRNAString>::add_features(
 
     for (unsigned i = 0; i < length(pSortedSites); ++i)
     {
-        idx = length(pSortedSites) - 1 - i;
+        idx = (unsigned)length(pSortedSites) - 1 - i;
 
         if (!pSeedSites.mEffectiveSites[pSortedSites[idx]])
         {
@@ -832,7 +823,7 @@ int TM1MRNADiFreqFlank<TRNAString>::add_features(
 
     for (unsigned i = 0; i < length(pSortedSites); ++i)
     {
-        idx = length(pSortedSites) - 1 - i;
+        idx = (unsigned)length(pSortedSites) - 1 - i;
 
         if (!pSeedSites.mEffectiveSites[pSortedSites[idx]])
         {
