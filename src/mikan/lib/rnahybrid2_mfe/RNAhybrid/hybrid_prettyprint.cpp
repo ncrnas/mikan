@@ -1,6 +1,5 @@
 #include <mikan/lib/rnahybrid2_mfe/RNAhybrid/include/hybrid_backtrace.hpp>
 #include <mikan/lib/rnahybrid2_mfe/RNAhybrid/include/hybrid_prettyprint.hpp>
-#include <string>
 
 namespace rh2 {
 
@@ -297,22 +296,21 @@ int RH2PrettyPrinter::get_hit_length()
     int hit_length = 0;
 
     std::string str_t1(t1.c_str());
-    int t_len = str_t1.length();
+    int t_len = (int)str_t1.length();
 
-    for (k = 0; k < (int)t_len && t1[k] == ' ' && t2[k] == ' '; ++k) {}
-    if (k < (int)t_len)
+    for (k = 0; k < t_len && t1[k] == ' ' && t2[k] == ' '; ++k) {}
+    if (k < t_len)
     {
         t1[k] = ' '; /* hide left dangle */
     }
 
-    k = t_len - 1;
     for (k = t_len - 1; k >= 0 && t1[k] == ' ' && t2[k] == ' '; --k) {}
     if (k >= 0)
     {
         t1[k] = ' '; /* hide right dangle */
     }
 
-    for (k = 0; k < (int)t_len; k++)
+    for (k = 0; k < t_len; k++)
     {
         if (t1[k] != ' ')
         {
@@ -320,7 +318,7 @@ int RH2PrettyPrinter::get_hit_length()
         }
     }
 
-    for (k = 0; k < (int)t_len; k++)
+    for (k = 0; k < t_len; k++)
     {
         if (t2[k] != ' ')
         {

@@ -1,8 +1,5 @@
 #include <mikan/lib/rnahybrid2_mfe/RNAhybrid/include/hybrid_energy.hpp>
 #include <mikan/lib/rnahybrid2_mfe/RNAhybrid/include/hybrid_table.hpp>
-#include <vector>
-#include <algorithm>
-#include <iostream>
 
 namespace rh2 {
 
@@ -33,22 +30,22 @@ void RH2Table::set_query_seed_pos(int qQueryLen)
 
 void RH2Table::table_alloc(int pTargetMaxLen, int pQueryMaxLen)
 {
-    tbl_unpaired_left_bot.resize(pTargetMaxLen);
+    tbl_unpaired_left_bot.resize((unsigned)pTargetMaxLen);
     for (int i = 0; i < pTargetMaxLen; ++i)
     {
-        tbl_unpaired_left_bot[i].resize(pQueryMaxLen, 0);
+        tbl_unpaired_left_bot[i].resize((unsigned)pQueryMaxLen, 0);
     }
 
-    tbl_closed.resize(pTargetMaxLen);
+    tbl_closed.resize((unsigned)pTargetMaxLen);
     for (int i = 0; i < pTargetMaxLen; ++i)
     {
-        tbl_closed[i].resize(pQueryMaxLen, 0);
+        tbl_closed[i].resize((unsigned)pQueryMaxLen, 0);
     }
 
-    tbl_unpaired_left_top.resize(pTargetMaxLen);
+    tbl_unpaired_left_top.resize((unsigned)pTargetMaxLen);
     for (int i = 0; i < pTargetMaxLen; ++i)
     {
-        tbl_unpaired_left_top[i].resize(pQueryMaxLen, 0);
+        tbl_unpaired_left_top[i].resize((unsigned)pQueryMaxLen, 0);
     }
 
     if (seed_def[0] == '7')
