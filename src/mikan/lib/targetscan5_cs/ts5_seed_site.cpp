@@ -1,9 +1,6 @@
 #include <mikan/lib/targetscan5_cs/include/ts5_inst_template.hpp> // TRNATYPE
 #include <mikan/lib/targetscan5_cs/include/ts5_seed_site.hpp>     // TS5Sequences, TS5SeedSeqs, TS5SeedSites
-#include <iostream>
-#include <seqan/sequence.h>
 #include <seqan/seq_io.h>
-#include <seqan/index.h>
 
 using namespace seqan;
 
@@ -29,7 +26,7 @@ int TS5Sequences<TRNAString>::read_fasta(CharString const &pFasta)
     {
         if (readRecord(id, seq, seqStream) != 0)
         {
-            std::cerr << "ERROR: Could not read from " << pFasta << "!" << std::endl;
+            std::cerr << "ERROR: Could not read from " << toCString(pFasta) << "!" << std::endl;
             return 1;
         }
 

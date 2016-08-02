@@ -1,8 +1,6 @@
 #include <mikan/lib/targetscan5_cs/include/ts5_align.hpp>         // TS5Alignment
 #include <mikan/lib/targetscan5_cs/include/ts5_inst_template.hpp> // TRNATYPE
-#include <cmath>                 // max, min
 #include <sstream>               // stringstream
-#include <seqan/sequence.h>
 #include <seqan/index.h>
 
 using namespace seqan;
@@ -104,7 +102,7 @@ int TS5Alignment<TRNAString>::align_3p_part(
     }
 
     complement(miRNAThreePrime);
-    lenDiff = abs(pMRNAPos[pMatchedIdx] - pMiRNAPos[pMatchedIdx]);
+    lenDiff = (unsigned)abs(pMRNAPos[pMatchedIdx] - pMiRNAPos[pMatchedIdx]);
 
     resize(mAlignBars[pMRNAIdx], maxLen+lenDiff, ' ');
     resize(mAlignMRNA[pMRNAIdx], maxLen+lenDiff, ' ');
@@ -160,7 +158,7 @@ void TS5Alignment<TRNAString>::set_align_bars(
 {
     unsigned startPos;
 
-    startPos = std::max(pMRNAPos[pMatchedIdx], pMiRNAPos[pMatchedIdx]);
+    startPos = (unsigned)std::max(pMRNAPos[pMatchedIdx], pMiRNAPos[pMatchedIdx]);
     for (int i = 0; i < pMatchLen[pMatchedIdx]; ++i)
     {
         mAlignBars[pMRNAIdx][startPos+i] = '|';
@@ -180,7 +178,7 @@ void TS5Alignment<TRNAString>::set_alignment(
 
     if (pSeqPos1[pMatchedIdx] - pSeqPos2[pMatchedIdx] > 0)
     {
-        startPos = pSeqPos1[pMatchedIdx] - pSeqPos2[pMatchedIdx];
+        startPos = (unsigned)pSeqPos1[pMatchedIdx] - pSeqPos2[pMatchedIdx];
     }
     else
     {
