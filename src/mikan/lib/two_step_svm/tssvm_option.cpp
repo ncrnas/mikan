@@ -1,7 +1,4 @@
 #include <mikan/lib/two_step_svm/include/tssvm_option.hpp>         // TSSVMOptions
-#include <iostream>
-#include <seqan/arg_parse.h>
-#include <seqan/sequence.h>
 
 using namespace seqan;
 

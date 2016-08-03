@@ -1,12 +1,6 @@
 #include <mikan/lib/two_step_svm/include/tssvm_inst_template.hpp>  // TRNATYPE
 #include <mikan/lib/two_step_svm/include/tssvm_site_feature.hpp>   // TSSVMRawFeatures
 #include <mikan/lib/two_step_svm/include/tssvm_site_svm.hpp>       // TSSVMSiteModel, TSSVMSiteInputVector
-#include <cmath>                    // pow
-#include <iostream>
-#include <fstream>
-#include <Eigen/Dense>
-#include <seqan/sequence.h>
-#include <seqan/stream.h>
 
 using namespace seqan;
 

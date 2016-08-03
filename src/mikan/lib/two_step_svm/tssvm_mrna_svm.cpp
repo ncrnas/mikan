@@ -1,9 +1,6 @@
 #include <mikan/lib/two_step_svm/include/tssvm_inst_template.hpp>  // TRNATYPE
 #include <mikan/lib/two_step_svm/include/tssvm_mrna_feature.hpp>   // TSSVMRNARawFeatures
 #include <mikan/lib/two_step_svm/include/tssvm_mrna_svm.hpp>       // TSSVMRNAModel, TSSVMRNAInputVector
-#include <Eigen/Dense>
-#include <seqan/sequence.h>
-#include <seqan/stream.h>
 
 using namespace seqan;
 
@@ -15,41 +12,41 @@ namespace tssvm{
 template <class TRNAString>
 void TSSVMRNAModel<TRNAString>::init_hyperplane()
 {
-    mHyperPlane[0] = -1.30572107595;
-    mHyperPlane[1] = 0.593744401172;
-    mHyperPlane[2] = 4.16198979669;
-    mHyperPlane[3] = 16.3787970139;
-    mHyperPlane[4] = 9.59984620853;
-    mHyperPlane[5] = 3.81289601546;
-    mHyperPlane[6] = -5.19816318534;
-    mHyperPlane[7] = -1.31499609314;
-    mHyperPlane[8] = -2.1582603992;
-    mHyperPlane[9] = -8.02015725935;
-    mHyperPlane[10] = -4.85249370022;
-    mHyperPlane[11] = -7.65730980842;
-    mHyperPlane[12] = -0.00668173334258;
-    mHyperPlane[13] = -2.95566934722;
-    mHyperPlane[14] = -12.5387352781;
-    mHyperPlane[15] = -12.0502325186;
-    mHyperPlane[16] = -4.7790370469;
-    mHyperPlane[17] = 2.79309363131;
-    mHyperPlane[18] = 4.2980051917;
-    mHyperPlane[19] = 4.46664757476;
-    mHyperPlane[20] = 5.2286212368;
-    mHyperPlane[21] = 2.34606717403;
-    mHyperPlane[22] = 1.30040788589;
-    mHyperPlane[23] = 0.889013323422;
-    mHyperPlane[24] = 2.9761142572;
-    mHyperPlane[25] = -0.188642775904;
-    mHyperPlane[26] = 0.989538955302;
-    mHyperPlane[27] = 7.82498328245;
-    mHyperPlane[28] = 0.0;
-    mHyperPlane[29] = 3.06558310165;
-    mHyperPlane[30] = 2.32548284281;
-    mHyperPlane[31] = 1.23598264889;
-    mHyperPlane[32] = 1.56331024459;
-    mHyperPlane[33] = -0.0724823473571;
-    mHyperPlane[34] = 20.5493145756;
+    mHyperPlane[0] = -1.30572107595f;
+    mHyperPlane[1] = 0.593744401172f;
+    mHyperPlane[2] = 4.16198979669f;
+    mHyperPlane[3] = 16.3787970139f;
+    mHyperPlane[4] = 9.59984620853f;
+    mHyperPlane[5] = 3.81289601546f;
+    mHyperPlane[6] = -5.19816318534f;
+    mHyperPlane[7] = -1.31499609314f;
+    mHyperPlane[8] = -2.1582603992f;
+    mHyperPlane[9] = -8.02015725935f;
+    mHyperPlane[10] = -4.85249370022f;
+    mHyperPlane[11] = -7.65730980842f;
+    mHyperPlane[12] = -0.00668173334258f;
+    mHyperPlane[13] = -2.95566934722f;
+    mHyperPlane[14] = -12.5387352781f;
+    mHyperPlane[15] = -12.0502325186f;
+    mHyperPlane[16] = -4.7790370469f;
+    mHyperPlane[17] = 2.79309363131f;
+    mHyperPlane[18] = 4.2980051917f;
+    mHyperPlane[19] = 4.46664757476f;
+    mHyperPlane[20] = 5.2286212368f;
+    mHyperPlane[21] = 2.34606717403f;
+    mHyperPlane[22] = 1.30040788589f;
+    mHyperPlane[23] = 0.889013323422f;
+    mHyperPlane[24] = 2.9761142572f;
+    mHyperPlane[25] = -0.188642775904f;
+    mHyperPlane[26] = 0.989538955302f;
+    mHyperPlane[27] = 7.82498328245f;
+    mHyperPlane[28] = 0.0f;
+    mHyperPlane[29] = 3.06558310165f;
+    mHyperPlane[30] = 2.32548284281f;
+    mHyperPlane[31] = 1.23598264889f;
+    mHyperPlane[32] = 1.56331024459f;
+    mHyperPlane[33] = -0.0724823473571f;
+    mHyperPlane[34] = 20.5493145756f;
 }
 
 template <class TRNAString>

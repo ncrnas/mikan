@@ -1,7 +1,5 @@
 #include <mikan/lib/two_step_svm/include/tssvm_core.hpp>           // TSSVMCoreInput, TSSVMCore
 #include <mikan/lib/two_step_svm/include/tssvm_inst_template.hpp>  // TRNATYPE
-#include <mikan/lib/two_step_svm/include/tssvm_option.hpp>         // TSSVMOptions
-#include <seqan/arg_parse.h>
 
 int main(int argc, char const ** argv)
 {

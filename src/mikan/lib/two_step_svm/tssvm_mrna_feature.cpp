@@ -1,11 +1,6 @@
 #include <math.h>                   // roundf
 #include <mikan/lib/two_step_svm/include/tssvm_inst_template.hpp>  // TRNATYPE
 #include <mikan/lib/two_step_svm/include/tssvm_mrna_feature.hpp>   // TSSVMRNARawFeatures, TSSVMFeatUTRLen, TSSVMFeatSiteNum,
-#include <mikan/lib/two_step_svm/include/tssvm_seed_site.hpp>      // TSSVMSeedSites
-#include <mikan/lib/two_step_svm/include/tssvm_site_svm.hpp>       // TSSVMSiteInputVector
-#include <seqan/sequence.h>
-                                    // TSSVMFeatTotDiscUTRLen, TSSVMFeatSeedTypeNum, TSSVMFeatDiscBin,
-                                    // TSSVMFeatOptDist, TSSVMFeatSiteNumFlg, TSSVMFeatTotDisc
 
 using namespace seqan;
 
@@ -163,9 +158,9 @@ int TSSVMFeatTotDiscUTRLen<TRNAString>::add_features(
         TSSVMSiteInputVector<TRNAString> &pSiteInput)
 {
     const seqan::String<float>& scors = pSiteInput.get_scores();
-    float minVal = 0.0;
-    float shiftVal = -2.27441;
-    float totVal = 0.0;
+    float minVal = 0.0f;
+    float shiftVal = -2.27441f;
+    float totVal = 0.0f;
     float mRNALen;
     float discUTRLen;
 
@@ -284,8 +279,8 @@ int TSSVMFeatDiscBin<TRNAString>::add_features(
         TSSVMSiteInputVector<TRNAString> &pSiteInput)
 {
     const seqan::String<float>& scors = pSiteInput.get_scores();
-    float maxNum = 38;
-    float shiftVal = -2.27441;
+    float maxNum = 38.0f;
+    float shiftVal = -2.27441f;
 
     resize(mDiscBin[pMRNAPosIdx], 17, 0.0);
 
@@ -401,10 +396,10 @@ int TSSVMFeatOptDist<TRNAString>::add_features(
 
     resize(dist, length(pSitePosByMRNA));
 
-    prevPos = mS8Pos[pSitePosByMRNA[0]];
+    prevPos = (unsigned)mS8Pos[pSitePosByMRNA[0]];
     for (unsigned i = 1; i < length(pSitePosByMRNA); ++i)
     {
-        pos =  mS8Pos[pSitePosByMRNA[i]];
+        pos =  (unsigned)mS8Pos[pSitePosByMRNA[i]];
         posDiff = pos - prevPos;
         dist[i] = posDiff;
 
@@ -495,10 +490,10 @@ int TSSVMFeatTotDisc<TRNAString>::add_features(
         TSSVMSiteInputVector<TRNAString> &pSiteInput)
 {
     const seqan::String<float>& scors = pSiteInput.get_scores();
-    float divVal = 100;
-    float minVal = 0.0;
-    float shiftVal = -2.27441;
-    float totVal = 0.0;
+    float divVal = 100.0f;
+    float minVal = 0.0f;
+    float shiftVal = -2.27441f;
+    float totVal = 0.0f;
 
     resize(mTotDisc[pMRNAPosIdx], 1);
 
