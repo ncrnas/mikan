@@ -1,10 +1,6 @@
 #include <mikan/lib/vienna_rna/include/vr16_duplex.hpp>
-#include <mikan/lib/vienna_rna/include/vr16_pair_mat.hpp>
-#include <mikan/lib/vienna_rna/include/vr16_params.hpp>
 #include <iostream>
-#include <string>
 #include <cstring>
-#include <cmath>
 
 namespace vr16
 {
@@ -22,8 +18,8 @@ int VR16Duplex::duplexfold(std::string &pS1, std::string &pS2, std::vector<int> 
     int pair_type;
     int pair_type2;
     int E;
-    int array_size_i = pArrayI.size();
-    int array_size_j = pArrayJ.size();
+    int array_size_i = (int)pArrayI.size();
+    int array_size_j = (int)pArrayJ.size();
 
     mBonusGiven = 0;
     mStructure.clear();
@@ -56,14 +52,14 @@ int VR16Duplex::duplexfold(std::string &pS1, std::string &pS2, std::vector<int> 
         std::cerr << "]" << std::endl;
     }
 
-    mN1 = pS1.size();
-    mN2 = pS2.size();
+    mN1 = (int)pS1.size();
+    mN2 = (int)pS2.size();
 
-    mC.resize(mN1 + 1);
+    mC.resize((unsigned)mN1 + 1);
 
     for (int i = 0; i <= mN1; ++i)
     {
-        mC[i].resize(mN2 + 1);
+        mC[i].resize((unsigned)mN2 + 1);
     }
 
     encode_seq(pS1, pS2);
@@ -230,7 +226,7 @@ int VR16Duplex::duplexfold(std::string &pS1, std::string &pS2, std::vector<int> 
         Emin += mBonusGiven;
     }
 
-    mEnergy = (float) (Emin) / 100.0;
+    mEnergy = (float) (Emin) / 100.0f;
 
     if (mFivePrimeLength)
     {
@@ -271,7 +267,7 @@ void VR16Duplex::encode_seq(std::string &pS1, std::string& pS2)
 {
     unsigned l;
 
-    l = pS1.size();
+    l = (unsigned)pS1.size();
     mS1.resize(l + 1, 0);
     mSS1.resize(l + 1, 0);
 
@@ -282,7 +278,7 @@ void VR16Duplex::encode_seq(std::string &pS1, std::string& pS2)
         mSS1[i] = mPairMat.get_alias(mS1[i]); /* for mismatches of nostandard bases */
     }
 
-    l = pS2.size();
+    l = (unsigned)pS2.size();
     mS2.resize(l + 1, 0);
     mSS2.resize(l + 1, 0);
 
@@ -309,8 +305,8 @@ int VR16Duplex::backtrack(int pI, int pJ, std::vector<int> &pArrayI, std::vector
     int j0;
     std::string st1(mN1 + 1, 0);
     std::string st2(mN2 + 1, 0);
-    int array_size_i = pArrayI.size();
-    int array_size_j = pArrayJ.size();
+    int array_size_i = (int)pArrayI.size();
+    int array_size_j = (int)pArrayJ.size();
 
     int first_time_five_prime = 1;
     int e_min;
@@ -467,7 +463,7 @@ int VR16Duplex::backtrack(int pI, int pJ, std::vector<int> &pArrayI, std::vector
         }
     }
 
-    mStructure.resize(i0 - pI + 1 + pJ - j0 + 1 + 1, 0);
+    mStructure.resize((unsigned)(i0 - pI + 1 + pJ - j0 + 1 + 1), 0);
 
     int idx = 0;
     for (int i = pI - 1; st1[i] != 0; ++i)

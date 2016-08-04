@@ -1,10 +1,6 @@
 #include <mikan/lib/vienna_rna/include/vr16_energy.hpp>
 #include <mikan/lib/vienna_rna/include/vr16_fold.hpp>
 #include <iostream>
-#include <string>
-#include <cmath>
-#include <map>
-#include <vector>
 #include <algorithm>
 
 namespace vr16
@@ -28,7 +24,7 @@ int VR16Fold::init_arrays(int pStrLen)
 
     resize_arrays(pStrLen);
 
-    mIdex.resize(pStrLen + 1);
+    mIdex.resize((unsigned)pStrLen + 1);
     for (int i = 1; i <= pStrLen; ++i)
     {
         mIdex[i] = (i * (i - 1)) >> 1; /* n(n-1)/2 */
@@ -51,10 +47,10 @@ void VR16Fold::clear_arrays()
 
 void VR16Fold::resize_arrays(int pStrLen)
 {
-    mF5.resize(pStrLen + 2);
-    mPtype.resize((pStrLen * (pStrLen + 1)) / 2 + 2);
+    mF5.resize((unsigned)pStrLen + 2);
+    mPtype.resize((unsigned)(pStrLen * (pStrLen + 1)) / 2 + 2);
 
-    mOpts.mBasePair.resize(1 + pStrLen / 2);
+    mOpts.mBasePair.resize(1 + (unsigned)pStrLen / 2);
 }
 
 float VR16Fold::fold(std::string &pString, std::string &pStructure)
@@ -63,14 +59,14 @@ float VR16Fold::fold(std::string &pString, std::string &pStructure)
     float energy2;
     int strLen;
 
-    strLen = pString.size();
+    strLen = (int)pString.size();
 
     if (strLen > mInitLength)
     {
         init_arrays(strLen);
     }
 
-    mBP.resize(strLen + 2, 0);
+    mBP.resize((unsigned)strLen + 2, 0);
     encode_seq(pString);
     make_ptypes(pStructure, mPtype, mBP, mOpts);
 
@@ -82,7 +78,7 @@ float VR16Fold::fold(std::string &pString, std::string &pStructure)
         mBT.parenthesis_structure(pStructure, strLen);
     }
 
-    energy2 = finalize_energy_calc(strLen, pStructure, energy, mOpts, mBP);
+    energy2 = (float)finalize_energy_calc(strLen, pStructure, energy, mOpts, mBP);
 
     mBP.clear();
 
@@ -94,7 +90,7 @@ void VR16Fold::encode_seq(std::string &pString)
 {
     unsigned l;
 
-    l = pString.size();
+    l = (unsigned)pString.size();
 
     mS.resize(l + 2);
     mS1.resize(l + 2);
@@ -151,7 +147,7 @@ void VR16Fold::make_ptypes(
                     type_1 = 0; /* i.j can only form isolated pairs */
                 }
 
-                pPtype[mIdex[j] + i] = type_1;
+                pPtype[mIdex[j] + i] = (char)type_1;
                 otype = type_1;
                 type_1 = ntype;
                 i--;
@@ -165,7 +161,7 @@ void VR16Fold::make_ptypes(
         int hx;
         std::vector<int> stack;
         char type;
-        stack.resize(n + 1);
+        stack.resize((unsigned)n + 1);
 
         for (hx = 0, j = 1; j <= n; j++)
         {
@@ -229,7 +225,7 @@ void VR16Fold::make_ptypes(
                 {
                     pPtype[mIdex[j] + k] = 0;
                 }
-                pPtype[mIdex[j] + i] = (type == 0) ? 7 : type_1;
+                pPtype[mIdex[j] + i] = (type == 0) ? (char)7 : (char)type_1;
                 for (int l = j + TURN + 1; l <= n; ++l)
                 {
                     pPtype[mIdex[l] + j] = 0;
@@ -240,6 +236,8 @@ void VR16Fold::make_ptypes(
                 {
                     pPtype[mIdex[l] + j] = 0;
                 }
+                break;
+            default: // do nothing;
                 break;
             }
         }
@@ -255,7 +253,7 @@ void VR16Fold::make_ptypes(
 int VR16Fold::fill_arrays(std::string &pString)
 {
     /* fill "c", "fML" and "f5" arrays and return  optimal energy */
-    int strLen = pString.size();
+    int strLen = (int)pString.size();
     mArrayC.init_arrays(strLen);
     mArrayML.init_arrays(strLen);
 
@@ -504,13 +502,13 @@ void VR16FoldArrayC::clear_arrays()
 
 void VR16FoldArrayC::resize_arrays(int pStrLen)
 {
-    mC.resize((pStrLen * (pStrLen + 1)) / 2 + 2);
-    mCC.resize(pStrLen + 2);
-    mCC1.resize(pStrLen + 2);
+    mC.resize((unsigned)(pStrLen * (pStrLen + 1)) / 2 + 2);
+    mCC.resize((unsigned)pStrLen + 2);
+    mCC1.resize((unsigned)pStrLen + 2);
 
-    mDMLi.resize(pStrLen + 1);
-    mDMLi1.resize(pStrLen + 1);
-    mDMLi2.resize(pStrLen + 1);
+    mDMLi.resize((unsigned)pStrLen + 1);
+    mDMLi1.resize((unsigned)pStrLen + 1);
+    mDMLi2.resize((unsigned)pStrLen + 1);
 }
 
 int VR16FoldArrayC::get_init_bonus(int pI, int pJ, std::vector<int>& pBP)
@@ -539,7 +537,7 @@ void VR16FoldArrayC::fill_arrays(
         std::vector<int>& pFML,
         std::string &pString)
 {
-    int strLen = pString.size();
+    int strLen = (int)pString.size();
     int ij = mIdex[pJ] + pI;
     int bonus = get_init_bonus(pI, pJ, pBP);
     int type_1 = get_type_1(pI, pJ, strLen, pPtype, pBP);
@@ -666,7 +664,7 @@ int VR16FoldArrayC::calc_coaxial_stack(
 {
     int type_2;
     int decomp = mParams.INF;
-    int decomp_t = mParams.INF;
+    int decomp_t;
 
     for (int k = pI + 2 + TURN; k < pJ - 2 - TURN; ++k)
     {
@@ -803,7 +801,7 @@ int VR16FoldArrayC::hairpin_e(int pSize, int pType, int pSi1, int pSj1, int pIdx
     {
         if (pSize == 4)
         { /* check for tetraloop bonus */
-            subStr6 = pString.substr(pIdx, 6);
+            subStr6 = pString.substr((unsigned)pIdx, 6);
             std::map<std::string, int>::const_iterator found =  mEn.mTetraloops.find(subStr6);
             if (found != mEn.mTetraloops.end())
             {
@@ -816,7 +814,7 @@ int VR16FoldArrayC::hairpin_e(int pSize, int pType, int pSi1, int pSj1, int pIdx
     {
         if (mOpts.mTriLoop)
         {
-            subStr5 = pString.substr(pIdx, 5);
+            subStr5 = pString.substr((unsigned)pIdx, 5);
             std::map<std::string, int>::const_iterator found =  mEn.mTriloops.find(subStr5);
             if (found != mEn.mTriloops.end())
             {
@@ -908,12 +906,12 @@ void VR16FoldArrayML::clear_arrays()
 
 void VR16FoldArrayML::resize_arrays(int pStrLen)
 {
-    mFML.resize((pStrLen * (pStrLen + 1)) / 2 + 2);
+    mFML.resize((unsigned)(pStrLen * (pStrLen + 1)) / 2 + 2);
     if (mUniqML)
     {
-        mFM1.resize((pStrLen * (pStrLen + 1)) / 2 + 2);
+        mFM1.resize((unsigned)(pStrLen * (pStrLen + 1)) / 2 + 2);
     }
-    mFmi.resize(pStrLen + 1);
+    mFmi.resize((unsigned)pStrLen + 1);
 
 }
 
@@ -1078,7 +1076,7 @@ void VR16FoldBackTrack::backtrack(
     int energy;
     int newE;
 
-    strLen = pString.size();
+    strLen = (int)pString.size();
 
     if (pS == 0)
     {

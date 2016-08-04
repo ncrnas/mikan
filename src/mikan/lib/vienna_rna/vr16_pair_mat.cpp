@@ -1,6 +1,5 @@
 #include <mikan/lib/vienna_rna/include/vr16_pair_mat.hpp>
 #include <iostream>
-#include <string>
 
 namespace vr16 {
 

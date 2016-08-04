@@ -1,6 +1,5 @@
 #include <mikan/lib/vienna_rna/include/vr16_ddg_core.hpp>
 #include <iostream>
-#include <cmath>
 
 namespace vr16
 {
@@ -15,17 +14,17 @@ void VR16DuplexRet::init_ret_vals(int pSize)
         return;
     }
 
-    mStructure.resize(pSize);
-    mL1.resize(pSize);
-    mStartMiR.resize(pSize);
-    mEndMiR.resize(pSize);
-    mStartTarget.resize(pSize);
-    mEndTarget.resize(pSize);
-    mMiRLen.resize(pSize);
-    mTargetLen.resize(pSize);
-    mDGall.resize(pSize);
-    mDG5.resize(pSize);
-    mDG3.resize(pSize);
+    mStructure.resize((unsigned)pSize);
+    mL1.resize((unsigned)pSize);
+    mStartMiR.resize((unsigned)pSize);
+    mEndMiR.resize((unsigned)pSize);
+    mStartTarget.resize((unsigned)pSize);
+    mEndTarget.resize((unsigned)pSize);
+    mMiRLen.resize((unsigned)pSize);
+    mTargetLen.resize((unsigned)pSize);
+    mDGall.resize((unsigned)pSize);
+    mDG5.resize((unsigned)pSize);
+    mDG3.resize((unsigned)pSize);
 
     mVecSize = pSize;
 }
@@ -40,18 +39,18 @@ void VR16DDG4Ret::init_ret_vals(int pSize)
         return;
     }
 
-    mDG0.resize(pSize);
-    mD1Array.resize(pSize);
-    mD2Array.resize(pSize);
-    mDDGArray.resize(pSize);
+    mDG0.resize((unsigned)pSize);
+    mD1Array.resize((unsigned)pSize);
+    mD2Array.resize((unsigned)pSize);
+    mDDGArray.resize((unsigned)pSize);
     for (int i = 0; i < pSize; ++i)
     {
         mD1Array[i].resize(ARRSIZE);
         mD2Array[i].resize(ARRSIZE);
         mDDGArray[i].resize(ARRSIZE);
     }
-    mDDGSum.resize(pSize);
-    mP.resize(pSize);
+    mDDGSum.resize((unsigned)pSize);
+    mP.resize((unsigned)pSize);
 
     mVecSize = pSize;
 }
@@ -85,7 +84,7 @@ int VR16DDGWorkSpace::duplexfold(
         return retVal;
     }
 
-    l2 =  mDup.mStructure.size() - mDup.mL1 - 1;
+    l2 =  (int)mDup.mStructure.size() - mDup.mL1 - 1;
 
     mDupRet.mStructure[pRetIdx] = mDup.mStructure;
     mDupRet.mL1[pRetIdx] = mDup.mL1;
@@ -146,7 +145,7 @@ int VR16DDGWorkSpace::calc_ddg4(int pRetIdx, std::string &pString)
     double dg2 = 0.0;
     double kT;
     double ddGsum;
-    std::vector<double> ddG(mDDG4Ret.ARRSIZE);
+    std::vector<double> ddG((unsigned)mDDG4Ret.ARRSIZE);
     std::string constrains0(pString.size(), 0);
 
     /* Fold with no constraint ********************************************/
