@@ -1,14 +1,5 @@
 #include <mikan/lib/miranda3/include/mr3_inst_template.hpp>  // TRNATYPE
 #include <mikan/lib/miranda3/include/mr3_score.hpp>          // MR3DDGScores, MR3TotalScores
-#include <mikan/lib/miranda3/include/mr3_seed_site.hpp>      // MR3SeedSites
-#include <iostream>
-#include <sstream>                // stringstream
-#include <cmath>                  // log
-#include <vector>                 // vector
-#include <string>                 // string
-#include <sstream>                // stringstream
-#include <seqan/sequence.h>
-#include <seqan/align.h>
 
 using namespace seqan;
 
@@ -158,7 +149,7 @@ void MR3AlignScores<TRNAString>::create_input_mrna_seq(
         Rna5String &pIMRNA3pSeq)
 {
     unsigned idx = 0;
-    unsigned seqLen = pEnd - pStart;
+    unsigned seqLen = (unsigned)(pEnd - pStart);
     int seed_idx = 0;
     int idex3p = 0;
     int len3p;
@@ -184,7 +175,7 @@ void MR3AlignScores<TRNAString>::create_input_mrna_seq(
         len3p = 0;
     }
 
-    seedLen3p = length(pMiRNASeq) - seedRegLen - 2;
+    seedLen3p = (int)length(pMiRNASeq) - seedRegLen - 2;
     if (seedLen3p - 1 > len3p)
     {
         maxpPos3p = seqLen;
@@ -253,7 +244,7 @@ int MR3EnergyScores<TRNAString>::calc_scores(
     resize(mEffectiveSites, length(pSeedSites.mEffectiveSites));
     resize(mEnScores, length(pSeedSites.mEffectiveSites));
 
-    mVRws.preppare_fold(length(pSeedSites.mEffectiveSites));
+    mVRws.preppare_fold((int)length(pSeedSites.mEffectiveSites));
 
     for (unsigned i = 0; i < length(mRNAPos); ++i)
     {
@@ -269,7 +260,7 @@ int MR3EnergyScores<TRNAString>::calc_scores(
         mVRws.calc_fold_energy(i, inputSeq);
 //        mVRws.print_fold_ret_vals(i);
 
-        score = mVRws.get_fold_energy(i);
+        score = (float)mVRws.get_fold_energy(i);
         if (mMaxEnergy < score)
         {
             mEffectiveSites[i] = false;
@@ -348,7 +339,7 @@ int MR3SiteScores<TRNAString>::calc_scores(
 {
     resize(mEffectiveSites, length(pSeedSites.mEffectiveSites));
 
-    mAlign.resize_align(length(pSeedSites.mEffectiveSites));
+    mAlign.resize_align((int)length(pSeedSites.mEffectiveSites));
 
     mAlignScores.calc_scores(pSeedSites, miRNASeq, pMRNASeqs);
     mEnergyScores.calc_scores(pSeedSites, miRNASeq, pMRNASeqs);

@@ -1,11 +1,8 @@
 #include <cmath>                 // min, max
-#include <math.h>                // roundf
 #include <mikan/lib/targetminer1/include/tm1_inst_template.hpp> // TRNATYPE
 #include <mikan/lib/targetminer1/include/tm1_seed_site.hpp>     // TM1SeedSites
 #include <mikan/lib/targetminer1/include/tm1_site_feature.hpp>  // TM1RawFeatures, TM1FeatSeedType, TM1FeatSitePos, TM1FeatDistance, TM1FeatAURich,
-#include <seqan/sequence.h>
-                                 // TM1FeatSingleFreq, TM1FeatSingleFreqFlank, TM1FeatDiFreq, TM1FeatDiFreqFlank,
-                                 // TM1FeatSingleMatch, TM1FeatTwoConsecMatch
+
 
 using namespace seqan;
 
@@ -43,12 +40,12 @@ int TM1RawFeatures<TRNAString>::add_features(
 
     mSeedTypes.add_features(pMiRNASeq, pMRNASeqs, pSeedSites.mEffectiveSites, pSeedSites);
     mSitePos.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, sitePos);
-    mDistance.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mSitePos, pSortedSites);
-    mAURich.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mSitePos, mDistance);
-    mSingleFreqs.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mSitePos);
-    mSingleFreqFlanks.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mSitePos, mDistance);
-    mDiFreqs.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mSitePos);
-    mDiFreqFlanks.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mSitePos, mDistance);
+    mDistance.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, pSortedSites);
+    mAURich.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mDistance);
+    mSingleFreqs.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites);
+    mSingleFreqFlanks.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mDistance);
+    mDiFreqs.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites);
+    mDiFreqFlanks.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mDistance);
     mSingleMatches.add_features(pMiRNASeq, pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mSitePos);
     mTwoMatches.add_features(pMiRNASeq, pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mSitePos);
 
@@ -112,7 +109,7 @@ int TM1FeatSeedType<TRNAString>::add_features(
 
     const StringSet<seqan::CharString>& seedTypes = pSeedSites.get_seed_types();
 
-    resize_features(length(mRNAPos));
+    resize_features((unsigned)length(mRNAPos));
 
     revMiRNASeq = pMiRNASeq;
     complement(revMiRNASeq);
@@ -173,10 +170,9 @@ int TM1FeatSitePos<TRNAString>::add_features(
 {
     int seqLen;
     float relStartPos, relEndPos;
-    int relStartPosI, relEndPosI;
     unsigned lenToCDS, startPos, endPos;
 
-    resize_features(length(pMRNAPos));
+    resize_features((unsigned)length(pMRNAPos));
 
     for (unsigned i = 0; i < length(pMRNAPos); ++i)
     {
@@ -187,12 +183,12 @@ int TM1FeatSitePos<TRNAString>::add_features(
 
         // Get m1 pos
         mM1Pos[i] = pSitePos[i] + SEARCH_SEQ_LEN;
-        seqLen = length(pMRNASeqs[pMRNAPos[i]]);
+        seqLen = (int)length(pMRNASeqs[pMRNAPos[i]]);
         mSeqLen[i] = seqLen;
 
         // Get m8 pos
         mM8Pos[i] = pSitePos[i] - 1;
-        lenToCDS = pSeedSites.get_length_to_cds(i);
+        lenToCDS = (unsigned)pSeedSites.get_length_to_cds(i);
 
         if (lenToCDS < MIN_DIST_TO_CDS || mM1Pos[i] > seqLen)
         {
@@ -201,11 +197,11 @@ int TM1FeatSitePos<TRNAString>::add_features(
         }
 
         // Get relative pos
-        startPos = pSeedSites.get_seed_start_pos(i) + 4;
-        endPos = pSeedSites.get_seed_end_pos2(i) - 1;
+        startPos = (unsigned)pSeedSites.get_seed_start_pos(i) + 4;
+        endPos = (unsigned)pSeedSites.get_seed_end_pos2(i) - 1;
         startPos = endPos - 1;
-        startPos = pSeedSites.get_seed_start_pos(i) + 2;
-        endPos = pSeedSites.get_seed_end_pos2(i) - 1;
+        startPos = (unsigned)pSeedSites.get_seed_start_pos(i) + 2;
+        endPos = (unsigned)pSeedSites.get_seed_end_pos2(i) - 1;
         relStartPos = (float) startPos / seqLen;
         relEndPos = (float) endPos / seqLen;
 //        std::cout << "seqlen: " << seqLen << ", startPos: " << startPos << std::endl;
@@ -256,7 +252,6 @@ int TM1FeatDistance<TRNAString>::add_features(
         String<bool> &pEffectiveSites,
         TSitePos const &pMRNAPos,
         TM1SeedSites<TRNAString> &pSeedSites,
-        TM1FeatSitePos<TRNAString> &pSeedPos,
         TM1SortedSitePos<TRNAString> &pSortedSites)
 {
     const StringSet<String<unsigned> >& sortedSites = pSortedSites.get_sorted_mrna_pos();
@@ -266,16 +261,16 @@ int TM1FeatDistance<TRNAString>::add_features(
     int startU, endU, lenU, startD, endD, lenD;
     String<int> nextSeedStarts;
 
-    resize_features(length(pMRNAPos));
+    resize_features((unsigned)length(pMRNAPos));
 
     for (unsigned i = 0; i < length(mRNAIDs); ++i)
     {
-        seqLen = length(pMRNASeqs[mRNAIDs[i]]);
+        seqLen = (int)length(pMRNASeqs[mRNAIDs[i]]);
         prevSeedStart = seqLen;
         resize(nextSeedStarts, length(sortedSites[i]));
         for (unsigned j = 0; j < length(sortedSites[i]); ++j)
         {
-            idx = length(sortedSites[i]) - j - 1;
+            idx = (int)length(sortedSites[i]) - j - 1;
             siteId = sortedSites[i][idx];
             if (!pEffectiveSites[siteId])
             {
@@ -350,18 +345,15 @@ int TM1FeatAURich<TRNAString>::add_features(
         String<bool> &pEffectiveSites,
         TSitePos const &pMRNAPos,
         TM1SeedSites<TRNAString> &pSeedSites,
-        TM1FeatSitePos<TRNAString> &pSeedPos,
         TM1FeatDistance<TRNAString> &pDistance)
 {
     int seqLen, startU, endU, startD, endD;
     float totalScore, upScore, upMaxScore, downScore, downMaxScore;
-    CharString chrUp = "up";
-    CharString chrDown = "down";
+    //CharString chrUp = "up";
+    //CharString chrDown = "down";
 
-    resize_features(length(pMRNAPos));
+    resize_features((unsigned)length(pMRNAPos));
 
-    startU = 0;
-    startD = 0;
     for (unsigned i = 0; i < length(pMRNAPos); ++i)
     {
         if (!pEffectiveSites[i])
@@ -374,7 +366,7 @@ int TM1FeatAURich<TRNAString>::add_features(
         startU = std::max(0, endU - pDistance.get_upstream_len(i));
         startU = std::max(0, endU - 30);
 
-        seqLen = length(pMRNASeqs[pMRNAPos[i]]);
+        seqLen = (int)length(pMRNASeqs[pMRNAPos[i]]);
         startD = pSeedSites.get_seed_end_pos(i);
         endD = std::min(startD + 30, seqLen);
 
@@ -451,12 +443,11 @@ int TM1FeatSingleFreq<TRNAString>::add_features(
         TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         TSitePos const &pMRNAPos,
-        TM1SeedSites<TRNAString> &pSeedSites,
-        TM1FeatSitePos<TRNAString> &pSeedPos)
+        TM1SeedSites<TRNAString> &pSeedSites)
 {
     int seedStart, seedEnd, curpos, seqLen;
 
-    resize_features(length(pMRNAPos));
+    resize_features((unsigned)length(pMRNAPos));
 
     for (unsigned i = 0; i < length(pMRNAPos); ++i)
     {
@@ -466,7 +457,7 @@ int TM1FeatSingleFreq<TRNAString>::add_features(
         }
 
         // Get start position for seed
-        seqLen = length(pMRNASeqs[pMRNAPos[i]]);
+        seqLen = (int)length(pMRNASeqs[pMRNAPos[i]]);
         seedEnd = pSeedSites.get_seed_end_pos(i);
         seedStart = pSeedSites.get_seed_start_pos(i);
 
@@ -534,12 +525,11 @@ int TM1FeatSingleFreqFlank<TRNAString>::add_features(
         String<bool> &pEffectiveSites,
         TSitePos const &pMRNAPos,
         TM1SeedSites<TRNAString> &pSeedSites,
-        TM1FeatSitePos<TRNAString> &pSeedPos,
         TM1FeatDistance<TRNAString> &pDistance)
 {
     int seqLen, startU, endU, startD, endD;
 
-    resize_features(length(pMRNAPos));
+    resize_features((unsigned)length(pMRNAPos));
 
     for (unsigned i = 0; i < length(pMRNAPos); ++i)
     {
@@ -555,7 +545,7 @@ int TM1FeatSingleFreqFlank<TRNAString>::add_features(
         calc_pos_scores(pMRNASeqs[pMRNAPos[i]], startU, endU, i);
 
         // Get start and end positions for downstream
-        seqLen = length(pMRNASeqs[pMRNAPos[i]]);
+        seqLen = (int)length(pMRNASeqs[pMRNAPos[i]]);
         startD = pSeedSites.get_seed_end_pos(i);
         endD = std::min(startD + pDistance.get_downstream_len(i), seqLen);
         calc_pos_scores(pMRNASeqs[pMRNAPos[i]], startD, endD, i);
@@ -634,12 +624,11 @@ int TM1FeatDiFreq<TRNAString>::add_features(
         TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         TSitePos const &pMRNAPos,
-        TM1SeedSites<TRNAString> &pSeedSites,
-        TM1FeatSitePos<TRNAString> &pSeedPos)
+        TM1SeedSites<TRNAString> &pSeedSites)
 {
     int seedStart, seedEnd, seqLen, curpos1, curpos2;
 
-    resize_features(length(pMRNAPos));
+    resize_features((unsigned)length(pMRNAPos));
 
     for (unsigned i = 0; i < length(pMRNAPos); ++i)
     {
@@ -649,7 +638,7 @@ int TM1FeatDiFreq<TRNAString>::add_features(
         }
 
         // Get start position for seed
-        seqLen = length(pMRNASeqs[pMRNAPos[i]]);
+        seqLen = (int)length(pMRNASeqs[pMRNAPos[i]]);
         seedEnd = pSeedSites.get_seed_end_pos(i);
         seedStart = pSeedSites.get_seed_start_pos(i) - 1;
 
@@ -748,12 +737,11 @@ int TM1FeatDiFreqFlank<TRNAString>::add_features(
         String<bool> &pEffectiveSites,
         TSitePos const &pMRNAPos,
         TM1SeedSites<TRNAString> &pSeedSites,
-        TM1FeatSitePos<TRNAString> &pSeedPos,
         TM1FeatDistance<TRNAString> &pDistance)
 {
     int seqLen, startU, endU, startD, endD, lenUp, lenDown;
 
-    resize_features(length(pMRNAPos));
+    resize_features((unsigned)length(pMRNAPos));
 
     for (unsigned i = 0; i < length(pMRNAPos); ++i)
     {
@@ -769,7 +757,7 @@ int TM1FeatDiFreqFlank<TRNAString>::add_features(
         calc_pos_scores(pMRNASeqs[pMRNAPos[i]], startU, endU, i);
 
         // Get start and end positions for downstream
-        seqLen = length(pMRNASeqs[pMRNAPos[i]]);
+        seqLen = (int)length(pMRNASeqs[pMRNAPos[i]]);
         startD = pSeedSites.get_seed_end_pos(i) - 1;
         lenDown = pDistance.get_downstream_len(i) + 1;
         endD = std::min(startD + lenDown, seqLen);
@@ -902,7 +890,7 @@ int TM1FeatSingleMatch<TRNAString>::add_features(
 {
     int seedStart, m1pos, curpos;
 
-    resize_features(length(pMRNAPos));
+    resize_features((unsigned)length(pMRNAPos));
 
     for (unsigned i = 0; i < length(pMRNAPos); ++i)
     {
@@ -1016,7 +1004,7 @@ int TM1FeatTwoConsecMatch<TRNAString>::add_features(
 {
     int seedStart, m1pos, curpos1, curpos2;
 
-    resize_features(length(pMRNAPos));
+    resize_features((unsigned)length(pMRNAPos));
 
     for (unsigned i = 0; i < length(pMRNAPos); ++i)
     {

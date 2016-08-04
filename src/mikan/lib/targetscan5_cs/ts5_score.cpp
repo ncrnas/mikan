@@ -2,9 +2,6 @@
 #include <mikan/lib/targetscan5_cs/include/ts5_feature.hpp>       // TS5RawFeatures
 #include <mikan/lib/targetscan5_cs/include/ts5_inst_template.hpp> // TRNATYPE
 #include <mikan/lib/targetscan5_cs/include/ts5_score.hpp>         // TS5ContextScores, TS5ScoreSeedType, TS5FeatSitePos, TS5FeatAURich,
-#include <mikan/lib/targetscan5_cs/include/ts5_seed_site.hpp>     // TS5SeedSites
-#include <seqan/sequence.h>
-                                 // TS5FeatThreePrimePair, TS5TotalScores
 
 using namespace seqan;
 
@@ -44,7 +41,7 @@ int TS5ContextScores<TRNAString>::calc_scores(TS5RawFeatures<TRNAString> &pRawFe
     float seedTypeScore, sitePosScore, auRichScore, threePrimePairScore, totalScore;
     int lenScores;
 
-    lenScores = length(pRawFeatures.mEffectiveSites);
+    lenScores = (int)length(pRawFeatures.mEffectiveSites);
     resize(mEffectiveSites, lenScores);
     resize_scores(lenScores);
 
@@ -149,7 +146,7 @@ float TS5ScoreSitePos::calc_score(int pIdx, CharString &pSeedType, int &pSitePos
         score = mSlope7M8 * (float) pSitePos + mICept7M8;
     }
 
-    score = roundf(score * 1000.0 ) / 1000.0;
+    score = roundf(score * 1000.0f) / 1000.0f;
     mSitePos[pIdx] = score;
 
     return score;
@@ -186,7 +183,7 @@ float TS5ScoreAURich::calc_score(int pIdx, CharString &pSeedType, float &pAuRich
         score = mSlope7M8 * pAuRich + mICept7M8;
     }
 
-    score = roundf(score * 1000.0 ) / 1000.0;
+    score = roundf(score * 1000.0f) / 1000.0f;
     mAURich[pIdx] = score;
 
     return score;

@@ -1,7 +1,4 @@
 #include <mikan/lib/rnahybrid2_mfe/include/rh2_option.hpp>        // RH2Options
-#include <iostream>
-#include <seqan/arg_parse.h>
-#include <seqan/sequence.h>
 
 using namespace seqan;
 

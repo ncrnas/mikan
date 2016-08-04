@@ -1,9 +1,5 @@
 #include <mikan/lib/rnahybrid2_mfe/include/rh2_inst_template.hpp> // TRNATYPE
 #include <mikan/lib/rnahybrid2_mfe/include/rh2_score.hpp>         // RH2MFEScores, RH2TotalScores
-#include <mikan/lib/rnahybrid2_mfe/include/rh2_seed_site.hpp>     // RH2SeedSites
-#include <vector>                // vector
-#include <sstream>               // stringstream
-#include <seqan/sequence.h>
 
 using namespace seqan;
 
@@ -46,9 +42,9 @@ int RH2MFEScores<TRNAString>::calc_scores(
 
     reverse(miRNASeq);
     queryLen = length(miRNASeq);
-    rhMiRNASeq.resize(queryLen + 2);
+    rhMiRNASeq.resize((unsigned)(queryLen + 2));
     create_rh_seq(miRNASeq, rhMiRNASeq);
-    rhMRNASeq.resize(mMaxMRNALen + 2);
+    rhMRNASeq.resize((unsigned)(mMaxMRNALen + 2));
 
     mRHCore.init_workspace(mMaxMRNALen, queryLen);
 
@@ -67,7 +63,7 @@ int RH2MFEScores<TRNAString>::calc_scores(
 
         if (length(pMRNASeqs[mRNAPos[i]]) < (unsigned) seqEnd)
         {
-            seqEnd = length(pMRNASeqs[mRNAPos[i]]);
+            seqEnd = (int)length(pMRNASeqs[mRNAPos[i]]);
         }
 
         if (seqStart < 0)
@@ -196,7 +192,7 @@ int RH2TotalScores<TRNAString>::calc_scores(
     resize(newIdices, length(siteMRNAPos));
     for (unsigned i = 0; i < length(pSortedSites); ++i)
     {
-        posIdx = pSortedSites[i];
+        posIdx = (unsigned)pSortedSites[i];
 
         if (!pMFEScores.mEffectiveSites[posIdx])
         {
@@ -218,7 +214,7 @@ int RH2TotalScores<TRNAString>::calc_scores(
 
     for (unsigned i = 0; i < length(pSortedSites); ++i)
     {
-        posIdx = pSortedSites[i];
+        posIdx = (unsigned)pSortedSites[i];
 
         if (!pMFEScores.mEffectiveSites[posIdx])
         {

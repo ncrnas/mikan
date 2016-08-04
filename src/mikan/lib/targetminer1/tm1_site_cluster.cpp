@@ -1,13 +1,7 @@
 #include <mikan/lib/targetminer1/include/tm1_inst_template.hpp>  // TRNATYPE
 #include <mikan/lib/targetminer1/include/tm1_seed_site.hpp>      // TM1SeedSites
 #include <mikan/lib/targetminer1/include/tm1_site_cluster.hpp>   // TM1Overlap, TM1SortedSitePos
-#include <set>                    // set
-#include <map>                    // multimap
-#include <utility>                // pair
-#include <iostream>
-#include <seqan/sequence.h>
 #include <seqan/seq_io.h>
-#include <seqan/graph_align.h>
 
 using namespace seqan;
 
@@ -36,8 +30,8 @@ void TM1SiteCluster<TRNAString>::cluster_site_pos(
         {
             continue;
         }
-        mRNAPosSet.insert(mRNAPos[i]);
-        mSiteMap.insert(TPosPair(mRNAPos[i], i));
+        mRNAPosSet.insert((unsigned)mRNAPos[i]);
+        mSiteMap.insert(TPosPair((unsigned)mRNAPos[i], i));
         ++mSiteCount;
     }
 }
@@ -87,7 +81,7 @@ int TM1SortedSitePos<TRNAString>::generate_sorted_mrna_pos(
         ret = siteMap.equal_range((*itSet));
         for (itMap = ret.first; itMap != ret.second; ++itMap)
         {
-            startPos.insert(TPosPair(sitePos[(*itMap).second], (*itMap).second));
+            startPos.insert(TPosPair((unsigned)sitePos[(*itMap).second], (*itMap).second));
         }
 
         resize(mSortedSites[idx1], startPos.size());
@@ -139,8 +133,8 @@ void TM1SortedSitePos<TRNAString>::remove_overlapped_sites(TM1SeedSites<TRNAStri
         {
             siteId = (*itSorted).second;
 
-            seedStart = pSeedSites.get_seed_start_pos(siteId);
-            seedEnd = pSeedSites.get_seed_end_pos(siteId) + 1;
+            seedStart = (unsigned)pSeedSites.get_seed_start_pos(siteId);
+            seedEnd = (unsigned)pSeedSites.get_seed_end_pos(siteId) + 1;
             seedEnd = seedStart + 4;
 
             clear(results);
@@ -183,7 +177,7 @@ void TM1SortedSitePos<TRNAString>::sort_by_pos7(
     for (itMap = pGroupedSites.first; itMap != pGroupedSites.second; ++itMap)
     {
         siteId = (*itMap).second;
-        pos7 = sitePos[siteId];
+        pos7 = (unsigned)sitePos[siteId];
         pSortedSites.insert(TPosPair(pos7, siteId));
     }
 }
@@ -202,7 +196,7 @@ void TM1SortedSitePos<TRNAString>::sort_by_seed_types(
 
     for (itMap = pGroupedSites.first; itMap != pGroupedSites.second; ++itMap)
     {
-        pos7 = sitePos[(*itMap).second];
+        pos7 = (unsigned)sitePos[(*itMap).second];
         if (pos7 > maxPos)
         {
             maxPos = pos7;

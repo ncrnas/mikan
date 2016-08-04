@@ -14,9 +14,10 @@ void VR16Params::init_parameters(double pTemperature)
 {
     double tempf = ((pTemperature + K0) / mEn.mTmeasure);
 
+    //TODO: Check the type of all variables (int or float)
     for (unsigned i = 0; i < 31; ++i)
     {
-        mHairpin[i] = (int) mEn.mHairpin37[i] * (tempf);
+        mHairpin[i] = (int) mEn.mHairpin37[i] * tempf;
     }
 
     int imax = 0;
@@ -340,7 +341,7 @@ void VR16PFParams::scale_pf_params(unsigned int pLen, double pTemperature)
         mExpHairpin[i] = std::exp(-10.0 * GT / kT);
     }
 
-    for (unsigned i = 0; i <= (unsigned)std::min(30, (int)MAXLOOP); ++i)
+    for (unsigned i = 0; i <= (unsigned)std::min((unsigned)30, (unsigned)MAXLOOP); ++i)
     {
         GT = mEn.mBulge37[i] * TT;
         mExpBulge[i] = std::exp(-10.0 * GT / kT);

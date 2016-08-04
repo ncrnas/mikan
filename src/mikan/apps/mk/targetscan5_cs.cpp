@@ -1,7 +1,4 @@
 #include <mikan/lib/targetscan5_cs/include/ts5_core.hpp>          // TS5CoreInput, TS5Core
-#include <mikan/lib/targetscan5_cs/include/ts5_inst_template.hpp> // TRNATYPE
-#include <mikan/lib/targetscan5_cs/include/ts5_option.hpp>        // TS5CSOptions
-#include <seqan/arg_parse.h>
 
 int main(int argc, char const ** argv)
 {

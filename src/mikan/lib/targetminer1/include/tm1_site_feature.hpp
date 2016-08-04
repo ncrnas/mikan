@@ -93,8 +93,7 @@ public:
 
     // Method prototype
     int add_features(TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos,
-            TM1SeedSites<TRNAString> &pSeedSites, TM1FeatSitePos<TRNAString> &pSeedPos,
-            TM1SortedSitePos<TRNAString> &pSortedSites);
+            TM1SeedSites<TRNAString> &pSeedSites, TM1SortedSitePos<TRNAString> &pSortedSites);
     void clear_features();
     void print_feature(unsigned pIdx);
 
@@ -127,8 +126,7 @@ public:
 
     // Method prototype
     int add_features(TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos,
-            TM1SeedSites<TRNAString> &pSeedSites, TM1FeatSitePos<TRNAString> &pSeedPos,
-            TM1FeatDistance<TRNAString> &pDistance);
+            TM1SeedSites<TRNAString> &pSeedSites, TM1FeatDistance<TRNAString> &pDistance);
     void clear_features();
     void print_feature(unsigned pIdx);
 
@@ -159,7 +157,7 @@ public:
 
     // Method prototype
     int add_features(TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos,
-            TM1SeedSites<TRNAString> &pSeedSites, TM1FeatSitePos<TRNAString> &pSeedPos);
+            TM1SeedSites<TRNAString> &pSeedSites);
     void clear_features();
     void print_feature(unsigned pIdx);
 
@@ -190,8 +188,7 @@ public:
 
     // Method prototype
     int add_features(TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos,
-            TM1SeedSites<TRNAString> &pSeedSites, TM1FeatSitePos<TRNAString> &pSeedPos,
-            TM1FeatDistance<TRNAString> &pDistance);
+            TM1SeedSites<TRNAString> &pSeedSites, TM1FeatDistance<TRNAString> &pDistance);
     void clear_features();
     void print_feature(unsigned pIdx);
 
@@ -223,7 +220,7 @@ public:
 
     // Method prototype
     int add_features(TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos,
-            TM1SeedSites<TRNAString> &pSeedSites, TM1FeatSitePos<TRNAString> &pSeedPos);
+            TM1SeedSites<TRNAString> &pSeedSites);
     void clear_features();
     void print_feature(unsigned pIdx);
 
@@ -262,8 +259,7 @@ public:
 
     // Method prototype
     int add_features(TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos,
-            TM1SeedSites<TRNAString> &pSeedSites, TM1FeatSitePos<TRNAString> &pSeedPos,
-            TM1FeatDistance<TRNAString> &pDistance);
+            TM1SeedSites<TRNAString> &pSeedSites, TM1FeatDistance<TRNAString> &pDistance);
     void clear_features();
     void print_feature(unsigned pIdx);
 

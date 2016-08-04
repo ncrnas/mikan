@@ -15,9 +15,7 @@
 /* -------------------------------------------------------------------------------- */
 
 #include <mikan/lib/rnahybrid2_mfe/RNAhybrid/include/hybrid_core.hpp>
-#include <vector>
-#include <string>
-#include <iostream>
+
 
 namespace rh2 {
 

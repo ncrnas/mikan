@@ -1,9 +1,6 @@
 #include <mikan/lib/miranda3/include/mr3_inst_template.hpp>  // TRNATYPE
 #include <mikan/lib/miranda3/include/mr3_seed_site.hpp>      // MR3Sequences, MR3SeedSeqs, MR3SeedSites
-#include <iostream>
-#include <seqan/sequence.h>
 #include <seqan/seq_io.h>
-#include <seqan/index.h>
 
 using namespace seqan;
 
@@ -29,7 +26,7 @@ int MR3Sequences<TRNAString>::read_fasta(CharString const &pFasta)
     {
         if (readRecord(id, seq, seqStream) != 0)
         {
-            std::cerr << "ERROR: Could not read from " << pFasta << "!" << std::endl;
+            std::cerr << "ERROR: Could not read from " << toCString(pFasta) << "!" << std::endl;
             return 1;
         }
 
@@ -46,7 +43,7 @@ int MR3Sequences<TRNAString>::read_fasta(CharString const &pFasta)
 
         if (mMaxLen < (int)length(seq))
         {
-            mMaxLen = length(seq);
+            mMaxLen = (int)length(seq);
         }
     }
 

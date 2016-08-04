@@ -1,11 +1,7 @@
 #include <math.h>
 #include <mikan/lib/two_step_svm/include/tssvm_align.hpp>          // TSAlign
 #include <mikan/lib/two_step_svm/include/tssvm_inst_template.hpp>  // TRNATYPE
-#include <mikan/lib/two_step_svm/include/tssvm_seed_site.hpp>      // TSSVMSeedSite
 #include <mikan/lib/two_step_svm/include/tssvm_site_feature.hpp>   // TSSVMRawFeatures, TSSVMFeatSeedType, TSSVMFeatSimilarity,
-#include <seqan/sequence.h>
-                                    // TSSVMFeatAURichUp, TSSVMFeatAURichDown, TSSVMFeatSitePos,
-                                    // TSSVMFeatSeqMatch, TSSVMFeatA1Match
 
 using namespace seqan;
 
@@ -232,7 +228,7 @@ int TSSVMFeatAURichUp<TRNAString>::add_features(
         }
 
         // Get start and end positions for upstream and downstream
-        getUpStreamPos(siteS8Pos[i], startPos, endPos);
+        getUpStreamPos((unsigned)siteS8Pos[i], startPos, endPos);
 
         int k = 0;
         for (unsigned j = startPos; j < endPos; ++j)

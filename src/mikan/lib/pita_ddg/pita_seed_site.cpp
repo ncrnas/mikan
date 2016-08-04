@@ -1,9 +1,6 @@
 #include <mikan/lib/pita_ddg/include/pita_inst_template.hpp> // TRNATYPE
 #include <mikan/lib/pita_ddg/include/pita_seed_site.hpp>     // PITASequences, PITASeedSeqs, PITASeedSites
-#include <iostream>
-#include <seqan/sequence.h>
 #include <seqan/seq_io.h>
-#include <seqan/index.h>
 
 using namespace seqan;
 
@@ -29,7 +26,7 @@ int PITASequences<TRNAString>::read_fasta(CharString const &pFasta)
     {
         if (readRecord(id, seq, seqStream) != 0)
         {
-            std::cerr << "ERROR: Could not read from " << pFasta << "!" << std::endl;
+            std::cerr << "ERROR: Could not read from " << toCString(pFasta) << "!" << std::endl;
             return 1;
         }
 
@@ -46,7 +43,7 @@ int PITASequences<TRNAString>::read_fasta(CharString const &pFasta)
 
         if (mMaxLen < (int)length(seq))
         {
-            mMaxLen = length(seq);
+            mMaxLen = (int)length(seq);
         }
     }
 
@@ -65,7 +62,6 @@ int PITASeedSeqs<TRNAString>::create_seed_seqs(StringSet<CharString> &pSeedDef)
     }
 
     TRNAString seedSeq;
-    CharString seedType;
 
     int retVal;
 
@@ -84,21 +80,21 @@ int PITASeedSeqs<TRNAString>::create_seed_seqs(StringSet<CharString> &pSeedDef)
     {
         if (pSeedDef[3] == '1')
         {
-            retVal = create_single_guwobble_seed_seqs(seedSeq);
+            (void)create_single_guwobble_seed_seqs(seedSeq);
         }
         else if (pSeedDef[3] == '+')
         {
-            retVal = create_multi_guwobble_seed_seqs(seedSeq);
+            (void)create_multi_guwobble_seed_seqs(seedSeq);
         }
 
         if (pSeedDef[4] != "0:0")
         {
-            retVal = create_mismatch_seed_seqs(seedSeq);
+            (void)create_mismatch_seed_seqs(seedSeq);
         }
 
         if (pSeedDef[4] != "0:0" && (pSeedDef[3] == '1' || pSeedDef[3] == '+'))
         {
-            retVal = create_gu_mismatch_seed_seqs(seedSeq);
+            (void)create_gu_mismatch_seed_seqs(seedSeq);
         }
     }
 

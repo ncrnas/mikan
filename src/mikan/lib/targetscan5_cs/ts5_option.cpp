@@ -1,7 +1,4 @@
 #include <mikan/lib/targetscan5_cs/include/ts5_option.hpp>        // TS5CSOptions
-#include <iostream>
-#include <seqan/arg_parse.h>
-#include <seqan/sequence.h>
 
 using namespace seqan;
 

@@ -1,7 +1,4 @@
 #include <mikan/lib/rnahybrid2_mfe/include/rh2_core.hpp>          // RH2CoreInput, RH2Core
-#include <mikan/lib/rnahybrid2_mfe/include/rh2_inst_template.hpp> // TRNATYPE
-#include <mikan/lib/rnahybrid2_mfe/include/rh2_option.hpp>        // RH2Options
-#include <seqan/arg_parse.h>
 
 int main(int argc, char const ** argv)
 {

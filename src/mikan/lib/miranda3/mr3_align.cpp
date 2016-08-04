@@ -1,9 +1,5 @@
 #include <mikan/lib/miranda3/include/mr3_align.hpp>          // MR3Align
 #include <mikan/lib/miranda3/include/mr3_inst_template.hpp>  // TRNATYPE
-#include <iostream>
-#include <sstream>                // stringstream
-#include <seqan/sequence.h>
-#include <seqan/align.h>
 
 using namespace seqan;
 
@@ -67,7 +63,7 @@ void MR3Align<TRNAString>::align_seed(
         {
             idx2 = i;
         }
-        else if ((unsigned)i == length(pIMiRNASeedSeq) - pMMpos - 1)
+        else if (i == length(pIMiRNASeedSeq) - pMMpos - 1)
         {
             mAlignSeedMiRNA[pIdx][i] = '-';
             mAlignSeedMRNA[pIdx][i] = pIMRNASeedSeq[i];
@@ -135,8 +131,8 @@ void MR3Align<TRNAString>::align_3p(int pIdx, seqan::Rna5String &pIMiRNA3pSeq, s
     {
         mAlign3PScores[pIdx] = score;
 
-        TGap& alignMiRNA = row(mAign3P, 0);
-        TGap& alignMRNA =  row(mAign3P, 1);
+        TGap& alignMiRNA = (TGap&) row(mAign3P, 0);
+        TGap& alignMRNA =  (TGap&) row(mAign3P, 1);
 
         resize(mAlign3pMiRNA[pIdx], length(alignMiRNA) - 1);
         resize(mAlign3pMRNA[pIdx], length(alignMRNA) - 1);
@@ -163,7 +159,7 @@ void MR3Align<TRNAString>::combine_alignments(
         TRNAString const &pMiRNASeq,
         TRNAString const &pMRNASeq)
 {
-    int maxlen = length(pMiRNASeq) + mGapCount3pMiRNA[pIdx];
+    int maxlen = (int)length(pMiRNASeq) + mGapCount3pMiRNA[pIdx];
     int idx2;
     int idx2_orig;
 
@@ -182,7 +178,7 @@ void MR3Align<TRNAString>::combine_alignments(
     }
     for (unsigned i = 0; i < length(mAlign3pMiRNA[pIdx]); ++i)
     {
-        idx2 = i + length(mAlignSeedMiRNA[pIdx]) + 1;
+        idx2 = i + (int)length(mAlignSeedMiRNA[pIdx]) + 1;
         mAlignMiRNA[pIdx][idx2] = mAlign3pMiRNA[pIdx][i];
 
         if (i < length(mAlignMRNA[pIdx]) - 1)
@@ -196,7 +192,7 @@ void MR3Align<TRNAString>::combine_alignments(
         }
     }
 
-    idx2 = length(mAlignSeedMiRNA[pIdx]) + length(mAlign3pMiRNA[pIdx]) + 1;
+    idx2 = (int)length(mAlignSeedMiRNA[pIdx]) + (int)length(mAlign3pMiRNA[pIdx]) + 1;
     idx2_orig = idx2 - mGapCount3pMiRNA[pIdx];
     while (idx2 < maxlen)
     {
@@ -213,7 +209,7 @@ void MR3Align<TRNAString>::combine_alignments(
         ++idx2_orig;
     }
 
-    idx2 = length(mAlignSeedMiRNA[pIdx]) + length(mAlign3pMiRNA[pIdx]) + 1;
+    idx2 = (int)length(mAlignSeedMiRNA[pIdx]) + (int)length(mAlign3pMiRNA[pIdx]) + 1;
     idx2_orig = idx2 - mGapCount3pMRNA[pIdx];
     while (idx2 < maxlen)
     {

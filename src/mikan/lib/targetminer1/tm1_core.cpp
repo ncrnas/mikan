@@ -6,7 +6,6 @@
 #include <map>                   // multimap
 #include <utility>               // pair
 #include <seqan/arg_parse.h>
-#include <seqan/sequence.h>
 #include <mikan/lib/targetminer1/include/tm1_inst_template.hpp> // TRNATYPE
 #include <mikan/lib/targetminer1/include/tm1_option.hpp>        // TM1CSOptions
 #include <mikan/lib/targetminer1/include/tm1_core.hpp>          // TM1CoreInput, TM1Core
@@ -62,7 +61,7 @@ int TM1Core<TRNAString, SEEDLEN>::open_output_file()
     mOFile1.open(toCString(mOFileSite), std::ofstream::out);
     if (!mOFile1.good())
     {
-        std::cerr << "ERROR: Could not open output file " << mOFileSite << std::endl;
+        std::cerr << "ERROR: Could not open output file " << toCString(mOFileSite) << std::endl;
         return seqan::ArgumentParser::PARSE_ERROR;
     }
 
@@ -70,7 +69,7 @@ int TM1Core<TRNAString, SEEDLEN>::open_output_file()
     mOFile2.open(toCString(mOFileScore), std::ofstream::out);
     if (!mOFile2.good())
     {
-        std::cerr << "ERROR: Could not open output file " << mOFileScore << std::endl;
+        std::cerr << "ERROR: Could not open output file " << toCString(mOFileScore) << std::endl;
         return seqan::ArgumentParser::PARSE_ERROR;
     }
 
@@ -92,12 +91,13 @@ int TM1Core<TRNAString, SEEDLEN>::calculate_all_scores()
         retVal = calculate_mirna_scores(i);
         if (retVal != 0)
         {
-            std::cerr << "ERROR: Score calculation failed for " << mMiRNAIds[i] << "." << std::endl;
+            std::cerr << "ERROR: Score calculation failed for " << toCString((seqan::CharString)mMiRNAIds[i]);
+            std::cerr << "." << std::endl;
             return 1;
         }
 
 #if SEQAN_ENABLE_DEBUG
-        std::cout << mMiRNAIds[i] << ": ";
+        std::cout << toCString((seqan::CharString)mMiRNAIds[i]) << ": ";
         std::cout << double( clock() - startTime ) / (double)CLOCKS_PER_SEC << " seconds." << std::endl;
 #endif
 
@@ -253,11 +253,11 @@ int TM1Core<TRNAString, SEEDLEN>::write_site_positions(seqan::CharString const &
         seedStart = sitePos[i];
         seedEnd = seedStart + 6;
 
-        mOFile1 << pMiRNAId << "\t";
-        mOFile1 << mMRNAIds[mRNAPos[i]] << "\t";
+        mOFile1 << toCString(pMiRNAId) << "\t";
+        mOFile1 << toCString((seqan::CharString)mMRNAIds[mRNAPos[i]]) << "\t";
         mOFile1 << seedStart  << "\t";
         mOFile1 << seedEnd  << "\t";
-        mOFile1 << mRawFeatures.get_seed_type(i) << "\t";
+        mOFile1 << toCString(mRawFeatures.get_seed_type(i)) << "\t";
         mOFile1 << 0;
         mOFile1 << std::endl;
 
@@ -281,13 +281,13 @@ int TM1Core<TRNAString, SEEDLEN>::write_scores(seqan::CharString const &pMiRNAId
 
     for (unsigned i = 0; i < length(mRNAIdMap); ++i)
     {
-        sortedMRNAByScore.insert(TPosPair(-1.0 * scores[i], i));
+        sortedMRNAByScore.insert(TPosPair(-1.0f * scores[i], i));
     }
 
     for (itPos = sortedMRNAByScore.begin(); itPos != sortedMRNAByScore.end(); ++itPos)
     {
-        mOFile2 << pMiRNAId << "\t";
-        mOFile2 << mMRNAIds[mRNAIdMap[(*itPos).second]] << "\t";
+        mOFile2 << toCString(pMiRNAId) << "\t";
+        mOFile2 << toCString((seqan::CharString)mMRNAIds[mRNAIdMap[(*itPos).second]]) << "\t";
         mOFile2 << scores[(*itPos).second]  << "\t";
         mOFile2 << siteNum[(*itPos).second] << "\t";
         mOFile2 << predictions[(*itPos).second];
@@ -320,12 +320,12 @@ int TM1Core<TRNAString, SEEDLEN>::write_alignment(seqan::CharString const &pMiRN
         seedStart = sitePos[i];
         seedEnd = seedStart + 6;
 
-        std::cout << "### " << count+1 << ": " << pMiRNAId <<" ###" << std::endl;
+        std::cout << "### " << count+1 << ": " << toCString(pMiRNAId) <<" ###" << std::endl;
         alignment.write_alignment(i);
-        std::cout << "  miRNA:                " << pMiRNAId << std::endl;
-        std::cout << "  mRNA:                 " << mMRNAIds[mRNAPos[i]] << std::endl;
-        std::cout << "  seed type:            " << seedType << std::endl;
-        std::cout << "  seed type:            " << mRawFeatures.get_seed_type(i);
+        std::cout << "  miRNA:                " << toCString(pMiRNAId) << std::endl;
+        std::cout << "  mRNA:                 " << toCString((seqan::CharString)mMRNAIds[mRNAPos[i]]) << std::endl;
+        std::cout << "  seed type:            " << toCString(seedType) << std::endl;
+        std::cout << "  seed type:            " << toCString(mRawFeatures.get_seed_type(i));
         std::cout << std::endl;
         std::cout << "  position(seed start): " << seedStart << std::endl;
         std::cout << "  position(seed end):   " << seedEnd << std::endl;

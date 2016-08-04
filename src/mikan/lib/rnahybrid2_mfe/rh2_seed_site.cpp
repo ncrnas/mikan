@@ -1,9 +1,6 @@
 #include <mikan/lib/rnahybrid2_mfe/include/rh2_inst_template.hpp> // TRNATYPE
 #include <mikan/lib/rnahybrid2_mfe/include/rh2_seed_site.hpp>     // RH2Sequences, RH2SeedSeqs, RH2SeedSites
-#include <iostream>
-#include <seqan/sequence.h>
 #include <seqan/seq_io.h>
-#include <seqan/index.h>
 
 using namespace seqan;
 
@@ -29,7 +26,7 @@ int RH2Sequences<TRNAString>::read_fasta(CharString const &pFasta)
     {
         if (readRecord(id, seq, seqStream) != 0)
         {
-            std::cerr << "ERROR: Could not read from " << pFasta << "!" << std::endl;
+            std::cerr << "ERROR: Could not read from " << toCString(pFasta) << "!" << std::endl;
             return 1;
         }
 
@@ -46,7 +43,7 @@ int RH2Sequences<TRNAString>::read_fasta(CharString const &pFasta)
 
         if (mMaxLen < (int)length(seq))
         {
-            mMaxLen = length(seq);
+            mMaxLen = (int)length(seq);
         }
     }
 
@@ -87,7 +84,7 @@ int RH2SeedSeqs<TRNAString>::create_seed_seqs(CharString &pSeedDef, CharString &
 
     if (pSeedDef[0] == '6' || pSeedDef[0] == '7')
     {
-        retVal = create_nmer_seed_seqs(seedSeq, pSeedDef);
+        (void)create_nmer_seed_seqs(seedSeq, pSeedDef);
     }
 
     resize(mEffectiveSeeds, length(mSeedSeqs), true);
@@ -192,7 +189,7 @@ int RH2SeedSeqs<TRNAString>::create_multi_guwobble_seed_seqs(
 {
     TRNAString seedGUSeq;
 
-    unsigned seedDatLen = length(mSeedSeqs);
+    unsigned seedDatLen = (unsigned)length(mSeedSeqs);
 
     for (unsigned i = 0; i < length(pSeedSeq); ++i)
     {
@@ -205,7 +202,7 @@ int RH2SeedSeqs<TRNAString>::create_multi_guwobble_seed_seqs(
                 appendValue(mSeedSeqs, seedGUSeq);
                 appendValue(mSeedTypes, pGUT);
             }
-            seedDatLen = length(mSeedSeqs);
+            seedDatLen = (unsigned)length(mSeedSeqs);
         }
         else if (pSeedSeq[i] == 'A')
         {
@@ -216,7 +213,7 @@ int RH2SeedSeqs<TRNAString>::create_multi_guwobble_seed_seqs(
                 appendValue(mSeedSeqs, seedGUSeq);
                 appendValue(mSeedTypes, pGUM);
             }
-            seedDatLen = length(mSeedSeqs);
+            seedDatLen = (unsigned)length(mSeedSeqs);
         }
 
     }

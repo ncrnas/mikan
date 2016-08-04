@@ -1,7 +1,4 @@
 #include <mikan/lib/pita_ddg/include/pita_core.hpp>          // PITACoreInput, PITACore
-#include <mikan/lib/pita_ddg/include/pita_inst_template.hpp> // TRNATYPE
-#include <mikan/lib/pita_ddg/include/pita_option.hpp>        // PITAOptions
-#include <seqan/arg_parse.h>
 
 int main(int argc, char const ** argv)
 {

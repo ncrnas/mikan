@@ -1,9 +1,5 @@
 #include <mikan/lib/two_step_svm/include/tssvm_align.hpp>          // TSAlign
 #include <mikan/lib/two_step_svm/include/tssvm_inst_template.hpp>  // TRNATYPE
-#include <mikan/lib/two_step_svm/include/tssvm_seed_site.hpp>      // TSSVMSeedSite
-#include <iostream>
-#include <seqan/sequence.h>
-#include <seqan/align.h>
 
 using namespace seqan;
 
@@ -55,7 +51,7 @@ int TSAlign<TRNAString>::align_seq(
             return 1;
         }
 
-        retVal = set_mrna_seq_for_align(seedTypes[i], sitePos[i], length(pMiRNASeq),
+        retVal = set_mrna_seq_for_align(seedTypes[i], (unsigned)sitePos[i], length(pMiRNASeq),
                 pMRNASeqs[mRNAPos[i]], mRNAAlignSeq);
         if (retVal != 0)
         {
@@ -78,14 +74,14 @@ int TSAlign<TRNAString>::align_seq(
 
         alignLen = get_align_len(align);
 
-        retVal = set_align_mrna(align, alignLen, seedTypes[i], misMatchPos[i], sitePos[i],
+        retVal = set_align_mrna(align, alignLen, seedTypes[i], (unsigned)misMatchPos[i], (unsigned)sitePos[i],
                 pMRNASeqs[mRNAPos[i]], i);
         if (retVal != 0)
         {
             return 1;
         }
 
-        retVal = set_align_mirna(align, alignLen, seedTypes[i], misMatchPos[i], pMiRNASeq, i);
+        retVal = set_align_mirna(align, alignLen, seedTypes[i], (unsigned)misMatchPos[i], pMiRNASeq, i);
         if (retVal != 0)
         {
             return 1;

@@ -1,6 +1,5 @@
 #include <mikan/lib/rnahybrid2_mfe/RNAhybrid/include/hybrid_backtrace.hpp>
-#include <algorithm>
-#include <iostream>
+
 
 namespace rh2 {
 
@@ -119,7 +118,6 @@ void RH2BackTrace::back_hybrid(
     bool v1_min = false;
     bool v2_min = false;
     bool v3_min = false;
-    min_mfe = 65000;
 
     if (v2.get_mfe() < v3.get_mfe())
     {
@@ -610,7 +608,6 @@ void RH2BackTrace::back_closed(
             bool v7b_min = false;
             bool v7c_min = false;
             bool v7d_min = false;
-            float min_mfe = 65000;
 
             if (v7b.get_mfe() < v7c.get_mfe())
             {
@@ -687,7 +684,6 @@ void RH2BackTrace::back_closed(
     bool v5_min = false;
     bool v3_min = false;
     bool v1_min = false;
-    min_mfe = 65000;
 
     if (v7.get_mfe() < v8.get_mfe())
     {

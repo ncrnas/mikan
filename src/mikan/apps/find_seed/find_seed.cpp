@@ -1,6 +1,5 @@
 #include <iostream>
 #include <seqan/arg_parse.h>
-#include <seqan/sequence.h>
 #include <seqan/seq_io.h>
 #include <seqan/find.h>
 #include <seqan/index.h>
@@ -78,19 +77,19 @@ ArgumentParser::ParseResult parseCommandLine(
     std::fstream mirna_fa(toCString(options.mirna_fa), std::ios::binary | std::ios::in);
     if (!mirna_fa.good())
     {
-        std::cerr << "ERROR: Could not open input file " << options.mirna_fa << std::endl;
+        std::cerr << "ERROR: Could not open input file " << toCString(options.mirna_fa) << std::endl;
         return ArgumentParser::PARSE_ERROR;
     }
     std::fstream mrna_fa(toCString(options.mrna_fa), std::ios::binary | std::ios::in);
     if (!mrna_fa.good())
     {
-        std::cerr << "ERROR: Could not open input file " << options.mrna_fa << std::endl;
+        std::cerr << "ERROR: Could not open input file " << toCString(options.mrna_fa) << std::endl;
         return ArgumentParser::PARSE_ERROR;
     }
     std::fstream ofile(toCString(options.ofile), std::ios::binary | std::ios::out);
     if (!ofile.good())
     {
-        std::cerr << "ERROR: Could not open output file " << options.ofile << std::endl;
+        std::cerr << "ERROR: Could not open output file " << toCString(options.ofile) << std::endl;
         return ArgumentParser::PARSE_ERROR;
     }
 
@@ -127,7 +126,7 @@ int read_fasta(
     {
         if (readRecord(id, seq, seqStream) != 0)
         {
-            std::cerr << "ERROR: Could not read from " << fasta << "!" << std::endl;
+            std::cerr << "ERROR: Could not read from " << toCString(fasta) << "!" << std::endl;
             return 1;
         }
 
@@ -173,7 +172,7 @@ int search_by_bruteforce(
         get_seed_res = get_seed(mirnas[i], seed);
         if (get_seed_res != 0)
         {
-            std::cerr << "ERROR: Could not get the seed sequence of " << mirnas[i] << std::endl;
+            std::cerr << "ERROR: Could not get the seed sequence of " << toCString((CharString)mirnas[i]) << std::endl;
             return 1;
         }
 
@@ -184,7 +183,8 @@ int search_by_bruteforce(
             Finder<RnaString> finder(mrnas[j]);
             while (find(finder, pattern))
             {
-                ofile << mirna_ids[i] << "\t" << mrna_ids[j] << "\t" << beginPosition(finder) << std::endl;
+                ofile << toCString((CharString)mirna_ids[i]) << "\t" << toCString((CharString)mrna_ids[j]);
+                ofile << "\t" << beginPosition(finder) << std::endl;
             }
         }
 
@@ -209,7 +209,7 @@ int search_by_horspool(
         get_seed_res = get_seed(mirnas[i], seed);
         if (get_seed_res != 0)
         {
-            std::cerr << "ERROR: Could not get the seed sequence of " << mirnas[i] << std::endl;
+            std::cerr << "ERROR: Could not get the seed sequence of " << toCString((CharString)mirnas[i]) << std::endl;
             return 1;
         }
 
@@ -220,7 +220,8 @@ int search_by_horspool(
             Finder<RnaString> finder(mrnas[j]);
             while (find(finder, pattern))
             {
-                ofile << mirna_ids[i] << "\t" << mrna_ids[j] << "\t" << beginPosition(finder) << std::endl;
+                ofile << toCString((CharString)mirna_ids[i]) << "\t" << toCString((CharString)mrna_ids[j]);
+                ofile << "\t" << beginPosition(finder) << std::endl;
             }
         }
 
@@ -251,7 +252,7 @@ int search_by_suffixarray(
         get_seed_res = get_seed(mirnas[i], seed);
         if (get_seed_res != 0)
         {
-            std::cerr << "ERROR: Could not get the seed sequence of " << mirnas[i] << std::endl;
+            std::cerr << "ERROR: Could not get the seed sequence of " << toCString((CharString)mirnas[i]) << std::endl;
             return 1;
         }
 
@@ -262,7 +263,7 @@ int search_by_suffixarray(
             mrna_id = position(finder).i1;
             site_pos= position(finder).i2;
 
-            ofile << mirna_ids[i] << "\t" << mrna_ids[mrna_id] << "\t" << site_pos << std::endl;
+            ofile << toCString((CharString)mirna_ids[i]) << "\t" << mrna_ids[mrna_id] << "\t" << site_pos << std::endl;
         }
 
     }
@@ -292,7 +293,7 @@ int search_by_ngram(
         get_seed_res = get_seed(mirnas[i], seed);
         if (get_seed_res != 0)
         {
-            std::cerr << "ERROR: Could not get the seed sequence of " << mirnas[i] << std::endl;
+            std::cerr << "ERROR: Could not get the seed sequence of " << toCString((CharString)mirnas[i]) << std::endl;
             return 1;
         }
 
@@ -303,7 +304,7 @@ int search_by_ngram(
             mrna_id = position(finder).i1;
             site_pos= position(finder).i2;
 
-            ofile << mirna_ids[i] << "\t" << mrna_ids[mrna_id] << "\t" << site_pos << std::endl;
+            ofile << toCString((CharString)mirna_ids[i]) << "\t" << mrna_ids[mrna_id] << "\t" << site_pos << std::endl;
         }
     }
 
@@ -343,7 +344,7 @@ int main(int argc, char const ** argv)
     std::ofstream ofile(toCString(options.ofile));
     if (!ofile.good())
     {
-        std::cerr << "ERROR: Could not open output file " << options.ofile << std::endl;
+        std::cerr << "ERROR: Could not open output file " << toCString(options.ofile) << std::endl;
         return ArgumentParser::PARSE_ERROR;
     }
 

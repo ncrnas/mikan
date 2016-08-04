@@ -1,14 +1,5 @@
 #include <mikan/lib/pita_ddg/include/pita_inst_template.hpp> // TRNATYPE
 #include <mikan/lib/pita_ddg/include/pita_score.hpp>         // PITADDGScores, PITATotalScores
-#include <mikan/lib/pita_ddg/include/pita_seed_site.hpp>     // PITASeedSites
-#include <mikan/lib/vienna_rna/include/vr16_ddg_core.hpp>      // VR16DDGWorkSpace
-#include <iostream>
-#include <sstream>                // stringstream
-#include <cmath>                  // log
-#include <vector>                 // vector
-#include <string>                 // string
-#include <sstream>                // stringstream
-#include <seqan/sequence.h>
 
 using namespace seqan;
 
@@ -57,7 +48,7 @@ void PITAAlign<TRNAString>::create_align(
     }
 
     resize(mAlignMRNA[pId], length(pMiRNASeq), ' ');
-    startPos = pSitePos + (INDEXED_SEQ_LEN + 1) - length(pMiRNASeq);
+    startPos = pSitePos + (INDEXED_SEQ_LEN + 1) - (int)length(pMiRNASeq);
     for (unsigned i = 0; i < length(pMiRNASeq); ++i)
     {
         if (startPos + i > 0)
@@ -69,7 +60,7 @@ void PITAAlign<TRNAString>::create_align(
     resize(mAlignBars[pId], length(pMiRNASeq), ' ');
     for (int i = 1; i < seedLen + 1; ++i)
     {
-        pos = length(pMiRNASeq) - 1 - i;
+        pos = (int)length(pMiRNASeq) - 1 - i;
         mChar = ' ';
         if ((mAlignMiRNA[pId][pos] == 'C' && mAlignMRNA[pId][pos] == 'G')
                 || (mAlignMiRNA[pId][pos] == 'G' && mAlignMRNA[pId][pos] == 'C')
@@ -116,7 +107,7 @@ int PITADGDuplexScores<TRNAString>::calc_scores(
     int seqEnd = 0;
 
     resize(mEffectiveSites, length(pSeedSites.mEffectiveSites));
-    mVRws.preppare_duplexfold(length(pSeedSites.mEffectiveSites));
+    mVRws.preppare_duplexfold((int)length(pSeedSites.mEffectiveSites));
 
     inputMiRNASeq.resize(length(pMiRNASeq));
     create_input_mirna_seq(pMiRNASeq, inputMiRNASeq);
@@ -145,7 +136,7 @@ int PITADGDuplexScores<TRNAString>::calc_scores(
         mVRws.duplexfold(i, inputMiRNASeq, inputMRNASeq, inputMatchSeq, inputMatchSeq);
 //        mVRws.print_duplexfold_ret_vals(i);
 
-        mAlign.create_align(i, pMiRNASeq, pMRNASeqs[mRNAPos[i]], seedTypes[i], sitePos[i], mismatchPos[i]);
+        mAlign.create_align(i, pMiRNASeq, pMRNASeqs[mRNAPos[i]], seedTypes[i], (unsigned)sitePos[i], mismatchPos[i]);
 
         mEffectiveSites[i] = true;
     }
@@ -191,10 +182,10 @@ void PITADGDuplexScores<TRNAString>::create_input_matched_seq(
         int pMismatchPos,
         std::vector<int> &pInputMatchSeq)
 {
-    int seedLen = lexicalCast<int>(pSeedType[0]);
-    pInputMatchSeq.resize(seedLen + 1);
+    unsigned seedLen = lexicalCast<unsigned>(pSeedType[0]);
+    pInputMatchSeq.resize((seedLen + 1));
 
-    for (int i = 0; i < seedLen + 1; ++i)
+    for (int i = 0; i < (int)seedLen + 1; ++i)
     {
         if (i == 0)
         {
@@ -220,7 +211,7 @@ void PITADGDuplexScores<TRNAString>::print_input(
         std::string &pInputMRNASeq,
         std::vector<int> &pInputMatchSeq)
 {
-    std::cout << "seed type:   " << pSeedType << std::endl;
+    std::cout << "seed type:   " << toCString(pSeedType) << std::endl;
     std::cout << "miRNA seq:   " << pInputMiRNASeq << std::endl;
     std::cout << "mRNA seq:    " << pInputMRNASeq << std::endl;
     std::cout << "constraints: ";
@@ -270,7 +261,7 @@ int PITADGOpenScores<TRNAString>::calc_scores(
     paramU = pFlankUp;
     paramS = DDG_OPEN + DDG_AREA + pFlankDown - 1;
     paramFT = DDG_OPEN + pFlankDown;
-    mVRws.prepare_ddg4(length(pSeedSites.mEffectiveSites), paramU, paramS, paramFT, paramFT);
+    mVRws.prepare_ddg4((int)length(pSeedSites.mEffectiveSites), paramU, paramS, paramFT, paramFT);
 
     seqLen = DDG_OPEN + DDG_AREA*2 + pFlankUp + pFlankDown;
     resize(inputMRNASeq, seqLen);
@@ -355,7 +346,7 @@ int PITADDGScores<TRNAString>::calc_scores(
 
     resize(mEffectiveSites, length(pSeedSites.mEffectiveSites));
     resize(mDDGScores, length(pSeedSites.mEffectiveSites));
-    mAlign.resize_align(length(pSeedSites.mEffectiveSites));
+    mAlign.resize_align((int)length(pSeedSites.mEffectiveSites));
 
     mDGDuplexScores.calc_scores(pSeedSites, miRNASeq, pMRNASeqs);
     mDGOpenScores.calc_scores(pSeedSites, pMRNASeqs, pFlankUp, pFlankDown);
@@ -425,7 +416,7 @@ int PITATotalScores<TRNAString>::calc_scores(
     resize(newIdices, length(siteMRNAPos));
     for (unsigned i = 0; i < length(pSortedSites); ++i)
     {
-        posIdx = pSortedSites[i];
+        posIdx = (unsigned)pSortedSites[i];
 
         if (!pMFEScores.mEffectiveSites[posIdx])
         {
@@ -449,7 +440,7 @@ int PITATotalScores<TRNAString>::calc_scores(
 
     for (unsigned i = 0; i < length(pSortedSites); ++i)
     {
-        posIdx = pSortedSites[i];
+        posIdx = (unsigned)pSortedSites[i];
 
         if (!pMFEScores.mEffectiveSites[posIdx])
         {
@@ -475,7 +466,7 @@ int PITATotalScores<TRNAString>::calc_scores(
 
     for (unsigned i = 0; i < length(pSortedSites); ++i)
     {
-        posIdx = pSortedSites[i];
+        posIdx = (unsigned)pSortedSites[i];
 
         if (!pMFEScores.mEffectiveSites[posIdx] || maxScoreIds[newIdices[i]] == (int)i)
         {

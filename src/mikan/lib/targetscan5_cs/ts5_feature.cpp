@@ -1,8 +1,6 @@
 #include <mikan/lib/targetscan5_cs/include/ts5_feature.hpp>       // TS5RawFeatures, TS5FeatSeedType, TS5FeatSitePos, TS5FeatAURich,
 #include <mikan/lib/targetscan5_cs/include/ts5_inst_template.hpp> // TRNATYPE
-#include <cmath>                 // min, max
-#include <seqan/sequence.h>
-                                 // TS5FeatThreePrimePair
+
 
 using namespace seqan;
 
@@ -55,7 +53,6 @@ int TS5FeatSeedType<TRNAString>::add_features(
         TSitePos const &pMRNAPos,
         TSitePos const &pSitePos)
 {
-    TRNAString tSite;
     bool IsA1, MatchM8;
     int startPos;
     unsigned endPos;
@@ -82,7 +79,7 @@ int TS5FeatSeedType<TRNAString>::add_features(
 
         // check A1 site
         IsA1 = false;
-        endPos = startPos + 6;
+        endPos = (unsigned)startPos + 6;
         if (endPos < length(pMRNASeqs[pMRNAPos[i]]))
         {
             mRNAA1 = pMRNASeqs[pMRNAPos[i]][endPos];
@@ -163,7 +160,7 @@ int TS5FeatSitePos<TRNAString>::add_features(
         }
 
         // Get length to UTR end
-        seqLen = length(pMRNASeqs[pMRNAPos[i]]);
+        seqLen = (int)length(pMRNASeqs[pMRNAPos[i]]);
         lenDown = seqLen - (lenUp + 7);
 
         // Get score
@@ -217,7 +214,7 @@ int TS5FeatAURich<TRNAString>::add_features(
         // Get start and end positions for upstream and downstream
         getUpDownStreamPos(seedType, pSitePos[i], startU, startD);
         endU = pSitePos[i] - 1;
-        seqLen = length(pMRNASeqs[pMRNAPos[i]]);
+        seqLen = (int)length(pMRNASeqs[pMRNAPos[i]]);
         endD = std::min(startD + 30, seqLen);
 
         calcPosScores(seedType, chrUp, pMRNASeqs[pMRNAPos[i]], startU, endU, upTotalScore, upMaxScore);
@@ -276,22 +273,22 @@ void TS5FeatAURich<TRNAString>::calcPosScores(
         {
             if (pUpOrDown == "up")
             {
-                score = 1.0 / (i + 1);
+                score = 1.0f / (i + 1);
             }
             else
             {
-                score = 1.0 / (i + 2);
+                score = 1.0f / (i + 2);
             }
         }
         else if (pSeedType == "7mer-A1")
         {
-            score = 1.0 / (i + 2);
+            score = 1.0f / (i + 2);
         }
         else if (pSeedType == "7mer-m8")
         {
             if (pUpOrDown == "up")
             {
-                score = 1.0 / (i + 1);
+                score = 1.0f / (i + 1);
             }
             else
             {
@@ -301,7 +298,7 @@ void TS5FeatAURich<TRNAString>::calcPosScores(
                 }
                 else
                 {
-                    score = 1.0 / (i + 1);
+                    score = 1.0f / (i + 1);
                 }
             }
         }
@@ -345,7 +342,7 @@ int TS5FeatThreePrimePair<TRNAString>::add_features(
         TS5FeatSeedType<TRNAString> &pSeedTypes)
 {
     resize(mThreePrimePair, length(pMRNAPos));
-    mAlign.resize_alignments(length(pMRNAPos));
+    mAlign.resize_alignments((unsigned)length(pMRNAPos));
     for (unsigned i = 0; i < length(pMRNAPos); ++i)
     {
         if (!pEffectiveSites[i])
@@ -358,7 +355,7 @@ int TS5FeatThreePrimePair<TRNAString>::add_features(
         CharString const& seedType = pSeedTypes.get_seed_type(i);
 
         mThreePrimePair[i] = findBestMatch(i, pMRNAPos, pSitePos, seedType, pMRNASeqs[pMRNAPos[i]], pMiRNASeq);
-        mAlign.align_seed(i, seedType, pMiRNASeq, pMRNASeqs[pMRNAPos[i]], pSitePos[i]);
+        mAlign.align_seed(i, seedType, pMiRNASeq, pMRNASeqs[pMRNAPos[i]], (unsigned)pSitePos[i]);
     }
 
     return 0;
@@ -450,7 +447,7 @@ float TS5FeatThreePrimePair<TRNAString>::findBestMatch(
     getMRNASeq(pSeedType, pMRNASeq, pSitePos[pPosIdx], mRNAThreePrime);
     getMiRNASeq(pSeedType, pMiRNASeq, miRNAThreePrime);
 
-    float score = 0.0;
+    float score = 0.0f;
     TIndexQGram RNAIdx(mRNAThreePrime);
     TFinder finder(RNAIdx);
     TRNAString twoRNAs;
@@ -542,12 +539,13 @@ float TS5FeatThreePrimePair<TRNAString>::calcScore(
         String<int> &pMiRNAPos,
         String<int> &pMRNAPos)
 {
-    float score, bestScore, offset;
+    float score, bestScore;
+    int offset;
     int miRNAPos;
     int minOffSet;
 
     bestScore = 0.0;
-    minOffSet = length(pMatchLen);
+    minOffSet = (int)length(pMatchLen);
     for (unsigned i = 0; i < length(pMatchLen); ++i)
     {
         score = 0.0;
@@ -581,7 +579,7 @@ float TS5FeatThreePrimePair<TRNAString>::calcScore(
         }
 
         offset = std::abs(pMiRNAPos[i] - pMRNAPos[i]);
-        score = score - std::max(0.0,((offset - 2.0) / 2.0));
+        score = score - std::max(0.0f,((offset - 2.0f) / 2.0f));
         if (bestScore < score)
         {
             bestScore = score;

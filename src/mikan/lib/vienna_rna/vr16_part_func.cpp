@@ -1,9 +1,5 @@
 #include <mikan/lib/vienna_rna/include/vr16_part_func.hpp>
 #include <iostream>
-#include <string>
-#include <cmath>
-#include <vector>
-#include <string>
 #include <algorithm>
 #include <cfloat>
 
@@ -85,15 +81,15 @@ float VR16PartFunc::pf_fold(std::string &pString, std::string &pStructure, doubl
 
     max_real = DBL_MAX;
 
-    strLen = pString.size();
+    strLen = (unsigned)pString.size();
     if (strLen > mInitLength)
     {
         init_pf_fold(strLen, pTemperature); /* (re)allocate space */
     }
     mPFParams.reset_scale();
 
-    mS.resize(strLen + 1);
-    mS1.resize(strLen + 1);
+    mS.resize((unsigned)strLen + 1);
+    mS1.resize((unsigned)strLen + 1);
     mS[0] = strLen;
     for (int l = 1; l <= strLen; ++l)
     {
@@ -129,7 +125,7 @@ float VR16PartFunc::pf_fold(std::string &pString, std::string &pStructure, doubl
         mPrml[i] = 0.0;
     }
 
-    for (int j = TURN + 2; j <= (int)strLen; ++j)
+    for (int j = TURN + 2; j <= strLen; ++j)
     {
         for (int i = j - TURN - 1; i >= 1; --i)
         {
@@ -316,7 +312,7 @@ float VR16PartFunc::pf_fold(std::string &pString, std::string &pStructure, doubl
         }
     } /* end if (do_backtrack)*/
 
-    return free_energy;
+    return (float)free_energy;
 }
 
 void VR16PartFunc::backtrack(int pStrLen, int pIdPrmL0, int pIdPrmL1)
@@ -424,7 +420,7 @@ void VR16PartFunc::backtrack(int pStrLen, int pIdPrmL0, int pIdPrmL1)
             {
                 int i = k - 1;
                 double prmt = 0.0;
-                double prmt1 = 0.0;
+                double prmt1;
 
                 int ii = mOpts.mIIndx[i]; /* ii-j=[i,j]     */
                 int ll = mOpts.mIIndx[l + 1]; /* ll-j=[l+1,j-1] */
@@ -475,7 +471,7 @@ void VR16PartFunc::backtrack(int pStrLen, int pIdPrmL0, int pIdPrmL1)
 
                 if (mOpts.mProb[kl] > Qmax)
                 {
-                    Qmax = mOpts.mProb[kl];
+                    Qmax = (int)mOpts.mProb[kl];
                     if (Qmax > max_real / 10.0)
                     {
                         std::cerr << "Warning: P close to overflow: " << i << " " << mOpts.mProb[kl];
@@ -640,7 +636,7 @@ void VR16PartFunc::make_ptypes(std::string &pStructure)
         int hx;
         std::vector<int> tmp_stack;
         char type_c;
-        tmp_stack.resize(strLen + 1);
+        tmp_stack.resize((unsigned)strLen + 1);
         int i;
         int j;
 
@@ -677,7 +673,7 @@ void VR16PartFunc::make_ptypes(std::string &pStructure)
                     std::cerr << "Error: Unbalanced brackets in constraints. " << pStructure << std::endl;
                 }
                 i = tmp_stack[--hx];
-                type_c = mPtype[mOpts.mIIndx[i] - j];
+                type_c = (char)(mPtype[mOpts.mIIndx[i] - j]);
                 /* don't allow pairs i<k<j<l */
                 for (int k = i; k <= j; k++)
                 {
@@ -706,6 +702,8 @@ void VR16PartFunc::make_ptypes(std::string &pStructure)
                     mPtype[mOpts.mIIndx[j] - l] = 0;
                 }
                 break;
+             default:
+                 break;
             }
         }
 
@@ -726,7 +724,7 @@ double VR16PartFunc::exp_hairpin_energy(int pU, int pType, int pSi1, int pSj1, i
     q = mPFParams.mExpHairpin[pU];
     if ((mOpts.mTetraLoop) && (pU == 4))
     {
-        subStr6 = pString.substr(pIdx, 6);
+        subStr6 = pString.substr((unsigned)pIdx, 6);
         std::map<std::string, int>::const_iterator found = mEn.mTetraloops.find(subStr6);
         if (found != mEn.mTetraloops.end())
         {
@@ -738,7 +736,7 @@ double VR16PartFunc::exp_hairpin_energy(int pU, int pType, int pSi1, int pSj1, i
     {
         if (mOpts.mTriLoop)
         {
-            subStr5 = pString.substr(pIdx, 5);
+            subStr5 = pString.substr((unsigned)pIdx, 5);
             std::map<std::string, int>::const_iterator found = mEn.mTriloops.find(subStr5);
             if (found != mEn.mTriloops.end())
             {

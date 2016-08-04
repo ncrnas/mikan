@@ -1,9 +1,5 @@
 #include <mikan/lib/targetminer1/include/tm1_align.hpp>         // TM1Alignment
 #include <mikan/lib/targetminer1/include/tm1_inst_template.hpp> // TRNATYPE
-#include <cmath>                 // max, min
-#include <sstream>               // stringstream
-#include <seqan/sequence.h>
-#include <seqan/index.h>
 
 using namespace seqan;
 

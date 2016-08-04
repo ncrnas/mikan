@@ -1,7 +1,4 @@
 #include <mikan/lib/miranda3/include/mr3_option.hpp>         // MR3Options
-#include <iostream>
-#include <seqan/arg_parse.h>
-#include <seqan/sequence.h>
 
 using namespace seqan;
 

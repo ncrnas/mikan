@@ -1,6 +1,5 @@
 #include <mikan/lib/vienna_rna/include/vr16_fold_core.hpp>
 #include <iostream>
-#include <cmath>
 
 namespace vr16
 {
@@ -15,8 +14,8 @@ void VR16FoldRet::init_ret_vals(int pSize)
         return;
     }
 
-    mStructure.resize(pSize);
-    mFoldEnergy.resize(pSize);
+    mStructure.resize((unsigned)pSize);
+    mFoldEnergy.resize((unsigned)pSize);
 
     mVecSize = pSize;
 }

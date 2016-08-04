@@ -1,9 +1,6 @@
 #include <mikan/lib/targetminer1/include/tm1_inst_template.hpp> // TRNATYPE
 #include <mikan/lib/targetminer1/include/tm1_seed_site.hpp>     // TM1Sequences, TM1SeedSeqs, TM1SeedSites
-#include <iostream>
-#include <seqan/sequence.h>
 #include <seqan/seq_io.h>
-#include <seqan/index.h>
 
 using namespace seqan;
 
@@ -29,7 +26,7 @@ int TM1Sequences<TRNAString>::read_fasta(CharString const &pFasta)
     {
         if (readRecord(id, seq, seqStream) != 0)
         {
-            std::cerr << "ERROR: Could not read from " << pFasta << "!" << std::endl;
+            std::cerr << "ERROR: Could not read from " << toCString(pFasta) << "!" << std::endl;
             return 1;
         }
 
@@ -72,7 +69,6 @@ int TM1SeedSeqs<TRNAString>::create_seed_seqs()
     }
 
     TRNAString seedSeq;
-    CharString seedType;
 
     int retVal;
 
@@ -83,7 +79,7 @@ int TM1SeedSeqs<TRNAString>::create_seed_seqs()
     }
     reverseComplement(seedSeq);
 
-    retVal = create_nmer_seed_seqs(seedSeq);
+    (void)create_nmer_seed_seqs(seedSeq);
 
     resize(mEffectiveSeeds, length(mSeedSeqs), true);
     retVal = check_redundant_seeds();

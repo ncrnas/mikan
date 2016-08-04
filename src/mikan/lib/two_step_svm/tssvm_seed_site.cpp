@@ -1,9 +1,6 @@
 #include <mikan/lib/two_step_svm/include/tssvm_inst_template.hpp>  // TRNATYPE
 #include <mikan/lib/two_step_svm/include/tssvm_seed_site.hpp>      // TSSVMSequences, TSSVMSeedSeqs, TSSVMSeedSites, TSSVMSeedSiteOverlap
-#include <iostream>
-#include <seqan/sequence.h>
 #include <seqan/seq_io.h>
-#include <seqan/graph_align.h>
 
 using namespace seqan;
 
@@ -29,7 +26,7 @@ int TSSVMSequences<TRNAString>::read_fasta(CharString const &pFasta)
     {
         if (readRecord(id, seq, seqStream) != 0)
         {
-            std::cerr << "ERROR: Could not read from " << pFasta << "!" << std::endl;
+            std::cerr << "ERROR: Could not read from " << toCString(pFasta) << "!" << std::endl;
             return 1;
         }
 
@@ -614,7 +611,7 @@ void TSSVMSeedSiteOverlap<TRNAString>::sort_by_seed_type(
     ret = mSiteMap.equal_range(pPosIdx);
     for (itMap = ret.first; itMap != ret.second; ++itMap)
     {
-        sortedPos.insert(TPosPair(sitePos[(*itMap).second], (*itMap).second));
+        sortedPos.insert(TPosPair((unsigned)sitePos[(*itMap).second], (*itMap).second));
         ++count;
     }
 

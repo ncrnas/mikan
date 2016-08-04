@@ -615,7 +615,7 @@ int VR16FoldArrayC::get_type_1(int pI, int pJ, int pStrLen, std::vector<char>& p
 int VR16FoldArrayC::calc_ml_decomp(int pI, int pJ, int pType1, std::vector<int>& pS1)
 {
     int ml_energy;
-    int decomp = get_dmlx_val(mIdDMLi1, pType1 - 1);
+    int decomp = get_dmlx_val(mIdDMLi1, pType1 - 1); //TODO: check the difference with pita_ddg/ViennaRNA/vr16_fold.cpp
     int decomp_t;
 
     if (mOpts.mDangles)

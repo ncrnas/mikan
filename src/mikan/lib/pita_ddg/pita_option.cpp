@@ -1,7 +1,4 @@
 #include <mikan/lib/pita_ddg/include/pita_option.hpp>        // PITAOptions
-#include <iostream>
-#include <seqan/arg_parse.h>
-#include <seqan/sequence.h>
 
 using namespace seqan;
 

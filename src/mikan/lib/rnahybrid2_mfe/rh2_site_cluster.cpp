@@ -1,12 +1,6 @@
 #include <mikan/lib/rnahybrid2_mfe/include/rh2_inst_template.hpp> // TRNATYPE
 #include <mikan/lib/rnahybrid2_mfe/include/rh2_score.hpp>         // RH2MFEScores
-#include <mikan/lib/rnahybrid2_mfe/include/rh2_seed_site.hpp>     // RH2SeedSites
 #include <mikan/lib/rnahybrid2_mfe/include/rh2_site_cluster.hpp>  // RH2Overlap, RH2SortedSitePos
-#include <set>                   // set
-#include <map>                   // multimap
-#include <utility>               // pair
-#include <iostream>
-#include <seqan/sequence.h>
 
 using namespace seqan;
 
@@ -36,8 +30,8 @@ void RH2SiteCluster<TRNAString>::cluster_site_pos(
         {
             continue;
         }
-        mRNAPosSet.insert(mRNAPos[i]);
-        mSiteMap.insert(TPosPair(mRNAPos[i], i));
+        mRNAPosSet.insert((unsigned)mRNAPos[i]);
+        mSiteMap.insert(TPosPair((unsigned)mRNAPos[i], i));
         ++mSiteCount;
     }
 }
@@ -87,10 +81,10 @@ void RH2Overlap<TRNAString>::find_overlapped_sites(
     std::multimap<unsigned, unsigned>& siteMap = mSiteCluster.get_mrna_pos_map();
     std::multimap<unsigned, unsigned> startPos;
 
-    ret = siteMap.equal_range(pPosIdx);
+    ret = siteMap.equal_range((unsigned)pPosIdx);
     for (itMap = ret.first; itMap != ret.second; ++itMap)
     {
-        startPos.insert(TPosPair(pScores.get_hit_start((*itMap).second), (*itMap).second));
+        startPos.insert(TPosPair((unsigned)pScores.get_hit_start((*itMap).second), (*itMap).second));
     }
 
     cluster_overlapped_sites(pSeedSites, pScores, startPos, pOverlapDef);
@@ -154,8 +148,8 @@ void RH2Overlap<TRNAString>::mark_overlapped_sites(
             {
                 continue;
             }
-            startPos.insert(TPosPair(pScores.get_hit_start(mPos), (mPos)));
-            startPos.insert(TPosPair(pScores.get_hit_start((*itSet)), (*itSet)));
+            startPos.insert(TPosPair((unsigned)pScores.get_hit_start(mPos), (mPos)));
+            startPos.insert(TPosPair((unsigned)pScores.get_hit_start((*itSet)), (*itSet)));
             cluster_overlapped_sites(pSeedSites, pScores, startPos, pOverlapDef);
             startPos.clear();
         }
@@ -166,7 +160,7 @@ void RH2Overlap<TRNAString>::mark_overlapped_sites(
             {
                 continue;
             }
-            startPos.insert(TPosPair(pScores.get_hit_start((*itSet)), (*itSet)));
+            startPos.insert(TPosPair((unsigned)pScores.get_hit_start((*itSet)), (*itSet)));
         }
         cluster_overlapped_sites(pSeedSites, pScores, startPos, pOverlapDef);
         startPos.clear();
@@ -255,7 +249,7 @@ void RH2TopNScore<TRNAString>::sort_sites_by_score(RH2MFEScores<TRNAString> &pSc
     std::multimap<unsigned, unsigned>& siteMap = mSiteCluster.get_mrna_pos_map();
     std::multimap<float, unsigned> sortedSites;
 
-    ret = siteMap.equal_range(pPosIdx);
+    ret = siteMap.equal_range((unsigned)pPosIdx);
     for (itMap = ret.first; itMap != ret.second; ++itMap)
     {
         sortedSites.insert(TScorePair(pScores.get_score((*itMap).second), (*itMap).second));
@@ -321,7 +315,7 @@ int RH2SortedSitePos<TRNAString>::generate_sorted_mrna_pos(
         ret = siteMap.equal_range((*itSet));
         for (itMap = ret.first; itMap != ret.second; ++itMap)
         {
-            startPos.insert(TPosPair(pScores.get_hit_start((*itMap).second), (*itMap).second));
+            startPos.insert(TPosPair((unsigned)pScores.get_hit_start((*itMap).second), (*itMap).second));
         }
 
         for (itStart = startPos.begin(); itStart != startPos.end(); ++itStart)
