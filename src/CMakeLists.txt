@@ -15,6 +15,11 @@ project (mikans)
 
 cmake_minimum_required (VERSION 2.8.2)
 
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  add_definitions ("-Wno-unused-local-typedefs")
+  add_definitions ("-Wno-unused-private-field")
+endif()
+
 # ===========================================================================
 # Iff the file INST or SUA exists in the source root
 # turn on SeqAn instrumentation for experimental data collection
