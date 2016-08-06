@@ -447,7 +447,11 @@ void _assignTagsBamToSamOneTag(TTarget & target, TSourceIter & it)
                 *ptr++ = *it++;
             }
             char buffer[32];
+#ifdef __MINGW32__
+            snprintf(buffer, 32, "%d", (int)x);
+#else
             snprintf(buffer, 32, "%d", x);
+#endif
             append(target, buffer);
         }
         break;
@@ -461,7 +465,11 @@ void _assignTagsBamToSamOneTag(TTarget & target, TSourceIter & it)
                 *ptr++ = *it++;
             }
             char buffer[32];
+#ifdef __MINGW32__
+            snprintf(buffer, 32, "%u", (unsigned)x);
+#else
             snprintf(buffer, 32, "%u", x);
+#endif
             append(target, buffer);
         }
         break;
@@ -582,7 +590,11 @@ void _assignTagsBamToSamOneTag(TTarget & target, TSourceIter & it)
                         *ptr++ = *it++;
                     }
                     char buffer[32];
+#ifdef __MINGW32__
+                    snprintf(buffer, 32, "%d", (int)y);
+#else
                     snprintf(buffer, 32, "%d", y);
+#endif
                     append(target, buffer);
                 }
                 break;
@@ -598,7 +610,11 @@ void _assignTagsBamToSamOneTag(TTarget & target, TSourceIter & it)
                         *ptr++ = *it++;
                     }
                     char buffer[32];
+#ifdef __MINGW32__
+                    snprintf(buffer, 32, "%u", (int)y);
+#else
                     snprintf(buffer, 32, "%u", y);
+#endif
                     append(target, buffer);
                 }
                 break;
