@@ -18,6 +18,8 @@ cmake_minimum_required (VERSION 2.8.2)
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   add_definitions ("-Wno-unused-local-typedefs")
   add_definitions ("-Wno-unused-private-field")
+elseif(MINGW)
+  add_definitions ("-Wno-unused-local-typedefs")
 endif()
 
 # ===========================================================================
