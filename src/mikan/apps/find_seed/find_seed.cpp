@@ -263,7 +263,8 @@ int search_by_suffixarray(
             mrna_id = position(finder).i1;
             site_pos= position(finder).i2;
 
-            ofile << toCString((CharString)mirna_ids[i]) << "\t" << mrna_ids[mrna_id] << "\t" << site_pos << std::endl;
+            ofile << toCString((CharString)mirna_ids[i]) << "\t" << toCString((seqan::CharString)mrna_ids[mrna_id]);
+            ofile << "\t" << site_pos << std::endl;
         }
 
     }
@@ -304,7 +305,8 @@ int search_by_ngram(
             mrna_id = position(finder).i1;
             site_pos= position(finder).i2;
 
-            ofile << toCString((CharString)mirna_ids[i]) << "\t" << mrna_ids[mrna_id] << "\t" << site_pos << std::endl;
+            ofile << toCString((CharString)mirna_ids[i]) << "\t" << toCString((seqan::CharString)mrna_ids[mrna_id]);
+            ofile << "\t" << site_pos << std::endl;
         }
     }
 
