@@ -21,7 +21,7 @@ public:
 
 public:
     // Define methods
-    TSSVMSiteModel(): mB(-1.26691213422), mAlphas(15391), mSVs(15391, 95), mMatProd(15391)
+    TSSVMSiteModel(): mB(-1.26691213422f), mAlphas(15391), mSVs(15391, 95), mMatProd(15391)
     {}
 
     // Define methods
