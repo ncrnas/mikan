@@ -342,7 +342,7 @@ void VR16PFParams::scale_pf_params(unsigned int pLen, double pTemperature)
         mExpHairpin[i] = std::exp(-10.0 * GT / kT);
     }
 
-    for (unsigned i = 0; i <= MAXLOOP; ++i)
+    for (unsigned i = 0; i <= (unsigned)MAXLOOP; ++i)
     {
         GT = mEn.mBulge37[i] * TT;
         mExpBulge[i] = std::exp(-10.0 * GT / kT);
