@@ -18,7 +18,7 @@ class VR16Params
 public:
     // Constant values
     static const int NBPAIRS = 7;
-    static const int MAXLOOP = 30;
+    static const int MAXLOOP = 30; // must be MAXLOOP >= 30
     const double K0;
     const double GASCONST;                      /* in [cal/K] */
     const int INF;

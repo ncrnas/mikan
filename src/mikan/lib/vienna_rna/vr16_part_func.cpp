@@ -158,7 +158,8 @@ float VR16PartFunc::pf_fold(std::string &pString, std::string &pStructure, doubl
                 for (int k = i + 1; k <= max_k; ++k)
                 {
                     int u1 = k - i - 1;
-                    for (int l = std::max(k + TURN + 1, j - 1 - MAXLOOP + u1); l < j; ++l)
+                    int min_l = ((k + TURN + 1) > (j - 1 - MAXLOOP + u1) ? (k + TURN + 1) : (j - 1 - MAXLOOP + u1));
+                    for (int l = min_l; l < j; ++l)
                     {
                         type_2 = mPtype[mOpts.mIIndx[k] - l];
                         if (type_2 != 0)

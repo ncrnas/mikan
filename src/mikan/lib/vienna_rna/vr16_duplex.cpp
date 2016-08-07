@@ -144,7 +144,7 @@ int VR16Duplex::duplexfold(std::string &pS1, std::string &pS2, std::vector<int> 
                     E = mPpIL.loop_energy(i - k - 1, l - j - 1, pair_type2, mPairMat.mRtype[pair_type],
                             mSS1[k + 1], mSS2[l - 1], mSS1[i - 1], mSS2[j + 1]);
 
-                    mC[i][j] = std::min(mC[i][j], mC[k][l] + E);
+                    mC[i][j] = ((mC[i][j] < (mC[k][l] + E)) ? mC[i][j] : (mC[k][l] + E));
                 }
             }
 
@@ -318,8 +318,8 @@ int VR16Duplex::backtrack(int pI, int pJ, std::vector<int> &pArrayI, std::vector
         std::cerr << "Starting backtrack at " << pI << ","<< pJ << " with " << mC[pI][pJ] << std::endl;
     }
 
-    i0 = std::min(pI + 1, mN1);
-    j0 = std::max(pJ - 1, 1);
+    i0 = (((pI + 1) < mN1) ? (pI + 1) : mN1);
+    j0 = (((pJ - 1) > 1) ? (pJ - 1) : 1);
 
     while (pI > 0 && pJ <= mN2)
     {
