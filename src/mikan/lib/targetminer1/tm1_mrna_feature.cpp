@@ -13,36 +13,36 @@ void TM1ScaledFeatures<TRNAString>::init_max_vals()
 {
 
     resize(mMaxFeatVals, FEATURE_NUM);
-    mMaxFeatVals[0] = 22;
-    mMaxFeatVals[1] = 16;
-    mMaxFeatVals[2] = 4;
-    mMaxFeatVals[3] = 4;
-    mMaxFeatVals[4] = 4;
-    mMaxFeatVals[5] = 5.521905;
-    mMaxFeatVals[6] = 5.098095;
-    mMaxFeatVals[7] = 4.668748;
-    mMaxFeatVals[8] = 6.165895;
-    mMaxFeatVals[9] = 3.253333;
-    mMaxFeatVals[10] = 1.092381;
-    mMaxFeatVals[11] = 1.194862;
-    mMaxFeatVals[12] = 1.56094;
-    mMaxFeatVals[13] = 1.265512;
-    mMaxFeatVals[14] = 0.875394;
-    mMaxFeatVals[15] = 0.95453;
-    mMaxFeatVals[16] = 1.444317;
-    mMaxFeatVals[17] = 2.26501;
-    mMaxFeatVals[18] = 1.229357;
-    mMaxFeatVals[19] = 1.152942;
-    mMaxFeatVals[20] = 1.446197;
-    mMaxFeatVals[21] = 0.671929;
-    mMaxFeatVals[22] = 0.9738289999999999;
-    mMaxFeatVals[23] = 1;
-    mMaxFeatVals[24] = 1;
-    mMaxFeatVals[25] = 4;
-    mMaxFeatVals[26] = 2;
-    mMaxFeatVals[27] = 1;
-    mMaxFeatVals[28] = 2;
-    mMaxFeatVals[29] = 1;
+    mMaxFeatVals[0] = 22.0f;
+    mMaxFeatVals[1] = 16.0f;
+    mMaxFeatVals[2] = 4.0f;
+    mMaxFeatVals[3] = 4.0f;
+    mMaxFeatVals[4] = 4.0f;
+    mMaxFeatVals[5] = 5.521905f;
+    mMaxFeatVals[6] = 5.098095f;
+    mMaxFeatVals[7] = 4.668748f;
+    mMaxFeatVals[8] = 6.165895f;
+    mMaxFeatVals[9] = 3.253333f;
+    mMaxFeatVals[10] = 1.092381f;
+    mMaxFeatVals[11] = 1.194862f;
+    mMaxFeatVals[12] = 1.56094f;
+    mMaxFeatVals[13] = 1.265512f;
+    mMaxFeatVals[14] = 0.875394f;
+    mMaxFeatVals[15] = 0.95453f;
+    mMaxFeatVals[16] = 1.444317f;
+    mMaxFeatVals[17] = 2.26501f;
+    mMaxFeatVals[18] = 1.229357f;
+    mMaxFeatVals[19] = 1.152942f;
+    mMaxFeatVals[20] = 1.446197f;
+    mMaxFeatVals[21] = 0.671929f;
+    mMaxFeatVals[22] = 0.9738289999999999f;
+    mMaxFeatVals[23] = 1.0f;
+    mMaxFeatVals[24] = 1.0f;
+    mMaxFeatVals[25] = 4.0f;
+    mMaxFeatVals[26] = 2.0f;
+    mMaxFeatVals[27] = 1.0f;
+    mMaxFeatVals[28] = 2.0f;
+    mMaxFeatVals[29] = 1.0f;
 }
 
 template <class TRNAString>
@@ -542,15 +542,15 @@ int TM1MRNASingleFreq<TRNAString>::add_features(
         seedType = pRawFeatures.get_seed_type(pSortedSites[idx]);
         if (seedType == "6mer")
         {
-            seedlen = 6 * site_count;
+            seedlen = (float)(6 * site_count);
         }
         else if (seedType == "7mer-A1" || seedType == "7mer-m8")
         {
-            seedlen = 7 * site_count;
+            seedlen = (float)(7 * site_count);
         }
         else if (seedType == "8mer")
         {
-            seedlen = 8 * site_count;
+            seedlen =(float)(8 * site_count);
         }
         mSeedFreqU[pIdx] += totalFreqU / seedlen;
         mSeedFreqC[pIdx] += totalFreqC / seedlen;
@@ -625,7 +625,7 @@ int TM1MRNASingleFreqFlank<TRNAString>::add_features(
         totalFreqA += singleFreqFlank.m3PCountA[pSortedSites[idx]];
         totalFreqU += singleFreqFlank.m3PCountU[pSortedSites[idx]];
 
-        seqlen = singleFreqFlank.m3PTotal[pSortedSites[idx]] * site_count;
+        seqlen = (float)(singleFreqFlank.m3PTotal[pSortedSites[idx]] * site_count);
         if (seqlen != 0)
         {
             m3PFreqA[pIdx] += totalFreqA / seqlen;
@@ -712,15 +712,15 @@ int TM1MRNADiFreq<TRNAString>::add_features(
         seedType = pRawFeatures.get_seed_type(pSortedSites[idx]);
         if (seedType == "6mer")
         {
-            seedlen = 6 * site_count;
+            seedlen = (float)(6 * site_count);
         }
         else if (seedType == "7mer-A1" || seedType == "7mer-m8")
         {
-            seedlen = 7 * site_count;
+            seedlen = (float)(7 * site_count);
         }
         else if (seedType == "8mer")
         {
-            seedlen = 8 * site_count;
+            seedlen = (float)(8 * site_count);
         }
         mSeedFreqUC[pIdx] += totalFreqUC / seedlen;
         mSeedFreqCA[pIdx] += totalFreqCA / seedlen;
@@ -842,7 +842,7 @@ int TM1MRNADiFreqFlank<TRNAString>::add_features(
         totalFreqCA += diFreqFlank.m3PCountCA[pSortedSites[idx]];
         totalFreqCU += diFreqFlank.m3PCountCU[pSortedSites[idx]];
 
-        seqlen = diFreqFlank.m3PTotal[pSortedSites[idx]] * site_count;
+        seqlen = (float)(diFreqFlank.m3PTotal[pSortedSites[idx]] * site_count);
         if (seqlen != 0)
         {
             m3PFreqAA[pIdx] += totalFreqAA / seqlen;
