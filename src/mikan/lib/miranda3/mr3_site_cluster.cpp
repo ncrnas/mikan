@@ -125,8 +125,8 @@ int MR3Overlap<TRNAString>::filter_overlapped_sites_by_scores(
             continue;
         }
 
-        scorePrev = pSiteScores.get_align_score(pairs[i][0]);
-        scoreCur = pSiteScores.get_align_score(pairs[i][1]);
+        scorePrev = (unsigned)pSiteScores.get_align_score(pairs[i][0]);
+        scoreCur = (unsigned)pSiteScores.get_align_score(pairs[i][1]);
         if (scorePrev < scoreCur)
         {
             pSeedSites.mEffectiveSites[pairs[i][0]] = false;
