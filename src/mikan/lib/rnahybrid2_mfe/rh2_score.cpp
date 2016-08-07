@@ -111,7 +111,7 @@ template <class TRNAString>
 void RH2MFEScores<TRNAString>::calc_normalized_score(int pIdx, int pTargetLen, int pQueryLen)
 {
     float mfx = mMFEScores[pIdx];
-    mNormScores[pIdx] = -1.0 * mfx / log(pTargetLen * pQueryLen);
+    mNormScores[pIdx] = -1.0f * mfx / log((float)(pTargetLen * pQueryLen));
 }
 
 template <class TRNAString>

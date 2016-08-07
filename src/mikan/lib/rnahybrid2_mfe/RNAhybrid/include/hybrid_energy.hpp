@@ -83,17 +83,17 @@ public:
     RH2EnergyFunc() :
         target_seq(0),
         query_seq(0),
-        e(2.718281828459),
-        t(273.15),
-        temp(273.15 + 37.0),
-        r(8.3143),
-        wkn(0.83),
-        npp(0.2),
-        pbp(0.1 * 0.83),
-        mloop_close(4.6),
-        free_base_penalty(0.4),
-        helix_penalty(0.1),
-        mF0(0.0)
+        e(2.718281828459f),
+        t(273.15f),
+        temp(273.15f + 37.0f),
+        r(8.3143f),
+        wkn(0.83f),
+        npp(0.2f),
+        pbp(0.1f * 0.83f),
+        mloop_close(4.6f),
+        free_base_penalty(0.4f),
+        helix_penalty(0.1f),
+        mF0(0.0f)
     {
         init_energies();
     }
