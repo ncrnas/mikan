@@ -75,7 +75,7 @@ SEQAN_CHECKPOINT
 }
 
 
-//unspektakul�re funktion, die die int ID zur�ckgibt (braucht man damit es f�r alle alignment typen geht)
+//unspektakulre funktion, die die int ID zurckgibt (braucht man damit es fr alle alignment typen geht)
 //template<typename TSource,typename TSpec, typename TValue, typename TSeqMap>					
 //int 
 //_getSeqMapId(TSeqMap & seq_map,
