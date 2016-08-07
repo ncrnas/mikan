@@ -14,7 +14,7 @@ class TS5ScoreSeedType
 {
 public:
     // Define methods
-    TS5ScoreSeedType(): mContrib8mer(-0.310), mContrib7M8(-0.161), mContrib7A1(-0.099) {}
+    TS5ScoreSeedType(): mContrib8mer(-0.310f), mContrib7M8(-0.161f), mContrib7A1(-0.099f) {}
     void set_score(int i, float val){mSeedTypes[i] = val;};
     float& get_score(int i){return mSeedTypes[i];}
 
@@ -38,8 +38,8 @@ class TS5ScoreSitePos
 {
 public:
     // Define methods
-    TS5ScoreSitePos(): mSlope8mer(0.000172), mSlope7M8(0.000091), mSlope7A1(0.000072),
-    mICept8mer(-0.07), mICept7M8(-0.037), mICept7A1(-0.032) {}
+    TS5ScoreSitePos(): mSlope8mer(0.000172f), mSlope7M8(0.000091f), mSlope7A1(0.000072f),
+    mICept8mer(-0.07f), mICept7M8(-0.037f), mICept7A1(-0.032f) {}
     void set_score(int i, float val){mSitePos[i] = val;};
     float& get_score(int i){return mSitePos[i];}
 
@@ -65,8 +65,8 @@ class TS5ScoreAURich
 {
 public:
     // Define methods
-    TS5ScoreAURich(): mSlope8mer(-0.64), mSlope7M8(-0.5), mSlope7A1(-0.42),
-    mICept8mer(0.365), mICept7M8(0.269), mICept7A1(0.236) {}
+    TS5ScoreAURich(): mSlope8mer(-0.64f), mSlope7M8(-0.5f), mSlope7A1(-0.42f),
+    mICept8mer(0.365f), mICept7M8(0.269f), mICept7A1(0.236f) {}
     void set_score(int i, float val){mAURich[i] = val;};
     float& get_score(int i){return mAURich[i];}
 
@@ -92,8 +92,8 @@ class TS5ScoreThreePrimePair
 {
 public:
     // Define methods
-    TS5ScoreThreePrimePair(): mSlope8mer(-0.0041), mSlope7M8(-0.031), mSlope7A1(-0.0211),
-    mICept8mer(0.011), mICept7M8(0.067), mICept7A1(0.046) {}
+    TS5ScoreThreePrimePair(): mSlope8mer(-0.0041f), mSlope7M8(-0.031f), mSlope7A1(-0.0211f),
+    mICept8mer(0.011f), mICept7M8(0.067f), mICept7A1(0.046f) {}
     void set_score(int i, float val){mThreePrimePair[i] = val;}
     float& get_score(int i){return mThreePrimePair[i];}
 

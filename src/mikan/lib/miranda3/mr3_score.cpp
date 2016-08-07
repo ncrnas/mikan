@@ -97,7 +97,7 @@ int MR3AlignScores<TRNAString>::calc_scores(
         }
         else
         {
-            mAlignScores[i] = score;
+            mAlignScores[i] = (float)score;
             mAlign.combine_alignments(i, pMiRNASeq, iMRNASeq);
             mEffectiveSites[i] = true;
         }

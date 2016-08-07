@@ -103,10 +103,10 @@ int TSSVMFeatUTRLen<TRNAString>::add_features(
     float mRNALen;
 
     resize(mUTRLen[pMRNAPosIdx], 1);
-    mRNALen = length(pMRNASeqs[pMRNAPosIdx]);
+    mRNALen = (float)length(pMRNASeqs[pMRNAPosIdx]);
     mRNALen = mRNALen / 22559;
     mUTRLen[pMRNAPosIdx][0] = roundf(mRNALen * 10000) / 10000;
-
+	
     return 0;
 }
 
@@ -131,8 +131,8 @@ int TSSVMFeatSiteNum<TRNAString>::add_features(
     float siteNum;
 
     resize(mSiteNum[pMRNAPosIdx], 1);
-    siteNum = length(pSitePosByMRNA);
-    mSiteNumRaw[pMRNAPosIdx] = siteNum;
+    siteNum = (float)length(pSitePosByMRNA);
+    mSiteNumRaw[pMRNAPosIdx] = (int)siteNum;
     siteNum = siteNum / 38;
     mSiteNum[pMRNAPosIdx][0] = roundf(siteNum * 10000) / 10000;
 
@@ -166,7 +166,7 @@ int TSSVMFeatTotDiscUTRLen<TRNAString>::add_features(
 
     resize(mTotDiscUTRLen[pMRNAPosIdx], 1);
 
-    mRNALen = length(pMRNASeqs[pMRNAPosIdx]);
+    mRNALen = (float)length(pMRNASeqs[pMRNAPosIdx]);
 
     for (unsigned i = 0; i < length(pSitePosByMRNA); ++i)
     {
@@ -454,7 +454,7 @@ int TSSVMFeatSiteNumFlg<TRNAString>::add_features(
     float siteNum;
 
     resize(mSiteNumFlg[pMRNAPosIdx], 3, 0.0);
-    siteNum = length(pSitePosByMRNA);
+    siteNum = (float)length(pSitePosByMRNA);
 
     if (siteNum <= 1)
     {

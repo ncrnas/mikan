@@ -139,7 +139,7 @@ int TS5FeatSitePos<TRNAString>::add_features(
     {
         if (!pEffectiveSites[i])
         {
-            mSitePos[i] = -1.0;
+            mSitePos[i] = -1;
             continue;
         }
 
@@ -155,7 +155,7 @@ int TS5FeatSitePos<TRNAString>::add_features(
         if (lenUp < (MIN_DIST_TO_CDS - 1))
         {
             pEffectiveSites[i] = false;
-            mSitePos[i] = -1.0;
+            mSitePos[i] = -1;
             continue;
         }
 

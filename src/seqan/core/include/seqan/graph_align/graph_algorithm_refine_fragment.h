@@ -118,9 +118,9 @@ SEQAN_CHECKPOINT
 //
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
-////die n�chsten beiden funktionen: f�r Fragmente und Score vom Typ Simple
-////f�r den fall dass es keine mismatches innerhalb der segmente gibt und Score vom typ Simple ist
-////TODO: m�sste f�r einen bestimmten TFragSpec sein (Exact oder noMismatches)
+////die nchsten beiden funktionen: fr Fragmente und Score vom Typ Simple
+////fr den fall dass es keine mismatches innerhalb der segmente gibt und Score vom typ Simple ist
+////TODO: msste fr einen bestimmten TFragSpec sein (Exact oder noMismatches)
 ////get score for alignment starting at pos_i on one sequence (first sequence if i_am_first==true)
 ////and pos_j on other sequence (second sequence if i_am_first==true), if len1!=len2 then the refinement
 ////process was stopped (the cut is not exact)

@@ -1350,7 +1350,8 @@ void VR16FoldBackTrack::backtrack(
             continue;
         }
 
-        for (p = i + 1; p <= std::min(j - 2 - TURN, i + mParams.MAXLOOP + 1); p++)
+        int max_p = (((j - 2 - TURN) < (i + mParams.MAXLOOP + 1)) ? (j - 2 - TURN) : (i + mParams.MAXLOOP + 1));
+        for (p = i + 1;  p <= max_p; p++)
         {
             int minq;
             minq = j - i + p - mParams.MAXLOOP - 2;

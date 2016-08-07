@@ -162,15 +162,15 @@ int TSSVMFeatSimilarity<TRNAString>::add_features(
 
             if (barChar == '|')
             {
-                tmpScore = 1;
+                tmpScore = 1.0f;
             }
             else if (barChar == ':')
             {
-                tmpScore = 0.4;
+                tmpScore = 0.4f;
             }
             else
             {
-                tmpScore = 0;
+                tmpScore = 0.0f;
             }
 
             simAll += tmpScore;
@@ -372,7 +372,7 @@ int TSSVMFeatSitePos<TRNAString>::add_features(
             continue;
         }
 
-        posScore = (siteS8Pos[i] + 1);
+        posScore = (float)(siteS8Pos[i] + 1);
         posScore = roundf(posScore / length(pMRNASeqs[mRNAPos[i]]) * 10000) / 10000;
 
         mSitePos[i][0] = posScore;
@@ -424,15 +424,15 @@ int TSSVMFeatSeqMatch<TRNAString>::add_features(
 
             if (barChar == '|')
             {
-                mSeqMatch[i][j] = 1;
+                mSeqMatch[i][j] = 1.0f;
             }
             else if (barChar == ':')
             {
-                mSeqMatch[i][j] = 0.4;
+                mSeqMatch[i][j] = 0.4f;
             }
             else
             {
-                mSeqMatch[i][j] = 0;
+                mSeqMatch[i][j] = 0.0f;
             }
         }
     }

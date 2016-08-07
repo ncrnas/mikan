@@ -20,7 +20,7 @@ public:
 
 public:
     // Define methods
-    TM1MRNAModel(): mRho(-0.279867), mGamma(0.09), mAlphas(435), mSVs(435, 30), mSquaredSVs(435), mMatProd(435)
+    TM1MRNAModel(): mRho(-0.279867f), mGamma(0.09f), mAlphas(435), mSVs(435, 30), mSquaredSVs(435), mMatProd(435)
     {
         init_model();
     }

@@ -16,7 +16,7 @@ class TSSVMRNAModel
 {
 public:
     // Define methods
-    TSSVMRNAModel(): mB(-1.92467490317), mHyperPlane(35)
+    TSSVMRNAModel(): mB(-1.92467490317f), mHyperPlane(35)
     {
         init_hyperplane();
     }

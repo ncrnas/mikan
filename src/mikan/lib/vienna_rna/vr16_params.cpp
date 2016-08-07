@@ -1,8 +1,6 @@
 #include <mikan/lib/vienna_rna/include/vr16_params.hpp>
-#include <algorithm>                  // std::min
+#include <algorithm>
 #include <iostream>
-#include <cmath>
-#include <vector>
 
 namespace vr16
 {
@@ -10,21 +8,21 @@ namespace vr16
 //
 // VR16Params methods
 //
+//TODO: Method is currently not used. Should be initialized?
 void VR16Params::init_parameters(double pTemperature)
 {
     double tempf = ((pTemperature + K0) / mEn.mTmeasure);
 
-    //TODO: Check the type of all variables (int or float)
     for (unsigned i = 0; i < 31; ++i)
     {
-        mHairpin[i] = (int) mEn.mHairpin37[i] * tempf;
+        mHairpin[i] = (int)(mEn.mHairpin37[i] * tempf);
     }
 
     int imax = 0;
-    for (int i = 0; i <= std::min(30, (int)MAXLOOP); ++i)
+    for (int i = 0; i <= MAXLOOP; ++i)
     {
-        mBulge[i] = (int) mEn.mBulge37[i] * tempf;
-        mInternalLoop[i] = (int) mEn.mInternalLoop37[i] * tempf;
+        mBulge[i] = (int)(mEn.mBulge37[i] * tempf);
+        mInternalLoop[i] = (int)(mEn.mInternalLoop37[i] * tempf);
         ++imax;
     }
 
@@ -37,37 +35,36 @@ void VR16Params::init_parameters(double pTemperature)
 
     for (int i = 0; i < 5; ++i)
     {
-        mFNinio[i] = (int) mEn.mFNinio37[i] * tempf;
+        mFNinio[i] = (int)(mEn.mFNinio37[i] * tempf);
     }
 
     for (unsigned i = 0; i < mEn.mTetraloops.size(); ++i)
     {
-        mTetraEnergy[i] = mEn.mTetraEnth37
-                - (mEn.mTetraEnth37 - mEn.mTetraEnergy37[i]) * tempf;
+        mTetraEnergy[i] = (int)(mEn.mTetraEnth37 - (mEn.mTetraEnth37 - mEn.mTetraEnergy37[i]) * tempf);
     }
     for (unsigned i = 0; i < mEn.mTriloops.size(); ++i)
     {
         mTriloopE[i] = mEn.mTriloopE37[i];
     }
 
-    mMLBase = mEn.mMLBase37 * tempf;
+    mMLBase = (int)(mEn.mMLBase37 * tempf);
     for (int i = 0; i <= NBPAIRS; ++i)
     { /* includes AU penalty */
-        mMLintern[i] = mEn.mMLIntern37 * tempf;
+        mMLintern[i] = (int)(mEn.mMLIntern37 * tempf);
         mMLintern[i] += (i > 2) ? mEn.mTerminalAU : 0;
     }
-    mMLclosing = mEn.mMLClosing37 * tempf;
+    mMLclosing = (int)(mEn.mMLClosing37 * tempf);
 
     mTerminalAU = mEn.mTerminalAU;
 
-    mDuplexInit = mEn.mDuplexInit * tempf;
+    mDuplexInit = (int)(mEn.mDuplexInit * tempf);
 
     /* stacks    G(T) = H - [H - G(T0)]*T/T0 */
     for (int i = 0; i <= NBPAIRS; ++i)
     {
         for (int j = 0; j <= NBPAIRS; ++j)
         {
-            mStack[i][j] = mEn.mEnthalpies[i][j] - (mEn.mEnthalpies[i][j] - mEn.mStack37[i][j]) * tempf;
+            mStack[i][j] = (int)(mEn.mEnthalpies[i][j] - (mEn.mEnthalpies[i][j] - mEn.mStack37[i][j]) * tempf);
         }
     }
 
@@ -78,9 +75,12 @@ void VR16Params::init_parameters(double pTemperature)
         {
             for (int k = 0; k < 5; ++k)
             {
-                mMismatchI[i][j][k] = mEn.mMismH[i][j][k] - (mEn.mMismH[i][j][k] - mEn.mMismatchI37[i][j][k]) * tempf;
-                mMismatchH[i][j][k] = mEn.mMismH[i][j][k] - (mEn.mMismH[i][j][k] - mEn.mMismatchH37[i][j][k]) * tempf;
-                mMismatchM[i][j][k] = mEn.mMismH[i][j][k] - (mEn.mMismH[i][j][k] - mEn.mMismatchM37[i][j][k]) * tempf;
+                mMismatchI[i][j][k] = (int)(mEn.mMismH[i][j][k] -
+                        (mEn.mMismH[i][j][k] - mEn.mMismatchI37[i][j][k]) * tempf);
+                mMismatchH[i][j][k] = (int)(mEn.mMismH[i][j][k] -
+                        (mEn.mMismH[i][j][k] - mEn.mMismatchH37[i][j][k]) * tempf);
+                mMismatchM[i][j][k] = (int)(mEn.mMismH[i][j][k] -
+                        (mEn.mMismH[i][j][k] - mEn.mMismatchM37[i][j][k]) * tempf);
             }
         }
     }
@@ -91,10 +91,10 @@ void VR16Params::init_parameters(double pTemperature)
     {
         for (int j = 0; j < 5; ++j)
         {
-            dd = mEn.mDangle5_H[i][j] - (mEn.mDangle5_H[i][j] - mEn.mDangle5_37[i][j]) * tempf;
+            dd = (int)(mEn.mDangle5_H[i][j] - (mEn.mDangle5_H[i][j] - mEn.mDangle5_37[i][j]) * tempf);
             mDangle5[i][j] = (dd > 0) ? 0 : dd; /* must be <= 0 */
 
-            dd = mEn.mDangle3_H[i][j] - (mEn.mDangle3_H[i][j] - mEn.mDangle3_37[i][j]) * tempf;
+            dd = (int)(mEn.mDangle3_H[i][j] - (mEn.mDangle3_H[i][j] - mEn.mDangle3_37[i][j]) * tempf);
             mDangle3[i][j] = (dd > 0) ? 0 : dd; /* must be <= 0 */
         }
     }
@@ -108,8 +108,8 @@ void VR16Params::init_parameters(double pTemperature)
             {
                 for (int l = 0; l < 5; ++l)
                 {
-                    mInt11[i][j][k][l] = mEn.mInt11_H[i][j][k][l] -
-                            (mEn.mInt11_H[i][j][k][l] - mEn.mInt11_37[i][j][k][l]) * tempf;
+                    mInt11[i][j][k][l] = (int)(mEn.mInt11_H[i][j][k][l] -
+                            (mEn.mInt11_H[i][j][k][l] - mEn.mInt11_37[i][j][k][l]) * tempf);
                 }
             }
         }
@@ -126,8 +126,8 @@ void VR16Params::init_parameters(double pTemperature)
                 {
                     for (int m = 0; m < 5; ++m)
                     {
-                        mInt21[i][j][k][l][m] = mEn.mInt21_H[i][j][k][l][m] - (mEn.mInt21_H[i][j][k][l][m]
-                                                 - mEn.mInt21_37[i][j][k][l][m]) * tempf;
+                        mInt21[i][j][k][l][m] = (int)(mEn.mInt21_H[i][j][k][l][m] - (mEn.mInt21_H[i][j][k][l][m]
+                                                 - mEn.mInt21_37[i][j][k][l][m]) * tempf);
                     }
                 }
             }
@@ -147,8 +147,8 @@ void VR16Params::init_parameters(double pTemperature)
                     {
                         for (int n = 0; n < 5; ++n)
                         {
-                            mInt22[i][j][k][l][m][n] = mEn.mInt22_H[i][j][k][l][m][n] - (mEn.mInt22_H[i][j][k][l][m][n]
-                                                        - mEn.mInt22_37[i][j][k][l][m][n]) * tempf;
+                            mInt22[i][j][k][l][m][n] = (int)(mEn.mInt22_H[i][j][k][l][m][n] -
+                                    (mEn.mInt22_H[i][j][k][l][m][n] - mEn.mInt22_37[i][j][k][l][m][n]) * tempf);
                         }
                     }
                 }
@@ -164,6 +164,7 @@ void VR16Params::init_parameters(double pTemperature)
 //
 // VR16ParamIL methods
 //
+//TODO: Method is currently not used. Should be initialized?
 void VR16ParamIL::init_parameters()
 {
     int lp;
@@ -335,13 +336,13 @@ void VR16PFParams::scale_pf_params(unsigned int pLen, double pTemperature)
     }
 
     /* loop energies: hairpins, bulges, interior, mulit-loops */
-    for (unsigned i = 0; i <= (unsigned)std::min(30, (int)pLen); ++i)
+    for (unsigned i = 0; i <= ((30 < pLen) ? 30 : pLen); ++i)
     {
         GT = mEn.mHairpin37[i] * TT;
         mExpHairpin[i] = std::exp(-10.0 * GT / kT);
     }
 
-    for (unsigned i = 0; i <= (unsigned)std::min((unsigned)30, (unsigned)MAXLOOP); ++i)
+    for (unsigned i = 0; i <= (unsigned)MAXLOOP; ++i)
     {
         GT = mEn.mBulge37[i] * TT;
         mExpBulge[i] = std::exp(-10.0 * GT / kT);
@@ -375,7 +376,7 @@ void VR16PFParams::scale_pf_params(unsigned int pLen, double pTemperature)
         GT = mEn.mFNinio37[i] * TT;
         for (unsigned j = 0; j <= (unsigned)MAXLOOP; ++j)
         {
-            mExpNinio[i][j] = std::exp(-10.0 * std::min(mEn.MAX_NINIO, (int)(j * GT)) / kT);
+            mExpNinio[i][j] = std::exp(-10.0 * ((mEn.MAX_NINIO < (j * GT)) ? mEn.MAX_NINIO : (j * GT)) / kT);
         }
     }
 
