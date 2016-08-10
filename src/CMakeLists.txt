@@ -138,6 +138,8 @@ add_subdirectory (mikan)
 #message (STATUS "Configuring sandbox")
 #add_subdirectory (sandbox)
 
+add_subdirectory (test)
+
 # ===========================================================================
 # Include CPack
 # ===========================================================================
