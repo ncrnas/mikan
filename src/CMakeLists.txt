@@ -21,6 +21,7 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 elseif(MINGW)
   add_definitions ("-Wno-unused-local-typedefs")
   add_definitions ("-Wno-unused-but-set-variable")
+#  set(gtest_disable_pthreads on)
 endif()
 
 # ===========================================================================
