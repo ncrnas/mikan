@@ -1,13 +1,6 @@
-# ===========================================================================
-#                  SeqAn - The Library for Sequence Analysis
-# ===========================================================================
-# File: /mikan/apps/mk/CMakeLists.txt
-#
-# CMakeLists.txt file for mk apps
-# ===========================================================================
+project (mk_twostep_svm)
 
 cmake_minimum_required (VERSION 2.8.2)
-project (mikan_apps)
 
 # ----------------------------------------------------------------------------
 # Dependencies
@@ -22,40 +15,20 @@ find_package (SeqAn REQUIRED)
 # ----------------------------------------------------------------------------
 
 # Add lib directories
-add_subdirectory(../lib/rnahybrid2_mfe rh2)
-add_subdirectory(../lib/targetscan5_cs ts5)
-add_subdirectory(../lib/two_step_svm tssvm)
-add_subdirectory(../lib/pita_ddg pita)
-add_subdirectory(../lib/miranda3 mr3as)
-add_subdirectory(../lib/targetminer1 tm1)
+add_subdirectory(../../lib/two_step_svm tssvm)
 
 # Add include directories
-include_directories (${SEQAN_INCLUDE_DIRS} 
-                     ${RH2_HEADERS}
-                     ${TS5_HEADERS}
-                     ${TSSVM_HEADERS}
-                     ${PITA_HEADERS}
-                     ${MR3_HEADERS}
-                     ${TM1_HEADERS})
+include_directories (${SEQAN_INCLUDE_DIRS}
+        ${TSSVM_HEADERS})
 
 # Add definitions set by find_package (SeqAn)
 add_definitions (${SEQAN_DEFINITIONS})
 
 # Add executable applications
-add_executable (rnahybrid2_mfe mkrnahybrid/rnahybrid2_mfe.cpp)
-add_executable (targetscan5_cs mktargetscan/targetscan5_cs.cpp)
-add_executable (two_step_svm mktwostepsvm/two_step_svm.cpp)
-add_executable (pita_ddg mkpita/pita_ddg.cpp)
-add_executable (miranda3 mkmiranda/miranda3.cpp)
-add_executable (targetminer1 mktargetminer/targetminer1.cpp)
+add_executable (mk-twostep-svm two_step_svm.cpp)
 
 # Add libraries
-add_library(rh2 ${RH2_SOURCE})
-add_library(ts5 ${TS5_SOURCE})
 add_library(tssvm ${TSSVM_SOURCE})
-add_library(pita ${PITA_SOURCE})
-add_library(mr3as ${MR3_SOURCE})
-add_library(tm1 ${TM1_SOURCE})
 
 # Add dependencies found by find_package (SeqAn)
 if (MSVC)
@@ -64,68 +37,39 @@ else ()
   set (LIBM_NAME "m")
 endif ()
 
-target_link_libraries (rnahybrid2_mfe rh2 ${SEQAN_LIBRARIES} ${LIBM_NAME})
-target_link_libraries (targetscan5_cs ts5 ${SEQAN_LIBRARIES} ${LIBM_NAME})
-target_link_libraries (two_step_svm tssvm ${SEQAN_LIBRARIES} ${LIBM_NAME})
-target_link_libraries (pita_ddg pita ${SEQAN_LIBRARIES} ${LIBM_NAME})
-target_link_libraries (miranda3 mr3as ${SEQAN_LIBRARIES} ${LIBM_NAME})
-target_link_libraries (targetminer1 tm1 ${SEQAN_LIBRARIES} ${LIBM_NAME})
+target_link_libraries (mk-twostep-svm tssvm ${SEQAN_LIBRARIES} ${LIBM_NAME})
 
 # Add CXX flags found by find_package (SeqAn)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SEQAN_CXX_FLAGS}")
+
+include(${CMAKE_SOURCE_DIR}/test/lib/googletest/cmake/internal_utils.cmake)
+config_compiler_and_linker()  # Defined in internal_utils.cmake.
 
 # ----------------------------------------------------------------------------
 # Installation
 # ----------------------------------------------------------------------------
 
-# Set variables for installing, depending on the selected build type
-if (NOT SEQAN_PREFIX_SHARE_DOC)
-  seqan_setup_install_vars (rnahybrid2_mfe)
-  seqan_setup_install_vars (targetscan5_cs)
-  seqan_setup_install_vars (two_step_svm)
-  seqan_setup_install_vars (pita_ddg)
-  seqan_setup_install_vars (targetminer1)
-endif (NOT SEQAN_PREFIX_SHARE_DOC)
+# Install mk-twostep-svm in ${PREFIX}/bin directory
+install (TARGETS mk-twostep-svm
+        DESTINATION bin)
 
-# Install mk programs in ${PREFIX}/bin directory
-install (TARGETS rnahybrid2_mfe
-         DESTINATION bin)
-install (TARGETS targetscan5_cs
-         DESTINATION bin)
-install (TARGETS two_step_svm
-         DESTINATION bin)
-install (TARGETS pita_ddg
-         DESTINATION bin)
-install (TARGETS miranda3
-         DESTINATION bin)
-install (TARGETS targetminer1
-         DESTINATION bin)
-                  
-# Install non-binary files for the package to "." for app builds and
-# ${PREFIX}/share/doc/mk for SeqAn release builds
-install (FILES LICENSE
-               README
-         DESTINATION ${SEQAN_PREFIX_SHARE_DOC})
-#install (FILES example/fasta1.fa
-#               example/fasta2.fa
-#         DESTINATION ${SEQAN_PREFIX_SHARE_DOC}/example)
-
-# ----------------------------------------------------------------------------
-# App Test
-# ----------------------------------------------------------------------------
-
-#seqan_add_app_test (empt)
+install (FILES ${CMAKE_SOURCE_DIR}/../LICENSE
+        ${CMAKE_SOURCE_DIR}/../README.md
+        DESTINATION share/doc/mikan/mk_twostep_svm)
 
 # ----------------------------------------------------------------------------
 # CPack Install
 # ----------------------------------------------------------------------------
 
-if (SEQAN_BUILD_SYSTEM STREQUAL "APP:mk")
-  set (CPACK_PACKAGE_NAME "mk")
-  set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "empt")
-  set (CPACK_DEBIAN_PACKAGE_MAINTAINER "Your Name <your.email@example.net>")
-  set (CPACK_PACKAGE_VENDOR "Your Name <your.email@example.net>")
+set (CPACK_PACKAGE_NAME "mk-twostep-svm")
+set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "mk-twostep-svm: mikan version of the Two-step SVM algorithm")
+set (CPACK_DEBIAN_PACKAGE_MAINTAINER "Takaya Saito <takaya.saito@outlook.com>")
+set (CPACK_PACKAGE_VENDOR "Takaya Saito <takaya.saito@outlook.com>")
+set (CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/../LICENSE)
+set (CPACK_RESOURCE_FILE_README ${CMAKE_SOURCE_DIR}/../README.md)
+set (CPACK_PACKAGE_VERSION "${MIKAN_VERSION}")
+set (CPACK_PACKAGE_VERSION_MAJOR "${MIKAN_VERSION_MAJOR}")
+set (CPACK_PACKAGE_VERSION_MINOR "${MIKAN_VERSION_MINOR}")
+set (CPACK_PACKAGE_VERSION_PATCH "${MIKAN_VERSION_PATCH}")
 
-  seqan_configure_cpack_app (mk "mk")
-endif (SEQAN_BUILD_SYSTEM STREQUAL "APP:mk")
-
+include (CPack)

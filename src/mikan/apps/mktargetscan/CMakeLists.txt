@@ -1,13 +1,6 @@
-# ===========================================================================
-#                  SeqAn - The Library for Sequence Analysis
-# ===========================================================================
-# File: /mikan/apps/mk/CMakeLists.txt
-#
-# CMakeLists.txt file for mk apps
-# ===========================================================================
+project (mk_targetscan)
 
 cmake_minimum_required (VERSION 2.8.2)
-project (mk_miranda)
 
 # ----------------------------------------------------------------------------
 # Dependencies
@@ -22,20 +15,20 @@ find_package (SeqAn REQUIRED)
 # ----------------------------------------------------------------------------
 
 # Add lib directories
-add_subdirectory(../../lib/miranda3 mr3as)
+add_subdirectory(../../lib/targetscan5_cs ts5)
 
 # Add include directories
 include_directories (${SEQAN_INCLUDE_DIRS}
-                     ${MR3_HEADERS})
+                     ${TS5_HEADERS})
 
 # Add definitions set by find_package (SeqAn)
 add_definitions (${SEQAN_DEFINITIONS})
 
 # Add executable applications
-add_executable (mk-miranda mkmiranda/miranda3.cpp)
+add_executable (mk-targetscan targetscan5_cs.cpp)
 
 # Add libraries
-add_library(mr3as ${MR3_SOURCE})
+add_library(ts5 ${TS5_SOURCE})
 
 # Add dependencies found by find_package (SeqAn)
 if (MSVC)
@@ -44,7 +37,7 @@ else ()
   set (LIBM_NAME "m")
 endif ()
 
-target_link_libraries (mk-miranda mr3as ${SEQAN_LIBRARIES} ${LIBM_NAME})
+target_link_libraries (mk-targetscan ts5 ${SEQAN_LIBRARIES} ${LIBM_NAME})
 
 # Add CXX flags found by find_package (SeqAn)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SEQAN_CXX_FLAGS}")
@@ -56,20 +49,20 @@ config_compiler_and_linker()  # Defined in internal_utils.cmake.
 # Installation
 # ----------------------------------------------------------------------------
 
-# Install mk-miranda in ${PREFIX}/bin directory
-install (TARGETS mk-miranda
+# Install mk-targetscan in ${PREFIX}/bin directory
+install (TARGETS mk-targetscan
          DESTINATION bin)
 
 install (FILES ${CMAKE_SOURCE_DIR}/../LICENSE
         ${CMAKE_SOURCE_DIR}/../README.md
-        DESTINATION share/doc/mikan/mkmiranda)
+        DESTINATION share/doc/mikan/mk_targetscan)
 
 # ----------------------------------------------------------------------------
 # CPack Install
 # ----------------------------------------------------------------------------
 
-set (CPACK_PACKAGE_NAME "mk_miranda")
-set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "mk-miranda: mikan version of the miRanda algorithm")
+set (CPACK_PACKAGE_NAME "mk-targetscan")
+set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "mk-targetscan: mikan version of the TargetScan algorithm")
 set (CPACK_DEBIAN_PACKAGE_MAINTAINER "Takaya Saito <takaya.saito@outlook.com>")
 set (CPACK_PACKAGE_VENDOR "Takaya Saito <takaya.saito@outlook.com>")
 set (CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/../LICENSE)

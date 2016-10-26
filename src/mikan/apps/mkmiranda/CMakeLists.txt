@@ -1,4 +1,4 @@
-project (mk_rnahybrid)
+project (mk_miranda)
 
 cmake_minimum_required (VERSION 2.8.2)
 
@@ -15,20 +15,20 @@ find_package (SeqAn REQUIRED)
 # ----------------------------------------------------------------------------
 
 # Add lib directories
-add_subdirectory(../../lib/rnahybrid2_mfe rh2)
+add_subdirectory(../../lib/miranda3 mr3as)
 
 # Add include directories
 include_directories (${SEQAN_INCLUDE_DIRS}
-                     ${RH2_HEADERS})
+                     ${MR3_HEADERS})
 
 # Add definitions set by find_package (SeqAn)
 add_definitions (${SEQAN_DEFINITIONS})
 
 # Add executable applications
-add_executable (mk-rnahybrid rnahybrid2_mfe.cpp)
+add_executable (mk-miranda miranda3.cpp)
 
 # Add libraries
-add_library(rh2 ${RH2_SOURCE})
+add_library(mr3as ${MR3_SOURCE})
 
 # Add dependencies found by find_package (SeqAn)
 if (MSVC)
@@ -37,7 +37,7 @@ else ()
   set (LIBM_NAME "m")
 endif ()
 
-target_link_libraries (mk-rnahybrid rh2 ${SEQAN_LIBRARIES} ${LIBM_NAME})
+target_link_libraries (mk-miranda mr3as ${SEQAN_LIBRARIES} ${LIBM_NAME})
 
 # Add CXX flags found by find_package (SeqAn)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SEQAN_CXX_FLAGS}")
@@ -49,20 +49,20 @@ config_compiler_and_linker()  # Defined in internal_utils.cmake.
 # Installation
 # ----------------------------------------------------------------------------
 
-# Install mk-rnahybrid in ${PREFIX}/bin directory
-install (TARGETS mk-rnahybrid
+# Install mk-miranda in ${PREFIX}/bin directory
+install (TARGETS mk-miranda
          DESTINATION bin)
 
 install (FILES ${CMAKE_SOURCE_DIR}/../LICENSE
         ${CMAKE_SOURCE_DIR}/../README.md
-        DESTINATION share/doc/mikan/mk_rnahybrid)
+        DESTINATION share/doc/mikan/mk_miranda)
 
 # ----------------------------------------------------------------------------
 # CPack Install
 # ----------------------------------------------------------------------------
 
-set (CPACK_PACKAGE_NAME "mk-rnahybrid")
-set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "mk-rnahybrid: mikan version of the RNAhybrid algorithm")
+set (CPACK_PACKAGE_NAME "mk-miranda")
+set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "mk-miranda: mikan version of the miRanda algorithm")
 set (CPACK_DEBIAN_PACKAGE_MAINTAINER "Takaya Saito <takaya.saito@outlook.com>")
 set (CPACK_PACKAGE_VENDOR "Takaya Saito <takaya.saito@outlook.com>")
 set (CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/../LICENSE)
