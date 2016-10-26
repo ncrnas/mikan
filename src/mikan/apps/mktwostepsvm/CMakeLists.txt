@@ -7,15 +7,14 @@
 # ===========================================================================
 
 cmake_minimum_required (VERSION 2.8.2)
-project (mikan_apps_mk)
-message (STATUS "Configuring mikan/apps/mk")
+project (mikan_apps)
 
 # ----------------------------------------------------------------------------
 # Dependencies
 # ----------------------------------------------------------------------------
 
 # Search SeqAn and select dependencies
-#set (SEQAN_FIND_DEPENDENCIES NONE)
+set (SEQAN_FIND_DEPENDENCIES NONE)
 find_package (SeqAn REQUIRED)
 
 # ----------------------------------------------------------------------------
@@ -23,12 +22,12 @@ find_package (SeqAn REQUIRED)
 # ----------------------------------------------------------------------------
 
 # Add lib directories
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../lib/rnahybrid2_mfe rh2)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../lib/targetscan5_cs ts5)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../lib/two_step_svm tssvm)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../lib/pita_ddg pita)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../lib/miranda3 mr3as)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../lib/targetminer1 tm1)
+add_subdirectory(../lib/rnahybrid2_mfe rh2)
+add_subdirectory(../lib/targetscan5_cs ts5)
+add_subdirectory(../lib/two_step_svm tssvm)
+add_subdirectory(../lib/pita_ddg pita)
+add_subdirectory(../lib/miranda3 mr3as)
+add_subdirectory(../lib/targetminer1 tm1)
 
 # Add include directories
 include_directories (${SEQAN_INCLUDE_DIRS} 
@@ -43,12 +42,12 @@ include_directories (${SEQAN_INCLUDE_DIRS}
 add_definitions (${SEQAN_DEFINITIONS})
 
 # Add executable applications
-add_executable (rnahybrid2_mfe rnahybrid2_mfe.cpp)
-add_executable (targetscan5_cs targetscan5_cs.cpp)
-add_executable (two_step_svm two_step_svm.cpp)
-add_executable (pita_ddg pita_ddg.cpp)
-add_executable (miranda3 miranda3.cpp)
-add_executable (targetminer1 targetminer1.cpp)
+add_executable (rnahybrid2_mfe mkrnahybrid/rnahybrid2_mfe.cpp)
+add_executable (targetscan5_cs mktargetscan/targetscan5_cs.cpp)
+add_executable (two_step_svm mktwostepsvm/two_step_svm.cpp)
+add_executable (pita_ddg mkpita/pita_ddg.cpp)
+add_executable (miranda3 mkmiranda/miranda3.cpp)
+add_executable (targetminer1 mktargetminer/targetminer1.cpp)
 
 # Add libraries
 add_library(rh2 ${RH2_SOURCE})
