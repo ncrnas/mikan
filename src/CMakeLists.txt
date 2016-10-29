@@ -105,7 +105,7 @@ seqan_build_system_init ()
 # ===========================================================================
 
 add_subdirectory (mikan)
-# Run unit tests
-#if (${ADD_GTEST})
-#  add_subdirectory (test)
-#endif()
+#Run unit tests
+if (${ADD_GTEST})
+  add_subdirectory (test)
+endif()
