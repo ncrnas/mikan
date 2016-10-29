@@ -1,10 +1,10 @@
 #ifndef HYBRID_CORE_HPP_
 #define HYBRID_CORE_HPP_
 
-#include <mikan/lib/rnahybrid2_mfe/RNAhybrid/include/hybrid_backtrace.hpp>
-#include <mikan/lib/rnahybrid2_mfe/RNAhybrid/include/hybrid_energy.hpp>
-#include <mikan/lib/rnahybrid2_mfe/RNAhybrid/include/hybrid_prettyprint.hpp>
-#include <mikan/lib/rnahybrid2_mfe/RNAhybrid/include/hybrid_table.hpp>
+#include <hybrid_backtrace.hpp>
+#include <hybrid_energy.hpp>
+#include <hybrid_prettyprint.hpp>
+#include <hybrid_table.hpp>
 #include <string>
 #include <vector>
 

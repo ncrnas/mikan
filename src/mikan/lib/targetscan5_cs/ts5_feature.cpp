@@ -1,5 +1,5 @@
-#include <mikan/lib/targetscan5_cs/include/ts5_feature.hpp>       // TS5RawFeatures, TS5FeatSeedType, TS5FeatSitePos, TS5FeatAURich,
-#include <mikan/lib/targetscan5_cs/include/ts5_inst_template.hpp> // TRNATYPE
+#include <ts5_feature.hpp>       // TS5RawFeatures, TS5FeatSeedType, TS5FeatSitePos, TS5FeatAURich,
+#include <ts5_inst_template.hpp> // TRNATYPE
 
 
 using namespace seqan;

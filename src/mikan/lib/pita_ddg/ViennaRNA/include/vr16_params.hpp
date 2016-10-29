@@ -1,10 +1,10 @@
 #ifndef VR16_PARAMS_HPP_
 #define VR16_PARAMS_HPP_
 
-#include <mikan/lib/pita_ddg/ViennaRNA/include/vr16_energy.hpp>                // VR16EnergyParams
-#include <mikan/lib/pita_ddg/ViennaRNA/include/vr16_fold_options.hpp>          // VR16FoldOptions
-#include <mikan/lib/pita_ddg/ViennaRNA/include/vr16_fold_options.hpp>          // VR16FoldOptions
-#include <mikan/lib/pita_ddg/ViennaRNA/include/vr16_pair_mat.hpp>              // VR16PairMat
+#include <vr16_energy.hpp>                // VR16EnergyParams
+#include <vr16_fold_options.hpp>          // VR16FoldOptions
+#include <vr16_fold_options.hpp>          // VR16FoldOptions
+#include <vr16_pair_mat.hpp>              // VR16PairMat
 #include <cmath>
 #include <map>
 

@@ -14,7 +14,7 @@
 /* adpcompile -c rnahybrid/HybridMFE3_simple_3tab.lhs -al mfe enum -bt -bts -o rnahybrid/hybridBack4.c */
 /* -------------------------------------------------------------------------------- */
 
-#include <mikan/lib/rnahybrid2_mfe/RNAhybrid/include/hybrid_core.hpp>
+#include <hybrid_core.hpp>
 
 
 namespace rh2 {

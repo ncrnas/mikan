@@ -1,4 +1,4 @@
-#include <mikan/lib/rnahybrid2_mfe/include/rh2_core.hpp>          // RH2CoreInput, RH2Core
+#include <rh2_core.hpp>          // RH2CoreInput, RH2Core
 
 int main(int argc, char const ** argv)
 {

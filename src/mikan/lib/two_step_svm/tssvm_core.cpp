@@ -4,15 +4,15 @@
 #include <ctime>                    // clock_t, clock, CLOCKS_PER_SEC
 #endif
 #include <seqan/arg_parse.h>
-#include <mikan/lib/two_step_svm/include/tssvm_inst_template.hpp>  // TRNATYPE
-#include <mikan/lib/two_step_svm/include/tssvm_option.hpp>         // TSSVMOptions
-#include <mikan/lib/two_step_svm/include/tssvm_seed_site.hpp>      // TSSVMSeedSites, TSSVMSeedSiteOverlap
-#include <mikan/lib/two_step_svm/include/tssvm_align.hpp>          // TSAlign
-#include <mikan/lib/two_step_svm/include/tssvm_site_feature.hpp>   // TSSVMRawFeatures
-#include <mikan/lib/two_step_svm/include/tssvm_site_svm.hpp>       // TSSVMSiteModel, TSSVMSiteInputVector
-#include <mikan/lib/two_step_svm/include/tssvm_mrna_feature.hpp>   // TSSVMRNARawFeatures
-#include <mikan/lib/two_step_svm/include/tssvm_mrna_svm.hpp>       // TSSVMRNAInputVector
-#include <mikan/lib/two_step_svm/include/tssvm_core.hpp>           // TSSVMCoreInput, TSSVMCore
+#include <tssvm_inst_template.hpp>  // TRNATYPE
+#include <tssvm_option.hpp>         // TSSVMOptions
+#include <tssvm_seed_site.hpp>      // TSSVMSeedSites, TSSVMSeedSiteOverlap
+#include <tssvm_align.hpp>          // TSAlign
+#include <tssvm_site_feature.hpp>   // TSSVMRawFeatures
+#include <tssvm_site_svm.hpp>       // TSSVMSiteModel, TSSVMSiteInputVector
+#include <tssvm_mrna_feature.hpp>   // TSSVMRNARawFeatures
+#include <tssvm_mrna_svm.hpp>       // TSSVMRNAInputVector
+#include <tssvm_core.hpp>           // TSSVMCoreInput, TSSVMCore
 
 namespace tssvm{
 

@@ -1,5 +1,5 @@
-#include <mikan/lib/rnahybrid2_mfe/RNAhybrid/include/hybrid_energy.hpp>
-#include <mikan/lib/rnahybrid2_mfe/RNAhybrid/include/hybrid_table.hpp>
+#include <hybrid_energy.hpp>
+#include <hybrid_table.hpp>
 
 namespace rh2 {
 

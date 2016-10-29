@@ -1,7 +1,7 @@
 #ifndef HYBRID_PRETTYPRINT_HPP_
 #define HYBRID_PRETTYPRINT_HPP_
 
-#include <mikan/lib/rnahybrid2_mfe/RNAhybrid/include/hybrid_backtrace.hpp>
+#include <hybrid_backtrace.hpp>
 #include <string>
 #include <algorithm>
 

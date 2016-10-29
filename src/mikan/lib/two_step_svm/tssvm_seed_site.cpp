@@ -1,5 +1,5 @@
-#include <mikan/lib/two_step_svm/include/tssvm_inst_template.hpp>  // TRNATYPE
-#include <mikan/lib/two_step_svm/include/tssvm_seed_site.hpp>      // TSSVMSequences, TSSVMSeedSeqs, TSSVMSeedSites, TSSVMSeedSiteOverlap
+#include <tssvm_inst_template.hpp>  // TRNATYPE
+#include <tssvm_seed_site.hpp>      // TSSVMSequences, TSSVMSeedSeqs, TSSVMSeedSites, TSSVMSeedSiteOverlap
 #include <seqan/seq_io.h>
 
 using namespace seqan;

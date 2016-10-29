@@ -1,4 +1,4 @@
-#include <mikan/lib/targetminer1/include/tm1_option.hpp>        // TM1CSOptions
+#include <tm1_option.hpp>        // TM1CSOptions
 
 using namespace seqan;
 

@@ -1,4 +1,4 @@
-#include <mikan/lib/vienna_rna/include/vr16_fold_core.hpp>
+#include <vr16_fold_core.hpp>
 #include <iostream>
 
 namespace vr16

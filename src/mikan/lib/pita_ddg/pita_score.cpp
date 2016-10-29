@@ -1,5 +1,5 @@
-#include <mikan/lib/pita_ddg/include/pita_inst_template.hpp> // TRNATYPE
-#include <mikan/lib/pita_ddg/include/pita_score.hpp>         // PITADDGScores, PITATotalScores
+#include <pita_inst_template.hpp> // TRNATYPE
+#include <pita_score.hpp>         // PITADDGScores, PITATotalScores
 
 using namespace seqan;
 

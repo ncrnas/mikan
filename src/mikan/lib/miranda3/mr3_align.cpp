@@ -1,5 +1,5 @@
-#include <mikan/lib/miranda3/include/mr3_align.hpp>          // MR3Align
-#include <mikan/lib/miranda3/include/mr3_inst_template.hpp>  // TRNATYPE
+#include <mr3_align.hpp>          // MR3Align
+#include <mr3_inst_template.hpp>  // TRNATYPE
 
 using namespace seqan;
 

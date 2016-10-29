@@ -1,4 +1,4 @@
-#include <mikan/lib/targetscan5_cs/include/ts5_core.hpp>          // TS5CoreInput, TS5Core
+#include <ts5_core.hpp>          // TS5CoreInput, TS5Core
 
 int main(int argc, char const ** argv)
 {

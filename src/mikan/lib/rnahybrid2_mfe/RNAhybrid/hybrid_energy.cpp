@@ -1,4 +1,4 @@
-#include <mikan/lib/rnahybrid2_mfe/RNAhybrid/include/hybrid_energy.hpp>
+#include <hybrid_energy.hpp>
 #include <cstring>
 
 namespace rh2 {

@@ -1,4 +1,4 @@
-#include <mikan/lib/targetminer1/include/tm1_core.hpp>          // TM1CoreInput, TM1Core
+#include <tm1_core.hpp>          // TM1CoreInput, TM1Core
 
 int main(int argc, char const ** argv)
 {

@@ -1,6 +1,6 @@
-#include <mikan/lib/two_step_svm/include/tssvm_inst_template.hpp>  // TRNATYPE
-#include <mikan/lib/two_step_svm/include/tssvm_site_feature.hpp>   // TSSVMRawFeatures
-#include <mikan/lib/two_step_svm/include/tssvm_site_svm.hpp>       // TSSVMSiteModel, TSSVMSiteInputVector
+#include <tssvm_inst_template.hpp>  // TRNATYPE
+#include <tssvm_site_feature.hpp>   // TSSVMRawFeatures
+#include <tssvm_site_svm.hpp>       // TSSVMSiteModel, TSSVMSiteInputVector
 
 using namespace seqan;
 

@@ -1,4 +1,4 @@
-#include <mikan/lib/pita_ddg/include/pita_core.hpp>          // PITACoreInput, PITACore
+#include <pita_core.hpp>          // PITACoreInput, PITACore
 
 int main(int argc, char const ** argv)
 {

@@ -1,6 +1,6 @@
-#include <mikan/lib/pita_ddg/include/pita_inst_template.hpp> // TRNATYPE
-#include <mikan/lib/pita_ddg/include/pita_score.hpp>         // PITAMFEScores
-#include <mikan/lib/pita_ddg/include/pita_site_cluster.hpp>  // PITAOverlap, PITASortedSitePos
+#include <pita_inst_template.hpp> // TRNATYPE
+#include <pita_score.hpp>         // PITAMFEScores
+#include <pita_site_cluster.hpp>  // PITAOverlap, PITASortedSitePos
 
 using namespace seqan;
 

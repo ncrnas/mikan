@@ -1,13 +1,13 @@
 #ifndef VR16_DDG_CORE_HPP_
 #define VR16_DDG_CORE_HPP_
 
-#include <mikan/lib/vienna_rna/include/vr16_duplex.hpp>                // VR16Duplex
-#include <mikan/lib/vienna_rna/include/vr16_energy.hpp>                // VR16EnergyParams
-#include <mikan/lib/vienna_rna/include/vr16_fold.hpp>                  // VR16Fold
-#include <mikan/lib/vienna_rna/include/vr16_fold_options.hpp>          // VR16FoldOptions
-#include <mikan/lib/vienna_rna/include/vr16_pair_mat.hpp>              // VR16PairMat
-#include <mikan/lib/vienna_rna/include/vr16_params.hpp>                // VR16Params, VR16ParamIL, VR16PFParams
-#include <mikan/lib/vienna_rna/include/vr16_part_func.hpp>             // VR16PartFunc
+#include <vr16_duplex.hpp>                // VR16Duplex
+#include <vr16_energy.hpp>                // VR16EnergyParams
+#include <vr16_fold.hpp>                  // VR16Fold
+#include <vr16_fold_options.hpp>          // VR16FoldOptions
+#include <vr16_pair_mat.hpp>              // VR16PairMat
+#include <vr16_params.hpp>                // VR16Params, VR16ParamIL, VR16PFParams
+#include <vr16_part_func.hpp>             // VR16PartFunc
 #include <vector>
 #include <string>
 

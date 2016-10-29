@@ -1,11 +1,11 @@
 #ifndef PITA_CORE_HPP_
 #define PITA_CORE_HPP_
 
-#include <mikan/lib/pita_ddg/include/pita_inst_template.hpp> // TRNATYPE
-#include <mikan/lib/pita_ddg/include/pita_option.hpp>        // PITAOptions
-#include <mikan/lib/pita_ddg/include/pita_score.hpp>         // PITAGGDScores, PITATotalScores
-#include <mikan/lib/pita_ddg/include/pita_seed_site.hpp>     // PITASequences, PITASeedSites
-#include <mikan/lib/pita_ddg/include/pita_site_cluster.hpp>  // PITAOverlap, PITASortedSitePos
+#include <pita_inst_template.hpp> // TRNATYPE
+#include <pita_option.hpp>        // PITAOptions
+#include <pita_score.hpp>         // PITAGGDScores, PITATotalScores
+#include <pita_seed_site.hpp>     // PITASequences, PITASeedSites
+#include <pita_site_cluster.hpp>  // PITAOverlap, PITASortedSitePos
 #include <seqan/sequence.h>
 
 namespace ptddg {

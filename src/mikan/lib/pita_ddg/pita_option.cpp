@@ -1,4 +1,4 @@
-#include <mikan/lib/pita_ddg/include/pita_option.hpp>        // PITAOptions
+#include <pita_option.hpp>        // PITAOptions
 
 using namespace seqan;
 

@@ -1,6 +1,6 @@
-#include <mikan/lib/rnahybrid2_mfe/include/rh2_inst_template.hpp> // TRNATYPE
-#include <mikan/lib/rnahybrid2_mfe/include/rh2_score.hpp>         // RH2MFEScores
-#include <mikan/lib/rnahybrid2_mfe/include/rh2_site_cluster.hpp>  // RH2Overlap, RH2SortedSitePos
+#include <rh2_inst_template.hpp> // TRNATYPE
+#include <rh2_score.hpp>         // RH2MFEScores
+#include <rh2_site_cluster.hpp>  // RH2Overlap, RH2SortedSitePos
 
 using namespace seqan;
 

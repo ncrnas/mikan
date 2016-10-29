@@ -1,12 +1,12 @@
 #ifndef TSSVM_CORE_HPP_
 #define TSSVM_CORE_HPP_
 
-#include <mikan/lib/two_step_svm/include/tssvm_align.hpp>          // TSAlign
-#include <mikan/lib/two_step_svm/include/tssvm_mrna_feature.hpp>   // TSSVMRNARawFeatures
-#include <mikan/lib/two_step_svm/include/tssvm_mrna_svm.hpp>       // TSSVMRNAInputVector
-#include <mikan/lib/two_step_svm/include/tssvm_option.hpp>         // TSSVMOptions
-#include <mikan/lib/two_step_svm/include/tssvm_seed_site.hpp>      // TSSVMSequences, TSSVMSeedSites, TSSVMSeedSiteOverlap
-#include <mikan/lib/two_step_svm/include/tssvm_site_svm.hpp>       // TSSVMSiteInputVector
+#include <tssvm_align.hpp>          // TSAlign
+#include <tssvm_mrna_feature.hpp>   // TSSVMRNARawFeatures
+#include <tssvm_mrna_svm.hpp>       // TSSVMRNAInputVector
+#include <tssvm_option.hpp>         // TSSVMOptions
+#include <tssvm_seed_site.hpp>      // TSSVMSequences, TSSVMSeedSites, TSSVMSeedSiteOverlap
+#include <tssvm_site_svm.hpp>       // TSSVMSiteInputVector
 #include <seqan/sequence.h>
 
 namespace tssvm{

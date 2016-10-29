@@ -1,4 +1,4 @@
-#include <mikan/lib/vienna_rna/include/vr16_duplex.hpp>
+#include <vr16_duplex.hpp>
 #include <iostream>
 #include <cstring>
 

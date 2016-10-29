@@ -1,4 +1,4 @@
-#include <mikan/lib/vienna_rna/include/vr16_params.hpp>
+#include <vr16_params.hpp>
 #include <algorithm>                  // std::min
 #include <iostream>
 #include <cmath>

@@ -1,4 +1,4 @@
-#include <mikan/lib/rnahybrid2_mfe/RNAhybrid/include/hybrid_backtrace.hpp>
+#include <hybrid_backtrace.hpp>
 
 
 namespace rh2 {

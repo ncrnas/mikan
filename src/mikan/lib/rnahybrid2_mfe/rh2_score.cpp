@@ -1,5 +1,5 @@
-#include <mikan/lib/rnahybrid2_mfe/include/rh2_inst_template.hpp> // TRNATYPE
-#include <mikan/lib/rnahybrid2_mfe/include/rh2_score.hpp>         // RH2MFEScores, RH2TotalScores
+#include <rh2_inst_template.hpp> // TRNATYPE
+#include <rh2_score.hpp>         // RH2MFEScores, RH2TotalScores
 
 using namespace seqan;
 

@@ -1,8 +1,8 @@
 #ifndef TSSVM_SITE_FEATURE_HPP_
 #define TSSVM_SITE_FEATURE_HPP_
 
-#include <mikan/lib/two_step_svm/include/tssvm_align.hpp>          // TSAlign
-#include <mikan/lib/two_step_svm/include/tssvm_seed_site.hpp>      // TSSVMSeedSite
+#include <tssvm_align.hpp>          // TSAlign
+#include <tssvm_seed_site.hpp>      // TSSVMSeedSite
 #include <seqan/sequence.h>
 
 namespace tssvm{

@@ -1,4 +1,4 @@
-#include <mikan/lib/miranda3/include/mr3_core.hpp>          // MR3CoreInput, MR3Core
+#include <mr3_core.hpp>          // MR3CoreInput, MR3Core
 
 int main(int argc, char const ** argv)
 {

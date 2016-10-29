@@ -6,12 +6,12 @@
 #include <ctime>                 // clock_t, clock, CLOCKS_PER_SEC
 #endif
 #include <seqan/arg_parse.h>
-#include <mikan/lib/rnahybrid2_mfe/include/rh2_inst_template.hpp> // TRNATYPE
-#include <mikan/lib/rnahybrid2_mfe/include/rh2_option.hpp>        // RH2Options
-#include <mikan/lib/rnahybrid2_mfe/include/rh2_seed_site.hpp>     // RH2Sequences, RH2SeedSites
-#include <mikan/lib/rnahybrid2_mfe/include/rh2_score.hpp>         // RH2MFEScores, RH2TotalScores
-#include <mikan/lib/rnahybrid2_mfe/include/rh2_site_cluster.hpp>  // RH2Overlap, RH2TopNScore, RH2SortedSitePos
-#include <mikan/lib/rnahybrid2_mfe/include/rh2_core.hpp>          // RH2CoreInput, RH2Core
+#include <rh2_inst_template.hpp> // TRNATYPE
+#include <rh2_option.hpp>        // RH2Options
+#include <rh2_seed_site.hpp>     // RH2Sequences, RH2SeedSites
+#include <rh2_score.hpp>         // RH2MFEScores, RH2TotalScores
+#include <rh2_site_cluster.hpp>  // RH2Overlap, RH2TopNScore, RH2SortedSitePos
+#include <rh2_core.hpp>          // RH2CoreInput, RH2Core
 
 namespace rh2mfe {
 

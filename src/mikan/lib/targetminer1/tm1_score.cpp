@@ -1,6 +1,6 @@
 #include <math.h>                // roundf
-#include <mikan/lib/targetminer1/include/tm1_inst_template.hpp> // TRNATYPE
-#include <mikan/lib/targetminer1/include/tm1_score.hpp>         // TM1ClassifiedScores
+#include <tm1_inst_template.hpp> // TRNATYPE
+#include <tm1_score.hpp>         // TM1ClassifiedScores
 
 using namespace seqan;
 

@@ -1,5 +1,5 @@
-#include <mikan/lib/rnahybrid2_mfe/RNAhybrid/include/hybrid_backtrace.hpp>
-#include <mikan/lib/rnahybrid2_mfe/RNAhybrid/include/hybrid_prettyprint.hpp>
+#include <hybrid_backtrace.hpp>
+#include <hybrid_prettyprint.hpp>
 
 namespace rh2 {
 

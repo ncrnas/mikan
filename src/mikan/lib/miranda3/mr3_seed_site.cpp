@@ -1,5 +1,5 @@
-#include <mikan/lib/miranda3/include/mr3_inst_template.hpp>  // TRNATYPE
-#include <mikan/lib/miranda3/include/mr3_seed_site.hpp>      // MR3Sequences, MR3SeedSeqs, MR3SeedSites
+#include <mr3_inst_template.hpp>  // TRNATYPE
+#include <mr3_seed_site.hpp>      // MR3Sequences, MR3SeedSeqs, MR3SeedSites
 #include <seqan/seq_io.h>
 
 using namespace seqan;

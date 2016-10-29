@@ -1,11 +1,11 @@
 #ifndef MR3_CORE_HPP_
 #define MR3_CORE_HPP_
 
-#include <mikan/lib/miranda3/include/mr3_inst_template.hpp>  // TRNATYPE
-#include <mikan/lib/miranda3/include/mr3_option.hpp>         // MR3Options
-#include <mikan/lib/miranda3/include/mr3_score.hpp>          // MR3GGDScores, MR3TotalScores
-#include <mikan/lib/miranda3/include/mr3_seed_site.hpp>      // MR3Sequences, MR3SeedSites
-#include <mikan/lib/miranda3/include/mr3_site_cluster.hpp>   // MR3Overlap, MR3SortedSitePos
+#include <mr3_inst_template.hpp>  // TRNATYPE
+#include <mr3_option.hpp>         // MR3Options
+#include <mr3_score.hpp>          // MR3GGDScores, MR3TotalScores
+#include <mr3_seed_site.hpp>      // MR3Sequences, MR3SeedSites
+#include <mr3_site_cluster.hpp>   // MR3Overlap, MR3SortedSitePos
 #include <seqan/sequence.h>
 
 namespace mr3as {

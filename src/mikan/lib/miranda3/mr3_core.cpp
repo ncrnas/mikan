@@ -5,12 +5,12 @@
 #include <ctime>                  // clock_t, clock, CLOCKS_PER_SEC
 #endif
 #include <seqan/arg_parse.h>
-#include <mikan/lib/miranda3/include/mr3_inst_template.hpp>  // TRNATYPE
-#include <mikan/lib/miranda3/include/mr3_option.hpp>         // MR3Options
-#include <mikan/lib/miranda3/include/mr3_seed_site.hpp>      // MR3Sequences, MR3SeedSites
-#include <mikan/lib/miranda3/include/mr3_score.hpp>          // MR3SiteScores, MR3TotalScores
-#include <mikan/lib/miranda3/include/mr3_site_cluster.hpp>   // MR3Overlap, MR3TopNScore, MR3SortedSitePos
-#include <mikan/lib/miranda3/include/mr3_core.hpp>           // MR3CoreInput, MR3Core
+#include <mr3_inst_template.hpp>  // TRNATYPE
+#include <mr3_option.hpp>         // MR3Options
+#include <mr3_seed_site.hpp>      // MR3Sequences, MR3SeedSites
+#include <mr3_score.hpp>          // MR3SiteScores, MR3TotalScores
+#include <mr3_site_cluster.hpp>   // MR3Overlap, MR3TopNScore, MR3SortedSitePos
+#include <mr3_core.hpp>           // MR3CoreInput, MR3Core
 
 namespace mr3as {
 

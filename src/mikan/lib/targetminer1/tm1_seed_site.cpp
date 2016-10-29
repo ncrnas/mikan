@@ -1,5 +1,5 @@
-#include <mikan/lib/targetminer1/include/tm1_inst_template.hpp> // TRNATYPE
-#include <mikan/lib/targetminer1/include/tm1_seed_site.hpp>     // TM1Sequences, TM1SeedSeqs, TM1SeedSites
+#include <tm1_inst_template.hpp> // TRNATYPE
+#include <tm1_seed_site.hpp>     // TM1Sequences, TM1SeedSeqs, TM1SeedSites
 #include <seqan/seq_io.h>
 
 using namespace seqan;
