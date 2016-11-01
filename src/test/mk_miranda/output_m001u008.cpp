@@ -5,10 +5,10 @@
 
 namespace {
 
-    class U3008 : public TestIOMR3AS
+    class OM001U008 : public TestIOMR3AS
     {
     protected:
-        U3008() {
+        OM001U008() {
             IFNAME1 = (char *)"mir_001.fasta";
             IFNAME2 = (char *)"utr3_008.fasta";
             O1FNAME1 = (char *)"test_output1_site_8.txt";
@@ -19,13 +19,13 @@ namespace {
         }
     };
 
-    TEST_F(U3008, comp_site) {
+    TEST_F(OM001U008, comp_site) {
         run_main();
 
         gtest_compare_two_files(o1file1, o2file1);
     }
 
-    TEST_F(U3008, comp_mrna) {
+    TEST_F(OM001U008, comp_mrna) {
         run_main();
 
         gtest_compare_two_files(o1file2, o2file2);

@@ -6,10 +6,10 @@
 
 namespace {
 
-    class MI001 : public TestIOMR3AS
+    class SDM001 : public TestIOMR3AS
     {
     protected:
-        MI001() {
+        SDM001() {
             IFNAME1 = (char *)"mir_001.fasta";
             IFNAME2 = (char *)"utr3_001.fasta";
             O1FNAME1 = (char *)"test_output1_site_1.txt";
@@ -20,7 +20,7 @@ namespace {
         }
     };
 
-    TEST_F(MI001, get_seed_1) {
+    TEST_F(SDM001, get_seed_1) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
@@ -46,7 +46,7 @@ namespace {
         comp_two_rnas(mSeedSeqs.get_seed_seq(0), rnastr);
     }
 
-    TEST_F(MI001, get_seed_6mer) {
+    TEST_F(SDM001, get_seed_6mer) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
@@ -76,7 +76,7 @@ namespace {
         EXPECT_STREQ(seq_type, seqan::toCString((seqan::CharString)mSeedSeqs.get_seed_type(0)));
     }
 
-    TEST_F(MI001, get_seed_gut) {
+    TEST_F(SDM001, get_seed_gut) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
