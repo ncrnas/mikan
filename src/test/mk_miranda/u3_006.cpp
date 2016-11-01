@@ -13,7 +13,7 @@ namespace {
             IFNAME2 = (char *)"utr3_006.fasta";
             OFNAME1 = (char *)"test_output_1.txt";
             OFNAME2 = (char *)"test_ds1.txt";
-            OMPATH = (char *)"mkmiranda/";
+            OMPATH = (char *)"miranda/";
         }
 
         void read_files() {
