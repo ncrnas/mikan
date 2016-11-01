@@ -24,9 +24,6 @@ protected:
         seqan::clear(mrna_seqs);
     }
 
-    virtual void TearDown() {
-    }
-
     void read_files() {
         options.mMiRNAFasta = seqan::toCString(ifile1);
         options.mMRNAFasta = seqan::toCString(ifile2);
@@ -46,7 +43,7 @@ protected:
     seqan::StringSet<seqan::RnaString> mrna_seqs;
 };
 
-class TestIOMR3AS  : public ::testing::Test
+class TestIOBase : public ::testing::Test
 {
 protected:
     char *IFNAME1;
@@ -90,15 +87,34 @@ protected:
         seqan::clear(mrna_seqs);
     }
 
-    virtual void TearDown() {
-    }
+    int fread_res;
+    int argc;
+    char *argv[5];
+    seqan::CharString dfile;
+    seqan::CharString ifile1;
+    seqan::CharString ifile2;
+    seqan::CharString ompath;
+    seqan::CharString o1file1;
+    seqan::CharString o1file2;
+    seqan::CharString o2file1;
+    seqan::CharString o2file2;
+    seqan::StringSet<seqan::CharString> mirna_ids;
+    seqan::StringSet<seqan::CharString> mrna_ids;
+    seqan::StringSet<seqan::RnaString> mirna_seqs;
+    seqan::StringSet<seqan::RnaString> mrna_seqs;
+};
+
+class TestIOMR3AS : public TestIOBase
+{
+protected:
 
     void read_files(bool parse_argv) {
         if (parse_argv)
         {
             (void)options.parseCommandLine(argc, (const char **)argv);
         }
-        else {
+        else
+        {
             options.mMiRNAFasta = seqan::toCString(ifile1);
             options.mMRNAFasta = seqan::toCString(ifile2);
             coreInput.init_from_args(options);
@@ -117,20 +133,4 @@ protected:
     mr3as::MR3Options options;
     mr3as::MR3SeedSeqs<seqan::RnaString> mSeedSeqs;
     seqan::StringSet<seqan::CharString> mSeedDef;
-
-    int fread_res;
-    int argc;
-    char *argv[5];
-    seqan::CharString dfile;
-    seqan::CharString ifile1;
-    seqan::CharString ifile2;
-    seqan::CharString ompath;
-    seqan::CharString o1file1;
-    seqan::CharString o1file2;
-    seqan::CharString o2file1;
-    seqan::CharString o2file2;
-    seqan::StringSet<seqan::CharString> mirna_ids;
-    seqan::StringSet<seqan::CharString> mrna_ids;
-    seqan::StringSet<seqan::RnaString> mirna_seqs;
-    seqan::StringSet<seqan::RnaString> mrna_seqs;
 };
