@@ -1,4 +1,4 @@
-project (test_mk_miranda)
+project (test_mk_common)
 
 cmake_minimum_required (VERSION 2.8.2)
 
@@ -30,7 +30,7 @@ else()
 endif()
 
 # Add executable applications
-add_executable (gtest_mk_miranda  mi_001.cpp
+add_executable (gtest_mk_common mi_001.cpp mi_002.cpp
         u3_001.cpp u3_002.cpp u3_003.cpp u3_004.cpp u3_005.cpp u3_006.cpp u3_007.cpp u3_008.cpp
         u3_009.cpp u3_010.cpp u3_011.cpp)
 
@@ -42,9 +42,10 @@ if(NOT TARGET mikantest)
     add_library(mikantest ${MKTEST_SOURCE})
 endif()
 
+
 # Add dependencies found by find_package (SeqAn)
-target_link_libraries (gtest_mk_miranda gtest gtest_main)
-target_link_libraries (gtest_mk_miranda ${SEQAN_LIBRARIES} mr3as mikantest)
+target_link_libraries (gtest_mk_common gtest gtest_main)
+target_link_libraries (gtest_mk_common ${SEQAN_LIBRARIES} mr3as mikantest)
 
 # Add CXX flags found by find_package (SeqAn)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SEQAN_CXX_FLAGS}")
@@ -54,4 +55,4 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/../lib/googletest/cmake/internal_utils.cmake
 config_compiler_and_linker()  # Defined in internal_utils.cmake.
 
 # Add test
-add_test (NAME test_mk_miranda COMMAND gtest_mk_miranda)
+add_test (NAME test_mk_miranda COMMAND gtest_mk_common)

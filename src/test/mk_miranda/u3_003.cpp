@@ -5,7 +5,7 @@
 
 namespace {
 
-    class U3003 : public TestIO
+    class U3003 : public TestIOMR3AS
     {
     protected:
         U3003() {
@@ -16,63 +16,8 @@ namespace {
             O2FNAME1 = (char *)"test_output2_site_3.txt";
             O2FNAME2 = (char *)"test_output2_mrna_3.txt";
             OMPATH = (char *)"mk_miranda/";
-        }
-
-        void read_files() {
-            (void)options.parseCommandLine(argc, (const char **)argv);
-            coreInput.init_from_args(options);
-            (void)coreInput.load_seq_from_file();
-        }
-
-        void run_main() {
-            (void)mr3as::MR3CoreMain(argc, (const char **)argv);
-        }
-
-        mr3as::MR3CoreInput<mr3as::TRNATYPE> coreInput;
-        mr3as::MR3Options options;
+        };
     };
-
-    TEST_F(U3003, mrna_fasta) {
-        read_files();
-        mrna_ids = coreInput.get_mrna_ids();
-        mrna_seqs = coreInput.get_mrna_seqs();
-
-        EXPECT_EQ(1u, length(mrna_ids));
-
-        const char *id1 = "hg18_refGene NM_018214 range=chr6:53895551-53896878 5'pad=0 3'pad=0 "
-                "revComp=FALSE strand=+ repeatMasking=none";
-        EXPECT_STREQ(id1, seqan::toCString(mrna_ids[0]));
-
-        EXPECT_EQ(1u, length(mrna_seqs));
-        const char *seq1 = "AGUUUCACCUCCAAGUUUUACCUCCUGUGUCUUCCUCUGCUGUCGAGACG"
-                "UUCCUGUCUGCUUCCCGGGAGCCUCACGUGCUCCUUGUCCUAACCAGCCC"
-                "CCGCGCGCCAUCUUCCCGUGGAGUGUGGGGAAGCUGCUGUCUCCCAGGAA"
-                "GUGCCUUACUCAUCCCGCAACCAGUCAGCGCACCAGUGGUCUCCCGGUGU"
-                "GAUUUUUUUUUUUUUUAAUUUCAGUUGUUUGUAAUAAGUAGAAUACACUA"
-                "CUGUAAACAUACGACCUUUGUUUUUGUCUUAUGUUGGGGUAAAGGAAAGC"
-                "AGGAAGGGGAAUUUUUAUCCUCCUCCCUUCCGUAAAGUGCUGGGAUAUUU"
-                "UGAAUCCCCCAAGUUCCCUUGGACCUACUGAUGAGAGAUAGUUUUAUGUA"
-                "UGGGGAAAAAUGGAUACUUUUUAAACCUUUUUUGGCAGCUCAGAUGGUGU"
-                "AAAUUUUAAAAUUUUGUAUAGGUAUUUCAUAACAAAAAUAUGUAUUUCUU"
-                "UUUUGUUAUUUUAUCUUGAAAACGGUACAUAUUUUAGUAUUUGUGCAGAA"
-                "AAACAAGUCCUAAAGUAUUUGUUUUUAUUUGUACCAUCCACUUGUGCCUU"
-                "ACUGUAUCCUGUGUCAUGUCCAAUCAGUUGUAAACAAUGGCAUCUUUGAA"
-                "CAGUGUGAUGAGAAUAGGAAUGUGGUGUUUUAAAGCAGUGUUGCAUUUUA"
-                "AUCAGUAAUCUACCUGGUGGAUUUGUUUUUAACCAAAAAGAUGAAUUAUC"
-                "AAUGAUUUGUAAUUAUAUCAGUUGAUUUUUUUUGAAAAGAUGAACCAAAG"
-                "GAUUUGACUGCUAAUAUUUUAUUCCUUACACUUUUUUUCUGAAUAAGUCU"
-                "CUCAUAAUGAGUGCAGUGUCAGACUGUGCCUACUCUGAUGGUAUGUGCCA"
-                "UUUGUAAAAUAAAAUAGAGCAGAAAAACACAAAAAGAGAACACUGGUUCA"
-                "GACAUUCAGUGGGCAAGUAAAUUAUGGACUGCAAAAUAAUGAUUUUUAUU"
-                "CAAGAAAGCUUUAAAAGUUUUAUAUCCAGAUAUACAACCACAAUAAAGCA"
-                "AAAUAACCUACUAUCAAAAUAGAAAUGUUGCUAUCUUUAUAAGUGCAAUU"
-                "UAAUUUGUAAAUAGAGUUUGAAUCAAAGUAUCACAAAAUACUGCUUCAAG"
-                "AUUUAAUUUUAAAUCUGCUAAUUUAAGGGAUAUUGGGAAAAGUUUUGGUG"
-                "UGUUUCUGUUGAUUUCUUUUUUGUAUGCUGUGAUAAAAGAGAAAUGAAAA"
-                "GUGCCAGUCACUGUGUGGUGUCUAGGAAAAUCAUAUAUAUUUUUUUCUCC"
-                "AAGAAAUAAAUUCAUCCUGGACAUUGGC";
-        EXPECT_STREQ(seq1, seqan::toCString((seqan::CharString)mrna_seqs[0]));
-    }
 
     TEST_F(U3003, comp_site) {
         run_main();

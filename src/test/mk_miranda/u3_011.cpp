@@ -5,7 +5,7 @@
 
 namespace {
 
-    class U3011 : public TestIO
+    class U3011 : public TestIOMR3AS
     {
     protected:
         U3011() {
@@ -17,37 +17,7 @@ namespace {
             O2FNAME2 = (char *)"test_output2_mrna_11.txt";
             OMPATH = (char *)"mk_miranda/";
         }
-
-        void read_files() {
-            (void)options.parseCommandLine(argc, (const char **)argv);
-            coreInput.init_from_args(options);
-            (void)coreInput.load_seq_from_file();
-        }
-
-        void run_main() {
-            (void)mr3as::MR3CoreMain(argc, (const char **)argv);
-        }
-
-        mr3as::MR3CoreInput<mr3as::TRNATYPE> coreInput;
-        mr3as::MR3Options options;
     };
-
-    TEST_F(U3011, mrna_fasta) {
-        read_files();
-        mrna_ids = coreInput.get_mrna_ids();
-        mrna_seqs = coreInput.get_mrna_seqs();
-
-        EXPECT_EQ(1u, length(mrna_ids));
-
-        const char *id1 = "NM_000001*chr1*-*0000001*9000001";
-        EXPECT_STREQ(id1, seqan::toCString(mrna_ids[0]));
-
-        EXPECT_EQ(1u, length(mrna_seqs));
-        const char *seq1 = "UUUGAGUUCUGGCCACCAACAAUUUAGUCAUAUCUGAUAGGUACAAAAGA"
-                "AAACCAAGAUUUUGAUAUGACCACCUUUCAACACUUUUUACUGCAACUAG";
-        EXPECT_STREQ(seq1, seqan::toCString((seqan::CharString)mrna_seqs[0]));
-    }
-
 
     TEST_F(U3011, comp_site) {
         run_main();
