@@ -1,6 +1,6 @@
-#include <mikan/lib/two_step_svm/include/tssvm_inst_template.hpp>  // TRNATYPE
-#include <mikan/lib/two_step_svm/include/tssvm_mrna_feature.hpp>   // TSSVMRNARawFeatures
-#include <mikan/lib/two_step_svm/include/tssvm_mrna_svm.hpp>       // TSSVMRNAModel, TSSVMRNAInputVector
+#include <tssvm_inst_template.hpp>  // TRNATYPE
+#include <tssvm_mrna_feature.hpp>   // TSSVMRNARawFeatures
+#include <tssvm_mrna_svm.hpp>       // TSSVMRNAModel, TSSVMRNAInputVector
 
 using namespace seqan;
 

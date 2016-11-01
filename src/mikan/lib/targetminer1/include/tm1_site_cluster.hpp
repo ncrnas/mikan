@@ -1,7 +1,7 @@
 #ifndef TM1_SITE_CLUSTER_HPP_
 #define TM1_SITE_CLUSTER_HPP_
 
-#include <mikan/lib/targetminer1/include/tm1_seed_site.hpp>      // TM1SeedSites
+#include <tm1_seed_site.hpp>      // TM1SeedSites
 #include <set>                    // set
 #include <map>                    // multimap
 #include <utility>                // pair

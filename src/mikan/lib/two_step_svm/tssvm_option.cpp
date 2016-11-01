@@ -1,4 +1,4 @@
-#include <mikan/lib/two_step_svm/include/tssvm_option.hpp>         // TSSVMOptions
+#include <tssvm_option.hpp>         // TSSVMOptions
 
 using namespace seqan;
 

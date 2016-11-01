@@ -1,5 +1,5 @@
-#include <mikan/lib/pita_ddg/include/pita_inst_template.hpp> // TRNATYPE
-#include <mikan/lib/pita_ddg/include/pita_seed_site.hpp>     // PITASequences, PITASeedSeqs, PITASeedSites
+#include <pita_inst_template.hpp> // TRNATYPE
+#include <pita_seed_site.hpp>     // PITASequences, PITASeedSeqs, PITASeedSites
 #include <seqan/seq_io.h>
 
 using namespace seqan;

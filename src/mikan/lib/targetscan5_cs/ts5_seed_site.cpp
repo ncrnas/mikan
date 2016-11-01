@@ -1,5 +1,5 @@
-#include <mikan/lib/targetscan5_cs/include/ts5_inst_template.hpp> // TRNATYPE
-#include <mikan/lib/targetscan5_cs/include/ts5_seed_site.hpp>     // TS5Sequences, TS5SeedSeqs, TS5SeedSites
+#include <ts5_inst_template.hpp> // TRNATYPE
+#include <ts5_seed_site.hpp>     // TS5Sequences, TS5SeedSeqs, TS5SeedSites
 #include <seqan/seq_io.h>
 
 using namespace seqan;

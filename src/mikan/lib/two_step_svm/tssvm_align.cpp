@@ -1,5 +1,5 @@
-#include <mikan/lib/two_step_svm/include/tssvm_align.hpp>          // TSAlign
-#include <mikan/lib/two_step_svm/include/tssvm_inst_template.hpp>  // TRNATYPE
+#include <tssvm_align.hpp>          // TSAlign
+#include <tssvm_inst_template.hpp>  // TRNATYPE
 
 using namespace seqan;
 

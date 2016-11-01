@@ -1,8 +1,8 @@
 #ifndef RH2_SITE_CLUSTER_HPP_
 #define RH2_SITE_CLUSTER_HPP_
 
-#include <mikan/lib/rnahybrid2_mfe/include/rh2_score.hpp>         // RH2MFEScores
-#include <mikan/lib/rnahybrid2_mfe/include/rh2_seed_site.hpp>     // RH2SeedSites
+#include <rh2_score.hpp>         // RH2MFEScores
+#include <rh2_seed_site.hpp>     // RH2SeedSites
 #include <set>                   // set
 #include <map>                   // multimap
 #include <utility>               // pair

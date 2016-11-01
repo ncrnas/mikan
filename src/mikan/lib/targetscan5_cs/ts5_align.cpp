@@ -1,5 +1,5 @@
-#include <mikan/lib/targetscan5_cs/include/ts5_align.hpp>         // TS5Alignment
-#include <mikan/lib/targetscan5_cs/include/ts5_inst_template.hpp> // TRNATYPE
+#include <ts5_align.hpp>         // TS5Alignment
+#include <ts5_inst_template.hpp> // TRNATYPE
 #include <sstream>               // stringstream
 #include <seqan/index.h>
 

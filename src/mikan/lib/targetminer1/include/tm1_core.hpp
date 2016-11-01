@@ -1,14 +1,14 @@
 #ifndef TM1_CORE_HPP_
 #define TM1_CORE_HPP_
 
-#include <mikan/lib/targetminer1/include/tm1_inst_template.hpp> // TRNATYPE
-#include <mikan/lib/targetminer1/include/tm1_mrna_feature.hpp>  // TM1MRNAFeatures
-#include <mikan/lib/targetminer1/include/tm1_mrna_svm.hpp>      // TM1MRNAModel, TM1MRNAInputVector
-#include <mikan/lib/targetminer1/include/tm1_option.hpp>        // TM1CSOptions
-#include <mikan/lib/targetminer1/include/tm1_score.hpp>         // TM1ClassifiedScores
-#include <mikan/lib/targetminer1/include/tm1_seed_site.hpp>     // TM1Sequences, TM1SeedSites
-#include <mikan/lib/targetminer1/include/tm1_site_cluster.hpp>  // TM1Overlap
-#include <mikan/lib/targetminer1/include/tm1_site_feature.hpp>  // TM1RawFeatures
+#include <tm1_inst_template.hpp> // TRNATYPE
+#include <tm1_mrna_feature.hpp>  // TM1MRNAFeatures
+#include <tm1_mrna_svm.hpp>      // TM1MRNAModel, TM1MRNAInputVector
+#include <tm1_option.hpp>        // TM1CSOptions
+#include <tm1_score.hpp>         // TM1ClassifiedScores
+#include <tm1_seed_site.hpp>     // TM1Sequences, TM1SeedSites
+#include <tm1_site_cluster.hpp>  // TM1Overlap
+#include <tm1_site_feature.hpp>  // TM1RawFeatures
 
 namespace tm1p{
 //

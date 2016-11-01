@@ -5,12 +5,12 @@
 #include <ctime>                  // clock_t, clock, CLOCKS_PER_SEC
 #endif
 #include <seqan/arg_parse.h>
-#include <mikan/lib/pita_ddg/include/pita_inst_template.hpp> // TRNATYPE
-#include <mikan/lib/pita_ddg/include/pita_option.hpp>        // PITAOptions
-#include <mikan/lib/pita_ddg/include/pita_seed_site.hpp>     // PITASequences, PITASeedSites
-#include <mikan/lib/pita_ddg/include/pita_score.hpp>         // PITAMFEScores, PITATotalScores
-#include <mikan/lib/pita_ddg/include/pita_site_cluster.hpp>  // PITAOverlap, PITATopNScore, PITASortedSitePos
-#include <mikan/lib/pita_ddg/include/pita_core.hpp>          // PITACoreInput, PITACore
+#include <pita_inst_template.hpp> // TRNATYPE
+#include <pita_option.hpp>        // PITAOptions
+#include <pita_seed_site.hpp>     // PITASequences, PITASeedSites
+#include <pita_score.hpp>         // PITAMFEScores, PITATotalScores
+#include <pita_site_cluster.hpp>  // PITAOverlap, PITATopNScore, PITASortedSitePos
+#include <pita_core.hpp>          // PITACoreInput, PITACore
 
 namespace ptddg {
 

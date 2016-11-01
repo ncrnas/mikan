@@ -1,8 +1,8 @@
 #ifndef RH2_SCORE_HPP_
 #define RH2_SCORE_HPP_
 
-#include <mikan/lib/rnahybrid2_mfe/include/rh2_seed_site.hpp>     // RH2SeedSites
-#include <mikan/lib/rnahybrid2_mfe/RNAhybrid/include/hybrid_core.hpp>       // RH2WorkSpace, RH2RetValues
+#include <rh2_seed_site.hpp>     // RH2SeedSites
+#include <hybrid_core.hpp>       // RH2WorkSpace, RH2RetValues
 #include <vector>
 #include <sstream>
 #include <seqan/sequence.h>

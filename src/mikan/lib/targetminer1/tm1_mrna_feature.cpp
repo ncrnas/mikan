@@ -1,5 +1,5 @@
-#include <mikan/lib/targetminer1/include/tm1_inst_template.hpp> // TRNATYPE
-#include <mikan/lib/targetminer1/include/tm1_mrna_feature.hpp>  // TM1ScaledFeatures, TM1RawMRNAures, TM1MRNASeedType, TM1MRNASiteCount,
+#include <tm1_inst_template.hpp> // TRNATYPE
+#include <tm1_mrna_feature.hpp>  // TM1ScaledFeatures, TM1RawMRNAures, TM1MRNASeedType, TM1MRNASiteCount,
 
 using namespace seqan;
 

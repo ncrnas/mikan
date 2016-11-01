@@ -1,7 +1,7 @@
 #include <math.h>                // roundf
-#include <mikan/lib/targetscan5_cs/include/ts5_feature.hpp>       // TS5RawFeatures
-#include <mikan/lib/targetscan5_cs/include/ts5_inst_template.hpp> // TRNATYPE
-#include <mikan/lib/targetscan5_cs/include/ts5_score.hpp>         // TS5ContextScores, TS5ScoreSeedType, TS5FeatSitePos, TS5FeatAURich,
+#include <ts5_feature.hpp>       // TS5RawFeatures
+#include <ts5_inst_template.hpp> // TRNATYPE
+#include <ts5_score.hpp>         // TS5ContextScores, TS5ScoreSeedType, TS5FeatSitePos, TS5FeatAURich,
 
 using namespace seqan;
 

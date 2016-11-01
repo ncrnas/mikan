@@ -1,11 +1,11 @@
 #ifndef TS5_CORE_HPP_
 #define TS5_CORE_HPP_
 
-#include <mikan/lib/targetscan5_cs/include/ts5_feature.hpp>       // TS5RawFeatures
-#include <mikan/lib/targetscan5_cs/include/ts5_inst_template.hpp> // TRNATYPE
-#include <mikan/lib/targetscan5_cs/include/ts5_option.hpp>        // TS5CSOptions
-#include <mikan/lib/targetscan5_cs/include/ts5_score.hpp>         // TS5ContextScores, TS5TotalScores
-#include <mikan/lib/targetscan5_cs/include/ts5_seed_site.hpp>     // TS5Sequences, TS5SeedSites
+#include <ts5_feature.hpp>       // TS5RawFeatures
+#include <ts5_inst_template.hpp> // TRNATYPE
+#include <ts5_option.hpp>        // TS5CSOptions
+#include <ts5_score.hpp>         // TS5ContextScores, TS5TotalScores
+#include <ts5_seed_site.hpp>     // TS5Sequences, TS5SeedSites
 
 namespace ts5cs{
 //

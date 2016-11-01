@@ -1,6 +1,6 @@
-#include <mikan/lib/vienna_rna/include/vr16_duplex.hpp>
-#include <mikan/lib/vienna_rna/include/vr16_pair_mat.hpp>
-#include <mikan/lib/vienna_rna/include/vr16_params.hpp>
+#include <vr16_duplex.hpp>
+#include <vr16_pair_mat.hpp>
+#include <vr16_params.hpp>
 #include <iostream>
 #include <string>
 #include <cstring>

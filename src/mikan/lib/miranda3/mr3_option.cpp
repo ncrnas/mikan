@@ -1,4 +1,4 @@
-#include <mikan/lib/miranda3/include/mr3_option.hpp>         // MR3Options
+#include <mr3_option.hpp>         // MR3Options
 
 using namespace seqan;
 

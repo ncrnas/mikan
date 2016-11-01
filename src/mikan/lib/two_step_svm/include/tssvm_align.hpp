@@ -1,7 +1,7 @@
 #ifndef TSSVM_ALIGN_HPP_
 #define TSSVM_ALIGN_HPP_
 
-#include <mikan/lib/two_step_svm/include/tssvm_seed_site.hpp>      // TSSVMSeedSites
+#include <tssvm_seed_site.hpp>      // TSSVMSeedSites
 #include <seqan/sequence.h>
 #include <seqan/align.h>
 #include <seqan/score.h>

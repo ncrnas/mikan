@@ -1,14 +1,11 @@
-# ===========================================================================
-#                  SeqAn - The Library for Sequence Analysis
-# ===========================================================================
-# File: /mikan/apps/CMakeLists.txt
-#
-# CMakeLists.txt file for the apps
-# ===========================================================================
+project (mk_apps)
 
 cmake_minimum_required (VERSION 2.8.2)
-project (mikan_apps)
 
-# Register all apps in core.  The apps will be built in SEQAN_RELEASE mode or
-# the apps called ${app} in APP:${app} mode.
-seqan_register_apps ()
+# Add subdirectories
+add_subdirectory (miranda)
+add_subdirectory (pita)
+add_subdirectory (rnahybrid)
+add_subdirectory (targetminer)
+add_subdirectory (targetscan)
+add_subdirectory (twostepsvm)

@@ -6,12 +6,12 @@
 #include <map>                   // multimap
 #include <utility>               // pair
 #include <seqan/arg_parse.h>
-#include <mikan/lib/targetscan5_cs/include/ts5_inst_template.hpp> // TRNATYPE
-#include <mikan/lib/targetscan5_cs/include/ts5_option.hpp>        // TS5CSOptions
-#include <mikan/lib/targetscan5_cs/include/ts5_seed_site.hpp>     // TS5Sequences, TS5SeedSites
-#include <mikan/lib/targetscan5_cs/include/ts5_feature.hpp>       // TS5RawFeatures
-#include <mikan/lib/targetscan5_cs/include/ts5_score.hpp>         // TS5ContextScores, TS5TotalScores
-#include <mikan/lib/targetscan5_cs/include/ts5_core.hpp>          // TS5CoreInput, TS5Core
+#include <ts5_inst_template.hpp> // TRNATYPE
+#include <ts5_option.hpp>        // TS5CSOptions
+#include <ts5_seed_site.hpp>     // TS5Sequences, TS5SeedSites
+#include <ts5_feature.hpp>       // TS5RawFeatures
+#include <ts5_score.hpp>         // TS5ContextScores, TS5TotalScores
+#include <ts5_core.hpp>          // TS5CoreInput, TS5Core
 
 namespace ts5cs {
 //

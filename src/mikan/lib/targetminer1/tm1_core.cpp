@@ -6,9 +6,9 @@
 #include <map>                   // multimap
 #include <utility>               // pair
 #include <seqan/arg_parse.h>
-#include <mikan/lib/targetminer1/include/tm1_inst_template.hpp> // TRNATYPE
-#include <mikan/lib/targetminer1/include/tm1_option.hpp>        // TM1CSOptions
-#include <mikan/lib/targetminer1/include/tm1_core.hpp>          // TM1CoreInput, TM1Core
+#include <tm1_inst_template.hpp> // TRNATYPE
+#include <tm1_option.hpp>        // TM1CSOptions
+#include <tm1_core.hpp>          // TM1CoreInput, TM1Core
 
 namespace tm1p {
 //

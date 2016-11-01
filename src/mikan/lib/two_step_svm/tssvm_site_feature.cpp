@@ -1,7 +1,7 @@
 #include <math.h>
-#include <mikan/lib/two_step_svm/include/tssvm_align.hpp>          // TSAlign
-#include <mikan/lib/two_step_svm/include/tssvm_inst_template.hpp>  // TRNATYPE
-#include <mikan/lib/two_step_svm/include/tssvm_site_feature.hpp>   // TSSVMRawFeatures, TSSVMFeatSeedType, TSSVMFeatSimilarity,
+#include <tssvm_align.hpp>          // TSAlign
+#include <tssvm_inst_template.hpp>  // TRNATYPE
+#include <tssvm_site_feature.hpp>   // TSSVMRawFeatures, TSSVMFeatSeedType, TSSVMFeatSimilarity,
 
 using namespace seqan;
 
