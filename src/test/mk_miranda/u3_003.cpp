@@ -11,19 +11,23 @@ namespace {
         U3003() {
             IFNAME1 = (char *)"mir_001.fasta";
             IFNAME2 = (char *)"utr3_003.fasta";
-            OFNAME1 = (char *)"test_output_1.txt";
-            OFNAME2 = (char *)"test_ds1.txt";
-            OMPATH = (char *)"miranda/";
+            O1FNAME1 = (char *)"test_output1_site_3.txt";
+            O1FNAME2 = (char *)"test_output1_mrna_3.txt";
+            O2FNAME1 = (char *)"test_output2_site_3.txt";
+            O2FNAME2 = (char *)"test_output2_mrna_3.txt";
+            OMPATH = (char *)"mk_miranda/";
         }
 
         void read_files() {
-            options.mMiRNAFasta = ifile1;
-            options.mMRNAFasta = ifile2;
-
+            (void)options.parseCommandLine(argc, (const char **)argv);
             coreInput.init_from_args(options);
-            int retVal = coreInput.load_seq_from_file();
-            EXPECT_EQ(retVal, 0);
+            (void)coreInput.load_seq_from_file();
         }
+
+        void run_main() {
+            (void)mr3as::MR3CoreMain(argc, (const char **)argv);
+        }
+
         mr3as::MR3CoreInput<mr3as::TRNATYPE> coreInput;
         mr3as::MR3Options options;
     };
@@ -68,5 +72,17 @@ namespace {
                 "GUGCCAGUCACUGUGUGGUGUCUAGGAAAAUCAUAUAUAUUUUUUUCUCC"
                 "AAGAAAUAAAUUCAUCCUGGACAUUGGC";
         EXPECT_STREQ(seq1, seqan::toCString((seqan::CharString)mrna_seqs[0]));
+    }
+
+    TEST_F(U3003, comp_site) {
+        run_main();
+
+        gtest_compare_two_files(o1file1, o2file1);
+    }
+
+    TEST_F(U3003, comp_mrna) {
+        run_main();
+
+        gtest_compare_two_files(o1file2, o2file2);
     }
 }

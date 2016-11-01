@@ -10,6 +10,8 @@
 
 namespace mr3as {
 
+int MR3CoreMain(int argc, char const **argv);
+
 //
 // Input data for MR3 score
 //

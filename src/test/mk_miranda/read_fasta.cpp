@@ -95,7 +95,7 @@ namespace {
         dfile2 += "mir_002.fasta";
 
         int func_res = gtest_compare_two_files(dfile1, dfile2);
-        EXPECT_EQ(0u, func_res);
+        EXPECT_EQ(0, func_res);
     }
 
 }
