@@ -28,68 +28,29 @@ namespace {
         }
     };
 
-    TEST_F(SeedCanonical, get_seed_1) {
+    TEST_F(SeedCanonical, get_seed_1_1) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
-
-        mSeedSeqs.set_mirna_seq(mirna_seqs[0]);
-
-        mSeedDef[1] = 'N';
-        mSeedDef[2] = 'N';
-
-        int n = mSeedSeqs.create_seed_seqs(mSeedDef);
-        EXPECT_EQ(0, n);
-        EXPECT_EQ(1u, length(mSeedSeqs.mEffectiveSeeds));
-
-        test_seed("AAGGCA", 0, "6mer");
-    }
-
-    TEST_F(SeedCanonical, get_seed_2_1) {
-        read_files(false);
-        mirna_seqs = coreInput.get_mirna_seqs();
-
-        mSeedDef[1] = 'N';
-        mSeedDef[2] = 'N';
-
         mSeedSeqs.set_mirna_seq(mirna_seqs[0]);
 
         int n = mSeedSeqs.create_seed_seqs(mSeedDef);
         EXPECT_EQ(0, n);
         EXPECT_EQ(1u, length(mSeedSeqs.mEffectiveSeeds));
 
-        test_seed("AAGGCA", 0, "6mer");
+        test_seed("AAGGCA", 0, "6mer", true);
     }
 
-    TEST_F(SeedCanonical, get_seed_2_2) {
+    TEST_F(SeedCanonical, get_seed_1_2) {
         read_files(false);
+
         mirna_seqs = coreInput.get_mirna_seqs();
-
-        mSeedDef[1] = 'N';
-        mSeedDef[2] = 'N';
-
         mSeedSeqs.set_mirna_seq(mirna_seqs[1]);
 
         int n = mSeedSeqs.create_seed_seqs(mSeedDef);
         EXPECT_EQ(0, n);
         EXPECT_EQ(1u, length(mSeedSeqs.mEffectiveSeeds));
 
-        test_seed("GGAAUG", 0, "6mer");
-    }
-
-    TEST_F(SeedCanonical, get_seed_6mer) {
-        read_files(false);
-        mirna_seqs = coreInput.get_mirna_seqs();
-
-        mSeedDef[1] = 'N';
-        mSeedDef[2] = 'N';
-
-        mSeedSeqs.set_mirna_seq(mirna_seqs[0]);
-
-        int n = mSeedSeqs.create_seed_seqs(mSeedDef);
-        EXPECT_EQ(0, n);
-        EXPECT_EQ(1u, length(mSeedSeqs.mEffectiveSeeds));
-
-        test_seed("AAGGCA", 0, "6mer");
+        test_seed("GGAAUG", 0, "6mer", true);
     }
 }

@@ -6,10 +6,10 @@
 
 namespace {
 
-    class SeedGU : public TestSeedMR3AS
+    class SeedMismatch : public TestSeedMR3AS
     {
     protected:
-        SeedGU() {
+        SeedMismatch() {
             IFNAME1 = (char *)"mir_001.fasta";
             IFNAME2 = (char *)"utr3_001.fasta";
             O1FNAME1 = (char *)"test_output1_site_1.txt";
@@ -28,7 +28,7 @@ namespace {
         }
     };
 
-    TEST_F(SeedGU, get_seed_gut) {
+    TEST_F(SeedMismatch, get_seed_gut) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
@@ -44,7 +44,7 @@ namespace {
         test_seed("AAAGCA", 2, "GUT", true);
     }
 
-    TEST_F(SeedGU, get_seed_gum) {
+    TEST_F(SeedMismatch, get_seed_gum) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
@@ -62,7 +62,7 @@ namespace {
         test_seed("AGAAUG", 4, "GUT", true);
     }
 
-    TEST_F(SeedGU, get_seed_gu_plus) {
+    TEST_F(SeedMismatch, get_seed_gu_plus) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
