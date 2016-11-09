@@ -28,64 +28,73 @@ namespace {
         }
     };
 
-    TEST_F(SeedMismatch, get_seed_gut) {
+    TEST_F(SeedMismatch, get_seed_mm_1) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
-        mSeedDef[3] = "1";
+        mSeedDef[4] = "1:1";
         mSeedSeqs.set_mirna_seq(mirna_seqs[0]);
 
         int n = mSeedSeqs.create_seed_seqs(mSeedDef);
         EXPECT_EQ(0, n);
-        EXPECT_EQ(3u, length(mSeedSeqs.mEffectiveSeeds));
+        EXPECT_EQ(17u, length(mSeedSeqs.mEffectiveSeeds));
 
         test_seed("AAGGCA", 0, "6mer", true);
-        test_seed("AAGACA", 1, "GUT", true);
-        test_seed("AAAGCA", 2, "GUT", true);
+
+        test_seed("AAGGCG", 1, "MM", true);
+        test_seed("AAGGCC", 2, "MM", true);
+        test_seed("AAGGCU", 3, "MM", true);
+
+        test_seed("AAGGUA", 4, "MM", true);
+        test_seed("AAGGAA", 5, "MM", true);
+        test_seed("AAGGGA", 6, "MM", true);
+
+        test_seed("AAGUCA", 7, "MM", true);
+        test_seed("AAGCCA", 8, "MM", true);
+
+        test_seed("AAUGCA", 9, "MM", true);
+        test_seed("AACGCA", 10, "MM", true);
+
+        test_seed("AGGGCA", 11, "MM", true);
+        test_seed("ACGGCA", 12, "MM", true);
+        test_seed("AUGGCA", 13, "MM", true);
+
+        test_seed("GAGGCA", 14, "MM", true);
+        test_seed("CAGGCA", 15, "MM", true);
+        test_seed("UAGGCA", 16, "MM", true);
     }
 
-    TEST_F(SeedMismatch, get_seed_gum) {
+    TEST_F(SeedMismatch, get_seed_mm_2) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
-        mSeedDef[3] = "1";
+        mSeedDef[4] = "0:1";
         mSeedSeqs.set_mirna_seq(mirna_seqs[1]);
 
         int n = mSeedSeqs.create_seed_seqs(mSeedDef);
         EXPECT_EQ(0, n);
-        EXPECT_EQ(5u, length(mSeedSeqs.mEffectiveSeeds));
+        EXPECT_EQ(15u, length(mSeedSeqs.mEffectiveSeeds));
 
         test_seed("GGAAUG", 0, "6mer", true);
-        test_seed("GGAAUA", 1, "GUT", true);
-        test_seed("GGAACG", 2, "GUM", true);
-        test_seed("GAAAUG", 3, "GUT", true);
-        test_seed("AGAAUG", 4, "GUT", true);
-    }
 
-    TEST_F(SeedMismatch, get_seed_gu_plus) {
-        read_files(false);
+        test_seed("GGAAUU", 1, "MM", true);
+        test_seed("GGAAUC", 2, "MM", true);
 
-        mirna_seqs = coreInput.get_mirna_seqs();
-        mSeedDef[3] = "+";
-        mSeedSeqs.set_mirna_seq(mirna_seqs[0]);
+        test_seed("GGAAGG", 3, "MM", true);
+        test_seed("GGAAAG", 4, "MM", true);
 
-        int n = mSeedSeqs.create_seed_seqs(mSeedDef);
-        EXPECT_EQ(0, n);
-        EXPECT_EQ(12u, length(mSeedSeqs.mEffectiveSeeds));
+        test_seed("GGAGUG", 5, "MM", true);
+        test_seed("GGACUG", 6, "MM", true);
+        test_seed("GGAUUG", 7, "MM", true);
 
-        test_seed("AAGGCA", 0, "6mer", true);
-        test_seed("AAGACA", 1, "GUT", true);
-        test_seed("AAAGCA", 2, "GUT", true);
+        test_seed("GGGAUG", 8, "MM", true);
+        test_seed("GGCAUG", 9, "MM", true);
+        test_seed("GGUAUG", 10, "MM", true);
 
-        test_seed("AAGACA", 3, "GU+", false);
-        test_seed("AAGACA", 4, "GU+", false);
-        test_seed("AAAACA", 5, "GU+", true);
+        test_seed("GUAAUG", 11, "MM", true);
+        test_seed("GCAAUG", 12, "MM", true);
 
-        test_seed("AAAGCA", 6, "GU+", false);
-        test_seed("AAAACA", 7, "GU+", false);
-        test_seed("AAAGCA", 8, "GU+", false);
-        test_seed("AAAACA", 9, "GU+", false);
-        test_seed("AAAACA", 10, "GU+", false);
-        test_seed("AAAACA", 11, "GU+", false);
+        test_seed("UGAAUG", 13, "MM", true);
+        test_seed("CGAAUG", 14, "MM", true);
     }
 }
