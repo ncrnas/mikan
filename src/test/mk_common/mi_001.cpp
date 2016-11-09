@@ -1,12 +1,11 @@
 #include<string>
 #include <seqan/sequence.h>
 #include "gtest/gtest.h"
-#include "test_io.hpp"
-#include "mr3_core.hpp"
+#include "test_fasta.hpp"
 
 namespace {
 
-    class MI001 : public TestIOCommon
+    class MI001 : public TestFasta
     {
     protected:
         MI001() {
