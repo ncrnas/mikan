@@ -38,7 +38,7 @@ namespace {
         EXPECT_EQ(0, n);
         EXPECT_EQ(1u, length(mSeedSeqs.mEffectiveSeeds));
 
-        test_seed("AAGGCA", 0, "6mer", true);
+        test_seed("AAGGCA", 0, "6mer", true, 0);
     }
 
     TEST_F(SeedCanonical, get_seed_1_2) {
@@ -51,6 +51,6 @@ namespace {
         EXPECT_EQ(0, n);
         EXPECT_EQ(1u, length(mSeedSeqs.mEffectiveSeeds));
 
-        test_seed("GGAAUG", 0, "6mer", true);
+        test_seed("GGAAUG", 0, "6mer", true, 0);
     }
 }
