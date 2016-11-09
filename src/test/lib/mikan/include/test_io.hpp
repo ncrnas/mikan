@@ -4,45 +4,7 @@
 #include "mikan_utils.hpp"
 #include "mr3_core.hpp"
 
-class TestIOCommon : public ::testing::Test
-{
-protected:
-    char *IFNAME1;
-    char *IFNAME2;
-
-    virtual void SetUp() {
-        dfile = STRINGIZE(TEST_DATA_PATH);
-
-        ifile1 = dfile;
-        ifile2 = dfile;
-        ifile1 += IFNAME1;
-        ifile2 += IFNAME2;
-
-        seqan::clear(mirna_ids);
-        seqan::clear(mrna_ids);
-        seqan::clear(mirna_seqs);
-        seqan::clear(mrna_seqs);
-    }
-
-    void read_files() {
-        options.mMiRNAFasta = seqan::toCString(ifile1);
-        options.mMRNAFasta = seqan::toCString(ifile2);
-        coreInput.init_from_args(options);
-        (void)coreInput.load_seq_from_file();
-    }
-
-    mr3as::MR3CoreInput<mr3as::TRNATYPE> coreInput;
-    mr3as::MR3Options options;
-
-    seqan::CharString dfile;
-    seqan::CharString ifile1;
-    seqan::CharString ifile2;
-    seqan::StringSet<seqan::CharString> mirna_ids;
-    seqan::StringSet<seqan::CharString> mrna_ids;
-    seqan::StringSet<seqan::RnaString> mirna_seqs;
-    seqan::StringSet<seqan::RnaString> mrna_seqs;
-};
-
+template <class TCoreInput, class TOptions>
 class TestIOBase : public ::testing::Test
 {
 protected:
@@ -55,14 +17,14 @@ protected:
     char *OMPATH;
 
     virtual void SetUp() {
-        dfile = STRINGIZE(TEST_DATA_PATH);
+        seqan::CharString dfile = STRINGIZE(TEST_DATA_PATH);
 
         ifile1 = dfile;
         ifile2 = dfile;
         ifile1 += IFNAME1;
         ifile2 += IFNAME2;
 
-        ompath = dfile;
+        seqan::CharString ompath = dfile;
         ompath += OMPATH;
         o1file1 = ompath;
         o1file2 = ompath;
@@ -87,27 +49,6 @@ protected:
         seqan::clear(mrna_seqs);
     }
 
-    int fread_res;
-    int argc;
-    char *argv[5];
-    seqan::CharString dfile;
-    seqan::CharString ifile1;
-    seqan::CharString ifile2;
-    seqan::CharString ompath;
-    seqan::CharString o1file1;
-    seqan::CharString o1file2;
-    seqan::CharString o2file1;
-    seqan::CharString o2file2;
-    seqan::StringSet<seqan::CharString> mirna_ids;
-    seqan::StringSet<seqan::CharString> mrna_ids;
-    seqan::StringSet<seqan::RnaString> mirna_seqs;
-    seqan::StringSet<seqan::RnaString> mrna_seqs;
-};
-
-class TestIOMR3AS : public TestIOBase
-{
-protected:
-
     void read_files(bool parse_argv) {
         if (parse_argv)
         {
@@ -125,10 +66,23 @@ protected:
         (void)coreInput.load_seq_from_file();
     }
 
-    void run_main() {
-        (void)mr3as::MR3CoreMain(argc, (const char **)argv);
-    }
+    TCoreInput coreInput;
+    TOptions options;
 
-    mr3as::MR3CoreInput<mr3as::TRNATYPE> coreInput;
-    mr3as::MR3Options options;
+    int argc;
+    char *argv[5];
+
+    seqan::CharString ifile1;
+    seqan::CharString ifile2;
+    seqan::CharString o1file1;
+    seqan::CharString o1file2;
+    seqan::CharString o2file1;
+    seqan::CharString o2file2;
+
+    seqan::StringSet<seqan::CharString> mirna_ids;
+    seqan::StringSet<seqan::CharString> mrna_ids;
+    seqan::StringSet<seqan::RnaString> mirna_seqs;
+    seqan::StringSet<seqan::RnaString> mrna_seqs;
 };
+
+typedef TestIOBase<mr3as::MR3CoreInput<mr3as::TRNATYPE>, mr3as::MR3Options> TestIOMR3AS;
