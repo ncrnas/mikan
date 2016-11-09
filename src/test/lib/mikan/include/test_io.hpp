@@ -131,6 +131,4 @@ protected:
 
     mr3as::MR3CoreInput<mr3as::TRNATYPE> coreInput;
     mr3as::MR3Options options;
-    mr3as::MR3SeedSeqs<seqan::RnaString> mSeedSeqs;
-    seqan::StringSet<seqan::CharString> mSeedDef;
 };
