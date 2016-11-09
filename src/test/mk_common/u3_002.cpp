@@ -1,11 +1,10 @@
 #include <iostream>
 #include "gtest/gtest.h"
-#include "test_io.hpp"
-#include "mr3_core.hpp"
+#include "test_fasta.hpp"
 
 namespace {
 
-    class U3002 : public TestIOCommon
+    class U3002 : public TestFasta
     {
     protected:
         U3002() {

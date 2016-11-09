@@ -30,11 +30,11 @@ else()
 endif()
 
 # Add executable applications
-#add_executable (gtest_mk_miranda seed_m001.cpp
+#add_executable (gtest_mk_miranda seed_canonical.cpp
 #        output_m001u001.cpp output_m001u002.cpp output_m001u003.cpp output_m001u004.cpp output_m001u005.cpp
 #        output_m001u006.cpp output_m001u007.cpp output_m001u008.cpp output_m001u009.cpp output_m001u010.cpp
 #        output_m001u011.cpp)
-add_executable (gtest_mk_miranda seed_m001.cpp)
+add_executable (gtest_mk_miranda seed_canonical.cpp seed_gu.cpp)
 
 include_directories (${SEQAN_INCLUDE_DIRS} ${gtest_SOURCE_DIR}/include
         ${gtest_SOURCE_DIR} ${MR3_HEADERS} ${MKTEST_HEADERS})

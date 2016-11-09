@@ -1,16 +1,15 @@
 #include<string>
 #include <seqan/sequence.h>
 #include "gtest/gtest.h"
-#include "test_io.hpp"
-#include "mr3_core.hpp"
+#include "test_main_io.hpp"
 #include "test_seed.hpp"
 
 namespace {
 
-    class SDM001 : public TestSeedMR3AS
+    class SeedCanonical : public TestSeedMR3AS
     {
     protected:
-        SDM001() {
+        SeedCanonical() {
             IFNAME1 = (char *)"mir_001.fasta";
             IFNAME2 = (char *)"utr3_001.fasta";
             O1FNAME1 = (char *)"test_output1_site_1.txt";
@@ -29,7 +28,7 @@ namespace {
         }
     };
 
-    TEST_F(SDM001, get_seed_1) {
+    TEST_F(SeedCanonical, get_seed_1) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
@@ -46,7 +45,7 @@ namespace {
         test_seed("AAGGCA", 0, "6mer");
     }
 
-    TEST_F(SDM001, get_seed_2_1) {
+    TEST_F(SeedCanonical, get_seed_2_1) {
         read_files(false);
         mirna_seqs = coreInput.get_mirna_seqs();
 
@@ -62,7 +61,7 @@ namespace {
         test_seed("AAGGCA", 0, "6mer");
     }
 
-    TEST_F(SDM001, get_seed_2_2) {
+    TEST_F(SeedCanonical, get_seed_2_2) {
         read_files(false);
         mirna_seqs = coreInput.get_mirna_seqs();
 
@@ -78,7 +77,7 @@ namespace {
         test_seed("GGAAUG", 0, "6mer");
     }
 
-    TEST_F(SDM001, get_seed_6mer) {
+    TEST_F(SeedCanonical, get_seed_6mer) {
         read_files(false);
         mirna_seqs = coreInput.get_mirna_seqs();
 
@@ -92,39 +91,5 @@ namespace {
         EXPECT_EQ(1u, length(mSeedSeqs.mEffectiveSeeds));
 
         test_seed("AAGGCA", 0, "6mer");
-    }
-
-    TEST_F(SDM001, get_seed_gut) {
-        read_files(false);
-        mirna_seqs = coreInput.get_mirna_seqs();
-
-        mSeedDef[3] = "1";
-
-        mSeedSeqs.set_mirna_seq(mirna_seqs[0]);
-
-        int n = mSeedSeqs.create_seed_seqs(mSeedDef);
-        EXPECT_EQ(0, n);
-        EXPECT_EQ(3u, length(mSeedSeqs.mEffectiveSeeds));
-
-        test_seed("AAGGCA", 0, "6mer");
-        test_seed("AAGACA", 1, "GUT");
-        test_seed("AAAGCA", 2, "GUT");
-    }
-
-    TEST_F(SDM001, get_seed_gum) {
-        read_files(false);
-        mirna_seqs = coreInput.get_mirna_seqs();
-
-        mSeedDef[3] = "1";
-
-        mSeedSeqs.set_mirna_seq(mirna_seqs[0]);
-
-        int n = mSeedSeqs.create_seed_seqs(mSeedDef);
-        EXPECT_EQ(0, n);
-        EXPECT_EQ(3u, length(mSeedSeqs.mEffectiveSeeds));
-
-        test_seed("AAGGCA", 0, "6mer");
-        test_seed("AAGACA", 1, "GUT");
-        test_seed("AAAGCA", 2, "GUT");
     }
 }
