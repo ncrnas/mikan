@@ -1,7 +1,7 @@
 #include<string>
 #include <seqan/sequence.h>
 #include "gtest/gtest.h"
-#include "test_io.hpp"
+#include "test_main_io.hpp"
 #include "test_seed.hpp"
 
 namespace {
