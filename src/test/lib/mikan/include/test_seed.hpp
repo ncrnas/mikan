@@ -9,12 +9,14 @@ class TestSeed : public TestIOMR3AS
 {
 protected:
 
-    void test_seed(const char *rnastr, int idx, const char *seq_type) {
+    void test_seed(const char *rnastr, int idx, const char *seq_type, bool effective, unsigned mmpos) {
         seqan::RnaString seedseq = rnastr;
 
         reverseComplement(seedseq);
         comp_two_rnas(mSeedSeqs.get_seed_seq(idx), seedseq);
         EXPECT_STREQ(seq_type, seqan::toCString((seqan::CharString)mSeedSeqs.get_seed_type(idx)));
+        EXPECT_EQ(effective, mSeedSeqs.mEffectiveSeeds[idx]);
+        EXPECT_EQ(mmpos, mSeedSeqs.get_mismatched_pos(idx));
     }
 
     TSeedSeqs mSeedSeqs;
