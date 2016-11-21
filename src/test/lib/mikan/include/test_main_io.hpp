@@ -58,12 +58,17 @@ protected:
         {
             options.mMiRNAFasta = seqan::toCString(ifile1);
             options.mMRNAFasta = seqan::toCString(ifile2);
-            coreInput.init_from_args(options);
-            (void)coreInput.load_seq_from_file();
         }
 
         coreInput.init_from_args(options);
         (void)coreInput.load_seq_from_file();
+    }
+
+    void set_seqs() {
+        mirna_ids = coreInput.get_mirna_ids();
+        mirna_seqs = coreInput.get_mirna_seqs();
+        mrna_ids = coreInput.get_mrna_ids();
+        mrna_seqs = coreInput.get_mrna_seqs();
     }
 
     TCoreInput coreInput;

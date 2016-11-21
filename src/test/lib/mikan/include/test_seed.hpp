@@ -4,8 +4,8 @@
 #include "mikan_utils.hpp"
 #include "mr3_core.hpp"
 
-template <class TSeedSeqs>
-class TestSeed : public TestIOMR3AS
+template <class TSeedSeqs, class TTestIO>
+class TestSeed : public TTestIO
 {
 protected:
 
@@ -23,4 +23,4 @@ protected:
     seqan::StringSet<seqan::CharString> mSeedDef;
 };
 
-typedef TestSeed<mr3as::MR3SeedSeqs<seqan::RnaString> > TestSeedMR3AS;
+typedef TestSeed<mr3as::MR3SeedSeqs<seqan::RnaString>, TestIOMR3AS> TestSeedMR3AS;
