@@ -6,10 +6,10 @@
 
 namespace {
 
-    class Site02Canonical : public TestSiteMR3AS
+    class Site01Nmer2 : public TestSiteMR3AS
     {
     protected:
-        Site02Canonical() {
+        Site01Nmer2() {
             IFNAME1 = (char *)"mir_001.fasta";
             IFNAME2 = (char *)"ts_01_nmer_2.fasta";
             O1FNAME1 = (char *)"test_output1_site_1.txt";
@@ -33,7 +33,7 @@ namespace {
 
     };
 
-    TEST_F(Site02Canonical, mir2) {
+    TEST_F(Site01Nmer2, mir2) {
         read_files(false);
         set_seqs();
         TIdx index(mrna_seqs);
