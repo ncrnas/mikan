@@ -11,7 +11,7 @@ namespace {
     protected:
         Site01Canonical() {
             IFNAME1 = (char *)"mir_001.fasta";
-            IFNAME2 = (char *)"ts_01_canonical_1.fasta";
+            IFNAME2 = (char *)"ts_01_nmer_1.fasta";
             O1FNAME1 = (char *)"test_output1_site_1.txt";
             O1FNAME2 = (char *)"test_output1_mrna_1.txt";
             O2FNAME1 = (char *)"test_output2_site_1.txt";
@@ -33,7 +33,7 @@ namespace {
 
     };
 
-    TEST_F(Site01Canonical, find_site) {
+    TEST_F(Site01Canonical, mir1) {
         read_files(false);
         set_seqs();
         TIdx index(mrna_seqs);
