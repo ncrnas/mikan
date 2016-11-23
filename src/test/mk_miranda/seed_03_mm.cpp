@@ -68,7 +68,7 @@ namespace {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
-        mSeedDef[4] = "0:1";
+        mSeedDef[4] = "1:1";
         mSeedSeqs.set_mirna_seq(mirna_seqs[1]);
 
         int n = mSeedSeqs.create_seed_seqs(mSeedDef);
