@@ -33,7 +33,7 @@ namespace {
 
     };
 
-    TEST_F(Site01Nmer2, mir2) {
+    TEST_F(Site01Nmer2, mir2_8mer) {
         read_files(false);
         set_seqs();
         TIdx index(mrna_seqs);
@@ -49,6 +49,45 @@ namespace {
         test_sites(sites, 2, "7mer", 2, 25, true, 0);
         test_sites(sites, 3, "7mer", 3, 25, true, 0);
         test_sites(sites, 4, "8mer", 4, 25, true, 0);
+    }
+
+    TEST_F(Site01Nmer2, mir2_7mer) {
+        read_files(false);
+        set_seqs();
+        TIdx index(mrna_seqs);
+        TFin finder(index);
+        TSit sites(index, finder, mrna_seqs);
+
+        mSeedDef[2] = 'N';
+        int ret_val = sites.find_seed_sites(mirna_seqs[1], mSeedDef);
+        EXPECT_EQ(0, ret_val);
+        EXPECT_EQ(5u, sites.get_length());
+
+        test_sites(sites, 0, "6mer", 0, 25, true, 0);
+        test_sites(sites, 1, "6mer", 1, 25, true, 0);
+        test_sites(sites, 2, "7mer", 2, 25, true, 0);
+        test_sites(sites, 3, "7mer", 3, 25, true, 0);
+        test_sites(sites, 4, "7mer", 4, 25, true, 0);
+    }
+
+    TEST_F(Site01Nmer2, mir2_6mer) {
+        read_files(false);
+        set_seqs();
+        TIdx index(mrna_seqs);
+        TFin finder(index);
+        TSit sites(index, finder, mrna_seqs);
+
+        mSeedDef[1] = 'N';
+        mSeedDef[2] = 'N';
+        int ret_val = sites.find_seed_sites(mirna_seqs[1], mSeedDef);
+        EXPECT_EQ(0, ret_val);
+        EXPECT_EQ(5u, sites.get_length());
+
+        test_sites(sites, 0, "6mer", 0, 25, true, 0);
+        test_sites(sites, 1, "6mer", 1, 25, true, 0);
+        test_sites(sites, 2, "6mer", 2, 25, true, 0);
+        test_sites(sites, 3, "6mer", 3, 25, true, 0);
+        test_sites(sites, 4, "6mer", 4, 25, true, 0);
     }
 
 }
