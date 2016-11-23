@@ -6,10 +6,10 @@
 
 namespace {
 
-    class Site02GU1 : public TestSiteMR3AS
+    class Site02GU2 : public TestSiteMR3AS
     {
     protected:
-        Site02GU1() {
+        Site02GU2() {
             IFNAME1 = (char *)"mir_001.fasta";
             IFNAME2 = (char *)"ts_02_gu_2.fasta";
             O1FNAME1 = (char *)"test_output1_site_1.txt";
@@ -33,7 +33,7 @@ namespace {
 
     };
 
-    TEST_F(Site02GU1, mir2) {
+    TEST_F(Site02GU2, mir2_gu) {
         read_files(false);
         set_seqs();
         TIdx index(mrna_seqs);

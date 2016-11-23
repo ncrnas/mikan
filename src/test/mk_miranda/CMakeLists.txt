@@ -34,9 +34,9 @@ endif()
 #        output_m001u001.cpp output_m001u002.cpp output_m001u003.cpp output_m001u004.cpp output_m001u005.cpp
 #        output_m001u006.cpp output_m001u007.cpp output_m001u008.cpp output_m001u009.cpp output_m001u010.cpp
 #        output_m001u011.cpp
-#        site_01_nmer_1.cpp site_01_nmer_2.cpp)
+#        site_01_nmer_1.cpp site_01_nmer_2.cpp site_02_gu_1.cpp site_02_gu_2.cpp)
 add_executable (gtest_mk_miranda seed_01_canonical.cpp seed_02_gu.cpp seed_03_mm.cpp seed_04_mmgu.cpp seed_05_bt.cpp
-        site_01_nmer_1.cpp site_01_nmer_2.cpp site_02_gu_2.cpp)
+        site_01_nmer_1.cpp site_01_nmer_2.cpp site_02_gu_1.cpp site_02_gu_2.cpp)
 
 include_directories (${SEQAN_INCLUDE_DIRS} ${gtest_SOURCE_DIR}/include
         ${gtest_SOURCE_DIR} ${MR3_HEADERS} ${MKTEST_HEADERS})
