@@ -33,7 +33,7 @@ namespace {
 
     };
 
-    TEST_F(Site01Nmer1, mir1_8mer) {
+    TEST_F(Site01Nmer1, mir124_8mer) {
         read_files(false);
         set_seqs();
         TIdx index(mrna_seqs);
@@ -105,7 +105,7 @@ namespace {
         test_sites(sites, 54, "", 54, 34, false, 0);
     }
 
-    TEST_F(Site01Nmer1, mir1_7mer) {
+    TEST_F(Site01Nmer1, mir124_7mer) {
         read_files(false);
         set_seqs();
         TIdx index(mrna_seqs);
@@ -124,7 +124,7 @@ namespace {
         test_sites(sites, 52, "7mer", 52, 32, true, 0);
     }
 
-    TEST_F(Site01Nmer1, mir1_6mer) {
+    TEST_F(Site01Nmer1, mir124_6mer) {
         read_files(false);
         set_seqs();
         TIdx index(mrna_seqs);

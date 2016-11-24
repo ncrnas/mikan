@@ -28,7 +28,7 @@ namespace {
         }
     };
 
-    TEST_F(SeedBT, get_seed_bt) {
+    TEST_F(SeedBT, mir124_bt) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();

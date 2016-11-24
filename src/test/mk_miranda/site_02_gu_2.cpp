@@ -33,7 +33,7 @@ namespace {
 
     };
 
-    TEST_F(Site02GU2, mir2_gu) {
+    TEST_F(Site02GU2, mir1_gu) {
         read_files(false);
         set_seqs();
         TIdx index(mrna_seqs);
@@ -94,7 +94,7 @@ namespace {
         test_sites(sites, 39, "GUT", 39, 24, false, 0);
     }
 
-    TEST_F(Site02GU2, mir2_gu_plus) {
+    TEST_F(Site02GU2, mir1_gu_plus) {
         read_files(false);
         set_seqs();
         TIdx index(mrna_seqs);

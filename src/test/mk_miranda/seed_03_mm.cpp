@@ -28,7 +28,7 @@ namespace {
         }
     };
 
-    TEST_F(SeedMismatch, get_seed_mm_1) {
+    TEST_F(SeedMismatch, mir124_mm) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
@@ -64,7 +64,7 @@ namespace {
         test_seed("UAGGCA", 16, "MM", true, 5);
     }
 
-    TEST_F(SeedMismatch, get_seed_mm_2) {
+    TEST_F(SeedMismatch, mir1_mm) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();

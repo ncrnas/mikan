@@ -33,7 +33,7 @@ namespace {
 
     };
 
-    TEST_F(Site02GU1, mir1_gu) {
+    TEST_F(Site02GU1, mir124_gu) {
         read_files(false);
         set_seqs();
         TIdx index(mrna_seqs);
@@ -59,7 +59,7 @@ namespace {
         test_sites(sites, 10, "8mer_GUT", 10, 24, true, 3);
     }
 
-    TEST_F(Site02GU1, mir1_gu_plus) {
+    TEST_F(Site02GU1, mir124_gu_plus) {
         read_files(false);
         set_seqs();
         TIdx index(mrna_seqs);

@@ -28,7 +28,7 @@ namespace {
         }
     };
 
-    TEST_F(SeedGU, get_seed_mir1) {
+    TEST_F(SeedGU, mir124_gu) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
@@ -44,7 +44,7 @@ namespace {
         test_seed("AAAGCA", 2, "GUT", true, 3);
     }
 
-    TEST_F(SeedGU, get_seed_mir2) {
+    TEST_F(SeedGU, mir1_gu) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
@@ -62,7 +62,7 @@ namespace {
         test_seed("AGAAUG", 4, "GUT", true, 5);
     }
 
-    TEST_F(SeedGU, get_seed_gu_plus) {
+    TEST_F(SeedGU, mir124_gu_plus) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();

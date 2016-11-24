@@ -28,7 +28,7 @@ namespace {
         }
     };
 
-    TEST_F(SeedMMGU, get_seed_mmgu) {
+    TEST_F(SeedMMGU, mir124_mmgu) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();

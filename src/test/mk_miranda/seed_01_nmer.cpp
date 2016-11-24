@@ -28,7 +28,7 @@ namespace {
         }
     };
 
-    TEST_F(SeedNmer, get_seed_1_1) {
+    TEST_F(SeedNmer, mir124_6mer) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
@@ -41,7 +41,7 @@ namespace {
         test_seed("AAGGCA", 0, "6mer", true, 0);
     }
 
-    TEST_F(SeedNmer, get_seed_1_2) {
+    TEST_F(SeedNmer, mir1_6mer) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
