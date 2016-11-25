@@ -23,7 +23,7 @@ namespace {
             mSeedDef[1] = 'Y';
             mSeedDef[2] = 'Y';
             mSeedDef[3] = "0";
-            mSeedDef[4] = "0:0";
+            mSeedDef[4] = "1:1";
             mSeedDef[5] = "0";
         }
     };
@@ -32,7 +32,6 @@ namespace {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
-        mSeedDef[4] = "1:1";
         mSeedSeqs.set_mirna_seq(mirna_seqs[0]);
 
         int n = mSeedSeqs.create_seed_seqs(mSeedDef);
@@ -68,7 +67,6 @@ namespace {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
-        mSeedDef[4] = "1:1";
         mSeedSeqs.set_mirna_seq(mirna_seqs[1]);
 
         int n = mSeedSeqs.create_seed_seqs(mSeedDef);
