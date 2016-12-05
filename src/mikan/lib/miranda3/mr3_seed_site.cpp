@@ -933,7 +933,6 @@ void MR3SeedSites<TRNAString>::set_gu_mismatch_seed_type(
             pNewSeedType = "7mer_MMGU";
             mm = pMisMatchPos;
         }
-
     }
 
     if (FORCE_LAST_MATCH && pNewSeedType != "")

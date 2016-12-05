@@ -45,10 +45,10 @@ int MR3CoreMain(int argc, char const **argv) {
     mr3as::MR3Core<mr3as::TRNATYPE>::TRNASet const& mMiRNASeqs = coreInput.get_mirna_seqs();
     mr3as::MR3Core<mr3as::TRNATYPE>::TCharSet const& mMRNAIds = coreInput.get_mrna_ids();
 
-    mr3as::MR3Core<mr3as::TRNATYPE> pitaCore(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
-    pitaCore.init_from_args(options);
-    pitaCore.open_output_file();
-    retVal = pitaCore.calculate_all_scores();
+    mr3as::MR3Core<mr3as::TRNATYPE> mr3Core(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
+    mr3Core.init_from_args(options);
+    mr3Core.open_output_file();
+    retVal = mr3Core.calculate_all_scores();
 
     return retVal;
 }
