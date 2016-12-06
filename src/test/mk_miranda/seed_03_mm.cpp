@@ -23,16 +23,15 @@ namespace {
             mSeedDef[1] = 'Y';
             mSeedDef[2] = 'Y';
             mSeedDef[3] = "0";
-            mSeedDef[4] = "0:0";
+            mSeedDef[4] = "1:1";
             mSeedDef[5] = "0";
         }
     };
 
-    TEST_F(SeedMismatch, get_seed_mm_1) {
+    TEST_F(SeedMismatch, mir124_mm) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
-        mSeedDef[4] = "1:1";
         mSeedSeqs.set_mirna_seq(mirna_seqs[0]);
 
         int n = mSeedSeqs.create_seed_seqs(mSeedDef);
@@ -64,11 +63,10 @@ namespace {
         test_seed("UAGGCA", 16, "MM", true, 5);
     }
 
-    TEST_F(SeedMismatch, get_seed_mm_2) {
+    TEST_F(SeedMismatch, mir1_mm) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
-        mSeedDef[4] = "0:1";
         mSeedSeqs.set_mirna_seq(mirna_seqs[1]);
 
         int n = mSeedSeqs.create_seed_seqs(mSeedDef);

@@ -6,10 +6,10 @@
 
 namespace {
 
-    class SeedCanonical : public TestSeedMR3AS
+    class SeedNmer : public TestSeedMR3AS
     {
     protected:
-        SeedCanonical() {
+        SeedNmer() {
             IFNAME1 = (char *)"mir_001.fasta";
             IFNAME2 = (char *)"utr3_001.fasta";
             O1FNAME1 = (char *)"test_output1_site_1.txt";
@@ -28,7 +28,7 @@ namespace {
         }
     };
 
-    TEST_F(SeedCanonical, get_seed_1_1) {
+    TEST_F(SeedNmer, mir124_6mer) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
@@ -41,7 +41,7 @@ namespace {
         test_seed("AAGGCA", 0, "6mer", true, 0);
     }
 
-    TEST_F(SeedCanonical, get_seed_1_2) {
+    TEST_F(SeedNmer, mir1_6mer) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
