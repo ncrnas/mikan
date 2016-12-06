@@ -1,3 +1,6 @@
+#ifndef MIKAN_TEST_MAIN_IO_HPP_
+#define MIKAN_TEST_MAIN_IO_HPP_
+
 #include<string>
 #include "gtest/gtest.h"
 #include "get_data_path.hpp"
@@ -91,3 +94,5 @@ protected:
 };
 
 typedef TestIOBase<mr3as::MR3CoreInput<mr3as::TRNATYPE>, mr3as::MR3Options> TestIOMR3AS;
+
+#endif //MIKAN_TEST_MAIN_IO_HPP_

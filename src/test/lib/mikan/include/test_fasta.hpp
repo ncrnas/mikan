@@ -1,3 +1,6 @@
+#ifndef MIKAN_TEST_FASTA_HPP_
+#define MIKAN_TEST_FASTA_HPP_
+
 #include<string>
 #include "gtest/gtest.h"
 #include "get_data_path.hpp"
@@ -42,3 +45,5 @@ protected:
     seqan::StringSet<seqan::RnaString> mirna_seqs;
     seqan::StringSet<seqan::RnaString> mrna_seqs;
 };
+
+#endif //MIKAN_TEST_FASTA_HPP_
