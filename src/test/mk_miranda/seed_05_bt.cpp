@@ -1,8 +1,7 @@
 #include<string>
 #include <seqan/sequence.h>
 #include "gtest/gtest.h"
-#include "test_main_io.hpp"
-#include "test_seed.hpp"
+#include "test_miranda.hpp"
 
 namespace {
 

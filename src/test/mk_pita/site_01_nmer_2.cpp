@@ -1,11 +1,11 @@
 #include<string>
 #include <seqan/sequence.h>
 #include "gtest/gtest.h"
-#include "test_miranda.hpp"
+#include "test_pita.hpp"
 
 namespace {
 
-    class Site01Nmer2 : public TestSiteMR3AS
+    class Site01Nmer2 : public TestSitePITA
     {
     protected:
         Site01Nmer2() {
@@ -15,7 +15,7 @@ namespace {
             O1FNAME2 = (char *)"test_output1_mrna_1.txt";
             O2FNAME1 = (char *)"test_output2_site_1.txt";
             O2FNAME2 = (char *)"test_output2_mrna_1.txt";
-            OMPATH = (char *)"mk_miranda/";
+            OMPATH = (char *)"mk_pita/";
 
             resize(mSeedDef, 6);
             mSeedDef[0] = 'Y';
@@ -26,9 +26,9 @@ namespace {
             mSeedDef[5] = "0";
         }
 
-        typedef mr3as::MR3Core<mr3as::TRNATYPE>::TIndexQGram TIdx;
-        typedef mr3as::MR3Core<mr3as::TRNATYPE>::TFinder TFin;
-        typedef mr3as::MR3SeedSites<mr3as::TRNATYPE> TSit;
+        typedef ptddg::PITACore<ptddg::TRNATYPE>::TIndexQGram TIdx;
+        typedef ptddg::PITACore<ptddg::TRNATYPE>::TFinder TFin;
+        typedef ptddg::PITASeedSites<ptddg::TRNATYPE> TSit;
 
     };
 

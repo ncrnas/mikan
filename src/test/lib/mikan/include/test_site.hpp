@@ -1,8 +1,10 @@
+#ifndef MIKAN_TEST_SITE_HPP_
+#define MIKAN_TEST_SITE_HPP_
+
 #include<string>
 #include "gtest/gtest.h"
 #include "get_data_path.hpp"
 #include "mikan_utils.hpp"
-#include "mr3_core.hpp"
 
 template <class TSites, class TTestIO>
 class TestSite : public TTestIO
@@ -26,4 +28,4 @@ protected:
     seqan::StringSet<seqan::CharString> mSeedDef;
 };
 
-typedef TestSite<mr3as::MR3SeedSites<mr3as::TRNATYPE>, TestIOMR3AS> TestSiteMR3AS;
+#endif //MIKAN_TEST_SITE_HPP_

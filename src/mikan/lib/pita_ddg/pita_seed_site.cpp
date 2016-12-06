@@ -689,7 +689,7 @@ void PITASeedSites<TRNAString>::set_multiple_gu_seed_type(
         {
             pNewSeedType = "8mer_GU+";
         }
-        else if (pSeedDef[1] == 'Y' && (pGumMx1 || pGutMx1))
+        else if (pSeedDef[1] == 'Y' && (pGumMx1 || pGutMx1)) //TODO: Check pGumMx1 || pGutMx1 || pMatchMx1
         {
             pNewSeedType = "7mer_GU+";
         }
@@ -766,7 +766,7 @@ void PITASeedSites<TRNAString>::set_mismatch_seed_type(
 
     if (pNewSeedType == "" && pSeedDef[1] == 'Y' && pSeedDef[4] == "1:1")
     {
-        if (pCurSeedType == "6mer" && !pMatchMx1 && !pGutMx1 && !pGumMx1)
+        if (pCurSeedType == "6mer" && !pMatchMx1 && !pGutMx1 && !pGumMx1) //TODO: Check !pMatchMx1 && !pGutMx1 && !pGumMx1
         {
             pNewSeedType = "7mer_MM";
             mm = pM1;

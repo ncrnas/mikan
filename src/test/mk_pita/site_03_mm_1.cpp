@@ -1,21 +1,21 @@
 #include<string>
 #include <seqan/sequence.h>
 #include "gtest/gtest.h"
-#include "test_miranda.hpp"
+#include "test_pita.hpp"
 
 namespace {
 
-    class Site03MM2 : public TestSiteMR3AS
+    class Site03MM1 : public TestSitePITA
     {
     protected:
-        Site03MM2() {
+        Site03MM1() {
             IFNAME1 = (char *)"mir_001.fasta";
-            IFNAME2 = (char *)"ts_03_mm_2.fasta";
+            IFNAME2 = (char *)"ts_03_mm_1.fasta";
             O1FNAME1 = (char *)"test_output1_site_1.txt";
             O1FNAME2 = (char *)"test_output1_mrna_1.txt";
             O2FNAME1 = (char *)"test_output2_site_1.txt";
             O2FNAME2 = (char *)"test_output2_mrna_1.txt";
-            OMPATH = (char *)"mk_miranda/";
+            OMPATH = (char *)"mk_pita/";
 
             resize(mSeedDef, 6);
             mSeedDef[0] = 'Y';
@@ -26,25 +26,25 @@ namespace {
             mSeedDef[5] = "0";
         }
 
-        typedef mr3as::MR3Core<mr3as::TRNATYPE>::TIndexQGram TIdx;
-        typedef mr3as::MR3Core<mr3as::TRNATYPE>::TFinder TFin;
-        typedef mr3as::MR3SeedSites<mr3as::TRNATYPE> TSit;
+        typedef ptddg::PITACore<ptddg::TRNATYPE>::TIndexQGram TIdx;
+        typedef ptddg::PITACore<ptddg::TRNATYPE>::TFinder TFin;
+        typedef ptddg::PITASeedSites<ptddg::TRNATYPE> TSit;
 
     };
 
-    TEST_F(Site03MM2, mir1_mm8) {
+    TEST_F(Site03MM1, mir124_mm8) {
         read_files(false);
         set_seqs();
         TIdx index(mrna_seqs);
         TFin finder(index);
         TSit sites(index, finder, mrna_seqs);
 
-        int ret_val = sites.find_seed_sites(mirna_seqs[1], mSeedDef);
+        int ret_val = sites.find_seed_sites(mirna_seqs[0], mSeedDef);
         EXPECT_EQ(0, ret_val);
         EXPECT_EQ(40u, sites.get_length());
 
-        test_sites(sites, 0, "7mer_MM", 0, 24, true, -1);
-        test_sites(sites, 1, "7mer_MM", 1, 24, true, -1);
+        test_sites(sites, 0, "6mer", 0, 24, true, 0);
+        test_sites(sites, 1, "6mer", 1, 24, true, 0);
         test_sites(sites, 2, "8mer_MM", 2, 24, true, -1);
         test_sites(sites, 3, "8mer_MM", 3, 24, true, -1);
 
@@ -91,7 +91,7 @@ namespace {
         test_sites(sites, 39, "8mer_MM", 39, 24, true, 5);
     }
 
-    TEST_F(Site03MM2, mir1_mm7) {
+    TEST_F(Site03MM1, mir124_mm7) {
         read_files(false);
         set_seqs();
         TIdx index(mrna_seqs);
@@ -99,7 +99,7 @@ namespace {
         TSit sites(index, finder, mrna_seqs);
 
         mSeedDef[4] = "0:1";
-        int ret_val = sites.find_seed_sites(mirna_seqs[1], mSeedDef);
+        int ret_val = sites.find_seed_sites(mirna_seqs[0], mSeedDef);
         EXPECT_EQ(0, ret_val);
         EXPECT_EQ(40u, sites.get_length());
 

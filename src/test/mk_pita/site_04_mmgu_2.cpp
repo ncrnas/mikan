@@ -1,11 +1,11 @@
 #include<string>
 #include <seqan/sequence.h>
 #include "gtest/gtest.h"
-#include "test_miranda.hpp"
+#include "test_pita.hpp"
 
 namespace {
 
-    class Site04MMGU2 : public TestSiteMR3AS
+    class Site04MMGU2 : public TestSitePITA
     {
     protected:
         Site04MMGU2() {
@@ -15,7 +15,7 @@ namespace {
             O1FNAME2 = (char *)"test_output1_mrna_1.txt";
             O2FNAME1 = (char *)"test_output2_site_1.txt";
             O2FNAME2 = (char *)"test_output2_mrna_1.txt";
-            OMPATH = (char *)"mk_miranda/";
+            OMPATH = (char *)"mk_pita/";
 
             resize(mSeedDef, 6);
             mSeedDef[0] = 'Y';
@@ -26,9 +26,9 @@ namespace {
             mSeedDef[5] = "0";
         }
 
-        typedef mr3as::MR3Core<mr3as::TRNATYPE>::TIndexQGram TIdx;
-        typedef mr3as::MR3Core<mr3as::TRNATYPE>::TFinder TFin;
-        typedef mr3as::MR3SeedSites<mr3as::TRNATYPE> TSit;
+        typedef ptddg::PITACore<ptddg::TRNATYPE>::TIndexQGram TIdx;
+        typedef ptddg::PITACore<ptddg::TRNATYPE>::TFinder TFin;
+        typedef ptddg::PITASeedSites<ptddg::TRNATYPE> TSit;
 
     };
 
@@ -43,36 +43,36 @@ namespace {
         EXPECT_EQ(0, ret_val);
         EXPECT_EQ(94u, sites.get_length());
 
-        test_sites(sites, 0, "7mer_GUM", 0, 24, true, -1);
-        test_sites(sites, 1, "7mer_GUM", 1, 24, true, -1);
+        test_sites(sites, 0, "6mer", 0, 24, true, 0);
+        test_sites(sites, 1, "6mer", 1, 24, true, 0);
 
         test_sites(sites, 2, "8mer_MMGU", 2, 24, true, -1);
         test_sites(sites, 3, "8mer_MMGU", 3, 24, true, -1);
         test_sites(sites, 4, "7mer_GUT", 4, 24, true, 0);
         test_sites(sites, 5, "7mer_GUT", 5, 24, true, 0);
-        test_sites(sites, 6, "7mer_MMGU", 6, 24, true, -1);
-        test_sites(sites, 7, "7mer_MMGU", 7, 24, true, -1);
+        test_sites(sites, 6, "GUT", 6, 24, false, 0);
+        test_sites(sites, 7, "GUT", 7, 24, false, 0);
 
         test_sites(sites, 8, "8mer_MMGU", 8, 24, true, -1);
         test_sites(sites, 9, "8mer_MMGU", 9, 24, true, -1);
         test_sites(sites, 10, "7mer_GUM", 10, 24, true, 1);
         test_sites(sites, 11, "7mer_GUM", 11, 24, true, 1);
-        test_sites(sites, 12, "7mer_MMGU", 12, 24, true, -1);
-        test_sites(sites, 13, "7mer_MMGU", 13, 24, true, -1);
+        test_sites(sites, 12, "GUM", 12, 24, false, 0);
+        test_sites(sites, 13, "GUM", 13, 24, false, 0);
 
         test_sites(sites, 14, "8mer_MMGU", 14, 24, true, -1);
         test_sites(sites, 15, "8mer_MMGU", 15, 24, true, -1);
         test_sites(sites, 16, "7mer_GUT", 16, 24, true, 4);
         test_sites(sites, 17, "7mer_GUT", 17, 24, true, 4);
-        test_sites(sites, 18, "7mer_MMGU", 18, 24, true, -1);
-        test_sites(sites, 19, "7mer_MMGU", 19, 24, true, -1);
+        test_sites(sites, 18, "GUT", 18, 24, false, 0);
+        test_sites(sites, 19, "GUT", 19, 24, false, 0);
 
         test_sites(sites, 20, "8mer_MMGU", 20, 24, true, -1);
         test_sites(sites, 21, "8mer_MMGU", 21, 24, true, -1);
         test_sites(sites, 22, "7mer_GUT", 22, 24, true, 5);
         test_sites(sites, 23, "7mer_GUT", 23, 24, true, 5);
-        test_sites(sites, 24, "7mer_MMGU", 24, 24, true, -1);
-        test_sites(sites, 25, "7mer_MMGU", 25, 24, true, -1);
+        test_sites(sites, 24, "GUT", 24, 24, false, 0);
+        test_sites(sites, 25, "GUT", 25, 24, false, 0);
 
         test_sites(sites, 26, "8mer_MMGU", 26, 24, true, 0);
         test_sites(sites, 27, "8mer_MMGU", 27, 24, true, 0);
@@ -159,8 +159,8 @@ namespace {
         EXPECT_EQ(0, ret_val);
         EXPECT_EQ(94u, sites.get_length());
 
-        test_sites(sites, 0, "7mer_GUM", 0, 24, true, -1);
-        test_sites(sites, 1, "7mer_GUM", 1, 24, true, -1);
+        test_sites(sites, 0, "6mer", 0, 24, true, 0);
+        test_sites(sites, 1, "6mer", 1, 24, true, 0);
 
         test_sites(sites, 2, "8mer_MMGU", 2, 24, true, -1);
         test_sites(sites, 3, "8mer_MMGU", 3, 24, true, -1);

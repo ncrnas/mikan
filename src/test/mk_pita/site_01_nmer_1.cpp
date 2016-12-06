@@ -1,11 +1,11 @@
 #include<string>
 #include <seqan/sequence.h>
 #include "gtest/gtest.h"
-#include "test_miranda.hpp"
+#include "test_pita.hpp"
 
 namespace {
 
-    class Site01Nmer1 : public TestSiteMR3AS
+    class Site01Nmer1 : public TestSitePITA
     {
     protected:
         Site01Nmer1() {
@@ -15,7 +15,7 @@ namespace {
             O1FNAME2 = (char *)"test_output1_mrna_1.txt";
             O2FNAME1 = (char *)"test_output2_site_1.txt";
             O2FNAME2 = (char *)"test_output2_mrna_1.txt";
-            OMPATH = (char *)"mk_miranda/";
+            OMPATH = (char *)"mk_pita/";
 
             resize(mSeedDef, 6);
             mSeedDef[0] = 'Y';
@@ -26,9 +26,9 @@ namespace {
             mSeedDef[5] = "0";
         }
 
-        typedef mr3as::MR3Core<mr3as::TRNATYPE>::TIndexQGram TIdx;
-        typedef mr3as::MR3Core<mr3as::TRNATYPE>::TFinder TFin;
-        typedef mr3as::MR3SeedSites<mr3as::TRNATYPE> TSit;
+        typedef ptddg::PITACore<ptddg::TRNATYPE>::TIndexQGram TIdx;
+        typedef ptddg::PITACore<ptddg::TRNATYPE>::TFinder TFin;
+        typedef ptddg::PITASeedSites<ptddg::TRNATYPE> TSit;
 
     };
 
@@ -44,10 +44,10 @@ namespace {
         EXPECT_EQ(55u, sites.get_length());
 
         test_sites(sites, 0, "", 0, 0, false, 0);
-        test_sites(sites, 1, "6mer", 1, 1, true, 0);
-        test_sites(sites, 2, "6mer", 2, 13, true, 0);
-        test_sites(sites, 3, "6mer", 3, 14, true, 0);
-        test_sites(sites, 4, "6mer", 4, 15, true, 0);
+        test_sites(sites, 1, "", 1, 1, false, 0);
+        test_sites(sites, 2, "", 2, 13, false, 0);
+        test_sites(sites, 3, "", 3, 14, false, 0);
+        test_sites(sites, 4, "", 4, 15, false, 0);
         test_sites(sites, 5, "6mer", 5, 18, true, 0);
         test_sites(sites, 6, "6mer", 6, 19, true, 0);
         test_sites(sites, 7, "6mer", 7, 20, true, 0);
@@ -56,10 +56,10 @@ namespace {
         test_sites(sites, 10, "", 10, 34, false, 0);
 
         test_sites(sites, 11, "", 11, 0, false, 0);
-        test_sites(sites, 12, "6mer", 12, 1, true, 0);
-        test_sites(sites, 13, "6mer", 13, 13, true, 0);
-        test_sites(sites, 14, "6mer", 14, 14, true, 0);
-        test_sites(sites, 15, "6mer", 15, 15, true, 0);
+        test_sites(sites, 12, "", 12, 1, false, 0);
+        test_sites(sites, 13, "", 13, 13, false, 0);
+        test_sites(sites, 14, "", 14, 14, false, 0);
+        test_sites(sites, 15, "", 15, 15, false, 0);
         test_sites(sites, 16, "6mer", 16, 18, true, 0);
         test_sites(sites, 17, "6mer", 17, 19, true, 0);
         test_sites(sites, 18, "6mer", 18, 20, true, 0);
@@ -67,10 +67,10 @@ namespace {
         test_sites(sites, 20, "6mer", 20, 33, true, 0);
         test_sites(sites, 21, "", 21, 34, false, 0);
 
-        test_sites(sites, 22, "7mer", 22, 1, true, 0);
-        test_sites(sites, 23, "7mer", 23, 13, true, 0);
-        test_sites(sites, 24, "7mer", 24, 14, true, 0);
-        test_sites(sites, 25, "7mer", 25, 15, true, 0);
+        test_sites(sites, 22, "", 22, 1, false, 0);
+        test_sites(sites, 23, "", 23, 13, false, 0);
+        test_sites(sites, 24, "", 24, 14, false, 0);
+        test_sites(sites, 25, "", 25, 15, false, 0);
         test_sites(sites, 26, "7mer", 26, 18, true, 0);
         test_sites(sites, 27, "7mer", 27, 19, true, 0);
         test_sites(sites, 28, "7mer", 28, 20, true, 0);
@@ -79,10 +79,10 @@ namespace {
         test_sites(sites, 31, "7mer", 31, 33, true, 0);
         test_sites(sites, 32, "", 32, 34, false, 0);
 
-        test_sites(sites, 33, "7mer", 33, 1, true, 0);
-        test_sites(sites, 34, "7mer", 34, 13, true, 0);
-        test_sites(sites, 35, "7mer", 35, 14, true, 0);
-        test_sites(sites, 36, "7mer", 36, 15, true, 0);
+        test_sites(sites, 33, "", 33, 1, false, 0);
+        test_sites(sites, 34, "", 34, 13, false, 0);
+        test_sites(sites, 35, "", 35, 14, false, 0);
+        test_sites(sites, 36, "", 36, 15, false, 0);
         test_sites(sites, 37, "7mer", 37, 18, true, 0);
         test_sites(sites, 38, "7mer", 38, 19, true, 0);
         test_sites(sites, 39, "7mer", 39, 20, true, 0);
@@ -91,10 +91,10 @@ namespace {
         test_sites(sites, 42, "7mer", 42, 33, true, 0);
         test_sites(sites, 43, "", 43, 34, false, 0);
 
-        test_sites(sites, 44, "8mer", 44, 2, true, 0);
-        test_sites(sites, 45, "8mer", 45, 13, true, 0);
-        test_sites(sites, 46, "8mer", 46, 14, true, 0);
-        test_sites(sites, 47, "8mer", 47, 15, true, 0);
+        test_sites(sites, 44, "", 44, 2, false, 0);
+        test_sites(sites, 45, "", 45, 13, false, 0);
+        test_sites(sites, 46, "", 46, 14, false, 0);
+        test_sites(sites, 47, "", 47, 15, false, 0);
         test_sites(sites, 48, "8mer", 48, 18, true, 0);
         test_sites(sites, 49, "8mer", 49, 19, true, 0);
         test_sites(sites, 50, "8mer", 50, 20, true, 0);
