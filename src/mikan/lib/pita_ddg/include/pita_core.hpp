@@ -10,6 +10,8 @@
 
 namespace ptddg {
 
+int PITACoreMain(int argc, char const **argv);
+
 //
 // Input data for PITA score
 //
