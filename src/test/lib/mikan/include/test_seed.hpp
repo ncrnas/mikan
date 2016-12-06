@@ -5,7 +5,6 @@
 #include "gtest/gtest.h"
 #include "get_data_path.hpp"
 #include "mikan_utils.hpp"
-#include "mr3_core.hpp"
 
 template <class TSeedSeqs, class TTestIO>
 class TestSeed : public TTestIO
@@ -25,7 +24,5 @@ protected:
     TSeedSeqs mSeedSeqs;
     seqan::StringSet<seqan::CharString> mSeedDef;
 };
-
-typedef TestSeed<mr3as::MR3SeedSeqs<seqan::RnaString>, TestIOMR3AS> TestSeedMR3AS;
 
 #endif //MIKAN_TEST_SEED_HPP_

@@ -5,7 +5,6 @@
 #include "gtest/gtest.h"
 #include "get_data_path.hpp"
 #include "mikan_utils.hpp"
-#include "mr3_core.hpp"
 
 template <class TCoreInput, class TOptions>
 class TestIOBase : public ::testing::Test
@@ -92,7 +91,5 @@ protected:
     seqan::StringSet<seqan::RnaString> mirna_seqs;
     seqan::StringSet<seqan::RnaString> mrna_seqs;
 };
-
-typedef TestIOBase<mr3as::MR3CoreInput<mr3as::TRNATYPE>, mr3as::MR3Options> TestIOMR3AS;
 
 #endif //MIKAN_TEST_MAIN_IO_HPP_

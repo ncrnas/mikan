@@ -39,9 +39,6 @@ add_executable (gtest_mk_miranda seed_01_nmer.cpp seed_02_gu.cpp seed_03_mm.cpp 
         site_01_nmer_1.cpp site_01_nmer_2.cpp site_02_gu_1.cpp site_02_gu_2.cpp site_03_mm_1.cpp site_03_mm_2.cpp
         site_04_mmgu_1.cpp site_04_mmgu_2.cpp site_05_bt_1.cpp)
 
-include_directories (${SEQAN_INCLUDE_DIRS} ${gtest_SOURCE_DIR}/include
-        ${gtest_SOURCE_DIR} ${MR3_HEADERS} ${MKTEST_HEADERS})
-
 # Add libraries
 if(NOT TARGET mikantest)
     add_library(mikantest ${MKTEST_SOURCE})
