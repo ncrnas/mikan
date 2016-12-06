@@ -983,7 +983,7 @@ void MR3SeedSites<TRNAString>::set_bt_seed_type(
     {
         return;
     }
-    mRNAM8 = mMRNASeqs[pMRNAPos][pSitePos- (7 - INDEXED_SEQ_LEN)];
+    mRNAM8 = mMRNASeqs[pMRNAPos][pSitePos- (8 - INDEXED_SEQ_LEN)];
 
     if (miRNAM6C == mRNAM7 && miRNAM7C == mRNAM8)
     {
@@ -998,6 +998,12 @@ void MR3SeedSites<TRNAString>::set_bt_seed_type(
             pNewSeedType = "8mer_BT";
         }
     }
+
+    //TODO Check BT sites - seed pos 3-7 instead of pos 2-6?
+//    std::cout << std::endl;
+//    std::cout << mMRNASeqs[pMRNAPos][pSitePos] << "," <<  mMRNASeqs[pMRNAPos][pSitePos+1] << "," <<  mMRNASeqs[pMRNAPos][pSitePos+2] << std::endl;
+//    std::cout << mRNAM7 << "," <<  mRNAM8 << std::endl;
+//    std::cout << miRNAM6C << "," <<  miRNAM7C << std::endl;
 
     if (FORCE_LAST_MATCH && pNewSeedType != "8mer_BT")
     {
