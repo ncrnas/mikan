@@ -1,5 +1,5 @@
-#ifndef MIKAN_TEST_MIRANDA_HPP_
-#define MIKAN_TEST_MIRANDA_HPP_
+#ifndef MIKAN_TEST_PITA_HPP_
+#define MIKAN_TEST_PITA_HPP_
 
 #include "test_main_io.hpp"
 #include "test_seed.hpp"
@@ -10,4 +10,4 @@ typedef TestIOBase<ptddg::PITACoreInput<ptddg::TRNATYPE>, ptddg::PITAOptions> Te
 typedef TestSeed<ptddg::PITASeedSeqs<ptddg::TRNATYPE>, TestIOPITA> TestSeedPITA;
 typedef TestSite<ptddg::PITASeedSites<ptddg::TRNATYPE>, TestIOPITA> TestSitePITA;
 
-#endif //MIKAN_TEST_MIRANDA_HPP_
+#endif //MIKAN_TEST_PITA_HPP_
