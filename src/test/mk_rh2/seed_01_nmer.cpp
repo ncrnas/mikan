@@ -17,7 +17,6 @@ namespace {
             O2FNAME2 = (char *)"test_output2_mrna_1.txt";
             OMPATH = (char *)"mk_rh2/";
 
-            //mSeedDef1 = "7mGU+";
             mSeedDef1 = "6mer";
             mOverlapDef = "orig";
         }
