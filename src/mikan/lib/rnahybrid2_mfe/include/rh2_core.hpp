@@ -10,6 +10,8 @@
 
 namespace rh2mfe {
 
+int RH2CoreMain(int argc, char const ** argv);
+
 //
 // Input data for RNAhybrid MFE score
 //

@@ -25,7 +25,21 @@ protected:
         EXPECT_EQ(mmpos, mismatchpos[idx]);
     }
 
+    void test_sites2(const TSites &sites, int idx, const char *seq_type, unsigned mpos, unsigned spos,
+                     bool effective) {
+        seqan::String<unsigned> const& mrnapos = sites.get_mrna_pos();
+        seqan::String<unsigned> const& sitepos = sites.get_site_pos();
+        seqan::StringSet<seqan::CharString> const& seedtypes =  sites.get_seed_types();
+
+        EXPECT_EQ(mpos, mrnapos[idx]);
+        EXPECT_EQ(spos, sitepos[idx]);
+        EXPECT_STREQ(seq_type, (const char *)seqan::toCString(seedtypes[idx]));
+        EXPECT_EQ(effective, sites.mEffectiveSites[idx]);
+    }
+
     seqan::StringSet<seqan::CharString> mSeedDef;
+    seqan::CharString mSeedDef1;
+    seqan::CharString mOverlapDef;
 };
 
 #endif //MIKAN_TEST_SITE_HPP_

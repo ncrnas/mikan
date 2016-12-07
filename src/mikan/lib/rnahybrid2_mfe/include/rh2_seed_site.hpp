@@ -54,6 +54,7 @@ public:
     RH2SeedSeqs() {}
     TRNAString const& get_seed_seq(int i) const {return mSeedSeqs[i];}
     seqan::CharString const& get_seed_type(int i) const {return mSeedTypes[i];}
+    unsigned get_mismatched_pos(int) {return 0;}
 
     // Method prototypes
     int create_seed_seqs(seqan::CharString &pSeedType, seqan::CharString &pOverlapDef);
