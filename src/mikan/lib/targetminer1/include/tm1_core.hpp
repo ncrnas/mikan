@@ -11,6 +11,9 @@
 #include <tm1_site_feature.hpp>  // TM1RawFeatures
 
 namespace tm1p{
+
+int TM1CoreMain(int argc, char const ** argv);
+
 //
 // Input data for TargetScan context score
 //
