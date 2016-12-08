@@ -75,6 +75,7 @@ public:
 public:
     // Define methods
     TS5SeedSites(TIndexQGram& pRNAIdx, TFinder& pFinder): mRNAIdx(pRNAIdx), mFinder(pFinder) {}
+    unsigned get_length() const {return seqan::length(mSitePos);}
     seqan::String<unsigned> const& get_mrna_pos() const {return mMRNAPos;}
     seqan::String<unsigned> const& get_site_pos() const {return mSitePos;}
 

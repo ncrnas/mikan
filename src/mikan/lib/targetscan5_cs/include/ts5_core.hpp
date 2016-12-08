@@ -8,6 +8,9 @@
 #include <ts5_seed_site.hpp>     // TS5Sequences, TS5SeedSites
 
 namespace ts5cs{
+
+int TS5CoreMain(int argc, char const ** argv);
+
 //
 // Input data for TargetScan context score
 //

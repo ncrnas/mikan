@@ -37,6 +37,14 @@ protected:
         EXPECT_EQ(effective, sites.mEffectiveSites[idx]);
     }
 
+    void test_sites3(const TSites &sites, int idx, unsigned mpos, unsigned spos) {
+        seqan::String<unsigned> const& mrnapos = sites.get_mrna_pos();
+        seqan::String<unsigned> const& sitepos = sites.get_site_pos();
+
+        EXPECT_EQ(mpos, mrnapos[idx]);
+        EXPECT_EQ(spos, sitepos[idx]);
+    }
+
     seqan::StringSet<seqan::CharString> mSeedDef;
     seqan::CharString mSeedDef1;
     seqan::CharString mOverlapDef;

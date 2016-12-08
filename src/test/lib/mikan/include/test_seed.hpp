@@ -30,6 +30,13 @@ protected:
         EXPECT_EQ(effective, mSeedSeqs.mEffectiveSeeds[idx]);
     }
 
+    void test_seed3(const char *rnastr) {
+        seqan::RnaString seedseq = rnastr;
+
+        reverseComplement(seedseq);
+        comp_two_rnas(mSeedSeqs.get_seed_seq(), seedseq);
+    }
+
     TSeedSeqs mSeedSeqs;
     seqan::StringSet<seqan::CharString> mSeedDef;
     seqan::CharString mSeedDef1;
