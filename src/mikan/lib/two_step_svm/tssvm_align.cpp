@@ -26,7 +26,7 @@ int TSAlign<TRNAString>::align_seq(
     const String<unsigned>& mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned>& sitePos = pSeedSites.get_site_pos();
     const StringSet<CharString>& seedTypes = pSeedSites.get_seed_types();
-    const String<unsigned>& misMatchPos = pSeedSites.get_mismatch_pos();
+    const String<unsigned>& misMatchPos = pSeedSites.get_mismatched_pos();
     TRNAString miRNAAlignSeq;
     TRNAString mRNAAlignSeq;
     TAlign align;

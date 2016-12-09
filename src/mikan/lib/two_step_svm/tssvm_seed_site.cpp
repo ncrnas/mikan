@@ -428,7 +428,7 @@ int TSSVMSeedSites<TRNAString>::set_seed_pos(
 {
     unsigned m8Pos, a1Pos;
     const CharString &seedType = pSeedSeqs.get_seed_type(pIdx);
-    unsigned mmPos = pSeedSeqs.get_mis_matched_pos(pIdx);
+    unsigned mmPos = pSeedSeqs.get_mismatched_pos(pIdx);
     int retVal;
 
     m8Pos = pSitePos - 1;
