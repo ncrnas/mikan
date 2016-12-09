@@ -62,7 +62,7 @@ public:
 
     TRNAString const& get_seed_seq(int i) const {return mSeedSeqs[i];}
     seqan::CharString const& get_seed_type(int i) const {return mSeedTypes[i];}
-    unsigned get_mis_matched_pos(int i) {return mMisMatchPos[i];}
+    unsigned get_mismatched_pos(int i) {return mMisMatchPos[i];}
 
     // Method prototypes
     int create_seed_seqs();
@@ -117,7 +117,7 @@ public:
     seqan::String<unsigned> const& get_site_pos_s1() const {return mS1Pos;}
     seqan::String<unsigned> const& get_site_pos_s8() const {return mS8Pos;}
     seqan::StringSet<seqan::CharString> const& get_seed_types() const {return mSeedTypes;}
-    seqan::String<unsigned> const& get_mismatch_pos() const {return mMisMatchPos;}
+    seqan::String<unsigned> const& get_mismatched_pos() const {return mMisMatchPos;}
 
     // Method prototypes
     void reset_finder();
