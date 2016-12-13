@@ -34,9 +34,10 @@ endif()
 #        site_01_nmer_1.cpp site_01_nmer_2.cpp site_02_gu_1.cpp site_02_gu_2.cpp site_03_mm_1.cpp site_03_mm_2.cpp
 #        site_04_mmgu_1.cpp site_04_mmgu_2.cpp site_05_bt_1.cpp)
 add_executable (gtest_mk_tm1 seed_01_all.cpp
-        site_01_nmer_1.cpp site_01_nmer_2.cpp site_02_gu_1.cpp site_02_gu_2.cpp )
+        site_01_nmer_1.cpp site_01_nmer_2.cpp site_02_gu_1.cpp site_02_gu_2.cpp site_03_mm_1.cpp site_03_mm_2.cpp
+        site_04_mmgu_1.cpp site_04_mmgu_2.cpp)
 
-# Add libraries
+        # Add libraries
 if(NOT TARGET mikantest)
     add_library(mikantest ${MKTEST_SOURCE})
 endif()
