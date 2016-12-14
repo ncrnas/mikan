@@ -25,8 +25,10 @@ include_directories (${SEQAN_INCLUDE_DIRS} ${gtest_SOURCE_DIR}/include
 add_definitions (${SEQAN_DEFINITIONS})
 if (MSVC)
     add_definitions (/D TEST_DATA_PATH=${CMAKE_CURRENT_LIST_DIR}/../data/)
+    add_definitions (/D TSSVM_MODEL_PATH=${CMAKE_SOURCE_DIR}/mikan/lib/two_step_svm/model)
 else()
     add_definitions (-DTEST_DATA_PATH=${CMAKE_CURRENT_LIST_DIR}/../data/)
+    add_definitions (-DTSSVM_MODEL_PATH=${CMAKE_SOURCE_DIR}/mikan/lib/two_step_svm/model)
 endif()
 
 # Add executable applications
@@ -35,7 +37,9 @@ endif()
 #        site_04_mmgu_1.cpp site_04_mmgu_2.cpp site_05_bt_1.cpp)
 add_executable (gtest_mk_tssvm seed_01_all.cpp
         site_01_nmer_1.cpp site_01_nmer_2.cpp site_02_gu_1.cpp site_02_gu_2.cpp site_03_mm_1.cpp site_03_mm_2.cpp
-        site_04_mmgu_1.cpp site_04_mmgu_2.cpp)
+        site_04_mmgu_1.cpp site_04_mmgu_2.cpp
+        site_output_01_nmer_1.cpp site_output_01_nmer_2.cpp site_output_02_gu_1.cpp site_output_02_gu_2.cpp
+        site_output_03_mm_1.cpp site_output_03_mm_2.cpp site_output_04_mmgu_1.cpp site_output_04_mmgu_2.cpp)
 
 # Add libraries
 if(NOT TARGET mikantest)

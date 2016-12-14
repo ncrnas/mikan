@@ -77,7 +77,7 @@ protected:
     TOptions options;
 
     int argc;
-    char *argv[5];
+    char *argv[6];
 
     seqan::CharString ifile1;
     seqan::CharString ifile2;
