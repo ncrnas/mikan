@@ -30,14 +30,15 @@ else()
 endif()
 
 # Add executable applications
-#add_executable (gtest_mk_pita seed_01_nmer.cpp seed_02_gu.cpp seed_03_mm.cpp seed_04_mmgu.cpp seed_05_bt.cpp
-#        site_01_nmer_1.cpp site_01_nmer_2.cpp site_02_gu_1.cpp site_02_gu_2.cpp site_03_mm_1.cpp site_03_mm_2.cpp
-#        site_04_mmgu_1.cpp site_04_mmgu_2.cpp site_05_bt_1.cpp)
 add_executable (gtest_mk_rh2 seed_01_nmer.cpp seed_02_gu.cpp site_01_nmer_1.cpp site_01_nmer_2.cpp
         site_02_gu_1.cpp site_02_gu_2.cpp site_03_mm_1.cpp site_03_mm_2.cpp
         site_04_mmgu_1.cpp site_04_mmgu_2.cpp
         site_output_01_nmer_1.cpp site_output_01_nmer_2.cpp site_output_02_gu_1.cpp site_output_02_gu_2.cpp
         site_output_03_mm_1.cpp site_output_03_mm_2.cpp site_output_04_mmgu_1.cpp site_output_04_mmgu_2.cpp)
+
+add_executable (gtest_mk_rh2_long output_m001u001.cpp output_m001u002.cpp output_m001u003.cpp output_m001u004.cpp
+        output_m001u005.cpp output_m001u006.cpp output_m001u007.cpp output_m001u008.cpp output_m001u009.cpp
+        output_m001u010.cpp output_m001u011.cpp)
 
 # Add libraries
 if(NOT TARGET mikantest)
@@ -47,6 +48,8 @@ endif()
 # Add dependencies found by find_package (SeqAn)
 target_link_libraries (gtest_mk_rh2 gtest gtest_main)
 target_link_libraries (gtest_mk_rh2 ${SEQAN_LIBRARIES} rh2 mikantest)
+target_link_libraries (gtest_mk_rh2_long gtest gtest_main)
+target_link_libraries (gtest_mk_rh2_long ${SEQAN_LIBRARIES} rh2 mikantest)
 
 # Add CXX flags found by find_package (SeqAn)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SEQAN_CXX_FLAGS}")
@@ -57,3 +60,4 @@ config_compiler_and_linker()  # Defined in internal_utils.cmake.
 
 # Add test
 add_test (NAME test_mk_rh2 COMMAND gtest_mk_rh2)
+add_test (NAME test_mk_rh2_long COMMAND gtest_mk_rh2_long)
