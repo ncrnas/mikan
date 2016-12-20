@@ -1,6 +1,6 @@
 #include <iostream>
 #include "gtest/gtest.h"
-#include "test_main_io.hpp"
+#include "test_miranda.hpp"
 
 namespace {
 
