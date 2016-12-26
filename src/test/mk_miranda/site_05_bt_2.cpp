@@ -5,12 +5,12 @@
 
 namespace {
 
-    class Site05BT1 : public TestSiteMR3AS
+    class Site05BT2 : public TestSiteMR3AS
     {
     protected:
-        Site05BT1() {
+        Site05BT2() {
             IFNAME1 = (char *)"mir_001.fasta";
-            IFNAME2 = (char *)"ts_05_bt_1.fasta";
+            IFNAME2 = (char *)"ts_05_bt_2.fasta";
             O1FNAME1 = (char *)"test_output1_site_1.txt";
             O1FNAME2 = (char *)"test_output1_mrna_1.txt";
             O2FNAME1 = (char *)"test_output2_site_1.txt";
@@ -32,14 +32,14 @@ namespace {
 
     };
 
-    TEST_F(Site05BT1, mir124_bt) {
+    TEST_F(Site05BT2, mir1_bt) {
         read_files(false);
         set_seqs();
         TIdx index(mrna_seqs);
         TFin finder(index);
         TSit sites(index, finder, mrna_seqs);
 
-        int ret_val = sites.find_seed_sites(mirna_seqs[0], mSeedDef);
+        int ret_val = sites.find_seed_sites(mirna_seqs[1], mSeedDef);
         EXPECT_EQ(0, ret_val);
         EXPECT_EQ(25u, sites.get_length());
 
@@ -70,6 +70,8 @@ namespace {
         test_sites(sites, 20, "7mer_BT", 20, 24, true, 5);
         test_sites(sites, 21, "8mer_BT", 21, 24, true, 5);
         test_sites(sites, 22, "8mer_BT", 22, 24, true, 5);
+        test_sites(sites, 23, "8mer_BT", 23, 24, true, 5);
+        test_sites(sites, 24, "8mer_BT", 24, 24, true, 5);
     }
 
 }
