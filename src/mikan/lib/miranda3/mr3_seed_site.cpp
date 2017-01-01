@@ -147,6 +147,7 @@ template <class TRNAString>
 int MR3SeedSeqs<TRNAString>::create_multi_guwobble_seed_seqs(TRNAString &pSeedSeq)
 {
     TRNAString seedGUSeq;
+    int mm;
 
     unsigned seedDatLen = length(mSeedSeqs);
 
@@ -154,25 +155,33 @@ int MR3SeedSeqs<TRNAString>::create_multi_guwobble_seed_seqs(TRNAString &pSeedSe
     {
         if (pSeedSeq[i] == 'C')
         {
-            for (unsigned j = 0; j < seedDatLen; ++j)
+            for (unsigned j = 1; j < seedDatLen; ++j)
             {
                 seedGUSeq = get_seed_seq(j);
-                seedGUSeq[i] = 'U';
-                appendValue(mSeedSeqs, seedGUSeq);
-                appendValue(mSeedTypes, "GU+");
-                appendValue(mMisMatchPos, 0);
+                mm = get_mismatched_pos(j);
+                if (seedGUSeq[i] != 'U' && mm > (int)i)
+                {
+                    seedGUSeq[i] = 'U';
+                    appendValue(mSeedSeqs, seedGUSeq);
+                    appendValue(mSeedTypes, "GU+");
+                    appendValue(mMisMatchPos, mm);
+                }
             }
             seedDatLen = length(mSeedSeqs);
         }
         else if (pSeedSeq[i] == 'A')
         {
-            for (unsigned j = 0; j < seedDatLen; ++j)
+            for (unsigned j = 1; j < seedDatLen; ++j)
             {
                 seedGUSeq = get_seed_seq(j);
-                seedGUSeq[i] = 'G';
-                appendValue(mSeedSeqs, seedGUSeq);
-                appendValue(mSeedTypes, "GU+");
-                appendValue(mMisMatchPos, 0);
+                mm = get_mismatched_pos(j);
+                if (seedGUSeq[i] != 'G' && mm > (int)i)
+                {
+                    seedGUSeq[i] = 'G';
+                    appendValue(mSeedSeqs, seedGUSeq);
+                    appendValue(mSeedTypes, "GU+");
+                    appendValue(mMisMatchPos, mm);
+                }
             }
             seedDatLen = length(mSeedSeqs);
         }
@@ -290,7 +299,7 @@ int MR3SeedSeqs<TRNAString>::create_bt_seed_seqs(TRNAString &pSeedSeq)
     allRNAs[3] = 'U';
 
     resize(seedBTSeq, 6);
-    for (unsigned i = 0; i < length(seedBTSeq); ++i)
+    for (unsigned i = 1; i < length(seedBTSeq); ++i)
     {
         for (unsigned j = 0; j < length(allRNAs); ++j)
         {
@@ -957,7 +966,7 @@ void MR3SeedSites<TRNAString>::set_bt_seed_type(
         unsigned pMisMatchPos,
         CharString &pNewSeedType)
 {
-    TRNAString cMiRNASeq, miRNAM6, miRNAM6C, miRNAM7, miRNAM7C, miRNAM8, miRNAM8C, mRNAM7, mRNAM8, mRNAM9;
+    TRNAString cMiRNASeq, miRNAM2C, miRNAM8C, miRNAM9C, mRNAM2, mRNAM7, mRNAM8;
 
     if (pNewSeedType != "")
     {
@@ -966,34 +975,27 @@ void MR3SeedSites<TRNAString>::set_bt_seed_type(
 
     cMiRNASeq = pMiRNA;
     complement(cMiRNASeq);
-    miRNAM6 = pMiRNA[6];
-    miRNAM6C = cMiRNASeq[6];
-    miRNAM7 = pMiRNA[7];
-    miRNAM7C = cMiRNASeq[7];
-    miRNAM8 = pMiRNA[8];
-    miRNAM8C = cMiRNASeq[8];
+    miRNAM2C = cMiRNASeq[1];
+    miRNAM8C = cMiRNASeq[7];
+    miRNAM9C = cMiRNASeq[8];
 
-    if ((int)pSitePos - 7 + (int)INDEXED_SEQ_LEN < 0)
+    if (((int)pSitePos - 7 + (int)INDEXED_SEQ_LEN < 0)
+        && (pSitePos- 1 + INDEXED_SEQ_LEN >= length(mMRNASeqs[pMRNAPos])))
     {
         return;
     }
+    mRNAM2 = mMRNASeqs[pMRNAPos][pSitePos + INDEXED_SEQ_LEN];
     mRNAM7 = mMRNASeqs[pMRNAPos][pSitePos- (7 - INDEXED_SEQ_LEN)];
 
-    if ((int)pSitePos - 8 + (int)INDEXED_SEQ_LEN < 0)
-    {
-        return;
-    }
-    mRNAM8 = mMRNASeqs[pMRNAPos][pSitePos- (8 - INDEXED_SEQ_LEN)];
-
-    if (miRNAM6C == mRNAM7 && miRNAM7C == mRNAM8)
+    if (miRNAM2C == mRNAM2 && miRNAM8C == mRNAM7)
     {
         pNewSeedType = "7mer_BT";
     }
 
-    if (pNewSeedType == "7mer_BT" && ((int)pSitePos - 9 + (int)INDEXED_SEQ_LEN >= 0))
+    if (pNewSeedType == "7mer_BT" && ((int)pSitePos - 8 + (int)INDEXED_SEQ_LEN >= 0))
     {
-        mRNAM9 = mMRNASeqs[pMRNAPos][pSitePos- (9 - INDEXED_SEQ_LEN)];
-        if (miRNAM8C == mRNAM9)
+        mRNAM8 = mMRNASeqs[pMRNAPos][pSitePos- (8 - INDEXED_SEQ_LEN)];
+        if (miRNAM9C == mRNAM8)
         {
             pNewSeedType = "8mer_BT";
         }
@@ -1001,9 +1003,9 @@ void MR3SeedSites<TRNAString>::set_bt_seed_type(
 
     //TODO Check BT sites - seed pos 3-7 instead of pos 2-6?
 //    std::cout << std::endl;
-//    std::cout << mMRNASeqs[pMRNAPos][pSitePos] << "," <<  mMRNASeqs[pMRNAPos][pSitePos+1] << "," <<  mMRNASeqs[pMRNAPos][pSitePos+2] << std::endl;
-//    std::cout << mRNAM7 << "," <<  mRNAM8 << std::endl;
-//    std::cout << miRNAM6C << "," <<  miRNAM7C << std::endl;
+//    std::cout << pMiRNA << std::endl;
+//    std::cout << mRNAM2 << ","  << mRNAM7 << "," <<  mRNAM8 << std::endl;
+//    std::cout << miRNAM2C << ","  << miRNAM8C << "," <<  miRNAM9C << std::endl;
 
     if (FORCE_LAST_MATCH && pNewSeedType != "8mer_BT")
     {
