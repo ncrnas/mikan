@@ -90,4 +90,34 @@ namespace {
         test_sites(sites, 14, "8mer_GU+", 14, 24, true, 0);
         test_sites(sites, 15, "8mer_GU+", 15, 24, true, 0);
     }
+
+    TEST_F(Site02GU1, mir124_def) {
+        read_files(false);
+        set_seqs();
+        TIdx index(mrna_seqs);
+        TFin finder(index);
+        TSit sites(index, finder, mrna_seqs);
+
+        mSeedDef[3] = "1";
+        mSeedDef[4] = "0:1";
+        mSeedDef[5] = "1";
+        int ret_val = sites.find_seed_sites(mirna_seqs[0], mSeedDef);
+        EXPECT_EQ(0, ret_val);
+        EXPECT_EQ(11u, sites.get_length());
+
+        test_sites(sites, 0, "7mer", 0, 24, true, 0);
+
+        test_sites(sites, 1, "GUT", 1, 24, false, 0);
+        test_sites(sites, 2, "7mer_GUT", 2, 24, true, 2);
+        test_sites(sites, 3, "7mer_GUT", 3, 24, true, 2);
+        test_sites(sites, 4, "8mer_GUT", 4, 24, true, 2);
+        test_sites(sites, 5, "8mer_GUT", 5, 24, true, 2);
+
+        test_sites(sites, 6, "GUT", 6, 24, false, 0);
+        test_sites(sites, 7, "7mer_GUT", 7, 24, true, 3);
+        test_sites(sites, 8, "7mer_GUT", 8, 24, true, 3);
+        test_sites(sites, 9, "8mer_GUT", 9, 24, true, 3);
+        test_sites(sites, 10, "8mer_GUT", 10, 24, true, 3);
+
+    }
 }
