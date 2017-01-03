@@ -72,4 +72,59 @@ namespace {
         test_sites(sites, 22, "8mer_BT", 22, 24, true, 5);
     }
 
+    TEST_F(Site05BT1, mir124_def) {
+        read_files(false);
+        set_seqs();
+        TIdx index(mrna_seqs);
+        TFin finder(index);
+        TSit sites(index, finder, mrna_seqs);
+
+        mSeedDef[3] = "+";
+        mSeedDef[4] = "1:1";
+        mSeedDef[5] = "1";
+        int ret_val = sites.find_seed_sites(mirna_seqs[0], mSeedDef);
+        EXPECT_EQ(0, ret_val);
+        EXPECT_EQ(31u, sites.get_length());
+
+        test_sites(sites, 0, "MM", 4, 25, false, 0);
+        test_sites(sites, 1, "MM", 5, 25, false, 0);
+
+        test_sites(sites, 2, "MM", 0, 25, false, 0);
+        test_sites(sites, 3, "MM", 1, 25, false, 0);
+        test_sites(sites, 4, "MM", 2, 25, false, 0);
+        test_sites(sites, 5, "MM", 3, 25, false, 0);
+
+        test_sites(sites, 6, "8mer_MM", 9, 24, true, 4);
+        test_sites(sites, 7, "8mer_MM", 19, 24, true, 4);
+
+        test_sites(sites, 8, "7mer_MM", 16, 24, true, 4);
+        test_sites(sites, 9, "8mer_MM", 17, 24, true, 4);
+        test_sites(sites, 10, "8mer_MM", 18, 24, true, 4);
+
+        test_sites(sites, 11, "8mer_MM", 23, 24, true, 5);
+        test_sites(sites, 12, "8mer_MM", 24, 24, true, 5);
+
+        test_sites(sites, 13, "7mer_MM", 20, 24, true, 5);
+        test_sites(sites, 14, "8mer_MM", 21, 24, true, 5);
+        test_sites(sites, 15, "8mer_MM", 22, 24, true, 5);
+
+        test_sites(sites, 16, "8mer_MMGU", 10, 24, true, 4);
+        test_sites(sites, 17, "8mer_MMGU", 15, 24, true, 4);
+
+        test_sites(sites, 18, "7mer_BT", 0, 24, true, 1);
+        test_sites(sites, 19, "7mer_BT", 1, 24, true, 1);
+        test_sites(sites, 20, "8mer_BT", 2, 24, true, 1);
+        test_sites(sites, 21, "8mer_BT", 3, 24, true, 1);
+        test_sites(sites, 22, "7mer_BT", 4, 24, true, 1);
+        test_sites(sites, 23, "7mer_BT", 5, 24, true, 1);
+
+        test_sites(sites, 24, "7mer_BT", 6, 24, true, 2);
+        test_sites(sites, 25, "8mer_BT", 7, 24, true, 2);
+        test_sites(sites, 26, "8mer_BT", 8, 24, true, 2);
+        test_sites(sites, 27, "7mer_BT", 11, 24, true, 3);
+        test_sites(sites, 28, "8mer_BT", 12, 24, true, 3);
+        test_sites(sites, 29, "8mer_BT", 13, 24, true, 3);
+        test_sites(sites, 30, "8mer_BT", 14, 24, true, 3);
+    }
+
 }

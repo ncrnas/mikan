@@ -89,4 +89,32 @@ namespace {
         test_sites(sites, 4, "6mer", 4, 25, true, 0);
     }
 
+    TEST_F(Site01Nmer2, mir1_def) {
+        read_files(false);
+        set_seqs();
+        TIdx index(mrna_seqs);
+        TFin finder(index);
+        TSit sites(index, finder, mrna_seqs);
+
+        mSeedDef[3] = "+";
+        mSeedDef[4] = "1:1";
+        mSeedDef[5] = "1";
+        int ret_val = sites.find_seed_sites(mirna_seqs[1], mSeedDef);
+        EXPECT_EQ(0, ret_val);
+        EXPECT_EQ(12u, sites.get_length());
+
+        test_sites(sites, 0, "7mer_MM", 0, 25, true, -1);
+        test_sites(sites, 1, "7mer_MM", 1, 25, true, -1);
+        test_sites(sites, 2, "7mer", 2, 25, true, 0);
+        test_sites(sites, 3, "7mer", 3, 25, true, 0);
+        test_sites(sites, 4, "8mer", 4, 25, true, 0);
+        test_sites(sites, 5, "7mer_MMGU", 0, 13, true, 3);
+        test_sites(sites, 6, "7mer_MMGU", 1, 13, true, 3);
+        test_sites(sites, 7, "7mer_MMGU", 2, 13, true, 3);
+        test_sites(sites, 8, "7mer_MMGU", 3, 13, true, 3);
+        test_sites(sites, 9, "7mer_MMGU", 4, 13, true, 3);
+        test_sites(sites, 10, "7mer_BT", 0, 24, true, 1);
+        test_sites(sites, 11, "7mer_BT", 1, 24, true, 1);
+    }
+
 }

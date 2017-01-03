@@ -143,4 +143,80 @@ namespace {
         test_sites(sites, 52, "6mer", 52, 32, true, 0);
     }
 
+    TEST_F(Site01Nmer1, mir124_def) {
+        read_files(false);
+        set_seqs();
+        TIdx index(mrna_seqs);
+        TFin finder(index);
+        TSit sites(index, finder, mrna_seqs);
+
+        mSeedDef[3] = "+";
+        mSeedDef[4] = "1:1";
+        mSeedDef[5] = "1";
+        int ret_val = sites.find_seed_sites(mirna_seqs[0], mSeedDef);
+        EXPECT_EQ(0, ret_val);
+        EXPECT_EQ(55u, sites.get_length());
+
+        test_sites(sites, 0, "", 0, 0, false, 0);
+        test_sites(sites, 1, "7mer_MM", 1, 1, true, -1);
+        test_sites(sites, 2, "7mer_MM", 2, 13, true, -1);
+        test_sites(sites, 3, "7mer_MM", 3, 14, true, -1);
+        test_sites(sites, 4, "7mer_MM", 4, 15, true, -1);
+        test_sites(sites, 5, "7mer_MM", 5, 18, true, -1);
+        test_sites(sites, 6, "7mer_MM", 6, 19, true, -1);
+        test_sites(sites, 7, "7mer_MM", 7, 20, true, -1);
+        test_sites(sites, 8, "7mer_MM", 8, 32, true, -1);
+        test_sites(sites, 9, "7mer_MM", 9, 33, true, -1);
+        test_sites(sites, 10, "", 10, 34, false, 0);
+
+        test_sites(sites, 11, "", 11, 0, false, 0);
+        test_sites(sites, 12, "7mer_MM", 12, 1, true, -1);
+        test_sites(sites, 13, "7mer_MM", 13, 13, true, -1);
+        test_sites(sites, 14, "7mer_MM", 14, 14, true, -1);
+        test_sites(sites, 15, "7mer_MM", 15, 15, true, -1);
+        test_sites(sites, 16, "7mer_MM", 16, 18, true, -1);
+        test_sites(sites, 17, "7mer_MM", 17, 19, true, -1);
+        test_sites(sites, 18, "7mer_MM", 18, 20, true, -1);
+        test_sites(sites, 19, "7mer_MM", 19, 32, true, -1);
+        test_sites(sites, 20, "7mer_MM", 20, 33, true, -1);
+        test_sites(sites, 21, "", 21, 34, false, 0);
+
+        test_sites(sites, 22, "7mer", 22, 1, true, 0);
+        test_sites(sites, 23, "7mer", 23, 13, true, 0);
+        test_sites(sites, 24, "7mer", 24, 14, true, 0);
+        test_sites(sites, 25, "7mer", 25, 15, true, 0);
+        test_sites(sites, 26, "7mer", 26, 18, true, 0);
+        test_sites(sites, 27, "7mer", 27, 19, true, 0);
+        test_sites(sites, 28, "7mer", 28, 20, true, 0);
+        test_sites(sites, 29, "7mer", 29, 21, true, 0);
+        test_sites(sites, 30, "7mer", 30, 32, true, 0);
+        test_sites(sites, 31, "7mer", 31, 33, true, 0);
+        test_sites(sites, 32, "", 32, 34, false, 0);
+
+        test_sites(sites, 33, "7mer", 33, 1, true, 0);
+        test_sites(sites, 34, "7mer", 34, 13, true, 0);
+        test_sites(sites, 35, "7mer", 35, 14, true, 0);
+        test_sites(sites, 36, "7mer", 36, 15, true, 0);
+        test_sites(sites, 37, "7mer", 37, 18, true, 0);
+        test_sites(sites, 38, "7mer", 38, 19, true, 0);
+        test_sites(sites, 39, "7mer", 39, 20, true, 0);
+        test_sites(sites, 40, "7mer", 40, 21, true, 0);
+        test_sites(sites, 41, "7mer", 41, 32, true, 0);
+        test_sites(sites, 42, "7mer", 42, 33, true, 0);
+        test_sites(sites, 43, "", 43, 34, false, 0);
+
+        test_sites(sites, 44, "8mer", 44, 2, true, 0);
+        test_sites(sites, 45, "8mer", 45, 13, true, 0);
+        test_sites(sites, 46, "8mer", 46, 14, true, 0);
+        test_sites(sites, 47, "8mer", 47, 15, true, 0);
+        test_sites(sites, 48, "8mer", 48, 18, true, 0);
+        test_sites(sites, 49, "8mer", 49, 19, true, 0);
+        test_sites(sites, 50, "8mer", 50, 20, true, 0);
+        test_sites(sites, 51, "8mer", 51, 21, true, 0);
+        test_sites(sites, 52, "8mer", 52, 32, true, 0);
+        test_sites(sites, 53, "8mer", 53, 33, true, 0);
+        test_sites(sites, 54, "", 54, 34, false, 0);
+    }
+
+
 }
