@@ -566,8 +566,8 @@ template <class TRNAString>
 void MR3SeedSites<TRNAString>::set_stringent_seed_type(
         CharString &pCurSeedType,
         StringSet<CharString> &pSeedDef,
-        bool pMatchMx1,
-        bool pMatchMx2,
+        bool pMatchMx8,
+        bool pMatchMx9,
         unsigned,
         CharString &pNewSeedType)
 {
@@ -578,11 +578,11 @@ void MR3SeedSites<TRNAString>::set_stringent_seed_type(
 
     if (pCurSeedType == "6mer")
     {
-        if (pSeedDef[2] == 'Y' && pMatchMx1 && pMatchMx2)
+        if (pSeedDef[2] == 'Y' && pMatchMx8 && pMatchMx9)
         {
             pNewSeedType = "8mer";
         }
-        else if (pSeedDef[1] == 'Y' && pMatchMx1)
+        else if (pSeedDef[1] == 'Y' && pMatchMx8)
         {
             pNewSeedType = "7mer";
         }
@@ -634,12 +634,12 @@ void MR3SeedSites<TRNAString>::set_single_gu_seed_type(
         StringSet<CharString> &pSeedDef,
         int pM1,
         int pM2,
-        bool pMatchMx1,
-        bool pMatchMx2,
-        bool pGutMx1,
-        bool pGutMx2,
-        bool pGumMx1,
-        bool pGumMx2,
+        bool pMatchMx8,
+        bool pMatchMx9,
+        bool pGutMx8,
+        bool pGutMx9,
+        bool pGumMx8,
+        bool pGumMx9,
         unsigned pMisMatchPos,
         CharString &pNewSeedType)
 {
@@ -652,10 +652,10 @@ void MR3SeedSites<TRNAString>::set_single_gu_seed_type(
 
     if (pCurSeedType == "6mer")
     {
-        if (pSeedDef[2] == 'Y' && ((pMatchMx1 && pGutMx2) || (pMatchMx2 && pGutMx1)))
+        if (pSeedDef[2] == 'Y' && ((pMatchMx8 && pGutMx9) || (pMatchMx9 && pGutMx8)))
         {
             pNewSeedType = "8mer_GUT";
-            if (pMatchMx1)
+            if (pMatchMx8)
             {
                 mm = pM2;
             }
@@ -664,10 +664,10 @@ void MR3SeedSites<TRNAString>::set_single_gu_seed_type(
                 mm = pM1;
             }
         }
-        else if (pSeedDef[2] == 'Y' && ((pMatchMx1 && pGumMx2) || (pMatchMx2 && pGumMx1)))
+        else if (pSeedDef[2] == 'Y' && ((pMatchMx8 && pGumMx9) || (pMatchMx9 && pGumMx8)))
         {
             pNewSeedType = "8mer_GUM";
-            if (pMatchMx1)
+            if (pMatchMx8)
             {
                 mm = pM2;
             }
@@ -676,12 +676,12 @@ void MR3SeedSites<TRNAString>::set_single_gu_seed_type(
                 mm = pM1;
             }
         }
-        else if (pSeedDef[1] == 'Y' && pGutMx1)
+        else if (pSeedDef[1] == 'Y' && pGutMx8)
         {
             pNewSeedType = "7mer_GUT";
             mm = pM1;
         }
-        else if (pSeedDef[1] == 'Y' && pGumMx1)
+        else if (pSeedDef[1] == 'Y' && pGumMx8)
         {
             pNewSeedType = "7mer_GUM";
             mm = pM1;
@@ -689,12 +689,12 @@ void MR3SeedSites<TRNAString>::set_single_gu_seed_type(
     }
     else if (pCurSeedType == "GUT")
     {
-        if (pSeedDef[2] == 'Y' && pMatchMx1 && pMatchMx2)
+        if (pSeedDef[2] == 'Y' && pMatchMx8 && pMatchMx9)
         {
             pNewSeedType = "8mer_GUT";
             mm = pMisMatchPos;
         }
-        else if (pSeedDef[1] == 'Y' && pMatchMx1)
+        else if (pSeedDef[1] == 'Y' && pMatchMx8)
         {
             pNewSeedType = "7mer_GUT";
             mm = pMisMatchPos;
@@ -702,12 +702,12 @@ void MR3SeedSites<TRNAString>::set_single_gu_seed_type(
     }
     else if (pCurSeedType == "GUM")
     {
-        if (pSeedDef[2] == 'Y' && pMatchMx1 && pMatchMx2)
+        if (pSeedDef[2] == 'Y' && pMatchMx8 && pMatchMx9)
         {
             pNewSeedType = "8mer_GUM";
             mm = pMisMatchPos;
         }
-        else if (pSeedDef[1] == 'Y' && pMatchMx1)
+        else if (pSeedDef[1] == 'Y' && pMatchMx8)
         {
             pNewSeedType = "7mer_GUM";
             mm = pMisMatchPos;
@@ -716,7 +716,7 @@ void MR3SeedSites<TRNAString>::set_single_gu_seed_type(
 
     if (FORCE_LAST_MATCH && pNewSeedType != "")
     {
-        check_last_match(pMatchMx1, pMatchMx2, pNewSeedType);
+        check_last_match(pMatchMx8, pMatchMx9, pNewSeedType);
     }
 
     if (pNewSeedType != "")
@@ -734,12 +734,12 @@ void MR3SeedSites<TRNAString>::set_multiple_gu_seed_type(
         StringSet<CharString> &pSeedDef,
         int,
         int,
-        bool pMatchMx1,
-        bool pMatchMx2,
-        bool pGutMx1,
-        bool pGutMx2,
-        bool pGumMx1,
-        bool pGumMx2,
+        bool pMatchMx8,
+        bool pMatchMx9,
+        bool pGutMx8,
+        bool pGutMx9,
+        bool pGumMx8,
+        bool pGumMx9,
         unsigned,
         CharString &pNewSeedType)
 {
@@ -748,28 +748,28 @@ void MR3SeedSites<TRNAString>::set_multiple_gu_seed_type(
         return;
     }
 
-    if (pCurSeedType == "6mer" && pSeedDef[2] == 'Y' && (pGumMx1 || pGutMx1) && (pGumMx2 || pGutMx2))
+    if (pCurSeedType == "6mer" && pSeedDef[2] == 'Y' && (pGumMx8 || pGutMx8) && (pGumMx9 || pGutMx9))
     {
         pNewSeedType = "8mer_GU+";
     }
     else if (pCurSeedType == "GUT" || pCurSeedType == "GUM")
     {
-        if (pSeedDef[2] == 'Y' && (pGumMx1 || pGutMx1 || pMatchMx1) && (pGumMx2 || pGutMx2 || pMatchMx2))
+        if (pSeedDef[2] == 'Y' && (pGumMx8 || pGutMx8 || pMatchMx8) && (pGumMx9 || pGutMx9 || pMatchMx9))
         {
             pNewSeedType = "8mer_GU+";
         }
-        else if (pSeedDef[1] == 'Y' && (pGumMx1 || pGutMx1))
+        else if (pSeedDef[1] == 'Y' && (pGumMx8 || pGutMx8))
         {
             pNewSeedType = "7mer_GU+";
         }
     }
     else if (pCurSeedType == "GU+")
     {
-        if (pSeedDef[2] == 'Y' && (pGumMx1 || pGutMx1 || pMatchMx1) && (pGumMx2 || pGutMx2 || pMatchMx2))
+        if (pSeedDef[2] == 'Y' && (pGumMx8 || pGutMx8 || pMatchMx8) && (pGumMx9 || pGutMx9 || pMatchMx9))
         {
             pNewSeedType = "8mer_GU+";
         }
-        else if (pSeedDef[1] == 'Y' && (pGumMx1 || pGutMx1 || pMatchMx1))
+        else if (pSeedDef[1] == 'Y' && (pGumMx8 || pGutMx8 || pMatchMx8))
         {
             pNewSeedType = "7mer_GU+";
         }
@@ -777,7 +777,7 @@ void MR3SeedSites<TRNAString>::set_multiple_gu_seed_type(
 
     if (FORCE_LAST_MATCH && pNewSeedType != "")
     {
-        check_last_match(pMatchMx1, pMatchMx2, pNewSeedType);
+        check_last_match(pMatchMx8, pMatchMx9, pNewSeedType);
     }
 
     if (pNewSeedType != "")
@@ -795,12 +795,12 @@ void MR3SeedSites<TRNAString>::set_mismatch_seed_type(
         StringSet<CharString> &pSeedDef,
         int pM1,
         int pM2,
-        bool pMatchMx1,
-        bool pMatchMx2,
-        bool pGutMx1,
-        bool pGutMx2,
-        bool pGumMx1,
-        bool pGumMx2,
+        bool pMatchMx8,
+        bool pMatchMx9,
+        bool pGutMx8,
+        bool pGutMx9,
+        bool pGumMx8,
+        bool pGumMx9,
         unsigned pMisMatchPos,
         CharString &pNewSeedType)
 {
@@ -813,11 +813,11 @@ void MR3SeedSites<TRNAString>::set_mismatch_seed_type(
 
     if (pSeedDef[2] == 'Y')
     {
-        if (pCurSeedType == "6mer" && ((pMatchMx1 && !pMatchMx2 && !pGutMx2 && !pGumMx2)
-                || (!pMatchMx1 && !pGutMx1 && !pGumMx1 && pMatchMx2)))
+        if (pCurSeedType == "6mer" && ((pMatchMx8 && !pMatchMx9 && !pGutMx9 && !pGumMx9)
+                || (!pMatchMx8 && !pGutMx8 && !pGumMx8 && pMatchMx9)))
         {
             pNewSeedType = "8mer_MM";
-            if (pMatchMx1)
+            if (pMatchMx8)
             {
                 mm = pM2;
             }
@@ -826,7 +826,7 @@ void MR3SeedSites<TRNAString>::set_mismatch_seed_type(
                 mm = pM1;
             }
         }
-        else if (pCurSeedType == "MM" && pMatchMx1 && pMatchMx2)
+        else if (pCurSeedType == "MM" && pMatchMx8 && pMatchMx9)
         {
             pNewSeedType = "8mer_MM";
             mm = pMisMatchPos;
@@ -835,12 +835,12 @@ void MR3SeedSites<TRNAString>::set_mismatch_seed_type(
 
     if (pNewSeedType == "" && pSeedDef[1] == 'Y' && pSeedDef[4] == "1:1")
     {
-        if (pCurSeedType == "6mer" && !pMatchMx1 && !pGutMx1 && !pGumMx1)
+        if (pCurSeedType == "6mer" && !pMatchMx8 && !pGutMx8 && !pGumMx8)
         {
             pNewSeedType = "7mer_MM";
             mm = pM1;
         }
-        else if (pCurSeedType == "MM" && pMatchMx1)
+        else if (pCurSeedType == "MM" && pMatchMx8)
         {
             pNewSeedType = "7mer_MM";
             mm = pMisMatchPos;
@@ -849,7 +849,7 @@ void MR3SeedSites<TRNAString>::set_mismatch_seed_type(
 
     if (FORCE_LAST_MATCH && pNewSeedType != "")
     {
-        check_last_match(pMatchMx1, pMatchMx2, pNewSeedType);
+        check_last_match(pMatchMx8, pMatchMx9, pNewSeedType);
     }
 
     if (pNewSeedType != "")
@@ -867,12 +867,12 @@ void MR3SeedSites<TRNAString>::set_gu_mismatch_seed_type(
         StringSet<CharString> &pSeedDef,
         int pM1,
         int pM2,
-        bool pMatchMx1,
-        bool pMatchMx2,
-        bool pGutMx1,
-        bool pGutMx2,
-        bool pGumMx1,
-        bool pGumMx2,
+        bool pMatchMx8,
+        bool pMatchMx9,
+        bool pGutMx8,
+        bool pGutMx9,
+        bool pGumMx8,
+        bool pGumMx9,
         unsigned pMisMatchPos,
         CharString &pNewSeedType)
 {
@@ -885,11 +885,11 @@ void MR3SeedSites<TRNAString>::set_gu_mismatch_seed_type(
 
     if (pSeedDef[2] == 'Y')
     {
-        if (pCurSeedType == "6mer" && ((!pMatchMx1 && !pMatchMx2 && (pGutMx1 || pGumMx1) && !(pGutMx2 || pGumMx2))
-                || (!pMatchMx1 && !pMatchMx2 && !(pGutMx1 || pGumMx1) && (pGutMx2 || pGumMx2))))
+        if (pCurSeedType == "6mer" && ((!pMatchMx8 && !pMatchMx9 && (pGutMx8 || pGumMx8) && !(pGutMx9 || pGumMx9))
+                || (!pMatchMx8 && !pMatchMx9 && !(pGutMx8 || pGumMx8) && (pGutMx9 || pGumMx9))))
         {
             pNewSeedType = "8mer_MMGU";
-            if (pGutMx1 || pGumMx1)
+            if (pGutMx8 || pGumMx8)
             {
                 mm = pM2;
             }
@@ -899,11 +899,11 @@ void MR3SeedSites<TRNAString>::set_gu_mismatch_seed_type(
             }
         }
         else if ((pCurSeedType == "GUT" || pCurSeedType == "GUM") &&
-                ((pMatchMx1 && !pMatchMx2 && !pGutMx2 && !pGumMx2)
-                || (!pMatchMx1 && pMatchMx2 && !pGutMx1 && !pGumMx1)))
+                ((pMatchMx8 && !pMatchMx9 && !pGutMx9 && !pGumMx9)
+                || (!pMatchMx8 && pMatchMx9 && !pGutMx8 && !pGumMx8)))
         {
             pNewSeedType = "8mer_MMGU";
-            if (pMatchMx1)
+            if (pMatchMx8)
             {
                 mm = pM2;
             }
@@ -912,13 +912,13 @@ void MR3SeedSites<TRNAString>::set_gu_mismatch_seed_type(
                 mm = pM1;
             }
         }
-        else if (pCurSeedType == "MM" && ((pMatchMx1 && (pGutMx2 || pGumMx2))
-                || ((pGutMx1 || pGumMx1) && pMatchMx2)))
+        else if (pCurSeedType == "MM" && ((pMatchMx8 && (pGutMx9 || pGumMx9))
+                || ((pGutMx8 || pGumMx8) && pMatchMx9)))
         {
             pNewSeedType = "8mer_MMGU";
             mm = pMisMatchPos;
         }
-        else if (pCurSeedType == "MMGU" && pMatchMx1 && pMatchMx2)
+        else if (pCurSeedType == "MMGU" && pMatchMx8 && pMatchMx9)
         {
             pNewSeedType = "8mer_MMGU";
             mm = pMisMatchPos;
@@ -927,17 +927,17 @@ void MR3SeedSites<TRNAString>::set_gu_mismatch_seed_type(
 
     if (pNewSeedType == "" && pSeedDef[1] == 'Y' && pSeedDef[4] == "1:1")
     {
-        if (pCurSeedType == "MM" && (pGutMx2 || pGumMx2))
+        if (pCurSeedType == "MM" && (pGutMx9 || pGumMx9))
         {
             pNewSeedType = "7mer_MMGU";
             mm = pMisMatchPos;
         }
-        else if ((pCurSeedType == "GUT" || pCurSeedType == "GUM") && (!pMatchMx1 && !pGutMx1 && !pGumMx1))
+        else if ((pCurSeedType == "GUT" || pCurSeedType == "GUM") && (!pMatchMx8 && !pGutMx8 && !pGumMx8))
         {
             pNewSeedType = "7mer_MMGU";
             mm = pM1;
         }
-        else if (pCurSeedType == "MMGU" && pMatchMx1)
+        else if (pCurSeedType == "MMGU" && pMatchMx8)
         {
             pNewSeedType = "7mer_MMGU";
             mm = pMisMatchPos;
@@ -946,7 +946,7 @@ void MR3SeedSites<TRNAString>::set_gu_mismatch_seed_type(
 
     if (FORCE_LAST_MATCH && pNewSeedType != "")
     {
-        check_last_match(pMatchMx1, pMatchMx2, pNewSeedType);
+        check_last_match(pMatchMx8, pMatchMx9, pNewSeedType);
     }
 
     if (pNewSeedType != "")
@@ -980,7 +980,7 @@ void MR3SeedSites<TRNAString>::set_bt_seed_type(
     miRNAM9C = cMiRNASeq[8];
 
     if (((int)pSitePos - 7 + (int)INDEXED_SEQ_LEN < 0)
-        && (pSitePos- 1 + INDEXED_SEQ_LEN >= length(mMRNASeqs[pMRNAPos])))
+        && (pSitePos + INDEXED_SEQ_LEN >= length(mMRNASeqs[pMRNAPos])))
     {
         return;
     }
@@ -1000,12 +1000,6 @@ void MR3SeedSites<TRNAString>::set_bt_seed_type(
             pNewSeedType = "8mer_BT";
         }
     }
-
-    //TODO Check BT sites - seed pos 3-7 instead of pos 2-6?
-//    std::cout << std::endl;
-//    std::cout << pMiRNA << std::endl;
-//    std::cout << mRNAM2 << ","  << mRNAM7 << "," <<  mRNAM8 << std::endl;
-//    std::cout << miRNAM2C << ","  << miRNAM8C << "," <<  miRNAM9C << std::endl;
 
     if (FORCE_LAST_MATCH && pNewSeedType != "8mer_BT")
     {
