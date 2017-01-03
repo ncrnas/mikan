@@ -43,4 +43,22 @@ namespace {
         test_sites2(sites, 2, "6mer", 2, 24, true);
         test_sites2(sites, 3, "6mer", 3, 24, true);
     }
+
+    TEST_F(Site03MM1, mir124_def) {
+        read_files(false);
+        set_seqs();
+        TIdx index(mrna_seqs);
+        TFin finder(index);
+        TSit sites(index, finder, mrna_seqs);
+
+        mSeedDef1 = "7mGU+";
+        int ret_val = sites.find_seed_sites(mirna_seqs[0], mSeedDef1, mOverlapDef);
+        EXPECT_EQ(0, ret_val);
+        EXPECT_EQ(4u, sites.get_length());
+
+        test_sites2(sites, 0, "7mer", 0, 24, false);
+        test_sites2(sites, 1, "7mer", 1, 24, false);
+        test_sites2(sites, 2, "7mer", 2, 24, false);
+        test_sites2(sites, 3, "7mer", 3, 24, false);
+    }
 }

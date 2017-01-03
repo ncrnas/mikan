@@ -113,7 +113,7 @@ namespace {
         test_sites2(sites, 10, "7mer_GUT", 10, 24, true);
     }
 
-    TEST_F(Site02GU1, mir124_7mer_gu_plus) {
+    TEST_F(Site02GU1, mir124_def) {
         read_files(false);
         set_seqs();
         TIdx index(mrna_seqs);

@@ -37,7 +37,19 @@ namespace {
         int ret_val = sites.find_seed_sites(mirna_seqs[0], mSeedDef1, mOverlapDef);
         EXPECT_EQ(0, ret_val);
         EXPECT_EQ(0u, sites.get_length());
+    }
 
+    TEST_F(Site06BM1, mir124_def) {
+        read_files(false);
+        set_seqs();
+        TIdx index(mrna_seqs);
+        TFin finder(index);
+        TSit sites(index, finder, mrna_seqs);
+
+        mSeedDef1 = "7mGU+";
+        int ret_val = sites.find_seed_sites(mirna_seqs[0], mSeedDef1, mOverlapDef);
+        EXPECT_EQ(0, ret_val);
+        EXPECT_EQ(0u, sites.get_length());
     }
 
 }
