@@ -157,7 +157,8 @@ template <class TRNAString>
 void MR3Align<TRNAString>::combine_alignments(
         int pIdx,
         TRNAString const &pMiRNASeq,
-        TRNAString const &pMRNASeq)
+        TRNAString const &pMRNASeq,
+        bool noA1)
 {
     int maxlen = (int)length(pMiRNASeq) + mGapCount3pMiRNA[pIdx];
     int idx2;
@@ -168,7 +169,14 @@ void MR3Align<TRNAString>::combine_alignments(
     resize(mAlignBars[pIdx], maxlen);
 
     mAlignMiRNA[pIdx][0] = pMiRNASeq[0];
-    mAlignMRNA[pIdx][0] = pMRNASeq[0];
+    if (noA1)
+    {
+        mAlignMRNA[pIdx][0] = '-';
+    }
+    else
+    {
+        mAlignMRNA[pIdx][0] = pMRNASeq[0];
+    }
 
     for (unsigned i = 0; i < length(mAlignSeedMiRNA[pIdx]); ++i)
     {
@@ -308,20 +316,21 @@ void MR3Align<TRNAString>::set_align_bars(int pIdx)
 }
 
 template <class TRNAString>
-void MR3Align<TRNAString>::get_mrna_seq(int pIdx, TRNAString& pStrMRNA)
+void MR3Align<TRNAString>::get_mrna_seq(int pIdx, seqan::CharString& pStrMRNA)
 {
     int idx = 0;
 
     resize(pStrMRNA, length(mAlignMRNA[pIdx]) - mGapCount3pMRNA[pIdx]);
     for (unsigned i = 0; i < length(mAlignMRNA[pIdx]); ++i)
     {
-        if (mAlignMRNA[pIdx][i] != '-')
+        if (mAlignMRNA[pIdx][i] != '-' || i == length(mAlignMRNA[pIdx]) - 1)
         {
             pStrMRNA[idx] = mAlignMRNA[pIdx][i];
             ++idx;
         }
     }
 
+    resize(pStrMRNA, idx);
     reverse(pStrMRNA);
 }
 

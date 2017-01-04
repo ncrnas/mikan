@@ -37,6 +37,7 @@ int MR3AlignScores<TRNAString>::calc_scores(
     int seqEnd = 0;
     int score;
     int mm;
+    bool noA1;
 
     resize(mEffectiveSites, length(pSeedSites.mEffectiveSites));
     resize(mAlignScores, length(pSeedSites.mEffectiveSites));
@@ -69,14 +70,14 @@ int MR3AlignScores<TRNAString>::calc_scores(
             seqStart = 0;
         }
 
+        noA1 = false;
         create_input_mrna_seq(pMiRNASeq, pMRNASeqs[mRNAPos[i]], seqStart, seqEnd, seedTypes[i],
-                iMRNASeq, iMRNASeedSeq, iMRNA3pSeq);
+                iMRNASeq, iMRNASeedSeq, iMRNA3pSeq, noA1);
 //        print_input(iMiRNASeq, iMRNASeq);
 //        print_input(iMiRNASeedSeq, iMRNASeedSeq);
-//
 //        std::cout << "miRNA seq:   " << length(iMiRNA3pSeq) << "," << iMiRNA3pSeq;
 //        std::cout << std::endl;
-//        std::cout << "mRNA seq:    " << length(iMRNA3pSeq) << "," << iMRNA3pSeq;
+//        std::cout << "mRNA seq2:    " << length(pMRNASeqs[mRNAPos[i]]) << "," << pMRNASeqs[mRNAPos[i]];
 //        std::cout << std::endl;
 
         mAlign.align_seed(i, iMiRNASeedSeq, iMRNASeedSeq, mm);
@@ -98,7 +99,7 @@ int MR3AlignScores<TRNAString>::calc_scores(
         else
         {
             mAlignScores[i] = (float)score;
-            mAlign.combine_alignments(i, pMiRNASeq, iMRNASeq);
+            mAlign.combine_alignments(i, pMiRNASeq, iMRNASeq, noA1);
             mEffectiveSites[i] = true;
         }
     }
@@ -146,7 +147,8 @@ void MR3AlignScores<TRNAString>::create_input_mrna_seq(
         const CharString& pSeedType,
         TRNAString &pIMRNASeq,
         TRNAString &pIMRNASeedSeq,
-        Rna5String &pIMRNA3pSeq)
+        Rna5String &pIMRNA3pSeq,
+        bool &pNoMRNA1)
 {
     unsigned idx = 0;
     unsigned seqLen = (unsigned)(pEnd - pStart);
@@ -196,19 +198,27 @@ void MR3AlignScores<TRNAString>::create_input_mrna_seq(
     for (unsigned i = 0; i < seqLen; ++i)
     {
         idx = seqLen - i - 1;
-        pIMRNASeq[idx] = pMRNASeq[pStart+i];
+        if (pStart + i < length(pMRNASeq))
+        {
+            pIMRNASeq[idx] = pMRNASeq[pStart+i];
+        }
+        else
+        {
+            pIMRNASeq[idx] = 'A';
+            pNoMRNA1 = true;
+        }
+
         if (idx != 0 && idx < seedRegLen)
         {
-            pIMRNASeedSeq[length(pIMRNASeedSeq) - seed_idx - 1] = pMRNASeq[pStart+i];
+            pIMRNASeedSeq[length(pIMRNASeedSeq) - seed_idx - 1] = pIMRNASeq[idx];
             ++seed_idx;
         }
         if (idx >= seedRegLen && idx < maxpPos3p)
         {
-            pIMRNA3pSeq[length(pIMRNA3pSeq) - idex3p - 1] = pMRNASeq[pStart+i];
+            pIMRNA3pSeq[length(pIMRNA3pSeq) - idex3p - 1] = pIMRNASeq[idx];
             ++idex3p;
         }
     }
-
 }
 
 template <class TRNAString>
@@ -280,7 +290,7 @@ int MR3EnergyScores<TRNAString>::calc_scores(
 template <class TRNAString>
 void MR3EnergyScores<TRNAString>::create_input_seq(int pIdx, TRNAString const &pMiRNASeq, std::string &pInputMRNASeq)
 {
-    TRNAString inputMRNA;
+    seqan::CharString inputMRNA;
 
     mAlign.get_mrna_seq(pIdx, inputMRNA);
 

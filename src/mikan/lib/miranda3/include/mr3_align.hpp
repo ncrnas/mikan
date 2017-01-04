@@ -70,8 +70,8 @@ public:
     void resize_align(unsigned pSize);
     void align_seed(int pIdx, TRNAString &pIMiRNASeedSeq, TRNAString &pIMRNASeedSeq, int pMMpos);
     void align_3p(int pIdx, seqan::Rna5String &pIMiRNA3pSeq, seqan::Rna5String &pIMRNA3pSeq);
-    void combine_alignments(int pIdx, TRNAString const &pMiRNASeq, TRNAString const &pMRNASeq);
-    void get_mrna_seq(int pIdx, TRNAString& pStrMRNA);
+    void combine_alignments(int pIdx, TRNAString const &pMiRNASeq, TRNAString const &pMRNASeq, bool noA1);
+    void get_mrna_seq(int pIdx, seqan::CharString& pStrMRNA);
     void init_3p_align(int pIdx);
 
 private:

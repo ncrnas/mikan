@@ -91,7 +91,7 @@ public:
 
     // Constant values
     static const unsigned MIN_DIST_TO_CDS = 7;
-    static const unsigned MIN_DIST_UTR_END = 1;
+    static const unsigned MIN_DIST_UTR_END = 0;
     static const unsigned INDEXED_SEQ_LEN = 6;
     static const bool FORCE_LAST_MATCH = false;
 

@@ -53,7 +53,7 @@ namespace {
         test_sites(sites, 7, "6mer", 7, 20, true, 0);
         test_sites(sites, 8, "6mer", 8, 32, true, 0);
         test_sites(sites, 9, "6mer", 9, 33, true, 0);
-        test_sites(sites, 10, "", 10, 34, false, 0);
+        test_sites(sites, 10, "6mer", 10, 34, true, 0);
 
         test_sites(sites, 11, "", 11, 0, false, 0);
         test_sites(sites, 12, "6mer", 12, 1, true, 0);
@@ -65,7 +65,7 @@ namespace {
         test_sites(sites, 18, "6mer", 18, 20, true, 0);
         test_sites(sites, 19, "6mer", 19, 32, true, 0);
         test_sites(sites, 20, "6mer", 20, 33, true, 0);
-        test_sites(sites, 21, "", 21, 34, false, 0);
+        test_sites(sites, 21, "6mer", 21, 34, true, 0);
 
         test_sites(sites, 22, "7mer", 22, 1, true, 0);
         test_sites(sites, 23, "7mer", 23, 13, true, 0);
@@ -77,7 +77,7 @@ namespace {
         test_sites(sites, 29, "7mer", 29, 21, true, 0);
         test_sites(sites, 30, "7mer", 30, 32, true, 0);
         test_sites(sites, 31, "7mer", 31, 33, true, 0);
-        test_sites(sites, 32, "", 32, 34, false, 0);
+        test_sites(sites, 32, "7mer", 32, 34, true, 0);
 
         test_sites(sites, 33, "7mer", 33, 1, true, 0);
         test_sites(sites, 34, "7mer", 34, 13, true, 0);
@@ -89,7 +89,7 @@ namespace {
         test_sites(sites, 40, "7mer", 40, 21, true, 0);
         test_sites(sites, 41, "7mer", 41, 32, true, 0);
         test_sites(sites, 42, "7mer", 42, 33, true, 0);
-        test_sites(sites, 43, "", 43, 34, false, 0);
+        test_sites(sites, 43, "7mer", 43, 34, true, 0);
 
         test_sites(sites, 44, "8mer", 44, 2, true, 0);
         test_sites(sites, 45, "8mer", 45, 13, true, 0);
@@ -101,7 +101,7 @@ namespace {
         test_sites(sites, 51, "8mer", 51, 21, true, 0);
         test_sites(sites, 52, "8mer", 52, 32, true, 0);
         test_sites(sites, 53, "8mer", 53, 33, true, 0);
-        test_sites(sites, 54, "", 54, 34, false, 0);
+        test_sites(sites, 54, "8mer", 54, 34, true, 0);
     }
 
     TEST_F(Site01Nmer1, mir124_7mer) {
@@ -167,7 +167,7 @@ namespace {
         test_sites(sites, 7, "7mer_MM", 7, 20, true, -1);
         test_sites(sites, 8, "7mer_MM", 8, 32, true, -1);
         test_sites(sites, 9, "7mer_MM", 9, 33, true, -1);
-        test_sites(sites, 10, "", 10, 34, false, 0);
+        test_sites(sites, 10, "7mer_MM", 10, 34, true, -1);
 
         test_sites(sites, 11, "", 11, 0, false, 0);
         test_sites(sites, 12, "7mer_MM", 12, 1, true, -1);
@@ -179,7 +179,7 @@ namespace {
         test_sites(sites, 18, "7mer_MM", 18, 20, true, -1);
         test_sites(sites, 19, "7mer_MM", 19, 32, true, -1);
         test_sites(sites, 20, "7mer_MM", 20, 33, true, -1);
-        test_sites(sites, 21, "", 21, 34, false, 0);
+        test_sites(sites, 21, "7mer_MM", 21, 34, true, -1);
 
         test_sites(sites, 22, "7mer", 22, 1, true, 0);
         test_sites(sites, 23, "7mer", 23, 13, true, 0);
@@ -191,7 +191,7 @@ namespace {
         test_sites(sites, 29, "7mer", 29, 21, true, 0);
         test_sites(sites, 30, "7mer", 30, 32, true, 0);
         test_sites(sites, 31, "7mer", 31, 33, true, 0);
-        test_sites(sites, 32, "", 32, 34, false, 0);
+        test_sites(sites, 32, "7mer", 32, 34, true, 0);
 
         test_sites(sites, 33, "7mer", 33, 1, true, 0);
         test_sites(sites, 34, "7mer", 34, 13, true, 0);
@@ -203,7 +203,7 @@ namespace {
         test_sites(sites, 40, "7mer", 40, 21, true, 0);
         test_sites(sites, 41, "7mer", 41, 32, true, 0);
         test_sites(sites, 42, "7mer", 42, 33, true, 0);
-        test_sites(sites, 43, "", 43, 34, false, 0);
+        test_sites(sites, 43, "7mer", 43, 34, true, 0);
 
         test_sites(sites, 44, "8mer", 44, 2, true, 0);
         test_sites(sites, 45, "8mer", 45, 13, true, 0);
@@ -215,7 +215,7 @@ namespace {
         test_sites(sites, 51, "8mer", 51, 21, true, 0);
         test_sites(sites, 52, "8mer", 52, 32, true, 0);
         test_sites(sites, 53, "8mer", 53, 33, true, 0);
-        test_sites(sites, 54, "", 54, 34, false, 0);
+        test_sites(sites, 54, "8mer", 54, 34, true, 0);
     }
 
 

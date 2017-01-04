@@ -56,7 +56,7 @@ private:
             seqan::Rna5String &pIMiRNA3pSeq);
     void create_input_mrna_seq(TRNAString const &pMiRNASeq, TRNAString const &pMRNASeq, int pStart, int pEnd,
             const seqan::CharString& pSeedType, TRNAString &pInputMRNASeq, TRNAString &pIMRNASeedSeq,
-            seqan::Rna5String &pIMRNA3pSeq);
+            seqan::Rna5String &pIMRNA3pSeq, bool &pNoMRNA1);
 
 };
 

@@ -1001,6 +1001,12 @@ void MR3SeedSites<TRNAString>::set_bt_seed_type(
         }
     }
 
+    //TODO Check BT sites - seed pos 3-7 instead of pos 2-6?
+//    std::cout << std::endl;
+//    std::cout << pMiRNA << std::endl;
+//    std::cout << mRNAM2 << ","  << mRNAM7 << "," <<  mRNAM8 << std::endl;
+//    std::cout << miRNAM2C << ","  << miRNAM8C << "," <<  miRNAM9C << std::endl;
+
     if (FORCE_LAST_MATCH && pNewSeedType != "8mer_BT")
     {
         pNewSeedType = "";
