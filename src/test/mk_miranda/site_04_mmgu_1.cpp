@@ -208,6 +208,8 @@ namespace {
         TFin finder(index);
         TSit sites(index, finder, mrna_seqs);
 
+        mSeedDef[3] = "+";
+        mSeedDef[4] = "1:1";
         mSeedDef[5] = "1";
         int ret_val = sites.find_seed_sites(mirna_seqs[0], mSeedDef);
         EXPECT_EQ(0, ret_val);

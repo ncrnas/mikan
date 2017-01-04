@@ -23,6 +23,14 @@ protected:
         EXPECT_STREQ(seq_type, (const char *)seqan::toCString(seedtypes[idx]));
         EXPECT_EQ(effective, sites.mEffectiveSites[idx]);
         EXPECT_EQ(mmpos, mismatchpos[idx]);
+
+//        std::cout << "SS"  << idx <<  ", ";
+//        std::cout << "CC" <<  (const char *)seqan::toCString(seedtypes[idx]) << "CC, ";
+//        std::cout << mrnapos[idx] <<  ", ";
+//        std::cout << sitepos[idx] <<  ", ";
+//        std::cout << sites.mEffectiveSites[idx] <<  ", ";
+//        std::cout <<  mismatchpos[idx] <<  ");";
+//        std::cout << std::endl;
     }
 
     void test_sites2(const TSites &sites, int idx, const char *seq_type, unsigned mpos, unsigned spos,
