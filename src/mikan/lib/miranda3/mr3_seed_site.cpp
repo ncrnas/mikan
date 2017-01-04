@@ -345,9 +345,15 @@ int MR3SeedSeqs<TRNAString>::check_redundant_seeds()
         seedSeq = mSeedSeqs[i];
         while (find(finder, seedSeq))
         {
-            if (i != position(finder).i1)
+            unsigned pos = position(finder).i1;
+            if (i != pos
+                && ((mSeedTypes[i] != "MM" && mSeedTypes[i] != "MMGU" && mSeedTypes[i] != "BT")
+                    || (mSeedTypes[i] == "MM" && mSeedTypes[pos] == "MM")
+                    || (mSeedTypes[i] == "MM" && mSeedTypes[pos] == "MMGU")
+                    || (mSeedTypes[i] == "MMGU" && mSeedTypes[pos] == "MMGU")
+                    || (mSeedTypes[i] == "BT" && mSeedTypes[pos] == "BT")))
             {
-                mEffectiveSeeds[position(finder).i1] = false;
+                mEffectiveSeeds[pos] = false;
             }
         }
         goBegin(finder);
