@@ -19,6 +19,15 @@ protected:
         EXPECT_STREQ(seq_type, seqan::toCString((seqan::CharString)mSeedSeqs.get_seed_type(idx)));
         EXPECT_EQ(effective, mSeedSeqs.mEffectiveSeeds[idx]);
         EXPECT_EQ(mmpos, mSeedSeqs.get_mismatched_pos(idx));
+
+//        seqan::RnaString seedseq2 = mSeedSeqs.get_seed_seq(idx);
+//        reverseComplement(seedseq2);
+//        std::cout << "SS Z" << seqan::toCString((seqan::CharString)seedseq2) << "Z, ";
+//        std::cout << idx <<  ", ";
+//        std::cout << "Z" << seqan::toCString((seqan::CharString)mSeedSeqs.get_seed_type(idx)) <<  "Z, ";
+//        std::cout << mSeedSeqs.mEffectiveSeeds[idx] <<  ", ";
+//        std::cout << mSeedSeqs.get_mismatched_pos(idx) <<  ");";
+//        std::cout << std::endl;
     }
 
     void test_seed2(const char *rnastr, int idx, const char *seq_type, bool effective) {

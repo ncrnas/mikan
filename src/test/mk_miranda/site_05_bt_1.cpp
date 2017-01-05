@@ -84,7 +84,7 @@ namespace {
         mSeedDef[5] = "1";
         int ret_val = sites.find_seed_sites(mirna_seqs[0], mSeedDef);
         EXPECT_EQ(0, ret_val);
-        EXPECT_EQ(31u, sites.get_length());
+        EXPECT_EQ(43u, sites.get_length());
 
         test_sites(sites, 0, "MM", 4, 25, false, 0);
         test_sites(sites, 1, "MM", 5, 25, false, 0);
@@ -121,10 +121,22 @@ namespace {
         test_sites(sites, 24, "7mer_BT", 6, 24, true, 2);
         test_sites(sites, 25, "8mer_BT", 7, 24, true, 2);
         test_sites(sites, 26, "8mer_BT", 8, 24, true, 2);
-        test_sites(sites, 27, "7mer_BT", 11, 24, true, 3);
-        test_sites(sites, 28, "8mer_BT", 12, 24, true, 3);
-        test_sites(sites, 29, "8mer_BT", 13, 24, true, 3);
-        test_sites(sites, 30, "8mer_BT", 14, 24, true, 3);
+        test_sites(sites, 27, "8mer_BT", 9, 24, true, 2);
+        test_sites(sites, 28, "8mer_BT", 10, 24, true, 2);
+        test_sites(sites, 29, "7mer_BT", 11, 24, true, 3);
+        test_sites(sites, 30, "8mer_BT", 12, 24, true, 3);
+        test_sites(sites, 31, "8mer_BT", 13, 24, true, 3);
+        test_sites(sites, 32, "8mer_BT", 14, 24, true, 3);
+        test_sites(sites, 33, "8mer_BT", 15, 24, true, 3);
+        test_sites(sites, 34, "7mer_BT", 16, 24, true, 4);
+        test_sites(sites, 35, "8mer_BT", 17, 24, true, 4);
+        test_sites(sites, 36, "8mer_BT", 18, 24, true, 4);
+        test_sites(sites, 37, "8mer_BT", 19, 24, true, 4);
+        test_sites(sites, 38, "7mer_BT", 20, 24, true, 5);
+        test_sites(sites, 39, "8mer_BT", 21, 24, true, 5);
+        test_sites(sites, 40, "8mer_BT", 22, 24, true, 5);
+        test_sites(sites, 41, "8mer_BT", 23, 24, true, 5);
+        test_sites(sites, 42, "8mer_BT", 24, 24, true, 5);
     }
 
 }
