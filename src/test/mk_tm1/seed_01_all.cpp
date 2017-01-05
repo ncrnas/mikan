@@ -5,10 +5,10 @@
 
 namespace {
 
-    class SeedNmer : public TestSeedTM1
+    class SeedAll : public TestSeedTM1
     {
     protected:
-        SeedNmer() {
+        SeedAll() {
             IFNAME1 = (char *)"mir_001.fasta";
             IFNAME2 = (char *)"utr3_001.fasta";
             O1FNAME1 = (char *)"test_output1_site_1.txt";
@@ -19,7 +19,7 @@ namespace {
         }
     };
 
-    TEST_F(SeedNmer, mir124) {
+    TEST_F(SeedAll, mir124_def) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
@@ -45,7 +45,7 @@ namespace {
         test_seed2("UAAGCA", 11, "GUMM", true);
     }
 
-    TEST_F(SeedNmer, mir1) {
+    TEST_F(SeedAll, mir1_def) {
         read_files(false);
 
         mirna_seqs = coreInput.get_mirna_seqs();
