@@ -444,9 +444,9 @@ int MR3TotalScores<TRNAString>::calc_scores(
     resize(mLogMaxEnScores, newIdx+1, 0.0);
     resize(mMRNAPos, newIdx+1);
     resize(mSiteNum, newIdx+1, 0);
-    resize(maxAlignScores, newIdx+1);
+    resize(maxAlignScores, newIdx+1, 0.0);
     resize(maxAlignScoreIds, newIdx+1);
-    resize(maxEnScores, newIdx+1);
+    resize(maxEnScores, newIdx+1, 0.0);
     resize(maxEnScoreIds, newIdx+1);
     resize(maxScoreProcessed, newIdx+1, false);
 
