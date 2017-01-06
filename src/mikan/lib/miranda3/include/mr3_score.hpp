@@ -29,6 +29,7 @@ public:
     static const unsigned SEED_REGION_LEN = 8;
     static const int MATCH_SCORE = 5;
     static const int EXTENT_SCORE = -4;
+    static const int OFFSET3P = 2;
 
     // Define variables
     seqan::String<bool> mEffectiveSites;
