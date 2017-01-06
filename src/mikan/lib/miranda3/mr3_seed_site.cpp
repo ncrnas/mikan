@@ -985,13 +985,17 @@ void MR3SeedSites<TRNAString>::set_bt_seed_type(
     miRNAM8C = cMiRNASeq[7];
     miRNAM9C = cMiRNASeq[8];
 
-    if (((int)pSitePos - 7 + (int)INDEXED_SEQ_LEN < 0)
-        && (pSitePos + INDEXED_SEQ_LEN >= length(mMRNASeqs[pMRNAPos])))
+    if ((pSitePos + INDEXED_SEQ_LEN) >= length(mMRNASeqs[pMRNAPos]))
     {
         return;
     }
     mRNAM2 = mMRNASeqs[pMRNAPos][pSitePos + INDEXED_SEQ_LEN];
-    mRNAM7 = mMRNASeqs[pMRNAPos][pSitePos- (7 - INDEXED_SEQ_LEN)];
+
+    if (((int)pSitePos - (7 - (int)INDEXED_SEQ_LEN)) < 0)
+    {
+        return;
+    }
+    mRNAM7 = mMRNASeqs[pMRNAPos][pSitePos - (7 - INDEXED_SEQ_LEN)];
 
     if (miRNAM2C == mRNAM2 && miRNAM8C == mRNAM7)
     {
