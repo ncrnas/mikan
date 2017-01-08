@@ -35,7 +35,7 @@ namespace {
 
         int n = mSeedSeqs.create_seed_seqs(mSeedDef);
         EXPECT_EQ(0, n);
-        EXPECT_EQ(68u, length(mSeedSeqs.mEffectiveSeeds));
+        EXPECT_EQ(72u, length(mSeedSeqs.mEffectiveSeeds));
 
         test_seed("AAGGCA", 0, "6mer", true, 0);
 
@@ -91,26 +91,30 @@ namespace {
         test_seed("CAAGCA", 46, "MMGU", true, 5);
         test_seed("UAAGCA", 47, "MMGU", true, 5);
 
-        test_seed("AGGCUA", 48, "BT", true, 1);
-        test_seed("AGGCGA", 49, "BT", true, 1);
-        test_seed("AGGCCA", 50, "BT", true, 1);
-        test_seed("AGGCAA", 51, "BT", true, 1);
-        test_seed("AGGUCA", 52, "BT", true, 2);
-        test_seed("AGGGCA", 53, "BT", true, 2);
-        test_seed("AGGCCA", 54, "BT", false, 2);
-        test_seed("AGGACA", 55, "BT", true, 2);
-        test_seed("AGUGCA", 56, "BT", true, 3);
-        test_seed("AGGGCA", 57, "BT", false, 3);
-        test_seed("AGCGCA", 58, "BT", true, 3);
-        test_seed("AGAGCA", 59, "BT", true, 3);
-        test_seed("AUGGCA", 60, "BT", true, 4);
-        test_seed("AGGGCA", 61, "BT", false, 4);
-        test_seed("ACGGCA", 62, "BT", true, 4);
-        test_seed("AAGGCA", 63, "BT", false, 4);
-        test_seed("UAGGCA", 64, "BT", true, 5);
-        test_seed("GAGGCA", 65, "BT", true, 5);
-        test_seed("CAGGCA", 66, "BT", true, 5);
-        test_seed("AAGGCA", 67, "BT", false, 5);
+        test_seed("AGGCAU", 48, "BT", true, 0);
+        test_seed("AGGCAG", 49, "BT", true, 0);
+        test_seed("AGGCAC", 50, "BT", true, 0);
+        test_seed("AGGCAA", 51, "BT", true, 0);
+        test_seed("AGGCUA", 52, "BT", true, 1);
+        test_seed("AGGCGA", 53, "BT", true, 1);
+        test_seed("AGGCCA", 54, "BT", true, 1);
+        test_seed("AGGCAA", 55, "BT", false, 1);
+        test_seed("AGGUCA", 56, "BT", true, 2);
+        test_seed("AGGGCA", 57, "BT", true, 2);
+        test_seed("AGGCCA", 58, "BT", false, 2);
+        test_seed("AGGACA", 59, "BT", true, 2);
+        test_seed("AGUGCA", 60, "BT", true, 3);
+        test_seed("AGGGCA", 61, "BT", false, 3);
+        test_seed("AGCGCA", 62, "BT", true, 3);
+        test_seed("AGAGCA", 63, "BT", true, 3);
+        test_seed("AUGGCA", 64, "BT", true, 4);
+        test_seed("AGGGCA", 65, "BT", false, 4);
+        test_seed("ACGGCA", 66, "BT", true, 4);
+        test_seed("AAGGCA", 67, "BT", false, 4);
+        test_seed("UAGGCA", 68, "BT", true, 5);
+        test_seed("GAGGCA", 69, "BT", true, 5);
+        test_seed("CAGGCA", 70, "BT", true, 5);
+        test_seed("AAGGCA", 71, "BT", false, 5);
     }
 
     TEST_F(SeedAll, mir1_def) {
@@ -121,7 +125,7 @@ namespace {
 
         int n = mSeedSeqs.create_seed_seqs(mSeedDef);
         EXPECT_EQ(0, n);
-        EXPECT_EQ(98u, length(mSeedSeqs.mEffectiveSeeds));
+        EXPECT_EQ(102u, length(mSeedSeqs.mEffectiveSeeds));
 
         test_seed("GGAAUG", 0, "6mer", true, 0);
 
@@ -209,25 +213,29 @@ namespace {
         test_seed("AUAAUG", 76, "MMGU", true, 4);
         test_seed("ACAAUG", 77, "MMGU", true, 4);
 
-        test_seed("GAAUUG", 78, "BT", true, 1);
-        test_seed("GAAUGG", 79, "BT", true, 1);
-        test_seed("GAAUCG", 80, "BT", true, 1);
-        test_seed("GAAUAG", 81, "BT", true, 1);
-        test_seed("GAAUUG", 82, "BT", false, 2);
-        test_seed("GAAGUG", 83, "BT", true, 2);
-        test_seed("GAACUG", 84, "BT", true, 2);
-        test_seed("GAAAUG", 85, "BT", false, 2);
-        test_seed("GAUAUG", 86, "BT", true, 3);
-        test_seed("GAGAUG", 87, "BT", true, 3);
-        test_seed("GACAUG", 88, "BT", true, 3);
-        test_seed("GAAAUG", 89, "BT", false, 3);
-        test_seed("GUAAUG", 90, "BT", true, 4);
-        test_seed("GGAAUG", 91, "BT", false, 4);
-        test_seed("GCAAUG", 92, "BT", true, 4);
-        test_seed("GAAAUG", 93, "BT", false, 4);
-        test_seed("UGAAUG", 94, "BT", true, 5);
-        test_seed("GGAAUG", 95, "BT", false, 5);
-        test_seed("CGAAUG", 96, "BT", true, 5);
-        test_seed("AGAAUG", 97, "BT", false, 5);
+        test_seed("GAAUGU", 78, "BT", true, 0);
+        test_seed("GAAUGG", 79, "BT", true, 0);
+        test_seed("GAAUGC", 80, "BT", true, 0);
+        test_seed("GAAUGA", 81, "BT", true, 0);
+        test_seed("GAAUUG", 82, "BT", true, 1);
+        test_seed("GAAUGG", 83, "BT", false, 1);
+        test_seed("GAAUCG", 84, "BT", true, 1);
+        test_seed("GAAUAG", 85, "BT", true, 1);
+        test_seed("GAAUUG", 86, "BT", false, 2);
+        test_seed("GAAGUG", 87, "BT", true, 2);
+        test_seed("GAACUG", 88, "BT", true, 2);
+        test_seed("GAAAUG", 89, "BT", false, 2);
+        test_seed("GAUAUG", 90, "BT", true, 3);
+        test_seed("GAGAUG", 91, "BT", true, 3);
+        test_seed("GACAUG", 92, "BT", true, 3);
+        test_seed("GAAAUG", 93, "BT", false, 3);
+        test_seed("GUAAUG", 94, "BT", true, 4);
+        test_seed("GGAAUG", 95, "BT", false, 4);
+        test_seed("GCAAUG", 96, "BT", true, 4);
+        test_seed("GAAAUG", 97, "BT", false, 4);
+        test_seed("UGAAUG", 98, "BT", true, 5);
+        test_seed("GGAAUG", 99, "BT", false, 5);
+        test_seed("CGAAUG", 100, "BT", true, 5);
+        test_seed("AGAAUG", 101, "BT", false, 5);
     }
 }

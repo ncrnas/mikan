@@ -41,37 +41,44 @@ namespace {
 
         int ret_val = sites.find_seed_sites(mirna_seqs[1], mSeedDef);
         EXPECT_EQ(0, ret_val);
-        EXPECT_EQ(25u, sites.get_length());
+        EXPECT_EQ(30u, sites.get_length());
 
-        test_sites(sites, 0, "7mer_BT", 0, 24, true, 1);
-        test_sites(sites, 1, "7mer_BT", 1, 24, true, 1);
-        test_sites(sites, 2, "8mer_BT", 2, 24, true, 1);
-        test_sites(sites, 3, "8mer_BT", 3, 24, true, 1);
-        test_sites(sites, 4, "7mer_BT", 4, 24, true, 1);
-        test_sites(sites, 5, "7mer_BT", 5, 24, true, 1);
+        test_sites(sites, 0, "BT", 20, 23, false, 0);
+        test_sites(sites, 1, "BT", 21, 23, false, 0);
+        test_sites(sites, 2, "BT", 22, 23, false, 0);
+        test_sites(sites, 3, "BT", 23, 23, false, 0);
+        test_sites(sites, 4, "BT", 24, 23, false, 0);
 
-        test_sites(sites, 6, "7mer_BT", 6, 24, true, 2);
-        test_sites(sites, 7, "8mer_BT", 7, 24, true, 2);
-        test_sites(sites, 8, "8mer_BT", 8, 24, true, 2);
-        test_sites(sites, 9, "8mer_BT", 9, 24, true, 2);
-        test_sites(sites, 10, "8mer_BT", 10, 24, true, 2);
+        test_sites(sites, 5, "7mer_BT", 0, 24, true, 1);
+        test_sites(sites, 6, "7mer_BT", 1, 24, true, 1);
+        test_sites(sites, 7, "8mer_BT", 2, 24, true, 1);
+        test_sites(sites, 8, "8mer_BT", 3, 24, true, 1);
+        test_sites(sites, 9, "7mer_BT", 4, 24, true, 1);
+        test_sites(sites, 10, "7mer_BT", 5, 24, true, 1);
 
-        test_sites(sites, 11, "7mer_BT", 11, 24, true, 3);
-        test_sites(sites, 12, "8mer_BT", 12, 24, true, 3);
-        test_sites(sites, 13, "8mer_BT", 13, 24, true, 3);
-        test_sites(sites, 14, "8mer_BT", 14, 24, true, 3);
-        test_sites(sites, 15, "8mer_BT", 15, 24, true, 3);
+        test_sites(sites, 11, "7mer_BT", 6, 24, true, 2);
+        test_sites(sites, 12, "8mer_BT", 7, 24, true, 2);
+        test_sites(sites, 13, "8mer_BT", 8, 24, true, 2);
+        test_sites(sites, 14, "8mer_BT", 9, 24, true, 2);
+        test_sites(sites, 15, "8mer_BT", 10, 24, true, 2);
 
-        test_sites(sites, 16, "7mer_BT", 16, 24, true, 4);
-        test_sites(sites, 17, "8mer_BT", 17, 24, true, 4);
-        test_sites(sites, 18, "8mer_BT", 18, 24, true, 4);
-        test_sites(sites, 19, "8mer_BT", 19, 24, true, 4);
+        test_sites(sites, 16, "7mer_BT", 11, 24, true, 3);
+        test_sites(sites, 17, "8mer_BT", 12, 24, true, 3);
+        test_sites(sites, 18, "8mer_BT", 13, 24, true, 3);
+        test_sites(sites, 19, "8mer_BT", 14, 24, true, 3);
+        test_sites(sites, 20, "8mer_BT", 15, 24, true, 3);
 
-        test_sites(sites, 20, "7mer_BT", 20, 24, true, 5);
-        test_sites(sites, 21, "8mer_BT", 21, 24, true, 5);
-        test_sites(sites, 22, "8mer_BT", 22, 24, true, 5);
-        test_sites(sites, 23, "8mer_BT", 23, 24, true, 5);
-        test_sites(sites, 24, "8mer_BT", 24, 24, true, 5);
+        test_sites(sites, 21, "7mer_BT", 16, 24, true, 4);
+        test_sites(sites, 22, "8mer_BT", 17, 24, true, 4);
+        test_sites(sites, 23, "8mer_BT", 18, 24, true, 4);
+        test_sites(sites, 24, "8mer_BT", 19, 24, true, 4);
+
+        test_sites(sites, 25, "7mer_BT", 20, 24, true, 5);
+        test_sites(sites, 26, "8mer_BT", 21, 24, true, 5);
+        test_sites(sites, 27, "8mer_BT", 22, 24, true, 5);
+        test_sites(sites, 28, "8mer_BT", 23, 24, true, 5);
+        test_sites(sites, 29, "8mer_BT", 24, 24, true, 5);
+
     }
 
     TEST_F(Site05BT2, mir1_def) {
@@ -86,7 +93,7 @@ namespace {
         mSeedDef[5] = "1";
         int ret_val = sites.find_seed_sites(mirna_seqs[1], mSeedDef);
         EXPECT_EQ(0, ret_val);
-        EXPECT_EQ(80u, sites.get_length());
+        EXPECT_EQ(85u, sites.get_length());
 
         test_sites(sites, 0, "7mer_MMGU", 5, 25, true, -1);
 
@@ -157,29 +164,39 @@ namespace {
         test_sites(sites, 55, "8mer_MMGU", 12, 24, true, 3);
         test_sites(sites, 56, "8mer_MMGU", 13, 24, true, 3);
 
-        test_sites(sites, 57, "7mer_BT", 0, 24, true, 1);
-        test_sites(sites, 58, "7mer_BT", 1, 24, true, 1);
-        test_sites(sites, 59, "8mer_BT", 2, 24, true, 1);
-        test_sites(sites, 60, "8mer_BT", 3, 24, true, 1);
-        test_sites(sites, 61, "7mer_BT", 4, 24, true, 1);
-        test_sites(sites, 62, "7mer_BT", 5, 24, true, 1);
-        test_sites(sites, 63, "7mer_BT", 6, 24, true, 2);
-        test_sites(sites, 64, "8mer_BT", 7, 24, true, 2);
-        test_sites(sites, 65, "8mer_BT", 8, 24, true, 2);
-        test_sites(sites, 66, "8mer_BT", 9, 24, true, 2);
-        test_sites(sites, 67, "7mer_BT", 11, 24, true, 3);
-        test_sites(sites, 68, "8mer_BT", 12, 24, true, 3);
-        test_sites(sites, 69, "8mer_BT", 13, 24, true, 3);
-        test_sites(sites, 70, "8mer_BT", 14, 24, true, 3);
-        test_sites(sites, 71, "8mer_BT", 15, 24, true, 3);
-        test_sites(sites, 72, "7mer_BT", 16, 24, true, 4);
-        test_sites(sites, 73, "8mer_BT", 17, 24, true, 4);
-        test_sites(sites, 74, "8mer_BT", 18, 24, true, 4);
-        test_sites(sites, 75, "8mer_BT", 19, 24, true, 4);
-        test_sites(sites, 76, "7mer_BT", 20, 24, true, 5);
-        test_sites(sites, 77, "8mer_BT", 21, 24, true, 5);
-        test_sites(sites, 78, "8mer_BT", 22, 24, true, 5);
-        test_sites(sites, 79, "8mer_BT", 23, 24, true, 5);
+        test_sites(sites, 57, "BT", 20, 23, false, 0);
+        test_sites(sites, 58, "BT", 21, 23, false, 0);
+        test_sites(sites, 59, "BT", 22, 23, false, 0);
+        test_sites(sites, 60, "BT", 23, 23, false, 0);
+        test_sites(sites, 61, "BT", 24, 23, false, 0);
+
+        test_sites(sites, 62, "7mer_BT", 0, 24, true, 1);
+        test_sites(sites, 63, "7mer_BT", 1, 24, true, 1);
+        test_sites(sites, 64, "8mer_BT", 2, 24, true, 1);
+        test_sites(sites, 65, "8mer_BT", 3, 24, true, 1);
+        test_sites(sites, 66, "7mer_BT", 4, 24, true, 1);
+        test_sites(sites, 67, "7mer_BT", 5, 24, true, 1);
+
+        test_sites(sites, 68, "7mer_BT", 6, 24, true, 2);
+        test_sites(sites, 69, "8mer_BT", 7, 24, true, 2);
+        test_sites(sites, 70, "8mer_BT", 8, 24, true, 2);
+        test_sites(sites, 71, "8mer_BT", 9, 24, true, 2);
+
+        test_sites(sites, 72, "7mer_BT", 11, 24, true, 3);
+        test_sites(sites, 73, "8mer_BT", 12, 24, true, 3);
+        test_sites(sites, 74, "8mer_BT", 13, 24, true, 3);
+        test_sites(sites, 75, "8mer_BT", 14, 24, true, 3);
+        test_sites(sites, 76, "8mer_BT", 15, 24, true, 3);
+
+        test_sites(sites, 77, "7mer_BT", 16, 24, true, 4);
+        test_sites(sites, 78, "8mer_BT", 17, 24, true, 4);
+        test_sites(sites, 79, "8mer_BT", 18, 24, true, 4);
+        test_sites(sites, 80, "8mer_BT", 19, 24, true, 4);
+
+        test_sites(sites, 81, "7mer_BT", 20, 24, true, 5);
+        test_sites(sites, 82, "8mer_BT", 21, 24, true, 5);
+        test_sites(sites, 83, "8mer_BT", 22, 24, true, 5);
+        test_sites(sites, 84, "8mer_BT", 23, 24, true, 5);
     }
 
 }

@@ -299,7 +299,7 @@ int MR3SeedSeqs<TRNAString>::create_bt_seed_seqs(TRNAString &pSeedSeq)
     allRNAs[3] = 'U';
 
     resize(seedBTSeq, 6);
-    for (unsigned i = 1; i < length(seedBTSeq); ++i)
+    for (unsigned i = 0; i < length(seedBTSeq); ++i)
     {
         for (unsigned j = 0; j < length(allRNAs); ++j)
         {
