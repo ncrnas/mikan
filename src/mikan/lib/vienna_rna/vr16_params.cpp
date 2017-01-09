@@ -546,7 +546,7 @@ void VR16PFParams::reset_scale()
     GT = mEn.mMLBase37 * TT;
 
     mScale[0] = 1.0;
-    for (unsigned i = 1; i <= mScale.size(); ++i)
+    for (unsigned i = 1; i < mScale.size(); ++i)
     {
         mScale[i] = mScale[i - 1] / mOpts.mPfScale;
     }
