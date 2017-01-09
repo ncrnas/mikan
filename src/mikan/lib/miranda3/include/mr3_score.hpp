@@ -29,6 +29,7 @@ public:
     static const unsigned SEED_REGION_LEN = 8;
     static const int MATCH_SCORE = 5;
     static const int EXTENT_SCORE = -4;
+    static const int OFFSET3P = 2;
 
     // Define variables
     seqan::String<bool> mEffectiveSites;
@@ -56,7 +57,7 @@ private:
             seqan::Rna5String &pIMiRNA3pSeq);
     void create_input_mrna_seq(TRNAString const &pMiRNASeq, TRNAString const &pMRNASeq, int pStart, int pEnd,
             const seqan::CharString& pSeedType, TRNAString &pInputMRNASeq, TRNAString &pIMRNASeedSeq,
-            seqan::Rna5String &pIMRNA3pSeq);
+            seqan::Rna5String &pIMRNA3pSeq, bool &pNoMRNA1);
 
 };
 

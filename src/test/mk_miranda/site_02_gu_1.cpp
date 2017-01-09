@@ -103,7 +103,7 @@ namespace {
         mSeedDef[5] = "1";
         int ret_val = sites.find_seed_sites(mirna_seqs[0], mSeedDef);
         EXPECT_EQ(0, ret_val);
-        EXPECT_EQ(16u, sites.get_length());
+        EXPECT_EQ(17u, sites.get_length());
 
         test_sites(sites, 0, "7mer", 0, 24, true, 0);
 
@@ -124,5 +124,7 @@ namespace {
         test_sites(sites, 13, "7mer_GU+", 13, 24, true, 0);
         test_sites(sites, 14, "8mer_GU+", 14, 24, true, 0);
         test_sites(sites, 15, "8mer_GU+", 15, 24, true, 0);
+
+        test_sites(sites, 16, "BT", 0, 23, false, 0);
     }
 }
