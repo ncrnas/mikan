@@ -75,7 +75,7 @@ int RH2SeedSeqs<TRNAString>::create_seed_seqs(CharString &pSeedDef, CharString &
 
     int retVal;
 
-    resize(seedSeq, 6);
+    resize(seedSeq, SEED_LEN);
     for (unsigned i = 0; i < length(seedSeq); ++i)
     {
         seedSeq[i] = mMiRNASeq[i+1];
@@ -224,7 +224,7 @@ int RH2SeedSeqs<TRNAString>::create_multi_guwobble_seed_seqs(
 template <class TRNAString>
 int RH2SeedSeqs<TRNAString>::check_redundant_seeds(seqan::CharString &)
 {
-    typedef Index<StringSet<TRNAString>, IndexQGram<UngappedShape<6> > > TIndexQGram;
+    typedef Index<StringSet<TRNAString>, IndexQGram<UngappedShape<SEED_LEN> > > TIndexQGram;
     typedef Finder<TIndexQGram> TFinder;
 
     TRNAString seedSeq;
@@ -354,9 +354,9 @@ void RH2SeedSites<TRNAString>::set_new_seed_type(
 
     mRNAM8 = mMRNASeqs[pMRNAPos][pSitePos-1];
 
-    if (pSitePos + 6 < length(mMRNASeqs[pMRNAPos]))
+    if (pSitePos + SEED_LEN < length(mMRNASeqs[pMRNAPos]))
     {
-        mRNAA1 = mMRNASeqs[pMRNAPos][pSitePos+6];
+        mRNAA1 = mMRNASeqs[pMRNAPos][pSitePos+SEED_LEN];
         noA1 = false;
     }
     else
