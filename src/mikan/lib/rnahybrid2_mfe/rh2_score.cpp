@@ -75,7 +75,7 @@ int RH2MFEScores<TRNAString>::calc_scores(
         create_rh_seq(mRNASeq, rhMRNASeq);
         targetLen = length(mRNASeq);
 
-//        write_seq_info(miSeq, mRNASeq, rhMiRNASeq, rhMRNASeq);
+//        write_seq_info(miRNASeq, mRNASeq, rhMiRNASeq, rhMRNASeq);
 
         mRHCore.set_target_seq(rhMRNASeq, targetLen);
         mRHCore.set_query_seq(rhMiRNASeq, queryLen);
@@ -126,10 +126,10 @@ void RH2MFEScores<TRNAString>::write_alignment(int pIdx, bool align_only)
         stream << "# normalized score: " << mNormScores[pIdx] << std::endl;
         stream << std::endl;
     }
-    stream << "target 5' " << mRHRetVals[pIdx].mTargetSub << " 3'" << std::endl;
-    stream << "          " << mRHRetVals[pIdx].mTarget << "   " << std::endl;
-    stream << "          " << mRHRetVals[pIdx].mQeuery << "   " << std::endl;
-    stream << "miRNA  3' " << mRHRetVals[pIdx].mQeuarySub << " 5'" << std::endl;
+    stream << "target 5' " << mRHRetVals[pIdx].mTargetSub.c_str() << " 3'" << std::endl;
+    stream << "          " << mRHRetVals[pIdx].mTarget.c_str()    << "   " << std::endl;
+    stream << "          " << mRHRetVals[pIdx].mQeuery.c_str()    << "   " << std::endl;
+    stream << "miRNA  3' " << mRHRetVals[pIdx].mQeuarySub.c_str() << " 5'" << std::endl;
 
     std::cout << stream.str();
 }
