@@ -4,10 +4,10 @@
 
 namespace {
 
-    class SiteOut04MMGU2 : public TestIORH2
+    class SiteOut04MMGU2A : public TestIORH2
     {
     protected:
-        SiteOut04MMGU2() {
+        SiteOut04MMGU2A() {
             IFNAME1 = (char *)"mir_004.fasta";
             IFNAME2 = (char *)"ts_04_mmgu_2.fasta";
             O1FNAME1 = (char *)"so04_mmgu_2_site_orig.txt";
@@ -18,7 +18,30 @@ namespace {
         }
     };
 
-    TEST_F(SiteOut04MMGU2, comp_orig_mk) {
+    TEST_F(SiteOut04MMGU2A, comp_orig_mk) {
+        (void)rh2mfe::RH2CoreMain(argc, (const char **)argv);
+        gtest_compare_two_files(o1file1, o2file1);
+        gtest_compare_two_files(o1file2, o2file2);
+    }
+
+    class SiteOut04MMGU2B : public TestIORH2
+    {
+    protected:
+        SiteOut04MMGU2B() {
+            IFNAME1 = (char *)"mir_004.fasta";
+            IFNAME2 = (char *)"ts_04_mmgu_2.fasta";
+            O1FNAME1 = (char *)"so04_mmgu_2_site_orig_b.txt";
+            O1FNAME2 = (char *)"so04_mmgu_2_mrna_orig_b.txt";
+            O2FNAME1 = (char *)"so04_mmgu_2_site_mk_b.txt";
+            O2FNAME2 = (char *)"so04_mmgu_2_mrna_mk_b.txt";
+            OMPATH = (char *)"mk_rh2/";
+        }
+    };
+
+    TEST_F(SiteOut04MMGU2B, comp_orig_mk) {
+        argc = 6;
+        argv[5] = (char*)"--overlap=orig";
+
         (void)rh2mfe::RH2CoreMain(argc, (const char **)argv);
         gtest_compare_two_files(o1file1, o2file1);
         gtest_compare_two_files(o1file2, o2file2);

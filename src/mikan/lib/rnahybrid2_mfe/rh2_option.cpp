@@ -88,9 +88,9 @@ void RH2Options::setProgramDescription(seqan::ArgumentParser &parser)
             ArgParseOption::STRING));
     setDefaultValue(parser, "seed_def", "7mGU+");
 
-    addOption(parser, ArgParseOption("o", "overlap", "Overlapped definition [orig, seed].",
+    addOption(parser, ArgParseOption("o", "overlap", "Overlapped definition [seed, orig].",
             ArgParseOption::STRING));
-    setDefaultValue(parser, "overlap", "orig");
+    setDefaultValue(parser, "overlap", "seed");
 
     addOption(parser, ArgParseOption("l", "target_len", "Length of input target sequences.",
             ArgParseOption::INTEGER));

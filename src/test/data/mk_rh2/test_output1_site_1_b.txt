@@ -13,7 +13,6 @@ hsa-miR-1 MIMAT0000416	hg18_refGene NM_000165 range=chr6:121810842-121812572 5'p
 hsa-miR-1 MIMAT0000416	hg18_refGene NM_000165 range=chr6:121810842-121812572 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	1327	1333	7mer_GUM	-12.7	1.81349
 hsa-miR-1 MIMAT0000416	hg18_refGene NM_000165 range=chr6:121810842-121812572 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	1610	1616	7mer	-20.6	2.94157
 hsa-miR-1 MIMAT0000416	hg18_refGene NM_000165 range=chr6:121810842-121812572 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	1692	1698	7mer_GUM	-9.6	1.37083
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_000165 range=chr6:121810842-121812572 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	1680	1686	7mer_GUM	-8.2	1.17092
 hsa-miR-1 MIMAT0000416	hg18_refGene NM_020347 range=chr3:45840450-45842809 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	64	70	7mer_GUM	-9.4	1.34227
 hsa-miR-1 MIMAT0000416	hg18_refGene NM_020347 range=chr3:45840450-45842809 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	76	82	7mer_GUM	-15.1	2.1562
 hsa-miR-1 MIMAT0000416	hg18_refGene NM_020347 range=chr3:45840450-45842809 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	323	329	7mer_GUM	-7.9	1.12808
@@ -25,7 +24,6 @@ hsa-miR-1 MIMAT0000416	hg18_refGene NM_020347 range=chr3:45840450-45842809 5'pad
 hsa-miR-1 MIMAT0000416	hg18_refGene NM_020347 range=chr3:45840450-45842809 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1507	1513	7mer_GUM	-11.4	1.62929
 hsa-miR-1 MIMAT0000416	hg18_refGene NM_020347 range=chr3:45840450-45842809 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1570	1576	7mer_GUT	-12.9	1.84205
 hsa-miR-1 MIMAT0000416	hg18_refGene NM_020347 range=chr3:45840450-45842809 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1768	1774	7mer_GUM	-17.7	2.53318
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_020347 range=chr3:45840450-45842809 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1754	1760	7mer_GUT	-13.7	1.95629
 hsa-miR-1 MIMAT0000416	hg18_refGene NM_020347 range=chr3:45840450-45842809 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1799	1805	7mer_GUT	-9.6	1.37083
 hsa-miR-1 MIMAT0000416	hg18_refGene NM_020347 range=chr3:45840450-45842809 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1853	1859	7mer_GUT	-10.5	1.49934
 hsa-miR-1 MIMAT0000416	hg18_refGene NM_020347 range=chr3:45840450-45842809 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1899	1905	7mer_GUT	-17.2	2.45607
