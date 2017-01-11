@@ -12,6 +12,10 @@ class RH2EnergyArray
 {
 public:
     RH2EnergyArray() {}
+    ~RH2EnergyArray()
+    {
+        free_heap();
+    }
 
     static const int ALPHASIZE = 5;
     static const int A = 0;
@@ -21,31 +25,34 @@ public:
     static const int N = 4;
     static const int X = 5;
 
-    float il_asym_ar[16][16];
+    float **il_asym_ar;
 
-    float stack_dg_ar  [ALPHASIZE][ALPHASIZE][ALPHASIZE][ALPHASIZE];
-    float tstackh_dg_ar[ALPHASIZE][ALPHASIZE][ALPHASIZE][ALPHASIZE];
-    float tstacki_dg_ar[ALPHASIZE][ALPHASIZE][ALPHASIZE][ALPHASIZE];
-    float hl_tetra_ar[ALPHASIZE][ALPHASIZE][ALPHASIZE][ALPHASIZE][ALPHASIZE][ALPHASIZE];
+    float ****stack_dg_ar;
+    float ****tstackh_dg_ar;
+    float ****tstacki_dg_ar;
+    float ******hl_tetra_ar;
 
-    float hl_ent_ar[31];
-    float bl_ent_ar[31];
-    float il_ent_ar[31];
+    float *hl_ent_ar;
+    float *bl_ent_ar;
+    float *il_ent_ar;
 
-    float dr_dangle_dg_ar[ALPHASIZE][ALPHASIZE][ALPHASIZE+1];
-    float dl_dangle_dg_ar[ALPHASIZE+1][ALPHASIZE][ALPHASIZE];
+    float ***dr_dangle_dg_ar;
+    float ***dl_dangle_dg_ar;
 
-    float int11_ar[ALPHASIZE][ALPHASIZE][ALPHASIZE][ALPHASIZE][ALPHASIZE][ALPHASIZE];
-    float int21_ar[ALPHASIZE][ALPHASIZE][ALPHASIZE][ALPHASIZE][ALPHASIZE][ALPHASIZE][ALPHASIZE];
-    float int22_ar[ALPHASIZE][ALPHASIZE][ALPHASIZE][ALPHASIZE][ALPHASIZE][ALPHASIZE][ALPHASIZE][ALPHASIZE];
+    float ******int11_ar;
+    float *******int21_ar;
+    float ********int22_ar;
 
-    float il_do_ar[ALPHASIZE][ALPHASIZE][ALPHASIZE][ALPHASIZE][16][16];
+    float ******il_do_ar;
 
     char canPair[ALPHASIZE+1][ALPHASIZE+1];
 
     void init_energies();
 
 private:
+    void init_heap();
+    void free_heap();
+
     void init_il_asym_ar();
     void init_stack_dg_ar();
     void init_tstackh_dg_ar();
