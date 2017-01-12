@@ -29,7 +29,7 @@ public:
 
 public:
     // Define methods
-    RH2Options() : mOutputAlign (false), mSeedDef("7mGU+"), mOverlapDef("orig"), mTargetLen(50), mQueryLen(30),
+    RH2Options() : mOutputAlign (false), mSeedDef("7mGU+"), mOverlapDef("seed"), mTargetLen(50), mQueryLen(30),
     mMaxHits(0) {}
 
     // Method prototypes

@@ -62,7 +62,21 @@ void RH2WorkSpace::create_ret_val(RH2RetValues& pRetVal, float pV2, int pSearchC
     pRetVal.mQeuarySub = pp.t4.c_str();
     pRetVal.mLenA1 = pp.get_count_to_A1();
     pRetVal.mSearchCount = pSearchCount;
-    pRetVal.mEffective = true;
+    pRetVal.mEffective = false;
+}
+
+void RH2WorkSpace::copy_ret_val(RH2RetValues& pRetVal1, RH2RetValues& pRetVal2)
+{
+    pRetVal1.mMfe = pRetVal2.mMfe;
+    pRetVal1.mTargetPos =pRetVal2.mTargetPos;
+    pRetVal1.mTargetPos0 = pRetVal2.mTargetPos0;
+    pRetVal1.mTargetSub = pRetVal2.mTargetSub;
+    pRetVal1.mTarget = pRetVal2.mTarget;
+    pRetVal1.mQeuery = pRetVal2.mQeuery;
+    pRetVal1.mQeuarySub = pRetVal2.mQeuarySub;
+    pRetVal1.mLenA1 =pRetVal2.mLenA1;
+    pRetVal1.mSearchCount = pRetVal2.mSearchCount;
+    pRetVal1.mEffective = pRetVal2.mEffective;
 }
 
 void RH2WorkSpace::reset_bt_work_space()
@@ -79,10 +93,13 @@ void RH2WorkSpace::reset_work_space()
 void RH2WorkSpace::mainloop(RH2RetValues& pRetVal)
 {
     float v2;
+    float min_v2;
+    bool first_iter = true;
     bool loopContinue = true;
     int hit_length, hit_start;
     int iterate_counter = 0;
     std::string str_bt;
+    RH2RetValues tmpRet;
 
     for (int targetPos = mTargetLen; targetPos >= 0; --targetPos)
     {
@@ -97,9 +114,11 @@ void RH2WorkSpace::mainloop(RH2RetValues& pRetVal)
     v2 = tbl.calc_hybrid(0, mTargetLen, 0, mQueryLen);
     if (v2 == 0.0)
     {
-        pRetVal.mEffective = false;
         loopContinue = false;
     }
+
+    pRetVal.mEffective = false;
+    min_v2 = v2;
 
     while (loopContinue)
     {
@@ -107,7 +126,6 @@ void RH2WorkSpace::mainloop(RH2RetValues& pRetVal)
         v2 = bt.get_min_mfe();
         if (v2 == 0.0)
         {
-            pRetVal.mEffective = false;
             loopContinue = false;
         }
 
@@ -115,13 +133,12 @@ void RH2WorkSpace::mainloop(RH2RetValues& pRetVal)
         str_bt = pp.t1.c_str();
         if (str_bt.length() == 0)
         {
-            pRetVal.mEffective = false;
             loopContinue = false;
         }
 
+        create_ret_val(tmpRet, v2, iterate_counter);
         if (pp.get_count_to_A1() >= mTargetLen - 1)
         {
-            create_ret_val(pRetVal, v2, iterate_counter);
             loopContinue = false;
         }
 
@@ -133,13 +150,20 @@ void RH2WorkSpace::mainloop(RH2RetValues& pRetVal)
         }
         else
         {
-            pRetVal.mHitLen = hit_length;
-            pRetVal.mHitStart = hit_start;
+            tmpRet.mHitLen = hit_length;
+            tmpRet.mHitStart = hit_start;
         }
 
+        if (v2 < min_v2 || first_iter)
+        {
+            copy_ret_val(pRetVal, tmpRet);
+            pRetVal.mEffective = true;
+            min_v2 = v2;
+        }
+
+        first_iter = false;
         reset_bt_work_space();
         ++iterate_counter;
-
     }
 
     reset_work_space();

@@ -80,11 +80,21 @@ void RH2Overlap<TRNAString>::find_overlapped_sites(
     TItRetPair ret;
     std::multimap<unsigned, unsigned>& siteMap = mSiteCluster.get_mrna_pos_map();
     std::multimap<unsigned, unsigned> startPos;
+    const seqan::String<unsigned>& sitePos = pSeedSites.get_site_pos();
+    unsigned stpos;
 
     ret = siteMap.equal_range((unsigned)pPosIdx);
     for (itMap = ret.first; itMap != ret.second; ++itMap)
     {
-        startPos.insert(TPosPair((unsigned)pScores.get_hit_start((*itMap).second), (*itMap).second));
+        if (pOverlapDef == "seed")
+        {
+            stpos = sitePos[(*itMap).second];
+        }
+        else
+        {
+            stpos = (unsigned)pScores.get_hit_start((*itMap).second);
+        }
+        startPos.insert(TPosPair(stpos, (*itMap).second));
     }
 
     cluster_overlapped_sites(pSeedSites, pScores, startPos, pOverlapDef);
@@ -115,7 +125,14 @@ void RH2Overlap<TRNAString>::cluster_overlapped_sites(
             mark_overlapped_sites(pSeedSites, pScores, olCluster, pOverlapDef);;
             olCluster.clear();
         }
-        prevStartPos = (*itStart).first + pScores.get_hit_length((*itStart).second);
+        if (pOverlapDef == "seed")
+        {
+            prevStartPos = (*itStart).first + RH2SeedSites<TRNAString>::SEED_LEN;
+        }
+        else
+        {
+            prevStartPos = (*itStart).first + pScores.get_hit_length((*itStart).second);
+        }
         prevMRNAPos = (*itStart).second;
     }
     if (olCluster.size() > 0)
@@ -137,6 +154,9 @@ void RH2Overlap<TRNAString>::mark_overlapped_sites(
     TItSet itSet;
     unsigned mPos;
     std::multimap<unsigned, unsigned> startPos;
+    const seqan::String<unsigned>& sitePos = pSeedSites.get_site_pos();
+    unsigned stpos1;
+    unsigned stpos2;
 
     mPos = get_pos_with_best_mfe(pScores, pOlCluster);
 
@@ -148,8 +168,18 @@ void RH2Overlap<TRNAString>::mark_overlapped_sites(
             {
                 continue;
             }
-            startPos.insert(TPosPair((unsigned)pScores.get_hit_start(mPos), (mPos)));
-            startPos.insert(TPosPair((unsigned)pScores.get_hit_start((*itSet)), (*itSet)));
+            if (pOverlapDef == "seed")
+            {
+                stpos1 = sitePos[mPos];
+                stpos2 = sitePos[(*itSet)];
+            }
+            else
+            {
+                stpos1 = (unsigned)pScores.get_hit_start(mPos);
+                stpos2 = (unsigned)pScores.get_hit_start((*itSet));
+            }
+            startPos.insert(TPosPair(stpos1, (mPos)));
+            startPos.insert(TPosPair(stpos2, (*itSet)));
             cluster_overlapped_sites(pSeedSites, pScores, startPos, pOverlapDef);
             startPos.clear();
         }
@@ -160,7 +190,15 @@ void RH2Overlap<TRNAString>::mark_overlapped_sites(
             {
                 continue;
             }
-            startPos.insert(TPosPair((unsigned)pScores.get_hit_start((*itSet)), (*itSet)));
+            if (pOverlapDef == "seed")
+            {
+                stpos2 = sitePos[(*itSet)];
+            }
+            else
+            {
+                stpos2 = (unsigned)pScores.get_hit_start((*itSet));
+            }
+            startPos.insert(TPosPair(stpos2, (*itSet)));
         }
         cluster_overlapped_sites(pSeedSites, pScores, startPos, pOverlapDef);
         startPos.clear();

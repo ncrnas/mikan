@@ -46,6 +46,9 @@ public:
     // Define types
     typedef seqan::StringSet<TRNAString> TRNASet;
 
+    // Constant values
+    static const unsigned SEED_LEN = 6;
+
     // Define variables
     seqan::String<bool> mEffectiveSeeds;
 
@@ -89,6 +92,7 @@ public:
     // Constant values
     static const unsigned MIN_DIST_TO_CDS = 1;
     static const unsigned MIN_DIST_UTR_END = 0;
+    static const unsigned SEED_LEN = 6;
 
     // Define variables
     seqan::String<bool> mEffectiveSites;

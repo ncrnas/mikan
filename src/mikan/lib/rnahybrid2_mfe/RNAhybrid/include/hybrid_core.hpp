@@ -86,6 +86,7 @@ private:
 
     bool is_effective_site();
     void create_ret_val(RH2RetValues& pRetVal, float pV2, int pSearchCount);
+    void copy_ret_val(RH2RetValues& pRetVal1, RH2RetValues& pRetVal2);
     void reset_bt_work_space();
     void reset_work_space();
     void mask_hit(int idx){target_seq[idx] = CHAR_X;}

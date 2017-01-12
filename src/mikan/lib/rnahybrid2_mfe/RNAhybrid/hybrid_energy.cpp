@@ -1,5 +1,6 @@
 #include <hybrid_energy.hpp>
 #include <cstring>
+#include <mk_memory.hpp>
 
 namespace rh2 {
 
@@ -58,8 +59,6 @@ void RH2EnergyArray::init_hl_ent_ar()
 
 void RH2EnergyArray::init_stack_dg_ar()
 {
-    std::memset(stack_dg_ar, 0, sizeof(stack_dg_ar));
-
     stack_dg_ar[A][A][U][U] = -0.900f;
     stack_dg_ar[A][C][G][U] = -2.200f;
     stack_dg_ar[A][G][C][U] = -2.100f;
@@ -100,9 +99,6 @@ void RH2EnergyArray::init_stack_dg_ar()
 
 void RH2EnergyArray::init_tstackh_dg_ar()
 {
-
-    std::memset(tstackh_dg_ar, 0, sizeof(tstackh_dg_ar));
-
     tstackh_dg_ar[A][A][A][U] = -0.300f;
     tstackh_dg_ar[A][A][C][U] = -0.500f;
     tstackh_dg_ar[A][A][G][U] = -0.300f;
@@ -204,9 +200,6 @@ void RH2EnergyArray::init_tstackh_dg_ar()
 
 void RH2EnergyArray::init_hl_tetra_ar()
 {
-
-    std::memset(hl_tetra_ar, 0, sizeof(hl_tetra_ar));
-
     hl_tetra_ar[G][G][G][G][A][C] = -3.000f;
     hl_tetra_ar[G][G][U][G][A][C] = -3.000f;
     hl_tetra_ar[C][G][A][A][A][G] = -3.000f;
@@ -314,8 +307,6 @@ void RH2EnergyArray::init_il_ent_ar()
 
 void RH2EnergyArray::init_tstacki_dg_ar()
 {
-    std::memset(tstacki_dg_ar, 0, sizeof(tstacki_dg_ar));
-
     tstacki_dg_ar[A][A][A][U] = 0.700f;
     tstacki_dg_ar[A][A][C][U] = 0.700f;
     tstacki_dg_ar[A][A][G][U] = -0.400f;
@@ -416,8 +407,6 @@ void RH2EnergyArray::init_tstacki_dg_ar()
 
 void RH2EnergyArray::init_dr_dangle_dg_ar()
 {
-    std::memset(dr_dangle_dg_ar, 0, sizeof(dr_dangle_dg_ar));
-
     dr_dangle_dg_ar[A][U][A] = -0.700f;
     dr_dangle_dg_ar[A][U][C] = -0.100f;
     dr_dangle_dg_ar[A][U][G] = -0.700f;
@@ -447,8 +436,6 @@ void RH2EnergyArray::init_dr_dangle_dg_ar()
 
 void RH2EnergyArray::init_dl_dangle_dg_ar()
 {
-    std::memset(dl_dangle_dg_ar, 0, sizeof(dl_dangle_dg_ar));
-
     dl_dangle_dg_ar[A][A][U] = -0.300f;
     dl_dangle_dg_ar[C][A][U] = -0.300f;
     dl_dangle_dg_ar[G][A][U] = -0.400f;
@@ -478,8 +465,6 @@ void RH2EnergyArray::init_dl_dangle_dg_ar()
 
 void RH2EnergyArray::init_int11_ar()
 {
-    std::memset(int11_ar, 0, sizeof(int11_ar));
-
     int11_ar[A][U][A][A][A][U] = 1.700f;
     int11_ar[A][U][A][C][A][U] = 1.700f;
     int11_ar[A][U][A][G][A][U] = 1.700f;
@@ -1060,8 +1045,6 @@ void RH2EnergyArray::init_int11_ar()
 
 void RH2EnergyArray::init_int21_ar()
 {
-    std::memset(int21_ar, 0, sizeof(int21_ar));
-
     int21_ar[A][U][A][A][A][A][U] = 3.900f;
     int21_ar[A][U][A][A][C][A][U] = 3.700f;
     int21_ar[A][U][A][A][G][A][U] = 3.100f;
@@ -3370,8 +3353,6 @@ void RH2EnergyArray::init_int21_ar()
 
 void RH2EnergyArray::init_int22_ar()
 {
-    std::memset(int22_ar, 0, sizeof(int22_ar));
-
     int22_ar[A][U][A][A][A][A][A][U] = 2.800f;
     int22_ar[A][U][A][A][A][C][A][U] = 2.600f;
     int22_ar[A][U][A][A][A][G][A][U] = 1.500f;
@@ -12604,6 +12585,8 @@ void RH2EnergyArray::init_canPair()
 
 void RH2EnergyArray::init_energies()
 {
+    init_heap();
+
     init_il_asym_ar();
 
     init_stack_dg_ar();
@@ -12624,6 +12607,55 @@ void RH2EnergyArray::init_energies()
 
     init_canPair();
 
+}
+
+void RH2EnergyArray::init_heap()
+{
+    il_asym_ar = mikan::create_2d_array<float>(16, 16);
+
+    stack_dg_ar = mikan::create_4d_array<float>(ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE);
+    tstackh_dg_ar = mikan::create_4d_array<float>(ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE);
+    tstacki_dg_ar = mikan::create_4d_array<float>(ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE);
+    hl_tetra_ar = mikan::create_6d_array<float>(ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE);
+
+    hl_ent_ar = mikan::create_1d_array<float>(31);
+    bl_ent_ar = mikan::create_1d_array<float>(31);
+    il_ent_ar = mikan::create_1d_array<float>(31);
+
+    dr_dangle_dg_ar = mikan::create_3d_array<float>(ALPHASIZE, ALPHASIZE, ALPHASIZE+1);
+    dl_dangle_dg_ar = mikan::create_3d_array<float>(ALPHASIZE+1, ALPHASIZE, ALPHASIZE);
+
+    int11_ar = mikan::create_6d_array<float>(ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE);
+    int21_ar = mikan::create_7d_array<float>(ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE,
+                                             ALPHASIZE);
+    int22_ar = mikan::create_8d_array<float>(ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE,
+                                             ALPHASIZE, ALPHASIZE);
+
+    il_do_ar = mikan::create_6d_array<float>(ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE, 16, 16);
+}
+
+void RH2EnergyArray::free_heap()
+{
+    mikan::delete_2d_array<float>(il_asym_ar, 16);
+
+    mikan::delete_4d_array<float>(stack_dg_ar, ALPHASIZE, ALPHASIZE, ALPHASIZE);
+    mikan::delete_4d_array<float>(tstackh_dg_ar, ALPHASIZE, ALPHASIZE, ALPHASIZE);
+    mikan::delete_4d_array<float>(tstacki_dg_ar, ALPHASIZE, ALPHASIZE, ALPHASIZE);
+    mikan::delete_6d_array<float>(hl_tetra_ar, ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE);
+
+    mikan::delete_1d_array<float>(hl_ent_ar);
+    mikan::delete_1d_array<float>(bl_ent_ar);
+    mikan::delete_1d_array<float>(il_ent_ar);
+
+    mikan::delete_3d_array<float>(dr_dangle_dg_ar, ALPHASIZE, ALPHASIZE);
+    mikan::delete_3d_array<float>(dl_dangle_dg_ar, ALPHASIZE+1, ALPHASIZE);
+
+    mikan::delete_6d_array<float>(int11_ar, ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE);
+    mikan::delete_7d_array<float>(int21_ar, ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE);
+    mikan::delete_8d_array<float>(int22_ar, ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE,
+                                  ALPHASIZE);
+
+    mikan::delete_6d_array<float>(il_do_ar, ALPHASIZE, ALPHASIZE, ALPHASIZE, ALPHASIZE, 16);
 }
 
 } // namespace rh2
