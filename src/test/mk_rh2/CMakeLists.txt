@@ -39,9 +39,10 @@ add_executable (gtest_mk_rh2
         site_output_03_mm_1.cpp site_output_03_mm_2.cpp site_output_04_mmgu_1.cpp site_output_04_mmgu_2.cpp
         site_output_05_bt_1.cpp site_output_05_bt_2.cpp site_output_06_bm_1.cpp site_output_06_bm_2.cpp)
 
-add_executable (gtest_mk_rh2_long output_m001u001.cpp output_m001u002.cpp output_m001u003.cpp output_m001u004.cpp
-        output_m001u005.cpp output_m001u006.cpp output_m001u007.cpp output_m001u008.cpp output_m001u009.cpp
-        output_m001u010.cpp output_m001u011.cpp)
+add_executable (gtest_mk_rh2_long
+        output_m001u001.cpp output_m001u002.cpp output_m001u003.cpp output_m001u004.cpp output_m001u005.cpp
+        output_m001u006.cpp output_m001u007.cpp output_m001u008.cpp output_m001u009.cpp output_m001u010.cpp
+        output_m001u011.cpp)
 
 # Add libraries
 if(NOT TARGET mikantest)
