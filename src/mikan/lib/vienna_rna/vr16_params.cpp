@@ -1,6 +1,7 @@
 #include <vr16_params.hpp>
 #include <algorithm>
 #include <iostream>
+#include <mk_memory.hpp>
 
 namespace vr16
 {
@@ -161,6 +162,49 @@ void VR16Params::init_parameters(double pTemperature)
 
 }
 
+void VR16Params::init_heap()
+{
+    mStack = mikan::create_2d_array<int>(NBPAIRS+1, NBPAIRS+1);
+    mHairpin = mikan::create_1d_array<int>(31);
+    mBulge = mikan::create_1d_array<int>(MAXLOOP+1);
+    mInternalLoop = mikan::create_1d_array<int>(MAXLOOP+1);
+    mMismatchI = mikan::create_3d_array<int>(NBPAIRS+1, 5, 5);
+    mMismatchH = mikan::create_3d_array<int>(NBPAIRS+1, 5, 5);
+    mMismatchM = mikan::create_3d_array<int>(NBPAIRS+1, 5, 5);
+    mDangle5 = mikan::create_2d_array<int>(NBPAIRS+1, 5);
+    mDangle3 = mikan::create_2d_array<int>(NBPAIRS+1, 5);
+    mInt11 = mikan::create_4d_array<int>(NBPAIRS+1, NBPAIRS+1, 5, 5);
+    mInt21 = mikan::create_5d_array<int>(NBPAIRS+1, NBPAIRS+1, 5, 5, 5);
+    mInt22 = mikan::create_6d_array<int>(NBPAIRS+1, NBPAIRS+1, 5, 5, 5, 5);
+    mFNinio = mikan::create_1d_array<int>(5);
+
+    mMLintern = mikan::create_1d_array<int>(NBPAIRS+1);
+    mTetraEnergy = mikan::create_1d_array<int>(200);
+    mTriloopE = mikan::create_1d_array<int>(40);
+
+}
+
+void VR16Params::free_heap()
+{
+    mikan::delete_2d_array<int>(mStack, NBPAIRS+1);
+    mikan::delete_1d_array<int>(mHairpin);
+    mikan::delete_1d_array<int>(mBulge);
+    mikan::delete_1d_array<int>(mInternalLoop);
+    mikan::delete_3d_array<int>(mMismatchI, NBPAIRS+1, 5);
+    mikan::delete_3d_array<int>(mMismatchH, NBPAIRS+1, 5);
+    mikan::delete_3d_array<int>(mMismatchM, NBPAIRS+1, 5);
+    mikan::delete_2d_array<int>(mDangle5, NBPAIRS+1);
+    mikan::delete_2d_array<int>(mDangle3, NBPAIRS+1);
+    mikan::delete_4d_array<int>(mInt11, NBPAIRS+1, NBPAIRS+1, 5);
+    mikan::delete_5d_array<int>(mInt21, NBPAIRS+1, NBPAIRS+1, 5, 5);
+    mikan::delete_6d_array<int>(mInt22, NBPAIRS+1, NBPAIRS+1, 5, 5, 5);
+    mikan::delete_1d_array<int>(mFNinio);
+
+    mikan::delete_1d_array<int>(mMLintern);
+    mikan::delete_1d_array<int>(mTetraEnergy);
+    mikan::delete_1d_array<int>(mTriloopE);
+}
+
 //
 // VR16ParamIL methods
 //
@@ -290,6 +334,16 @@ int VR16ParamIL::loop_energy(int pN1, int pN2, int pType1, int pType2, int pSi1,
     }
 
     return energy;
+}
+
+void VR16ParamIL::init_heap()
+{
+    mMinIL = mikan::create_2d_array<int>(MAXLOOP+1, MAXLOOP+1);
+}
+
+void VR16ParamIL::free_heap()
+{
+    mikan::delete_2d_array<int>(mMinIL, MAXLOOP+1);
 }
 
 //
@@ -555,6 +609,63 @@ void VR16PFParams::reset_scale()
     {
         mExpMLbase[i] = std::exp(-10.0 * i * GT / kT) * mScale[i];
     }
+
+}
+
+void VR16PFParams::init_heap()
+{
+    mExpBulge = mikan::create_1d_array<double>(MAXLOOP+1);
+    mExpInternal = mikan::create_1d_array<double>(MAXLOOP+1);
+
+    mExpNinio = mikan::create_2d_array<double>(5, MAXLOOP+1);
+
+
+    mExpMLintern = mikan::create_1d_array<double>(NBPAIRS+1);
+
+    mExpDangle5 = mikan::create_2d_array<double>(NBPAIRS+1, 5);
+    mExpDangle3 = mikan::create_2d_array<double>(NBPAIRS+1, 5);
+
+    mExpTetra = mikan::create_1d_array<double>(40);
+    mExpTriloop = mikan::create_1d_array<double>(40);
+    mExpStack = mikan::create_2d_array<double>(NBPAIRS+1, NBPAIRS+1);
+
+    mExpMismatchI = mikan::create_3d_array<double>(NBPAIRS+1, 5, 5);
+    mExpMismatchH = mikan::create_3d_array<double>(NBPAIRS+1, 5, 5);
+    mExpMismatchM = mikan::create_3d_array<double>(NBPAIRS+1, 5, 5);
+
+    mExpInt11 = mikan::create_4d_array<double>(NBPAIRS+1, NBPAIRS+1, 5, 5);
+    mExpInt21 = mikan::create_5d_array<double>(NBPAIRS+1, NBPAIRS+1, 5, 5, 5);
+    mExpInt22 = mikan::create_6d_array<double>(NBPAIRS+1, NBPAIRS+1, 5, 5, 5, 5);
+
+    mExpMLContrib = mikan::create_3d_array<double>(NBPAIRS+1, 5, 5);
+}
+
+void VR16PFParams::free_heap()
+{
+    mikan::delete_1d_array<double>(mExpBulge);
+    mikan::delete_1d_array<double>(mExpInternal);
+
+    mikan::delete_2d_array<double>(mExpNinio, 5);
+
+
+    mikan::delete_1d_array<double>(mExpMLintern);
+
+    mikan::delete_2d_array<double>(mExpDangle5, NBPAIRS+1);
+    mikan::delete_2d_array<double>(mExpDangle3, NBPAIRS+1);
+
+    mikan::delete_1d_array<double>(mExpTetra);
+    mikan::delete_1d_array<double>(mExpTriloop);
+    mikan::delete_2d_array<double>(mExpStack, NBPAIRS+1);
+
+    mikan::delete_3d_array<double>(mExpMismatchI, NBPAIRS+1, 5);
+    mikan::delete_3d_array<double>(mExpMismatchH, NBPAIRS+1, 5);
+    mikan::delete_3d_array<double>(mExpMismatchM, NBPAIRS+1, 5);
+
+    mikan::delete_4d_array<double>(mExpInt11, NBPAIRS+1, NBPAIRS+1, 5);
+    mikan::delete_5d_array<double>(mExpInt21, NBPAIRS+1, NBPAIRS+1, 5, 5);
+    mikan::delete_6d_array<double>(mExpInt22, NBPAIRS+1, NBPAIRS+1, 5, 5, 5);
+
+    mikan::delete_3d_array<double>(mExpMLContrib, NBPAIRS+1, 5);
 
 }
 

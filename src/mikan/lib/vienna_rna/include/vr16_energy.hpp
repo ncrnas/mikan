@@ -26,22 +26,22 @@ public:
     double mTmeasure;                          /* temperature of param measurements */
     double mlxc37;                             /* parameter for logarithmic loop  energy extrapolation  */
 
-    int mStack37[NBPAIRS+1][NBPAIRS+1];
-    int mEnthalpies[NBPAIRS+1][NBPAIRS+1];     /* stack enthalpies */
+    int **mStack37;
+    int **mEnthalpies;                         /* stack enthalpies */
 
-    int mHairpin37[31];
-    int mBulge37[31];
-    int mInternalLoop37[31];
+    int *mHairpin37;
+    int *mBulge37;
+    int *mInternalLoop37;
 
-    int mMismatchI37[NBPAIRS+1][5][5];         /* interior loop mismatches */
-    int mMismatchH37[NBPAIRS+1][5][5];         /* same for hairpins */
-    int mMismatchM37[NBPAIRS+1][5][5];         /* same for multiloops */
-    int mMismH[NBPAIRS+1][5][5];               /* mismatch enthalpies */
+    int ***mMismatchI37;                       /* interior loop mismatches */
+    int ***mMismatchH37;                       /* same for hairpins */
+    int ***mMismatchM37;                       /* same for multiloops */
+    int ***mMismH;                             /* mismatch enthalpies */
 
-    int mDangle5_37[NBPAIRS+1][5];             /* 5' dangle exterior of pair */
-    int mDangle3_37[NBPAIRS+1][5];             /* 3' dangle */
-    int mDangle3_H[NBPAIRS+1][5];              /* corresponding enthalpies */
-    int mDangle5_H[NBPAIRS+1][5];
+    int **mDangle5_37;                         /* 5' dangle exterior of pair */
+    int **mDangle3_37;                         /* 3' dangle */
+    int **mDangle3_H;                          /* corresponding enthalpies */
+    int **mDangle5_H;
 
     /* constants for linearly destabilizing contributions for multi-loops
        F = ML_closing + ML_intern*(k-1) + ML_BASE*u  */
@@ -60,30 +60,38 @@ public:
     int mDuplexInit;
 
     /* stabilizing contribution due to special hairpins of size 4 (tetraloops) */
-    std::map<std::string, int> mTetraloops;                /* string containing the special tetraloops */
-    int mTetraEnergy37[200];                               /* Bonus energy for special tetraloops */
+    std::map<std::string, int> mTetraloops;    /* string containing the special tetraloops */
+    int *mTetraEnergy37;                       /* Bonus energy for special tetraloops */
     int mTetraEnth37;
 
-    std::map<std::string, int> mTriloops;                  /* string containing the special triloops */
-    int mTriloopE37[40];                                   /* Bonus energy for special Triloops */
+    std::map<std::string, int> mTriloops;      /* string containing the special triloops */
+    int *mTriloopE37;                          /* Bonus energy for special Triloops */
 
-    int mInt11_37[NBPAIRS+1][NBPAIRS+1][5][5];             /* 1x1 interior loops */
-    int mInt11_H[NBPAIRS+1][NBPAIRS+1][5][5];
+    int ****mInt11_37;                         /* 1x1 interior loops */
+    int ****mInt11_H;
 
-    int mInt21_37[NBPAIRS+1][NBPAIRS+1][5][5][5];          /* 2x1 interior loops */
-    int mInt21_H[NBPAIRS+1][NBPAIRS+1][5][5][5];
+    int *****mInt21_37;                        /* 2x1 interior loops */
+    int *****mInt21_H;
 
-    int mInt22_37[NBPAIRS+1][NBPAIRS+1][5][5][5][5];       /* 2x2 interior loops */
-    int mInt22_H[NBPAIRS+1][NBPAIRS+1][5][5][5][5];
+    int ******mInt22_37;                       /* 2x2 interior loops */
+    int ******mInt22_H;
 
 public:
     // Define methods
     VR16EnergyParams(): K0(273.15), GASCONST(1.98717), MAX_NINIO(300)
     {
+        init_heap();
         init_parameters();
+    }
+    ~VR16EnergyParams()
+    {
+        free_heap();
     }
 
 private:
+    void init_heap();
+    void free_heap();
+
     void init_parameters();
 
     void init_stack37();

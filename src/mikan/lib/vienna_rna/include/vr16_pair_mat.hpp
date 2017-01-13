@@ -17,17 +17,22 @@ public:
 
     // Declare variables
     std::string mLawAndOrder;
-    int mBPPair[NBASES][NBASES];
+    int **mBPPair;
 
-    int mAlias[MAXALPHA+1];
-    int mPair[MAXALPHA+1][MAXALPHA+1];
-    int mRtype[8];
+    int *mAlias;
+    int **mPair;
+    int *mRtype;
 
 public:
     // Define methods
     VR16PairMat()
     {
+        init_heap();
         init_dat();
+    }
+    ~VR16PairMat()
+    {
+        free_heap();
     }
 
     // Method prototypes
@@ -36,6 +41,9 @@ public:
     int get_alias(int pIdx) {return mAlias[pIdx];}
 
 private:
+    void init_heap();
+    void free_heap();
+
     void init_dat();
 
 };

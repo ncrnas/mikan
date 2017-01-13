@@ -51,7 +51,7 @@ void PITAAlign<TRNAString>::create_align(
     startPos = pSitePos + (INDEXED_SEQ_LEN + 1) - (int)length(pMiRNASeq);
     for (unsigned i = 0; i < length(pMiRNASeq); ++i)
     {
-        if (startPos + i > 0)
+        if (startPos + (int)i > 0)
         {
             mAlignMRNA[pId][i] = pMRNASeq[startPos + i];
         }
