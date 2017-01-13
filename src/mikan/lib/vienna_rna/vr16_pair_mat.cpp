@@ -1,5 +1,6 @@
 #include <vr16_pair_mat.hpp>
 #include <iostream>
+#include <mk_memory.hpp>
 
 namespace vr16 {
 
@@ -251,6 +252,25 @@ int VR16PairMat::make_pair_matrix(int pEnergySet, std::string& pNonStandards, bo
     }
 
     return 0;
+}
+
+void VR16PairMat::init_heap()
+{
+
+    mBPPair = mikan::create_2d_array<int>(NBASES, NBASES);
+
+    mAlias = mikan::create_1d_array<int>(MAXALPHA+1);
+    mPair = mikan::create_2d_array<int>(MAXALPHA+1, MAXALPHA+1);
+    mRtype = mikan::create_1d_array<int>(8);
+}
+
+void VR16PairMat::free_heap()
+{
+    mikan::delete_2d_array<int>(mBPPair, NBASES);
+
+    mikan::delete_1d_array<int>(mAlias);
+    mikan::delete_2d_array<int>(mPair, MAXALPHA+1);
+    mikan::delete_1d_array<int>(mRtype);
 }
 
 } // namespace vr16

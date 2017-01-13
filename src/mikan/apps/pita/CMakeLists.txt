@@ -17,11 +17,13 @@ find_package (SeqAn REQUIRED)
 # Add lib directories
 add_subdirectory(../../lib/pita_ddg pita)
 add_subdirectory(../../lib/vienna_rna vrna)
+add_subdirectory(../../lib/mikan mk)
 
 # Add include directories
 include_directories (${SEQAN_INCLUDE_DIRS}
                      ${PITA_HEADERS}
-                     ${VR16_HEADERS})
+                     ${VR16_HEADERS}
+                     ${MIKAN_HEADERS})
 
 # Add definitions set by find_package (SeqAn)
 add_definitions (${SEQAN_DEFINITIONS})
@@ -34,6 +36,9 @@ add_library(pita ${PITA_SOURCE})
 if(NOT TARGET vrna)
   add_library(vrna ${VR16_SOURCE})
 endif()
+if(NOT TARGET mk)
+  add_library(mk ${MIKAN_SOURCE})
+endif()
 
 # Add dependencies found by find_package (SeqAn)
 if (MSVC)
@@ -42,7 +47,7 @@ else ()
   set (LIBM_NAME "m")
 endif ()
 
-target_link_libraries (mk-pita pita vrna ${SEQAN_LIBRARIES} ${LIBM_NAME})
+target_link_libraries (mk-pita pita vrna mk ${SEQAN_LIBRARIES} ${LIBM_NAME})
 
 # Add CXX flags found by find_package (SeqAn)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SEQAN_CXX_FLAGS}")

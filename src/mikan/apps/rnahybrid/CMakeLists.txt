@@ -31,7 +31,9 @@ add_executable (mk-rnahybrid rnahybrid2_mfe.cpp)
 
 # Add libraries
 add_library(rh2 ${RH2_SOURCE})
-add_library(mk ${MIKAN_SOURCE})
+if(NOT TARGET mk)
+  add_library(mk ${MIKAN_SOURCE})
+endif()
 
 # Add dependencies found by find_package (SeqAn)
 if (MSVC)

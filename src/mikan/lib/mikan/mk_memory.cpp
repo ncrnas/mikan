@@ -198,6 +198,16 @@ template int******* create_7d_array<int>(int len7, int len6, int len5, int len4,
 template int******** create_8d_array<int>(int len8, int len7, int len6, int len5, int len4, int len3, int len2,
                                           int len1);
 
+template double* create_1d_array<double>(int len1);
+template double** create_2d_array<double>(int len2, int len1);
+template double*** create_3d_array<double>(int len3, int len2, int len1);
+template double**** create_4d_array<double>(int len4, int len3, int len2, int len1);
+template double***** create_5d_array<double>(int len5, int len4, int len3, int len2, int len1);
+template double****** create_6d_array<double>(int len6, int len5, int len4, int len3, int len2, int len1);
+template double******* create_7d_array<double>(int len7, int len6, int len5, int len4, int len3, int len2, int len1);
+template double******** create_8d_array<double>(int len8, int len7, int len6, int len5, int len4, int len3, int len2,
+                                                int len1);
+
 template void delete_1d_array<float>(float *a1);
 template void delete_2d_array<float>(float **a2, int len2);
 template void delete_3d_array<float>(float ***a3, int len3, int len2);
@@ -217,5 +227,15 @@ template void delete_6d_array<int>(int ******a6, int len6, int len5, int len4, i
 template void delete_7d_array<int>(int *******a7, int len7, int len6, int len5, int len4, int len3, int len2);
 template void delete_8d_array<int>(int ********a8, int len8, int len7, int len6, int len5, int len4, int len3,
                                    int len2);
+
+template void delete_1d_array<double>(double *a1);
+template void delete_2d_array<double>(double **a2, int len2);
+template void delete_3d_array<double>(double ***a3, int len3, int len2);
+template void delete_4d_array<double>(double ****a4, int len4, int len3, int len2);
+template void delete_5d_array<double>(double *****a5, int len5, int len4, int len3, int len2);
+template void delete_6d_array<double>(double ******a6, int len6, int len5, int len4, int len3, int len2);
+template void delete_7d_array<double>(double *******a7, int len7, int len6, int len5, int len4, int len3, int len2);
+template void delete_8d_array<double>(double ********a8, int len8, int len7, int len6, int len5, int len4, int len3,
+                                      int len2);
 
 }
