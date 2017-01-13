@@ -11,7 +11,10 @@ namespace rh2{
 class RH2EnergyArray
 {
 public:
-    RH2EnergyArray() {}
+    RH2EnergyArray()
+    {
+        init_heap();
+    }
     ~RH2EnergyArray()
     {
         free_heap();
@@ -75,12 +78,23 @@ private:
 class RH2TempEnergyArray
 {
 public:
-    RH2TempEnergyArray() {}
+    RH2TempEnergyArray()
+    {
+        init_heap();
+    }
+    ~RH2TempEnergyArray()
+    {
+        free_heap();
+    }
 
     void clear_array();
 
-    float tmp_do_id[50][50][25][25];
-    bool flag_bit_do_id[50][50][25][25];
+    float ****tmp_do_id;
+    bool ****flag_bit_do_id;
+
+private:
+    void init_heap();
+    void free_heap();
 
 };
 

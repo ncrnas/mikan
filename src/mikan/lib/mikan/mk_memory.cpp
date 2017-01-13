@@ -208,6 +208,11 @@ template double******* create_7d_array<double>(int len7, int len6, int len5, int
 template double******** create_8d_array<double>(int len8, int len7, int len6, int len5, int len4, int len3, int len2,
                                                 int len1);
 
+template bool* create_1d_array<bool>(int len1);
+template bool** create_2d_array<bool>(int len2, int len1);
+template bool*** create_3d_array<bool>(int len3, int len2, int len1);
+template bool**** create_4d_array<bool>(int len4, int len3, int len2, int len1);
+
 template void delete_1d_array<float>(float *a1);
 template void delete_2d_array<float>(float **a2, int len2);
 template void delete_3d_array<float>(float ***a3, int len3, int len2);
@@ -237,5 +242,10 @@ template void delete_6d_array<double>(double ******a6, int len6, int len5, int l
 template void delete_7d_array<double>(double *******a7, int len7, int len6, int len5, int len4, int len3, int len2);
 template void delete_8d_array<double>(double ********a8, int len8, int len7, int len6, int len5, int len4, int len3,
                                       int len2);
+
+template void delete_1d_array<bool>(bool *a1);
+template void delete_2d_array<bool>(bool **a2, int len2);
+template void delete_3d_array<bool>(bool ***a3, int len3, int len2);
+template void delete_4d_array<bool>(bool ****a4, int len4, int len3, int len2);
 
 }

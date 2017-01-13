@@ -1,14 +1,42 @@
 #include <hybrid_energy.hpp>
 #include <cstring>
+#include <algorithm>    // std::fill_n
 #include <mk_memory.hpp>
 
 namespace rh2 {
 
+//
+// RH2TempEnergyArray methods
+//
 void RH2TempEnergyArray::clear_array()
 {
-    std::memset(flag_bit_do_id, 0, sizeof(flag_bit_do_id));
+    for (unsigned i = 0; i < 50; ++i)
+    {
+        for (unsigned j = 0; j < 50; ++j)
+        {
+            for (unsigned k = 0; k < 25; ++k)
+            {
+                std::fill_n(flag_bit_do_id[i][j][k], 25, 0);
+            }
+        }
+    }
 }
 
+void RH2TempEnergyArray::init_heap()
+{
+    tmp_do_id = mikan::create_4d_array<float>(50, 50, 25, 25);
+    flag_bit_do_id = mikan::create_4d_array<bool>(50, 50, 25, 25);
+}
+
+void RH2TempEnergyArray::free_heap()
+{
+    mikan::delete_4d_array<float>(tmp_do_id, 50, 50, 25);
+    mikan::delete_4d_array<bool>(flag_bit_do_id, 50, 50, 25);
+}
+
+//
+// RH2EnergyArray methods
+//
 void RH2EnergyArray::init_il_asym_ar()
 {
     int i, j;
@@ -12585,8 +12613,6 @@ void RH2EnergyArray::init_canPair()
 
 void RH2EnergyArray::init_energies()
 {
-    init_heap();
-
     init_il_asym_ar();
 
     init_stack_dg_ar();
