@@ -996,8 +996,6 @@ void VR16EnergyParams::init_mismatch_m37()
 {
 /*  mismatch energies in multiloops
     int mMismatchM37[NBPAIRS+1][5][5]; */
-
-//    std::memset(mMismatchM37, 0, sizeof(mMismatchM37));
 }
 
 void VR16EnergyParams::init_mism_h()
@@ -1613,8 +1611,6 @@ void VR16EnergyParams::init_tetra_energy37()
      -250, -250, -200, -200, -200, -200, -200, -150, -150, -150, -150, -150,
      -150, -150, -150, -150, -150, -150}; */
 
-    std::memset(mTetraEnergy37, 0, sizeof(mTetraEnergy37));
-
     mTetraEnergy37[0] = -300;
     mTetraEnergy37[1] = -300;
     mTetraEnergy37[2] = -300;
@@ -1652,8 +1648,6 @@ void VR16EnergyParams::init_tetra_energy37()
 void VR16EnergyParams::init_triloop_e37()
 {
 /*  int mTriloopE37[40]; */
-
-    std::memset(mTriloopE37, 0, sizeof(mTriloopE37));
 }
 
 void VR16EnergyParams::init_int11_37()
