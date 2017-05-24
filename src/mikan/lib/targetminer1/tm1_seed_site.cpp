@@ -527,6 +527,38 @@ int TM1SeedSites<TRNAString>::get_seed_start_pos(int pIdx)
 }
 
 template <class TRNAString>
+int TM1SeedSites<TRNAString>::get_seed_start_pos2(int pIdx)
+{
+    int offset = 1;
+
+    if (mSeedTypes[pIdx] == "8mer")
+    {
+        offset = 1;
+    }
+    else if(mSeedTypes[pIdx] == "7mer-A1")
+    {
+        offset = 1;
+    }
+    else if(mSeedTypes[pIdx] == "7mer-m8")
+    {
+        offset = 1;
+    }
+    else if (mSeedTypes[pIdx] == "6mer")
+    {
+        if (is_m8_match_gu(pIdx))
+        {
+            offset = 0;
+        }
+        else
+        {
+            offset = 1;
+        }
+    }
+
+    return std::max((int)mM8Pos[pIdx] + offset, 0);
+}
+
+template <class TRNAString>
 int TM1SeedSites<TRNAString>::get_length_to_cds(int pIdx)
 {
     int offset = 0;
