@@ -1,4 +1,4 @@
-#include <cmath>                 // min, max
+#include <cmath>                 // min, max, round
 #include <tm1_inst_template.hpp> // TRNATYPE
 #include <tm1_seed_site.hpp>     // TM1SeedSites
 #include <tm1_site_feature.hpp>  // TM1RawFeatures, TM1FeatSeedType, TM1FeatSitePos, TM1FeatDistance, TM1FeatAURich,
@@ -169,8 +169,9 @@ int TM1FeatSitePos<TRNAString>::add_features(
         TSitePos const &pSitePos)
 {
     int seqLen;
-    float relStartPos, relEndPos;
-    unsigned lenToCDS, startPos, endPos;
+    int relEndPosInt;
+    float relEndPos;
+    unsigned lenToCDS, endPos;
 
     resize_features((unsigned)length(pMRNAPos));
 
@@ -186,10 +187,9 @@ int TM1FeatSitePos<TRNAString>::add_features(
         seqLen = (int)length(pMRNASeqs[pMRNAPos[i]]);
         mSeqLen[i] = seqLen;
 
-        // Get m8 pos
+        // Check length to CDS
         mM8Pos[i] = pSitePos[i] - 1;
-        lenToCDS = (unsigned)pSeedSites.get_length_to_cds(i);
-
+        lenToCDS = (unsigned)pSeedSites.get_seed_start_pos2(i);
         if (lenToCDS < MIN_DIST_TO_CDS || mM1Pos[i] > seqLen)
         {
             pEffectiveSites[i] = false;
@@ -197,17 +197,11 @@ int TM1FeatSitePos<TRNAString>::add_features(
         }
 
         // Get relative pos
-        startPos = (unsigned)pSeedSites.get_seed_start_pos(i) + 4;
         endPos = (unsigned)pSeedSites.get_seed_end_pos2(i) - 1;
-        startPos = endPos - 1;
-        startPos = (unsigned)pSeedSites.get_seed_start_pos(i) + 2;
-        endPos = (unsigned)pSeedSites.get_seed_end_pos2(i) - 1;
-        relStartPos = (float) startPos / seqLen;
         relEndPos = (float) endPos / seqLen;
-//        std::cout << "seqlen: " << seqLen << ", startPos: " << startPos << std::endl;
-//        std::cout << relStartPos << ", " << relEndPos << std::endl;
-
-        if ((relStartPos >= 0.4 && relStartPos <= 0.6) || (relEndPos >= 0.4 && relEndPos <= 0.6))
+        relEndPos = roundf(relEndPos * 100.0f) / 100.0f;
+        relEndPosInt = (int)(relEndPos * 1000);
+        if (relEndPosInt >= 400 && relEndPosInt <= 600)
         {
             pEffectiveSites[i] = false;
             continue;
@@ -347,6 +341,7 @@ int TM1FeatAURich<TRNAString>::add_features(
         TM1SeedSites<TRNAString> &pSeedSites,
         TM1FeatDistance<TRNAString> &pDistance)
 {
+    (void)pDistance;
     int seqLen, startU, endU, startD, endD;
     float totalScore, upScore, upMaxScore, downScore, downMaxScore;
     //CharString chrUp = "up";
@@ -363,7 +358,6 @@ int TM1FeatAURich<TRNAString>::add_features(
 
         // Get start and end positions for upstream and downstream
         endU = pSeedSites.get_seed_start_pos(i);
-        startU = std::max(0, endU - pDistance.get_upstream_len(i));
         startU = std::max(0, endU - 30);
 
         seqLen = (int)length(pMRNASeqs[pMRNAPos[i]]);
@@ -373,7 +367,7 @@ int TM1FeatAURich<TRNAString>::add_features(
         calc_pos_scores(pMRNASeqs[pMRNAPos[i]], startU, endU, upScore, upMaxScore);
         calc_pos_scores(pMRNASeqs[pMRNAPos[i]], startD, endD, downScore, downMaxScore);
 
-        totalScore = (upScore + downScore) / (upMaxScore + downMaxScore);
+        totalScore = (upScore + downScore) / 60;
 
         mAURich[i] = totalScore;
     }

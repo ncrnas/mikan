@@ -106,6 +106,7 @@ public:
     void clear_pos();
     int get_seed_len(int pIdx);
     int get_seed_start_pos(int pIdx);
+    int get_seed_start_pos2(int pIdx);
     int get_seed_end_pos(int pIdx);
     int get_seed_end_pos2(int pIdx);
     int get_length_to_cds(int pIdx);
