@@ -19,6 +19,7 @@ namespace {
     };
 
     TEST_F(OM001U006, comp_site) {
+        // TODO: Recheck the result of hsa-miR-124 & hg18_refgene test3_7mer-a1 for CDS distance
         (void)rh2mfe::RH2CoreMain(argc, (const char **)argv);
         gtest_compare_two_files(o1file1, o2file1);
     }
