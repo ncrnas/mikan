@@ -36,7 +36,7 @@ private:
     Eigen::VectorXf mMatProd;
 
 private:
-    int init_alpha(seqan::CharString& pModelPath);
+    int init_alpha();
     int init_sv(seqan::CharString& pModelPath);
 
 };

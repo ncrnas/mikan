@@ -6,6 +6,7 @@ set(TSSVM_SOURCE
    ${CMAKE_CURRENT_SOURCE_DIR}/tssvm_seed_site.cpp
    ${CMAKE_CURRENT_SOURCE_DIR}/tssvm_align.cpp
    ${CMAKE_CURRENT_SOURCE_DIR}/tssvm_site_feature.cpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/tssvm_site_svm_alpha.cpp
    ${CMAKE_CURRENT_SOURCE_DIR}/tssvm_site_svm.cpp
    ${CMAKE_CURRENT_SOURCE_DIR}/tssvm_mrna_feature.cpp
    ${CMAKE_CURRENT_SOURCE_DIR}/tssvm_mrna_svm.cpp

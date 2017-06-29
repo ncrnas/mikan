@@ -1,6 +1,7 @@
 #include <tssvm_inst_template.hpp>  // TRNATYPE
 #include <tssvm_site_feature.hpp>   // TSSVMRawFeatures
 #include <tssvm_site_svm.hpp>       // TSSVMSiteModel, TSSVMSiteInputVector
+#include <tssvm_site_svm_alpha.hpp> // init_alpha_vector
 
 using namespace seqan;
 
@@ -14,7 +15,7 @@ int TSSVMSiteModel<TRNAString>::init_model(seqan::CharString& pModelPath)
 {
     int retVal;
 
-    retVal = init_alpha(pModelPath);
+    retVal = init_alpha();
     if (retVal != 0)
     {
         return retVal;
@@ -30,51 +31,9 @@ int TSSVMSiteModel<TRNAString>::init_model(seqan::CharString& pModelPath)
 }
 
 template <class TRNAString>
-int TSSVMSiteModel<TRNAString>::init_alpha(seqan::CharString& pModelPath)
+int TSSVMSiteModel<TRNAString>::init_alpha()
 {
-    int k;
-    CharString alphaFName(pModelPath);
-    alphaFName += "/site_alphas.txt";
-
-    std::fstream stream(toCString(alphaFName), std::ios::binary | std::ios::in);
-    if (!stream.good())
-    {
-        return 1;
-    }
-
-    RecordReader<std::istream, SinglePass<> > reader(stream);
-    seqan::CharString buffer;
-
-    k = 0;
-    while (!atEnd(reader))
-    {
-        clear(buffer);
-
-        if (k < MODEL_M - 1)
-        {
-            int res = readUntilChar(buffer, reader, ',');
-            if (res != 0)
-            {
-                return 1;
-            }
-        }
-        else
-        {
-            int res = readUntilChar(buffer, reader, '\n');
-            if (res != 0)
-            {
-                return 1;
-            }
-        }
-
-        mAlphas(k) = lexicalCast<float>(buffer);
-        goNext(reader);
-        ++k;
-
-    }
-
-    return 0;
-
+    return init_alpha_vector(mAlphas);
 }
 
 template <class TRNAString>
