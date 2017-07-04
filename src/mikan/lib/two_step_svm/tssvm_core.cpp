@@ -112,7 +112,7 @@ void TSSVMCore<TRNAString, SEEDLEN>::init_from_args(TSSVMOptions& opts)
 template <class TRNAString, int SEEDLEN>
 int TSSVMCore<TRNAString, SEEDLEN>::init_site_svm()
 {
-    return mSiteModel.init_model(mModelPath);
+    return mSiteModel.init_model();
 }
 
 template <class TRNAString, int SEEDLEN>

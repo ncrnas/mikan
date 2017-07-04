@@ -25,7 +25,7 @@ public:
     {}
 
     // Define methods
-    int init_model(seqan::CharString& pModelPath);
+    int init_model();
     float calc_score(Eigen::VectorXf& pInput);
 
 private:
@@ -37,7 +37,7 @@ private:
 
 private:
     int init_alpha();
-    int init_sv(seqan::CharString& pModelPath);
+    int init_sv();
 
 };
 
