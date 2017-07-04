@@ -29,7 +29,6 @@ public:
     float calc_score(Eigen::VectorXf& pInput);
 
 private:
-    seqan::CharString mModelPath;
     const float mB;
     Eigen::VectorXf mAlphas;
     Eigen::MatrixXf mSVs;

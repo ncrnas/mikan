@@ -23,11 +23,10 @@ ArgumentParser::ParseResult TSSVMOptions::parseCommandLine(
     }
 
     // Extract arguments
-    getArgumentValue(mModelPath, parser, 0);
-    getArgumentValue(mMiRNAFasta, parser, 1);
-    getArgumentValue(mMRNAFasta, parser, 2);
-    getArgumentValue(mOFileTargetSite, parser, 3);
-    getArgumentValue(mOFileMRNA, parser, 4);
+    getArgumentValue(mMiRNAFasta, parser, 0);
+    getArgumentValue(mMRNAFasta, parser, 1);
+    getArgumentValue(mOFileTargetSite, parser, 2);
+    getArgumentValue(mOFileMRNA, parser, 3);
 
     // Validate files
     res = validateFiles();
@@ -54,10 +53,9 @@ void TSSVMOptions::setProgramDescription(seqan::ArgumentParser &parser)
                  "[\\fIOPTIONS\\fP] \"\\fIMIRNA FILE\\fP\" \"\\fIMRNA FILE\\fP\" "
                  "\"\\fIOUT_TARGETSITE FILE\\fP\" \"\\fIOUT_MRNA\\fP\"");
     addDescription(parser,
-                   "This program calculate Two-step SVM scores for both target-site and mRNA levels.");
+                   "This program calculates Two-step SVM scores for both target-site and mRNA levels.");
 
     // Define Arguments
-    addArgument(parser, ArgParseArgument(ArgParseArgument::INPUTFILE));
     addArgument(parser, ArgParseArgument(ArgParseArgument::INPUTFILE));
     addArgument(parser, ArgParseArgument(ArgParseArgument::INPUTFILE));
     addArgument(parser, ArgParseArgument(ArgParseArgument::OUTPUTFILE));
@@ -70,7 +68,7 @@ void TSSVMOptions::setProgramDescription(seqan::ArgumentParser &parser)
     // Add Examples Section
     addTextSection(parser, "Examples");
     addListItem(parser,
-                "\\fBtwo_step_svm\\fP \\fImodel_path\\fP \\fImirna_fasta\\fP \\fImrna_fasta\\fP "
+                "\\fBtwo_step_svm\\fP \\fImirna_fasta\\fP \\fImrna_fasta\\fP "
                 "\\fIoutput_file1\\fP \\fIoutput_file2\\fP",
                 "calculate Two-step SVM scores of \\fImiRNAs\\fP in \\fImRNA\\fP regions "
                 "by using models in \\fImodel_path\\fP folder "
@@ -84,24 +82,6 @@ ArgumentParser::ParseResult TSSVMOptions::validateFiles()
 	char const *input_2 = toCString(mMRNAFasta);
 	char const *output_1 = toCString(mOFileTargetSite);
 	char const *output_2 = toCString(mOFileMRNA);
-
-    CharString alphaFName(mModelPath);
-    alphaFName += "/site_alphas.txt";
-    std::fstream alphas(toCString(alphaFName), std::ios::binary | std::ios::in);
-    if (!alphas.good())
-    {
-        std::cerr << "ERROR: Could not open model file for alpha values: " << toCString(alphaFName) << std::endl;
-        return ArgumentParser::PARSE_ERROR;
-    }
-
-    CharString svFName(mModelPath);
-    svFName += "/site_svs.txt";
-    std::fstream svs(toCString(svFName), std::ios::binary | std::ios::in);
-    if (!svs.good())
-    {
-        std::cerr << "ERROR: Could not open model file for support vectors: " << toCString(svFName) << std::endl;
-        return ArgumentParser::PARSE_ERROR;
-    }
 
     std::fstream mirna_fa(input_1, std::ios::in);
     if (!mirna_fa.good())
