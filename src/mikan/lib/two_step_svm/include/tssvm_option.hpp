@@ -17,7 +17,6 @@ public:
 
     // Declare variables
     bool mOutputAlign;
-    seqan::CharString mModelPath;
     seqan::CharString mMiRNAFasta;
     seqan::CharString mMRNAFasta;
     seqan::CharString mOFileTargetSite;

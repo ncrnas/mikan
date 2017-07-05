@@ -71,7 +71,6 @@ public:
     bool mOutputRNAScore;
     bool mOutputAlign;
 
-    seqan::CharString mModelPath;
     seqan::CharString mOFileTargetSite;
     seqan::CharString mOFileMRNA;
 

@@ -13,12 +13,11 @@ class TestIOTSSVM : public TestIOBase<tssvm::TSSVMCoreInput<tssvm::TRNATYPE>, ts
 
         modpath = STRINGIZE(TSSVM_MODEL_PATH);
 
-        argc = 6;
-        argv[1] = seqan::toCString(modpath);
-        argv[2] = seqan::toCString(ifile1);
-        argv[3] = seqan::toCString(ifile2);
-        argv[4] = seqan::toCString(o2file1);
-        argv[5] = seqan::toCString(o2file2);
+        argc = 5;
+        argv[1] = seqan::toCString(ifile1);
+        argv[2] = seqan::toCString(ifile2);
+        argv[3] = seqan::toCString(o2file1);
+        argv[4] = seqan::toCString(o2file2);
 
     }
 

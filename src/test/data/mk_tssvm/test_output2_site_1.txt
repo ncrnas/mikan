@@ -1,5 +1,5 @@
 hsa-miR-124 MIMAT0000422	hg18_refGene NM_000165 range=chr6:121810842-121812572 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	458	464	BM	-1.09417	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_000165 range=chr6:121810842-121812572 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	1255	1261	BM	-0.481679	
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_000165 range=chr6:121810842-121812572 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	1255	1261	BM	-0.481683	
 hsa-miR-124 MIMAT0000422	hg18_refGene NM_000165 range=chr6:121810842-121812572 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	1490	1496	6mer	0.344857	
 hsa-miR-124 MIMAT0000422	hg18_refGene NM_020347 range=chr3:45840450-45842809 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1053	1059	BM	-0.766147	
 hsa-miR-124 MIMAT0000422	hg18_refGene NM_000696 range=chr1:163898073-163898910 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	173	179	LP	-0.935552	
@@ -17,5 +17,5 @@ hsa-miR-1 MIMAT0000416	hg18_refGene NM_020347 range=chr3:45840450-45842809 5'pad
 hsa-miR-1 MIMAT0000416	hg18_refGene NM_020347 range=chr3:45840450-45842809 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1149	1155	7mer-A1	0.0666889	
 hsa-miR-1 MIMAT0000416	hg18_refGene NM_020347 range=chr3:45840450-45842809 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1547	1553	7mer-A1	0.500407	
 hsa-miR-1 MIMAT0000416	hg18_refGene NM_000696 range=chr1:163898073-163898910 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	92	98	BM	-0.594362	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_000696 range=chr1:163898073-163898910 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	435	441	6mer	0.213137	
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_000696 range=chr1:163898073-163898910 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	435	441	6mer	0.213135	
 hsa-miR-1 MIMAT0000416	hg18_refGene NM_000696 range=chr1:163898073-163898910 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	576	582	7mer-A1	-0.516288	

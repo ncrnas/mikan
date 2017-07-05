@@ -103,7 +103,6 @@ int TSSVMCoreInput<TRNAString>::load_seq_from_file()
 template <class TRNAString, int SEEDLEN>
 void TSSVMCore<TRNAString, SEEDLEN>::init_from_args(TSSVMOptions& opts)
 {
-    mModelPath = opts.mModelPath;
     mOFileTargetSite = opts.mOFileTargetSite;
     mOFileMRNA = opts.mOFileMRNA;
     mOutputAlign = opts.mOutputAlign;
@@ -112,7 +111,7 @@ void TSSVMCore<TRNAString, SEEDLEN>::init_from_args(TSSVMOptions& opts)
 template <class TRNAString, int SEEDLEN>
 int TSSVMCore<TRNAString, SEEDLEN>::init_site_svm()
 {
-    return mSiteModel.init_model(mModelPath);
+    return mSiteModel.init_model();
 }
 
 template <class TRNAString, int SEEDLEN>
