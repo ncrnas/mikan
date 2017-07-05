@@ -28,7 +28,9 @@ add_definitions (${SEQAN_DEFINITIONS})
 add_executable (mk-twostep-svm two_step_svm.cpp)
 
 # Add libraries
-add_library(tssvm ${TSSVM_SOURCE})
+if(NOT TARGET tssvm)
+  add_library(tssvm ${TSSVM_SOURCE})
+endif()
 
 # Add dependencies found by find_package (SeqAn)
 if (MSVC)

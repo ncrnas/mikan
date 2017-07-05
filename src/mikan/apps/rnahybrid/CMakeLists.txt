@@ -30,7 +30,9 @@ add_definitions (${SEQAN_DEFINITIONS})
 add_executable (mk-rnahybrid rnahybrid2_mfe.cpp)
 
 # Add libraries
-add_library(rh2 ${RH2_SOURCE})
+if(NOT TARGET rh2)
+  add_library(rh2 ${RH2_SOURCE})
+endif()
 if(NOT TARGET mk)
   add_library(mk ${MIKAN_SOURCE})
 endif()

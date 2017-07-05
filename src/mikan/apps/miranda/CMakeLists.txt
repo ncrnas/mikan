@@ -32,7 +32,9 @@ add_definitions (${SEQAN_DEFINITIONS})
 add_executable (mk-miranda miranda3.cpp)
 
 # Add libraries
-add_library(mr3as ${MR3_SOURCE})
+if(NOT TARGET mr3as)
+  add_library(mr3as ${MR3_SOURCE})
+endif()
 if(NOT TARGET vrna)
   add_library(vrna ${VR16_SOURCE})
 endif()

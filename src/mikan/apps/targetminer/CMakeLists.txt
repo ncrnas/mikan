@@ -28,7 +28,9 @@ add_definitions (${SEQAN_DEFINITIONS})
 add_executable (mk-targetminer targetminer1.cpp)
 
 # Add libraries
-add_library(tm1 ${TM1_SOURCE})
+if(NOT TARGET tm1)
+  add_library(tm1 ${TM1_SOURCE})
+endif()
 
 # Add dependencies found by find_package (SeqAn)
 if (MSVC)

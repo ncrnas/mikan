@@ -32,7 +32,9 @@ add_definitions (${SEQAN_DEFINITIONS})
 add_executable (mk-pita pita_ddg.cpp)
 
 # Add libraries
-add_library(pita ${PITA_SOURCE})
+if(NOT TARGET pita)
+  add_library(pita ${PITA_SOURCE})
+endif()
 if(NOT TARGET vrna)
   add_library(vrna ${VR16_SOURCE})
 endif()
