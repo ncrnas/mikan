@@ -4,13 +4,12 @@
 #include <seqan/sequence.h>
 #include <seqan/arg_parse.h>
 
-namespace tssvm{
+namespace tssvm {
 
 //
 // Tool options
 //
-class TSSVMOptions
-{
+class TSSVMOptions {
 public:
     // Define types
     typedef seqan::ArgumentParser::ParseResult TParseResult;
@@ -31,6 +30,7 @@ public:
 
 private:
     static void setProgramDescription(seqan::ArgumentParser &pParser);
+
     seqan::ArgumentParser::ParseResult validateFiles();
 };
 

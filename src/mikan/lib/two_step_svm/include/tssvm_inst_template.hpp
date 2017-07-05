@@ -3,7 +3,7 @@
 
 #include <seqan/sequence.h>
 
-namespace tssvm{
+namespace tssvm {
 
 typedef seqan::RnaString TRNATYPE;
 //typedef seqan::Rna5String TRNATYPE;

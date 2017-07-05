@@ -6,14 +6,13 @@
 #include <tm1_site_cluster.hpp>  // TM1SortedSitePos
 #include <seqan/sequence.h>
 
-namespace tm1p{
+namespace tm1p {
 
 //
 // Seed type feature
 //
-template <class TRNAString>
-class TM1FeatSeedType
-{
+template<class TRNAString>
+class TM1FeatSeedType {
 public:
     // Define types
     typedef typename seqan::StringSet<TRNAString> TRNASet;
@@ -22,12 +21,15 @@ public:
 public:
     // Define methods
     TM1FeatSeedType() {}
-    seqan::CharString& get_seed_type(unsigned idx){return mSeedTypes[idx];}
+
+    seqan::CharString &get_seed_type(unsigned idx) { return mSeedTypes[idx]; }
 
     // Method prototype
     int add_features(TRNAString const &pMiRNASeq, TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
-            TM1SeedSites<TRNAString> &pSeedSites);
+                     TM1SeedSites<TRNAString> &pSeedSites);
+
     void clear_features();
+
     void print_feature(unsigned pIdx);
 
 private:
@@ -40,9 +42,8 @@ private:
 //
 // Seed site position feature
 //
-template <class TRNAString>
-class TM1FeatSitePos
-{
+template<class TRNAString>
+class TM1FeatSitePos {
 public:
     // Define types
     typedef seqan::StringSet<TRNAString> TRNASet;
@@ -60,13 +61,17 @@ public:
 public:
     // Define methods
     TM1FeatSitePos() {}
-    int get_m1_pos(int i){return mM1Pos[i];}
-    int get_m8_pos(int i){return mM8Pos[i];}
+
+    int get_m1_pos(int i) { return mM1Pos[i]; }
+
+    int get_m8_pos(int i) { return mM8Pos[i]; }
 
     // Method prototype
     int add_features(TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos,
-            TM1SeedSites<TRNAString> &pSeedSites, TSitePos const &pSeedPos);
+                     TM1SeedSites<TRNAString> &pSeedSites, TSitePos const &pSeedPos);
+
     void clear_features();
+
     void print_feature(unsigned pIdx);
 
 private:
@@ -77,9 +82,8 @@ private:
 //
 // Distance to the nearest neighbor feature
 //
-template <class TRNAString>
-class TM1FeatDistance
-{
+template<class TRNAString>
+class TM1FeatDistance {
 public:
     // Define types
     typedef seqan::StringSet<TRNAString> TRNASet;
@@ -88,13 +92,17 @@ public:
 public:
     // Define methods
     TM1FeatDistance() {}
-    int get_upstream_len(int i){return mUpstream[i];}
-    int get_downstream_len(int i){return mDownstream[i];}
+
+    int get_upstream_len(int i) { return mUpstream[i]; }
+
+    int get_downstream_len(int i) { return mDownstream[i]; }
 
     // Method prototype
     int add_features(TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos,
-            TM1SeedSites<TRNAString> &pSeedSites, TM1SortedSitePos<TRNAString> &pSortedSites);
+                     TM1SeedSites<TRNAString> &pSeedSites, TM1SortedSitePos<TRNAString> &pSortedSites);
+
     void clear_features();
+
     void print_feature(unsigned pIdx);
 
 private:
@@ -109,9 +117,8 @@ private:
 //
 // AU-rich feature
 //
-template <class TRNAString>
-class TM1FeatAURich
-{
+template<class TRNAString>
+class TM1FeatAURich {
 public:
     // Define types
     typedef seqan::StringSet<TRNAString> TRNASet;
@@ -126,21 +133,23 @@ public:
 
     // Method prototype
     int add_features(TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos,
-            TM1SeedSites<TRNAString> &pSeedSites, TM1FeatDistance<TRNAString> &pDistance);
+                     TM1SeedSites<TRNAString> &pSeedSites, TM1FeatDistance<TRNAString> &pDistance);
+
     void clear_features();
+
     void print_feature(unsigned pIdx);
 
 private:
-    void calc_pos_scores(const TRNAString& pAURichRNA, int pStart, int pEnd, float& pTotalScore, float& pMaxScore);
+    void calc_pos_scores(const TRNAString &pAURichRNA, int pStart, int pEnd, float &pTotalScore, float &pMaxScore);
+
     void resize_features(unsigned pSize);
 };
 
 //
 // Single nucleotide frequency feature
 //
-template <class TRNAString>
-class TM1FeatSingleFreq
-{
+template<class TRNAString>
+class TM1FeatSingleFreq {
 public:
     // Define types
     typedef seqan::StringSet<TRNAString> TRNASet;
@@ -157,8 +166,10 @@ public:
 
     // Method prototype
     int add_features(TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos,
-            TM1SeedSites<TRNAString> &pSeedSites);
+                     TM1SeedSites<TRNAString> &pSeedSites);
+
     void clear_features();
+
     void print_feature(unsigned pIdx);
 
 private:
@@ -169,9 +180,8 @@ private:
 //
 // Single nucleotide frequency in flanking region feature
 //
-template <class TRNAString>
-class TM1FeatSingleFreqFlank
-{
+template<class TRNAString>
+class TM1FeatSingleFreqFlank {
 public:
     // Define types
     typedef seqan::StringSet<TRNAString> TRNASet;
@@ -188,21 +198,23 @@ public:
 
     // Method prototype
     int add_features(TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos,
-            TM1SeedSites<TRNAString> &pSeedSites, TM1FeatDistance<TRNAString> &pDistance);
+                     TM1SeedSites<TRNAString> &pSeedSites, TM1FeatDistance<TRNAString> &pDistance);
+
     void clear_features();
+
     void print_feature(unsigned pIdx);
 
 private:
-    void calc_pos_scores(const TRNAString& pMRNASeq, int pSiteStart, int pSiteEnd, int pIdx);
+    void calc_pos_scores(const TRNAString &pMRNASeq, int pSiteStart, int pSiteEnd, int pIdx);
+
     void resize_features(unsigned pSize);
 };
 
 //
 // Di-nucleotide frequency feature
 //
-template <class TRNAString>
-class TM1FeatDiFreq
-{
+template<class TRNAString>
+class TM1FeatDiFreq {
 public:
     // Define types
     typedef seqan::StringSet<TRNAString> TRNASet;
@@ -220,8 +232,10 @@ public:
 
     // Method prototype
     int add_features(TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos,
-            TM1SeedSites<TRNAString> &pSeedSites);
+                     TM1SeedSites<TRNAString> &pSeedSites);
+
     void clear_features();
+
     void print_feature(unsigned pIdx);
 
 private:
@@ -231,9 +245,8 @@ private:
 //
 // Di-nucleotide frequency in flanking region feature
 //
-template <class TRNAString>
-class TM1FeatDiFreqFlank
-{
+template<class TRNAString>
+class TM1FeatDiFreqFlank {
 public:
     // Define types
     typedef seqan::StringSet<TRNAString> TRNASet;
@@ -259,21 +272,23 @@ public:
 
     // Method prototype
     int add_features(TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos,
-            TM1SeedSites<TRNAString> &pSeedSites, TM1FeatDistance<TRNAString> &pDistance);
+                     TM1SeedSites<TRNAString> &pSeedSites, TM1FeatDistance<TRNAString> &pDistance);
+
     void clear_features();
+
     void print_feature(unsigned pIdx);
 
 private:
-    void calc_pos_scores(const TRNAString& pMRNASeq, int pSiteStart, int pSiteEnd, int pIdx);
+    void calc_pos_scores(const TRNAString &pMRNASeq, int pSiteStart, int pSiteEnd, int pIdx);
+
     void resize_features(unsigned pSize);
 };
 
 //
 // Single match frequency feature
 //
-template <class TRNAString>
-class TM1FeatSingleMatch
-{
+template<class TRNAString>
+class TM1FeatSingleMatch {
 public:
     // Define types
     typedef seqan::StringSet<TRNAString> TRNASet;
@@ -291,8 +306,11 @@ public:
 
     // Method prototype
     int add_features(TRNAString const &pMiRNASeq, TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
-            TSitePos const &pMRNAPos, TM1SeedSites<TRNAString> &pSeedSites, TM1FeatSitePos<TRNAString> &pSeedPos);
+                     TSitePos const &pMRNAPos, TM1SeedSites<TRNAString> &pSeedSites,
+                     TM1FeatSitePos<TRNAString> &pSeedPos);
+
     void clear_features();
+
     void print_feature(unsigned pIdx);
 
 private:
@@ -303,9 +321,8 @@ private:
 //
 // Two consecutive matches frequency feature
 //
-template <class TRNAString>
-class TM1FeatTwoConsecMatch
-{
+template<class TRNAString>
+class TM1FeatTwoConsecMatch {
 public:
     // Define types
     typedef seqan::StringSet<TRNAString> TRNASet;
@@ -324,8 +341,11 @@ public:
 
     // Method prototype
     int add_features(TRNAString const &pMiRNASeq, TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
-            TSitePos const &pMRNAPos, TM1SeedSites<TRNAString> &pSeedSites, TM1FeatSitePos<TRNAString> &pSeedPos);
+                     TSitePos const &pMRNAPos, TM1SeedSites<TRNAString> &pSeedSites,
+                     TM1FeatSitePos<TRNAString> &pSeedPos);
+
     void clear_features();
+
     void print_feature(unsigned pIdx);
 
 private:
@@ -335,9 +355,8 @@ private:
 //
 // Store all raw feature values
 //
-template <class TRNAString>
-class TM1RawFeatures
-{
+template<class TRNAString>
+class TM1RawFeatures {
 public:
     // Define types
     typedef seqan::StringSet<TRNAString> TRNASet;
@@ -345,22 +364,31 @@ public:
 public:
     // Define methods
     TM1RawFeatures() {}
-    seqan::CharString& get_seed_type(int i){return mSeedTypes.get_seed_type(i);}
 
-    const TM1FeatAURich<TRNAString>& get_au_rich() {return mAURich;}
-    const TM1FeatSingleFreq<TRNAString>& get_single_freq() {return mSingleFreqs;}
-    const TM1FeatSingleFreqFlank<TRNAString>& get_single_freq_flank() {return mSingleFreqFlanks;}
-    const TM1FeatDiFreq<TRNAString>& get_di_freq() {return mDiFreqs;}
-    const TM1FeatDiFreqFlank<TRNAString>& get_di_freq_flank() {return mDiFreqFlanks;}
-    const TM1FeatSingleMatch<TRNAString>& get_single_match() {return mSingleMatches;}
-    const TM1FeatTwoConsecMatch<TRNAString>& get_two_consec_match() {return mTwoMatches;}
+    seqan::CharString &get_seed_type(int i) { return mSeedTypes.get_seed_type(i); }
 
-    const TM1Alignment<TRNAString>& get_alignment() {return mAlign;}
+    const TM1FeatAURich<TRNAString> &get_au_rich() { return mAURich; }
+
+    const TM1FeatSingleFreq<TRNAString> &get_single_freq() { return mSingleFreqs; }
+
+    const TM1FeatSingleFreqFlank<TRNAString> &get_single_freq_flank() { return mSingleFreqFlanks; }
+
+    const TM1FeatDiFreq<TRNAString> &get_di_freq() { return mDiFreqs; }
+
+    const TM1FeatDiFreqFlank<TRNAString> &get_di_freq_flank() { return mDiFreqFlanks; }
+
+    const TM1FeatSingleMatch<TRNAString> &get_single_match() { return mSingleMatches; }
+
+    const TM1FeatTwoConsecMatch<TRNAString> &get_two_consec_match() { return mTwoMatches; }
+
+    const TM1Alignment<TRNAString> &get_alignment() { return mAlign; }
 
     // Method prototypes
     int add_features(TRNAString const &pMiRNASeq, TRNASet const &pMRNASeqs,
-            TM1SeedSites<TRNAString> &pSeedSites, TM1SortedSitePos<TRNAString> &pSortedSites);
+                     TM1SeedSites<TRNAString> &pSeedSites, TM1SortedSitePos<TRNAString> &pSortedSites);
+
     void clear_features();
+
     void print_features(TM1SeedSites<TRNAString> &pSeedSites);
 
 private:

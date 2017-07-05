@@ -6,24 +6,27 @@
 #include <tm1_site_cluster.hpp>   // TM1SortedSitePos
 #include <seqan/sequence.h>
 
-namespace tm1p{
+namespace tm1p {
 
 //
 // Classified scores
 //
-template <class TRNAString>
-class TM1ClassifiedScores
-{
+template<class TRNAString>
+class TM1ClassifiedScores {
 public:
     // Define methods
     TM1ClassifiedScores() {}
-    const seqan::String<float>& get_scores(){return mScores;}
-    const seqan::String<int>& get_labels(){return mPredictions;}
-    const seqan::String<unsigned>& get_site_num(){return mSiteNum;}
+
+    const seqan::String<float> &get_scores() { return mScores; }
+
+    const seqan::String<int> &get_labels() { return mPredictions; }
+
+    const seqan::String<unsigned> &get_site_num() { return mSiteNum; }
 
     // Method prototypes
     void clear_scores();
-    int calc_scores(const seqan::String<unsigned>& pSiteCoutns, const seqan::String<float>& pScores);
+
+    int calc_scores(const seqan::String<unsigned> &pSiteCoutns, const seqan::String<float> &pScores);
 
 private:
     seqan::String<float> mScores;

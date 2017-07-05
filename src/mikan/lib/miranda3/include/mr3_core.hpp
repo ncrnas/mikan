@@ -15,9 +15,8 @@ int MR3CoreMain(int argc, char const **argv);
 //
 // Input data for MR3 score
 //
-template <class TRNAString>
-class MR3CoreInput
-{
+template<class TRNAString>
+class MR3CoreInput {
 public:
     // Define types
     typedef seqan::StringSet<seqan::CharString> TCharSet;
@@ -30,13 +29,18 @@ public:
 public:
     // Define methods
     MR3CoreInput() {}
-    TCharSet const& get_mirna_ids() {return mMiRNASeqs.get_ids();}
-    TRNASet const& get_mirna_seqs () {return mMiRNASeqs.get_seqs();}
-    TCharSet const& get_mrna_ids() {return mMRNASeqs.get_ids();}
-    TRNASet const& get_mrna_seqs () {return mMRNASeqs.get_seqs();}
+
+    TCharSet const &get_mirna_ids() { return mMiRNASeqs.get_ids(); }
+
+    TRNASet const &get_mirna_seqs() { return mMiRNASeqs.get_seqs(); }
+
+    TCharSet const &get_mrna_ids() { return mMRNASeqs.get_ids(); }
+
+    TRNASet const &get_mrna_seqs() { return mMRNASeqs.get_seqs(); }
 
     // Method prototypes
-    void init_from_args(MR3Options& opts);
+    void init_from_args(MR3Options &opts);
+
     int load_seq_from_file();
 
 private:
@@ -47,9 +51,8 @@ private:
 //
 // MR3 score process core
 //
-template <class TRNAString, int SEEDLEN=6>
-class MR3Core
-{
+template<class TRNAString, int SEEDLEN = 6>
+class MR3Core {
 public:
     // Define types
     typedef seqan::StringSet<seqan::CharString> TCharSet;
@@ -81,27 +84,30 @@ public:
 
 public:
     // Define methods
-    MR3Core(TCharSet const& pMiRNAIds, TRNASet const& pMiRNASeqs, TCharSet const& pMRNAIds, TRNASet const& pMRNASeqs,
-            TIndexQGram& pRNAIdx, TFinder& pFinder):
-                mExecSearchSeedSites(true), mExecCalSiteScore(true), mExecFilterOverlap(true),
-                mExecSortSites(true), mExecSumScores(true), mOutputSiteScore(true), mOutputTotalScore(true),
-                mOutputAlign(true), mMinSeedLen(6), mMaxSeedLen(8), mMinAlignScore(120.0), mMaxEnergy(1.0),
-                mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
-                mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
-                mSiteScores()
-                {}
+    MR3Core(TCharSet const &pMiRNAIds, TRNASet const &pMiRNASeqs, TCharSet const &pMRNAIds,
+            TRNASet const &pMRNASeqs,
+            TIndexQGram &pRNAIdx, TFinder &pFinder) :
+            mExecSearchSeedSites(true), mExecCalSiteScore(true), mExecFilterOverlap(true),
+            mExecSortSites(true), mExecSumScores(true), mOutputSiteScore(true), mOutputTotalScore(true),
+            mOutputAlign(true), mMinSeedLen(6), mMaxSeedLen(8), mMinAlignScore(120.0), mMaxEnergy(1.0),
+            mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
+            mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
+            mSiteScores() {}
 
     // Method prototypes
-    void init_from_args(MR3Options& opts);
+    void init_from_args(MR3Options &opts);
+
     int open_output_file();
+
     int calculate_all_scores();
+
     int calculate_mirna_scores(unsigned pIdx);
 
 private:
-    TCharSet const& mMiRNAIds;
-    TRNASet const& mMiRNASeqs;
-    TCharSet const& mMRNAIds;
-    TRNASet const& mMRNASeqs;
+    TCharSet const &mMiRNAIds;
+    TRNASet const &mMiRNASeqs;
+    TCharSet const &mMRNAIds;
+    TRNASet const &mMRNASeqs;
 
     std::ofstream mOFile1;
     std::ofstream mOFile2;
@@ -114,7 +120,9 @@ private:
 
 private:
     int write_site_score(seqan::CharString const &pMiRNAId);
+
     int write_total_score(seqan::CharString const &pMiRNAId);
+
     int write_alignment(seqan::CharString const &pMiRNAId);
 
 };

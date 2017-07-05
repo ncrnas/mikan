@@ -4,13 +4,12 @@
 #include <seqan/sequence.h>
 #include <seqan/arg_parse.h>
 
-namespace mikan{
+namespace mikan {
 
 //
 // Tool options
 //
-class MKOptions
-{
+class MKOptions {
 public:
     // Define types
     typedef seqan::ArgumentParser::ParseResult TParseResult;
@@ -30,6 +29,7 @@ public:
 
 private:
     static void setProgramDescription(seqan::ArgumentParser &pParser);
+
     seqan::ArgumentParser::ParseResult validateFiles();
 };
 

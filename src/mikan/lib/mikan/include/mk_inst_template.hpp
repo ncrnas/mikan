@@ -3,7 +3,7 @@
 
 #include <seqan/sequence.h>
 
-namespace mikan{
+namespace mikan {
 
 typedef seqan::RnaString TRNATYPE;
 //typedef seqan::Rna5String TRNATYPE;

@@ -4,13 +4,12 @@
 #include <seqan/sequence.h>
 #include <seqan/arg_parse.h>
 
-namespace mr3as{
+namespace mr3as {
 
 //
 // Tool options
 //
-class MR3Options
-{
+class MR3Options {
 public:
     // Define types
     typedef seqan::ArgumentParser::ParseResult TParseResult;
@@ -31,13 +30,14 @@ public:
 
 public:
     // Define methods
-    MR3Options() : mOutputAlign (false), mMinSeedLen(6), mMaxSeedLen(8), mMinAlignScore(140.0), mMaxEnergy(1.0) {}
+    MR3Options() : mOutputAlign(false), mMinSeedLen(6), mMaxSeedLen(8), mMinAlignScore(140.0), mMaxEnergy(1.0) {}
 
     // Method prototypes
     seqan::ArgumentParser::ParseResult parseCommandLine(int argc, char const **argv);
 
 private:
     static void setProgramDescription(seqan::ArgumentParser &pParser);
+
     seqan::ArgumentParser::ParseResult validateFiles();
 };
 

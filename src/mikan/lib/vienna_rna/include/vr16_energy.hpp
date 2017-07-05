@@ -9,8 +9,7 @@ namespace vr16 {
 //
 // Energy parameters
 //
-class VR16EnergyParams
-{
+class VR16EnergyParams {
 public:
     // Constant values
     const double K0;
@@ -78,50 +77,64 @@ public:
 
 public:
     // Define methods
-    VR16EnergyParams(): K0(273.15), GASCONST(1.98717), MAX_NINIO(300)
-    {
+    VR16EnergyParams() : K0(273.15), GASCONST(1.98717), MAX_NINIO(300) {
         init_heap();
         init_parameters();
     }
-    ~VR16EnergyParams()
-    {
+
+    ~VR16EnergyParams() {
         free_heap();
     }
 
 private:
     void init_heap();
+
     void free_heap();
 
     void init_parameters();
 
     void init_stack37();
+
     void init_enthalpies();
 
     void init_hairpin37();
+
     void init_bulge37();
+
     void init_internal_loop37();
 
     void init_mismatch_i37();
+
     void init_mismatch_h37();
+
     void init_mismatch_m37();
+
     void init_mism_h();
 
     void init_dangle5_37();
+
     void init_dangle3_37();
+
     void init_dangle3_h();
+
     void init_dangle5_h();
 
     void init_tetraloops();
+
     void init_tetra_energy37();
+
     void init_triloop_e37();
 
     void init_int11_37();
+
     void init_int11_h();
 
     void init_int21_37();
+
     void init_int21_h();
 
     void init_int22_37();
+
     void init_int22_h();
 };
 

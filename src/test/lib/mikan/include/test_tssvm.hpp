@@ -6,8 +6,7 @@
 #include "test_site.hpp"
 #include "tssvm_core.hpp"
 
-class TestIOTSSVM : public TestIOBase<tssvm::TSSVMCoreInput<tssvm::TRNATYPE>, tssvm::TSSVMOptions>
-{
+class TestIOTSSVM : public TestIOBase<tssvm::TSSVMCoreInput<tssvm::TRNATYPE>, tssvm::TSSVMOptions> {
     virtual void SetUp() {
         TestIOBase<tssvm::TSSVMCoreInput<tssvm::TRNATYPE>, tssvm::TSSVMOptions>::SetUp();
 

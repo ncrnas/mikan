@@ -16,14 +16,13 @@ public:
 
 public:
     // Declare variables
-    VR16Bond(): i(0), j(0) {}
+    VR16Bond() : i(0), j(0) {}
 };
 
 //
 // Options for ViennaRNA fold, duplexfold, and part_func
 //
-class VR16FoldOptions
-{
+class VR16FoldOptions {
 public:
     // Declare variables
     bool mNoGU;                                    /* GU not allowed at all */
@@ -39,10 +38,10 @@ public:
     int mLogML;                                    /* use logarithmic multiloop energy function */
     int mCutPoint;                                 /* first position of 2nd strand for co-folding */
 
-    std::vector<VR16Bond > mBasePair;              /* list of base pairs */
+    std::vector<VR16Bond> mBasePair;              /* list of base pairs */
 
     std::vector<double> mProb;                     /* base pairing prob. matrix */
-    std::vector<int>  mIIndx;                      /* mProb[i,j] -> mProb[mIIndx[i]-j] */
+    std::vector<int> mIIndx;                      /* mProb[i,j] -> mProb[mIIndx[i]-j] */
 
     double mPfScale;                               /* scaling factor to avoid float overflows*/
     bool mFoldConstrained;                         /* fold with constraints */
@@ -54,10 +53,10 @@ public:
 public:
     // Define methods
     VR16FoldOptions() :
-        mNoGU(false), mNoClosingGU(false), mTetraLoop(true), mTriLoop(false), mEnergySet(0),
-        mDangles(1), mNonStandards(""), mTemperature(37.0), mJamesRule(true), mLogML(0), mCutPoint(0),
-        mPfScale(-1), mFoldConstrained(false), mDoBacktrack(false), mNoLonelyPairs(false), mBacktrackType('F')
-    {}
+            mNoGU(false), mNoClosingGU(false), mTetraLoop(true), mTriLoop(false), mEnergySet(0),
+            mDangles(1), mNonStandards(""), mTemperature(37.0), mJamesRule(true), mLogML(0), mCutPoint(0),
+            mPfScale(-1), mFoldConstrained(false), mDoBacktrack(false), mNoLonelyPairs(false),
+            mBacktrackType('F') {}
 };
 
 } // namespace vr16

@@ -10,16 +10,15 @@
 #include <tssvm_site_svm.hpp>       // TSSVMSiteInputVector
 #include <seqan/sequence.h>
 
-namespace tssvm{
+namespace tssvm {
 
-int TSSVMCoreMain(int argc, char const ** argv);
+int TSSVMCoreMain(int argc, char const **argv);
 
 //
 // Input data for Two-step SVM score
 //
-template <class TRNAString>
-class TSSVMCoreInput
-{
+template<class TRNAString>
+class TSSVMCoreInput {
 public:
     // Define types
     typedef seqan::StringSet<seqan::CharString> TCharSet;
@@ -32,13 +31,18 @@ public:
 public:
     // Define methods
     TSSVMCoreInput() {}
-    TCharSet const& get_mirna_ids() {return mMiRNASeqs.get_ids();}
-    TRNASet const& get_mirna_seqs () {return mMiRNASeqs.get_seqs();}
-    TCharSet const& get_mrna_ids() {return mMRNASeqs.get_ids();}
-    TRNASet const& get_mrna_seqs () {return mMRNASeqs.get_seqs();}
+
+    TCharSet const &get_mirna_ids() { return mMiRNASeqs.get_ids(); }
+
+    TRNASet const &get_mirna_seqs() { return mMiRNASeqs.get_seqs(); }
+
+    TCharSet const &get_mrna_ids() { return mMRNASeqs.get_ids(); }
+
+    TRNASet const &get_mrna_seqs() { return mMRNASeqs.get_seqs(); }
 
     // Method prototypes
-    void init_from_args(TSSVMOptions& opts);
+    void init_from_args(TSSVMOptions &opts);
+
     int load_seq_from_file();
 
 private:
@@ -49,9 +53,8 @@ private:
 //
 //Two-step SVM score process core
 //
-template <class TRNAString, int SEEDLEN=6>
-class TSSVMCore
-{
+template<class TRNAString, int SEEDLEN = 6>
+class TSSVMCore {
 public:
     // Define types
     typedef seqan::StringSet<seqan::CharString> TCharSet;
@@ -76,26 +79,30 @@ public:
 
 public:
     // Define methods
-    TSSVMCore(TCharSet const& pMiRNAIds, TRNASet const& pMiRNASeqs, TCharSet const& pMRNAIds,
-            TRNASet const& pMRNASeqs, TIndexQGram& pRNAIdx, TFinder& pFinder):
-                  mExecSearchSeedSites(true), mExecFilterOverlap(true), mExecAlignSeq(true), mExecSiteFeat(true),
-                  mExecSiteScore(true), mExecRNAFeat(true), mExecRNAScore(true), mOutputSiteScore(true),
-                  mOutputRNAScore(true), mOutputAlign(true), mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs),
-                  mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
-                  mSiteInput(mSiteModel) {}
+    TSSVMCore(TCharSet const &pMiRNAIds, TRNASet const &pMiRNASeqs, TCharSet const &pMRNAIds,
+              TRNASet const &pMRNASeqs, TIndexQGram &pRNAIdx, TFinder &pFinder) :
+            mExecSearchSeedSites(true), mExecFilterOverlap(true), mExecAlignSeq(true), mExecSiteFeat(true),
+            mExecSiteScore(true), mExecRNAFeat(true), mExecRNAScore(true), mOutputSiteScore(true),
+            mOutputRNAScore(true), mOutputAlign(true), mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs),
+            mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
+            mSiteInput(mSiteModel) {}
 
     // Method prototypes
-    void init_from_args(TSSVMOptions& opts);
+    void init_from_args(TSSVMOptions &opts);
+
     int open_output_file();
+
     int calculate_all_scores();
+
     int calculate_mirna_scores(unsigned pIdx);
+
     int init_site_svm();
 
 private:
-    TCharSet const& mMiRNAIds;
-    TRNASet const& mMiRNASeqs;
-    TCharSet const& mMRNAIds;
-    TRNASet const& mMRNASeqs;
+    TCharSet const &mMiRNAIds;
+    TRNASet const &mMiRNASeqs;
+    TCharSet const &mMRNAIds;
+    TRNASet const &mMRNASeqs;
 
     std::ofstream mOFile1;
     std::ofstream mOFile2;
@@ -111,7 +118,9 @@ private:
 
 private:
     int write_ts_scores(seqan::CharString const &pMiRNAId);
+
     int write_mrna_scores(seqan::CharString const &pMiRNAId);
+
     int write_alignment(seqan::CharString const &pMiRNAId);
 
 };

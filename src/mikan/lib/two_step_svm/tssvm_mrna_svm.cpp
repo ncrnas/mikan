@@ -4,14 +4,13 @@
 
 using namespace seqan;
 
-namespace tssvm{
+namespace tssvm {
 //
 // TSSVMRNAModel methods
 //
 
-template <class TRNAString>
-void TSSVMRNAModel<TRNAString>::init_hyperplane()
-{
+template<class TRNAString>
+void TSSVMRNAModel<TRNAString>::init_hyperplane() {
     mHyperPlane[0] = -1.30572107595f;
     mHyperPlane[1] = 0.593744401172f;
     mHyperPlane[2] = 4.16198979669f;
@@ -49,9 +48,8 @@ void TSSVMRNAModel<TRNAString>::init_hyperplane()
     mHyperPlane[34] = 20.5493145756f;
 }
 
-template <class TRNAString>
-float TSSVMRNAModel<TRNAString>::calc_score(Eigen::VectorXf& pInput)
-{
+template<class TRNAString>
+float TSSVMRNAModel<TRNAString>::calc_score(Eigen::VectorXf &pInput) {
     float score;
 
     score = mHyperPlane.dot(pInput) + mB;
@@ -63,40 +61,35 @@ float TSSVMRNAModel<TRNAString>::calc_score(Eigen::VectorXf& pInput)
 //
 // TSSVMRNAInputVector methods
 //
-template <class TRNAString>
-void TSSVMRNAInputVector<TRNAString>::clear_scores()
-{
+template<class TRNAString>
+void TSSVMRNAInputVector<TRNAString>::clear_scores() {
     clear(mScores);
 }
 
-template <class TRNAString>
-int TSSVMRNAInputVector<TRNAString>::classify(TSSVMRNARawFeatures<TRNAString> &pRNAFeatures)
-{
+template<class TRNAString>
+int TSSVMRNAInputVector<TRNAString>::classify(TSSVMRNARawFeatures<TRNAString> &pRNAFeatures) {
     calc_score(pRNAFeatures);
 
     return 0;
 }
 
-template <class TRNAString>
-int TSSVMRNAInputVector<TRNAString>::calc_score(TSSVMRNARawFeatures<TRNAString> &pRNAFeatures)
-{
-    TFeatSet& urlLen = pRNAFeatures.get_all_utr_len();
-    TFeatSet& siteNum = pRNAFeatures.get_all_site_num();
-    TFeatSet& utrLen = pRNAFeatures.get_all_tot_disc_utr_len();
-    TFeatSet& seedTypeNum = pRNAFeatures.get_all_seed_type_num();
-    TFeatSet& discBin =  pRNAFeatures.get_all_disc_num();
-    TFeatSet& optDist = pRNAFeatures.get_all_opt_dist();
-    TFeatSet& siteNumFlg = pRNAFeatures.get_all_site_num_flag();
-    TFeatSet& totDisc = pRNAFeatures.get_all_to_disc();
+template<class TRNAString>
+int TSSVMRNAInputVector<TRNAString>::calc_score(TSSVMRNARawFeatures<TRNAString> &pRNAFeatures) {
+    TFeatSet &urlLen = pRNAFeatures.get_all_utr_len();
+    TFeatSet &siteNum = pRNAFeatures.get_all_site_num();
+    TFeatSet &utrLen = pRNAFeatures.get_all_tot_disc_utr_len();
+    TFeatSet &seedTypeNum = pRNAFeatures.get_all_seed_type_num();
+    TFeatSet &discBin = pRNAFeatures.get_all_disc_num();
+    TFeatSet &optDist = pRNAFeatures.get_all_opt_dist();
+    TFeatSet &siteNumFlg = pRNAFeatures.get_all_site_num_flag();
+    TFeatSet &totDisc = pRNAFeatures.get_all_to_disc();
 
     int k;
     resize(mScores, length(pRNAFeatures.mEffectiveRNAs));
 
-    for (unsigned i = 0; i < length(mScores); ++i)
-    {
+    for (unsigned i = 0; i < length(mScores); ++i) {
 
-        if (!pRNAFeatures.mEffectiveRNAs[i])
-        {
+        if (!pRNAFeatures.mEffectiveRNAs[i]) {
             continue;
         }
 
@@ -107,23 +100,19 @@ int TSSVMRNAInputVector<TRNAString>::calc_score(TSSVMRNARawFeatures<TRNAString> 
         ++k;
         mInputVec[k] = utrLen[i][0];
         ++k;
-        for (unsigned j = 0; j < length(seedTypeNum[i]); ++j)
-        {
+        for (unsigned j = 0; j < length(seedTypeNum[i]); ++j) {
             mInputVec[k] = seedTypeNum[i][j];
             ++k;
         }
-        for (unsigned j = 0; j < length(discBin[i]); ++j)
-        {
+        for (unsigned j = 0; j < length(discBin[i]); ++j) {
             mInputVec[k] = discBin[i][j];
             ++k;
         }
-        for (unsigned j = 0; j < length(optDist[i]); ++j)
-        {
+        for (unsigned j = 0; j < length(optDist[i]); ++j) {
             mInputVec[k] = optDist[i][j];
             ++k;
         }
-        for (unsigned j = 0; j < length(siteNumFlg[i]); ++j)
-        {
+        for (unsigned j = 0; j < length(siteNumFlg[i]); ++j) {
             mInputVec[k] = siteNumFlg[i][j];
             ++k;
         }
@@ -137,15 +126,17 @@ int TSSVMRNAInputVector<TRNAString>::calc_score(TSSVMRNARawFeatures<TRNAString> 
     return 0;
 }
 
-template <class TRNAString>
-void TSSVMRNAInputVector<TRNAString>::print_input_vector()
-{
+template<class TRNAString>
+void TSSVMRNAInputVector<TRNAString>::print_input_vector() {
     std::cout << mInputVec.transpose();
     std::cout << std::endl;
 }
 
 // Explicit template instantiation
-template class TSSVMRNAModel<TRNATYPE>;
-template class TSSVMRNAInputVector<TRNATYPE>;
+template
+class TSSVMRNAModel<TRNATYPE>;
+
+template
+class TSSVMRNAInputVector<TRNATYPE>;
 
 } // namespace tssvm

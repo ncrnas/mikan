@@ -10,14 +10,13 @@
 
 namespace rh2mfe {
 
-int RH2CoreMain(int argc, char const ** argv);
+int RH2CoreMain(int argc, char const **argv);
 
 //
 // Input data for RNAhybrid MFE score
 //
-template <class TRNAString>
-class RH2CoreInput
-{
+template<class TRNAString>
+class RH2CoreInput {
 public:
     // Define types
     typedef seqan::StringSet<seqan::CharString> TCharSet;
@@ -30,13 +29,18 @@ public:
 public:
     // Define methods
     RH2CoreInput() {}
-    TCharSet const& get_mirna_ids() {return mMiRNASeqs.get_ids();}
-    TRNASet const& get_mirna_seqs () {return mMiRNASeqs.get_seqs();}
-    TCharSet const& get_mrna_ids() {return mMRNASeqs.get_ids();}
-    TRNASet const& get_mrna_seqs () {return mMRNASeqs.get_seqs();}
+
+    TCharSet const &get_mirna_ids() { return mMiRNASeqs.get_ids(); }
+
+    TRNASet const &get_mirna_seqs() { return mMiRNASeqs.get_seqs(); }
+
+    TCharSet const &get_mrna_ids() { return mMRNASeqs.get_ids(); }
+
+    TRNASet const &get_mrna_seqs() { return mMRNASeqs.get_seqs(); }
 
     // Method prototypes
-    void init_from_args(RH2Options& opts);
+    void init_from_args(RH2Options &opts);
+
     int load_seq_from_file();
 
 private:
@@ -47,9 +51,8 @@ private:
 //
 // RNAhybrid MFE score process core
 //
-template <class TRNAString, int SEEDLEN=6>
-class RH2Core
-{
+template<class TRNAString, int SEEDLEN = 6>
+class RH2Core {
 public:
     // Define types
     typedef seqan::StringSet<seqan::CharString> TCharSet;
@@ -76,26 +79,29 @@ public:
 
 public:
     // Define methods
-    RH2Core(TCharSet const& pMiRNAIds, TRNASet const& pMiRNASeqs, TCharSet const& pMRNAIds, TRNASet const& pMRNASeqs,
-            TIndexQGram& pRNAIdx, TFinder& pFinder, int pMRNAMaxLen, int pMiRNAMaxLen, std::string& pSeedDef):
-                mExecSearchSeedSites(true), mExecCalMFEScore(true), mExecFilterOverlap(true),
-                mExecFilterSiteNum(true), mExecSortSites(true), mExecSumScores(true), mOutputMFEScore(true),
-                mOutputTotalScore(true), mOutputAlign(true), mMaxHits(0), mMiRNAIds(pMiRNAIds),
-                mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs),
-                mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mMfeScores(pMRNAMaxLen, pMiRNAMaxLen, pSeedDef)
-                {}
+    RH2Core(TCharSet const &pMiRNAIds, TRNASet const &pMiRNASeqs, TCharSet const &pMRNAIds,
+            TRNASet const &pMRNASeqs,
+            TIndexQGram &pRNAIdx, TFinder &pFinder, int pMRNAMaxLen, int pMiRNAMaxLen, std::string &pSeedDef) :
+            mExecSearchSeedSites(true), mExecCalMFEScore(true), mExecFilterOverlap(true),
+            mExecFilterSiteNum(true), mExecSortSites(true), mExecSumScores(true), mOutputMFEScore(true),
+            mOutputTotalScore(true), mOutputAlign(true), mMaxHits(0), mMiRNAIds(pMiRNAIds),
+            mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs),
+            mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mMfeScores(pMRNAMaxLen, pMiRNAMaxLen, pSeedDef) {}
 
     // Method prototypes
-    void init_from_args(RH2Options& opts);
+    void init_from_args(RH2Options &opts);
+
     int open_output_file();
+
     int calculate_all_scores();
+
     int calculate_mirna_scores(unsigned pIdx);
 
 private:
-    TCharSet const& mMiRNAIds;
-    TRNASet const& mMiRNASeqs;
-    TCharSet const& mMRNAIds;
-    TRNASet const& mMRNASeqs;
+    TCharSet const &mMiRNAIds;
+    TRNASet const &mMiRNASeqs;
+    TCharSet const &mMRNAIds;
+    TRNASet const &mMRNASeqs;
 
     std::ofstream mOFile1;
     std::ofstream mOFile2;
@@ -109,7 +115,9 @@ private:
 
 private:
     int write_mfe_score(seqan::CharString const &pMiRNAId);
+
     int write_total_score(seqan::CharString const &pMiRNAId);
+
     int write_alignment(seqan::CharString const &pMiRNAId);
 
 };

@@ -11,9 +11,8 @@ namespace mikan {
 //
 // Input data for mikan score
 //
-template <class TRNAString>
-class MKCoreInput
-{
+template<class TRNAString>
+class MKCoreInput {
 public:
     // Define types
     typedef seqan::StringSet<seqan::CharString> TCharSet;
@@ -26,13 +25,18 @@ public:
 public:
     // Define methods
     MKCoreInput() {}
-    TCharSet const& get_mirna_ids() {return mMiRNASeqs.get_ids();}
-    TRNASet const& get_mirna_seqs () {return mMiRNASeqs.get_seqs();}
-    TCharSet const& get_mrna_ids() {return mMRNASeqs.get_ids();}
-    TRNASet const& get_mrna_seqs () {return mMRNASeqs.get_seqs();}
+
+    TCharSet const &get_mirna_ids() { return mMiRNASeqs.get_ids(); }
+
+    TRNASet const &get_mirna_seqs() { return mMiRNASeqs.get_seqs(); }
+
+    TCharSet const &get_mrna_ids() { return mMRNASeqs.get_ids(); }
+
+    TRNASet const &get_mrna_seqs() { return mMRNASeqs.get_seqs(); }
 
     // Method prototypes
-    void init_from_args(MKOptions& opts);
+    void init_from_args(MKOptions &opts);
+
     int load_seq_from_file();
 
 private:

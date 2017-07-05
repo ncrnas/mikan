@@ -3,7 +3,7 @@
 
 #include <seqan/sequence.h>
 
-namespace mr3as{
+namespace mr3as {
 
 typedef seqan::RnaString TRNATYPE;
 //typedef seqan::Rna5String TRNATYPE;

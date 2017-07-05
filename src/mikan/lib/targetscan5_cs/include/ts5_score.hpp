@@ -5,22 +5,25 @@
 #include <ts5_seed_site.hpp>     // TS5SeedSites
 #include <seqan/sequence.h>
 
-namespace ts5cs{
+namespace ts5cs {
 
 //
 // Seed type score
 //
-class TS5ScoreSeedType
-{
+class TS5ScoreSeedType {
 public:
     // Define methods
-    TS5ScoreSeedType(): mContrib8mer(-0.310f), mContrib7M8(-0.161f), mContrib7A1(-0.099f) {}
-    void set_score(int i, float val){mSeedTypes[i] = val;};
-    float& get_score(int i){return mSeedTypes[i];}
+    TS5ScoreSeedType() : mContrib8mer(-0.310f), mContrib7M8(-0.161f), mContrib7A1(-0.099f) {}
+
+    void set_score(int i, float val) { mSeedTypes[i] = val; };
+
+    float &get_score(int i) { return mSeedTypes[i]; }
 
     // Method prototypes
     void clear_scores();
+
     float calc_score(int pIdx, seqan::CharString &pSeedType);
+
     void resize_scores(int pSize);
 
 private:
@@ -34,18 +37,21 @@ private:
 //
 // Seed site position score
 //
-class TS5ScoreSitePos
-{
+class TS5ScoreSitePos {
 public:
     // Define methods
-    TS5ScoreSitePos(): mSlope8mer(0.000172f), mSlope7M8(0.000091f), mSlope7A1(0.000072f),
-    mICept8mer(-0.07f), mICept7M8(-0.037f), mICept7A1(-0.032f) {}
-    void set_score(int i, float val){mSitePos[i] = val;};
-    float& get_score(int i){return mSitePos[i];}
+    TS5ScoreSitePos() : mSlope8mer(0.000172f), mSlope7M8(0.000091f), mSlope7A1(0.000072f),
+                        mICept8mer(-0.07f), mICept7M8(-0.037f), mICept7A1(-0.032f) {}
+
+    void set_score(int i, float val) { mSitePos[i] = val; };
+
+    float &get_score(int i) { return mSitePos[i]; }
 
     // Method prototypes
     void clear_scores();
+
     float calc_score(int pIdx, seqan::CharString &pSeedType, int &pSitePos);
+
     void resize_scores(int pSize);
 
 private:
@@ -61,18 +67,21 @@ private:
 //
 // AU-rich score
 //
-class TS5ScoreAURich
-{
+class TS5ScoreAURich {
 public:
     // Define methods
-    TS5ScoreAURich(): mSlope8mer(-0.64f), mSlope7M8(-0.5f), mSlope7A1(-0.42f),
-    mICept8mer(0.365f), mICept7M8(0.269f), mICept7A1(0.236f) {}
-    void set_score(int i, float val){mAURich[i] = val;};
-    float& get_score(int i){return mAURich[i];}
+    TS5ScoreAURich() : mSlope8mer(-0.64f), mSlope7M8(-0.5f), mSlope7A1(-0.42f),
+                       mICept8mer(0.365f), mICept7M8(0.269f), mICept7A1(0.236f) {}
+
+    void set_score(int i, float val) { mAURich[i] = val; };
+
+    float &get_score(int i) { return mAURich[i]; }
 
     // Method prototypes
     void clear_scores();
+
     float calc_score(int pIdx, seqan::CharString &pSeedType, float &pAuRich);
+
     void resize_scores(int pSize);
 
 private:
@@ -88,18 +97,21 @@ private:
 //
 //  Additional 3' paring score
 //
-class TS5ScoreThreePrimePair
-{
+class TS5ScoreThreePrimePair {
 public:
     // Define methods
-    TS5ScoreThreePrimePair(): mSlope8mer(-0.0041f), mSlope7M8(-0.031f), mSlope7A1(-0.0211f),
-    mICept8mer(0.011f), mICept7M8(0.067f), mICept7A1(0.046f) {}
-    void set_score(int i, float val){mThreePrimePair[i] = val;}
-    float& get_score(int i){return mThreePrimePair[i];}
+    TS5ScoreThreePrimePair() : mSlope8mer(-0.0041f), mSlope7M8(-0.031f), mSlope7A1(-0.0211f),
+                               mICept8mer(0.011f), mICept7M8(0.067f), mICept7A1(0.046f) {}
+
+    void set_score(int i, float val) { mThreePrimePair[i] = val; }
+
+    float &get_score(int i) { return mThreePrimePair[i]; }
 
     // Method prototypes
     void clear_scores();
+
     float calc_score(int pIdx, seqan::CharString &pSeedType, float &pThreePrimePair);
+
     void resize_scores(int pSize);
 
 private:
@@ -116,26 +128,32 @@ private:
 //
 // Store context scores
 //
-template <class TRNAString>
-class TS5ContextScores
-{
+template<class TRNAString>
+class TS5ContextScores {
 public:
     // Define methods
     TS5ContextScores() {}
-    void set_score(int i, float val){mContextScores[i] = val;};
 
-    float const& get_score(int i) const {return mContextScores[i];}
-    float& get_seed_type_score(int i){return mSeedTypes.get_score(i);}
-    float& get_site_pos_score(int i){return mSitePos.get_score(i);}
-    float& get_au_rich_score(int i){return mAURich.get_score(i);}
-    float& get_three_prime_pair_score(int i){return mThreePrimePair.get_score(i);}
+    void set_score(int i, float val) { mContextScores[i] = val; };
+
+    float const &get_score(int i) const { return mContextScores[i]; }
+
+    float &get_seed_type_score(int i) { return mSeedTypes.get_score(i); }
+
+    float &get_site_pos_score(int i) { return mSitePos.get_score(i); }
+
+    float &get_au_rich_score(int i) { return mAURich.get_score(i); }
+
+    float &get_three_prime_pair_score(int i) { return mThreePrimePair.get_score(i); }
 
     // Define variables
     seqan::String<bool> mEffectiveSites;
 
     // Method prototypes
     void clear_scores();
-    int calc_scores(TS5RawFeatures<TRNAString> &pRawFeatures);
+
+    int calc_scores(TS5RawFeatures <TRNAString> &pRawFeatures);
+
     void resize_scores(int pSize);
 
 private:
@@ -150,19 +168,22 @@ private:
 //
 // Total context scores
 //
-template <class TRNAString>
-class TS5TotalScores
-{
+template<class TRNAString>
+class TS5TotalScores {
 public:
     // Define methods
     TS5TotalScores() {}
-    const seqan::String<float>& get_scores(){return mTotalScores;}
-    const seqan::String<int>& get_mrna_pos(){return mMRNAPos;}
-    const seqan::String<int>& get_site_num(){return mSiteNum;}
+
+    const seqan::String<float> &get_scores() { return mTotalScores; }
+
+    const seqan::String<int> &get_mrna_pos() { return mMRNAPos; }
+
+    const seqan::String<int> &get_site_num() { return mSiteNum; }
 
     // Method prototypes
     void clear_scores();
-    int calc_scores(TS5SeedSites<TRNAString> &pSeedSites, TS5ContextScores<TRNAString> &pContextScores);
+
+    int calc_scores(TS5SeedSites <TRNAString> &pSeedSites, TS5ContextScores<TRNAString> &pContextScores);
 
 private:
     seqan::String<float> mTotalScores;

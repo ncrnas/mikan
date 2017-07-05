@@ -5,14 +5,13 @@
 #include <Eigen/Dense>
 #include <seqan/sequence.h>
 
-namespace tssvm{
+namespace tssvm {
 
 //
 // Site level SVM model
 //
-template <class TRNAString>
-class TSSVMSiteModel
-{
+template<class TRNAString>
+class TSSVMSiteModel {
 public:
     // Constant values
     static const int INPUT_FEAT_NUM = 95;
@@ -21,12 +20,12 @@ public:
 
 public:
     // Define methods
-    TSSVMSiteModel(): mB(-1.26691213422f), mAlphas(15391), mSVs(15391, 95), mMatProd(15391)
-    {}
+    TSSVMSiteModel() : mB(-1.26691213422f), mAlphas(15391), mSVs(15391, 95), mMatProd(15391) {}
 
     // Define methods
     int init_model();
-    float calc_score(Eigen::VectorXf& pInput);
+
+    float calc_score(Eigen::VectorXf &pInput);
 
 private:
     const float mB;
@@ -36,6 +35,7 @@ private:
 
 private:
     int init_alpha();
+
     int init_sv();
 
 };
@@ -43,29 +43,31 @@ private:
 //
 // Input vector for Site level SVM
 //
-template <class TRNAString>
-class TSSVMSiteInputVector
-{
+template<class TRNAString>
+class TSSVMSiteInputVector {
 public:
     // Define types
     typedef seqan::StringSet<seqan::String<float> > TFeatSet;
 
 public:
     // Define methods
-    TSSVMSiteInputVector(TSSVMSiteModel<TRNAString>& pModel): mModel(pModel), mInputVec(95) {}
-    const seqan::String<float>& get_scores(){return mScores;}
+    TSSVMSiteInputVector(TSSVMSiteModel<TRNAString> &pModel) : mModel(pModel), mInputVec(95) {}
+
+    const seqan::String<float> &get_scores() { return mScores; }
 
     // Method prototypes
     void clear_scores();
+
     int classify(TSSVMRawFeatures<TRNAString> &pSiteFeatures);
 
 private:
-    TSSVMSiteModel<TRNAString>& mModel;
+    TSSVMSiteModel<TRNAString> &mModel;
     Eigen::VectorXf mInputVec;
     seqan::String<float> mScores;
 
 private:
     int calc_score(TSSVMRawFeatures<TRNAString> &pSiteFeatures);
+
     void print_input_vector();
 
 };

@@ -6,9 +6,8 @@
 #include "get_data_path.hpp"
 #include "mikan_utils.hpp"
 
-template <class TCoreInput, class TOptions>
-class TestIOBase : public ::testing::Test
-{
+template<class TCoreInput, class TOptions>
+class TestIOBase : public ::testing::Test {
 protected:
     char *IFNAME1;
     char *IFNAME2;
@@ -39,7 +38,7 @@ protected:
         o2file2 += O2FNAME2;
 
         argc = 5;
-        argv[0] = (char *)"program";
+        argv[0] = (char *) "program";
         argv[1] = seqan::toCString(ifile1);
         argv[2] = seqan::toCString(ifile2);
         argv[3] = seqan::toCString(o2file1);
@@ -52,18 +51,15 @@ protected:
     }
 
     void read_files(bool parse_argv) {
-        if (parse_argv)
-        {
-            (void)options.parseCommandLine(argc, (const char **)argv);
-        }
-        else
-        {
+        if (parse_argv) {
+            (void) options.parseCommandLine(argc, (const char **) argv);
+        } else {
             options.mMiRNAFasta = seqan::toCString(ifile1);
             options.mMRNAFasta = seqan::toCString(ifile2);
         }
 
         coreInput.init_from_args(options);
-        (void)coreInput.load_seq_from_file();
+        (void) coreInput.load_seq_from_file();
     }
 
     void set_seqs() {

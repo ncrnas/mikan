@@ -6,14 +6,13 @@
 #include <tm1_site_feature.hpp>  // TM1RawFeatures
 #include <seqan/sequence.h>
 
-namespace tm1p{
+namespace tm1p {
 
 //
 // Seed type feature
 //
-template <class TRNAString>
-class TM1MRNASeedType
-{
+template<class TRNAString>
+class TM1MRNASeedType {
 public:
     // Member variables
     seqan::String<float> mNum6mer;
@@ -24,10 +23,13 @@ public:
     TM1MRNASeedType() {}
 
     // Method prototype
-    int add_features(unsigned pIdx, const seqan::String<unsigned>& pSortedSites,
-            TM1SeedSites<TRNAString> &pSeedSites, TM1RawFeatures<TRNAString> &pRawFeatures);
+    int add_features(unsigned pIdx, const seqan::String<unsigned> &pSortedSites,
+                     TM1SeedSites<TRNAString> &pSeedSites, TM1RawFeatures<TRNAString> &pRawFeatures);
+
     void clear_features();
+
     void resize_features(unsigned pSize);
+
     void print_feature(unsigned pIdx);
 
 };
@@ -35,9 +37,8 @@ public:
 //
 // Site count feature
 //
-template <class TRNAString>
-class TM1MRNASiteCount
-{
+template<class TRNAString>
+class TM1MRNASiteCount {
 public:
     // Member variables
     seqan::String<unsigned> mSiteCount;
@@ -47,10 +48,13 @@ public:
     TM1MRNASiteCount() {}
 
     // Method prototype
-    int add_features(unsigned pIdx, const seqan::String<unsigned>& pSortedSites,
-            TM1SeedSites<TRNAString> &pSeedSites, TM1RawFeatures<TRNAString> &pRawFeatures);
+    int add_features(unsigned pIdx, const seqan::String<unsigned> &pSortedSites,
+                     TM1SeedSites<TRNAString> &pSeedSites, TM1RawFeatures<TRNAString> &pRawFeatures);
+
     void clear_features();
+
     void resize_features(unsigned pSize);
+
     void print_feature(unsigned pIdx);
 
 };
@@ -58,9 +62,8 @@ public:
 //
 // AU-rich feature
 //
-template <class TRNAString>
-class TM1MRNAAURich
-{
+template<class TRNAString>
+class TM1MRNAAURich {
 public:
     seqan::String<float> mAU6mer;
     seqan::String<float> mAU7merm8;
@@ -71,10 +74,13 @@ public:
     TM1MRNAAURich() {}
 
     // Method prototype
-    int add_features(unsigned pIdx, const seqan::String<unsigned>& pSortedSites,
-            TM1SeedSites<TRNAString> &pSeedSites, TM1RawFeatures<TRNAString> &pRawFeatures);
+    int add_features(unsigned pIdx, const seqan::String<unsigned> &pSortedSites,
+                     TM1SeedSites<TRNAString> &pSeedSites, TM1RawFeatures<TRNAString> &pRawFeatures);
+
     void clear_features();
+
     void resize_features(unsigned pSize);
+
     void print_feature(unsigned pIdx);
 
 };
@@ -82,9 +88,8 @@ public:
 //
 // Single nucleotide frequency feature
 //
-template <class TRNAString>
-class TM1MRNASingleFreq
-{
+template<class TRNAString>
+class TM1MRNASingleFreq {
 public:
     seqan::String<float> mSeedFreqU;
     seqan::String<float> mSeedFreqC;
@@ -94,10 +99,13 @@ public:
     TM1MRNASingleFreq() {}
 
     // Method prototype
-    int add_features(unsigned pIdx, const seqan::String<unsigned>& pSortedSites,
-            TM1SeedSites<TRNAString> &pSeedSites, TM1RawFeatures<TRNAString> &pRawFeatures);
+    int add_features(unsigned pIdx, const seqan::String<unsigned> &pSortedSites,
+                     TM1SeedSites<TRNAString> &pSeedSites, TM1RawFeatures<TRNAString> &pRawFeatures);
+
     void clear_features();
+
     void resize_features(unsigned pSize);
+
     void print_feature(unsigned pIdx);
 
 };
@@ -106,9 +114,8 @@ public:
 //
 // Single nucleotide frequency in flanking region feature
 //
-template <class TRNAString>
-class TM1MRNASingleFreqFlank
-{
+template<class TRNAString>
+class TM1MRNASingleFreqFlank {
 public:
     seqan::String<float> m3PFreqA;
     seqan::String<float> m3PFreqU;
@@ -118,10 +125,13 @@ public:
     TM1MRNASingleFreqFlank() {}
 
     // Method prototype
-    int add_features(unsigned pIdx, const seqan::String<unsigned>& pSortedSites,
-            TM1SeedSites<TRNAString> &pSeedSites, TM1RawFeatures<TRNAString> &pRawFeatures);
+    int add_features(unsigned pIdx, const seqan::String<unsigned> &pSortedSites,
+                     TM1SeedSites<TRNAString> &pSeedSites, TM1RawFeatures<TRNAString> &pRawFeatures);
+
     void clear_features();
+
     void resize_features(unsigned pSize);
+
     void print_feature(unsigned pIdx);
 
 };
@@ -129,9 +139,8 @@ public:
 //
 // Di-nucleotide frequency feature
 //
-template <class TRNAString>
-class TM1MRNADiFreq
-{
+template<class TRNAString>
+class TM1MRNADiFreq {
 public:
     seqan::String<float> mSeedFreqUC;
     seqan::String<float> mSeedFreqCA;
@@ -142,10 +151,13 @@ public:
     TM1MRNADiFreq() {}
 
     // Method prototype
-    int add_features(unsigned pIdx, const seqan::String<unsigned>& pSortedSites,
-            TM1SeedSites<TRNAString> &pSeedSites, TM1RawFeatures<TRNAString> &pRawFeatures);
+    int add_features(unsigned pIdx, const seqan::String<unsigned> &pSortedSites,
+                     TM1SeedSites<TRNAString> &pSeedSites, TM1RawFeatures<TRNAString> &pRawFeatures);
+
     void clear_features();
+
     void resize_features(unsigned pSize);
+
     void print_feature(unsigned pIdx);
 
 };
@@ -153,9 +165,8 @@ public:
 //
 // Di-nucleotide frequency in flanking region feature
 //
-template <class TRNAString>
-class TM1MRNADiFreqFlank
-{
+template<class TRNAString>
+class TM1MRNADiFreqFlank {
 public:
     seqan::String<float> m3PFreqAA;
     seqan::String<float> m3PFreqAU;
@@ -174,10 +185,13 @@ public:
     TM1MRNADiFreqFlank() {}
 
     // Method prototype
-    int add_features(unsigned pIdx, const seqan::String<unsigned>& pSortedSites,
-            TM1SeedSites<TRNAString> &pSeedSites, TM1RawFeatures<TRNAString> &pRawFeatures);
+    int add_features(unsigned pIdx, const seqan::String<unsigned> &pSortedSites,
+                     TM1SeedSites<TRNAString> &pSeedSites, TM1RawFeatures<TRNAString> &pRawFeatures);
+
     void clear_features();
+
     void resize_features(unsigned pSize);
+
     void print_feature(unsigned pIdx);
 
 };
@@ -185,9 +199,8 @@ public:
 //
 // Single match frequency feature
 //
-template <class TRNAString>
-class TM1MRNASingleMatch
-{
+template<class TRNAString>
+class TM1MRNASingleMatch {
 public:
     seqan::String<float> mFreqUG;
     seqan::String<float> mFreqGU;
@@ -198,19 +211,21 @@ public:
     TM1MRNASingleMatch() {}
 
     // Method prototype
-    int add_features(unsigned pIdx, const seqan::String<unsigned>& pSortedSites,
-            TM1SeedSites<TRNAString> &pSeedSites, TM1RawFeatures<TRNAString> &pRawFeatures);
+    int add_features(unsigned pIdx, const seqan::String<unsigned> &pSortedSites,
+                     TM1SeedSites<TRNAString> &pSeedSites, TM1RawFeatures<TRNAString> &pRawFeatures);
+
     void clear_features();
+
     void resize_features(unsigned pSize);
+
     void print_feature(unsigned pIdx);
 };
 
 //
 // Two consecutive matches frequency feature
 //
-template <class TRNAString>
-class TM1MRNATwoConsecMatch
-{
+template<class TRNAString>
+class TM1MRNATwoConsecMatch {
 public:
     seqan::String<float> mFreqUACG;
     seqan::String<float> mFreqUAUG;
@@ -222,10 +237,13 @@ public:
     TM1MRNATwoConsecMatch() {}
 
     // Method prototype
-    int add_features(unsigned pIdx, const seqan::String<unsigned>& pSortedSites,
-            TM1SeedSites<TRNAString> &pSeedSites, TM1RawFeatures<TRNAString> &pRawFeatures);
+    int add_features(unsigned pIdx, const seqan::String<unsigned> &pSortedSites,
+                     TM1SeedSites<TRNAString> &pSeedSites, TM1RawFeatures<TRNAString> &pRawFeatures);
+
     void clear_features();
+
     void resize_features(unsigned pSize);
+
     void print_feature(unsigned pIdx);
 
 };
@@ -234,30 +252,34 @@ public:
 //
 // Scale and store all feature values
 //
-template <class TRNAString>
-class TM1ScaledFeatures
-{
+template<class TRNAString>
+class TM1ScaledFeatures {
 public:
     // Constant values
     static const unsigned FEATURE_NUM = 30;
 
 public:
     // Define methods
-    TM1ScaledFeatures() : mLower(-1.0), mUpper(1.0)
-    {
+    TM1ScaledFeatures() : mLower(-1.0), mUpper(1.0) {
         init_max_vals();
     }
-    const seqan::String<unsigned>& get_mrna_ids() {return mMRNAIDs;}
-    const seqan::StringSet<seqan::String<float> >& get_mrna_features(){return mScaledFeatures;}
+
+    const seqan::String<unsigned> &get_mrna_ids() { return mMRNAIDs; }
+
+    const seqan::StringSet<seqan::String<float> > &get_mrna_features() { return mScaledFeatures; }
 
     // Method prototypes
-    int scale_features(TM1SortedSitePos<TRNAString> &pSortedSites, TM1MRNASeedType<TRNAString>& pSeedTypes,
-            TM1MRNAAURich<TRNAString>& pAURich, TM1MRNASingleFreq<TRNAString>& pSingleFreqs,
-            TM1MRNASingleFreqFlank<TRNAString>& pSingleFreqFlanks, TM1MRNADiFreq<TRNAString>& pDiFreqs,
-            TM1MRNADiFreqFlank<TRNAString>& pDiFreqFlanks, TM1MRNASingleMatch<TRNAString>& pSingleMatches,
-            TM1MRNATwoConsecMatch<TRNAString>& pTwoMatches);
+    int scale_features(TM1SortedSitePos<TRNAString> &pSortedSites, TM1MRNASeedType<TRNAString> &pSeedTypes,
+                       TM1MRNAAURich<TRNAString> &pAURich, TM1MRNASingleFreq<TRNAString> &pSingleFreqs,
+                       TM1MRNASingleFreqFlank<TRNAString> &pSingleFreqFlanks, TM1MRNADiFreq<TRNAString> &pDiFreqs,
+                       TM1MRNADiFreqFlank<TRNAString> &pDiFreqFlanks,
+                       TM1MRNASingleMatch<TRNAString> &pSingleMatches,
+                       TM1MRNATwoConsecMatch<TRNAString> &pTwoMatches);
+
     void clear_features();
+
     void resize_features(unsigned pSize);
+
     void print_features();
 
 private:
@@ -270,35 +292,47 @@ private:
 
 private:
     void init_max_vals();
+
     float scale_feat_val(unsigned pIdx, float pVal);
 
-    void scale_seed_type(unsigned pIdx, TM1MRNASeedType<TRNAString>& pSeedTypes);
-    void scale_au_rich(unsigned pIdx, TM1MRNAAURich<TRNAString>& pAURich);
-    void scale_single_freq(unsigned pIdx, TM1MRNASingleFreq<TRNAString>& pSingleFreqs);
-    void scale_freq_flank(unsigned pIdx, TM1MRNASingleFreqFlank<TRNAString>& pSingleFreqFlanks);
-    void scale_di_freq(unsigned pIdx, TM1MRNADiFreq<TRNAString>& pDiFreqs);
-    void scale_di_freq_flank(unsigned pIdx, TM1MRNADiFreqFlank<TRNAString>& pDiFreqFlanks);
-    void scale_single_match(unsigned pIdx, TM1MRNASingleMatch<TRNAString>& pSingleMatches);
-    void scale_two_match(unsigned pIdx, TM1MRNATwoConsecMatch<TRNAString>& pTwoMatches);
+    void scale_seed_type(unsigned pIdx, TM1MRNASeedType<TRNAString> &pSeedTypes);
+
+    void scale_au_rich(unsigned pIdx, TM1MRNAAURich<TRNAString> &pAURich);
+
+    void scale_single_freq(unsigned pIdx, TM1MRNASingleFreq<TRNAString> &pSingleFreqs);
+
+    void scale_freq_flank(unsigned pIdx, TM1MRNASingleFreqFlank<TRNAString> &pSingleFreqFlanks);
+
+    void scale_di_freq(unsigned pIdx, TM1MRNADiFreq<TRNAString> &pDiFreqs);
+
+    void scale_di_freq_flank(unsigned pIdx, TM1MRNADiFreqFlank<TRNAString> &pDiFreqFlanks);
+
+    void scale_single_match(unsigned pIdx, TM1MRNASingleMatch<TRNAString> &pSingleMatches);
+
+    void scale_two_match(unsigned pIdx, TM1MRNATwoConsecMatch<TRNAString> &pTwoMatches);
 };
 
 //
 // Store all raw feature values
 //
-template <class TRNAString>
-class TM1MRNAFeatures
-{
+template<class TRNAString>
+class TM1MRNAFeatures {
 public:
     // Define methods
     TM1MRNAFeatures() {}
-    TM1ScaledFeatures<TRNAString>& get_scaled_feature() {return mScaledFeats;}
-    const seqan::String<unsigned>& get_site_counts() {return mSiteCounts.mSiteCount;}
+
+    TM1ScaledFeatures<TRNAString> &get_scaled_feature() { return mScaledFeats; }
+
+    const seqan::String<unsigned> &get_site_counts() { return mSiteCounts.mSiteCount; }
 
     // Method prototypes
-    int add_features(TM1SeedSites<TRNAString> &pSeedSites,TM1RawFeatures<TRNAString> &pRawFeatures,
-            TM1SortedSitePos<TRNAString> &pSortedSites);
+    int add_features(TM1SeedSites<TRNAString> &pSeedSites, TM1RawFeatures<TRNAString> &pRawFeatures,
+                     TM1SortedSitePos<TRNAString> &pSortedSites);
+
     void clear_features();
+
     void resize_features(unsigned pSize);
+
     void print_features(TM1SortedSitePos<TRNAString> &pSortedSites);
 
 private:

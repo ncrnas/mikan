@@ -7,8 +7,7 @@
 #include "mikan_utils.hpp"
 #include "mr3_core.hpp"
 
-class TestFasta : public ::testing::Test
-{
+class TestFasta : public ::testing::Test {
 protected:
     char *IFNAME1;
     char *IFNAME2;
@@ -31,7 +30,7 @@ protected:
         options.mMiRNAFasta = seqan::toCString(ifile1);
         options.mMRNAFasta = seqan::toCString(ifile2);
         coreInput.init_from_args(options);
-        (void)coreInput.load_seq_from_file();
+        (void) coreInput.load_seq_from_file();
     }
 
     mr3as::MR3CoreInput<mr3as::TRNATYPE> coreInput;

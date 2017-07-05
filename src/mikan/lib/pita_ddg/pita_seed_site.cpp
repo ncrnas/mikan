@@ -4,46 +4,39 @@
 
 using namespace seqan;
 
-namespace ptddg{
+namespace ptddg {
 
 //
 // PITASequences methods
 //
-template <class TRNAString>
-int PITASequences<TRNAString>::read_fasta(CharString const &pFasta)
-{
+template<class TRNAString>
+int PITASequences<TRNAString>::read_fasta(CharString const &pFasta) {
     CharString id;
     CharString seq;
 
     SequenceStream seqStream(toCString(pFasta));
-    if (!isGood(seqStream))
-    {
+    if (!isGood(seqStream)) {
         std::cerr << "ERROR: Could not open the file!" << std::endl;
         return 1;
     }
 
-    while (!atEnd(seqStream))
-    {
-        if (readRecord(id, seq, seqStream) != 0)
-        {
+    while (!atEnd(seqStream)) {
+        if (readRecord(id, seq, seqStream) != 0) {
             std::cerr << "ERROR: Could not read from " << toCString(pFasta) << "!" << std::endl;
             return 1;
         }
 
         toUpper(seq);
-        for (unsigned i = 0; i < length(seq); ++i)
-        {
-            if (seq[i] == 'T')
-            {
+        for (unsigned i = 0; i < length(seq); ++i) {
+            if (seq[i] == 'T') {
                 seq[i] = 'U';
             }
         }
         appendValue(mSeqIds, id);
         appendValue(mSeqs, seq);
 
-        if (mMaxLen < (int)length(seq))
-        {
-            mMaxLen = (int)length(seq);
+        if (mMaxLen < (int) length(seq)) {
+            mMaxLen = (int) length(seq);
         }
     }
 
@@ -53,11 +46,9 @@ int PITASequences<TRNAString>::read_fasta(CharString const &pFasta)
 //
 // PITASeedSeqs methods
 //
-template <class TRNAString>
-int PITASeedSeqs<TRNAString>::create_seed_seqs(StringSet<CharString> &pSeedDef)
-{
-    if (length(mMiRNASeq) == 0)
-    {
+template<class TRNAString>
+int PITASeedSeqs<TRNAString>::create_seed_seqs(StringSet<CharString> &pSeedDef) {
+    if (length(mMiRNASeq) == 0) {
         return 1;
     }
 
@@ -66,9 +57,8 @@ int PITASeedSeqs<TRNAString>::create_seed_seqs(StringSet<CharString> &pSeedDef)
     int retVal;
 
     resize(seedSeq, 6);
-    for (unsigned i = 0; i < length(seedSeq); ++i)
-    {
-        seedSeq[i] = mMiRNASeq[i+1];
+    for (unsigned i = 0; i < length(seedSeq); ++i) {
+        seedSeq[i] = mMiRNASeq[i + 1];
     }
     reverseComplement(seedSeq);
 
@@ -76,55 +66,43 @@ int PITASeedSeqs<TRNAString>::create_seed_seqs(StringSet<CharString> &pSeedDef)
     appendValue(mSeedTypes, "6mer");
     appendValue(mMisMatchPos, 0);
 
-    if (pSeedDef[2] == 'Y' || pSeedDef[1] == 'Y')
-    {
-        if (pSeedDef[3] == '1')
-        {
-            (void)create_single_guwobble_seed_seqs(seedSeq);
-        }
-        else if (pSeedDef[3] == '+')
-        {
-            (void)create_multi_guwobble_seed_seqs(seedSeq);
+    if (pSeedDef[2] == 'Y' || pSeedDef[1] == 'Y') {
+        if (pSeedDef[3] == '1') {
+            (void) create_single_guwobble_seed_seqs(seedSeq);
+        } else if (pSeedDef[3] == '+') {
+            (void) create_multi_guwobble_seed_seqs(seedSeq);
         }
 
-        if (pSeedDef[4] != "0:0")
-        {
-            (void)create_mismatch_seed_seqs(seedSeq);
+        if (pSeedDef[4] != "0:0") {
+            (void) create_mismatch_seed_seqs(seedSeq);
         }
 
-        if (pSeedDef[4] != "0:0" && (pSeedDef[3] == '1' || pSeedDef[3] == '+'))
-        {
-            (void)create_gu_mismatch_seed_seqs(seedSeq);
+        if (pSeedDef[4] != "0:0" && (pSeedDef[3] == '1' || pSeedDef[3] == '+')) {
+            (void) create_gu_mismatch_seed_seqs(seedSeq);
         }
     }
 
     resize(mEffectiveSeeds, length(mSeedSeqs), true);
     retVal = check_redundant_seeds();
-    if (retVal != 0)
-    {
+    if (retVal != 0) {
         return 1;
     }
 
     return 0;
 }
 
-template <class TRNAString>
-int PITASeedSeqs<TRNAString>::create_single_guwobble_seed_seqs(TRNAString &pSeedSeq)
-{
+template<class TRNAString>
+int PITASeedSeqs<TRNAString>::create_single_guwobble_seed_seqs(TRNAString &pSeedSeq) {
     TRNAString seedGUSeq;
 
-    for (unsigned i = 0; i < length(pSeedSeq); ++i)
-    {
-        if (pSeedSeq[i] == 'C')
-        {
+    for (unsigned i = 0; i < length(pSeedSeq); ++i) {
+        if (pSeedSeq[i] == 'C') {
             seedGUSeq = pSeedSeq;
             seedGUSeq[i] = 'U';
             appendValue(mSeedSeqs, seedGUSeq);
             appendValue(mSeedTypes, "GUT");
             appendValue(mMisMatchPos, i);
-        }
-        else if (pSeedSeq[i] == 'A')
-        {
+        } else if (pSeedSeq[i] == 'A') {
             seedGUSeq = pSeedSeq;
             seedGUSeq[i] = 'G';
             appendValue(mSeedSeqs, seedGUSeq);
@@ -136,19 +114,15 @@ int PITASeedSeqs<TRNAString>::create_single_guwobble_seed_seqs(TRNAString &pSeed
     return 0;
 }
 
-template <class TRNAString>
-int PITASeedSeqs<TRNAString>::create_multi_guwobble_seed_seqs(TRNAString &pSeedSeq)
-{
+template<class TRNAString>
+int PITASeedSeqs<TRNAString>::create_multi_guwobble_seed_seqs(TRNAString &pSeedSeq) {
     TRNAString seedGUSeq;
 
     unsigned seedDatLen = length(mSeedSeqs);
 
-    for (unsigned i = 0; i < length(pSeedSeq); ++i)
-    {
-        if (pSeedSeq[i] == 'C')
-        {
-            for (unsigned j = 0; j < seedDatLen; ++j)
-            {
+    for (unsigned i = 0; i < length(pSeedSeq); ++i) {
+        if (pSeedSeq[i] == 'C') {
+            for (unsigned j = 0; j < seedDatLen; ++j) {
                 seedGUSeq = get_seed_seq(j);
                 seedGUSeq[i] = 'U';
                 appendValue(mSeedSeqs, seedGUSeq);
@@ -156,11 +130,8 @@ int PITASeedSeqs<TRNAString>::create_multi_guwobble_seed_seqs(TRNAString &pSeedS
                 appendValue(mMisMatchPos, 0);
             }
             seedDatLen = length(mSeedSeqs);
-        }
-        else if (pSeedSeq[i] == 'A')
-        {
-            for (unsigned j = 0; j < seedDatLen; ++j)
-            {
+        } else if (pSeedSeq[i] == 'A') {
+            for (unsigned j = 0; j < seedDatLen; ++j) {
                 seedGUSeq = get_seed_seq(j);
                 seedGUSeq[i] = 'G';
                 appendValue(mSeedSeqs, seedGUSeq);
@@ -174,50 +145,37 @@ int PITASeedSeqs<TRNAString>::create_multi_guwobble_seed_seqs(TRNAString &pSeedS
     return 0;
 }
 
-template <class TRNAString>
-int PITASeedSeqs<TRNAString>::create_mismatch_seed_seqs(TRNAString &pSeedSeq, bool pIsMMGU, int pGUPos)
-{
+template<class TRNAString>
+int PITASeedSeqs<TRNAString>::create_mismatch_seed_seqs(TRNAString &pSeedSeq, bool pIsMMGU, int pGUPos) {
     TRNAString seedLPSeq;
     CharString seedType;
-    char ch1=0;
-    char ch2=0;
-    char ch3=0;
+    char ch1 = 0;
+    char ch2 = 0;
+    char ch3 = 0;
 
-    if (pIsMMGU)
-    {
-        seedType ="MMGU";
-    }
-    else
-    {
-        seedType ="MM";
+    if (pIsMMGU) {
+        seedType = "MMGU";
+    } else {
+        seedType = "MM";
     }
 
-    for (unsigned i = 0; i < length(pSeedSeq); ++i)
-    {
-        if (pIsMMGU && (pGUPos == (int)i))
-        {
+    for (unsigned i = 0; i < length(pSeedSeq); ++i) {
+        if (pIsMMGU && (pGUPos == (int) i)) {
             continue;
         }
-        if (pSeedSeq[i] == 'A')
-        {
+        if (pSeedSeq[i] == 'A') {
             ch1 = 'C';
             ch2 = 'x';
             ch3 = 'U';
-        }
-        else if (pSeedSeq[i] == 'C')
-        {
+        } else if (pSeedSeq[i] == 'C') {
             ch1 = 'A';
             ch2 = 'x';
             ch3 = 'G';
-        }
-        else if (pSeedSeq[i] == 'G')
-        {
+        } else if (pSeedSeq[i] == 'G') {
             ch1 = 'A';
             ch2 = 'U';
             ch3 = 'C';
-        }
-        else if (pSeedSeq[i] == 'U')
-        {
+        } else if (pSeedSeq[i] == 'U') {
             ch1 = 'C';
             ch2 = 'G';
             ch3 = 'A';
@@ -228,8 +186,7 @@ int PITASeedSeqs<TRNAString>::create_mismatch_seed_seqs(TRNAString &pSeedSeq, bo
         appendValue(mSeedSeqs, seedLPSeq);
         appendValue(mSeedTypes, seedType);
         appendValue(mMisMatchPos, i);
-        if (ch2 != 'x')
-        {
+        if (ch2 != 'x') {
             seedLPSeq = pSeedSeq;
             seedLPSeq[i] = ch2;
             appendValue(mSeedSeqs, seedLPSeq);
@@ -246,21 +203,16 @@ int PITASeedSeqs<TRNAString>::create_mismatch_seed_seqs(TRNAString &pSeedSeq, bo
     return 0;
 }
 
-template <class TRNAString>
-int PITASeedSeqs<TRNAString>::create_gu_mismatch_seed_seqs(TRNAString &pSeedSeq)
-{
+template<class TRNAString>
+int PITASeedSeqs<TRNAString>::create_gu_mismatch_seed_seqs(TRNAString &pSeedSeq) {
     TRNAString seedGUSeq;
 
-    for (unsigned i = 0; i < length(pSeedSeq); ++i)
-    {
-        if (pSeedSeq[i] == 'C')
-        {
+    for (unsigned i = 0; i < length(pSeedSeq); ++i) {
+        if (pSeedSeq[i] == 'C') {
             seedGUSeq = pSeedSeq;
             seedGUSeq[i] = 'U';
             create_mismatch_seed_seqs(seedGUSeq, true, i);
-        }
-        else if (pSeedSeq[i] == 'A')
-        {
+        } else if (pSeedSeq[i] == 'A') {
             seedGUSeq = pSeedSeq;
             seedGUSeq[i] = 'G';
             create_mismatch_seed_seqs(seedGUSeq, true, i);
@@ -270,9 +222,8 @@ int PITASeedSeqs<TRNAString>::create_gu_mismatch_seed_seqs(TRNAString &pSeedSeq)
     return 0;
 }
 
-template <class TRNAString>
-int PITASeedSeqs<TRNAString>::check_redundant_seeds()
-{
+template<class TRNAString>
+int PITASeedSeqs<TRNAString>::check_redundant_seeds() {
     typedef Index<StringSet<TRNAString>, IndexQGram<UngappedShape<6> > > TIndexQGram;
     typedef Finder<TIndexQGram> TFinder;
 
@@ -280,17 +231,13 @@ int PITASeedSeqs<TRNAString>::check_redundant_seeds()
     TIndexQGram RNAIdx(mSeedSeqs);
     TFinder finder(RNAIdx);
 
-    for (unsigned i = 0; i < length(mSeedSeqs); ++i)
-    {
-        if (!mEffectiveSeeds[i])
-        {
+    for (unsigned i = 0; i < length(mSeedSeqs); ++i) {
+        if (!mEffectiveSeeds[i]) {
             continue;
         }
         seedSeq = mSeedSeqs[i];
-        while (find(finder, seedSeq))
-        {
-            if (i != position(finder).i1)
-            {
+        while (find(finder, seedSeq)) {
+            if (i != position(finder).i1) {
                 mEffectiveSeeds[position(finder).i1] = false;
             }
         }
@@ -301,9 +248,8 @@ int PITASeedSeqs<TRNAString>::check_redundant_seeds()
     return 0;
 }
 
-template <class TRNAString>
-void PITASeedSeqs<TRNAString>::set_mirna_seq(TRNAString pSeq)
-{
+template<class TRNAString>
+void PITASeedSeqs<TRNAString>::set_mirna_seq(TRNAString pSeq) {
     clear(mSeedSeqs);
     clear(mSeedTypes);
     clear(mEffectiveSeeds);
@@ -313,9 +259,8 @@ void PITASeedSeqs<TRNAString>::set_mirna_seq(TRNAString pSeq)
 //
 // PITASeedSites methods
 //
-template <class TRNAString>
-void PITASeedSites<TRNAString>::clear_pos()
-{
+template<class TRNAString>
+void PITASeedSites<TRNAString>::clear_pos() {
     clear(mMRNAPos);
     clear(mSitePos);
     clear(mSeedTypes);
@@ -323,18 +268,16 @@ void PITASeedSites<TRNAString>::clear_pos()
     clear(mEffectiveSites);
 }
 
-template <class TRNAString>
-void PITASeedSites<TRNAString>::reset_finder()
-{
+template<class TRNAString>
+void PITASeedSites<TRNAString>::reset_finder() {
     goBegin(mFinder);
     clear(mFinder);
 }
 
-template <class TRNAString>
+template<class TRNAString>
 int PITASeedSites<TRNAString>::find_seed_sites(
         TRNAString const &pMiRNA,
-        StringSet<CharString> &pSeedDef)
-{
+        StringSet<CharString> &pSeedDef) {
     PITASeedSeqs<TRNAString> seedSeqs;
     TRNAString seedSeq;
     CharString seedType;
@@ -348,17 +291,14 @@ int PITASeedSites<TRNAString>::find_seed_sites(
 
     seedSeqs.set_mirna_seq(pMiRNA);
     retVal = seedSeqs.create_seed_seqs(pSeedDef);
-    if (retVal != 0)
-    {
+    if (retVal != 0) {
         std::cerr << "ERROR: Could not get the seed sequence for " << pMiRNA;
         std::cerr << std::endl;
         return 1;
     }
 
-    for (unsigned i = 0; i < length(seedSeqs.mEffectiveSeeds); ++i)
-    {
-        if (!seedSeqs.mEffectiveSeeds[i])
-        {
+    for (unsigned i = 0; i < length(seedSeqs.mEffectiveSeeds); ++i) {
+        if (!seedSeqs.mEffectiveSeeds[i]) {
             continue;
         }
 
@@ -366,15 +306,13 @@ int PITASeedSites<TRNAString>::find_seed_sites(
         seedType = seedSeqs.get_seed_type(i);
         misMatchPos = seedSeqs.get_mismatched_pos(i);
 
-        while (find(mFinder, seedSeq))
-        {
+        while (find(mFinder, seedSeq)) {
             mRNAPos = position(mFinder).i1;
             sitePos = position(mFinder).i2;
 
             effectiveSite = true;
             endPos = sitePos + INDEXED_SEQ_LEN;
-            if ((endPos < MIN_DIST_TO_CDS) || (endPos + MIN_DIST_UTR_END > length(mMRNASeqs[mRNAPos])))
-            {
+            if ((endPos < MIN_DIST_TO_CDS) || (endPos + MIN_DIST_UTR_END > length(mMRNASeqs[mRNAPos]))) {
                 effectiveSite = false;
             }
 
@@ -389,7 +327,7 @@ int PITASeedSites<TRNAString>::find_seed_sites(
     return 0;
 }
 
-template <class TRNAString>
+template<class TRNAString>
 void PITASeedSites<TRNAString>::set_new_seed_type(
         CharString &pCurSeedType,
         StringSet<CharString> &pSeedDef,
@@ -397,13 +335,11 @@ void PITASeedSites<TRNAString>::set_new_seed_type(
         unsigned pSitePos,
         TRNAString const &pMiRNA,
         unsigned pMisMatchPos,
-        bool &pEffectiveSite)
-{
+        bool &pEffectiveSite) {
     bool matchM8, matchM9, gutM8, gutM9, gumM8, gumM9;;
     CharString newSeedType = "";
 
-    if (!pEffectiveSite)
-    {
+    if (!pEffectiveSite) {
         appendValue(mSeedTypes, "");
         appendValue(mMisMatchPos, 0);
         return;
@@ -414,38 +350,32 @@ void PITASeedSites<TRNAString>::set_new_seed_type(
 
     set_stringent_seed_type(pCurSeedType, pSeedDef, matchM8, matchM9, pMisMatchPos, newSeedType);
 
-    if (newSeedType == "" && (pSeedDef[2] == 'Y' || pSeedDef[1] == 'Y'))
-    {
-        if (pSeedDef[3] == '1' || pSeedDef[3] == '+')
-        {
+    if (newSeedType == "" && (pSeedDef[2] == 'Y' || pSeedDef[1] == 'Y')) {
+        if (pSeedDef[3] == '1' || pSeedDef[3] == '+') {
             set_single_gu_seed_type(pCurSeedType, pSeedDef, -1, -2, matchM8, matchM9, gutM8, gutM9, gumM8, gumM9,
-                    pMisMatchPos, newSeedType);
+                                    pMisMatchPos, newSeedType);
         }
 
-        if (newSeedType == "" && pSeedDef[3] == '+')
-        {
+        if (newSeedType == "" && pSeedDef[3] == '+') {
             set_multiple_gu_seed_type(pCurSeedType, pSeedDef, -1, -2, matchM8, matchM9, gutM8, gutM9, gumM8, gumM9,
-                    pMisMatchPos, newSeedType);
+                                      pMisMatchPos, newSeedType);
         }
 
-        if (newSeedType == "" && pSeedDef[4] != "0:0")
-        {
+        if (newSeedType == "" && pSeedDef[4] != "0:0") {
             set_mismatch_seed_type(pCurSeedType, pSeedDef, -1, -2, matchM8, matchM9, gutM8, gutM9, gumM8, gumM9,
-                    pMisMatchPos, newSeedType);
+                                   pMisMatchPos, newSeedType);
         }
 
-        if (newSeedType == "" && pSeedDef[4] != "0:0" && (pSeedDef[3] == '1' || pSeedDef[3] == '+'))
-        {
+        if (newSeedType == "" && pSeedDef[4] != "0:0" && (pSeedDef[3] == '1' || pSeedDef[3] == '+')) {
             set_gu_mismatch_seed_type(pCurSeedType, pSeedDef, -1, -2, matchM8, matchM9, gutM8, gutM9, gumM8, gumM9,
-                    pMisMatchPos, newSeedType);
+                                      pMisMatchPos, newSeedType);
         }
 
     }
 
     set_6mer_seed_type(pCurSeedType, pSeedDef, matchM8, matchM9, pMisMatchPos, newSeedType);
 
-    if (newSeedType == "")
-    {
+    if (newSeedType == "") {
         pEffectiveSite = false;
         appendValue(mSeedTypes, pCurSeedType);
         appendValue(mMisMatchPos, 0);
@@ -455,7 +385,7 @@ void PITASeedSites<TRNAString>::set_new_seed_type(
 
 }
 
-template <class TRNAString>
+template<class TRNAString>
 void PITASeedSites<TRNAString>::set_mx_matches(
         unsigned pMRNAPos,
         unsigned pSitePos,
@@ -463,64 +393,52 @@ void PITASeedSites<TRNAString>::set_mx_matches(
         int pMx,
         bool &pMatchMx,
         bool &pGutMx,
-        bool &pGumMx)
-{
+        bool &pGumMx) {
     TRNAString cMiRNASeq, miRNAMx, mRNAMx, miRNAMxC;
 
-    miRNAMx = pMiRNA[pMx-1];
+    miRNAMx = pMiRNA[pMx - 1];
     cMiRNASeq = pMiRNA;
     complement(cMiRNASeq);
-    miRNAMxC = cMiRNASeq[pMx-1];
+    miRNAMxC = cMiRNASeq[pMx - 1];
 
-    mRNAMx = mMRNASeqs[pMRNAPos][pSitePos-(pMx- 1 - INDEXED_SEQ_LEN)];
+    mRNAMx = mMRNASeqs[pMRNAPos][pSitePos - (pMx - 1 - INDEXED_SEQ_LEN)];
 
     pMatchMx = false;
-    if (miRNAMxC == mRNAMx)
-    {
+    if (miRNAMxC == mRNAMx) {
         pMatchMx = true;
     }
 
     pGutMx = false;
     pGumMx = false;
-    if ((miRNAMx == 'G' && mRNAMx == 'U'))
-    {
+    if ((miRNAMx == 'G' && mRNAMx == 'U')) {
         pGutMx = true;
-    }
-    else if ((miRNAMx == 'U' && mRNAMx == 'G'))
-    {
+    } else if ((miRNAMx == 'U' && mRNAMx == 'G')) {
         pGumMx = true;
     }
 
 }
 
-template <class TRNAString>
+template<class TRNAString>
 void PITASeedSites<TRNAString>::set_stringent_seed_type(
         CharString &pCurSeedType,
         StringSet<CharString> &pSeedDef,
         bool pMatchMx1,
         bool pMatchMx2,
         unsigned,
-        CharString &pNewSeedType)
-{
-    if (pNewSeedType != "")
-    {
+        CharString &pNewSeedType) {
+    if (pNewSeedType != "") {
         return;
     }
 
-    if (pCurSeedType == "6mer")
-    {
-        if (pSeedDef[2] == 'Y' && pMatchMx1 && pMatchMx2)
-        {
+    if (pCurSeedType == "6mer") {
+        if (pSeedDef[2] == 'Y' && pMatchMx1 && pMatchMx2) {
             pNewSeedType = "8mer";
-        }
-        else if (pSeedDef[1] == 'Y' && pMatchMx1)
-        {
+        } else if (pSeedDef[1] == 'Y' && pMatchMx1) {
             pNewSeedType = "7mer";
         }
     }
 
-    if (pNewSeedType != "")
-    {
+    if (pNewSeedType != "") {
         appendValue(mSeedTypes, pNewSeedType);
         appendValue(mMisMatchPos, 0);
     }
@@ -528,30 +446,25 @@ void PITASeedSites<TRNAString>::set_stringent_seed_type(
     return;
 }
 
-template <class TRNAString>
+template<class TRNAString>
 void PITASeedSites<TRNAString>::set_6mer_seed_type(
         CharString &pCurSeedType,
         StringSet<CharString> &pSeedDef,
-        bool ,
-        bool ,
+        bool,
+        bool,
         unsigned,
-        CharString &pNewSeedType)
-{
-    if (pNewSeedType != "")
-    {
+        CharString &pNewSeedType) {
+    if (pNewSeedType != "") {
         return;
     }
 
-    if (pCurSeedType == "6mer")
-    {
-        if (pSeedDef[0] == 'Y')
-        {
+    if (pCurSeedType == "6mer") {
+        if (pSeedDef[0] == 'Y') {
             pNewSeedType = "6mer";
         }
     }
 
-    if (pNewSeedType != "")
-    {
+    if (pNewSeedType != "") {
         appendValue(mSeedTypes, pNewSeedType);
         appendValue(mMisMatchPos, 0);
     }
@@ -559,7 +472,7 @@ void PITASeedSites<TRNAString>::set_6mer_seed_type(
     return;
 }
 
-template <class TRNAString>
+template<class TRNAString>
 void PITASeedSites<TRNAString>::set_single_gu_seed_type(
         CharString &pCurSeedType,
         StringSet<CharString> &pSeedDef,
@@ -572,86 +485,58 @@ void PITASeedSites<TRNAString>::set_single_gu_seed_type(
         bool pGumMx1,
         bool pGumMx2,
         unsigned pMisMatchPos,
-        CharString &pNewSeedType)
-{
+        CharString &pNewSeedType) {
     int mm;
 
-    if (pNewSeedType != "")
-    {
+    if (pNewSeedType != "") {
         return;
     }
 
-    if (pCurSeedType == "6mer")
-    {
-        if (pSeedDef[2] == 'Y' && ((pMatchMx1 && pGutMx2) || (pMatchMx2 && pGutMx1)))
-        {
+    if (pCurSeedType == "6mer") {
+        if (pSeedDef[2] == 'Y' && ((pMatchMx1 && pGutMx2) || (pMatchMx2 && pGutMx1))) {
             pNewSeedType = "8mer_GUT";
-            if (pMatchMx1)
-            {
+            if (pMatchMx1) {
                 mm = pM2;
-            }
-            else
-            {
+            } else {
                 mm = pM1;
             }
-        }
-        else if (pSeedDef[2] == 'Y' && ((pMatchMx1 && pGumMx2) || (pMatchMx2 && pGumMx1)))
-        {
+        } else if (pSeedDef[2] == 'Y' && ((pMatchMx1 && pGumMx2) || (pMatchMx2 && pGumMx1))) {
             pNewSeedType = "8mer_GUM";
-            if (pMatchMx1)
-            {
+            if (pMatchMx1) {
                 mm = pM2;
-            }
-            else
-            {
+            } else {
                 mm = pM1;
             }
-        }
-        else if (pSeedDef[1] == 'Y' && pGutMx1)
-        {
+        } else if (pSeedDef[1] == 'Y' && pGutMx1) {
             pNewSeedType = "7mer_GUT";
             mm = pM1;
-        }
-        else if (pSeedDef[1] == 'Y' && pGumMx1)
-        {
+        } else if (pSeedDef[1] == 'Y' && pGumMx1) {
             pNewSeedType = "7mer_GUM";
             mm = pM1;
         }
-    }
-    else if (pCurSeedType == "GUT")
-    {
-        if (pSeedDef[2] == 'Y' && pMatchMx1 && pMatchMx2)
-        {
+    } else if (pCurSeedType == "GUT") {
+        if (pSeedDef[2] == 'Y' && pMatchMx1 && pMatchMx2) {
             pNewSeedType = "8mer_GUT";
             mm = pMisMatchPos;
-        }
-        else if (pSeedDef[1] == 'Y' && pMatchMx1)
-        {
+        } else if (pSeedDef[1] == 'Y' && pMatchMx1) {
             pNewSeedType = "7mer_GUT";
             mm = pMisMatchPos;
         }
-    }
-    else if (pCurSeedType == "GUM")
-    {
-        if (pSeedDef[2] == 'Y' && pMatchMx1 && pMatchMx2)
-        {
+    } else if (pCurSeedType == "GUM") {
+        if (pSeedDef[2] == 'Y' && pMatchMx1 && pMatchMx2) {
             pNewSeedType = "8mer_GUM";
             mm = pMisMatchPos;
-        }
-        else if (pSeedDef[1] == 'Y' && pMatchMx1)
-        {
+        } else if (pSeedDef[1] == 'Y' && pMatchMx1) {
             pNewSeedType = "7mer_GUM";
             mm = pMisMatchPos;
         }
     }
 
-    if (FORCE_LAST_MATCH && pNewSeedType != "")
-    {
+    if (FORCE_LAST_MATCH && pNewSeedType != "") {
         check_last_match(pMatchMx1, pMatchMx2, pNewSeedType);
     }
 
-    if (pNewSeedType != "")
-    {
+    if (pNewSeedType != "") {
         appendValue(mSeedTypes, pNewSeedType);
         appendValue(mMisMatchPos, mm);
     }
@@ -659,7 +544,7 @@ void PITASeedSites<TRNAString>::set_single_gu_seed_type(
     return;
 }
 
-template <class TRNAString>
+template<class TRNAString>
 void PITASeedSites<TRNAString>::set_multiple_gu_seed_type(
         CharString &pCurSeedType,
         StringSet<CharString> &pSeedDef,
@@ -672,47 +557,33 @@ void PITASeedSites<TRNAString>::set_multiple_gu_seed_type(
         bool pGumMx1,
         bool pGumMx2,
         unsigned,
-        CharString &pNewSeedType)
-{
-    if (pNewSeedType != "")
-    {
+        CharString &pNewSeedType) {
+    if (pNewSeedType != "") {
         return;
     }
 
-    if (pCurSeedType == "6mer" && pSeedDef[2] == 'Y' && (pGumMx1 || pGutMx1) && (pGumMx2 || pGutMx2))
-    {
+    if (pCurSeedType == "6mer" && pSeedDef[2] == 'Y' && (pGumMx1 || pGutMx1) && (pGumMx2 || pGutMx2)) {
         pNewSeedType = "8mer_GU+";
-    }
-    else if (pCurSeedType == "GUT" || pCurSeedType == "GUM")
-    {
-        if (pSeedDef[2] == 'Y' && (pGumMx1 || pGutMx1 || pMatchMx1) && (pGumMx2 || pGutMx2 || pMatchMx2))
-        {
+    } else if (pCurSeedType == "GUT" || pCurSeedType == "GUM") {
+        if (pSeedDef[2] == 'Y' && (pGumMx1 || pGutMx1 || pMatchMx1) && (pGumMx2 || pGutMx2 || pMatchMx2)) {
             pNewSeedType = "8mer_GU+";
-        }
-        else if (pSeedDef[1] == 'Y' && (pGumMx1 || pGutMx1)) //TODO: Check pGumMx1 || pGutMx1 || pMatchMx1
+        } else if (pSeedDef[1] == 'Y' && (pGumMx1 || pGutMx1)) //TODO: Check pGumMx1 || pGutMx1 || pMatchMx1
         {
             pNewSeedType = "7mer_GU+";
         }
-    }
-    else if (pCurSeedType == "GU+")
-    {
-        if (pSeedDef[2] == 'Y' && (pGumMx1 || pGutMx1 || pMatchMx1) && (pGumMx2 || pGutMx2 || pMatchMx2))
-        {
+    } else if (pCurSeedType == "GU+") {
+        if (pSeedDef[2] == 'Y' && (pGumMx1 || pGutMx1 || pMatchMx1) && (pGumMx2 || pGutMx2 || pMatchMx2)) {
             pNewSeedType = "8mer_GU+";
-        }
-        else if (pSeedDef[1] == 'Y' && (pGumMx1 || pGutMx1 || pMatchMx1))
-        {
+        } else if (pSeedDef[1] == 'Y' && (pGumMx1 || pGutMx1 || pMatchMx1)) {
             pNewSeedType = "7mer_GU+";
         }
     }
 
-    if (FORCE_LAST_MATCH && pNewSeedType != "")
-    {
+    if (FORCE_LAST_MATCH && pNewSeedType != "") {
         check_last_match(pMatchMx1, pMatchMx2, pNewSeedType);
     }
 
-    if (pNewSeedType != "")
-    {
+    if (pNewSeedType != "") {
         appendValue(mSeedTypes, pNewSeedType);
         appendValue(mMisMatchPos, 0);
     }
@@ -720,7 +591,7 @@ void PITASeedSites<TRNAString>::set_multiple_gu_seed_type(
     return;
 }
 
-template <class TRNAString>
+template<class TRNAString>
 void PITASeedSites<TRNAString>::set_mismatch_seed_type(
         CharString &pCurSeedType,
         StringSet<CharString> &pSeedDef,
@@ -733,58 +604,45 @@ void PITASeedSites<TRNAString>::set_mismatch_seed_type(
         bool pGumMx1,
         bool pGumMx2,
         unsigned pMisMatchPos,
-        CharString &pNewSeedType)
-{
+        CharString &pNewSeedType) {
     int mm;
 
-    if (pNewSeedType != "")
-    {
+    if (pNewSeedType != "") {
         return;
     }
 
-    if (pSeedDef[2] == 'Y')
-    {
+    if (pSeedDef[2] == 'Y') {
         if (pCurSeedType == "6mer" && ((pMatchMx1 && !pMatchMx2 && !pGutMx2 && !pGumMx2)
-                || (!pMatchMx1 && !pGutMx1 && !pGumMx1 && pMatchMx2)))
-        {
+                                       || (!pMatchMx1 && !pGutMx1 && !pGumMx1 && pMatchMx2))) {
             pNewSeedType = "8mer_MM";
-            if (pMatchMx1)
-            {
+            if (pMatchMx1) {
                 mm = pM2;
-            }
-            else
-            {
+            } else {
                 mm = pM1;
             }
-        }
-        else if (pCurSeedType == "MM" && pMatchMx1 && pMatchMx2)
-        {
+        } else if (pCurSeedType == "MM" && pMatchMx1 && pMatchMx2) {
             pNewSeedType = "8mer_MM";
             mm = pMisMatchPos;
         }
     }
 
-    if (pNewSeedType == "" && pSeedDef[1] == 'Y' && pSeedDef[4] == "1:1")
-    {
-        if (pCurSeedType == "6mer" && !pMatchMx1 && !pGutMx1 && !pGumMx1) //TODO: Check !pMatchMx1 && !pGutMx1 && !pGumMx1
+    if (pNewSeedType == "" && pSeedDef[1] == 'Y' && pSeedDef[4] == "1:1") {
+        if (pCurSeedType == "6mer" && !pMatchMx1 && !pGutMx1 &&
+            !pGumMx1) //TODO: Check !pMatchMx1 && !pGutMx1 && !pGumMx1
         {
             pNewSeedType = "7mer_MM";
             mm = pM1;
-        }
-        else if (pCurSeedType == "MM" && pMatchMx1)
-        {
+        } else if (pCurSeedType == "MM" && pMatchMx1) {
             pNewSeedType = "7mer_MM";
             mm = pMisMatchPos;
         }
     }
 
-    if (FORCE_LAST_MATCH && pNewSeedType != "")
-    {
+    if (FORCE_LAST_MATCH && pNewSeedType != "") {
         check_last_match(pMatchMx1, pMatchMx2, pNewSeedType);
     }
 
-    if (pNewSeedType != "")
-    {
+    if (pNewSeedType != "") {
         appendValue(mSeedTypes, pNewSeedType);
         appendValue(mMisMatchPos, mm);
     }
@@ -792,7 +650,7 @@ void PITASeedSites<TRNAString>::set_mismatch_seed_type(
     return;
 }
 
-template <class TRNAString>
+template<class TRNAString>
 void PITASeedSites<TRNAString>::set_gu_mismatch_seed_type(
         CharString &pCurSeedType,
         StringSet<CharString> &pSeedDef,
@@ -805,84 +663,61 @@ void PITASeedSites<TRNAString>::set_gu_mismatch_seed_type(
         bool pGumMx1,
         bool pGumMx2,
         unsigned pMisMatchPos,
-        CharString &pNewSeedType)
-{
+        CharString &pNewSeedType) {
     int mm;
 
-    if (pNewSeedType != "")
-    {
+    if (pNewSeedType != "") {
         return;
     }
 
-    if (pSeedDef[2] == 'Y')
-    {
+    if (pSeedDef[2] == 'Y') {
         if (pCurSeedType == "6mer" && ((!pMatchMx1 && !pMatchMx2 && (pGutMx1 || pGumMx1) && !(pGutMx2 || pGumMx2))
-                || (!pMatchMx1 && !pMatchMx2 && !(pGutMx1 || pGumMx1) && (pGutMx2 || pGumMx2))))
-        {
+                                       || (!pMatchMx1 && !pMatchMx2 && !(pGutMx1 || pGumMx1) &&
+                                           (pGutMx2 || pGumMx2)))) {
             pNewSeedType = "8mer_MMGU";
-            if (pGutMx1 || pGumMx1)
-            {
+            if (pGutMx1 || pGumMx1) {
                 mm = pM2;
-            }
-            else
-            {
+            } else {
                 mm = pM1;
             }
-        }
-        else if ((pCurSeedType == "GUT" || pCurSeedType == "GUM") &&
-                ((pMatchMx1 && !pMatchMx2 && !pGutMx2 && !pGumMx2)
-                || (!pMatchMx1 && pMatchMx2 && !pGutMx1 && !pGumMx1)))
-        {
+        } else if ((pCurSeedType == "GUT" || pCurSeedType == "GUM") &&
+                   ((pMatchMx1 && !pMatchMx2 && !pGutMx2 && !pGumMx2)
+                    || (!pMatchMx1 && pMatchMx2 && !pGutMx1 && !pGumMx1))) {
             pNewSeedType = "8mer_MMGU";
-            if (pMatchMx1)
-            {
+            if (pMatchMx1) {
                 mm = pM2;
-            }
-            else
-            {
+            } else {
                 mm = pM1;
             }
-        }
-        else if (pCurSeedType == "MM" && ((pMatchMx1 && (pGutMx2 || pGumMx2))
-                || ((pGutMx1 || pGumMx1) && pMatchMx2)))
-        {
+        } else if (pCurSeedType == "MM" && ((pMatchMx1 && (pGutMx2 || pGumMx2))
+                                            || ((pGutMx1 || pGumMx1) && pMatchMx2))) {
             pNewSeedType = "8mer_MMGU";
             mm = pMisMatchPos;
-        }
-        else if (pCurSeedType == "MMGU" && pMatchMx1 && pMatchMx2)
-        {
+        } else if (pCurSeedType == "MMGU" && pMatchMx1 && pMatchMx2) {
             pNewSeedType = "8mer_MMGU";
             mm = pMisMatchPos;
         }
     }
 
-    if (pNewSeedType == "" && pSeedDef[1] == 'Y' && pSeedDef[4] == "1:1")
-    {
-        if (pCurSeedType == "MM" && (pGutMx2 || pGumMx2))
-        {
+    if (pNewSeedType == "" && pSeedDef[1] == 'Y' && pSeedDef[4] == "1:1") {
+        if (pCurSeedType == "MM" && (pGutMx2 || pGumMx2)) {
             pNewSeedType = "7mer_MMGU";
             mm = pMisMatchPos;
-        }
-        else if ((pCurSeedType == "GUT" || pCurSeedType == "GUM") && (!pMatchMx1 && !pGutMx1 && !pGumMx1))
-        {
+        } else if ((pCurSeedType == "GUT" || pCurSeedType == "GUM") && (!pMatchMx1 && !pGutMx1 && !pGumMx1)) {
             pNewSeedType = "7mer_MMGU";
             mm = pM1;
-        }
-        else if (pCurSeedType == "MMGU" && pMatchMx1)
-        {
+        } else if (pCurSeedType == "MMGU" && pMatchMx1) {
             pNewSeedType = "7mer_MMGU";
             mm = pMisMatchPos;
         }
 
     }
 
-    if (FORCE_LAST_MATCH && pNewSeedType != "")
-    {
+    if (FORCE_LAST_MATCH && pNewSeedType != "") {
         check_last_match(pMatchMx1, pMatchMx2, pNewSeedType);
     }
 
-    if (pNewSeedType != "")
-    {
+    if (pNewSeedType != "") {
         appendValue(mSeedTypes, pNewSeedType);
         appendValue(mMisMatchPos, mm);
     }
@@ -890,23 +725,25 @@ void PITASeedSites<TRNAString>::set_gu_mismatch_seed_type(
     return;
 }
 
-template <class TRNAString>
-void PITASeedSites<TRNAString>::check_last_match(bool pMatchM8, bool pMatchM9, seqan::CharString &pNewSeedType)
-{
-    if (pNewSeedType == "6mer" || pNewSeedType == "7mer" || pNewSeedType == "8mer")
-    {
+template<class TRNAString>
+void PITASeedSites<TRNAString>::check_last_match(bool pMatchM8, bool pMatchM9, seqan::CharString &pNewSeedType) {
+    if (pNewSeedType == "6mer" || pNewSeedType == "7mer" || pNewSeedType == "8mer") {
         return;
     }
 
-    if ((pNewSeedType[0] == '7' && !pMatchM8) || (pNewSeedType[0] == '8' && !pMatchM9))
-    {
+    if ((pNewSeedType[0] == '7' && !pMatchM8) || (pNewSeedType[0] == '8' && !pMatchM9)) {
         pNewSeedType = "";
     }
 }
 
 // Explicit template instantiation
-template class PITASequences<TRNATYPE>;
-template class PITASeedSeqs<TRNATYPE>;
-template class PITASeedSites<TRNATYPE>;
+template
+class PITASequences<TRNATYPE>;
+
+template
+class PITASeedSeqs<TRNATYPE>;
+
+template
+class PITASeedSites<TRNATYPE>;
 
 } // namespace ptddg

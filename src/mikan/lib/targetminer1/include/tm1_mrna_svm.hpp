@@ -5,14 +5,13 @@
 #include <Eigen/Dense>
 #include <seqan/sequence.h>
 
-namespace tm1p{
+namespace tm1p {
 
 //
 // mRNA level SVM model
 //
-template <class TRNAString>
-class TM1MRNAModel
-{
+template<class TRNAString>
+class TM1MRNAModel {
 public:
     // Constant values
     static const unsigned INPUT_FEAT_NUM = 30;
@@ -20,13 +19,12 @@ public:
 
 public:
     // Define methods
-    TM1MRNAModel(): mRho(-0.279867f), mGamma(0.09f), mAlphas(435), mSVs(435, 30), mSquaredSVs(435), mMatProd(435)
-    {
+    TM1MRNAModel() : mRho(-0.279867f), mGamma(0.09f), mAlphas(435), mSVs(435, 30), mSquaredSVs(435), mMatProd(435) {
         init_model();
     }
 
     // Define methods
-    float calc_score(Eigen::VectorXf& pInput, float pValSquared);
+    float calc_score(Eigen::VectorXf &pInput, float pValSquared);
 
 private:
     const float mRho;
@@ -38,8 +36,11 @@ private:
 
 private:
     void init_model();
+
     void init_alpha();
+
     void init_sv();
+
     void init_sv_squared();
 
 };
@@ -47,21 +48,22 @@ private:
 //
 // Input vector for mRNA level SVM
 //
-template <class TRNAString>
-class TM1MRNAInputVector
-{
+template<class TRNAString>
+class TM1MRNAInputVector {
 public:
     // Constant values
     static const unsigned INPUT_FEAT_NUM = 30;
 
 public:
     // Define methods
-    TM1MRNAInputVector():  mInputVec(30) {}
-    const seqan::String<float>& get_scores(){return mScores;}
+    TM1MRNAInputVector() : mInputVec(30) {}
+
+    const seqan::String<float> &get_scores() { return mScores; }
 
     // Method prototypes
     void clear_scores();
-    int classify(TM1ScaledFeatures<TRNAString> &pMRNAFeatures);
+
+    int classify(TM1ScaledFeatures <TRNAString> &pMRNAFeatures);
 
 private:
     TM1MRNAModel<TRNAString> mModel;
@@ -69,7 +71,8 @@ private:
     seqan::String<float> mScores;
 
 private:
-    int calc_score(TM1ScaledFeatures<TRNAString> &pMRNAFeatures);
+    int calc_score(TM1ScaledFeatures <TRNAString> &pMRNAFeatures);
+
     void print_input_vector(float pValSquared);
 
 };
