@@ -1,46 +1,10 @@
 #include <tm1_inst_template.hpp> // TRNATYPE
-#include <tm1_seed_site.hpp>     // TM1Sequences, TM1SeedSeqs, TM1SeedSites
+#include <tm1_seed_site.hpp>     // TM1SeedSeqs, TM1SeedSites
 #include <seqan/seq_io.h>
 
 using namespace seqan;
 
 namespace tm1p {
-
-//
-// TM1Sequences methods
-//
-template<class TRNAString>
-int TM1Sequences<TRNAString>::read_fasta(CharString const &pFasta) {
-    CharString id;
-    CharString seq;
-
-    SequenceStream seqStream(toCString(pFasta));
-    if (!isGood(seqStream)) {
-        std::cerr << "ERROR: Could not open the file!" << std::endl;
-        return 1;
-    }
-
-    while (!atEnd(seqStream)) {
-        if (readRecord(id, seq, seqStream) != 0) {
-            std::cerr << "ERROR: Could not read from " << toCString(pFasta) << "!" << std::endl;
-            return 1;
-        }
-
-        toUpper(seq);
-        for (unsigned i = 0; i < length(seq); ++i) {
-            if (seq[i] == 'T') {
-                seq[i] = 'U';
-            }
-        }
-
-        if (length(seq) > 0) {
-            appendValue(mSeqIds, id);
-            appendValue(mSeqs, seq);
-        }
-    }
-
-    return 0;
-}
 
 //
 // TM1SeedSeqs methods
@@ -526,8 +490,6 @@ int TM1SeedSites<TRNAString>::get_seed_end_pos2(int pIdx) {
 }
 
 // Explicit template instantiation
-template
-class TM1Sequences<TRNATYPE>;
 
 template
 class TM1SeedSeqs<TRNATYPE>;

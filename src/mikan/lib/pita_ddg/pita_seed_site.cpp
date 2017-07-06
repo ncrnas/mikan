@@ -7,43 +7,6 @@ using namespace seqan;
 namespace ptddg {
 
 //
-// PITASequences methods
-//
-template<class TRNAString>
-int PITASequences<TRNAString>::read_fasta(CharString const &pFasta) {
-    CharString id;
-    CharString seq;
-
-    SequenceStream seqStream(toCString(pFasta));
-    if (!isGood(seqStream)) {
-        std::cerr << "ERROR: Could not open the file!" << std::endl;
-        return 1;
-    }
-
-    while (!atEnd(seqStream)) {
-        if (readRecord(id, seq, seqStream) != 0) {
-            std::cerr << "ERROR: Could not read from " << toCString(pFasta) << "!" << std::endl;
-            return 1;
-        }
-
-        toUpper(seq);
-        for (unsigned i = 0; i < length(seq); ++i) {
-            if (seq[i] == 'T') {
-                seq[i] = 'U';
-            }
-        }
-        appendValue(mSeqIds, id);
-        appendValue(mSeqs, seq);
-
-        if (mMaxLen < (int) length(seq)) {
-            mMaxLen = (int) length(seq);
-        }
-    }
-
-    return 0;
-}
-
-//
 // PITASeedSeqs methods
 //
 template<class TRNAString>
@@ -737,9 +700,6 @@ void PITASeedSites<TRNAString>::check_last_match(bool pMatchM8, bool pMatchM9, s
 }
 
 // Explicit template instantiation
-template
-class PITASequences<TRNATYPE>;
-
 template
 class PITASeedSeqs<TRNATYPE>;
 

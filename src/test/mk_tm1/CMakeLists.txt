@@ -15,11 +15,12 @@ find_package(SeqAn REQUIRED)
 # ----------------------------------------------------------------------------
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/mikan/lib/targetminer1 tm1)
+add_subdirectory(${CMAKE_SOURCE_DIR}/mikan/lib/mikan mk)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../lib/mikan mikantest)
 
 # Add include directories
 include_directories(${SEQAN_INCLUDE_DIRS} ${gtest_SOURCE_DIR}/include
-        ${gtest_SOURCE_DIR} ${TM1_HEADERS} ${MKTEST_HEADERS})
+        ${gtest_SOURCE_DIR} ${TM1_HEADERS} ${MIKAN_HEADERS} ${MKTEST_HEADERS})
 
 # Add definitions set by find_package (SeqAn)
 add_definitions(${SEQAN_DEFINITIONS})
@@ -48,9 +49,9 @@ endif ()
 
 # Add dependencies found by find_package (SeqAn)
 target_link_libraries(gtest_mk_tm1 gtest gtest_main)
-target_link_libraries(gtest_mk_tm1 ${SEQAN_LIBRARIES} tm1 mikantest)
+target_link_libraries(gtest_mk_tm1 ${SEQAN_LIBRARIES} tm1 mk mikantest)
 target_link_libraries(gtest_mk_tm1_long gtest gtest_main)
-target_link_libraries(gtest_mk_tm1_long ${SEQAN_LIBRARIES} tm1 mikantest)
+target_link_libraries(gtest_mk_tm1_long ${SEQAN_LIBRARIES} tm1 mk mikantest)
 
 
 # Add CXX flags found by find_package (SeqAn)

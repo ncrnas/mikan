@@ -19,12 +19,13 @@ public:
     typedef seqan::StringSet<TRNAString> TRNASet;
 
     // Declare variables
-    seqan::CharString mMiRNAFasta;
-    seqan::CharString mMRNAFasta;
+    seqan::CharString &mMiRNAFasta;
+    seqan::CharString &mMRNAFasta;
 
 public:
     // Define methods
-    MKCoreInput() {}
+    MKCoreInput(seqan::CharString &pMiRNAFasta, seqan::CharString &pMRNAFasta) :
+            mMiRNAFasta(pMiRNAFasta), mMRNAFasta(pMRNAFasta){}
 
     TCharSet const &get_mirna_ids() { return mMiRNASeqs.get_ids(); }
 
@@ -35,8 +36,6 @@ public:
     TRNASet const &get_mrna_seqs() { return mMRNASeqs.get_seqs(); }
 
     // Method prototypes
-    void init_from_args(MKOptions &opts);
-
     int load_seq_from_file();
 
 private:

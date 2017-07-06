@@ -4,8 +4,9 @@
 #include <pita_inst_template.hpp> // TRNATYPE
 #include <pita_option.hpp>        // PITAOptions
 #include <pita_score.hpp>         // PITAGGDScores, PITATotalScores
-#include <pita_seed_site.hpp>     // PITASequences, PITASeedSites
+#include <pita_seed_site.hpp>     // PITASeedSites
 #include <pita_site_cluster.hpp>  // PITAOverlap, PITASortedSitePos
+#include <mk_sequence.hpp>        // MKSequences
 #include <seqan/sequence.h>
 
 namespace ptddg {
@@ -44,8 +45,8 @@ public:
     int load_seq_from_file();
 
 private:
-    PITASequences<TRNAString> mMiRNASeqs;
-    PITASequences<TRNAString> mMRNASeqs;
+    mikan::MKSequences<TRNAString> mMiRNASeqs;
+    mikan::MKSequences<TRNAString> mMRNASeqs;
 };
 
 //

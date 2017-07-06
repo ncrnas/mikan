@@ -1,43 +1,10 @@
 #include <ts5_inst_template.hpp> // TRNATYPE
-#include <ts5_seed_site.hpp>     // TS5Sequences, TS5SeedSeqs, TS5SeedSites
+#include <ts5_seed_site.hpp>     // TS5SeedSeqs, TS5SeedSites
 #include <seqan/seq_io.h>
 
 using namespace seqan;
 
 namespace ts5cs {
-
-//
-// TS5Sequences methods
-//
-template<class TRNAString>
-int TS5Sequences<TRNAString>::read_fasta(CharString const &pFasta) {
-    CharString id;
-    CharString seq;
-
-    SequenceStream seqStream(toCString(pFasta));
-    if (!isGood(seqStream)) {
-        std::cerr << "ERROR: Could not open the file!" << std::endl;
-        return 1;
-    }
-
-    while (!atEnd(seqStream)) {
-        if (readRecord(id, seq, seqStream) != 0) {
-            std::cerr << "ERROR: Could not read from " << toCString(pFasta) << "!" << std::endl;
-            return 1;
-        }
-
-        toUpper(seq);
-        for (unsigned i = 0; i < length(seq); ++i) {
-            if (seq[i] == 'T') {
-                seq[i] = 'U';
-            }
-        }
-        appendValue(mSeqIds, id);
-        appendValue(mSeqs, seq);
-    }
-
-    return 0;
-}
 
 //
 // TS5SeedSeqs methods
@@ -108,8 +75,6 @@ void TS5SeedSites<TRNAString, SEEDLEN>::clear_pos() {
 }
 
 // Explicit template instantiation
-template
-class TS5Sequences<TRNATYPE>;
 
 template
 class TS5SeedSeqs<TRNATYPE>;

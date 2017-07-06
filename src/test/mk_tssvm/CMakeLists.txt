@@ -15,11 +15,12 @@ find_package(SeqAn REQUIRED)
 # ----------------------------------------------------------------------------
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/mikan/lib/two_step_svm tssvm)
+add_subdirectory(${CMAKE_SOURCE_DIR}/mikan/lib/mikan mk)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../lib/mikan mikantest)
 
 # Add include directories
 include_directories(${SEQAN_INCLUDE_DIRS} ${gtest_SOURCE_DIR}/include
-        ${gtest_SOURCE_DIR} ${TSSVM_HEADERS} ${MKTEST_HEADERS})
+        ${gtest_SOURCE_DIR} ${TSSVM_HEADERS} ${MIKAN_HEADERS} ${MKTEST_HEADERS})
 
 # Add definitions set by find_package (SeqAn)
 add_definitions(${SEQAN_DEFINITIONS})
@@ -50,9 +51,9 @@ endif ()
 
 # Add dependencies found by find_package (SeqAn)
 target_link_libraries(gtest_mk_tssvm gtest gtest_main)
-target_link_libraries(gtest_mk_tssvm ${SEQAN_LIBRARIES} tssvm mikantest)
+target_link_libraries(gtest_mk_tssvm ${SEQAN_LIBRARIES} tssvm mk mikantest)
 target_link_libraries(gtest_mk_tssvm_long gtest gtest_main)
-target_link_libraries(gtest_mk_tssvm_long ${SEQAN_LIBRARIES} tssvm mikantest)
+target_link_libraries(gtest_mk_tssvm_long ${SEQAN_LIBRARIES} tssvm mk mikantest)
 
 # Add CXX flags found by find_package (SeqAn)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SEQAN_CXX_FLAGS}")

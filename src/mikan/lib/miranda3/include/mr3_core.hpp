@@ -4,8 +4,9 @@
 #include <mr3_inst_template.hpp>  // TRNATYPE
 #include <mr3_option.hpp>         // MR3Options
 #include <mr3_score.hpp>          // MR3GGDScores, MR3TotalScores
-#include <mr3_seed_site.hpp>      // MR3Sequences, MR3SeedSites
+#include <mr3_seed_site.hpp>      // MR3SeedSites
 #include <mr3_site_cluster.hpp>   // MR3Overlap, MR3SortedSitePos
+#include <mk_sequence.hpp>        // MKSequences
 #include <seqan/sequence.h>
 
 namespace mr3as {
@@ -44,8 +45,8 @@ public:
     int load_seq_from_file();
 
 private:
-    MR3Sequences<TRNAString> mMiRNASeqs;
-    MR3Sequences<TRNAString> mMRNASeqs;
+    mikan::MKSequences<TRNAString> mMiRNASeqs;
+    mikan::MKSequences<TRNAString> mMRNASeqs;
 };
 
 //

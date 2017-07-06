@@ -1,47 +1,10 @@
 #include <mr3_inst_template.hpp>  // TRNATYPE
-#include <mr3_seed_site.hpp>      // MR3Sequences, MR3SeedSeqs, MR3SeedSites
+#include <mr3_seed_site.hpp>      // MR3SeedSeqs, MR3SeedSites
 #include <seqan/seq_io.h>
 
 using namespace seqan;
 
 namespace mr3as {
-
-//
-// MR3Sequences methods
-//
-template<class TRNAString>
-int MR3Sequences<TRNAString>::read_fasta(CharString const &pFasta) {
-    CharString id;
-    CharString seq;
-
-    SequenceStream seqStream(toCString(pFasta));
-    if (!isGood(seqStream)) {
-        std::cerr << "ERROR: Could not open the file!" << std::endl;
-        return 1;
-    }
-
-    while (!atEnd(seqStream)) {
-        if (readRecord(id, seq, seqStream) != 0) {
-            std::cerr << "ERROR: Could not read from " << toCString(pFasta) << "!" << std::endl;
-            return 1;
-        }
-
-        toUpper(seq);
-        for (unsigned i = 0; i < length(seq); ++i) {
-            if (seq[i] == 'T') {
-                seq[i] = 'U';
-            }
-        }
-        appendValue(mSeqIds, id);
-        appendValue(mSeqs, seq);
-
-        if (mMaxLen < (int) length(seq)) {
-            mMaxLen = (int) length(seq);
-        }
-    }
-
-    return 0;
-}
 
 //
 // MR3SeedSeqs methods
@@ -856,8 +819,6 @@ void MR3SeedSites<TRNAString>::check_last_match(bool pMatchM8, bool pMatchM9, se
 }
 
 // Explicit template instantiation
-template
-class MR3Sequences<TRNATYPE>;
 
 template
 class MR3SeedSeqs<TRNATYPE>;

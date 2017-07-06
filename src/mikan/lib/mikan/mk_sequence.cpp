@@ -32,8 +32,10 @@ int MKSequences<TRNAString>::read_fasta(CharString const &pFasta) {
                 seq[i] = 'U';
             }
         }
-        appendValue(mSeqIds, id);
-        appendValue(mSeqs, seq);
+        if (length(seq) > 0) {
+            appendValue(mSeqIds, id);
+            appendValue(mSeqs, seq);
+        }
 
         if (mMaxLen < (int) length(seq)) {
             mMaxLen = (int) length(seq);

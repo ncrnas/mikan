@@ -16,10 +16,12 @@ find_package(SeqAn REQUIRED)
 
 # Add lib directories
 add_subdirectory(../../lib/two_step_svm tssvm)
+add_subdirectory(../../lib/mikan mk)
 
 # Add include directories
 include_directories(${SEQAN_INCLUDE_DIRS}
-        ${TSSVM_HEADERS})
+        ${TSSVM_HEADERS}
+        ${MIKAN_HEADERS})
 
 # Add definitions set by find_package (SeqAn)
 add_definitions(${SEQAN_DEFINITIONS})
@@ -31,6 +33,9 @@ add_executable(mk-twostep-svm two_step_svm.cpp)
 if (NOT TARGET tssvm)
     add_library(tssvm ${TSSVM_SOURCE})
 endif ()
+if (NOT TARGET mk)
+    add_library(mk ${MIKAN_SOURCE})
+endif ()
 
 # Add dependencies found by find_package (SeqAn)
 if (MSVC)
@@ -39,7 +44,7 @@ else ()
     set(LIBM_NAME "m")
 endif ()
 
-target_link_libraries(mk-twostep-svm tssvm ${SEQAN_LIBRARIES} ${LIBM_NAME})
+target_link_libraries(mk-twostep-svm tssvm mk ${SEQAN_LIBRARIES} ${LIBM_NAME})
 
 # Add CXX flags found by find_package (SeqAn)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SEQAN_CXX_FLAGS}")

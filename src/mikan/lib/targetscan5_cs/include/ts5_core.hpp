@@ -5,7 +5,8 @@
 #include <ts5_inst_template.hpp> // TRNATYPE
 #include <ts5_option.hpp>        // TS5CSOptions
 #include <ts5_score.hpp>         // TS5ContextScores, TS5TotalScores
-#include <ts5_seed_site.hpp>     // TS5Sequences, TS5SeedSites
+#include <ts5_seed_site.hpp>     // TS5SeedSites
+#include <mk_sequence.hpp>       // MKSequences
 
 namespace ts5cs {
 
@@ -43,8 +44,8 @@ public:
     int load_seq_from_file();
 
 private:
-    TS5Sequences<TRNAString> mMiRNASeqs;
-    TS5Sequences<TRNAString> mMRNASeqs;
+    mikan::MKSequences<TRNAString> mMiRNASeqs;
+    mikan::MKSequences<TRNAString> mMRNASeqs;
 };
 
 //

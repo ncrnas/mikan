@@ -4,8 +4,9 @@
 #include <rh2_inst_template.hpp> // TRNATYPE
 #include <rh2_option.hpp>        // RH2Options
 #include <rh2_score.hpp>         // RH2MFEScores, RH2TotalScores
-#include <rh2_seed_site.hpp>     // RH2Sequences, RH2SeedSites
+#include <rh2_seed_site.hpp>     // RH2SeedSites
 #include <rh2_site_cluster.hpp>  // RH2Overlap, RH2TopNScore, RH2SortedSitePos
+#include <mk_sequence.hpp>       // MKSequences
 #include <seqan/sequence.h>
 
 namespace rh2mfe {
@@ -44,8 +45,8 @@ public:
     int load_seq_from_file();
 
 private:
-    RH2Sequences<TRNAString> mMiRNASeqs;
-    RH2Sequences<TRNAString> mMRNASeqs;
+    mikan::MKSequences<TRNAString> mMiRNASeqs;
+    mikan::MKSequences<TRNAString> mMRNASeqs;
 };
 
 //

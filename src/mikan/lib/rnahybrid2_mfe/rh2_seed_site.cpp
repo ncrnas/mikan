@@ -1,47 +1,10 @@
 #include <rh2_inst_template.hpp> // TRNATYPE
-#include <rh2_seed_site.hpp>     // RH2Sequences, RH2SeedSeqs, RH2SeedSites
+#include <rh2_seed_site.hpp>     // RH2SeedSeqs, RH2SeedSites
 #include <seqan/seq_io.h>
 
 using namespace seqan;
 
 namespace rh2mfe {
-
-//
-// RH2Sequences methods
-//
-template<class TRNAString>
-int RH2Sequences<TRNAString>::read_fasta(CharString const &pFasta) {
-    CharString id;
-    CharString seq;
-
-    SequenceStream seqStream(toCString(pFasta));
-    if (!isGood(seqStream)) {
-        std::cerr << "ERROR: Could not open the file!" << std::endl;
-        return 1;
-    }
-
-    while (!atEnd(seqStream)) {
-        if (readRecord(id, seq, seqStream) != 0) {
-            std::cerr << "ERROR: Could not read from " << toCString(pFasta) << "!" << std::endl;
-            return 1;
-        }
-
-        toUpper(seq);
-        for (unsigned i = 0; i < length(seq); ++i) {
-            if (seq[i] == 'T') {
-                seq[i] = 'U';
-            }
-        }
-        appendValue(mSeqIds, id);
-        appendValue(mSeqs, seq);
-
-        if (mMaxLen < (int) length(seq)) {
-            mMaxLen = (int) length(seq);
-        }
-    }
-
-    return 0;
-}
 
 //
 // RH2SeedSeqs methods
@@ -358,8 +321,6 @@ void RH2SeedSites<TRNAString>::set_new_seed_type(
 }
 
 // Explicit template instantiation
-template
-class RH2Sequences<TRNATYPE>;
 
 template
 class RH2SeedSeqs<TRNATYPE>;

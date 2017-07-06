@@ -8,7 +8,7 @@
 #include <seqan/arg_parse.h>
 #include <pita_inst_template.hpp> // TRNATYPE
 #include <pita_option.hpp>        // PITAOptions
-#include <pita_seed_site.hpp>     // PITASequences, PITASeedSites
+#include <pita_seed_site.hpp>     // PITASeedSites
 #include <pita_score.hpp>         // PITAMFEScores, PITATotalScores
 #include <pita_site_cluster.hpp>  // PITAOverlap, PITATopNScore, PITASortedSitePos
 #include <pita_core.hpp>          // PITACoreInput, PITACore

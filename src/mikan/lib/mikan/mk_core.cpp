@@ -22,12 +22,6 @@ namespace mikan {
 // MKCoreInput methods
 //
 template<class TRNAString>
-void MKCoreInput<TRNAString>::init_from_args(MKOptions &opts) {
-    mMiRNAFasta = opts.mMiRNAFasta;
-    mMRNAFasta = opts.mMRNAFasta;
-}
-
-template<class TRNAString>
 int MKCoreInput<TRNAString>::load_seq_from_file() {
     int retVal;
 

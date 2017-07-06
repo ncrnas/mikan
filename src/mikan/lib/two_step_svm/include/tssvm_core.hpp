@@ -6,8 +6,9 @@
 #include <tssvm_mrna_feature.hpp>   // TSSVMRNARawFeatures
 #include <tssvm_mrna_svm.hpp>       // TSSVMRNAInputVector
 #include <tssvm_option.hpp>         // TSSVMOptions
-#include <tssvm_seed_site.hpp>      // TSSVMSequences, TSSVMSeedSites, TSSVMSeedSiteOverlap
+#include <tssvm_seed_site.hpp>      // TSSVMSeedSites, TSSVMSeedSiteOverlap
 #include <tssvm_site_svm.hpp>       // TSSVMSiteInputVector
+#include <mk_sequence.hpp>          // MKSequences
 #include <seqan/sequence.h>
 
 namespace tssvm {
@@ -46,8 +47,8 @@ public:
     int load_seq_from_file();
 
 private:
-    TSSVMSequences<TRNAString> mMiRNASeqs;
-    TSSVMSequences<TRNAString> mMRNASeqs;
+    mikan::MKSequences<TRNAString> mMiRNASeqs;
+    mikan::MKSequences<TRNAString> mMRNASeqs;
 };
 
 //

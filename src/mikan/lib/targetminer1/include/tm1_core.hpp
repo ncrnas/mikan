@@ -6,9 +6,10 @@
 #include <tm1_mrna_svm.hpp>      // TM1MRNAModel, TM1MRNAInputVector
 #include <tm1_option.hpp>        // TM1CSOptions
 #include <tm1_score.hpp>         // TM1ClassifiedScores
-#include <tm1_seed_site.hpp>     // TM1Sequences, TM1SeedSites
+#include <tm1_seed_site.hpp>     // TM1SeedSites
 #include <tm1_site_cluster.hpp>  // TM1Overlap
 #include <tm1_site_feature.hpp>  // TM1RawFeatures
+#include <mk_sequence.hpp>       // MKSequences
 
 namespace tm1p {
 
@@ -46,8 +47,8 @@ public:
     int load_seq_from_file();
 
 private:
-    TM1Sequences<TRNAString> mMiRNASeqs;
-    TM1Sequences<TRNAString> mMRNASeqs;
+    mikan::MKSequences<TRNAString> mMiRNASeqs;
+    mikan::MKSequences<TRNAString> mMRNASeqs;
 };
 
 //
