@@ -7,7 +7,7 @@
 
 #include <seqan/arg_parse.h>
 #include <mk_inst_template.hpp>  // TRNATYPE
-#include <mk_core.hpp>           // MR3CoreInput, MR3Core
+#include <mk_input.hpp>          // MKInput
 
 #include <mr3_core.hpp>          // MR3CoreMain
 #include <pita_core.hpp>          // PITACoreMain
@@ -19,10 +19,17 @@
 namespace mikan {
 
 //
-// MKCoreInput methods
+// MKInput methods
 //
 template<class TRNAString>
-int MKCoreInput<TRNAString>::load_seq_from_file() {
+void MKInput<TRNAString>::set_file_names(seqan::CharString &pMiRNAFasta,
+                                         seqan::CharString &pMRNAFasta) {
+    mMiRNAFasta = pMiRNAFasta;
+    mMRNAFasta = pMRNAFasta;
+}
+
+template<class TRNAString>
+int MKInput<TRNAString>::load_seq_from_file() {
     int retVal;
 
     // Read miRNA fasta file
@@ -42,6 +49,6 @@ int MKCoreInput<TRNAString>::load_seq_from_file() {
 
 // Explicit template instantiation
 template
-class MKCoreInput<TRNATYPE>;
+class MKInput<TRNATYPE>;
 
 } // namespace mikan

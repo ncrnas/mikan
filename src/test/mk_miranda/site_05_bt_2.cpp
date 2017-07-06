@@ -32,7 +32,7 @@ protected:
 };
 
 TEST_F(Site05BT2, mir1_bt) {
-    read_files(false);
+    read_files();
     set_seqs();
     TIdx index(mrna_seqs);
     TFin finder(index);
@@ -81,7 +81,7 @@ TEST_F(Site05BT2, mir1_bt) {
 }
 
 TEST_F(Site05BT2, mir1_def) {
-    read_files(false);
+    read_files();
     set_seqs();
     TIdx index(mrna_seqs);
     TFin finder(index);

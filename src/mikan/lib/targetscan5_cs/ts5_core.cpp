@@ -12,7 +12,8 @@
 #include <ts5_seed_site.hpp>     // TS5SeedSites
 #include <ts5_feature.hpp>       // TS5RawFeatures
 #include <ts5_score.hpp>         // TS5ContextScores, TS5TotalScores
-#include <ts5_core.hpp>          // TS5CoreInput, TS5Core
+#include <ts5_core.hpp>          // TS5Core
+#include <mk_input.hpp>          // MKInput
 
 namespace ts5cs {
 
@@ -27,8 +28,8 @@ int TS5CoreMain(int argc, char const **argv) {
     }
 
     // Read input files
-    ts5cs::TS5CoreInput<ts5cs::TRNATYPE> coreInput;
-    coreInput.init_from_args(options);
+    mikan::MKInput<ts5cs::TRNATYPE> coreInput;
+    coreInput.set_file_names(options.mMiRNAFasta, options.mMRNAFasta);
     retVal = coreInput.load_seq_from_file();
     if (retVal != 0) {
         return 1;
@@ -47,34 +48,6 @@ int TS5CoreMain(int argc, char const **argv) {
     ts5Core.init_from_args(options);
     ts5Core.open_output_file();
     retVal = ts5Core.calculate_all_scores();
-    if (retVal != 0) {
-        return 1;
-    }
-
-    return 0;
-}
-
-//
-// TS5CoreInput methods
-//
-template<class TRNAString>
-void TS5CoreInput<TRNAString>::init_from_args(TS5CSOptions &opts) {
-    mMiRNAFasta = opts.mMiRNAFasta;
-    mMRNAFasta = opts.mMRNAFasta;
-}
-
-template<class TRNAString>
-int TS5CoreInput<TRNAString>::load_seq_from_file() {
-    int retVal;
-
-    // Read miRNA fasta file
-    retVal = mMiRNASeqs.read_fasta(mMiRNAFasta);
-    if (retVal != 0) {
-        return 1;
-    }
-
-    // Read mRNA fasta file
-    retVal = mMRNASeqs.read_fasta(mMRNAFasta);
     if (retVal != 0) {
         return 1;
     }
@@ -316,8 +289,6 @@ int TS5Core<TRNAString, SEEDLEN>::write_alignment(seqan::CharString const &pMiRN
 }
 
 // Explicit template instantiation
-template
-class TS5CoreInput<TRNATYPE>;
 
 template
 class TS5Core<TRNATYPE>;

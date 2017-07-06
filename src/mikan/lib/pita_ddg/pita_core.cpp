@@ -11,7 +11,8 @@
 #include <pita_seed_site.hpp>     // PITASeedSites
 #include <pita_score.hpp>         // PITAMFEScores, PITATotalScores
 #include <pita_site_cluster.hpp>  // PITAOverlap, PITATopNScore, PITASortedSitePos
-#include <pita_core.hpp>          // PITACoreInput, PITACore
+#include <pita_core.hpp>          // PITACore
+#include <mk_input.hpp>           // MKInput
 
 namespace ptddg {
 
@@ -26,8 +27,8 @@ int PITACoreMain(int argc, char const **argv) {
     }
 
     // Read input files
-    ptddg::PITACoreInput<ptddg::TRNATYPE> coreInput;
-    coreInput.init_from_args(options);
+    mikan::MKInput<ptddg::TRNATYPE> coreInput;
+    coreInput.set_file_names(options.mMiRNAFasta, options.mMRNAFasta);
     retVal = coreInput.load_seq_from_file();
     if (retVal != 0) {
         return 1;
@@ -47,34 +48,6 @@ int PITACoreMain(int argc, char const **argv) {
     pitaCore.init_from_args(options);
     pitaCore.open_output_file();
     retVal = pitaCore.calculate_all_scores();
-    if (retVal != 0) {
-        return 1;
-    }
-
-    return 0;
-}
-
-//
-// PITACoreInput methods
-//
-template<class TRNAString>
-void PITACoreInput<TRNAString>::init_from_args(PITAOptions &opts) {
-    mMiRNAFasta = opts.mMiRNAFasta;
-    mMRNAFasta = opts.mMRNAFasta;
-}
-
-template<class TRNAString>
-int PITACoreInput<TRNAString>::load_seq_from_file() {
-    int retVal;
-
-    // Read miRNA fasta file
-    retVal = mMiRNASeqs.read_fasta(mMiRNAFasta);
-    if (retVal != 0) {
-        return 1;
-    }
-
-    // Read mRNA fasta file
-    retVal = mMRNASeqs.read_fasta(mMRNAFasta);
     if (retVal != 0) {
         return 1;
     }
@@ -373,8 +346,6 @@ int PITACore<TRNAString, SEEDLEN>::write_alignment(seqan::CharString const &pMiR
 }
 
 // Explicit template instantiation
-template
-class PITACoreInput<TRNATYPE>;
 
 template
 class PITACore<TRNATYPE>;

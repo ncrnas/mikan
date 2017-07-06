@@ -16,42 +16,6 @@ namespace tssvm {
 int TSSVMCoreMain(int argc, char const **argv);
 
 //
-// Input data for Two-step SVM score
-//
-template<class TRNAString>
-class TSSVMCoreInput {
-public:
-    // Define types
-    typedef seqan::StringSet<seqan::CharString> TCharSet;
-    typedef seqan::StringSet<TRNAString> TRNASet;
-
-    // Declare variables
-    seqan::CharString mMiRNAFasta;
-    seqan::CharString mMRNAFasta;
-
-public:
-    // Define methods
-    TSSVMCoreInput() {}
-
-    TCharSet const &get_mirna_ids() { return mMiRNASeqs.get_ids(); }
-
-    TRNASet const &get_mirna_seqs() { return mMiRNASeqs.get_seqs(); }
-
-    TCharSet const &get_mrna_ids() { return mMRNASeqs.get_ids(); }
-
-    TRNASet const &get_mrna_seqs() { return mMRNASeqs.get_seqs(); }
-
-    // Method prototypes
-    void init_from_args(TSSVMOptions &opts);
-
-    int load_seq_from_file();
-
-private:
-    mikan::MKSequences<TRNAString> mMiRNASeqs;
-    mikan::MKSequences<TRNAString> mMRNASeqs;
-};
-
-//
 //Two-step SVM score process core
 //
 template<class TRNAString, int SEEDLEN = 6>

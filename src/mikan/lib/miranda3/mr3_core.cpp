@@ -11,8 +11,8 @@
 #include <mr3_seed_site.hpp>      // MR3SeedSites
 #include <mr3_score.hpp>          // MR3SiteScores, MR3TotalScores
 #include <mr3_site_cluster.hpp>   // MR3Overlap, MR3TopNScore, MR3SortedSitePos
-#include <mr3_core.hpp>           // MR3CoreInput, MR3Core
-
+#include <mr3_core.hpp>           // MR3Core
+#include <mk_input.hpp>           // MKInput
 
 namespace mr3as {
 
@@ -27,8 +27,8 @@ int MR3CoreMain(int argc, char const **argv) {
     }
 
     // Read input files
-    mr3as::MR3CoreInput<mr3as::TRNATYPE> coreInput;
-    coreInput.init_from_args(options);
+    mikan::MKInput<mr3as::TRNATYPE> coreInput;
+    coreInput.set_file_names(options.mMiRNAFasta, options.mMRNAFasta);
     retVal = coreInput.load_seq_from_file();
     if (retVal != 0) {
         return retVal;
@@ -50,34 +50,6 @@ int MR3CoreMain(int argc, char const **argv) {
     retVal = mr3Core.calculate_all_scores();
 
     return retVal;
-}
-
-//
-// MR3CoreInput methods
-//
-template<class TRNAString>
-void MR3CoreInput<TRNAString>::init_from_args(MR3Options &opts) {
-    mMiRNAFasta = opts.mMiRNAFasta;
-    mMRNAFasta = opts.mMRNAFasta;
-}
-
-template<class TRNAString>
-int MR3CoreInput<TRNAString>::load_seq_from_file() {
-    int retVal;
-
-    // Read miRNA fasta file
-    retVal = mMiRNASeqs.read_fasta(mMiRNAFasta);
-    if (retVal != 0) {
-        return 1;
-    }
-
-    // Read mRNA fasta file
-    retVal = mMRNASeqs.read_fasta(mMRNAFasta);
-    if (retVal != 0) {
-        return 1;
-    }
-
-    return 0;
 }
 
 //
@@ -356,8 +328,6 @@ int MR3Core<TRNAString, SEEDLEN>::write_alignment(seqan::CharString const &pMiRN
 }
 
 // Explicit template instantiation
-template
-class MR3CoreInput<TRNATYPE>;
 
 template
 class MR3Core<TRNATYPE>;

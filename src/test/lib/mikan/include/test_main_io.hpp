@@ -5,8 +5,10 @@
 #include "gtest/gtest.h"
 #include "get_data_path.hpp"
 #include "mikan_utils.hpp"
+#include "mk_inst_template.hpp"
+#include "mk_input.hpp"
 
-template<class TCoreInput, class TOptions>
+template<class TCoreInput>
 class TestIOBase : public ::testing::Test {
 protected:
     char *IFNAME1;
@@ -50,15 +52,8 @@ protected:
         seqan::clear(mrna_seqs);
     }
 
-    void read_files(bool parse_argv) {
-        if (parse_argv) {
-            (void) options.parseCommandLine(argc, (const char **) argv);
-        } else {
-            options.mMiRNAFasta = seqan::toCString(ifile1);
-            options.mMRNAFasta = seqan::toCString(ifile2);
-        }
-
-        coreInput.init_from_args(options);
+    void read_files() {
+        coreInput.set_file_names(ifile1, ifile2);
         (void) coreInput.load_seq_from_file();
     }
 
@@ -69,11 +64,10 @@ protected:
         mrna_seqs = coreInput.get_mrna_seqs();
     }
 
-    TCoreInput coreInput;
-    TOptions options;
-
     int argc;
     char *argv[6];
+
+    TCoreInput coreInput;
 
     seqan::CharString ifile1;
     seqan::CharString ifile2;

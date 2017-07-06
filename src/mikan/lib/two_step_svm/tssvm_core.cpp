@@ -13,7 +13,8 @@
 #include <tssvm_site_svm.hpp>       // TSSVMSiteModel, TSSVMSiteInputVector
 #include <tssvm_mrna_feature.hpp>   // TSSVMRNARawFeatures
 #include <tssvm_mrna_svm.hpp>       // TSSVMRNAInputVector
-#include <tssvm_core.hpp>           // TSSVMCoreInput, TSSVMCore
+#include <tssvm_core.hpp>           // TSSVMCore
+#include <mk_input.hpp>             // MKInput
 
 namespace tssvm {
 
@@ -28,8 +29,8 @@ int TSSVMCoreMain(int argc, char const **argv) {
     }
 
     // Read input files
-    tssvm::TSSVMCoreInput<tssvm::TRNATYPE> coreInput;
-    coreInput.init_from_args(options);
+    mikan::MKInput<tssvm::TRNATYPE> coreInput;
+    coreInput.set_file_names(options.mMiRNAFasta, options.mMRNAFasta);
     retVal = coreInput.load_seq_from_file();
     if (retVal != 0) {
         return 1;
@@ -54,34 +55,6 @@ int TSSVMCoreMain(int argc, char const **argv) {
     // Calculate scores for all miRNAs
     tssvmCore.open_output_file();
     retVal = tssvmCore.calculate_all_scores();
-    if (retVal != 0) {
-        return 1;
-    }
-
-    return 0;
-}
-
-//
-// TSSVMCoreInput methods
-//
-template<class TRNAString>
-void TSSVMCoreInput<TRNAString>::init_from_args(TSSVMOptions &opts) {
-    mMiRNAFasta = opts.mMiRNAFasta;
-    mMRNAFasta = opts.mMRNAFasta;
-}
-
-template<class TRNAString>
-int TSSVMCoreInput<TRNAString>::load_seq_from_file() {
-    int retVal;
-
-    // Read miRNA fasta file
-    retVal = mMiRNASeqs.read_fasta(mMiRNAFasta);
-    if (retVal != 0) {
-        return 1;
-    }
-
-    // Read mRNA fasta file
-    retVal = mMRNASeqs.read_fasta(mMRNAFasta);
     if (retVal != 0) {
         return 1;
     }
@@ -368,8 +341,6 @@ int TSSVMCore<TRNAString, SEEDLEN>::write_alignment(seqan::CharString const &pMi
 }
 
 // Explicit template instantiation
-template
-class TSSVMCoreInput<TRNATYPE>;
 
 template
 class TSSVMCore<TRNATYPE>;

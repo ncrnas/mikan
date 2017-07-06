@@ -22,7 +22,7 @@ protected:
 };
 
 TEST_F(SeedGU, mir124_6m_gu) {
-    read_files(false);
+    read_files();
 
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedSeqs.set_mirna_seq(mirna_seqs[0]);
@@ -37,7 +37,7 @@ TEST_F(SeedGU, mir124_6m_gu) {
 }
 
 TEST_F(SeedGU, mir1_6m_gu) {
-    read_files(false);
+    read_files();
 
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedSeqs.set_mirna_seq(mirna_seqs[1]);
@@ -54,7 +54,7 @@ TEST_F(SeedGU, mir1_6m_gu) {
 }
 
 TEST_F(SeedGU, mir124_6m_gu_plus) {
-    read_files(false);
+    read_files();
 
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedDef1 = "6mGU+";
@@ -73,7 +73,7 @@ TEST_F(SeedGU, mir124_6m_gu_plus) {
 }
 
 TEST_F(SeedGU, mir1_6m_gu_plus) {
-    read_files(false);
+    read_files();
 
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedDef1 = "6mGU+";
@@ -106,7 +106,7 @@ TEST_F(SeedGU, mir1_6m_gu_plus) {
 }
 
 TEST_F(SeedGU, mir124_7m_gu) {
-    read_files(false);
+    read_files();
 
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedDef1 = "7mGU1";
@@ -122,7 +122,7 @@ TEST_F(SeedGU, mir124_7m_gu) {
 }
 
 TEST_F(SeedGU, mir1_7m_gu) {
-    read_files(false);
+    read_files();
 
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedDef1 = "7mGU1";
@@ -140,7 +140,7 @@ TEST_F(SeedGU, mir1_7m_gu) {
 }
 
 TEST_F(SeedGU, mir124_7m_gu_plus) {
-    read_files(false);
+    read_files();
 
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedDef1 = "7mGU+";
@@ -159,7 +159,7 @@ TEST_F(SeedGU, mir124_7m_gu_plus) {
 }
 
 TEST_F(SeedGU, mir1_7m_gu_plus) {
-    read_files(false);
+    read_files();
 
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedDef1 = "7mGU+";

@@ -27,7 +27,7 @@ protected:
 };
 
 TEST_F(SeedBT, mir124_bt) {
-    read_files(false);
+    read_files();
 
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedSeqs.set_mirna_seq(mirna_seqs[0]);
@@ -70,7 +70,7 @@ TEST_F(SeedBT, mir124_bt) {
 }
 
 TEST_F(SeedBT, mir1_bt) {
-    read_files(false);
+    read_files();
 
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedSeqs.set_mirna_seq(mirna_seqs[1]);

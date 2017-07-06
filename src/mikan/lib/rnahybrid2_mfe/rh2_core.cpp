@@ -12,7 +12,8 @@
 #include <rh2_seed_site.hpp>     // RH2Sequences, RH2SeedSites
 #include <rh2_score.hpp>         // RH2MFEScores, RH2TotalScores
 #include <rh2_site_cluster.hpp>  // RH2Overlap, RH2TopNScore, RH2SortedSitePos
-#include <rh2_core.hpp>          // RH2CoreInput, RH2Core
+#include <rh2_core.hpp>          // RH2Core
+#include <mk_input.hpp>          // MKInput
 
 namespace rh2mfe {
 
@@ -27,8 +28,8 @@ int RH2CoreMain(int argc, char const **argv) {
     }
 
     // Read input files
-    rh2mfe::RH2CoreInput<rh2mfe::TRNATYPE> coreInput;
-    coreInput.init_from_args(options);
+    mikan::MKInput<rh2mfe::TRNATYPE> coreInput;
+    coreInput.set_file_names(options.mMiRNAFasta, options.mMRNAFasta);
     retVal = coreInput.load_seq_from_file();
     if (retVal != 0) {
         return 1;
@@ -51,34 +52,6 @@ int RH2CoreMain(int argc, char const **argv) {
     rh2Core.init_from_args(options);
     rh2Core.open_output_file();
     retVal = rh2Core.calculate_all_scores();
-    if (retVal != 0) {
-        return 1;
-    }
-
-    return 0;
-}
-
-//
-// RH2CoreInput methods
-//
-template<class TRNAString>
-void RH2CoreInput<TRNAString>::init_from_args(RH2Options &opts) {
-    mMiRNAFasta = opts.mMiRNAFasta;
-    mMRNAFasta = opts.mMRNAFasta;
-}
-
-template<class TRNAString>
-int RH2CoreInput<TRNAString>::load_seq_from_file() {
-    int retVal;
-
-    // Read miRNA fasta file
-    retVal = mMiRNASeqs.read_fasta(mMiRNAFasta);
-    if (retVal != 0) {
-        return 1;
-    }
-
-    // Read mRNA fasta file
-    retVal = mMRNASeqs.read_fasta(mMRNAFasta);
     if (retVal != 0) {
         return 1;
     }
@@ -342,8 +315,6 @@ int RH2Core<TRNAString, SEEDLEN>::write_alignment(seqan::CharString const &pMiRN
 }
 
 // Explicit template instantiation
-template
-class RH2CoreInput<TRNATYPE>;
 
 template
 class RH2Core<TRNATYPE>;

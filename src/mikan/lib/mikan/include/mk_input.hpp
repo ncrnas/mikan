@@ -12,20 +12,19 @@ namespace mikan {
 // Input data for mikan score
 //
 template<class TRNAString>
-class MKCoreInput {
+class MKInput {
 public:
     // Define types
     typedef seqan::StringSet<seqan::CharString> TCharSet;
     typedef seqan::StringSet<TRNAString> TRNASet;
 
     // Declare variables
-    seqan::CharString &mMiRNAFasta;
-    seqan::CharString &mMRNAFasta;
+    seqan::CharString mMiRNAFasta;
+    seqan::CharString mMRNAFasta;
 
 public:
     // Define methods
-    MKCoreInput(seqan::CharString &pMiRNAFasta, seqan::CharString &pMRNAFasta) :
-            mMiRNAFasta(pMiRNAFasta), mMRNAFasta(pMRNAFasta){}
+    MKInput() {}
 
     TCharSet const &get_mirna_ids() { return mMiRNASeqs.get_ids(); }
 
@@ -37,6 +36,7 @@ public:
 
     // Method prototypes
     int load_seq_from_file();
+    void set_file_names(seqan::CharString &pMiRNAFasta, seqan::CharString &pMRNAFasta);
 
 private:
     MKSequences<TRNAString> mMiRNASeqs;

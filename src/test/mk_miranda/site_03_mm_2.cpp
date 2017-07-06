@@ -32,7 +32,7 @@ protected:
 };
 
 TEST_F(Site03MM2, mir1_mm7) {
-    read_files(false);
+    read_files();
     set_seqs();
     TIdx index(mrna_seqs);
     TFin finder(index);
@@ -91,7 +91,7 @@ TEST_F(Site03MM2, mir1_mm7) {
 }
 
 TEST_F(Site03MM2, mir1_mm8) {
-    read_files(false);
+    read_files();
     set_seqs();
     TIdx index(mrna_seqs);
     TFin finder(index);
@@ -151,7 +151,7 @@ TEST_F(Site03MM2, mir1_mm8) {
 }
 
 TEST_F(Site03MM2, mir1_def) {
-    read_files(false);
+    read_files();
     set_seqs();
     TIdx index(mrna_seqs);
     TFin finder(index);

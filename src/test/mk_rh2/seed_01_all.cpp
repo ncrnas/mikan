@@ -22,7 +22,7 @@ protected:
 };
 
 TEST_F(SeedAll, mir124_def) {
-    read_files(false);
+    read_files();
 
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedDef1 = "7mGU+";
@@ -41,7 +41,7 @@ TEST_F(SeedAll, mir124_def) {
 }
 
 TEST_F(SeedAll, mir1_def) {
-    read_files(false);
+    read_files();
 
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedDef1 = "7mGU+";

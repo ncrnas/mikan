@@ -9,7 +9,8 @@
 #include <seqan/arg_parse.h>
 #include <tm1_inst_template.hpp> // TRNATYPE
 #include <tm1_option.hpp>        // TM1CSOptions
-#include <tm1_core.hpp>          // TM1CoreInput, TM1Core
+#include <tm1_core.hpp>          // TM1Core
+#include <mk_input.hpp>          // MKInput
 
 namespace tm1p {
 
@@ -24,8 +25,8 @@ int TM1CoreMain(int argc, char const **argv) {
     }
 
     // Read input files
-    tm1p::TM1CoreInput<tm1p::TRNATYPE> coreInput;
-    coreInput.init_from_args(options);
+    mikan::MKInput<tm1p::TRNATYPE> coreInput;
+    coreInput.set_file_names(options.mMiRNAFasta, options.mMRNAFasta);
     retVal = coreInput.load_seq_from_file();
     if (retVal != 0) {
         return 1;
@@ -44,34 +45,6 @@ int TM1CoreMain(int argc, char const **argv) {
     tm1Core.init_from_args(options);
     tm1Core.open_output_file();
     retVal = tm1Core.calculate_all_scores();
-    if (retVal != 0) {
-        return 1;
-    }
-
-    return 0;
-}
-
-//
-// TM1CoreInput methods
-//
-template<class TRNAString>
-void TM1CoreInput<TRNAString>::init_from_args(TM1CSOptions &opts) {
-    mMiRNAFasta = opts.mMiRNAFasta;
-    mMRNAFasta = opts.mMRNAFasta;
-}
-
-template<class TRNAString>
-int TM1CoreInput<TRNAString>::load_seq_from_file() {
-    int retVal;
-
-    // Read miRNA fasta file
-    retVal = mMiRNASeqs.read_fasta(mMiRNAFasta);
-    if (retVal != 0) {
-        return 1;
-    }
-
-    // Read mRNA fasta file
-    retVal = mMRNASeqs.read_fasta(mMRNAFasta);
     if (retVal != 0) {
         return 1;
     }
@@ -339,8 +312,6 @@ int TM1Core<TRNAString, SEEDLEN>::write_alignment(seqan::CharString const &pMiRN
 }
 
 // Explicit template instantiation
-template
-class TM1CoreInput<TRNATYPE>;
 
 template
 class TM1Core<TRNATYPE>;

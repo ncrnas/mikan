@@ -27,7 +27,7 @@ protected:
 };
 
 TEST_F(Site01Nmer1, mir124_6mer) {
-    read_files(false);
+    read_files();
     set_seqs();
     TIdx index(mrna_seqs);
     TFin finder(index);
@@ -99,7 +99,7 @@ TEST_F(Site01Nmer1, mir124_6mer) {
 }
 
 TEST_F(Site01Nmer1, mir124_7mer) {
-    read_files(false);
+    read_files();
     set_seqs();
     TIdx index(mrna_seqs);
     TFin finder(index);
@@ -172,7 +172,7 @@ TEST_F(Site01Nmer1, mir124_7mer) {
 }
 
 TEST_F(Site01Nmer1, mir124_def) {
-    read_files(false);
+    read_files();
     set_seqs();
     TIdx index(mrna_seqs);
     TFin finder(index);

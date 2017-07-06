@@ -24,7 +24,7 @@ protected:
 };
 
 TEST_F(Site03MM2, mir1_mm) {
-    read_files(false);
+    read_files();
     set_seqs();
     TIdx index(mrna_seqs);
     TFin finder(index);

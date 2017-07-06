@@ -22,7 +22,7 @@ protected:
 };
 
 TEST_F(SeedNmer, mir124_6mer) {
-    read_files(false);
+    read_files();
 
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedSeqs.set_mirna_seq(mirna_seqs[0]);
@@ -35,7 +35,7 @@ TEST_F(SeedNmer, mir124_6mer) {
 }
 
 TEST_F(SeedNmer, mir1_6mer) {
-    read_files(false);
+    read_files();
 
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedSeqs.set_mirna_seq(mirna_seqs[1]);
@@ -48,7 +48,7 @@ TEST_F(SeedNmer, mir1_6mer) {
 }
 
 TEST_F(SeedNmer, mir124_7mer) {
-    read_files(false);
+    read_files();
 
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedDef1 = "7mer";
@@ -62,7 +62,7 @@ TEST_F(SeedNmer, mir124_7mer) {
 }
 
 TEST_F(SeedNmer, mir1_7mer) {
-    read_files(false);
+    read_files();
 
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedDef1 = "7mer";

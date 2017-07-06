@@ -4,7 +4,7 @@ set(MIKAN_SOURCE
         ${CMAKE_CURRENT_SOURCE_DIR}/mk_memory.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/mk_option.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/mk_sequence.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/mk_core.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/mk_input.cpp
         PARENT_SCOPE
         )
 set(MIKAN_HEADERS
