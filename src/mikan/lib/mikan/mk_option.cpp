@@ -37,10 +37,7 @@ void MKOptions::setProgramDescription(seqan::ArgumentParser &parser) {
                    "This program calculates mikan scores and summarizes them for miRNA:mRNA pairs.");
 
     // Define Arguments
-    addArgument(parser, ArgParseArgument(ArgParseArgument::INPUTFILE));
-    addArgument(parser, ArgParseArgument(ArgParseArgument::INPUTFILE));
-    addArgument(parser, ArgParseArgument(ArgParseArgument::OUTPUTFILE));
-    addArgument(parser, ArgParseArgument(ArgParseArgument::OUTPUTFILE));
+    addIOArgs(parser);
 
     // Define Options
 //    addSection(parser, "mikan Options");
@@ -55,7 +52,13 @@ void MKOptions::setProgramDescription(seqan::ArgumentParser &parser) {
 
 }
 
-ArgumentParser::ParseResult MKOptions::validateFiles() {
+ArgumentParser::ParseResult MKOptions::validateFiles(seqan::ArgumentParser &parser) {
+    // Extract arguments
+    getArgumentValue(mMiRNAFasta, parser, 0);
+    getArgumentValue(mMRNAFasta, parser, 1);
+    getArgumentValue(mOFileSite, parser, 2);
+    getArgumentValue(mOFileTotal, parser, 3);
+
     char const *input_1 = toCString(mMiRNAFasta);
     char const *input_2 = toCString(mMRNAFasta);
     char const *output_1 = toCString(mOFileSite);
@@ -86,6 +89,13 @@ ArgumentParser::ParseResult MKOptions::validateFiles() {
     }
 
     return ArgumentParser::PARSE_OK;
+}
+
+void MKOptions::addIOArgs(seqan::ArgumentParser &parser) {
+    addArgument(parser, ArgParseArgument(ArgParseArgument::INPUTFILE));
+    addArgument(parser, ArgParseArgument(ArgParseArgument::INPUTFILE));
+    addArgument(parser, ArgParseArgument(ArgParseArgument::OUTPUTFILE));
+    addArgument(parser, ArgParseArgument(ArgParseArgument::OUTPUTFILE));
 }
 
 } // namespace mikan

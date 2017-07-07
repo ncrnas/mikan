@@ -65,7 +65,7 @@ int RH2CoreMain(int argc, char const **argv) {
 template<class TRNAString, int SEEDLEN>
 void RH2Core<TRNAString, SEEDLEN>::init_from_args(RH2Options &opts) {
     mOutputAlign = opts.mOutputAlign;
-    mOFileMFE = opts.mOFileMFE;
+    mOFileMFE = opts.mOFileSite;
     mOFileTotal = opts.mOFileTotal;
 
     mSeedDef = opts.mSeedDef;

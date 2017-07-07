@@ -20,14 +20,8 @@ ArgumentParser::ParseResult TS5CSOptions::parseCommandLine(
         return res;
     }
 
-    // Extract arguments
-    getArgumentValue(mMiRNAFasta, parser, 0);
-    getArgumentValue(mMRNAFasta, parser, 1);
-    getArgumentValue(mOFileContext, parser, 2);
-    getArgumentValue(mOFileTotal, parser, 3);
-
     // Validate files
-    res = validateFiles();
+    res = validateFiles(parser);
     if (res != ArgumentParser::PARSE_OK) {
         return res;
     }
@@ -52,10 +46,7 @@ void TS5CSOptions::setProgramDescription(seqan::ArgumentParser &parser) {
                    "This program calculates TargetScan context scores and summarizes them for miRNA:mRNA pairs.");
 
     // Define Arguments
-    addArgument(parser, ArgParseArgument(ArgParseArgument::INPUTFILE));
-    addArgument(parser, ArgParseArgument(ArgParseArgument::INPUTFILE));
-    addArgument(parser, ArgParseArgument(ArgParseArgument::OUTPUTFILE));
-    addArgument(parser, ArgParseArgument(ArgParseArgument::OUTPUTFILE));
+    addIOArgs(parser);
 
     // Define Options
     addSection(parser, "TargetScan5 Context Score Options");
@@ -70,37 +61,5 @@ void TS5CSOptions::setProgramDescription(seqan::ArgumentParser &parser) {
                         "and write the scores to \\fIoutput1\\fP and the total scores to \\fIoutput2\\fP");
 }
 
-ArgumentParser::ParseResult TS5CSOptions::validateFiles() {
-    char const *input_1 = toCString(mMiRNAFasta);
-    char const *input_2 = toCString(mMRNAFasta);
-    char const *output_1 = toCString(mOFileContext);
-    char const *output_2 = toCString(mOFileTotal);
-
-    std::fstream mirna_fa(input_1, std::ios::in);
-    if (!mirna_fa.good()) {
-        std::cerr << "ERROR: Could not open input file: " << input_1 << std::endl;
-        return ArgumentParser::PARSE_ERROR;
-    }
-
-    std::fstream mrna_fa(input_2, std::ios::in);
-    if (!mrna_fa.good()) {
-        std::cerr << "ERROR: Could not open input file: " << input_2 << std::endl;
-        return ArgumentParser::PARSE_ERROR;
-    }
-
-    std::fstream ofile1(output_1, std::ios::out);
-    if (!ofile1.good()) {
-        std::cerr << "ERROR: Could not open output file: " << output_1 << std::endl;
-        return ArgumentParser::PARSE_ERROR;
-    }
-
-    std::fstream ofile2(output_2, std::ios::out);
-    if (!ofile2.good()) {
-        std::cerr << "ERROR: Could not open output file: " << output_2 << std::endl;
-        return ArgumentParser::PARSE_ERROR;
-    }
-
-    return ArgumentParser::PARSE_OK;
-}
 
 } // namespace ts5cs

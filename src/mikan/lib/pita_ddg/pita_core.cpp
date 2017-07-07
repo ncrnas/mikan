@@ -61,7 +61,7 @@ int PITACoreMain(int argc, char const **argv) {
 template<class TRNAString, int SEEDLEN>
 void PITACore<TRNAString, SEEDLEN>::init_from_args(PITAOptions &opts) {
     mOutputAlign = opts.mOutputAlign;
-    mOFileDDG = opts.mOFileDDG;
+    mOFileDDG = opts.mOFileSite;
     mOFileTotal = opts.mOFileTotal;
     mMinSeedLen = opts.mMinSeedLen;
     mMaxSeedLen = opts.mMaxSeedLen;

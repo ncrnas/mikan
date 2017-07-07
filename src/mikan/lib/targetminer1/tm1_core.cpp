@@ -59,7 +59,7 @@ template<class TRNAString, int SEEDLEN>
 void TM1Core<TRNAString, SEEDLEN>::init_from_args(TM1CSOptions &opts) {
     mOutputAlign = opts.mOutputAlign;
     mOFileSite = opts.mOFileSite;
-    mOFileScore = opts.mOFileScore;
+    mOFileScore = opts.mOFileTotal;
 }
 
 template<class TRNAString, int SEEDLEN>

@@ -30,7 +30,10 @@ public:
 private:
     static void setProgramDescription(seqan::ArgumentParser &pParser);
 
-    seqan::ArgumentParser::ParseResult validateFiles();
+protected:
+    seqan::ArgumentParser::ParseResult validateFiles(seqan::ArgumentParser &parser);
+
+    static void addIOArgs(seqan::ArgumentParser &parser);
 };
 
 } // namespace mikan

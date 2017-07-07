@@ -3,25 +3,18 @@
 
 #include <seqan/sequence.h>
 #include <seqan/arg_parse.h>
+#include <mk_option.hpp>        // MKOptions
 
 namespace tm1p {
 
 //
 // Tool options
 //
-class TM1CSOptions {
+class TM1CSOptions : public mikan::MKOptions {
 public:
-    // Define types
-    typedef seqan::ArgumentParser::ParseResult TParseResult;
-
     // Declare variables
     bool mOutputAlign;
-    seqan::CharString mMiRNAFasta;
-    seqan::CharString mMRNAFasta;
-    seqan::CharString mOFileSite;
-    seqan::CharString mOFileScore;
 
-public:
     // Define methods
     TM1CSOptions() : mOutputAlign(false) {}
 
@@ -30,8 +23,6 @@ public:
 
 private:
     static void setProgramDescription(seqan::ArgumentParser &pParser);
-
-    seqan::ArgumentParser::ParseResult validateFiles();
 };
 
 } // namespace tm1p

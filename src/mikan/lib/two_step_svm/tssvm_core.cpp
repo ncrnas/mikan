@@ -67,8 +67,8 @@ int TSSVMCoreMain(int argc, char const **argv) {
 //
 template<class TRNAString, int SEEDLEN>
 void TSSVMCore<TRNAString, SEEDLEN>::init_from_args(TSSVMOptions &opts) {
-    mOFileTargetSite = opts.mOFileTargetSite;
-    mOFileMRNA = opts.mOFileMRNA;
+    mOFileTargetSite = opts.mOFileSite;
+    mOFileMRNA = opts.mOFileTotal;
     mOutputAlign = opts.mOutputAlign;
 }
 

@@ -61,7 +61,7 @@ int TS5CoreMain(int argc, char const **argv) {
 template<class TRNAString, int SEEDLEN>
 void TS5Core<TRNAString, SEEDLEN>::init_from_args(TS5CSOptions &opts) {
     mOutputAlign = opts.mOutputAlign;
-    mOFileContext = opts.mOFileContext;
+    mOFileContext = opts.mOFileSite;
     mOFileTotal = opts.mOFileTotal;
 }
 
