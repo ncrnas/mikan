@@ -1,28 +1,30 @@
 #ifndef TSSVM_SITE_FEATURE_HPP_
 #define TSSVM_SITE_FEATURE_HPP_
 
-#include <tssvm_align.hpp>          // TSAlign
-#include <tssvm_seed_site.hpp>      // TSSVMSeedSite
+#include "tssvm_align.hpp"          // TSAlign
+#include "tssvm_seed_site.hpp"      // TSSVMSeedSite
 #include <seqan/sequence.h>
 
-namespace tssvm{
+namespace tssvm {
 
 //
 // Seed type feature
 //
-template <class TRNAString>
-class TSSVMFeatSeedType
-{
+template<class TRNAString>
+class TSSVMFeatSeedType {
 public:
     // Define methods
     TSSVMFeatSeedType() {}
-    seqan::String<float>& get_val(int i){return mSeedTypes[i];}
-    seqan::StringSet<seqan::String<float> >& get_all_val(){return mSeedTypes;}
+
+    seqan::String<float> &get_val(int i) { return mSeedTypes[i]; }
+
+    seqan::StringSet<seqan::String<float> > &get_all_val() { return mSeedTypes; }
 
     // Method prototype
-    int add_features(TSSVMSeedSites<TRNAString> &pSeedSites, TSAlign<TRNAString> const &pAlignSeqs,
-            TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs,
-            seqan::String<bool> &pEffectiveSites);
+    int add_features(TSSVMSeedSites <TRNAString> &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
+                     TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs,
+                     seqan::String<bool> &pEffectiveSites);
+
     void clear_features();
 
 private:
@@ -32,19 +34,21 @@ private:
 //
 // Alignment similarity feature
 //
-template <class TRNAString>
-class TSSVMFeatSimilarity
-{
+template<class TRNAString>
+class TSSVMFeatSimilarity {
 public:
     // Define methods
     TSSVMFeatSimilarity() {}
-    seqan::String<float>& get_val(int i){return mSimilarities[i];}
-    seqan::StringSet<seqan::String<float> >& get_all_val(){return mSimilarities;}
+
+    seqan::String<float> &get_val(int i) { return mSimilarities[i]; }
+
+    seqan::StringSet<seqan::String<float> > &get_all_val() { return mSimilarities; }
 
     // Method prototype
-    int add_features(TSSVMSeedSites<TRNAString> &pSeedSites, TSAlign<TRNAString> const &pAlignSeqs,
-            TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs,
-            seqan::String<bool> &pEffectiveSites);
+    int add_features(TSSVMSeedSites <TRNAString> &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
+                     TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs,
+                     seqan::String<bool> &pEffectiveSites);
+
     void clear_features();
 
 private:
@@ -54,23 +58,26 @@ private:
 //
 // 30nt upstream AU-rich feature
 //
-template <class TRNAString>
-class TSSVMFeatAURichUp
-{
+template<class TRNAString>
+class TSSVMFeatAURichUp {
 public:
     // Define methods
     TSSVMFeatAURichUp() {}
-    seqan::String<float>& get_val(int i){return mAURichUp[i];}
-    seqan::StringSet<seqan::String<float> >& get_all_val(){return mAURichUp;}
+
+    seqan::String<float> &get_val(int i) { return mAURichUp[i]; }
+
+    seqan::StringSet<seqan::String<float> > &get_all_val() { return mAURichUp; }
 
     // Method prototype
-    int add_features(TSSVMSeedSites<TRNAString> &pSeedSites, TSAlign<TRNAString> const &pAlignSeqs,
-            TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs,
-            seqan::String<bool> &pEffectiveSites);
+    int add_features(TSSVMSeedSites <TRNAString> &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
+                     TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs,
+                     seqan::String<bool> &pEffectiveSites);
+
     void clear_features();
 
 private:
     seqan::StringSet<seqan::String<float> > mAURichUp;
+
     void getUpStreamPos(unsigned pStartMRNAPos, unsigned &pStartPos, unsigned &pEndPos);
 
 };
@@ -78,23 +85,26 @@ private:
 //
 // 30nt downstream AU-rich feature
 //
-template <class TRNAString>
-class TSSVMFeatAURichDown
-{
+template<class TRNAString>
+class TSSVMFeatAURichDown {
 public:
     // Define methods
     TSSVMFeatAURichDown() {}
-    seqan::String<float>& get_val(int i){return mAURichDown[i];}
-    seqan::StringSet<seqan::String<float> >& get_all_val(){return mAURichDown;}
+
+    seqan::String<float> &get_val(int i) { return mAURichDown[i]; }
+
+    seqan::StringSet<seqan::String<float> > &get_all_val() { return mAURichDown; }
 
     // Method prototype
-    int add_features(TSSVMSeedSites<TRNAString> &pSeedSites, TSAlign<TRNAString> const &pAlignSeqs,
-            TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs,
-            seqan::String<bool> &pEffectiveSites);
+    int add_features(TSSVMSeedSites <TRNAString> &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
+                     TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs,
+                     seqan::String<bool> &pEffectiveSites);
+
     void clear_features();
 
 private:
     seqan::StringSet<seqan::String<float> > mAURichDown;
+
     void getDownStreamPos(unsigned pStartMRNAPos, unsigned pSeqLen, unsigned &pStartPos, unsigned &pEndPos);
 
 };
@@ -102,19 +112,21 @@ private:
 //
 // Seed site position feature
 //
-template <class TRNAString>
-class TSSVMFeatSitePos
-{
+template<class TRNAString>
+class TSSVMFeatSitePos {
 public:
     // Define methods
     TSSVMFeatSitePos() {}
-    seqan::String<float>& get_val(int i){return mSitePos[i];}
-    seqan::StringSet<seqan::String<float> >& get_all_val(){return mSitePos;}
+
+    seqan::String<float> &get_val(int i) { return mSitePos[i]; }
+
+    seqan::StringSet<seqan::String<float> > &get_all_val() { return mSitePos; }
 
     // Method prototype
-    int add_features(TSSVMSeedSites<TRNAString> &pSeedSites, TSAlign<TRNAString> const &pAlignSeqs,
-            TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs,
-            seqan::String<bool> &pEffectiveSites);
+    int add_features(TSSVMSeedSites <TRNAString> &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
+                     TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs,
+                     seqan::String<bool> &pEffectiveSites);
+
     void clear_features();
 
 private:
@@ -126,19 +138,21 @@ private:
 //
 // Sequence match feature
 //
-template <class TRNAString>
-class TSSVMFeatSeqMatch
-{
+template<class TRNAString>
+class TSSVMFeatSeqMatch {
 public:
     // Define methods
     TSSVMFeatSeqMatch() {}
-    seqan::String<float>& get_val(int i){return mSeqMatch[i];}
-    seqan::StringSet<seqan::String<float> >& get_all_val(){return mSeqMatch;}
+
+    seqan::String<float> &get_val(int i) { return mSeqMatch[i]; }
+
+    seqan::StringSet<seqan::String<float> > &get_all_val() { return mSeqMatch; }
 
     // Method prototype
-    int add_features(TSSVMSeedSites<TRNAString> &pSeedSites, TSAlign<TRNAString> const &pAlignSeqs,
-            TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs,
-            seqan::String<bool> &pEffectiveSites);
+    int add_features(TSSVMSeedSites <TRNAString> &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
+                     TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs,
+                     seqan::String<bool> &pEffectiveSites);
+
     void clear_features();
 
 private:
@@ -150,19 +164,21 @@ private:
 //
 // A1 match feature
 //
-template <class TRNAString>
-class TSSVMFeatA1Match
-{
+template<class TRNAString>
+class TSSVMFeatA1Match {
 public:
     // Define methods
     TSSVMFeatA1Match() {}
-    seqan::String<float>& get_val(int i){return mA1Match[i];}
-    seqan::StringSet<seqan::String<float> >& get_all_val(){return mA1Match;}
+
+    seqan::String<float> &get_val(int i) { return mA1Match[i]; }
+
+    seqan::StringSet<seqan::String<float> > &get_all_val() { return mA1Match; }
 
     // Method prototype
-    int add_features(TSSVMSeedSites<TRNAString> &pSeedSites, TSAlign<TRNAString> const &pAlignSeqs,
-            TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs,
-            seqan::String<bool> &pEffectiveSites);
+    int add_features(TSSVMSeedSites <TRNAString> &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
+                     TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs,
+                     seqan::String<bool> &pEffectiveSites);
+
     void clear_features();
 
 private:
@@ -174,9 +190,8 @@ private:
 //
 // Store all raw feature values
 //
-template <class TRNAString>
-class TSSVMRawFeatures
-{
+template<class TRNAString>
+class TSSVMRawFeatures {
 public:
     // Define types
     typedef seqan::StringSet<seqan::String<float> > TFeatSet;
@@ -187,25 +202,39 @@ public:
 public:
     // Define methods
     TSSVMRawFeatures() {}
-    seqan::String<float>& get_seed_type(int i){return mSeedTypes.get_val(i);}
-    seqan::String<float>& get_similarities(int i){return mSimilarities.get_val(i);}
-    seqan::String<float>& get_au_rich_up(int i){return mAURichUp.get_val(i);}
-    seqan::String<float>& get_au_rich_down(int i){return mAURichDown.get_val(i);}
-    seqan::String<float>& get_site_pos(int i){return mSitePos.get_val(i);}
-    seqan::String<float>& get_seq_match(int i){return mSeqMatch.get_val(i);}
-    seqan::String<float>& get_a1_match(int i){return mA1Match.get_val(i);}
 
-    TFeatSet& get_all_seed_type(){return mSeedTypes.get_all_val();}
-    TFeatSet& get_all_similarities(){return mSimilarities.get_all_val();}
-    TFeatSet& get_all_au_rich_up(){return mAURichUp.get_all_val();}
-    TFeatSet& get_all_au_rich_down(){return mAURichDown.get_all_val();}
-    TFeatSet& get_all_site_pos(){return mSitePos.get_all_val();}
-    TFeatSet& get_all_seq_match(){return mSeqMatch.get_all_val();}
-    TFeatSet& get_all_a1_match(){return mA1Match.get_all_val();}
+    seqan::String<float> &get_seed_type(int i) { return mSeedTypes.get_val(i); }
+
+    seqan::String<float> &get_similarities(int i) { return mSimilarities.get_val(i); }
+
+    seqan::String<float> &get_au_rich_up(int i) { return mAURichUp.get_val(i); }
+
+    seqan::String<float> &get_au_rich_down(int i) { return mAURichDown.get_val(i); }
+
+    seqan::String<float> &get_site_pos(int i) { return mSitePos.get_val(i); }
+
+    seqan::String<float> &get_seq_match(int i) { return mSeqMatch.get_val(i); }
+
+    seqan::String<float> &get_a1_match(int i) { return mA1Match.get_val(i); }
+
+    TFeatSet &get_all_seed_type() { return mSeedTypes.get_all_val(); }
+
+    TFeatSet &get_all_similarities() { return mSimilarities.get_all_val(); }
+
+    TFeatSet &get_all_au_rich_up() { return mAURichUp.get_all_val(); }
+
+    TFeatSet &get_all_au_rich_down() { return mAURichDown.get_all_val(); }
+
+    TFeatSet &get_all_site_pos() { return mSitePos.get_all_val(); }
+
+    TFeatSet &get_all_seq_match() { return mSeqMatch.get_all_val(); }
+
+    TFeatSet &get_all_a1_match() { return mA1Match.get_all_val(); }
 
     // Method prototypes
-    int add_features(TSSVMSeedSites<TRNAString> &pSeedSites, TSAlign<TRNAString> const &pAlignSeqs,
-            TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs);
+    int add_features(TSSVMSeedSites <TRNAString> &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
+                     TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs);
+
     void clear_features();
 
 private:

@@ -14,7 +14,7 @@
 /* adpcompile -c rnahybrid/HybridMFE3_simple_3tab.lhs -al mfe enum -bt -bts -o rnahybrid/hybridBack4.c */
 /* -------------------------------------------------------------------------------- */
 
-#include <hybrid_core.hpp>
+#include "hybrid_core.hpp"
 
 
 namespace rh2 {
@@ -22,15 +22,13 @@ namespace rh2 {
 /* main dynamic programming loop                                                    */
 /* -------------------------------------------------------------------------------- */
 
-void RH2WorkSpace::init_workspace(int pTargetLen, int pQueryLen)
-{
+void RH2WorkSpace::init_workspace(int pTargetLen, int pQueryLen) {
     tbl.table_alloc(pTargetLen, pQueryLen);
     bt.alloc_string(pTargetLen, pQueryLen);
     pp.alloc_string(pTargetLen, pQueryLen);
 }
 
-void RH2WorkSpace::set_target_seq(std::vector<char>& seq, int qTargetLen)
-{
+void RH2WorkSpace::set_target_seq(std::vector<char> &seq, int qTargetLen) {
     target_seq = seq;
     en.set_target_seq(&target_seq);
     tbl.set_target_seq(&target_seq, qTargetLen);
@@ -40,8 +38,7 @@ void RH2WorkSpace::set_target_seq(std::vector<char>& seq, int qTargetLen)
     mTargetLen = qTargetLen;
 }
 
-void RH2WorkSpace::set_query_seq(std::vector<char>& seq, int qQueryLen)
-{
+void RH2WorkSpace::set_query_seq(std::vector<char> &seq, int qQueryLen) {
     query_seq = seq;
     en.set_query_seq(&query_seq);
     tbl.set_query_seq(&query_seq, qQueryLen);
@@ -51,8 +48,7 @@ void RH2WorkSpace::set_query_seq(std::vector<char>& seq, int qQueryLen)
     mQueryLen = qQueryLen;
 }
 
-void RH2WorkSpace::create_ret_val(RH2RetValues& pRetVal, float pV2, int pSearchCount)
-{
+void RH2WorkSpace::create_ret_val(RH2RetValues &pRetVal, float pV2, int pSearchCount) {
     pRetVal.mMfe = pV2;
     pRetVal.mTargetPos = bt.get_gx();
     pRetVal.mTargetPos0 = bt.get_gx() - 1;
@@ -65,33 +61,29 @@ void RH2WorkSpace::create_ret_val(RH2RetValues& pRetVal, float pV2, int pSearchC
     pRetVal.mEffective = false;
 }
 
-void RH2WorkSpace::copy_ret_val(RH2RetValues& pRetVal1, RH2RetValues& pRetVal2)
-{
+void RH2WorkSpace::copy_ret_val(RH2RetValues &pRetVal1, RH2RetValues &pRetVal2) {
     pRetVal1.mMfe = pRetVal2.mMfe;
-    pRetVal1.mTargetPos =pRetVal2.mTargetPos;
+    pRetVal1.mTargetPos = pRetVal2.mTargetPos;
     pRetVal1.mTargetPos0 = pRetVal2.mTargetPos0;
     pRetVal1.mTargetSub = pRetVal2.mTargetSub;
     pRetVal1.mTarget = pRetVal2.mTarget;
     pRetVal1.mQeuery = pRetVal2.mQeuery;
     pRetVal1.mQeuarySub = pRetVal2.mQeuarySub;
-    pRetVal1.mLenA1 =pRetVal2.mLenA1;
+    pRetVal1.mLenA1 = pRetVal2.mLenA1;
     pRetVal1.mSearchCount = pRetVal2.mSearchCount;
     pRetVal1.mEffective = pRetVal2.mEffective;
 }
 
-void RH2WorkSpace::reset_bt_work_space()
-{
+void RH2WorkSpace::reset_bt_work_space() {
     bt.reset();
     pp.reset();
 }
 
-void RH2WorkSpace::reset_work_space()
-{
+void RH2WorkSpace::reset_work_space() {
     bt.clear_processed_x();
 }
 
-void RH2WorkSpace::mainloop(RH2RetValues& pRetVal)
-{
+void RH2WorkSpace::mainloop(RH2RetValues &pRetVal) {
     float v2;
     float min_v2;
     bool first_iter = true;
@@ -101,10 +93,8 @@ void RH2WorkSpace::mainloop(RH2RetValues& pRetVal)
     std::string str_bt;
     RH2RetValues tmpRet;
 
-    for (int targetPos = mTargetLen; targetPos >= 0; --targetPos)
-    {
-        for (int queryPos = mQueryLen; queryPos >= 0; --queryPos)
-        {
+    for (int targetPos = mTargetLen; targetPos >= 0; --targetPos) {
+        for (int queryPos = mQueryLen; queryPos >= 0; --queryPos) {
             tbl.calc_unpaired_left_bot(targetPos, mTargetLen, queryPos, mQueryLen);
             tbl.calc_closed(targetPos, mTargetLen, queryPos, mQueryLen);
             tbl.calc_unpaired_left_top(targetPos, mTargetLen, queryPos, mQueryLen);
@@ -112,50 +102,41 @@ void RH2WorkSpace::mainloop(RH2RetValues& pRetVal)
     }
 
     v2 = tbl.calc_hybrid(0, mTargetLen, 0, mQueryLen);
-    if (v2 == 0.0)
-    {
+    if (v2 == 0.0) {
         loopContinue = false;
     }
 
     pRetVal.mEffective = false;
     min_v2 = v2;
 
-    while (loopContinue)
-    {
+    while (loopContinue) {
         bt.build_bt_string(0, mTargetLen, 0, mQueryLen);
         v2 = bt.get_min_mfe();
-        if (v2 == 0.0)
-        {
+        if (v2 == 0.0) {
             loopContinue = false;
         }
 
         pp.pp_str_Hybrid();
         str_bt = pp.t1.c_str();
-        if (str_bt.length() == 0)
-        {
+        if (str_bt.length() == 0) {
             loopContinue = false;
         }
 
         create_ret_val(tmpRet, v2, iterate_counter);
-        if (pp.get_count_to_A1() >= mTargetLen - 1)
-        {
+        if (pp.get_count_to_A1() >= mTargetLen - 1) {
             loopContinue = false;
         }
 
         hit_length = pp.get_hit_length();
         hit_start = bt.get_gx() + (pp.t1[0] != ' ');
-        if (loopContinue)
-        {
+        if (loopContinue) {
             bt.add_processed_x();
-        }
-        else
-        {
+        } else {
             tmpRet.mHitLen = hit_length;
             tmpRet.mHitStart = hit_start;
         }
 
-        if (v2 < min_v2 || first_iter)
-        {
+        if (v2 < min_v2 || first_iter) {
             copy_ret_val(pRetVal, tmpRet);
             pRetVal.mEffective = true;
             min_v2 = v2;

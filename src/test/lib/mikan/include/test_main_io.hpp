@@ -5,10 +5,11 @@
 #include "gtest/gtest.h"
 #include "get_data_path.hpp"
 #include "mikan_utils.hpp"
+#include "mk_typedef.hpp"
+#include "mk_input.hpp"
 
-template <class TCoreInput, class TOptions>
-class TestIOBase : public ::testing::Test
-{
+template<class TCoreInput>
+class TestIOBase : public ::testing::Test {
 protected:
     char *IFNAME1;
     char *IFNAME2;
@@ -39,7 +40,7 @@ protected:
         o2file2 += O2FNAME2;
 
         argc = 5;
-        argv[0] = (char *)"program";
+        argv[0] = (char *) "program";
         argv[1] = seqan::toCString(ifile1);
         argv[2] = seqan::toCString(ifile2);
         argv[3] = seqan::toCString(o2file1);
@@ -51,19 +52,9 @@ protected:
         seqan::clear(mrna_seqs);
     }
 
-    void read_files(bool parse_argv) {
-        if (parse_argv)
-        {
-            (void)options.parseCommandLine(argc, (const char **)argv);
-        }
-        else
-        {
-            options.mMiRNAFasta = seqan::toCString(ifile1);
-            options.mMRNAFasta = seqan::toCString(ifile2);
-        }
-
-        coreInput.init_from_args(options);
-        (void)coreInput.load_seq_from_file();
+    void read_files() {
+        coreInput.set_file_names(ifile1, ifile2);
+        (void) coreInput.load_seq_from_file();
     }
 
     void set_seqs() {
@@ -73,11 +64,10 @@ protected:
         mrna_seqs = coreInput.get_mrna_seqs();
     }
 
-    TCoreInput coreInput;
-    TOptions options;
-
     int argc;
     char *argv[6];
+
+    TCoreInput coreInput;
 
     seqan::CharString ifile1;
     seqan::CharString ifile2;

@@ -6,9 +6,8 @@
 #include "get_data_path.hpp"
 #include "mikan_utils.hpp"
 
-template <class TSeedSeqs, class TTestIO>
-class TestSeed : public TTestIO
-{
+template<class TSeedSeqs, class TTestIO>
+class TestSeed : public TTestIO {
 protected:
 
     void test_seed(const char *rnastr, int idx, const char *seq_type, bool effective, unsigned mmpos) {
@@ -16,7 +15,7 @@ protected:
 
         reverseComplement(seedseq);
         comp_two_rnas(mSeedSeqs.get_seed_seq(idx), seedseq);
-        EXPECT_STREQ(seq_type, seqan::toCString((seqan::CharString)mSeedSeqs.get_seed_type(idx)));
+        EXPECT_STREQ(seq_type, seqan::toCString((seqan::CharString) mSeedSeqs.get_seed_type(idx)));
         EXPECT_EQ(effective, mSeedSeqs.mEffectiveSeeds[idx]);
         EXPECT_EQ(mmpos, mSeedSeqs.get_mismatched_pos(idx));
 
@@ -35,7 +34,7 @@ protected:
 
         reverseComplement(seedseq);
         comp_two_rnas(mSeedSeqs.get_seed_seq(idx), seedseq);
-        EXPECT_STREQ(seq_type, seqan::toCString((seqan::CharString)mSeedSeqs.get_seed_type(idx)));
+        EXPECT_STREQ(seq_type, seqan::toCString((seqan::CharString) mSeedSeqs.get_seed_type(idx)));
         EXPECT_EQ(effective, mSeedSeqs.mEffectiveSeeds[idx]);
     }
 

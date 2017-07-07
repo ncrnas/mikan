@@ -5,9 +5,10 @@
 #include "test_seed.hpp"
 #include "test_site.hpp"
 #include "ts5_core.hpp"
+#include "mk_input.hpp"
 
-typedef TestIOBase<ts5cs::TS5CoreInput<ts5cs::TRNATYPE>, ts5cs::TS5CSOptions> TestIOTS5;
-typedef TestSeed<ts5cs::TS5SeedSeqs<ts5cs::TRNATYPE>, TestIOTS5> TestSeedTS5;
-typedef TestSite<ts5cs::TS5SeedSites<ts5cs::TRNATYPE>, TestIOTS5> TestSiteTS5;
+typedef TestIOBase<mikan::MKInput<mikan::TRNATYPE> > TestIOTS5;
+typedef TestSeed<ts5cs::TS5SeedSeqs<mikan::TRNATYPE>, TestIOTS5> TestSeedTS5;
+typedef TestSite<ts5cs::TS5SeedSites<mikan::TRNATYPE>, TestIOTS5> TestSiteTS5;
 
 #endif //MIKAN_TEST_TS5_HPP_

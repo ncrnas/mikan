@@ -4,43 +4,13 @@
 #include <seqan/sequence.h>
 #include <seqan/index.h>
 
-namespace ptddg{
-
-//
-// Store miRNA and mRNA sequences and ids
-//
-template <class TRNAString>
-class PITASequences
-{
-public:
-    // Define types
-    typedef seqan::StringSet<seqan::CharString> TCharSet;
-    typedef seqan::StringSet<TRNAString> TRNASet;
-
-    // Define methods
-    PITASequences(): mMaxLen(0) {}
-    unsigned get_length() const {return length(mSeqIds);}
-    seqan::CharString const& get_seq_id(unsigned const pIdx) const {return mSeqIds[pIdx];}
-    TRNAString const& get_seq(unsigned const pIdx) const {return mSeqs[pIdx];}
-    TCharSet const& get_ids() const {return mSeqIds;}
-    TRNASet const& get_seqs() const {return mSeqs;}
-    int get_max_seq_len() {return mMaxLen;}
-
-    // Method prototypes
-    int read_fasta(seqan::CharString const &pFasta);
-
-private:
-    TCharSet mSeqIds;
-    TRNASet mSeqs;
-    int mMaxLen;
-};
+namespace ptddg {
 
 //
 // Generate miRNA seeds
 //
-template <class TRNAString>
-class PITASeedSeqs
-{
+template<class TRNAString>
+class PITASeedSeqs {
 public:
     // Define types
     typedef seqan::StringSet<TRNAString> TRNASet;
@@ -51,12 +21,16 @@ public:
 public:
     // Define methods
     PITASeedSeqs() {}
-    TRNAString const& get_seed_seq(int i) const {return mSeedSeqs[i];}
-    seqan::CharString const& get_seed_type(int i) const {return mSeedTypes[i];}
-    unsigned get_mismatched_pos(int i) {return mMisMatchPos[i];}
+
+    TRNAString const &get_seed_seq(int i) const { return mSeedSeqs[i]; }
+
+    seqan::CharString const &get_seed_type(int i) const { return mSeedTypes[i]; }
+
+    unsigned get_mismatched_pos(int i) { return mMisMatchPos[i]; }
 
     // Method prototypes
     int create_seed_seqs(seqan::StringSet<seqan::CharString> &pSeedType);
+
     void set_mirna_seq(TRNAString pSeq);
 
 private:
@@ -67,10 +41,15 @@ private:
 
 private:
     int create_nmer_seed_seqs(TRNAString &pSeedSeq, seqan::StringSet<seqan::CharString> &pSeedDef);
+
     int create_single_guwobble_seed_seqs(TRNAString &pSeedSeq);
+
     int create_multi_guwobble_seed_seqs(TRNAString &pSeedSeq);
-    int create_mismatch_seed_seqs(TRNAString &pSeedSeq, bool pIsGUMM=false, int pGUPos=0);
+
+    int create_mismatch_seed_seqs(TRNAString &pSeedSeq, bool pIsGUMM = false, int pGUPos = 0);
+
     int create_gu_mismatch_seed_seqs(TRNAString &pSeedSeq);
+
     int check_redundant_seeds();
 
 };
@@ -78,9 +57,8 @@ private:
 //
 // miRNA seed sites
 //
-template <class TRNAString>
-class PITASeedSites
-{
+template<class TRNAString>
+class PITASeedSites {
 public:
     // Define types
     typedef seqan::StringSet<TRNAString> TRNASet;
@@ -99,17 +77,24 @@ public:
 
 public:
     // Define methods
-    PITASeedSites(TIndexQGram& pRNAIdx, TFinder& pFinder, TRNASet const &pMRNASeqs):
-        mRNAIdx(pRNAIdx), mFinder(pFinder), mMRNASeqs(pMRNASeqs) {}
-    unsigned get_length() const {return seqan::length(mSitePos);}
-    seqan::String<unsigned> const& get_mrna_pos() const {return mMRNAPos;}
-    seqan::String<unsigned> const& get_site_pos() const {return mSitePos;}
-    seqan::StringSet<seqan::CharString> const& get_seed_types() const {return mSeedTypes;}
-    seqan::String<int> const& get_mismatched_pos() const {return mMisMatchPos;}
+    PITASeedSites(TIndexQGram &pRNAIdx, TFinder &pFinder, TRNASet const &pMRNASeqs) :
+            mRNAIdx(pRNAIdx), mFinder(pFinder), mMRNASeqs(pMRNASeqs) {}
+
+    unsigned get_length() const { return seqan::length(mSitePos); }
+
+    seqan::String<unsigned> const &get_mrna_pos() const { return mMRNAPos; }
+
+    seqan::String<unsigned> const &get_site_pos() const { return mSitePos; }
+
+    seqan::StringSet<seqan::CharString> const &get_seed_types() const { return mSeedTypes; }
+
+    seqan::String<int> const &get_mismatched_pos() const { return mMisMatchPos; }
 
     // Method prototypes
     void reset_finder();
+
     int find_seed_sites(TRNAString const &pMiRNA, seqan::StringSet<seqan::CharString> &pSeedDef);
+
     void clear_pos();
 
 private:
@@ -117,34 +102,43 @@ private:
     seqan::String<unsigned> mSitePos;
     seqan::StringSet<seqan::CharString> mSeedTypes;
     seqan::String<int> mMisMatchPos;
-    TIndexQGram& mRNAIdx;
-    TFinder& mFinder;
+    TIndexQGram &mRNAIdx;
+    TFinder &mFinder;
     TRNASet const &mMRNASeqs;
 
 private:
     void set_new_seed_type(seqan::CharString &pCurSeedType, seqan::StringSet<seqan::CharString> &pSeedDef,
-            unsigned pMRNAPos, unsigned pSitePos, TRNAString const &pMiRNA, unsigned pMisMatchPos,
-            bool &pEffectiveSite);
+                           unsigned pMRNAPos, unsigned pSitePos, TRNAString const &pMiRNA, unsigned pMisMatchPos,
+                           bool &pEffectiveSite);
 
     void set_mx_matches(unsigned pMRNAPos, unsigned pSitePos, TRNAString const &pMiRNA, int pMx,
-            bool &pMatchMx, bool &pGutMx, bool &pGumMx);
+                        bool &pMatchMx, bool &pGutMx, bool &pGumMx);
 
     void set_stringent_seed_type(seqan::CharString &pCurSeedType, seqan::StringSet<seqan::CharString> &pSeedDef,
-            bool pMatchMx1, bool pMatchMx2, unsigned pMisMatchPos, seqan::CharString &pNewSeedType);
+                                 bool pMatchMx1, bool pMatchMx2, unsigned pMisMatchPos,
+                                 seqan::CharString &pNewSeedType);
+
     void set_single_gu_seed_type(seqan::CharString &pCurSeedType, seqan::StringSet<seqan::CharString> &pSeedDef,
-            int pM1, int pM2, bool pMatchMx1, bool pMatchMx2, bool pGutMx1, bool pGutMx2,
-            bool pGumMx1, bool pGumMx2, unsigned pMisMatchPos, seqan::CharString &pNewSeedType);
+                                 int pM1, int pM2, bool pMatchMx1, bool pMatchMx2, bool pGutMx1, bool pGutMx2,
+                                 bool pGumMx1, bool pGumMx2, unsigned pMisMatchPos,
+                                 seqan::CharString &pNewSeedType);
+
     void set_multiple_gu_seed_type(seqan::CharString &pCurSeedType, seqan::StringSet<seqan::CharString> &pSeedDef,
-            int pM1, int pM2, bool pMatchMx1, bool pMatchMx2, bool pGutMx1, bool pGutMx2,
-            bool pGumMx1, bool pGumMx2, unsigned pMisMatchPos, seqan::CharString &pNewSeedType);
+                                   int pM1, int pM2, bool pMatchMx1, bool pMatchMx2, bool pGutMx1, bool pGutMx2,
+                                   bool pGumMx1, bool pGumMx2, unsigned pMisMatchPos,
+                                   seqan::CharString &pNewSeedType);
+
     void set_mismatch_seed_type(seqan::CharString &pCurSeedType, seqan::StringSet<seqan::CharString> &pSeedDef,
-            int pM1, int pM2, bool pMatchMx1, bool pMatchMx2, bool pGutMx1, bool pGutMx2,
-            bool pGumMx1, bool pGumMx2, unsigned pMisMatchPos, seqan::CharString &pNewSeedType);
+                                int pM1, int pM2, bool pMatchMx1, bool pMatchMx2, bool pGutMx1, bool pGutMx2,
+                                bool pGumMx1, bool pGumMx2, unsigned pMisMatchPos, seqan::CharString &pNewSeedType);
+
     void set_gu_mismatch_seed_type(seqan::CharString &pCurSeedType, seqan::StringSet<seqan::CharString> &pSeedDef,
-            int pM1, int pM2, bool pMatchMx1, bool pMatchMx2, bool pGutMx1, bool pGutMx2,
-            bool pGumMx1, bool pGumMx2, unsigned pMisMatchPos, seqan::CharString &pNewSeedType);
+                                   int pM1, int pM2, bool pMatchMx1, bool pMatchMx2, bool pGutMx1, bool pGutMx2,
+                                   bool pGumMx1, bool pGumMx2, unsigned pMisMatchPos,
+                                   seqan::CharString &pNewSeedType);
+
     void set_6mer_seed_type(seqan::CharString &pCurSeedType, seqan::StringSet<seqan::CharString> &pSeedDef,
-            bool pMatchMx1, bool pMatchMx2, unsigned pMisMatchPos, seqan::CharString &pNewSeedType);
+                            bool pMatchMx1, bool pMatchMx2, unsigned pMisMatchPos, seqan::CharString &pNewSeedType);
 
     void check_last_match(bool pMatchM8, bool pMatchM9, seqan::CharString &pNewSeedType);
 

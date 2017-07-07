@@ -3,9 +3,9 @@
 
 #include <Eigen/Dense>
 
-namespace tssvm{
+namespace tssvm {
 
-int init_alpha_vector(Eigen::VectorXf & mAlphas);
+int init_alpha_vector(Eigen::VectorXf &mAlphas);
 
 } // namespace tssvm
 

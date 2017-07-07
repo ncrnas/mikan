@@ -4,11 +4,10 @@
 #include<string>
 #include "gtest/gtest.h"
 #include "get_data_path.hpp"
-#include "mikan_utils.hpp"
-#include "mr3_core.hpp"
+#include "mk_typedef.hpp"
+#include "mk_input.hpp"
 
-class TestFasta : public ::testing::Test
-{
+class TestFasta : public ::testing::Test {
 protected:
     char *IFNAME1;
     char *IFNAME2;
@@ -28,15 +27,12 @@ protected:
     }
 
     void read_files() {
-        options.mMiRNAFasta = seqan::toCString(ifile1);
-        options.mMRNAFasta = seqan::toCString(ifile2);
-        coreInput.init_from_args(options);
-        (void)coreInput.load_seq_from_file();
+        coreInput.set_file_names(ifile1, ifile2);
+        (void) coreInput.load_seq_from_file();
     }
 
-    mr3as::MR3CoreInput<mr3as::TRNATYPE> coreInput;
-    mr3as::MR3Options options;
-
+    mikan::MKInput<mikan::TRNATYPE> coreInput;
+    
     seqan::CharString dfile;
     seqan::CharString ifile1;
     seqan::CharString ifile2;

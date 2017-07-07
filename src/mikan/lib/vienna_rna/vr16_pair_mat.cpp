@@ -1,14 +1,13 @@
-#include <vr16_pair_mat.hpp>
+#include "vr16_pair_mat.hpp"
 #include <iostream>
-#include <mk_memory.hpp>
+#include "mk_nd_array.hpp"
 
 namespace vr16 {
 
 //
 // VR16PairMat methods
 //
-void VR16PairMat::init_dat()
-{
+void VR16PairMat::init_dat() {
     mLawAndOrder = "_ACGUTXKI";
 
 /*     _  A  C  G  U  X  K  I
@@ -104,31 +103,24 @@ void VR16PairMat::init_dat()
 
 }
 
-int VR16PairMat::encode_char(char pChr, int pEnergySet)
-{
+int VR16PairMat::encode_char(char pChr, int pEnergySet) {
     /* return numerical representation of base used e.g. in pair[][] */
     int code;
 
-    if (pEnergySet > 0)
-    {
+    if (pEnergySet > 0) {
         code = (int) (pChr - 'A') + 1;
-    }
-    else
-    {
+    } else {
         code = 0;
         unsigned i = 0;
-        for (std::string::iterator it = mLawAndOrder.begin(); it != mLawAndOrder.end(); ++it)
-        {
-            if (pChr == (char)(*it))
-            {
+        for (std::string::iterator it = mLawAndOrder.begin(); it != mLawAndOrder.end(); ++it) {
+            if (pChr == (char) (*it)) {
                 code = i;
                 break;
             }
             ++i;
         }
 
-        if (code > 4)
-        {
+        if (code > 4) {
             --code; /* make T and U equivalent */
         }
     }
@@ -136,87 +128,63 @@ int VR16PairMat::encode_char(char pChr, int pEnergySet)
     return code;
 }
 
-int VR16PairMat::make_pair_matrix(int pEnergySet, std::string& pNonStandards, bool pNoGU)
-{
-    if (pEnergySet == 0)
-    {
-        for (unsigned i = 0; i < 5; ++i)
-        {
+int VR16PairMat::make_pair_matrix(int pEnergySet, std::string &pNonStandards, bool pNoGU) {
+    if (pEnergySet == 0) {
+        for (unsigned i = 0; i < 5; ++i) {
             mAlias[i] = (int) i;
         }
         mAlias[5] = 3;     /* X <-> G */
         mAlias[6] = 2;     /* K <-> C */
         mAlias[7] = 0;     /* I <-> default base '@' */
-        for (int i = 0; i < NBASES; ++i)
-        {
-            for (int j = 0; j < NBASES; ++j)
-            {
+        for (int i = 0; i < NBASES; ++i) {
+            for (int j = 0; j < NBASES; ++j) {
                 mPair[i][j] = mBPPair[i][j];
             }
         }
-        if (pNoGU)
-        {
+        if (pNoGU) {
             mPair[3][4] = 0;
             mPair[4][3] = 0;
         }
-        if (pNonStandards.size() != 0)
-        { /* allow nonstandard bp's */
-            for (unsigned i = 0; i < pNonStandards.size(); i += 2)
-            {
+        if (pNonStandards.size() != 0) { /* allow nonstandard bp's */
+            for (unsigned i = 0; i < pNonStandards.size(); i += 2) {
                 mPair[encode_char(pNonStandards[i], pEnergySet)][encode_char(pNonStandards[i + 1], pEnergySet)] = 7;
             }
         }
-        for (int i = 0; i < NBASES; ++i)
-        {
-            for (int j = 0; j < NBASES; ++j)
-            {
+        for (int i = 0; i < NBASES; ++i) {
+            for (int j = 0; j < NBASES; ++j) {
                 mRtype[mPair[i][j]] = mPair[j][i];
             }
         }
-    }
-    else
-    {
-        for (int i = 0; i <= MAXALPHA; ++i)
-        {
-            for (int j = 0; j <= MAXALPHA; ++j)
-            {
+    } else {
+        for (int i = 0; i <= MAXALPHA; ++i) {
+            for (int j = 0; j <= MAXALPHA; ++j) {
                 mPair[i][j] = 0;
             }
         }
-        if (pEnergySet == 1)
-        {
-            for (int i = 1; i < MAXALPHA; ++i)
-            {
+        if (pEnergySet == 1) {
+            for (int i = 1; i < MAXALPHA; ++i) {
                 mAlias[i] = 3; /* A <-> G */
                 ++i;
                 mAlias[i] = 2; /* B <-> C */
             }
-            for (int i = 1; i < MAXALPHA; ++i)
-            {
+            for (int i = 1; i < MAXALPHA; ++i) {
                 mPair[i][i + 1] = 2; /* AB <-> GC */
                 ++i;
                 mPair[i][i - 1] = 1; /* BA <-> CG */
             }
-        }
-        else if (pEnergySet == 2)
-        {
-            for (int i = 1; i < MAXALPHA; ++i)
-            {
+        } else if (pEnergySet == 2) {
+            for (int i = 1; i < MAXALPHA; ++i) {
                 mAlias[i] = 1; /* A <-> A*/
                 ++i;
                 mAlias[i] = 4; /* B <-> U */
             }
-            for (int i = 1; i < MAXALPHA; ++i)
-            {
+            for (int i = 1; i < MAXALPHA; ++i) {
                 mPair[i][i + 1] = 5; /* AB <-> AU */
                 ++i;
                 mPair[i][i - 1] = 6; /* BA <-> UA */
             }
-        }
-        else if (pEnergySet == 3)
-        {
-            for (unsigned i = 1; i < MAXALPHA - 2; ++i)
-            {
+        } else if (pEnergySet == 3) {
+            for (unsigned i = 1; i < MAXALPHA - 2; ++i) {
                 mAlias[i] = 3; /* A <-> G */
                 ++i;
                 mAlias[i] = 2; /* B <-> C */
@@ -225,8 +193,7 @@ int VR16PairMat::make_pair_matrix(int pEnergySet, std::string& pNonStandards, bo
                 ++i;
                 mAlias[i] = 4; /* D <-> U */
             }
-            for (unsigned i = 1; i < MAXALPHA - 2; ++i)
-            {
+            for (unsigned i = 1; i < MAXALPHA - 2; ++i) {
                 mPair[i][i + 1] = 2; /* AB <-> GC */
                 ++i;
                 mPair[i][i - 1] = 1; /* BA <-> CG */
@@ -235,17 +202,13 @@ int VR16PairMat::make_pair_matrix(int pEnergySet, std::string& pNonStandards, bo
                 ++i;
                 mPair[i][i - 1] = 6; /* DC <-> UA */
             }
-        }
-        else
-        {
+        } else {
             std::cerr << "Error: Wrong energy_set." << std::endl;
             return 1;
         }
 
-        for (int i = 0; i <= MAXALPHA; ++i)
-        {
-            for (int j = 0; j <= MAXALPHA; ++j)
-            {
+        for (int i = 0; i <= MAXALPHA; ++i) {
+            for (int j = 0; j <= MAXALPHA; ++j) {
                 mRtype[mPair[i][j]] = mPair[j][i];
             }
         }
@@ -254,22 +217,20 @@ int VR16PairMat::make_pair_matrix(int pEnergySet, std::string& pNonStandards, bo
     return 0;
 }
 
-void VR16PairMat::init_heap()
-{
+void VR16PairMat::init_heap() {
 
     mBPPair = mikan::create_2d_array<int>(NBASES, NBASES);
 
-    mAlias = mikan::create_1d_array<int>(MAXALPHA+1);
-    mPair = mikan::create_2d_array<int>(MAXALPHA+1, MAXALPHA+1);
+    mAlias = mikan::create_1d_array<int>(MAXALPHA + 1);
+    mPair = mikan::create_2d_array<int>(MAXALPHA + 1, MAXALPHA + 1);
     mRtype = mikan::create_1d_array<int>(8);
 }
 
-void VR16PairMat::free_heap()
-{
+void VR16PairMat::free_heap() {
     mikan::delete_2d_array<int>(mBPPair, NBASES);
 
     mikan::delete_1d_array<int>(mAlias);
-    mikan::delete_2d_array<int>(mPair, MAXALPHA+1);
+    mikan::delete_2d_array<int>(mPair, MAXALPHA + 1);
     mikan::delete_1d_array<int>(mRtype);
 }
 

@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8.2)
+cmake_minimum_required(VERSION 2.8.2)
 
 set(TSSVM_SOURCE
         ${CMAKE_CURRENT_SOURCE_DIR}/tssvm_core.cpp
@@ -15,7 +15,7 @@ set(TSSVM_SOURCE
         PARENT_SCOPE
         )
 set(TSSVM_HEADERS
-   ${CMAKE_CURRENT_SOURCE_DIR}/include
-   PARENT_SCOPE
-)
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        PARENT_SCOPE
+        )
 

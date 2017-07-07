@@ -1,29 +1,32 @@
 #ifndef TM1_SITE_CLUSTER_HPP_
 #define TM1_SITE_CLUSTER_HPP_
 
-#include <tm1_seed_site.hpp>      // TM1SeedSites
+#include "tm1_seed_site.hpp"      // TM1SeedSites
 #include <set>                    // set
 #include <map>                    // multimap
 #include <utility>                // pair
 
-namespace tm1p{
+namespace tm1p {
 
 //
 // Provide basic site cluster
 //
-template <class TRNAString>
-class TM1SiteCluster
-{
+template<class TRNAString>
+class TM1SiteCluster {
 public:
     // Define methods
     TM1SiteCluster() : mSiteCount(0) {}
-    std::set<unsigned>& get_mrna_pos_set() {return mRNAPosSet;}
-    std::multimap<unsigned, unsigned>& get_mrna_pos_map() {return mSiteMap;}
-    int get_site_count() {return mSiteCount;}
+
+    std::set<unsigned> &get_mrna_pos_set() { return mRNAPosSet; }
+
+    std::multimap<unsigned, unsigned> &get_mrna_pos_map() { return mSiteMap; }
+
+    int get_site_count() { return mSiteCount; }
 
     // Method prototype
     void clear_cluster();
-    void cluster_site_pos(TM1SeedSites<TRNAString> &pSeedSites);
+
+    void cluster_site_pos(TM1SeedSites <TRNAString> &pSeedSites);
 
 private:
     typedef std::pair<unsigned, unsigned> TPosPair;
@@ -37,17 +40,19 @@ private:
 //
 // Sort sites by position
 //
-template <class TRNAString>
-class TM1SortedSitePos
-{
+template<class TRNAString>
+class TM1SortedSitePos {
 public:
     // Define methods
     TM1SortedSitePos() {}
 
     // Method prototype
-    int generate_sorted_mrna_pos(TM1SeedSites<TRNAString> &pSeedSites, bool pRemoveOvelaps);
-    const seqan::StringSet<seqan::String<unsigned> >& get_sorted_mrna_pos() {return mSortedSites;}
-    const seqan::String<unsigned>& get_mrna_ids(){return mMRNAIDs;}
+    int generate_sorted_mrna_pos(TM1SeedSites <TRNAString> &pSeedSites, bool pRemoveOvelaps);
+
+    const seqan::StringSet<seqan::String<unsigned> > &get_sorted_mrna_pos() { return mSortedSites; }
+
+    const seqan::String<unsigned> &get_mrna_ids() { return mMRNAIDs; }
+
     void clear_site_pos();
 
 private:
@@ -63,11 +68,13 @@ private:
     TM1SiteCluster<TRNAString> mSiteCluster;
 
 private:
-    void remove_overlapped_sites(TM1SeedSites<TRNAString> &pSeedSites);
-    void sort_by_seed_types(TM1SeedSites<TRNAString> &pSeedSites, TItRetPair& pGroupedSites,
-            std::map<unsigned, unsigned>& pSortedSites);
-    void sort_by_pos7(TM1SeedSites<TRNAString> &pSeedSites, TItRetPair& pGroupedSites,
-            std::map<unsigned, unsigned>& pSortedSites);
+    void remove_overlapped_sites(TM1SeedSites <TRNAString> &pSeedSites);
+
+    void sort_by_seed_types(TM1SeedSites <TRNAString> &pSeedSites, TItRetPair &pGroupedSites,
+                            std::map<unsigned, unsigned> &pSortedSites);
+
+    void sort_by_pos7(TM1SeedSites <TRNAString> &pSeedSites, TItRetPair &pGroupedSites,
+                      std::map<unsigned, unsigned> &pSortedSites);
 
 };
 

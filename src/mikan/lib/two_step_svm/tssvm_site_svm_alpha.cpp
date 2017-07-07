@@ -1,9 +1,8 @@
-#include <tssvm_site_svm_alpha.hpp>
+#include "tssvm_site_svm_alpha.hpp"
 
-namespace tssvm{
+namespace tssvm {
 
-int init_alpha_vector(Eigen::VectorXf & mAlphas)
-{
+int init_alpha_vector(Eigen::VectorXf &mAlphas) {
     mAlphas.segment(0, 1119).setConstant(1.8759f);
     mAlphas(2) = 1.53811930677f;
     mAlphas(10) = 1.14644462096f;
