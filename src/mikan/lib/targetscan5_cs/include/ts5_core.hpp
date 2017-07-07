@@ -1,12 +1,12 @@
 #ifndef TS5_CORE_HPP_
 #define TS5_CORE_HPP_
 
-#include <ts5_feature.hpp>       // TS5RawFeatures
-#include <mk_inst_template.hpp>  // TRNATYPE
-#include <ts5_option.hpp>        // TS5CSOptions
-#include <ts5_score.hpp>         // TS5ContextScores, TS5TotalScores
-#include <ts5_seed_site.hpp>     // TS5SeedSites
-#include <mk_sequence.hpp>       // MKSequences
+#include "ts5_feature.hpp"       // TS5RawFeatures
+#include "mk_inst_template.hpp"  // TRNATYPE
+#include "ts5_option.hpp"        // TS5CSOptions
+#include "ts5_score.hpp"         // TS5ContextScores, TS5TotalScores
+#include "ts5_seed_site.hpp"     // TS5SeedSites
+#include "mk_sequence.hpp"       // MKSequences
 
 namespace ts5cs {
 

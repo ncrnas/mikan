@@ -1,8 +1,8 @@
 #ifndef MR3_SITE_CLUSTER_HPP_
 #define MR3_SITE_CLUSTER_HPP_
 
-#include <mr3_score.hpp>          // MR3DDGScores
-#include <mr3_seed_site.hpp>      // MR3SeedSites
+#include "mr3_score.hpp"          // MR3DDGScores
+#include "mr3_seed_site.hpp"      // MR3SeedSites
 #include <set>                    // set
 #include <map>                    // multimap
 #include <utility>                // pair

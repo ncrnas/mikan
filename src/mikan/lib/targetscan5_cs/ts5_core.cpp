@@ -7,13 +7,13 @@
 #include <map>                   // multimap
 #include <utility>               // pair
 #include <seqan/arg_parse.h>
-#include <mk_inst_template.hpp>  // TRNATYPE
-#include <ts5_option.hpp>        // TS5CSOptions
-#include <ts5_seed_site.hpp>     // TS5SeedSites
-#include <ts5_feature.hpp>       // TS5RawFeatures
-#include <ts5_score.hpp>         // TS5ContextScores, TS5TotalScores
-#include <ts5_core.hpp>          // TS5Core
-#include <mk_input.hpp>          // MKInput
+#include "mk_inst_template.hpp"  // TRNATYPE
+#include "ts5_option.hpp"        // TS5CSOptions
+#include "ts5_seed_site.hpp"     // TS5SeedSites
+#include "ts5_feature.hpp"       // TS5RawFeatures
+#include "ts5_score.hpp"         // TS5ContextScores, TS5TotalScores
+#include "ts5_core.hpp"          // TS5Core
+#include "mk_input.hpp"          // MKInput
 
 using namespace mikan;
 

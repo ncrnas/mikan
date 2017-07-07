@@ -1,7 +1,7 @@
 #ifndef TM1_MRNA_SVM_HPP_
 #define TM1_MRNA_SVM_HPP_
 
-#include <tm1_mrna_feature.hpp>   // TM1ScaledFeatures,
+#include "tm1_mrna_feature.hpp"   // TM1ScaledFeatures,
 #include <Eigen/Dense>
 #include <seqan/sequence.h>
 

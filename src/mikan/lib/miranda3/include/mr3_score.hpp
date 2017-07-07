@@ -1,9 +1,9 @@
 #ifndef MR3_SCORE_HPP_
 #define MR3_SCORE_HPP_
 
-#include <mr3_align.hpp>          // MR3SeedSites
-#include <mr3_seed_site.hpp>      // MR3Align
-#include <vr16_fold_core.hpp>     // VR16FoldWorkSpace
+#include "mr3_align.hpp"          // MR3SeedSites
+#include "mr3_seed_site.hpp"      // MR3Align
+#include "vr16_fold_core.hpp"     // VR16FoldWorkSpace
 #include <vector>
 #include <string>
 #include <sstream>

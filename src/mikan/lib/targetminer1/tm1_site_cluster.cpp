@@ -1,6 +1,6 @@
-#include <mk_inst_template.hpp>   // TRNATYPE
-#include <tm1_seed_site.hpp>      // TM1SeedSites
-#include <tm1_site_cluster.hpp>   // TM1Overlap, TM1SortedSitePos
+#include "mk_inst_template.hpp"   // TRNATYPE
+#include "tm1_seed_site.hpp"      // TM1SeedSites
+#include "tm1_site_cluster.hpp"   // TM1Overlap, TM1SortedSitePos
 #include <seqan/seq_io.h>
 
 using namespace seqan;

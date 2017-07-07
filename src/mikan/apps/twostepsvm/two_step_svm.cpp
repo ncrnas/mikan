@@ -1,4 +1,4 @@
-#include <tssvm_core.hpp>           // TSSVMCoreMain
+#include "tssvm_core.hpp"           // TSSVMCoreMain
 
 int main(int argc, char const **argv) {
     int retVal;

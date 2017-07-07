@@ -1,7 +1,7 @@
 #include <math.h>
-#include <tssvm_align.hpp>          // TSAlign
-#include <mk_inst_template.hpp>     // TRNATYPE
-#include <tssvm_site_feature.hpp>   // TSSVMRawFeatures, TSSVMFeatSeedType, TSSVMFeatSimilarity,
+#include "tssvm_align.hpp"          // TSAlign
+#include "mk_inst_template.hpp"     // TRNATYPE
+#include "tssvm_site_feature.hpp"   // TSSVMRawFeatures, TSSVMFeatSeedType, TSSVMFeatSimilarity,
 
 using namespace seqan;
 using namespace mikan;

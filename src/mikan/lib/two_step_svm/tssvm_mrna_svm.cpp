@@ -1,6 +1,6 @@
-#include <mk_inst_template.hpp>     // TRNATYPE
-#include <tssvm_mrna_feature.hpp>   // TSSVMRNARawFeatures
-#include <tssvm_mrna_svm.hpp>       // TSSVMRNAModel, TSSVMRNAInputVector
+#include "mk_inst_template.hpp"     // TRNATYPE
+#include "tssvm_mrna_feature.hpp"   // TSSVMRNARawFeatures
+#include "tssvm_mrna_svm.hpp"       // TSSVMRNAModel, TSSVMRNAInputVector
 
 using namespace seqan;
 using namespace mikan;

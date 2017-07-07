@@ -1,9 +1,9 @@
 #ifndef TM1_SITE_FEATURE_HPP_
 #define TM1_SITE_FEATURE_HPP_
 
-#include <tm1_align.hpp>         // TM1Alignment
-#include <tm1_seed_site.hpp>     // TM1SeedSites
-#include <tm1_site_cluster.hpp>  // TM1SortedSitePos
+#include "tm1_align.hpp"         // TM1Alignment
+#include "tm1_seed_site.hpp"     // TM1SeedSites
+#include "tm1_site_cluster.hpp"  // TM1SortedSitePos
 #include <seqan/sequence.h>
 
 namespace tm1p {

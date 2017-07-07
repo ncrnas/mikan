@@ -1,6 +1,6 @@
-#include <vr16_energy.hpp>
+#include "vr16_energy.hpp"
 #include <cstring>
-#include <mk_memory.hpp>
+#include "mk_memory.hpp"
 
 namespace vr16
 {

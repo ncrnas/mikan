@@ -1,8 +1,8 @@
 #ifndef PITA_SITE_CLUSTER_HPP_
 #define PITA_SITE_CLUSTER_HPP_
 
-#include <pita_score.hpp>         // PITADDGScores
-#include <pita_seed_site.hpp>     // PITASeedSites
+#include "pita_score.hpp"         // PITADDGScores
+#include "pita_seed_site.hpp"     // PITASeedSites
 #include <set>                    // set
 #include <map>                    // multimap
 #include <utility>                // pair

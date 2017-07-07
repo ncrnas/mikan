@@ -6,15 +6,15 @@
 #endif
 
 #include <seqan/arg_parse.h>
-#include <mk_inst_template.hpp>  // TRNATYPE
-#include <mk_input.hpp>          // MKInput
+#include "mk_inst_template.hpp"  // TRNATYPE
+#include "mk_input.hpp"          // MKInput
 
-#include <mr3_core.hpp>          // MR3CoreMain
-#include <pita_core.hpp>          // PITACoreMain
-#include <rh2_core.hpp>          // RH2CoreMain
-#include <tm1_core.hpp>          // TM1CoreMain
-#include <ts5_core.hpp>          // TS5CoreMain
-#include <tssvm_core.hpp>           // TSSVMCoreMain
+#include "mr3_core.hpp"          // MR3CoreMain
+#include "pita_core.hpp"          // PITACoreMain
+#include "rh2_core.hpp"          // RH2CoreMain
+#include "tm1_core.hpp"          // TM1CoreMain
+#include "ts5_core.hpp"          // TS5CoreMain
+#include "tssvm_core.hpp"           // TSSVMCoreMain
 
 namespace mikan {
 

@@ -1,14 +1,14 @@
 #ifndef TSSVM_CORE_HPP_
 #define TSSVM_CORE_HPP_
 
-#include <tssvm_align.hpp>          // TSAlign
-#include <mk_inst_template.hpp>     // TRNATYPE
-#include <tssvm_mrna_feature.hpp>   // TSSVMRNARawFeatures
-#include <tssvm_mrna_svm.hpp>       // TSSVMRNAInputVector
-#include <tssvm_option.hpp>         // TSSVMOptions
-#include <tssvm_seed_site.hpp>      // TSSVMSeedSites, TSSVMSeedSiteOverlap
-#include <tssvm_site_svm.hpp>       // TSSVMSiteInputVector
-#include <mk_sequence.hpp>          // MKSequences
+#include "tssvm_align.hpp"          // TSAlign
+#include "mk_inst_template.hpp"     // TRNATYPE
+#include "tssvm_mrna_feature.hpp"   // TSSVMRNARawFeatures
+#include "tssvm_mrna_svm.hpp"       // TSSVMRNAInputVector
+#include "tssvm_option.hpp"         // TSSVMOptions
+#include "tssvm_seed_site.hpp"      // TSSVMSeedSites, TSSVMSeedSiteOverlap
+#include "tssvm_site_svm.hpp"       // TSSVMSiteInputVector
+#include "mk_sequence.hpp"          // MKSequences
 #include <seqan/sequence.h>
 
 namespace tssvm {

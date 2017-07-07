@@ -6,13 +6,13 @@
 #endif
 
 #include <seqan/arg_parse.h>
-#include <mk_inst_template.hpp>   // TRNATYPE
-#include <mr3_option.hpp>         // MR3Options
-#include <mr3_seed_site.hpp>      // MR3SeedSites
-#include <mr3_score.hpp>          // MR3SiteScores, MR3TotalScores
-#include <mr3_site_cluster.hpp>   // MR3Overlap, MR3TopNScore, MR3SortedSitePos
-#include <mr3_core.hpp>           // MR3Core
-#include <mk_input.hpp>           // MKInput
+#include "mk_inst_template.hpp"   // TRNATYPE
+#include "mr3_option.hpp"         // MR3Options
+#include "mr3_seed_site.hpp"      // MR3SeedSites
+#include "mr3_score.hpp"          // MR3SiteScores, MR3TotalScores
+#include "mr3_site_cluster.hpp"   // MR3Overlap, MR3TopNScore, MR3SortedSitePos
+#include "mr3_core.hpp"           // MR3Core
+#include "mk_input.hpp"           // MKInput
 
 using namespace mikan;
 

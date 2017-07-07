@@ -1,7 +1,7 @@
-#include <hybrid_energy.hpp>
+#include "hybrid_energy.hpp"
 #include <cstring>
 #include <algorithm>    // std::fill_n
-#include <mk_memory.hpp>
+#include "mk_memory.hpp"
 
 namespace rh2 {
 

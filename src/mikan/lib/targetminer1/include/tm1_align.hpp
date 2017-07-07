@@ -1,8 +1,8 @@
 #ifndef TM1_ALIGN_HPP_
 #define TM1_ALIGN_HPP_
 
-#include <tm1_align.hpp>         // TM1Alignment
-#include <tm1_seed_site.hpp>     // TM1SeedSites
+#include "tm1_align.hpp"         // TM1Alignment
+#include "tm1_seed_site.hpp"     // TM1SeedSites
 #include <seqan/sequence.h>
 
 namespace tm1p {

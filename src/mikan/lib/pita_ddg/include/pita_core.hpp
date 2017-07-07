@@ -1,12 +1,12 @@
 #ifndef PITA_CORE_HPP_
 #define PITA_CORE_HPP_
 
-#include <mk_inst_template.hpp>   // TRNATYPE
-#include <pita_option.hpp>        // PITAOptions
-#include <pita_score.hpp>         // PITAGGDScores, PITATotalScores
-#include <pita_seed_site.hpp>     // PITASeedSites
-#include <pita_site_cluster.hpp>  // PITAOverlap, PITASortedSitePos
-#include <mk_sequence.hpp>        // MKSequences
+#include "mk_inst_template.hpp"   // TRNATYPE
+#include "pita_option.hpp"        // PITAOptions
+#include "pita_score.hpp"         // PITAGGDScores, PITATotalScores
+#include "pita_seed_site.hpp"     // PITASeedSites
+#include "pita_site_cluster.hpp"  // PITAOverlap, PITASortedSitePos
+#include "mk_sequence.hpp"        // MKSequences
 #include <seqan/sequence.h>
 
 namespace ptddg {

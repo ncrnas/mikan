@@ -1,5 +1,5 @@
-#include <mk_inst_template.hpp>     // TRNATYPE
-#include <tssvm_seed_site.hpp>      // TSSVMSequences, TSSVMSeedSeqs, TSSVMSeedSites, TSSVMSeedSiteOverlap
+#include "mk_inst_template.hpp"     // TRNATYPE
+#include "tssvm_seed_site.hpp"      // TSSVMSequences, TSSVMSeedSeqs, TSSVMSeedSites, TSSVMSeedSiteOverlap
 #include <seqan/seq_io.h>
 
 using namespace seqan;

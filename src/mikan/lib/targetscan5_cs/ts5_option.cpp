@@ -1,4 +1,4 @@
-#include <ts5_option.hpp>        // TS5CSOptions
+#include "ts5_option.hpp"        // TS5CSOptions
 
 using namespace seqan;
 

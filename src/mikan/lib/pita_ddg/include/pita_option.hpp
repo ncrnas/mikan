@@ -3,7 +3,7 @@
 
 #include <seqan/sequence.h>
 #include <seqan/arg_parse.h>
-#include <mk_option.hpp>        // MKOptions
+#include "mk_option.hpp"        // MKOptions
 
 namespace ptddg {
 

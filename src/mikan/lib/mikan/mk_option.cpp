@@ -1,4 +1,4 @@
-#include <mk_option.hpp>         // MKOptions
+#include "mk_option.hpp"         // MKOptions
 
 using namespace seqan;
 

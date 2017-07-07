@@ -1,5 +1,5 @@
-#include <hybrid_energy.hpp>
-#include <hybrid_table.hpp>
+#include "hybrid_energy.hpp"
+#include "hybrid_table.hpp"
 
 namespace rh2 {
 

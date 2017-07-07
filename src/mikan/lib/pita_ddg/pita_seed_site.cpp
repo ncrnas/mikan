@@ -1,5 +1,5 @@
-#include <mk_inst_template.hpp>   // TRNATYPE
-#include <pita_seed_site.hpp>     // PITASequences, PITASeedSeqs, PITASeedSites
+#include "mk_inst_template.hpp"   // TRNATYPE
+#include "pita_seed_site.hpp"     // PITASequences, PITASeedSeqs, PITASeedSites
 #include <seqan/seq_io.h>
 
 using namespace seqan;

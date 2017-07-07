@@ -1,8 +1,8 @@
 #ifndef TS5_SCORE_HPP_
 #define TS5_SCORE_HPP_
 
-#include <ts5_feature.hpp>       // TS5RawFeatures
-#include <ts5_seed_site.hpp>     // TS5SeedSites
+#include "ts5_feature.hpp"       // TS5RawFeatures
+#include "ts5_seed_site.hpp"     // TS5SeedSites
 #include <seqan/sequence.h>
 
 namespace ts5cs {

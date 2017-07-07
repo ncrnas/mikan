@@ -1,4 +1,4 @@
-#include <rh2_option.hpp>        // RH2Options
+#include "rh2_option.hpp"        // RH2Options
 
 using namespace seqan;
 

@@ -1,8 +1,8 @@
 #ifndef TS5_FEATURE_HPP_
 #define TS5_FEATURE_HPP_
 
-#include <ts5_align.hpp>         // TS5Alignment
-#include <ts5_seed_site.hpp>     // TS5SeedSites
+#include "ts5_align.hpp"         // TS5Alignment
+#include "ts5_seed_site.hpp"     // TS5SeedSites
 #include <seqan/sequence.h>
 
 namespace ts5cs {

@@ -1,4 +1,4 @@
-#include <tm1_core.hpp>          // TM1CoreMain
+#include "tm1_core.hpp"          // TM1CoreMain
 
 int main(int argc, char const **argv) {
     int retVal;

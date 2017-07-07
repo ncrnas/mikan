@@ -1,7 +1,7 @@
 #ifndef TSSVM_MRNA_SVM_HPP_
 #define TSSVM_MRNA_SVM_HPP_
 
-#include <tssvm_mrna_feature.hpp>    // TSSVMRNARawFeatures
+#include "tssvm_mrna_feature.hpp"    // TSSVMRNARawFeatures
 #include <Eigen/Dense>
 #include <seqan/sequence.h>
 

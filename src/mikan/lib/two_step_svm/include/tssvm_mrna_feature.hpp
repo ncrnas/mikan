@@ -1,8 +1,8 @@
 #ifndef TSSVM_MRNA_FEATURE_HPP_
 #define TSSVM_MRNA_FEATURE_HPP_
 
-#include <tssvm_seed_site.hpp>      // TSSVMSeedSites
-#include <tssvm_site_svm.hpp>       // TSSVMSiteInputVector
+#include "tssvm_seed_site.hpp"      // TSSVMSeedSites
+#include "tssvm_site_svm.hpp"       // TSSVMSiteInputVector
 #include <seqan/sequence.h>
 
 namespace tssvm {

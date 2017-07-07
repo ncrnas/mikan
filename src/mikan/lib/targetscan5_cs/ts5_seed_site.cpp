@@ -1,5 +1,5 @@
-#include <mk_inst_template.hpp>  // TRNATYPE
-#include <ts5_seed_site.hpp>     // TS5SeedSeqs, TS5SeedSites
+#include "mk_inst_template.hpp"  // TRNATYPE
+#include "ts5_seed_site.hpp"     // TS5SeedSeqs, TS5SeedSites
 #include <seqan/seq_io.h>
 
 using namespace seqan;

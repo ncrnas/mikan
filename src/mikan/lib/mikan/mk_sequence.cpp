@@ -1,5 +1,5 @@
-#include <mk_inst_template.hpp>  // TRNATYPE
-#include <mk_sequence.hpp>       // MKSequences
+#include "mk_inst_template.hpp"  // TRNATYPE
+#include "mk_sequence.hpp"       // MKSequences
 #include <seqan/seq_io.h>
 
 using namespace seqan;

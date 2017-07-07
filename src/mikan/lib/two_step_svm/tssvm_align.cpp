@@ -1,5 +1,5 @@
-#include <tssvm_align.hpp>          // TSAlign
-#include <mk_inst_template.hpp>     // TRNATYPE
+#include "tssvm_align.hpp"          // TSAlign
+#include "mk_inst_template.hpp"     // TRNATYPE
 
 using namespace seqan;
 using namespace mikan;

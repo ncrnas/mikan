@@ -1,7 +1,7 @@
 #include <math.h>                // roundf
-#include <ts5_feature.hpp>       // TS5RawFeatures
-#include <mk_inst_template.hpp>  // TRNATYPE
-#include <ts5_score.hpp>         // TS5ContextScores, TS5ScoreSeedType, TS5FeatSitePos, TS5FeatAURich,
+#include "ts5_feature.hpp"       // TS5RawFeatures
+#include "mk_inst_template.hpp"  // TRNATYPE
+#include "ts5_score.hpp"         // TS5ContextScores, TS5ScoreSeedType, TS5FeatSitePos, TS5FeatAURich,
 
 using namespace seqan;
 using namespace mikan;

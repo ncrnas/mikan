@@ -1,8 +1,8 @@
 #ifndef PITA_SCORE_HPP_
 #define PITA_SCORE_HPP_
 
-#include <pita_seed_site.hpp>     // PITASeedSites
-#include <vr16_ddg_core.hpp>      // VR16DDGWorkSpace
+#include "pita_seed_site.hpp"     // PITASeedSites
+#include "vr16_ddg_core.hpp"      // VR16DDGWorkSpace
 #include <vector>
 #include <string>
 #include <sstream>

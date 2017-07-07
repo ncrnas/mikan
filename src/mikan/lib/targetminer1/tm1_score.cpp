@@ -1,6 +1,6 @@
 #include <math.h>                // roundf
-#include <mk_inst_template.hpp> // TRNATYPE
-#include <tm1_score.hpp>         // TM1ClassifiedScores
+#include "mk_inst_template.hpp" // TRNATYPE
+#include "tm1_score.hpp"         // TM1ClassifiedScores
 
 using namespace seqan;
 using namespace mikan;

@@ -1,6 +1,6 @@
-#include <mk_inst_template.hpp>  // TRNATYPE
-#include <rh2_score.hpp>         // RH2MFEScores
-#include <rh2_site_cluster.hpp>  // RH2Overlap, RH2SortedSitePos
+#include "mk_inst_template.hpp"  // TRNATYPE
+#include "rh2_score.hpp"         // RH2MFEScores
+#include "rh2_site_cluster.hpp"  // RH2Overlap, RH2SortedSitePos
 
 using namespace seqan;
 using namespace mikan;

@@ -1,4 +1,4 @@
-#include <pita_core.hpp>          // PITACoreMain
+#include "pita_core.hpp"          // PITACoreMain
 
 int main(int argc, char const **argv) {
     int retVal;

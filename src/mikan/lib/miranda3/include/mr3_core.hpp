@@ -1,12 +1,12 @@
 #ifndef MR3_CORE_HPP_
 #define MR3_CORE_HPP_
 
-#include <mk_inst_template.hpp>   // TRNATYPE
-#include <mr3_option.hpp>         // MR3Options
-#include <mr3_score.hpp>          // MR3GGDScores, MR3TotalScores
-#include <mr3_seed_site.hpp>      // MR3SeedSites
-#include <mr3_site_cluster.hpp>   // MR3Overlap, MR3SortedSitePos
-#include <mk_sequence.hpp>        // MKSequences
+#include "mk_inst_template.hpp"   // TRNATYPE
+#include "mr3_option.hpp"         // MR3Options
+#include "mr3_score.hpp"          // MR3GGDScores, MR3TotalScores
+#include "mr3_seed_site.hpp"      // MR3SeedSites
+#include "mr3_site_cluster.hpp"   // MR3Overlap, MR3SortedSitePos
+#include "mk_sequence.hpp"        // MKSequences
 #include <seqan/sequence.h>
 
 namespace mr3as {

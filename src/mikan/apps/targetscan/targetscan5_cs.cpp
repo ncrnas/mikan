@@ -1,4 +1,4 @@
-#include <ts5_core.hpp>          // TS5CoreMain
+#include "ts5_core.hpp"          // TS5CoreMain
 
 int main(int argc, char const **argv) {
     int retVal;

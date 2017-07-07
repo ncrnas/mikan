@@ -1,9 +1,9 @@
 #ifndef TM1_SCORE_HPP_
 #define TM1_SCORE_HPP_
 
-#include <mk_inst_template.hpp>   // TRNATYPE
-#include <tm1_mrna_svm.hpp>       // TM1MRNAInputVector
-#include <tm1_site_cluster.hpp>   // TM1SortedSitePos
+#include "mk_inst_template.hpp"   // TRNATYPE
+#include "tm1_mrna_svm.hpp"       // TM1MRNAInputVector
+#include "tm1_site_cluster.hpp"   // TM1SortedSitePos
 #include <seqan/sequence.h>
 
 namespace tm1p {

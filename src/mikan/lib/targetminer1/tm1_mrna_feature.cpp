@@ -1,5 +1,5 @@
-#include <mk_inst_template.hpp>  // TRNATYPE
-#include <tm1_mrna_feature.hpp>  // TM1ScaledFeatures, TM1RawMRNAures, TM1MRNASeedType, TM1MRNASiteCount,
+#include "mk_inst_template.hpp"  // TRNATYPE
+#include "tm1_mrna_feature.hpp"  // TM1ScaledFeatures, TM1RawMRNAures, TM1MRNASeedType, TM1MRNASiteCount,
 
 using namespace seqan;
 using namespace mikan;

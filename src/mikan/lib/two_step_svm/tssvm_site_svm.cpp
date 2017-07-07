@@ -1,8 +1,8 @@
-#include <mk_inst_template.hpp>     // TRNATYPE
-#include <tssvm_site_feature.hpp>   // TSSVMRawFeatures
-#include <tssvm_site_svm.hpp>       // TSSVMSiteModel, TSSVMSiteInputVector
-#include <tssvm_site_svm_alpha.hpp> // init_alpha_vector
-#include <tssvm_site_svm_sv.hpp>    // TSSVMSiteModelSV
+#include "mk_inst_template.hpp"     // TRNATYPE
+#include "tssvm_site_feature.hpp"   // TSSVMRawFeatures
+#include "tssvm_site_svm.hpp"       // TSSVMSiteModel, TSSVMSiteInputVector
+#include "tssvm_site_svm_alpha.hpp" // init_alpha_vector
+#include "tssvm_site_svm_sv.hpp"    // TSSVMSiteModelSV
 
 using namespace seqan;
 using namespace mikan;

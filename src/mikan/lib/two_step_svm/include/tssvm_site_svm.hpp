@@ -1,7 +1,7 @@
 #ifndef TSSVM_SITE_SVM_HPP_
 #define TSSVM_SITE_SVM_HPP_
 
-#include <tssvm_site_feature.hpp>   // TSSVMRawFeatures
+#include "tssvm_site_feature.hpp"   // TSSVMRawFeatures
 #include <Eigen/Dense>
 #include <seqan/sequence.h>
 

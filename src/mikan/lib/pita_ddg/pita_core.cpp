@@ -6,13 +6,13 @@
 #endif
 
 #include <seqan/arg_parse.h>
-#include <mk_inst_template.hpp>   // TRNATYPE
-#include <pita_option.hpp>        // PITAOptions
-#include <pita_seed_site.hpp>     // PITASeedSites
-#include <pita_score.hpp>         // PITAMFEScores, PITATotalScores
-#include <pita_site_cluster.hpp>  // PITAOverlap, PITATopNScore, PITASortedSitePos
-#include <pita_core.hpp>          // PITACore
-#include <mk_input.hpp>           // MKInput
+#include "mk_inst_template.hpp"   // TRNATYPE
+#include "pita_option.hpp"        // PITAOptions
+#include "pita_seed_site.hpp"     // PITASeedSites
+#include "pita_score.hpp"         // PITAMFEScores, PITATotalScores
+#include "pita_site_cluster.hpp"  // PITAOverlap, PITATopNScore, PITASortedSitePos
+#include "pita_core.hpp"          // PITACore
+#include "mk_input.hpp"           // MKInput
 
 using namespace mikan;
 

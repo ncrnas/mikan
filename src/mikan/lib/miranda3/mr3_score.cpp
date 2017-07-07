@@ -1,5 +1,5 @@
-#include <mk_inst_template.hpp>   // TRNATYPE
-#include <mr3_score.hpp>          // MR3DDGScores, MR3TotalScores
+#include "mk_inst_template.hpp"   // TRNATYPE
+#include "mr3_score.hpp"          // MR3DDGScores, MR3TotalScores
 
 using namespace seqan;
 using namespace mikan;

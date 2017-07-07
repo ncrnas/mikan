@@ -1,4 +1,4 @@
-#include <rh2_core.hpp>          // RH2CoreMain
+#include "rh2_core.hpp"          // RH2CoreMain
 
 int main(int argc, char const **argv) {
     int retVal;

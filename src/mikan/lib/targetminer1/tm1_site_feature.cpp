@@ -1,7 +1,7 @@
 #include <cmath>                 // min, max, round
-#include <mk_inst_template.hpp>  // TRNATYPE
-#include <tm1_seed_site.hpp>     // TM1SeedSites
-#include <tm1_site_feature.hpp>  // TM1RawFeatures, TM1FeatSeedType, TM1FeatSitePos, TM1FeatDistance, TM1FeatAURich,
+#include "mk_inst_template.hpp"  // TRNATYPE
+#include "tm1_seed_site.hpp"     // TM1SeedSites
+#include "tm1_site_feature.hpp"  // TM1RawFeatures, TM1FeatSeedType, TM1FeatSitePos, TM1FeatDistance, TM1FeatAURich,
 
 
 using namespace seqan;
