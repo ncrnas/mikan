@@ -32,7 +32,7 @@ template<class TRNAString>
 int TM1RawFeatures<TRNAString>::add_features(
         TRNAString const &pMiRNASeq,
         TRNASet const &pMRNASeqs,
-        TM1SeedSites<TRNAString> &pSeedSites,
+        TM1SeedSites &pSeedSites,
         TM1SortedSitePos<TRNAString> &pSortedSites) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &sitePos = pSeedSites.get_site_pos();
@@ -56,7 +56,7 @@ int TM1RawFeatures<TRNAString>::add_features(
 }
 
 template<class TRNAString>
-void TM1RawFeatures<TRNAString>::print_features(TM1SeedSites<TRNAString> &pSeedSites) {
+void TM1RawFeatures<TRNAString>::print_features(TM1SeedSites &pSeedSites) {
     for (unsigned i = 0; i < length(pSeedSites.mEffectiveSites); ++i) {
         if (!pSeedSites.mEffectiveSites[i]) {
             continue;
@@ -96,7 +96,7 @@ int TM1FeatSeedType<TRNAString>::add_features(
         TRNAString const &pMiRNASeq,
         TRNASet const &,
         String<bool> &pEffectiveSites,
-        TM1SeedSites<TRNAString> &pSeedSites) {
+        TM1SeedSites &pSeedSites) {
     TRNAString revMiRNASeq;
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
 
@@ -152,7 +152,7 @@ int TM1FeatSitePos<TRNAString>::add_features(
         TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         TSitePos const &pMRNAPos,
-        TM1SeedSites<TRNAString> &pSeedSites,
+        TM1SeedSites &pSeedSites,
         TSitePos const &pSitePos) {
     int seqLen;
     int relEndPosInt;
@@ -223,7 +223,7 @@ int TM1FeatDistance<TRNAString>::add_features(
         TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         TSitePos const &pMRNAPos,
-        TM1SeedSites<TRNAString> &pSeedSites,
+        TM1SeedSites &pSeedSites,
         TM1SortedSitePos<TRNAString> &pSortedSites) {
     const StringSet<String<unsigned> > &sortedSites = pSortedSites.get_sorted_mrna_pos();
     const String<unsigned> &mRNAIDs = pSortedSites.get_mrna_ids();
@@ -306,7 +306,7 @@ int TM1FeatAURich<TRNAString>::add_features(
         TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         TSitePos const &pMRNAPos,
-        TM1SeedSites<TRNAString> &pSeedSites,
+        TM1SeedSites &pSeedSites,
         TM1FeatDistance<TRNAString> &pDistance) {
     (void) pDistance;
     int seqLen, startU, endU, startD, endD;
@@ -395,7 +395,7 @@ int TM1FeatSingleFreq<TRNAString>::add_features(
         TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         TSitePos const &pMRNAPos,
-        TM1SeedSites<TRNAString> &pSeedSites) {
+        TM1SeedSites &pSeedSites) {
     int seedStart, seedEnd, curpos, seqLen;
 
     resize_features((unsigned) length(pMRNAPos));
@@ -465,7 +465,7 @@ int TM1FeatSingleFreqFlank<TRNAString>::add_features(
         TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         TSitePos const &pMRNAPos,
-        TM1SeedSites<TRNAString> &pSeedSites,
+        TM1SeedSites &pSeedSites,
         TM1FeatDistance<TRNAString> &pDistance) {
     int seqLen, startU, endU, startD, endD;
 
@@ -553,7 +553,7 @@ int TM1FeatDiFreq<TRNAString>::add_features(
         TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         TSitePos const &pMRNAPos,
-        TM1SeedSites<TRNAString> &pSeedSites) {
+        TM1SeedSites &pSeedSites) {
     int seedStart, seedEnd, seqLen, curpos1, curpos2;
 
     resize_features((unsigned) length(pMRNAPos));
@@ -652,7 +652,7 @@ int TM1FeatDiFreqFlank<TRNAString>::add_features(
         TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         TSitePos const &pMRNAPos,
-        TM1SeedSites<TRNAString> &pSeedSites,
+        TM1SeedSites &pSeedSites,
         TM1FeatDistance<TRNAString> &pDistance) {
     int seqLen, startU, endU, startD, endD, lenUp, lenDown;
 
@@ -771,7 +771,7 @@ int TM1FeatSingleMatch<TRNAString>::add_features(
         TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         TSitePos const &pMRNAPos,
-        TM1SeedSites<TRNAString> &pSeedSites,
+        TM1SeedSites &pSeedSites,
         TM1FeatSitePos<TRNAString> &pSeedPos) {
     int seedStart, m1pos, curpos;
 
@@ -866,7 +866,7 @@ int TM1FeatTwoConsecMatch<TRNAString>::add_features(
         TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         TSitePos const &pMRNAPos,
-        TM1SeedSites<TRNAString> &pSeedSites,
+        TM1SeedSites &pSeedSites,
         TM1FeatSitePos<TRNAString> &pSeedPos) {
     int seedStart, m1pos, curpos1, curpos2;
 

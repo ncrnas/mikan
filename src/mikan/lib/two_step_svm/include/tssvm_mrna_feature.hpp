@@ -24,7 +24,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
-                     TSSVMSeedSites<TRNAString> &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
+                     TSSVMSeedSites &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
                      TSSVMSiteInputVector<TRNAString> &pSiteInput);
 
     void clear_features();
@@ -55,7 +55,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
-                     TSSVMSeedSites<TRNAString> &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
+                     TSSVMSeedSites &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
                      TSSVMSiteInputVector<TRNAString> &pSiteInput);
 
     void clear_features();
@@ -82,7 +82,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
-                     TSSVMSeedSites<TRNAString> &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
+                     TSSVMSeedSites &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
                      TSSVMSiteInputVector<TRNAString> &pSiteInput);
 
     void clear_features();
@@ -109,7 +109,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
-                     TSSVMSeedSites<TRNAString> &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
+                     TSSVMSeedSites &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
                      TSSVMSiteInputVector<TRNAString> &pSiteInput);
 
     void clear_features();
@@ -136,7 +136,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
-                     TSSVMSeedSites<TRNAString> &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
+                     TSSVMSeedSites &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
                      TSSVMSiteInputVector<TRNAString> &pSiteInput);
 
     void clear_features();
@@ -164,7 +164,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
-                     TSSVMSeedSites<TRNAString> &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
+                     TSSVMSeedSites &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
                      TSSVMSiteInputVector<TRNAString> &pSiteInput);
 
     void clear_features();
@@ -192,7 +192,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
-                     TSSVMSeedSites<TRNAString> &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
+                     TSSVMSeedSites &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
                      TSSVMSiteInputVector<TRNAString> &pSiteInput);
 
     void clear_features();
@@ -220,7 +220,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
-                     TSSVMSeedSites<TRNAString> &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
+                     TSSVMSeedSites &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
                      TSSVMSiteInputVector<TRNAString> &pSiteInput);
 
     void clear_features();
@@ -283,8 +283,8 @@ public:
     seqan::String<unsigned> &get_site_count() { return mSiteNum.get_site_count(); }
 
     // Method prototypes
-    int add_features(TSSVMSeedSites<TRNAString> &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
-                     TSSVMSeedSiteOverlap<TRNAString> &pOverlappedSites,
+    int add_features(TSSVMSeedSites &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
+                     TSSVMSeedSiteOverlap &pOverlappedSites,
                      TSSVMSiteInputVector<TRNAString> &pSiteInput);
 
     void clear_features();

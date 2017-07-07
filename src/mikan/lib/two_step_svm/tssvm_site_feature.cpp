@@ -25,7 +25,7 @@ void TSSVMRawFeatures<TRNAString>::clear_features() {
 
 template<class TRNAString>
 int TSSVMRawFeatures<TRNAString>::add_features(
-        TSSVMSeedSites<TRNAString> &pSeedSites,
+        TSSVMSeedSites &pSeedSites,
         TSAlign<TRNAString> const &pAlignSeqs,
         TRNAString const &pMiRNASeq,
         StringSet<TRNAString> const &pMRNASeqs) {
@@ -55,7 +55,7 @@ void TSSVMFeatSeedType<TRNAString>::clear_features() {
 
 template<class TRNAString>
 int TSSVMFeatSeedType<TRNAString>::add_features(
-        TSSVMSeedSites<TRNAString> &pSeedSites,
+        TSSVMSeedSites &pSeedSites,
         TSAlign<TRNAString> const &,
         TRNAString const &,
         StringSet<TRNAString> const &,
@@ -105,7 +105,7 @@ void TSSVMFeatSimilarity<TRNAString>::clear_features() {
 
 template<class TRNAString>
 int TSSVMFeatSimilarity<TRNAString>::add_features(
-        TSSVMSeedSites<TRNAString> &,
+        TSSVMSeedSites &,
         TSAlign<TRNAString> const &pAlignSeqs,
         TRNAString const &,
         StringSet<TRNAString> const &,
@@ -170,7 +170,7 @@ void TSSVMFeatAURichUp<TRNAString>::clear_features() {
 
 template<class TRNAString>
 int TSSVMFeatAURichUp<TRNAString>::add_features(
-        TSSVMSeedSites<TRNAString> &pSeedSites,
+        TSSVMSeedSites &pSeedSites,
         TSAlign<TRNAString> const &,
         TRNAString const &,
         StringSet<TRNAString> const &pMRNASeqs,
@@ -228,7 +228,7 @@ void TSSVMFeatAURichDown<TRNAString>::clear_features() {
 
 template<class TRNAString>
 int TSSVMFeatAURichDown<TRNAString>::add_features(
-        TSSVMSeedSites<TRNAString> &pSeedSites,
+        TSSVMSeedSites &pSeedSites,
         TSAlign<TRNAString> const &,
         TRNAString const &,
         StringSet<TRNAString> const &pMRNASeqs,
@@ -291,7 +291,7 @@ void TSSVMFeatSitePos<TRNAString>::clear_features() {
 
 template<class TRNAString>
 int TSSVMFeatSitePos<TRNAString>::add_features(
-        TSSVMSeedSites<TRNAString> &pSeedSites,
+        TSSVMSeedSites &pSeedSites,
         TSAlign<TRNAString> const &,
         TRNAString const &,
         StringSet<TRNAString> const &pMRNASeqs,
@@ -327,7 +327,7 @@ void TSSVMFeatSeqMatch<TRNAString>::clear_features() {
 
 template<class TRNAString>
 int TSSVMFeatSeqMatch<TRNAString>::add_features(
-        TSSVMSeedSites<TRNAString> &,
+        TSSVMSeedSites &,
         TSAlign<TRNAString> const &pAlignSeqs,
         TRNAString const &,
         StringSet<TRNAString> const &,
@@ -375,7 +375,7 @@ void TSSVMFeatA1Match<TRNAString>::clear_features() {
 
 template<class TRNAString>
 int TSSVMFeatA1Match<TRNAString>::add_features(
-        TSSVMSeedSites<TRNAString> &pSeedSites,
+        TSSVMSeedSites &pSeedSites,
         TSAlign<TRNAString> const &,
         TRNAString const &,
         StringSet<TRNAString> const &,

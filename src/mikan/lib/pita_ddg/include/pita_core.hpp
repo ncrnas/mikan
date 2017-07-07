@@ -73,7 +73,7 @@ private:
     std::ofstream mOFile1;
     std::ofstream mOFile2;
 
-    PITASeedSites <mikan::TRNATYPE> mSeedSites;
+    PITASeedSites mSeedSites;
     PITADDGScores <mikan::TRNATYPE> mDDGScores;
     PITAOverlap <mikan::TRNATYPE> mOverlappedSites;
     PITASortedSitePos <mikan::TRNATYPE> mSortedSites;

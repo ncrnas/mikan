@@ -82,7 +82,7 @@ void PITADGDuplexScores<TRNAString>::clear_scores() {
 
 template<class TRNAString>
 int PITADGDuplexScores<TRNAString>::calc_scores(
-        PITASeedSites<TRNAString> &pSeedSites,
+        PITASeedSites &pSeedSites,
         TRNAString const &pMiRNASeq,
         TRNASet const &pMRNASeqs) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
@@ -212,7 +212,7 @@ void PITADGOpenScores<TRNAString>::clear_scores() {
 
 template<class TRNAString>
 int PITADGOpenScores<TRNAString>::calc_scores(
-        PITASeedSites<TRNAString> &pSeedSites,
+        PITASeedSites &pSeedSites,
         TRNASet const &pMRNASeqs,
         int pFlankUp,
         int pFlankDown) {
@@ -296,7 +296,7 @@ void PITADDGScores<TRNAString>::clear_scores() {
 
 template<class TRNAString>
 int PITADDGScores<TRNAString>::calc_scores(
-        PITASeedSites<TRNAString> &pSeedSites,
+        PITASeedSites &pSeedSites,
         TRNAString const &miRNASeq,
         TRNASet const &pMRNASeqs,
         int pFlankUp,
@@ -353,7 +353,7 @@ void PITATotalScores<TRNAString>::clear_scores() {
 
 template<class TRNAString>
 int PITATotalScores<TRNAString>::calc_scores(
-        PITASeedSites<TRNAString> &pSeedSites,
+        PITASeedSites &pSeedSites,
         PITADDGScores<TRNAString> &pMFEScores,
         const seqan::String<unsigned> &pSortedSites) {
 

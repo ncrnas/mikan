@@ -67,8 +67,8 @@ private:
     std::ofstream mOFile1;
     std::ofstream mOFile2;
 
-    TSSVMSeedSites<mikan::TRNATYPE> mSeedSites;
-    TSSVMSeedSiteOverlap<mikan::TRNATYPE> mOverlappedSites;
+    TSSVMSeedSites mSeedSites;
+    TSSVMSeedSiteOverlap mOverlappedSites;
     TSAlign<mikan::TRNATYPE> mAlignSeqs;
     TSSVMRawFeatures<mikan::TRNATYPE> mSiteFeatures;
     TSSVMSiteModel<mikan::TRNATYPE> mSiteModel;

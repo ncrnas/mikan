@@ -39,9 +39,9 @@ void TSSVMRNARawFeatures<TRNAString>::resize_feat(unsigned pLen) {
 
 template<class TRNAString>
 int TSSVMRNARawFeatures<TRNAString>::add_features(
-        TSSVMSeedSites<TRNAString> &pSeedSites,
+        TSSVMSeedSites &pSeedSites,
         StringSet<TRNAString> const &pMRNASeqs,
-        TSSVMSeedSiteOverlap<TRNAString> &pOverlappedSites,
+        TSSVMSeedSiteOverlap &pOverlappedSites,
         TSSVMSiteInputVector<TRNAString> &pSiteInput) {
     TItSet itSet;
     std::set<unsigned> &rnaPosSet = pOverlappedSites.get_mrna_pos_set();
@@ -89,7 +89,7 @@ template<class TRNAString>
 int TSSVMFeatUTRLen<TRNAString>::add_features(
         unsigned pMRNAPosIdx,
         String<unsigned> &,
-        TSSVMSeedSites<TRNAString> &,
+        TSSVMSeedSites &,
         StringSet<TRNAString> const &pMRNASeqs,
         TSSVMSiteInputVector<TRNAString> &) {
     float mRNALen;
@@ -115,7 +115,7 @@ template<class TRNAString>
 int TSSVMFeatSiteNum<TRNAString>::add_features(
         unsigned pMRNAPosIdx,
         String<unsigned> &pSitePosByMRNA,
-        TSSVMSeedSites<TRNAString> &,
+        TSSVMSeedSites &,
         StringSet<TRNAString> const &,
         TSSVMSiteInputVector<TRNAString> &) {
     float siteNum;
@@ -142,7 +142,7 @@ template<class TRNAString>
 int TSSVMFeatTotDiscUTRLen<TRNAString>::add_features(
         unsigned pMRNAPosIdx,
         String<unsigned> &pSitePosByMRNA,
-        TSSVMSeedSites<TRNAString> &,
+        TSSVMSeedSites &,
         StringSet<TRNAString> const &pMRNASeqs,
         TSSVMSiteInputVector<TRNAString> &pSiteInput) {
     const seqan::String<float> &scors = pSiteInput.get_scores();
@@ -185,7 +185,7 @@ template<class TRNAString>
 int TSSVMFeatSeedTypeNum<TRNAString>::add_features(
         unsigned pMRNAPosIdx,
         String<unsigned> &pSitePosByMRNA,
-        TSSVMSeedSites<TRNAString> &pSeedSites,
+        TSSVMSeedSites &pSeedSites,
         StringSet<TRNAString> const &,
         TSSVMSiteInputVector<TRNAString> &) {
     float maxNum = 38;
@@ -238,7 +238,7 @@ template<class TRNAString>
 int TSSVMFeatDiscBin<TRNAString>::add_features(
         unsigned pMRNAPosIdx,
         String<unsigned> &pSitePosByMRNA,
-        TSSVMSeedSites<TRNAString> &,
+        TSSVMSeedSites &,
         StringSet<TRNAString> const &,
         TSSVMSiteInputVector<TRNAString> &pSiteInput) {
     const seqan::String<float> &scors = pSiteInput.get_scores();
@@ -308,7 +308,7 @@ template<class TRNAString>
 int TSSVMFeatOptDist<TRNAString>::add_features(
         unsigned pMRNAPosIdx,
         String<unsigned> &pSitePosByMRNA,
-        TSSVMSeedSites<TRNAString> &pSeedSites,
+        TSSVMSeedSites &pSeedSites,
         StringSet<TRNAString> const &,
         TSSVMSiteInputVector<TRNAString> &) {
     const String<unsigned> &mS8Pos = pSeedSites.get_site_pos_s8();
@@ -366,7 +366,7 @@ template<class TRNAString>
 int TSSVMFeatSiteNumFlg<TRNAString>::add_features(
         unsigned pMRNAPosIdx,
         String<unsigned> &pSitePosByMRNA,
-        TSSVMSeedSites<TRNAString> &,
+        TSSVMSeedSites &,
         StringSet<TRNAString> const &,
         TSSVMSiteInputVector<TRNAString> &) {
     float siteNum;
@@ -397,7 +397,7 @@ template<class TRNAString>
 int TSSVMFeatTotDisc<TRNAString>::add_features(
         unsigned pMRNAPosIdx,
         String<unsigned> &pSitePosByMRNA,
-        TSSVMSeedSites<TRNAString> &,
+        TSSVMSeedSites &,
         StringSet<TRNAString> const &,
         TSSVMSiteInputVector<TRNAString> &pSiteInput) {
     const seqan::String<float> &scors = pSiteInput.get_scores();

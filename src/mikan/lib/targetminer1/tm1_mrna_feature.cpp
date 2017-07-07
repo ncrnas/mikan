@@ -224,7 +224,7 @@ void TM1MRNAFeatures<TRNAString>::resize_features(unsigned pSize) {
 
 template<class TRNAString>
 int TM1MRNAFeatures<TRNAString>::add_features(
-        TM1SeedSites<TRNAString> &pSeedSites,
+        TM1SeedSites &pSeedSites,
         TM1RawFeatures<TRNAString> &pRawFeatures,
         TM1SortedSitePos<TRNAString> &pSortedSites) {
     const StringSet<String<unsigned> > &sortedSites = pSortedSites.get_sorted_mrna_pos();
@@ -296,7 +296,7 @@ template<class TRNAString>
 int TM1MRNASeedType<TRNAString>::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites<TRNAString> &pSeedSites,
+        TM1SeedSites &pSeedSites,
         TM1RawFeatures<TRNAString> &pRawFeatures) {
     CharString seedType;
 
@@ -342,7 +342,7 @@ template<class TRNAString>
 int TM1MRNASiteCount<TRNAString>::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites<TRNAString> &pSeedSites,
+        TM1SeedSites &pSeedSites,
         TM1RawFeatures<TRNAString> &) {
     for (unsigned i = 0; i < length(pSortedSites); ++i) {
         if (!pSeedSites.mEffectiveSites[pSortedSites[i]]) {
@@ -387,7 +387,7 @@ template<class TRNAString>
 int TM1MRNAAURich<TRNAString>::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites<TRNAString> &pSeedSites,
+        TM1SeedSites &pSeedSites,
         TM1RawFeatures<TRNAString> &pRawFeatures) {
     CharString seedType;
     const TM1FeatAURich<TRNAString> &auRich = pRawFeatures.get_au_rich();
@@ -446,7 +446,7 @@ template<class TRNAString>
 int TM1MRNASingleFreq<TRNAString>::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites<TRNAString> &pSeedSites,
+        TM1SeedSites &pSeedSites,
         TM1RawFeatures<TRNAString> &pRawFeatures) {
     const TM1FeatSingleFreq<TRNAString> &singleFreq = pRawFeatures.get_single_freq();
     CharString seedType;
@@ -519,7 +519,7 @@ template<class TRNAString>
 int TM1MRNASingleFreqFlank<TRNAString>::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites<TRNAString> &pSeedSites,
+        TM1SeedSites &pSeedSites,
         TM1RawFeatures<TRNAString> &pRawFeatures) {
     const TM1FeatSingleFreqFlank<TRNAString> &singleFreqFlank = pRawFeatures.get_single_freq_flank();
     unsigned idx;
@@ -589,7 +589,7 @@ template<class TRNAString>
 int TM1MRNADiFreq<TRNAString>::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites<TRNAString> &pSeedSites,
+        TM1SeedSites &pSeedSites,
         TM1RawFeatures<TRNAString> &pRawFeatures) {
     const TM1FeatDiFreq<TRNAString> &diFreq = pRawFeatures.get_di_freq();
     CharString seedType;
@@ -694,7 +694,7 @@ template<class TRNAString>
 int TM1MRNADiFreqFlank<TRNAString>::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites<TRNAString> &pSeedSites,
+        TM1SeedSites &pSeedSites,
         TM1RawFeatures<TRNAString> &pRawFeatures) {
     const TM1FeatDiFreqFlank<TRNAString> &diFreqFlank = pRawFeatures.get_di_freq_flank();
     unsigned idx;
@@ -801,7 +801,7 @@ template<class TRNAString>
 int TM1MRNASingleMatch<TRNAString>::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites<TRNAString> &pSeedSites,
+        TM1SeedSites &pSeedSites,
         TM1RawFeatures<TRNAString> &pRawFeatures) {
     const TM1FeatSingleMatch<TRNAString> &singleMatch = pRawFeatures.get_single_match();
     int totalUG = 0;
@@ -866,7 +866,7 @@ template<class TRNAString>
 int TM1MRNATwoConsecMatch<TRNAString>::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites<TRNAString> &pSeedSites,
+        TM1SeedSites &pSeedSites,
         TM1RawFeatures<TRNAString> &pRawFeatures) {
     const TM1FeatTwoConsecMatch<TRNAString> &twoConsecMatch = pRawFeatures.get_two_consec_match();
     int totalUACG = 0;

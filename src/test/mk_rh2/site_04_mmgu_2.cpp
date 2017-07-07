@@ -23,7 +23,7 @@ protected:
 
     typedef mikan::TIndexQGram TIdx;
     typedef mikan::TFinder TFin;
-    typedef rh2mfe::RH2SeedSites<mikan::TRNATYPE> TSit;
+    typedef rh2mfe::RH2SeedSites TSit;
 
 };
 

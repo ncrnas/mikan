@@ -185,7 +185,7 @@ public:
 
     // Method prototypes
     int add_features(TRNAString const &pMiRNASeq, TRNASet const &pMRNASeqs,
-                     TS5SeedSites<TRNAString> const &pSeedSites);
+                     TS5SeedSites const &pSeedSites);
 
     void clear_features();
 

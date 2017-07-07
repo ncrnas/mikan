@@ -26,7 +26,7 @@ public:
 
     // Method prototype
     int add_features(TRNAString const &pMiRNASeq, TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
-                     TM1SeedSites<TRNAString> &pSeedSites);
+                     TM1SeedSites &pSeedSites);
 
     void clear_features();
 
@@ -68,7 +68,7 @@ public:
 
     // Method prototype
     int add_features(TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos,
-                     TM1SeedSites<TRNAString> &pSeedSites, TSitePos const &pSeedPos);
+                     TM1SeedSites &pSeedSites, TSitePos const &pSeedPos);
 
     void clear_features();
 
@@ -99,7 +99,7 @@ public:
 
     // Method prototype
     int add_features(TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos,
-                     TM1SeedSites<TRNAString> &pSeedSites, TM1SortedSitePos<TRNAString> &pSortedSites);
+                     TM1SeedSites &pSeedSites, TM1SortedSitePos<TRNAString> &pSortedSites);
 
     void clear_features();
 
@@ -133,7 +133,7 @@ public:
 
     // Method prototype
     int add_features(TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos,
-                     TM1SeedSites<TRNAString> &pSeedSites, TM1FeatDistance<TRNAString> &pDistance);
+                     TM1SeedSites &pSeedSites, TM1FeatDistance<TRNAString> &pDistance);
 
     void clear_features();
 
@@ -166,7 +166,7 @@ public:
 
     // Method prototype
     int add_features(TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos,
-                     TM1SeedSites<TRNAString> &pSeedSites);
+                     TM1SeedSites &pSeedSites);
 
     void clear_features();
 
@@ -198,7 +198,7 @@ public:
 
     // Method prototype
     int add_features(TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos,
-                     TM1SeedSites<TRNAString> &pSeedSites, TM1FeatDistance<TRNAString> &pDistance);
+                     TM1SeedSites &pSeedSites, TM1FeatDistance<TRNAString> &pDistance);
 
     void clear_features();
 
@@ -232,7 +232,7 @@ public:
 
     // Method prototype
     int add_features(TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos,
-                     TM1SeedSites<TRNAString> &pSeedSites);
+                     TM1SeedSites &pSeedSites);
 
     void clear_features();
 
@@ -272,7 +272,7 @@ public:
 
     // Method prototype
     int add_features(TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos,
-                     TM1SeedSites<TRNAString> &pSeedSites, TM1FeatDistance<TRNAString> &pDistance);
+                     TM1SeedSites &pSeedSites, TM1FeatDistance<TRNAString> &pDistance);
 
     void clear_features();
 
@@ -306,7 +306,7 @@ public:
 
     // Method prototype
     int add_features(TRNAString const &pMiRNASeq, TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
-                     TSitePos const &pMRNAPos, TM1SeedSites<TRNAString> &pSeedSites,
+                     TSitePos const &pMRNAPos, TM1SeedSites &pSeedSites,
                      TM1FeatSitePos<TRNAString> &pSeedPos);
 
     void clear_features();
@@ -341,7 +341,7 @@ public:
 
     // Method prototype
     int add_features(TRNAString const &pMiRNASeq, TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
-                     TSitePos const &pMRNAPos, TM1SeedSites<TRNAString> &pSeedSites,
+                     TSitePos const &pMRNAPos, TM1SeedSites &pSeedSites,
                      TM1FeatSitePos<TRNAString> &pSeedPos);
 
     void clear_features();
@@ -385,11 +385,11 @@ public:
 
     // Method prototypes
     int add_features(TRNAString const &pMiRNASeq, TRNASet const &pMRNASeqs,
-                     TM1SeedSites<TRNAString> &pSeedSites, TM1SortedSitePos<TRNAString> &pSortedSites);
+                     TM1SeedSites &pSeedSites, TM1SortedSitePos<TRNAString> &pSortedSites);
 
     void clear_features();
 
-    void print_features(TM1SeedSites<TRNAString> &pSeedSites);
+    void print_features(TM1SeedSites &pSeedSites);
 
 private:
     TM1FeatSeedType<TRNAString> mSeedTypes;

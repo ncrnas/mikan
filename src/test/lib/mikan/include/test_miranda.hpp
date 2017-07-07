@@ -8,7 +8,7 @@
 #include "mk_input.hpp"
 
 typedef TestIOBase<mikan::MKInput> TestIOMR3AS;
-typedef TestSeed<mr3as::MR3SeedSeqs<mikan::TRNATYPE>, TestIOMR3AS> TestSeedMR3AS;
-typedef TestSite<mr3as::MR3SeedSites<mikan::TRNATYPE>, TestIOMR3AS> TestSiteMR3AS;
+typedef TestSeed<mr3as::MR3SeedSeqs, TestIOMR3AS> TestSeedMR3AS;
+typedef TestSite<mr3as::MR3SeedSites, TestIOMR3AS> TestSiteMR3AS;
 
 #endif //MIKAN_TEST_MIRANDA_HPP_

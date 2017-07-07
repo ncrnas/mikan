@@ -24,7 +24,7 @@ public:
     // Method prototype
     void clear_cluster();
 
-    void cluster_site_pos(PITASeedSites <TRNAString> &pSeedSites);
+    void cluster_site_pos(PITASeedSites &pSeedSites);
 
 private:
     typedef std::pair<unsigned, unsigned> TPosPair;
@@ -45,7 +45,7 @@ public:
     PITAOverlap() {}
 
     // Method prototype
-    int filter_overlapped_sites(PITASeedSites <TRNAString> &pSeedSites, int pGapLen);
+    int filter_overlapped_sites(PITASeedSites &pSeedSites, int pGapLen);
 
     void clear_cluster();
 
@@ -59,7 +59,7 @@ private:
     PITASiteCluster<TRNAString> mSiteCluster;
 
 private:
-    void mark_overlapped_sites(PITASeedSites <TRNAString> &pSeedSites, int pPrevIdx, int pCurIdx);
+    void mark_overlapped_sites(PITASeedSites &pSeedSites, int pPrevIdx, int pCurIdx);
 
     unsigned get_seedtype_precedence(const seqan::CharString &pSeedType);
 };
@@ -74,7 +74,7 @@ public:
     PITASortedSitePos() {}
 
     // Method prototype
-    int generate_sorted_mrna_pos(PITASeedSites <TRNAString> &pSeedSites);
+    int generate_sorted_mrna_pos(PITASeedSites &pSeedSites);
 
     const seqan::String<unsigned> &get_sorted_mrna_pos() { return mSortedSitePos; }
 

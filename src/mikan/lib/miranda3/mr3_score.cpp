@@ -18,7 +18,7 @@ void MR3AlignScores<TRNAString>::clear_scores() {
 
 template<class TRNAString>
 int MR3AlignScores<TRNAString>::calc_scores(
-        MR3SeedSites<TRNAString> &pSeedSites,
+        MR3SeedSites &pSeedSites,
         TRNAString const &pMiRNASeq,
         TRNASet const &pMRNASeqs) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
@@ -207,7 +207,7 @@ void MR3EnergyScores<TRNAString>::clear_scores() {
 
 template<class TRNAString>
 int MR3EnergyScores<TRNAString>::calc_scores(
-        MR3SeedSites<TRNAString> &pSeedSites,
+        MR3SeedSites &pSeedSites,
         TRNAString const &pMiRNASeq,
         TRNASet const &) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
@@ -295,7 +295,7 @@ void MR3SiteScores<TRNAString>::init_rnafold() {
 
 template<class TRNAString>
 int MR3SiteScores<TRNAString>::calc_scores(
-        MR3SeedSites<TRNAString> &pSeedSites,
+        MR3SeedSites &pSeedSites,
         TRNAString const &miRNASeq,
         TRNASet const &pMRNASeqs) {
     resize(mEffectiveSites, length(pSeedSites.mEffectiveSites));
@@ -346,7 +346,7 @@ void MR3TotalScores<TRNAString>::clear_scores() {
 
 template<class TRNAString>
 int MR3TotalScores<TRNAString>::calc_scores(
-        MR3SeedSites<TRNAString> &pSeedSites,
+        MR3SeedSites &pSeedSites,
         MR3SiteScores<TRNAString> &pSiteScores,
         const seqan::String<unsigned> &pSortedSites) {
 

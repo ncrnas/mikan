@@ -26,7 +26,7 @@ public:
     // Method prototype
     void clear_cluster();
 
-    void cluster_site_pos(TM1SeedSites <TRNAString> &pSeedSites);
+    void cluster_site_pos(TM1SeedSites &pSeedSites);
 
 private:
     typedef std::pair<unsigned, unsigned> TPosPair;
@@ -47,7 +47,7 @@ public:
     TM1SortedSitePos() {}
 
     // Method prototype
-    int generate_sorted_mrna_pos(TM1SeedSites <TRNAString> &pSeedSites, bool pRemoveOvelaps);
+    int generate_sorted_mrna_pos(TM1SeedSites &pSeedSites, bool pRemoveOvelaps);
 
     const seqan::StringSet<seqan::String<unsigned> > &get_sorted_mrna_pos() { return mSortedSites; }
 
@@ -68,12 +68,12 @@ private:
     TM1SiteCluster<TRNAString> mSiteCluster;
 
 private:
-    void remove_overlapped_sites(TM1SeedSites <TRNAString> &pSeedSites);
+    void remove_overlapped_sites(TM1SeedSites &pSeedSites);
 
-    void sort_by_seed_types(TM1SeedSites <TRNAString> &pSeedSites, TItRetPair &pGroupedSites,
+    void sort_by_seed_types(TM1SeedSites &pSeedSites, TItRetPair &pGroupedSites,
                             std::map<unsigned, unsigned> &pSortedSites);
 
-    void sort_by_pos7(TM1SeedSites <TRNAString> &pSeedSites, TItRetPair &pGroupedSites,
+    void sort_by_pos7(TM1SeedSites &pSeedSites, TItRetPair &pGroupedSites,
                       std::map<unsigned, unsigned> &pSortedSites);
 
 };

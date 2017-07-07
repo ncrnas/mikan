@@ -19,7 +19,7 @@ void RH2SiteCluster<TRNAString>::clear_cluster() {
 
 template<class TRNAString>
 void RH2SiteCluster<TRNAString>::cluster_site_pos(
-        RH2SeedSites<TRNAString> &pSeedSites,
+        RH2SeedSites &pSeedSites,
         RH2MFEScores<TRNAString> &pScores) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
 
@@ -43,7 +43,7 @@ void RH2Overlap<TRNAString>::clear_cluster() {
 
 template<class TRNAString>
 int RH2Overlap<TRNAString>::filter_overlapped_sites(
-        RH2SeedSites<TRNAString> &pSeedSites,
+        RH2SeedSites &pSeedSites,
         RH2MFEScores<TRNAString> &pScores,
         CharString &pOverlapDef) {
     TItSet itSet;
@@ -64,7 +64,7 @@ int RH2Overlap<TRNAString>::filter_overlapped_sites(
 
 template<class TRNAString>
 void RH2Overlap<TRNAString>::find_overlapped_sites(
-        RH2SeedSites<TRNAString> &pSeedSites,
+        RH2SeedSites &pSeedSites,
         RH2MFEScores<TRNAString> &pScores,
         int pPosIdx,
         CharString &pOverlapDef) {
@@ -90,7 +90,7 @@ void RH2Overlap<TRNAString>::find_overlapped_sites(
 
 template<class TRNAString>
 void RH2Overlap<TRNAString>::cluster_overlapped_sites(
-        RH2SeedSites<TRNAString> &pSeedSites,
+        RH2SeedSites &pSeedSites,
         RH2MFEScores<TRNAString> &pScores,
         std::multimap<unsigned, unsigned> &pStartPos,
         CharString &pOverlapDef) {
@@ -109,7 +109,7 @@ void RH2Overlap<TRNAString>::cluster_overlapped_sites(
             olCluster.clear();
         }
         if (pOverlapDef == "seed") {
-            prevStartPos = (*itStart).first + RH2SeedSites<TRNAString>::SEED_LEN;
+            prevStartPos = (*itStart).first + RH2SeedSites::SEED_LEN;
         } else {
             prevStartPos = (*itStart).first + pScores.get_hit_length((*itStart).second);
         }
@@ -125,7 +125,7 @@ void RH2Overlap<TRNAString>::cluster_overlapped_sites(
 
 template<class TRNAString>
 void RH2Overlap<TRNAString>::mark_overlapped_sites(
-        RH2SeedSites<TRNAString> &pSeedSites,
+        RH2SeedSites &pSeedSites,
         RH2MFEScores<TRNAString> &pScores,
         std::set<unsigned> &pOlCluster,
         CharString &pOverlapDef) {
@@ -210,7 +210,7 @@ void RH2TopNScore<TRNAString>::clear_cluster() {
 
 template<class TRNAString>
 int RH2TopNScore<TRNAString>::filter_sites(
-        RH2SeedSites<TRNAString> &pSeedSites,
+        RH2SeedSites &pSeedSites,
         RH2MFEScores<TRNAString> &pScores,
         int pMaxHits) {
     TItSet itSet;
@@ -279,7 +279,7 @@ void RH2SortedSitePos<TRNAString>::clear_site_pos() {
 
 template<class TRNAString>
 int RH2SortedSitePos<TRNAString>::generate_sorted_mrna_pos(
-        RH2SeedSites<TRNAString> &pSeedSites,
+        RH2SeedSites &pSeedSites,
         RH2MFEScores<TRNAString> &pScores) {
     TItMap itMap;
     TItSet itSet;

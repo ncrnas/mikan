@@ -22,7 +22,7 @@ template<class TRNAString>
 int TS5RawFeatures<TRNAString>::add_features(
         TRNAString const &pMiRNASeq,
         TRNASet const &pMRNASeqs,
-        TS5SeedSites<TRNAString> const &pSeedSites) {
+        TS5SeedSites const &pSeedSites) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &sitePos = pSeedSites.get_site_pos();
 

@@ -88,7 +88,7 @@ public:
     TCharSet const &get_align_mirna() const { return mAlignMiRNA; }
 
     // Method prototypes
-    int align_seq(TSSVMSeedSites<TRNAString> &pSeedSites, TRNAString const &pMiRNASeq,
+    int align_seq(TSSVMSeedSites &pSeedSites, TRNAString const &pMiRNASeq,
                   TRNASet const &pMRNASeqs);
 
     void clear_alignments();

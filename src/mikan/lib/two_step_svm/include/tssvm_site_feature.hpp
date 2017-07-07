@@ -21,7 +21,7 @@ public:
     seqan::StringSet<seqan::String<float> > &get_all_val() { return mSeedTypes; }
 
     // Method prototype
-    int add_features(TSSVMSeedSites <TRNAString> &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
+    int add_features(TSSVMSeedSites &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
                      TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs,
                      seqan::String<bool> &pEffectiveSites);
 
@@ -45,7 +45,7 @@ public:
     seqan::StringSet<seqan::String<float> > &get_all_val() { return mSimilarities; }
 
     // Method prototype
-    int add_features(TSSVMSeedSites <TRNAString> &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
+    int add_features(TSSVMSeedSites &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
                      TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs,
                      seqan::String<bool> &pEffectiveSites);
 
@@ -69,7 +69,7 @@ public:
     seqan::StringSet<seqan::String<float> > &get_all_val() { return mAURichUp; }
 
     // Method prototype
-    int add_features(TSSVMSeedSites <TRNAString> &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
+    int add_features(TSSVMSeedSites &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
                      TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs,
                      seqan::String<bool> &pEffectiveSites);
 
@@ -96,7 +96,7 @@ public:
     seqan::StringSet<seqan::String<float> > &get_all_val() { return mAURichDown; }
 
     // Method prototype
-    int add_features(TSSVMSeedSites <TRNAString> &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
+    int add_features(TSSVMSeedSites &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
                      TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs,
                      seqan::String<bool> &pEffectiveSites);
 
@@ -123,7 +123,7 @@ public:
     seqan::StringSet<seqan::String<float> > &get_all_val() { return mSitePos; }
 
     // Method prototype
-    int add_features(TSSVMSeedSites <TRNAString> &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
+    int add_features(TSSVMSeedSites &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
                      TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs,
                      seqan::String<bool> &pEffectiveSites);
 
@@ -149,7 +149,7 @@ public:
     seqan::StringSet<seqan::String<float> > &get_all_val() { return mSeqMatch; }
 
     // Method prototype
-    int add_features(TSSVMSeedSites <TRNAString> &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
+    int add_features(TSSVMSeedSites &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
                      TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs,
                      seqan::String<bool> &pEffectiveSites);
 
@@ -175,7 +175,7 @@ public:
     seqan::StringSet<seqan::String<float> > &get_all_val() { return mA1Match; }
 
     // Method prototype
-    int add_features(TSSVMSeedSites <TRNAString> &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
+    int add_features(TSSVMSeedSites &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
                      TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs,
                      seqan::String<bool> &pEffectiveSites);
 
@@ -232,7 +232,7 @@ public:
     TFeatSet &get_all_a1_match() { return mA1Match.get_all_val(); }
 
     // Method prototypes
-    int add_features(TSSVMSeedSites <TRNAString> &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
+    int add_features(TSSVMSeedSites &pSeedSites, TSAlign <TRNAString> const &pAlignSeqs,
                      TRNAString const &pMiRNASeq, seqan::StringSet<TRNAString> const &pMRNASeqs);
 
     void clear_features();

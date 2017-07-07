@@ -183,7 +183,7 @@ public:
     // Method prototypes
     void clear_scores();
 
-    int calc_scores(TS5SeedSites <TRNAString> &pSeedSites, TS5ContextScores<TRNAString> &pContextScores);
+    int calc_scores(TS5SeedSites &pSeedSites, TS5ContextScores<TRNAString> &pContextScores);
 
 private:
     seqan::String<float> mTotalScores;

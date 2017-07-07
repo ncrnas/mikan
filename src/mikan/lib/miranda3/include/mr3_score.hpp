@@ -43,7 +43,7 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(MR3SeedSites<TRNAString> &pSeedSites, TRNAString const &miRNASeq, TRNASet const &pMRNASeqs);
+    int calc_scores(MR3SeedSites &pSeedSites, TRNAString const &miRNASeq, TRNASet const &pMRNASeqs);
 
     void print_input(TRNAString &pInputMiRNASeq, TRNAString &pInputMRNASeq);
 
@@ -95,7 +95,7 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(MR3SeedSites<TRNAString> &pSeedSites, TRNAString const &miRNASeq, TRNASet const &pMRNASeqs);
+    int calc_scores(MR3SeedSites &pSeedSites, TRNAString const &miRNASeq, TRNASet const &pMRNASeqs);
 
     void print_input(std::string &pInputMRNASeq);
 
@@ -143,7 +143,7 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(MR3SeedSites<TRNAString> &pSeedSites, TRNAString const &miRNASeq, TRNASet const &pMRNASeqs);
+    int calc_scores(MR3SeedSites &pSeedSites, TRNAString const &miRNASeq, TRNASet const &pMRNASeqs);
 
     void print_alignment(int pIdx);
 
@@ -181,7 +181,7 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(MR3SeedSites<TRNAString> &pSeedSites, MR3SiteScores<TRNAString> &pSiteScores,
+    int calc_scores(MR3SeedSites &pSeedSites, MR3SiteScores<TRNAString> &pSiteScores,
                     const seqan::String<unsigned> &pSortedSites);
 
 private:

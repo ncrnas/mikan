@@ -20,7 +20,7 @@ void RH2MFEScores<TRNAString>::clear_scores() {
 
 template<class TRNAString>
 int RH2MFEScores<TRNAString>::calc_scores(
-        RH2SeedSites<TRNAString> &pSeedSites,
+        RH2SeedSites &pSeedSites,
         TRNAString const &pMiRNASeq,
         TRNASet const &pMRNASeqs,
         CharString &) {
@@ -164,7 +164,7 @@ void RH2TotalScores<TRNAString>::clear_scores() {
 
 template<class TRNAString>
 int RH2TotalScores<TRNAString>::calc_scores(
-        RH2SeedSites<TRNAString> &pSeedSites,
+        RH2SeedSites &pSeedSites,
         RH2MFEScores<TRNAString> &pMFEScores,
         const seqan::String<unsigned> &pSortedSites) {
 

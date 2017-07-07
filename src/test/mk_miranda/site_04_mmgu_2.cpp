@@ -27,7 +27,7 @@ protected:
 
     typedef mikan::TIndexQGram TIdx;
     typedef mikan::TFinder TFin;
-    typedef mr3as::MR3SeedSites<mikan::TRNATYPE> TSit;
+    typedef mr3as::MR3SeedSites TSit;
 
 };
 

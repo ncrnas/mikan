@@ -62,7 +62,7 @@ private:
     std::ofstream mOFile1;
     std::ofstream mOFile2;
 
-    TM1SeedSites<mikan::TRNATYPE> mSeedSites;
+    TM1SeedSites mSeedSites;
     TM1RawFeatures<mikan::TRNATYPE> mRawFeatures;
     TM1SortedSitePos<mikan::TRNATYPE> mSortedSites;
     TM1MRNAFeatures<mikan::TRNATYPE> mMRNAFeatures;

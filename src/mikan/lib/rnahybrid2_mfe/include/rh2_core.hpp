@@ -66,7 +66,7 @@ private:
     std::ofstream mOFile1;
     std::ofstream mOFile2;
 
-    RH2SeedSites <mikan::TRNATYPE> mSeedSites;
+    RH2SeedSites mSeedSites;
     RH2MFEScores <mikan::TRNATYPE> mMfeScores;
     RH2Overlap <mikan::TRNATYPE> mOverlappedSites;
     RH2TopNScore <mikan::TRNATYPE> mTopScoredSites;

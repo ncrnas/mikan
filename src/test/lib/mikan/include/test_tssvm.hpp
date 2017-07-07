@@ -8,7 +8,7 @@
 #include "mk_input.hpp"
 
 typedef TestIOBase<mikan::MKInput> TestIOTSSVM;
-typedef TestSeed<tssvm::TSSVMSeedSeqs<mikan::TRNATYPE>, TestIOTSSVM> TestSeedTSSVM;
-typedef TestSite<tssvm::TSSVMSeedSites<mikan::TRNATYPE>, TestIOTSSVM> TestSiteTSSVM;
+typedef TestSeed<tssvm::TSSVMSeedSeqs, TestIOTSSVM> TestSeedTSSVM;
+typedef TestSite<tssvm::TSSVMSeedSites, TestIOTSSVM> TestSiteTSSVM;
 
 #endif //MIKAN_TEST_TSSVM_HPP_

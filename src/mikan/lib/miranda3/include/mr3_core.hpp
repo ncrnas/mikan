@@ -71,7 +71,7 @@ private:
     std::ofstream mOFile1;
     std::ofstream mOFile2;
 
-    MR3SeedSites <mikan::TRNATYPE> mSeedSites;
+    MR3SeedSites mSeedSites;
     MR3SiteScores <mikan::TRNATYPE> mSiteScores;
     MR3Overlap <mikan::TRNATYPE> mOverlappedSites;
     MR3SortedSitePos <mikan::TRNATYPE> mSortedSites;

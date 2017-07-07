@@ -39,7 +39,7 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(RH2SeedSites<TRNAString> &pSeedSites, TRNAString const &pMiRNASeq,
+    int calc_scores(RH2SeedSites &pSeedSites, TRNAString const &pMiRNASeq,
                     TRNASet const &pMRNASeqs, seqan::CharString &pOverlapDef);
 
     void calc_normalized_score(int pIdx, int pTargetLen, int pQueryLen);
@@ -81,7 +81,7 @@ public:
     // Method prototypes
     void clear_scores();
 
-    int calc_scores(RH2SeedSites<TRNAString> &pSeedSites, RH2MFEScores<TRNAString> &pMFEScores,
+    int calc_scores(RH2SeedSites &pSeedSites, RH2MFEScores<TRNAString> &pMFEScores,
                     const seqan::String<unsigned> &pSortedSites);
 
 private:

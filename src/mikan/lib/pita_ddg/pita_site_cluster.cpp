@@ -19,7 +19,7 @@ void PITASiteCluster<TRNAString>::clear_cluster() {
 
 template<class TRNAString>
 void PITASiteCluster<TRNAString>::cluster_site_pos(
-        PITASeedSites<TRNAString> &pSeedSites) {
+        PITASeedSites &pSeedSites) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
@@ -41,7 +41,7 @@ void PITAOverlap<TRNAString>::clear_cluster() {
 }
 
 template<class TRNAString>
-int PITAOverlap<TRNAString>::filter_overlapped_sites(PITASeedSites<TRNAString> &pSeedSites, int pGapLen) {
+int PITAOverlap<TRNAString>::filter_overlapped_sites(PITASeedSites &pSeedSites, int pGapLen) {
     TItSet itSet;
     TItRetPair ret;
     TItMap itMap2;
@@ -88,7 +88,7 @@ int PITAOverlap<TRNAString>::filter_overlapped_sites(PITASeedSites<TRNAString> &
 
 template<class TRNAString>
 void
-PITAOverlap<TRNAString>::mark_overlapped_sites(PITASeedSites<TRNAString> &pSeedSites, int pPrevIdx, int pCurIdx) {
+PITAOverlap<TRNAString>::mark_overlapped_sites(PITASeedSites &pSeedSites, int pPrevIdx, int pCurIdx) {
     StringSet<CharString> const &seedTypes = pSeedSites.get_seed_types();
     unsigned precPrev = get_seedtype_precedence(seedTypes[pPrevIdx]);
     unsigned precCur = get_seedtype_precedence(seedTypes[pCurIdx]);
@@ -151,7 +151,7 @@ void PITASortedSitePos<TRNAString>::clear_site_pos() {
 
 template<class TRNAString>
 int PITASortedSitePos<TRNAString>::generate_sorted_mrna_pos(
-        PITASeedSites<TRNAString> &pSeedSites) {
+        PITASeedSites &pSeedSites) {
     TItMap itMap;
     TItSet itSet;
     TItRetPair ret;

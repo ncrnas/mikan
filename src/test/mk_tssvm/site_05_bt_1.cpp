@@ -19,7 +19,7 @@ protected:
 
     typedef mikan::TIndexQGram TIdx;
     typedef mikan::TFinder TFin;
-    typedef tssvm::TSSVMSeedSites<mikan::TRNATYPE> TSit;
+    typedef tssvm::TSSVMSeedSites TSit;
 
 };
 

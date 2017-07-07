@@ -24,7 +24,7 @@ public:
     // Method prototype
     void clear_cluster();
 
-    void cluster_site_pos(RH2SeedSites <TRNAString> &pSeedSites, RH2MFEScores <TRNAString> &pScores);
+    void cluster_site_pos(RH2SeedSites &pSeedSites, RH2MFEScores <TRNAString> &pScores);
 
 private:
     typedef std::pair<unsigned, unsigned> TPosPair;
@@ -45,7 +45,7 @@ public:
     RH2Overlap() {}
 
     // Method prototype
-    int filter_overlapped_sites(RH2SeedSites <TRNAString> &pSeedSites, RH2MFEScores <TRNAString> &pScores,
+    int filter_overlapped_sites(RH2SeedSites &pSeedSites, RH2MFEScores <TRNAString> &pScores,
                                 seqan::CharString &pOverlapDef);
 
     void clear_cluster();
@@ -60,14 +60,14 @@ private:
     RH2SiteCluster<TRNAString> mSiteCluster;
 
 private:
-    void find_overlapped_sites(RH2SeedSites <TRNAString> &pSeedSites, RH2MFEScores <TRNAString> &pScores,
+    void find_overlapped_sites(RH2SeedSites &pSeedSites, RH2MFEScores <TRNAString> &pScores,
                                int pPosIdx, seqan::CharString &pOverlapDef);
 
-    void cluster_overlapped_sites(RH2SeedSites <TRNAString> &pSeedSites,
+    void cluster_overlapped_sites(RH2SeedSites &pSeedSites,
                                   RH2MFEScores <TRNAString> &pScores, std::multimap<unsigned, unsigned> &pStartPos,
                                   seqan::CharString &pOverlapDef);
 
-    void mark_overlapped_sites(RH2SeedSites <TRNAString> &pSeedSites, RH2MFEScores <TRNAString> &pScores,
+    void mark_overlapped_sites(RH2SeedSites &pSeedSites, RH2MFEScores <TRNAString> &pScores,
                                std::set<unsigned> &pOlCluster, seqan::CharString &pOverlapDef);
 
     unsigned get_pos_with_best_mfe(RH2MFEScores <TRNAString> &pScores, std::set<unsigned> &pOlCluster);
@@ -84,7 +84,7 @@ public:
     RH2TopNScore() : mTopN(0) {}
 
     // Method prototype
-    int filter_sites(RH2SeedSites <TRNAString> &pSeedSites, RH2MFEScores <TRNAString> &pScores, int pMaxHits);
+    int filter_sites(RH2SeedSites &pSeedSites, RH2MFEScores <TRNAString> &pScores, int pMaxHits);
 
     void clear_cluster();
 
@@ -118,7 +118,7 @@ public:
     const seqan::String<unsigned> &get_sorted_mrna_pos() { return mSortedSitePos; }
 
     // Method prototype
-    int generate_sorted_mrna_pos(RH2SeedSites <TRNAString> &pSeedSites, RH2MFEScores <TRNAString> &pScores);
+    int generate_sorted_mrna_pos(RH2SeedSites &pSeedSites, RH2MFEScores <TRNAString> &pScores);
 
     void clear_site_pos();
 
@@ -133,7 +133,7 @@ private:
     RH2SiteCluster<TRNAString> mSiteCluster;
 
 private:
-    void cluster_site_pos(RH2SeedSites <TRNAString> &pSeedSites,
+    void cluster_site_pos(RH2SeedSites &pSeedSites,
                           RH2MFEScores <TRNAString> &pScores);
 
 };

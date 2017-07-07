@@ -27,7 +27,7 @@ protected:
 
     typedef mikan::TIndexQGram TIdx;
     typedef mikan::TFinder TFin;
-    typedef ptddg::PITASeedSites<mikan::TRNATYPE> TSit;
+    typedef ptddg::PITASeedSites TSit;
 
 };
 

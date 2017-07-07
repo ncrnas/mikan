@@ -65,7 +65,7 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(PITASeedSites<TRNAString> &pSeedSites, TRNAString const &miRNASeq, TRNASet const &pMRNASeqs);
+    int calc_scores(PITASeedSites &pSeedSites, TRNAString const &miRNASeq, TRNASet const &pMRNASeqs);
 
     void print_input(seqan::CharString const &pSeedType, std::string &pInputMiRNASeq, std::string &pInputMRNASeq,
                      std::vector<int> &pInputMatchSeq);
@@ -108,7 +108,7 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(PITASeedSites<TRNAString> &pSeedSites, TRNASet const &pMRNASeqs, int pFlankUp, int pFlankDown);
+    int calc_scores(PITASeedSites &pSeedSites, TRNASet const &pMRNASeqs, int pFlankUp, int pFlankDown);
 
     void print_input(std::string &pInputMRNASeq);
 
@@ -154,7 +154,7 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(PITASeedSites<TRNAString> &pSeedSites, TRNAString const &miRNASeq, TRNASet const &pMRNASeqs,
+    int calc_scores(PITASeedSites &pSeedSites, TRNAString const &miRNASeq, TRNASet const &pMRNASeqs,
                     int pFlankUp, int pFlankDown);
 
     void print_alignment(int pIdx);
@@ -191,7 +191,7 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(PITASeedSites<TRNAString> &pSeedSites, PITADDGScores<TRNAString> &pDDGScores,
+    int calc_scores(PITASeedSites &pSeedSites, PITADDGScores<TRNAString> &pDDGScores,
                     const seqan::String<unsigned> &pSortedSites);
 
 private:

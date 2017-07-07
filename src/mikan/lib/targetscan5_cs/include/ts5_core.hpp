@@ -57,7 +57,7 @@ private:
     std::ofstream mOFile1;
     std::ofstream mOFile2;
 
-    TS5SeedSites <mikan::TRNATYPE> mSeedSites;
+    TS5SeedSites mSeedSites;
     TS5RawFeatures <mikan::TRNATYPE> mRawFeatures;
     TS5ContextScores <mikan::TRNATYPE> mCsScores;
     TS5TotalScores <mikan::TRNATYPE> mTotalScore;

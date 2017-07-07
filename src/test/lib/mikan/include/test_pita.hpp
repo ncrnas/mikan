@@ -8,7 +8,7 @@
 #include "mk_input.hpp"
 
 typedef TestIOBase<mikan::MKInput> TestIOPITA;
-typedef TestSeed<ptddg::PITASeedSeqs<mikan::TRNATYPE>, TestIOPITA> TestSeedPITA;
-typedef TestSite<ptddg::PITASeedSites<mikan::TRNATYPE>, TestIOPITA> TestSitePITA;
+typedef TestSeed<ptddg::PITASeedSeqs, TestIOPITA> TestSeedPITA;
+typedef TestSite<ptddg::PITASeedSites, TestIOPITA> TestSitePITA;
 
 #endif //MIKAN_TEST_PITA_HPP_

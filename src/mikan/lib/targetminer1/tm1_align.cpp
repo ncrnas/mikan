@@ -27,7 +27,7 @@ template<class TRNAString>
 void TM1Alignment<TRNAString>::align_all(
         TRNAString const &pMiRNASeq,
         TRNASet const &pMRNASeqs,
-        TM1SeedSites<TRNAString> const &pSeedSites,
+        TM1SeedSites const &pSeedSites,
         String<int> const &pA1Pos) {
     unsigned miLen;
     int a1pos;

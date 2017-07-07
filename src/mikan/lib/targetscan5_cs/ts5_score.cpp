@@ -200,7 +200,7 @@ void TS5TotalScores<TRNAString>::clear_scores() {
 }
 
 template<class TRNAString>
-int TS5TotalScores<TRNAString>::calc_scores(TS5SeedSites<TRNAString> &pSeedSites,
+int TS5TotalScores<TRNAString>::calc_scores(TS5SeedSites &pSeedSites,
                                             TS5ContextScores<TRNAString> &pContextScores) {
     const String<unsigned> &siteMRNAPos = pSeedSites.get_mrna_pos();
     int prevPos = -1;

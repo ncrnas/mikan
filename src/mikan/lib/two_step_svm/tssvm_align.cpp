@@ -19,7 +19,7 @@ void TSAlign<TRNAString>::clear_alignments() {
 
 template<class TRNAString>
 int TSAlign<TRNAString>::align_seq(
-        TSSVMSeedSites<TRNAString> &pSeedSites,
+        TSSVMSeedSites &pSeedSites,
         TRNAString const &pMiRNASeq,
         TRNASet const &pMRNASeqs) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();

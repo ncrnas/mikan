@@ -20,7 +20,7 @@ void TM1SiteCluster<TRNAString>::clear_cluster() {
 
 template<class TRNAString>
 void TM1SiteCluster<TRNAString>::cluster_site_pos(
-        TM1SeedSites<TRNAString> &pSeedSites) {
+        TM1SeedSites &pSeedSites) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
@@ -47,7 +47,7 @@ void TM1SortedSitePos<TRNAString>::clear_site_pos() {
 
 template<class TRNAString>
 int TM1SortedSitePos<TRNAString>::generate_sorted_mrna_pos(
-        TM1SeedSites<TRNAString> &pSeedSites,
+        TM1SeedSites &pSeedSites,
         bool pRemoveOvelaps) {
     TItMMap itMap;
     TItSet itSet;
@@ -93,7 +93,7 @@ int TM1SortedSitePos<TRNAString>::generate_sorted_mrna_pos(
 }
 
 template<class TRNAString>
-void TM1SortedSitePos<TRNAString>::remove_overlapped_sites(TM1SeedSites<TRNAString> &pSeedSites) {
+void TM1SortedSitePos<TRNAString>::remove_overlapped_sites(TM1SeedSites &pSeedSites) {
     TItMMap itMap;
     TItMap itSorted;
     TItSet itSet;
@@ -150,7 +150,7 @@ void TM1SortedSitePos<TRNAString>::remove_overlapped_sites(TM1SeedSites<TRNAStri
 
 template<class TRNAString>
 void TM1SortedSitePos<TRNAString>::sort_by_pos7(
-        TM1SeedSites<TRNAString> &pSeedSites,
+        TM1SeedSites &pSeedSites,
         TItRetPair &pGroupedSites,
         std::map<unsigned, unsigned> &pSortedSites) {
     TItMMap itMap;
@@ -166,7 +166,7 @@ void TM1SortedSitePos<TRNAString>::sort_by_pos7(
 
 template<class TRNAString>
 void TM1SortedSitePos<TRNAString>::sort_by_seed_types(
-        TM1SeedSites<TRNAString> &pSeedSites,
+        TM1SeedSites &pSeedSites,
         TItRetPair &pGroupedSites,
         std::map<unsigned, unsigned> &pSortedSites) {
     TItMMap itMap;

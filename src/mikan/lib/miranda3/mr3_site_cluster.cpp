@@ -25,7 +25,7 @@ void MR3SiteCluster<TRNAString>::clear_cluster() {
 
 template<class TRNAString>
 void MR3SiteCluster<TRNAString>::cluster_site_pos(
-        MR3SeedSites<TRNAString> &pSeedSites) {
+        MR3SeedSites &pSeedSites) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
@@ -48,7 +48,7 @@ void MR3Overlap<TRNAString>::clear_cluster() {
 
 template<class TRNAString>
 int MR3Overlap<TRNAString>::make_overlapped_pairs(
-        MR3SeedSites<TRNAString> &pSeedSites,
+        MR3SeedSites &pSeedSites,
         int pGapLen,
         StringSet<String<unsigned> > &pPairs) {
     TItSet itSet;
@@ -100,7 +100,7 @@ int MR3Overlap<TRNAString>::make_overlapped_pairs(
 
 template<class TRNAString>
 int MR3Overlap<TRNAString>::filter_overlapped_sites_by_scores(
-        MR3SeedSites<TRNAString> &pSeedSites,
+        MR3SeedSites &pSeedSites,
         MR3SiteScores<TRNAString> &pSiteScores,
         int pGapLen) {
     StringSet<String<unsigned> > pairs;
@@ -125,7 +125,7 @@ int MR3Overlap<TRNAString>::filter_overlapped_sites_by_scores(
 }
 
 template<class TRNAString>
-int MR3Overlap<TRNAString>::filter_overlapped_sites(MR3SeedSites<TRNAString> &pSeedSites, int pGapLen) {
+int MR3Overlap<TRNAString>::filter_overlapped_sites(MR3SeedSites &pSeedSites, int pGapLen) {
     StringSet<String<unsigned> > pairs;
 
     make_overlapped_pairs(pSeedSites, pGapLen, pairs);
@@ -138,7 +138,7 @@ int MR3Overlap<TRNAString>::filter_overlapped_sites(MR3SeedSites<TRNAString> &pS
 
 template<class TRNAString>
 void
-MR3Overlap<TRNAString>::mark_overlapped_sites(MR3SeedSites<TRNAString> &pSeedSites, int pPrevIdx, int pCurIdx) {
+MR3Overlap<TRNAString>::mark_overlapped_sites(MR3SeedSites &pSeedSites, int pPrevIdx, int pCurIdx) {
     StringSet<CharString> const &seedTypes = pSeedSites.get_seed_types();
     unsigned precPrev = get_seedtype_precedence(seedTypes[pPrevIdx]);
     unsigned precCur = get_seedtype_precedence(seedTypes[pCurIdx]);
@@ -205,7 +205,7 @@ void MR3SortedSitePos<TRNAString>::clear_site_pos() {
 
 template<class TRNAString>
 int MR3SortedSitePos<TRNAString>::generate_sorted_mrna_pos(
-        MR3SeedSites<TRNAString> &pSeedSites) {
+        MR3SeedSites &pSeedSites) {
     TItMap itMap;
     TItSet itSet;
     TItRetPair ret;
