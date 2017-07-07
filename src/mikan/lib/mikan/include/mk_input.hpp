@@ -39,6 +39,8 @@ public:
 
     void set_file_names(seqan::CharString &pMiRNAFasta, seqan::CharString &pMRNAFasta);
 
+    void set_options(MKOptions &opt);
+
 private:
     MKSequences<TRNAString> mMiRNASeqs;
     MKSequences<TRNAString> mMRNASeqs;

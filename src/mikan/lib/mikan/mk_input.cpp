@@ -9,13 +9,6 @@
 #include "mk_inst_template.hpp"  // TRNATYPE
 #include "mk_input.hpp"          // MKInput
 
-#include "mr3_core.hpp"          // MR3CoreMain
-#include "pita_core.hpp"          // PITACoreMain
-#include "rh2_core.hpp"          // RH2CoreMain
-#include "tm1_core.hpp"          // TM1CoreMain
-#include "ts5_core.hpp"          // TS5CoreMain
-#include "tssvm_core.hpp"           // TSSVMCoreMain
-
 namespace mikan {
 
 //
@@ -26,6 +19,12 @@ void MKInput<TRNAString>::set_file_names(seqan::CharString &pMiRNAFasta,
                                          seqan::CharString &pMRNAFasta) {
     mMiRNAFasta = pMiRNAFasta;
     mMRNAFasta = pMRNAFasta;
+}
+
+template<class TRNAString>
+void MKInput<TRNAString>::set_options(MKOptions & opt) {
+    mMiRNAFasta = opt.mMiRNAFasta;
+    mMRNAFasta = opt.mMRNAFasta;
 }
 
 template<class TRNAString>
