@@ -14,8 +14,6 @@
 #include "pita_core.hpp"          // PITACore
 #include "mk_input.hpp"           // MKInput
 
-using namespace mikan;
-
 namespace ptddg {
 
 int PITACoreMain(int argc, char const **argv) {
@@ -37,16 +35,16 @@ int PITACoreMain(int argc, char const **argv) {
     }
 
     // Create index
-    ptddg::PITACore<TRNATYPE>::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
-    ptddg::PITACore<TRNATYPE>::TIndexQGram index(mMRNASeqs);
-    ptddg::PITACore<TRNATYPE>::TFinder finder(index);
+    mikan::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
+    mikan::TIndexQGram index(mMRNASeqs);
+    mikan::TFinder finder(index);
 
     // Calculate scores for all miRNAs
-    ptddg::PITACore<TRNATYPE>::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
-    ptddg::PITACore<TRNATYPE>::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
-    ptddg::PITACore<TRNATYPE>::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
+    mikan::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
+    mikan::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
+    mikan::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
 
-    ptddg::PITACore<TRNATYPE> pitaCore(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
+    ptddg::PITACore pitaCore(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
     pitaCore.init_from_args(options);
     pitaCore.open_output_file();
     retVal = pitaCore.calculate_all_scores();
@@ -60,8 +58,7 @@ int PITACoreMain(int argc, char const **argv) {
 //
 // PITACore methods
 //
-template<class TRNAString, int SEEDLEN>
-void PITACore<TRNAString, SEEDLEN>::init_from_args(PITAOptions &opts) {
+void PITACore::init_from_args(PITAOptions &opts) {
     mOutputAlign = opts.mOutputAlign;
     mOFileDDG = opts.mOFileSite;
     mOFileTotal = opts.mOFileTotal;
@@ -93,8 +90,7 @@ void PITACore<TRNAString, SEEDLEN>::init_from_args(PITAOptions &opts) {
     set_backtrack(mOutputAlign);
 }
 
-template<class TRNAString, int SEEDLEN>
-int PITACore<TRNAString, SEEDLEN>::open_output_file() {
+int PITACore::open_output_file() {
     // Open output file 1
     mOFile1.open(toCString(mOFileDDG), std::ofstream::out);
     if (!mOFile1.good()) {
@@ -112,8 +108,7 @@ int PITACore<TRNAString, SEEDLEN>::open_output_file() {
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int PITACore<TRNAString, SEEDLEN>::calculate_all_scores() {
+int PITACore::calculate_all_scores() {
     int retVal;
 
     for (unsigned i = 0; i < length(mMiRNASeqs); ++i) {
@@ -139,10 +134,9 @@ int PITACore<TRNAString, SEEDLEN>::calculate_all_scores() {
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int PITACore<TRNAString, SEEDLEN>::calculate_mirna_scores(unsigned pIdx) {
+int PITACore::calculate_mirna_scores(unsigned pIdx) {
     int retVal;
-    TRNAString miRNASeq = mMiRNASeqs[pIdx];
+    mikan::TRNATYPE miRNASeq = mMiRNASeqs[pIdx];
 
     // Search seed sites
     if (mExecSearchSeedSites) {
@@ -226,8 +220,7 @@ int PITACore<TRNAString, SEEDLEN>::calculate_mirna_scores(unsigned pIdx) {
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int PITACore<TRNAString, SEEDLEN>::write_ddg_score(seqan::CharString const &pMiRNAId) {
+int PITACore::write_ddg_score(seqan::CharString const &pMiRNAId) {
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const seqan::StringSet<seqan::CharString> &seedTypes = mSeedSites.get_seed_types();
@@ -259,8 +252,7 @@ int PITACore<TRNAString, SEEDLEN>::write_ddg_score(seqan::CharString const &pMiR
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int PITACore<TRNAString, SEEDLEN>::write_total_score(seqan::CharString const &pMiRNAId) {
+int PITACore::write_total_score(seqan::CharString const &pMiRNAId) {
     const seqan::String<float> &totalScores = mTotalScores.get_scores();
     const seqan::String<int> &mRNAPos = mTotalScores.get_mrna_pos();
     const seqan::String<int> &siteNum = mTotalScores.get_site_num();
@@ -280,8 +272,7 @@ int PITACore<TRNAString, SEEDLEN>::write_total_score(seqan::CharString const &pM
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int PITACore<TRNAString, SEEDLEN>::write_alignment(seqan::CharString const &pMiRNAId) {
+int PITACore::write_alignment(seqan::CharString const &pMiRNAId) {
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const seqan::StringSet<seqan::CharString> &seedTypes = mSeedSites.get_seed_types();
@@ -346,11 +337,6 @@ int PITACore<TRNAString, SEEDLEN>::write_alignment(seqan::CharString const &pMiR
 
     return 0;
 }
-
-// Explicit template instantiation
-
-template
-class PITACore<TRNATYPE>;
 
 } // namespace ptddg
 

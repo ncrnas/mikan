@@ -21,8 +21,8 @@ protected:
         mOverlapDef = "orig";
     }
 
-    typedef rh2mfe::RH2Core<mikan::TRNATYPE>::TIndexQGram TIdx;
-    typedef rh2mfe::RH2Core<mikan::TRNATYPE>::TFinder TFin;
+    typedef mikan::TIndexQGram TIdx;
+    typedef mikan::TFinder TFin;
     typedef rh2mfe::RH2SeedSites<mikan::TRNATYPE> TSit;
 
 };

@@ -7,6 +7,7 @@
 #include "ts5_score.hpp"         // TS5ContextScores, TS5TotalScores
 #include "ts5_seed_site.hpp"     // TS5SeedSites
 #include "mk_sequence.hpp"       // MKSequences
+#include "mk_typedef.hpp"        // TCharSet, TRNASet, TIndexQGram, TFinder
 
 namespace ts5cs {
 
@@ -15,15 +16,8 @@ int TS5CoreMain(int argc, char const **argv);
 //
 // TargetScan context score process core
 //
-template<class TRNAString, int SEEDLEN = 6>
 class TS5Core {
 public:
-    // Define types
-    typedef seqan::StringSet<seqan::CharString> TCharSet;
-    typedef seqan::StringSet<TRNAString> TRNASet;
-    typedef seqan::Index<TRNASet, seqan::IndexQGram<seqan::UngappedShape<SEEDLEN> > > TIndexQGram;
-    typedef seqan::Finder<TIndexQGram> TFinder;
-
     // Declare variables
     bool mExecSearchSeedSites;
     bool mExecGetRawFeat;
@@ -37,9 +31,9 @@ public:
 
 public:
     // Define methods
-    TS5Core(TCharSet const &pMiRNAIds, TRNASet const &pMiRNASeqs, TCharSet const &pMRNAIds,
-            TRNASet const &pMRNASeqs,
-            TIndexQGram &pRNAIdx, TFinder &pFinder) :
+    TS5Core(mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs, 
+            mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
+            mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
             mExecSearchSeedSites(true), mExecGetRawFeat(true), mExecCalcContexScore(true),
             mExecSumScores(true), mOutputContexScore(true), mOutputTotalScore(true),
             mOutputAlign(true), mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
@@ -55,18 +49,18 @@ public:
     int calculate_mirna_scores(unsigned pIdx);
 
 private:
-    TCharSet const &mMiRNAIds;
-    TRNASet const &mMiRNASeqs;
-    TCharSet const &mMRNAIds;
-    TRNASet const &mMRNASeqs;
+    mikan::TCharSet const &mMiRNAIds;
+    mikan::TRNASet const &mMiRNASeqs;
+    mikan::TCharSet const &mMRNAIds;
+    mikan::TRNASet const &mMRNASeqs;
 
     std::ofstream mOFile1;
     std::ofstream mOFile2;
 
-    TS5SeedSites <TRNAString> mSeedSites;
-    TS5RawFeatures <TRNAString> mRawFeatures;
-    TS5ContextScores <TRNAString> mCsScores;
-    TS5TotalScores <TRNAString> mTotalScore;
+    TS5SeedSites <mikan::TRNATYPE> mSeedSites;
+    TS5RawFeatures <mikan::TRNATYPE> mRawFeatures;
+    TS5ContextScores <mikan::TRNATYPE> mCsScores;
+    TS5TotalScores <mikan::TRNATYPE> mTotalScore;
 
 private:
     int write_context_score(seqan::CharString const &pMiRNAId);

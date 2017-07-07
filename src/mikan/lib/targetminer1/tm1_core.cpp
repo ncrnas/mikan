@@ -12,8 +12,6 @@
 #include "tm1_core.hpp"          // TM1Core
 #include "mk_input.hpp"          // MKInput
 
-using namespace mikan;
-
 namespace tm1p {
 
 int TM1CoreMain(int argc, char const **argv) {
@@ -35,15 +33,15 @@ int TM1CoreMain(int argc, char const **argv) {
     }
 
     // Create index
-    tm1p::TM1Core<TRNATYPE>::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
-    tm1p::TM1Core<TRNATYPE>::TIndexQGram index(mMRNASeqs);
-    tm1p::TM1Core<TRNATYPE>::TFinder finder(index);
+    mikan::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
+    mikan::TIndexQGram index(mMRNASeqs);
+    mikan::TFinder finder(index);
 
     // Calculate scores for all miRNAs
-    tm1p::TM1Core<TRNATYPE>::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
-    tm1p::TM1Core<TRNATYPE>::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
-    tm1p::TM1Core<TRNATYPE>::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
-    tm1p::TM1Core<TRNATYPE> tm1Core(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
+    mikan::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
+    mikan::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
+    mikan::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
+    tm1p::TM1Core tm1Core(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
     tm1Core.init_from_args(options);
     tm1Core.open_output_file();
     retVal = tm1Core.calculate_all_scores();
@@ -57,15 +55,13 @@ int TM1CoreMain(int argc, char const **argv) {
 //
 // TM1Core methods
 //
-template<class TRNAString, int SEEDLEN>
-void TM1Core<TRNAString, SEEDLEN>::init_from_args(TM1CSOptions &opts) {
+void TM1Core::init_from_args(TM1CSOptions &opts) {
     mOutputAlign = opts.mOutputAlign;
     mOFileSite = opts.mOFileSite;
     mOFileScore = opts.mOFileTotal;
 }
 
-template<class TRNAString, int SEEDLEN>
-int TM1Core<TRNAString, SEEDLEN>::open_output_file() {
+int TM1Core::open_output_file() {
     // Open output file 1
     mOFile1.open(toCString(mOFileSite), std::ofstream::out);
     if (!mOFile1.good()) {
@@ -83,8 +79,7 @@ int TM1Core<TRNAString, SEEDLEN>::open_output_file() {
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int TM1Core<TRNAString, SEEDLEN>::calculate_all_scores() {
+int TM1Core::calculate_all_scores() {
     int retVal;
 
     for (unsigned i = 0; i < length(mMiRNASeqs); ++i) {
@@ -110,8 +105,7 @@ int TM1Core<TRNAString, SEEDLEN>::calculate_all_scores() {
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int TM1Core<TRNAString, SEEDLEN>::calculate_mirna_scores(unsigned pIdx) {
+int TM1Core::calculate_mirna_scores(unsigned pIdx) {
     int retVal;
 
     // Search seed sites
@@ -216,8 +210,7 @@ int TM1Core<TRNAString, SEEDLEN>::calculate_mirna_scores(unsigned pIdx) {
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int TM1Core<TRNAString, SEEDLEN>::write_site_positions(seqan::CharString const &pMiRNAId) {
+int TM1Core::write_site_positions(seqan::CharString const &pMiRNAId) {
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const seqan::StringSet<seqan::CharString> &mSeedTypes = mSeedSites.get_seed_types();
@@ -248,8 +241,7 @@ int TM1Core<TRNAString, SEEDLEN>::write_site_positions(seqan::CharString const &
 
 }
 
-template<class TRNAString, int SEEDLEN>
-int TM1Core<TRNAString, SEEDLEN>::write_scores(seqan::CharString const &pMiRNAId) {
+int TM1Core::write_scores(seqan::CharString const &pMiRNAId) {
     const seqan::String<float> &scores = mScores.get_scores();
     const seqan::String<int> &predictions = mScores.get_labels();
     const seqan::String<unsigned> &siteNum = mScores.get_site_num();
@@ -275,12 +267,11 @@ int TM1Core<TRNAString, SEEDLEN>::write_scores(seqan::CharString const &pMiRNAId
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int TM1Core<TRNAString, SEEDLEN>::write_alignment(seqan::CharString const &pMiRNAId) {
+int TM1Core::write_alignment(seqan::CharString const &pMiRNAId) {
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const seqan::StringSet<seqan::CharString> &mSeedTypes = mSeedSites.get_seed_types();
-    const TM1Alignment<TRNAString> &alignment = mRawFeatures.get_alignment();
+    const TM1Alignment<mikan::TRNATYPE> &alignment = mRawFeatures.get_alignment();
 
     seqan::CharString seedType;
     int seedStart, seedEnd;
@@ -312,10 +303,5 @@ int TM1Core<TRNAString, SEEDLEN>::write_alignment(seqan::CharString const &pMiRN
 
     return 0;
 }
-
-// Explicit template instantiation
-
-template
-class TM1Core<TRNATYPE>;
 
 } // namespace tm1p

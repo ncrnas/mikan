@@ -25,8 +25,8 @@ protected:
         mSeedDef[5] = "0";
     }
 
-    typedef ptddg::PITACore<mikan::TRNATYPE>::TIndexQGram TIdx;
-    typedef ptddg::PITACore<mikan::TRNATYPE>::TFinder TFin;
+    typedef mikan::TIndexQGram TIdx;
+    typedef mikan::TFinder TFin;
     typedef ptddg::PITASeedSites<mikan::TRNATYPE> TSit;
 
 };

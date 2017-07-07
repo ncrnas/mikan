@@ -1,5 +1,5 @@
-#ifndef MK_CORE_HPP_
-#define MK_CORE_HPP_
+#ifndef MK_INPUT_HPP_
+#define MK_INPUT_HPP_
 
 #include "mk_typedef.hpp"  // TRNATYPE
 #include "mk_option.hpp"         // MKOptions
@@ -44,4 +44,4 @@ private:
 
 } // namespace mikan
 
-#endif /* MK_CORE_HPP_ */
+#endif /* MK_INPUT_HPP_ */

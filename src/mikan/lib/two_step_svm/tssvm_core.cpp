@@ -16,8 +16,6 @@
 #include "tssvm_core.hpp"           // TSSVMCore
 #include "mk_input.hpp"             // MKInput
 
-using namespace mikan;
-
 namespace tssvm {
 
 int TSSVMCoreMain(int argc, char const **argv) {
@@ -39,15 +37,15 @@ int TSSVMCoreMain(int argc, char const **argv) {
     }
 
     // Create index
-    tssvm::TSSVMCore<TRNATYPE>::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
-    tssvm::TSSVMCore<TRNATYPE>::TIndexQGram index(mMRNASeqs);
-    tssvm::TSSVMCore<TRNATYPE>::TFinder finder(index);
+    mikan::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
+    mikan::TIndexQGram index(mMRNASeqs);
+    mikan::TFinder finder(index);
 
     // Prepare models
-    tssvm::TSSVMCore<TRNATYPE>::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
-    tssvm::TSSVMCore<TRNATYPE>::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
-    tssvm::TSSVMCore<TRNATYPE>::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
-    tssvm::TSSVMCore<TRNATYPE> tssvmCore(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
+    mikan::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
+    mikan::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
+    mikan::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
+    tssvm::TSSVMCore tssvmCore(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
     tssvmCore.init_from_args(options);
     retVal = tssvmCore.init_site_svm();
     if (retVal != 0) {
@@ -67,20 +65,17 @@ int TSSVMCoreMain(int argc, char const **argv) {
 //
 // TSSVMCore methods
 //
-template<class TRNAString, int SEEDLEN>
-void TSSVMCore<TRNAString, SEEDLEN>::init_from_args(TSSVMOptions &opts) {
+void TSSVMCore::init_from_args(TSSVMOptions &opts) {
     mOFileTargetSite = opts.mOFileSite;
     mOFileMRNA = opts.mOFileTotal;
     mOutputAlign = opts.mOutputAlign;
 }
 
-template<class TRNAString, int SEEDLEN>
-int TSSVMCore<TRNAString, SEEDLEN>::init_site_svm() {
+int TSSVMCore::init_site_svm() {
     return mSiteModel.init_model();
 }
 
-template<class TRNAString, int SEEDLEN>
-int TSSVMCore<TRNAString, SEEDLEN>::open_output_file() {
+int TSSVMCore::open_output_file() {
     // Open output file 1
     mOFile1.open(toCString(mOFileTargetSite), std::ofstream::out);
     if (!mOFile1.good()) {
@@ -98,8 +93,7 @@ int TSSVMCore<TRNAString, SEEDLEN>::open_output_file() {
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int TSSVMCore<TRNAString, SEEDLEN>::calculate_all_scores() {
+int TSSVMCore::calculate_all_scores() {
     int retVal;
 
     for (unsigned i = 0; i < length(mMiRNASeqs); ++i) {
@@ -125,10 +119,9 @@ int TSSVMCore<TRNAString, SEEDLEN>::calculate_all_scores() {
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int TSSVMCore<TRNAString, SEEDLEN>::calculate_mirna_scores(unsigned pIdx) {
+int TSSVMCore::calculate_mirna_scores(unsigned pIdx) {
     int retVal;
-    TRNAString miRNASeq = mMiRNASeqs[pIdx];
+    mikan::TRNATYPE miRNASeq = mMiRNASeqs[pIdx];
 
     // Search seed sites
     if (mExecSearchSeedSites) {
@@ -231,8 +224,7 @@ int TSSVMCore<TRNAString, SEEDLEN>::calculate_mirna_scores(unsigned pIdx) {
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int TSSVMCore<TRNAString, SEEDLEN>::write_ts_scores(seqan::CharString const &pMiRNAId) {
+int TSSVMCore::write_ts_scores(seqan::CharString const &pMiRNAId) {
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const seqan::StringSet<seqan::CharString> &seedTypes = mSeedSites.get_seed_types();
@@ -268,8 +260,7 @@ int TSSVMCore<TRNAString, SEEDLEN>::write_ts_scores(seqan::CharString const &pMi
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int TSSVMCore<TRNAString, SEEDLEN>::write_mrna_scores(seqan::CharString const &pMiRNAId) {
+int TSSVMCore::write_mrna_scores(seqan::CharString const &pMiRNAId) {
     typedef std::multimap<float, unsigned>::reverse_iterator TItMap;
     typedef std::pair<float, unsigned> TPosPair;
     std::set<unsigned>::iterator itSet;
@@ -300,8 +291,7 @@ int TSSVMCore<TRNAString, SEEDLEN>::write_mrna_scores(seqan::CharString const &p
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int TSSVMCore<TRNAString, SEEDLEN>::write_alignment(seqan::CharString const &pMiRNAId) {
+int TSSVMCore::write_alignment(seqan::CharString const &pMiRNAId) {
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const seqan::StringSet<seqan::CharString> &seedTypes = mSeedSites.get_seed_types();
@@ -341,10 +331,5 @@ int TSSVMCore<TRNAString, SEEDLEN>::write_alignment(seqan::CharString const &pMi
 
     return 0;
 }
-
-// Explicit template instantiation
-
-template
-class TSSVMCore<TRNATYPE>;
 
 } // namespace tssvm

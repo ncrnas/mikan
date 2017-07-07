@@ -9,6 +9,7 @@
 #include "tssvm_seed_site.hpp"      // TSSVMSeedSites, TSSVMSeedSiteOverlap
 #include "tssvm_site_svm.hpp"       // TSSVMSiteInputVector
 #include "mk_sequence.hpp"          // MKSequences
+#include "mk_typedef.hpp"           // TCharSet, TRNASet, TIndexQGram, TFinder
 #include <seqan/sequence.h>
 
 namespace tssvm {
@@ -18,15 +19,8 @@ int TSSVMCoreMain(int argc, char const **argv);
 //
 //Two-step SVM score process core
 //
-template<class TRNAString, int SEEDLEN = 6>
 class TSSVMCore {
 public:
-    // Define types
-    typedef seqan::StringSet<seqan::CharString> TCharSet;
-    typedef seqan::StringSet<TRNAString> TRNASet;
-    typedef seqan::Index<TRNASet, seqan::IndexQGram<seqan::UngappedShape<SEEDLEN> > > TIndexQGram;
-    typedef seqan::Finder<TIndexQGram> TFinder;
-
     // Declare variables
     bool mExecSearchSeedSites;
     bool mExecFilterOverlap;
@@ -44,13 +38,14 @@ public:
 
 public:
     // Define methods
-    TSSVMCore(TCharSet const &pMiRNAIds, TRNASet const &pMiRNASeqs, TCharSet const &pMRNAIds,
-              TRNASet const &pMRNASeqs, TIndexQGram &pRNAIdx, TFinder &pFinder) :
-            mExecSearchSeedSites(true), mExecFilterOverlap(true), mExecAlignSeq(true), mExecSiteFeat(true),
-            mExecSiteScore(true), mExecRNAFeat(true), mExecRNAScore(true), mOutputSiteScore(true),
-            mOutputRNAScore(true), mOutputAlign(true), mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs),
-            mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
-            mSiteInput(mSiteModel) {}
+    TSSVMCore(mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs, 
+              mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
+              mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
+              mExecSearchSeedSites(true), mExecFilterOverlap(true), mExecAlignSeq(true), mExecSiteFeat(true),
+              mExecSiteScore(true), mExecRNAFeat(true), mExecRNAScore(true), mOutputSiteScore(true),
+              mOutputRNAScore(true), mOutputAlign(true), mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs),
+              mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
+              mSiteInput(mSiteModel) {}
 
     // Method prototypes
     void init_from_args(TSSVMOptions &opts);
@@ -64,22 +59,22 @@ public:
     int init_site_svm();
 
 private:
-    TCharSet const &mMiRNAIds;
-    TRNASet const &mMiRNASeqs;
-    TCharSet const &mMRNAIds;
-    TRNASet const &mMRNASeqs;
+    mikan::TCharSet const &mMiRNAIds;
+    mikan::TRNASet const &mMiRNASeqs;
+    mikan::TCharSet const &mMRNAIds;
+    mikan::TRNASet const &mMRNASeqs;
 
     std::ofstream mOFile1;
     std::ofstream mOFile2;
 
-    TSSVMSeedSites<TRNAString> mSeedSites;
-    TSSVMSeedSiteOverlap<TRNAString> mOverlappedSites;
-    TSAlign<TRNAString> mAlignSeqs;
-    TSSVMRawFeatures<TRNAString> mSiteFeatures;
-    TSSVMSiteModel<TRNAString> mSiteModel;
-    TSSVMSiteInputVector<TRNAString> mSiteInput;
-    TSSVMRNARawFeatures<TRNAString> mRnaFeatures;
-    TSSVMRNAInputVector<TRNAString> mRnaInput;
+    TSSVMSeedSites<mikan::TRNATYPE> mSeedSites;
+    TSSVMSeedSiteOverlap<mikan::TRNATYPE> mOverlappedSites;
+    TSAlign<mikan::TRNATYPE> mAlignSeqs;
+    TSSVMRawFeatures<mikan::TRNATYPE> mSiteFeatures;
+    TSSVMSiteModel<mikan::TRNATYPE> mSiteModel;
+    TSSVMSiteInputVector<mikan::TRNATYPE> mSiteInput;
+    TSSVMRNARawFeatures<mikan::TRNATYPE> mRnaFeatures;
+    TSSVMRNAInputVector<mikan::TRNATYPE> mRnaInput;
 
 private:
     int write_ts_scores(seqan::CharString const &pMiRNAId);
