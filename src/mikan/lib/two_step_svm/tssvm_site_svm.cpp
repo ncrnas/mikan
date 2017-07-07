@@ -1,4 +1,4 @@
-#include "mk_inst_template.hpp"     // TRNATYPE
+#include "mk_typedef.hpp"           // TRNATYPE
 #include "tssvm_site_feature.hpp"   // TSSVMRawFeatures
 #include "tssvm_site_svm.hpp"       // TSSVMSiteModel, TSSVMSiteInputVector
 #include "tssvm_site_svm_alpha.hpp" // init_alpha_vector

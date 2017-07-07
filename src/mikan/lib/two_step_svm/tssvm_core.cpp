@@ -5,7 +5,7 @@
 #endif
 
 #include <seqan/arg_parse.h>
-#include "mk_inst_template.hpp"     // TRNATYPE
+#include "mk_typedef.hpp"           // TRNATYPE
 #include "tssvm_option.hpp"         // TSSVMOptions
 #include "tssvm_seed_site.hpp"      // TSSVMSeedSites, TSSVMSeedSiteOverlap
 #include "tssvm_align.hpp"          // TSAlign

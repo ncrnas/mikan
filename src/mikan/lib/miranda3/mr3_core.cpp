@@ -6,7 +6,7 @@
 #endif
 
 #include <seqan/arg_parse.h>
-#include "mk_inst_template.hpp"   // TRNATYPE
+#include "mk_typedef.hpp"         // TRNATYPE
 #include "mr3_option.hpp"         // MR3Options
 #include "mr3_seed_site.hpp"      // MR3SeedSites
 #include "mr3_score.hpp"          // MR3SiteScores, MR3TotalScores

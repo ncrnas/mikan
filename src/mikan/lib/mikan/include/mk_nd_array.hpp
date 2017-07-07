@@ -1,5 +1,5 @@
-#ifndef MIKAN_MK_MEMORY_HPP_
-#define MIKAN_MK_MEMORY_HPP_
+#ifndef MK_ND_ARRAY_HPP_
+#define MK_ND_ARRAY_HPP_
 
 namespace mikan {
 
@@ -53,4 +53,4 @@ void delete_8d_array(T ********a8, int len8, int len7, int len6, int len5, int l
 
 }
 
-#endif //MIKAN_MK_MEMORY_HPP_
+#endif //MK_ND_ARRAY_HPP_

@@ -1,4 +1,4 @@
-#include "mk_inst_template.hpp"     // TRNATYPE
+#include "mk_typedef.hpp"           // TRNATYPE
 #include "tssvm_mrna_feature.hpp"   // TSSVMRNARawFeatures
 #include "tssvm_mrna_svm.hpp"       // TSSVMRNAModel, TSSVMRNAInputVector
 

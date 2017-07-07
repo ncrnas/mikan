@@ -1,4 +1,4 @@
-#include "mk_inst_template.hpp"   // TRNATYPE
+#include "mk_typedef.hpp"         // TRNATYPE
 #include "pita_score.hpp"         // PITAMFEScores
 #include "pita_site_cluster.hpp"  // PITAOverlap, PITASortedSitePos
 

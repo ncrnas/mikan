@@ -1,7 +1,7 @@
 #ifndef MR3_CORE_HPP_
 #define MR3_CORE_HPP_
 
-#include "mk_inst_template.hpp"   // TRNATYPE
+#include "mk_typedef.hpp"         // TRNATYPE
 #include "mr3_option.hpp"         // MR3Options
 #include "mr3_score.hpp"          // MR3GGDScores, MR3TotalScores
 #include "mr3_seed_site.hpp"      // MR3SeedSites

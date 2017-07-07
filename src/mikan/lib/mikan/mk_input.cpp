@@ -6,7 +6,7 @@
 #endif
 
 #include <seqan/arg_parse.h>
-#include "mk_inst_template.hpp"  // TRNATYPE
+#include "mk_typedef.hpp"  // TRNATYPE
 #include "mk_input.hpp"          // MKInput
 
 namespace mikan {

@@ -1,5 +1,5 @@
-#include "mk_inst_template.hpp"  // TRNATYPE
-#include "rh2_score.hpp"         // RH2MFEScores, RH2TotalScores
+#include "mk_typedef.hpp"  // TRNATYPE
+#include "rh2_score.hpp"   // RH2MFEScores, RH2TotalScores
 
 using namespace seqan;
 using namespace mikan;

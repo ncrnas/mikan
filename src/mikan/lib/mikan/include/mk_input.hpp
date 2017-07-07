@@ -1,7 +1,7 @@
 #ifndef MK_CORE_HPP_
 #define MK_CORE_HPP_
 
-#include "mk_inst_template.hpp"  // TRNATYPE
+#include "mk_typedef.hpp"  // TRNATYPE
 #include "mk_option.hpp"         // MKOptions
 #include "mk_sequence.hpp"       // MKSequences
 #include <seqan/sequence.h>

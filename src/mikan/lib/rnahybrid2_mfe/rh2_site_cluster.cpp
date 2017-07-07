@@ -1,4 +1,4 @@
-#include "mk_inst_template.hpp"  // TRNATYPE
+#include "mk_typedef.hpp"        // TRNATYPE
 #include "rh2_score.hpp"         // RH2MFEScores
 #include "rh2_site_cluster.hpp"  // RH2Overlap, RH2SortedSitePos
 

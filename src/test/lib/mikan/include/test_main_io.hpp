@@ -5,7 +5,7 @@
 #include "gtest/gtest.h"
 #include "get_data_path.hpp"
 #include "mikan_utils.hpp"
-#include "mk_inst_template.hpp"
+#include "mk_typedef.hpp"
 #include "mk_input.hpp"
 
 template<class TCoreInput>

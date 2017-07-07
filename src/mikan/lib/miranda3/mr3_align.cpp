@@ -1,5 +1,5 @@
-#include "mr3_align.hpp"          // MR3Align
-#include "mk_inst_template.hpp"   // TRNATYPE
+#include "mr3_align.hpp"    // MR3Align
+#include "mk_typedef.hpp"   // TRNATYPE
 
 using namespace seqan;
 using namespace mikan;

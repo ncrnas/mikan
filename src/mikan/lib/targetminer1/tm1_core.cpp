@@ -7,7 +7,7 @@
 #include <map>                   // multimap
 #include <utility>               // pair
 #include <seqan/arg_parse.h>
-#include "mk_inst_template.hpp"  // TRNATYPE
+#include "mk_typedef.hpp"        // TRNATYPE
 #include "tm1_option.hpp"        // TM1CSOptions
 #include "tm1_core.hpp"          // TM1Core
 #include "mk_input.hpp"          // MKInput

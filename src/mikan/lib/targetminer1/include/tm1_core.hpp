@@ -1,7 +1,7 @@
 #ifndef TM1_CORE_HPP_
 #define TM1_CORE_HPP_
 
-#include "mk_inst_template.hpp"  // TRNATYPE
+#include "mk_typedef.hpp"        // TRNATYPE
 #include "tm1_mrna_feature.hpp"  // TM1MRNAFeatures
 #include "tm1_mrna_svm.hpp"      // TM1MRNAModel, TM1MRNAInputVector
 #include "tm1_option.hpp"        // TM1CSOptions

@@ -1,5 +1,5 @@
-#ifndef MK_INST_TEMPLATE_HPP_
-#define MK_INST_TEMPLATE_HPP_
+#ifndef MK_TYPEDEF_HPP_
+#define MK_TYPEDEF_HPP_
 
 #include <seqan/sequence.h>
 
@@ -10,4 +10,4 @@ typedef seqan::RnaString TRNATYPE;
 
 } // namespace mikan
 
-#endif /* MK_INST_TEMPLATE_HPP_ */
+#endif /* MK_TYPEDEF_HPP_ */

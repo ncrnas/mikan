@@ -1,5 +1,5 @@
 #include "ts5_feature.hpp"       // TS5RawFeatures, TS5FeatSeedType, TS5FeatSitePos, TS5FeatAURich,
-#include "mk_inst_template.hpp"  // TRNATYPE
+#include "mk_typedef.hpp"        // TRNATYPE
 
 
 using namespace seqan;

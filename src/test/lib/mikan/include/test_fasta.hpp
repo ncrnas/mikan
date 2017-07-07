@@ -4,7 +4,7 @@
 #include<string>
 #include "gtest/gtest.h"
 #include "get_data_path.hpp"
-#include "mk_inst_template.hpp"
+#include "mk_typedef.hpp"
 #include "mk_input.hpp"
 
 class TestFasta : public ::testing::Test {

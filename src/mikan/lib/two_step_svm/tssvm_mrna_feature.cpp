@@ -1,5 +1,5 @@
 #include <math.h>                   // roundf
-#include "mk_inst_template.hpp"     // TRNATYPE
+#include "mk_typedef.hpp"           // TRNATYPE
 #include "tssvm_mrna_feature.hpp"   // TSSVMRNARawFeatures, TSSVMFeatUTRLen, TSSVMFeatSiteNum,
 
 using namespace seqan;

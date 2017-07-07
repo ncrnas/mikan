@@ -1,4 +1,4 @@
-#include "mk_inst_template.hpp"  // TRNATYPE
+#include "mk_typedef.hpp"        // TRNATYPE
 #include "ts5_seed_site.hpp"     // TS5SeedSeqs, TS5SeedSites
 #include <seqan/seq_io.h>
 

@@ -1,4 +1,4 @@
-#include "mk_inst_template.hpp"   // TRNATYPE
+#include "mk_typedef.hpp"         // TRNATYPE
 #include "pita_seed_site.hpp"     // PITASequences, PITASeedSeqs, PITASeedSites
 #include <seqan/seq_io.h>
 

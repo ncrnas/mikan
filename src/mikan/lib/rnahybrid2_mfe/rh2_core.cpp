@@ -7,7 +7,7 @@
 #endif
 
 #include <seqan/arg_parse.h>
-#include "mk_inst_template.hpp"  // TRNATYPE
+#include "mk_typedef.hpp"        // TRNATYPE
 #include "rh2_option.hpp"        // RH2Options
 #include "rh2_seed_site.hpp"     // RH2Sequences, RH2SeedSites
 #include "rh2_score.hpp"         // RH2MFEScores, RH2TotalScores

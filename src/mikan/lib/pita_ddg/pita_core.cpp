@@ -6,7 +6,7 @@
 #endif
 
 #include <seqan/arg_parse.h>
-#include "mk_inst_template.hpp"   // TRNATYPE
+#include "mk_typedef.hpp"         // TRNATYPE
 #include "pita_option.hpp"        // PITAOptions
 #include "pita_seed_site.hpp"     // PITASeedSites
 #include "pita_score.hpp"         // PITAMFEScores, PITATotalScores

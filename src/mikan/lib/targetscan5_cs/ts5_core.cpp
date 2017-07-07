@@ -7,7 +7,7 @@
 #include <map>                   // multimap
 #include <utility>               // pair
 #include <seqan/arg_parse.h>
-#include "mk_inst_template.hpp"  // TRNATYPE
+#include "mk_typedef.hpp"        // TRNATYPE
 #include "ts5_option.hpp"        // TS5CSOptions
 #include "ts5_seed_site.hpp"     // TS5SeedSites
 #include "ts5_feature.hpp"       // TS5RawFeatures

@@ -1,5 +1,5 @@
-#include "tm1_align.hpp"         // TM1Alignment
-#include "mk_inst_template.hpp"  // TRNATYPE
+#include "tm1_align.hpp"   // TM1Alignment
+#include "mk_typedef.hpp"  // TRNATYPE
 
 using namespace seqan;
 using namespace mikan;

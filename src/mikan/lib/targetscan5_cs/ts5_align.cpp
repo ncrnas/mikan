@@ -1,5 +1,5 @@
 #include "ts5_align.hpp"         // TS5Alignment
-#include "mk_inst_template.hpp"  // TRNATYPE
+#include "mk_typedef.hpp"        // TRNATYPE
 #include <sstream>               // stringstream
 #include <seqan/index.h>
 
