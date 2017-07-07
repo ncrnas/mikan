@@ -7,7 +7,7 @@
 #include "pita_core.hpp"
 #include "mk_input.hpp"
 
-typedef TestIOBase<mikan::MKInput<mikan::TRNATYPE> > TestIOPITA;
+typedef TestIOBase<mikan::MKInput> TestIOPITA;
 typedef TestSeed<ptddg::PITASeedSeqs<mikan::TRNATYPE>, TestIOPITA> TestSeedPITA;
 typedef TestSite<ptddg::PITASeedSites<mikan::TRNATYPE>, TestIOPITA> TestSitePITA;
 

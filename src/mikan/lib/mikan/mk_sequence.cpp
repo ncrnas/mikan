@@ -9,8 +9,7 @@ namespace mikan {
 //
 // MKSequences methods
 //
-template<class TRNAString>
-int MKSequences<TRNAString>::read_fasta(CharString const &pFasta) {
+int MKSequences::read_fasta(CharString const &pFasta) {
     CharString id;
     CharString seq;
 
@@ -44,9 +43,5 @@ int MKSequences<TRNAString>::read_fasta(CharString const &pFasta) {
 
     return 0;
 }
-
-// Explicit template instantiation
-template
-class MKSequences<TRNATYPE>;
 
 } // namespace mikan

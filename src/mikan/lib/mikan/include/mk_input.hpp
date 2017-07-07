@@ -11,12 +11,8 @@ namespace mikan {
 //
 // Input data for mikan score
 //
-template<class TRNAString>
 class MKInput {
 public:
-    // Define types
-    typedef seqan::StringSet<seqan::CharString> TCharSet;
-    typedef seqan::StringSet<TRNAString> TRNASet;
 
     // Declare variables
     seqan::CharString mMiRNAFasta;
@@ -42,8 +38,8 @@ public:
     void set_options(MKOptions &opt);
 
 private:
-    MKSequences<TRNAString> mMiRNASeqs;
-    MKSequences<TRNAString> mMRNASeqs;
+    MKSequences mMiRNASeqs;
+    MKSequences mMRNASeqs;
 };
 
 } // namespace mikan

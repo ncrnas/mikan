@@ -6,7 +6,6 @@
 #endif
 
 #include <seqan/arg_parse.h>
-#include "mk_typedef.hpp"  // TRNATYPE
 #include "mk_input.hpp"          // MKInput
 
 namespace mikan {
@@ -14,21 +13,18 @@ namespace mikan {
 //
 // MKInput methods
 //
-template<class TRNAString>
-void MKInput<TRNAString>::set_file_names(seqan::CharString &pMiRNAFasta,
+void MKInput::set_file_names(seqan::CharString &pMiRNAFasta,
                                          seqan::CharString &pMRNAFasta) {
     mMiRNAFasta = pMiRNAFasta;
     mMRNAFasta = pMRNAFasta;
 }
 
-template<class TRNAString>
-void MKInput<TRNAString>::set_options(MKOptions & opt) {
+void MKInput::set_options(MKOptions & opt) {
     mMiRNAFasta = opt.mMiRNAFasta;
     mMRNAFasta = opt.mMRNAFasta;
 }
 
-template<class TRNAString>
-int MKInput<TRNAString>::load_seq_from_file() {
+int MKInput::load_seq_from_file() {
     int retVal;
 
     // Read miRNA fasta file
@@ -45,9 +41,5 @@ int MKInput<TRNAString>::load_seq_from_file() {
 
     return 0;
 }
-
-// Explicit template instantiation
-template
-class MKInput<TRNATYPE>;
 
 } // namespace mikan

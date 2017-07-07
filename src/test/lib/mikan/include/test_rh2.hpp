@@ -7,7 +7,7 @@
 #include "rh2_core.hpp"
 #include "mk_input.hpp"
 
-typedef TestIOBase<mikan::MKInput<mikan::TRNATYPE> > TestIORH2;
+typedef TestIOBase<mikan::MKInput> TestIORH2;
 typedef TestSeed<rh2mfe::RH2SeedSeqs<mikan::TRNATYPE>, TestIORH2> TestSeedRH2;
 typedef TestSite<rh2mfe::RH2SeedSites<mikan::TRNATYPE>, TestIORH2> TestSiteRH2;
 

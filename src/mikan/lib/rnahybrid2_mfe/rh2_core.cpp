@@ -30,7 +30,7 @@ int RH2CoreMain(int argc, char const **argv) {
     }
 
     // Read input files
-    mikan::MKInput<TRNATYPE> coreInput;
+    mikan::MKInput coreInput;
     coreInput.set_options(options);
     retVal = coreInput.load_seq_from_file();
     if (retVal != 0) {

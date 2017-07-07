@@ -31,7 +31,7 @@ protected:
         (void) coreInput.load_seq_from_file();
     }
 
-    mikan::MKInput<mikan::TRNATYPE> coreInput;
+    mikan::MKInput coreInput;
     
     seqan::CharString dfile;
     seqan::CharString ifile1;
