@@ -1,7 +1,8 @@
 #include <tm1_align.hpp>         // TM1Alignment
-#include <tm1_inst_template.hpp> // TRNATYPE
+#include <mk_inst_template.hpp>  // TRNATYPE
 
 using namespace seqan;
+using namespace mikan;
 
 namespace tm1p {
 

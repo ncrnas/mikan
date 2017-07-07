@@ -1,8 +1,9 @@
-#include <tm1_inst_template.hpp>  // TRNATYPE
+#include <mk_inst_template.hpp>   // TRNATYPE
 #include <tm1_mrna_feature.hpp>   // TM1ScaledFeatures
 #include <tm1_mrna_svm.hpp>       // TM1MRNAModel, TM1MRNAInputVector
 
 using namespace seqan;
+using namespace mikan;
 
 namespace tm1p {
 

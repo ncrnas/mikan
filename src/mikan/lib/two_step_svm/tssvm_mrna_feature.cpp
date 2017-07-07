@@ -1,8 +1,9 @@
 #include <math.h>                   // roundf
-#include <tssvm_inst_template.hpp>  // TRNATYPE
+#include <mk_inst_template.hpp>     // TRNATYPE
 #include <tssvm_mrna_feature.hpp>   // TSSVMRNARawFeatures, TSSVMFeatUTRLen, TSSVMFeatSiteNum,
 
 using namespace seqan;
+using namespace mikan;
 
 namespace tssvm {
 

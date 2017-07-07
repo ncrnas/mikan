@@ -2,7 +2,7 @@
 #define TSSVM_CORE_HPP_
 
 #include <tssvm_align.hpp>          // TSAlign
-#include <tssvm_inst_template.hpp>  // TRNATYPE
+#include <mk_inst_template.hpp>     // TRNATYPE
 #include <tssvm_mrna_feature.hpp>   // TSSVMRNARawFeatures
 #include <tssvm_mrna_svm.hpp>       // TSSVMRNAInputVector
 #include <tssvm_option.hpp>         // TSSVMOptions

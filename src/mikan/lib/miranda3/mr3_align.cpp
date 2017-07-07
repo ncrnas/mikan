@@ -1,7 +1,8 @@
 #include <mr3_align.hpp>          // MR3Align
-#include <mr3_inst_template.hpp>  // TRNATYPE
+#include <mk_inst_template.hpp>   // TRNATYPE
 
 using namespace seqan;
+using namespace mikan;
 
 namespace mr3as {
 

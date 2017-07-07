@@ -36,6 +36,7 @@ public:
 
     // Method prototypes
     int load_seq_from_file();
+
     void set_file_names(seqan::CharString &pMiRNAFasta, seqan::CharString &pMRNAFasta);
 
 private:

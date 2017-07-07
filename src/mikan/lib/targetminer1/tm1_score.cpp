@@ -1,8 +1,9 @@
 #include <math.h>                // roundf
-#include <tm1_inst_template.hpp> // TRNATYPE
+#include <mk_inst_template.hpp> // TRNATYPE
 #include <tm1_score.hpp>         // TM1ClassifiedScores
 
 using namespace seqan;
+using namespace mikan;
 
 namespace tm1p {
 

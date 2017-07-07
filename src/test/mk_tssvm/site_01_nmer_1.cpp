@@ -17,9 +17,9 @@ protected:
         OMPATH = (char *) "mk_tssvm/";
     }
 
-    typedef tssvm::TSSVMCore<tssvm::TRNATYPE>::TIndexQGram TIdx;
-    typedef tssvm::TSSVMCore<tssvm::TRNATYPE>::TFinder TFin;
-    typedef tssvm::TSSVMSeedSites<tssvm::TRNATYPE> TSit;
+    typedef tssvm::TSSVMCore<mikan::TRNATYPE>::TIndexQGram TIdx;
+    typedef tssvm::TSSVMCore<mikan::TRNATYPE>::TFinder TFin;
+    typedef tssvm::TSSVMSeedSites<mikan::TRNATYPE> TSit;
 
 };
 

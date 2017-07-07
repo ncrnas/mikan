@@ -7,13 +7,15 @@
 #endif
 
 #include <seqan/arg_parse.h>
-#include <rh2_inst_template.hpp> // TRNATYPE
+#include <mk_inst_template.hpp>  // TRNATYPE
 #include <rh2_option.hpp>        // RH2Options
 #include <rh2_seed_site.hpp>     // RH2Sequences, RH2SeedSites
 #include <rh2_score.hpp>         // RH2MFEScores, RH2TotalScores
 #include <rh2_site_cluster.hpp>  // RH2Overlap, RH2TopNScore, RH2SortedSitePos
 #include <rh2_core.hpp>          // RH2Core
 #include <mk_input.hpp>          // MKInput
+
+using namespace mikan;
 
 namespace rh2mfe {
 
@@ -28,7 +30,7 @@ int RH2CoreMain(int argc, char const **argv) {
     }
 
     // Read input files
-    mikan::MKInput<rh2mfe::TRNATYPE> coreInput;
+    mikan::MKInput<TRNATYPE> coreInput;
     coreInput.set_file_names(options.mMiRNAFasta, options.mMRNAFasta);
     retVal = coreInput.load_seq_from_file();
     if (retVal != 0) {
@@ -36,19 +38,19 @@ int RH2CoreMain(int argc, char const **argv) {
     }
 
     // Create index
-    rh2mfe::RH2Core<rh2mfe::TRNATYPE>::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
-    rh2mfe::RH2Core<rh2mfe::TRNATYPE>::TIndexQGram index(mMRNASeqs);
-    rh2mfe::RH2Core<rh2mfe::TRNATYPE>::TFinder finder(index);
+    rh2mfe::RH2Core<TRNATYPE>::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
+    rh2mfe::RH2Core<TRNATYPE>::TIndexQGram index(mMRNASeqs);
+    rh2mfe::RH2Core<TRNATYPE>::TFinder finder(index);
 
     // Calculate scores for all miRNAs
-    rh2mfe::RH2Core<rh2mfe::TRNATYPE>::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
-    rh2mfe::RH2Core<rh2mfe::TRNATYPE>::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
-    rh2mfe::RH2Core<rh2mfe::TRNATYPE>::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
+    rh2mfe::RH2Core<TRNATYPE>::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
+    rh2mfe::RH2Core<TRNATYPE>::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
+    rh2mfe::RH2Core<TRNATYPE>::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
     int mRNAMaxLen = options.mTargetLen;
     int miRNAMaxLen = options.mQueryLen;
     std::string seedDef(toCString(options.mSeedDef));
-    rh2mfe::RH2Core<rh2mfe::TRNATYPE> rh2Core(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder,
-                                              mRNAMaxLen, miRNAMaxLen, seedDef);
+    rh2mfe::RH2Core<TRNATYPE> rh2Core(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder,
+                                      mRNAMaxLen, miRNAMaxLen, seedDef);
     rh2Core.init_from_args(options);
     rh2Core.open_output_file();
     retVal = rh2Core.calculate_all_scores();

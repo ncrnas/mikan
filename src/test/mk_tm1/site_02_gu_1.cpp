@@ -17,9 +17,9 @@ protected:
         OMPATH = (char *) "mk_tm1/";
     }
 
-    typedef tm1p::TM1Core<tm1p::TRNATYPE>::TIndexQGram TIdx;
-    typedef tm1p::TM1Core<tm1p::TRNATYPE>::TFinder TFin;
-    typedef tm1p::TM1SeedSites<tm1p::TRNATYPE> TSit;
+    typedef tm1p::TM1Core<mikan::TRNATYPE>::TIndexQGram TIdx;
+    typedef tm1p::TM1Core<mikan::TRNATYPE>::TFinder TFin;
+    typedef tm1p::TM1SeedSites<mikan::TRNATYPE> TSit;
 
 };
 

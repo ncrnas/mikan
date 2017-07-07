@@ -1,7 +1,8 @@
-#include <rh2_inst_template.hpp> // TRNATYPE
+#include <mk_inst_template.hpp>  // TRNATYPE
 #include <rh2_score.hpp>         // RH2MFEScores, RH2TotalScores
 
 using namespace seqan;
+using namespace mikan;
 
 namespace rh2mfe {
 

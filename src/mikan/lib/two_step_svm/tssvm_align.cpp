@@ -1,7 +1,8 @@
 #include <tssvm_align.hpp>          // TSAlign
-#include <tssvm_inst_template.hpp>  // TRNATYPE
+#include <mk_inst_template.hpp>     // TRNATYPE
 
 using namespace seqan;
+using namespace mikan;
 
 namespace tssvm {
 

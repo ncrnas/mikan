@@ -17,9 +17,9 @@ protected:
         OMPATH = (char *) "mk_ts5/";
     }
 
-    typedef ts5cs::TS5Core<ts5cs::TRNATYPE>::TIndexQGram TIdx;
-    typedef ts5cs::TS5Core<ts5cs::TRNATYPE>::TFinder TFin;
-    typedef ts5cs::TS5SeedSites<ts5cs::TRNATYPE> TSit;
+    typedef ts5cs::TS5Core<mikan::TRNATYPE>::TIndexQGram TIdx;
+    typedef ts5cs::TS5Core<mikan::TRNATYPE>::TFinder TFin;
+    typedef ts5cs::TS5SeedSites<mikan::TRNATYPE> TSit;
 
 };
 

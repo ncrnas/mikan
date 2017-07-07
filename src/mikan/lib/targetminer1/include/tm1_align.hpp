@@ -30,7 +30,7 @@ public:
 
     // Method prototypes
     void
-    align_all(TRNAString const &pMiRNASeq, TRNASet const &pMRNASeqs, TM1SeedSites <TRNAString> const &pSeedSites,
+    align_all(TRNAString const &pMiRNASeq, TRNASet const &pMRNASeqs, TM1SeedSites<TRNAString> const &pSeedSites,
               seqan::String<int> const &pA1Pos);
 
     void resize_alignments(unsigned pSize);

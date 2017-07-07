@@ -1,8 +1,9 @@
-#include <rh2_inst_template.hpp> // TRNATYPE
+#include <mk_inst_template.hpp>  // TRNATYPE
 #include <rh2_seed_site.hpp>     // RH2SeedSeqs, RH2SeedSites
 #include <seqan/seq_io.h>
 
 using namespace seqan;
+using namespace mikan;
 
 namespace rh2mfe {
 

@@ -7,10 +7,12 @@
 #include <map>                   // multimap
 #include <utility>               // pair
 #include <seqan/arg_parse.h>
-#include <tm1_inst_template.hpp> // TRNATYPE
+#include <mk_inst_template.hpp>  // TRNATYPE
 #include <tm1_option.hpp>        // TM1CSOptions
 #include <tm1_core.hpp>          // TM1Core
 #include <mk_input.hpp>          // MKInput
+
+using namespace mikan;
 
 namespace tm1p {
 
@@ -25,7 +27,7 @@ int TM1CoreMain(int argc, char const **argv) {
     }
 
     // Read input files
-    mikan::MKInput<tm1p::TRNATYPE> coreInput;
+    mikan::MKInput<TRNATYPE> coreInput;
     coreInput.set_file_names(options.mMiRNAFasta, options.mMRNAFasta);
     retVal = coreInput.load_seq_from_file();
     if (retVal != 0) {
@@ -33,15 +35,15 @@ int TM1CoreMain(int argc, char const **argv) {
     }
 
     // Create index
-    tm1p::TM1Core<tm1p::TRNATYPE>::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
-    tm1p::TM1Core<tm1p::TRNATYPE>::TIndexQGram index(mMRNASeqs);
-    tm1p::TM1Core<tm1p::TRNATYPE>::TFinder finder(index);
+    tm1p::TM1Core<TRNATYPE>::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
+    tm1p::TM1Core<TRNATYPE>::TIndexQGram index(mMRNASeqs);
+    tm1p::TM1Core<TRNATYPE>::TFinder finder(index);
 
     // Calculate scores for all miRNAs
-    tm1p::TM1Core<tm1p::TRNATYPE>::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
-    tm1p::TM1Core<tm1p::TRNATYPE>::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
-    tm1p::TM1Core<tm1p::TRNATYPE>::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
-    tm1p::TM1Core<tm1p::TRNATYPE> tm1Core(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
+    tm1p::TM1Core<TRNATYPE>::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
+    tm1p::TM1Core<TRNATYPE>::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
+    tm1p::TM1Core<TRNATYPE>::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
+    tm1p::TM1Core<TRNATYPE> tm1Core(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
     tm1Core.init_from_args(options);
     tm1Core.open_output_file();
     retVal = tm1Core.calculate_all_scores();

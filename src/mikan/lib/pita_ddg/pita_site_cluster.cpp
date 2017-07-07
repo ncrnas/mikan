@@ -1,8 +1,9 @@
-#include <pita_inst_template.hpp> // TRNATYPE
+#include <mk_inst_template.hpp>   // TRNATYPE
 #include <pita_score.hpp>         // PITAMFEScores
 #include <pita_site_cluster.hpp>  // PITAOverlap, PITASortedSitePos
 
 using namespace seqan;
+using namespace mikan;
 
 namespace ptddg {
 

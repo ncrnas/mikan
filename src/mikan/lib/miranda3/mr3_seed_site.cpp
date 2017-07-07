@@ -1,8 +1,9 @@
-#include <mr3_inst_template.hpp>  // TRNATYPE
+#include <mk_inst_template.hpp>   // TRNATYPE
 #include <mr3_seed_site.hpp>      // MR3SeedSeqs, MR3SeedSites
 #include <seqan/seq_io.h>
 
 using namespace seqan;
+using namespace mikan;
 
 namespace mr3as {
 

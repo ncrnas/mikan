@@ -1,9 +1,10 @@
 #include <ts5_align.hpp>         // TS5Alignment
-#include <ts5_inst_template.hpp> // TRNATYPE
+#include <mk_inst_template.hpp>  // TRNATYPE
 #include <sstream>               // stringstream
 #include <seqan/index.h>
 
 using namespace seqan;
+using namespace mikan;
 
 namespace ts5cs {
 

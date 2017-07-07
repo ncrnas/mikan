@@ -6,13 +6,15 @@
 #endif
 
 #include <seqan/arg_parse.h>
-#include <mr3_inst_template.hpp>  // TRNATYPE
+#include <mk_inst_template.hpp>   // TRNATYPE
 #include <mr3_option.hpp>         // MR3Options
 #include <mr3_seed_site.hpp>      // MR3SeedSites
 #include <mr3_score.hpp>          // MR3SiteScores, MR3TotalScores
 #include <mr3_site_cluster.hpp>   // MR3Overlap, MR3TopNScore, MR3SortedSitePos
 #include <mr3_core.hpp>           // MR3Core
 #include <mk_input.hpp>           // MKInput
+
+using namespace mikan;
 
 namespace mr3as {
 
@@ -27,7 +29,7 @@ int MR3CoreMain(int argc, char const **argv) {
     }
 
     // Read input files
-    mikan::MKInput<mr3as::TRNATYPE> coreInput;
+    mikan::MKInput<TRNATYPE> coreInput;
     coreInput.set_file_names(options.mMiRNAFasta, options.mMRNAFasta);
     retVal = coreInput.load_seq_from_file();
     if (retVal != 0) {
@@ -35,16 +37,16 @@ int MR3CoreMain(int argc, char const **argv) {
     }
 
     // Create index
-    mr3as::MR3Core<mr3as::TRNATYPE>::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
-    mr3as::MR3Core<mr3as::TRNATYPE>::TIndexQGram index(mMRNASeqs);
-    mr3as::MR3Core<mr3as::TRNATYPE>::TFinder finder(index);
+    mr3as::MR3Core<TRNATYPE>::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
+    mr3as::MR3Core<TRNATYPE>::TIndexQGram index(mMRNASeqs);
+    mr3as::MR3Core<TRNATYPE>::TFinder finder(index);
 
     // Calculate scores for all miRNAs
-    mr3as::MR3Core<mr3as::TRNATYPE>::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
-    mr3as::MR3Core<mr3as::TRNATYPE>::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
-    mr3as::MR3Core<mr3as::TRNATYPE>::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
+    mr3as::MR3Core<TRNATYPE>::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
+    mr3as::MR3Core<TRNATYPE>::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
+    mr3as::MR3Core<TRNATYPE>::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
 
-    mr3as::MR3Core<mr3as::TRNATYPE> mr3Core(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
+    mr3as::MR3Core<TRNATYPE> mr3Core(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
     mr3Core.init_from_args(options);
     mr3Core.open_output_file();
     retVal = mr3Core.calculate_all_scores();

@@ -6,13 +6,15 @@
 #endif
 
 #include <seqan/arg_parse.h>
-#include <pita_inst_template.hpp> // TRNATYPE
+#include <mk_inst_template.hpp>   // TRNATYPE
 #include <pita_option.hpp>        // PITAOptions
 #include <pita_seed_site.hpp>     // PITASeedSites
 #include <pita_score.hpp>         // PITAMFEScores, PITATotalScores
 #include <pita_site_cluster.hpp>  // PITAOverlap, PITATopNScore, PITASortedSitePos
 #include <pita_core.hpp>          // PITACore
 #include <mk_input.hpp>           // MKInput
+
+using namespace mikan;
 
 namespace ptddg {
 
@@ -27,7 +29,7 @@ int PITACoreMain(int argc, char const **argv) {
     }
 
     // Read input files
-    mikan::MKInput<ptddg::TRNATYPE> coreInput;
+    mikan::MKInput<TRNATYPE> coreInput;
     coreInput.set_file_names(options.mMiRNAFasta, options.mMRNAFasta);
     retVal = coreInput.load_seq_from_file();
     if (retVal != 0) {
@@ -35,16 +37,16 @@ int PITACoreMain(int argc, char const **argv) {
     }
 
     // Create index
-    ptddg::PITACore<ptddg::TRNATYPE>::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
-    ptddg::PITACore<ptddg::TRNATYPE>::TIndexQGram index(mMRNASeqs);
-    ptddg::PITACore<ptddg::TRNATYPE>::TFinder finder(index);
+    ptddg::PITACore<TRNATYPE>::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
+    ptddg::PITACore<TRNATYPE>::TIndexQGram index(mMRNASeqs);
+    ptddg::PITACore<TRNATYPE>::TFinder finder(index);
 
     // Calculate scores for all miRNAs
-    ptddg::PITACore<ptddg::TRNATYPE>::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
-    ptddg::PITACore<ptddg::TRNATYPE>::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
-    ptddg::PITACore<ptddg::TRNATYPE>::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
+    ptddg::PITACore<TRNATYPE>::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
+    ptddg::PITACore<TRNATYPE>::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
+    ptddg::PITACore<TRNATYPE>::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
 
-    ptddg::PITACore<ptddg::TRNATYPE> pitaCore(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
+    ptddg::PITACore<TRNATYPE> pitaCore(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
     pitaCore.init_from_args(options);
     pitaCore.open_output_file();
     retVal = pitaCore.calculate_all_scores();

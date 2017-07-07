@@ -5,7 +5,7 @@
 #endif
 
 #include <seqan/arg_parse.h>
-#include <tssvm_inst_template.hpp>  // TRNATYPE
+#include <mk_inst_template.hpp>     // TRNATYPE
 #include <tssvm_option.hpp>         // TSSVMOptions
 #include <tssvm_seed_site.hpp>      // TSSVMSeedSites, TSSVMSeedSiteOverlap
 #include <tssvm_align.hpp>          // TSAlign
@@ -15,6 +15,8 @@
 #include <tssvm_mrna_svm.hpp>       // TSSVMRNAInputVector
 #include <tssvm_core.hpp>           // TSSVMCore
 #include <mk_input.hpp>             // MKInput
+
+using namespace mikan;
 
 namespace tssvm {
 
@@ -29,7 +31,7 @@ int TSSVMCoreMain(int argc, char const **argv) {
     }
 
     // Read input files
-    mikan::MKInput<tssvm::TRNATYPE> coreInput;
+    mikan::MKInput<TRNATYPE> coreInput;
     coreInput.set_file_names(options.mMiRNAFasta, options.mMRNAFasta);
     retVal = coreInput.load_seq_from_file();
     if (retVal != 0) {
@@ -37,15 +39,15 @@ int TSSVMCoreMain(int argc, char const **argv) {
     }
 
     // Create index
-    tssvm::TSSVMCore<tssvm::TRNATYPE>::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
-    tssvm::TSSVMCore<tssvm::TRNATYPE>::TIndexQGram index(mMRNASeqs);
-    tssvm::TSSVMCore<tssvm::TRNATYPE>::TFinder finder(index);
+    tssvm::TSSVMCore<TRNATYPE>::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
+    tssvm::TSSVMCore<TRNATYPE>::TIndexQGram index(mMRNASeqs);
+    tssvm::TSSVMCore<TRNATYPE>::TFinder finder(index);
 
     // Prepare models
-    tssvm::TSSVMCore<tssvm::TRNATYPE>::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
-    tssvm::TSSVMCore<tssvm::TRNATYPE>::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
-    tssvm::TSSVMCore<tssvm::TRNATYPE>::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
-    tssvm::TSSVMCore<tssvm::TRNATYPE> tssvmCore(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
+    tssvm::TSSVMCore<TRNATYPE>::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
+    tssvm::TSSVMCore<TRNATYPE>::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
+    tssvm::TSSVMCore<TRNATYPE>::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
+    tssvm::TSSVMCore<TRNATYPE> tssvmCore(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
     tssvmCore.init_from_args(options);
     retVal = tssvmCore.init_site_svm();
     if (retVal != 0) {

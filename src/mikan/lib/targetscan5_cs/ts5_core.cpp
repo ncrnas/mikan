@@ -7,13 +7,15 @@
 #include <map>                   // multimap
 #include <utility>               // pair
 #include <seqan/arg_parse.h>
-#include <ts5_inst_template.hpp> // TRNATYPE
+#include <mk_inst_template.hpp>  // TRNATYPE
 #include <ts5_option.hpp>        // TS5CSOptions
 #include <ts5_seed_site.hpp>     // TS5SeedSites
 #include <ts5_feature.hpp>       // TS5RawFeatures
 #include <ts5_score.hpp>         // TS5ContextScores, TS5TotalScores
 #include <ts5_core.hpp>          // TS5Core
 #include <mk_input.hpp>          // MKInput
+
+using namespace mikan;
 
 namespace ts5cs {
 
@@ -28,7 +30,7 @@ int TS5CoreMain(int argc, char const **argv) {
     }
 
     // Read input files
-    mikan::MKInput<ts5cs::TRNATYPE> coreInput;
+    mikan::MKInput<TRNATYPE> coreInput;
     coreInput.set_file_names(options.mMiRNAFasta, options.mMRNAFasta);
     retVal = coreInput.load_seq_from_file();
     if (retVal != 0) {
@@ -36,15 +38,15 @@ int TS5CoreMain(int argc, char const **argv) {
     }
 
     // Create index
-    ts5cs::TS5Core<ts5cs::TRNATYPE>::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
-    ts5cs::TS5Core<ts5cs::TRNATYPE>::TIndexQGram index(mMRNASeqs);
-    ts5cs::TS5Core<ts5cs::TRNATYPE>::TFinder finder(index);
+    ts5cs::TS5Core<TRNATYPE>::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
+    ts5cs::TS5Core<TRNATYPE>::TIndexQGram index(mMRNASeqs);
+    ts5cs::TS5Core<TRNATYPE>::TFinder finder(index);
 
     // Calculate scores for all miRNAs
-    ts5cs::TS5Core<ts5cs::TRNATYPE>::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
-    ts5cs::TS5Core<ts5cs::TRNATYPE>::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
-    ts5cs::TS5Core<ts5cs::TRNATYPE>::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
-    ts5cs::TS5Core<ts5cs::TRNATYPE> ts5Core(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
+    ts5cs::TS5Core<TRNATYPE>::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
+    ts5cs::TS5Core<TRNATYPE>::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
+    ts5cs::TS5Core<TRNATYPE>::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
+    ts5cs::TS5Core<TRNATYPE> ts5Core(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
     ts5Core.init_from_args(options);
     ts5Core.open_output_file();
     retVal = ts5Core.calculate_all_scores();

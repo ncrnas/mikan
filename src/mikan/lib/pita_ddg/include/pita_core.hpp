@@ -1,7 +1,7 @@
 #ifndef PITA_CORE_HPP_
 #define PITA_CORE_HPP_
 
-#include <pita_inst_template.hpp> // TRNATYPE
+#include <mk_inst_template.hpp>   // TRNATYPE
 #include <pita_option.hpp>        // PITAOptions
 #include <pita_score.hpp>         // PITAGGDScores, PITATotalScores
 #include <pita_seed_site.hpp>     // PITASeedSites
@@ -79,11 +79,11 @@ private:
     std::ofstream mOFile1;
     std::ofstream mOFile2;
 
-    PITASeedSites<TRNAString> mSeedSites;
-    PITADDGScores<TRNAString> mDDGScores;
-    PITAOverlap<TRNAString> mOverlappedSites;
-    PITASortedSitePos<TRNAString> mSortedSites;
-    PITATotalScores<TRNAString> mTotalScores;
+    PITASeedSites <TRNAString> mSeedSites;
+    PITADDGScores <TRNAString> mDDGScores;
+    PITAOverlap <TRNAString> mOverlappedSites;
+    PITASortedSitePos <TRNAString> mSortedSites;
+    PITATotalScores <TRNAString> mTotalScores;
 
 private:
     int write_ddg_score(seqan::CharString const &pMiRNAId);

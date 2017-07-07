@@ -1,7 +1,7 @@
 #ifndef MR3_CORE_HPP_
 #define MR3_CORE_HPP_
 
-#include <mr3_inst_template.hpp>  // TRNATYPE
+#include <mk_inst_template.hpp>   // TRNATYPE
 #include <mr3_option.hpp>         // MR3Options
 #include <mr3_score.hpp>          // MR3GGDScores, MR3TotalScores
 #include <mr3_seed_site.hpp>      // MR3SeedSites
@@ -77,11 +77,11 @@ private:
     std::ofstream mOFile1;
     std::ofstream mOFile2;
 
-    MR3SeedSites<TRNAString> mSeedSites;
-    MR3SiteScores<TRNAString> mSiteScores;
-    MR3Overlap<TRNAString> mOverlappedSites;
-    MR3SortedSitePos<TRNAString> mSortedSites;
-    MR3TotalScores<TRNAString> mTotalScores;
+    MR3SeedSites <TRNAString> mSeedSites;
+    MR3SiteScores <TRNAString> mSiteScores;
+    MR3Overlap <TRNAString> mOverlappedSites;
+    MR3SortedSitePos <TRNAString> mSortedSites;
+    MR3TotalScores <TRNAString> mTotalScores;
 
 private:
     int write_site_score(seqan::CharString const &pMiRNAId);

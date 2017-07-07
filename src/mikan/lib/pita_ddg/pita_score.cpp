@@ -1,7 +1,8 @@
-#include <pita_inst_template.hpp> // TRNATYPE
+#include <mk_inst_template.hpp>   // TRNATYPE
 #include <pita_score.hpp>         // PITADDGScores, PITATotalScores
 
 using namespace seqan;
+using namespace mikan;
 
 namespace ptddg {
 

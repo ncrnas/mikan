@@ -25,9 +25,9 @@ protected:
         mSeedDef[5] = "1";
     }
 
-    typedef mr3as::MR3Core<mr3as::TRNATYPE>::TIndexQGram TIdx;
-    typedef mr3as::MR3Core<mr3as::TRNATYPE>::TFinder TFin;
-    typedef mr3as::MR3SeedSites<mr3as::TRNATYPE> TSit;
+    typedef mr3as::MR3Core<mikan::TRNATYPE>::TIndexQGram TIdx;
+    typedef mr3as::MR3Core<mikan::TRNATYPE>::TFinder TFin;
+    typedef mr3as::MR3SeedSites<mikan::TRNATYPE> TSit;
 
 };
 
