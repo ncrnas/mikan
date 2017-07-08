@@ -2,34 +2,30 @@
 #include "mr3_score.hpp"    // MR3DDGScores, MR3TotalScores
 
 using namespace seqan;
-using namespace mikan;
 
 namespace mr3as {
 
 //
 // MR3AlignScores methods
 //
-
-template<class TRNAString>
-void MR3AlignScores<TRNAString>::clear_scores() {
+void MR3AlignScores::clear_scores() {
     clear(mEffectiveSites);
     clear(mAlignScores);
 }
 
-template<class TRNAString>
-int MR3AlignScores<TRNAString>::calc_scores(
+int MR3AlignScores::calc_scores(
         MR3SeedSites &pSeedSites,
-        TRNAString const &pMiRNASeq,
-        TRNASet const &pMRNASeqs) {
+        mikan::TRNATYPE const &pMiRNASeq,
+        mikan::TRNASet const &pMRNASeqs) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &sitePos = pSeedSites.get_site_pos();
     const String<int> &mmPos = pSeedSites.get_mismatched_pos();
     const StringSet<CharString> &seedTypes = pSeedSites.get_seed_types();
 
-    TRNAString iMiRNASeq;
-    TRNAString iMRNASeq;
-    TRNAString iMiRNASeedSeq;
-    TRNAString iMRNASeedSeq;
+    mikan::TRNATYPE iMiRNASeq;
+    mikan::TRNATYPE iMRNASeq;
+    mikan::TRNATYPE iMiRNASeedSeq;
+    mikan::TRNATYPE iMRNASeedSeq;
     Rna5String iMiRNA3pSeq;
     Rna5String iMRNA3pSeq;
     int seqStart = 0;
@@ -96,11 +92,10 @@ int MR3AlignScores<TRNAString>::calc_scores(
     return 0;
 }
 
-template<class TRNAString>
-void MR3AlignScores<TRNAString>::create_input_mirna_seq(
-        TRNAString const &pMiRNASeq,
-        TRNAString &pIMiRNASeq,
-        TRNAString &pIMiRNASeedSeq,
+void MR3AlignScores::create_input_mirna_seq(
+        mikan::TRNATYPE const &pMiRNASeq,
+        mikan::TRNATYPE &pIMiRNASeq,
+        mikan::TRNATYPE &pIMiRNASeedSeq,
         Rna5String &pIMiRNA3pSeq) {
     int idxseed = 0;
     int idx3p = 1;
@@ -123,15 +118,14 @@ void MR3AlignScores<TRNAString>::create_input_mirna_seq(
     }
 }
 
-template<class TRNAString>
-void MR3AlignScores<TRNAString>::create_input_mrna_seq(
-        TRNAString const &pMiRNASeq,
-        TRNAString const &pMRNASeq,
+void MR3AlignScores::create_input_mrna_seq(
+        mikan::TRNATYPE const &pMiRNASeq,
+        mikan::TRNATYPE const &pMRNASeq,
         int pStart,
         int pEnd,
         const CharString &pSeedType,
-        TRNAString &pIMRNASeq,
-        TRNAString &pIMRNASeedSeq,
+        mikan::TRNATYPE &pIMRNASeq,
+        mikan::TRNATYPE &pIMRNASeedSeq,
         Rna5String &pIMRNA3pSeq,
         bool &pNoMRNA1) {
     unsigned idx = 0;
@@ -187,8 +181,7 @@ void MR3AlignScores<TRNAString>::create_input_mrna_seq(
     }
 }
 
-template<class TRNAString>
-void MR3AlignScores<TRNAString>::print_input(TRNAString &pInputMiRNASeq, TRNAString &pInputMRNASeq) {
+void MR3AlignScores::print_input(mikan::TRNATYPE &pInputMiRNASeq, mikan::TRNATYPE &pInputMRNASeq) {
     std::cout << "miRNA seq:   " << length(pInputMiRNASeq) << "," << pInputMiRNASeq;
     std::cout << std::endl;
     std::cout << "mRNA seq:    " << length(pInputMRNASeq) << "," << pInputMRNASeq;
@@ -199,17 +192,15 @@ void MR3AlignScores<TRNAString>::print_input(TRNAString &pInputMiRNASeq, TRNAStr
 // MR3EnergyScores methods
 //
 
-template<class TRNAString>
-void MR3EnergyScores<TRNAString>::clear_scores() {
+void MR3EnergyScores::clear_scores() {
     clear(mEffectiveSites);
     clear(mEnScores);
 }
 
-template<class TRNAString>
-int MR3EnergyScores<TRNAString>::calc_scores(
+int MR3EnergyScores::calc_scores(
         MR3SeedSites &pSeedSites,
-        TRNAString const &pMiRNASeq,
-        TRNASet const &) {
+        mikan::TRNATYPE const &pMiRNASeq,
+        mikan::TRNASet const &) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     std::string inputSeq;
     float score;
@@ -245,9 +236,8 @@ int MR3EnergyScores<TRNAString>::calc_scores(
     return 0;
 }
 
-template<class TRNAString>
 void
-MR3EnergyScores<TRNAString>::create_input_seq(int pIdx, TRNAString const &pMiRNASeq, std::string &pInputMRNASeq) {
+MR3EnergyScores::create_input_seq(int pIdx, mikan::TRNATYPE const &pMiRNASeq, std::string &pInputMRNASeq) {
     seqan::CharString inputMRNA;
 
     mAlign.get_mrna_seq(pIdx, inputMRNA);
@@ -269,35 +259,30 @@ MR3EnergyScores<TRNAString>::create_input_seq(int pIdx, TRNAString const &pMiRNA
     }
 }
 
-template<class TRNAString>
-void MR3EnergyScores<TRNAString>::print_input(std::string &pInputSeq) {
+void MR3EnergyScores::print_input(std::string &pInputSeq) {
     std::cout << "input seq: " << pInputSeq << std::endl;
 }
 
 //
 // MR3SiteScores methods
 //
-
-template<class TRNAString>
-void MR3SiteScores<TRNAString>::clear_scores() {
+void MR3SiteScores::clear_scores() {
     clear(mEffectiveSites);
     mAlignScores.clear_scores();
     mEnergyScores.clear_scores();
     mAlign.clear_align();
 }
 
-template<class TRNAString>
-void MR3SiteScores<TRNAString>::init_rnafold() {
+void MR3SiteScores::init_rnafold() {
     mVRws.set_backtrack(false);
     mVRws.set_fold_constraint(false);
     mVRws.init_arrays(RNAFOLD_MAX_INPUTLEN);
 }
 
-template<class TRNAString>
-int MR3SiteScores<TRNAString>::calc_scores(
+int MR3SiteScores::calc_scores(
         MR3SeedSites &pSeedSites,
-        TRNAString const &miRNASeq,
-        TRNASet const &pMRNASeqs) {
+        mikan::TRNATYPE const &miRNASeq,
+        mikan::TRNASet const &pMRNASeqs) {
     resize(mEffectiveSites, length(pSeedSites.mEffectiveSites));
 
     mAlign.resize_align((int) length(pSeedSites.mEffectiveSites));
@@ -316,8 +301,7 @@ int MR3SiteScores<TRNAString>::calc_scores(
     return 0;
 }
 
-template<class TRNAString>
-void MR3SiteScores<TRNAString>::print_alignment(int pIdx) {
+void MR3SiteScores::print_alignment(int pIdx) {
     std::stringstream stream;
 
     stream << "mRNA   5' " << mAlign.mAlignMRNA[pIdx] << " 3'";
@@ -334,8 +318,7 @@ void MR3SiteScores<TRNAString>::print_alignment(int pIdx) {
 //
 // MR3TotalScores methods
 //
-template<class TRNAString>
-void MR3TotalScores<TRNAString>::clear_scores() {
+void MR3TotalScores::clear_scores() {
     clear(mMRNAPos);
     clear(mSiteNum);
     clear(mTotalEnScores);
@@ -344,10 +327,9 @@ void MR3TotalScores<TRNAString>::clear_scores() {
     clear(mLogMaxEnScores);
 }
 
-template<class TRNAString>
-int MR3TotalScores<TRNAString>::calc_scores(
+int MR3TotalScores::calc_scores(
         MR3SeedSites &pSeedSites,
-        MR3SiteScores<TRNAString> &pSiteScores,
+        MR3SiteScores &pSiteScores,
         const seqan::String<unsigned> &pSortedSites) {
 
     const String<unsigned> &siteMRNAPos = pSeedSites.get_mrna_pos();
@@ -455,18 +437,5 @@ int MR3TotalScores<TRNAString>::calc_scores(
 
     return 0;
 }
-
-// Explicit template instantiation
-template
-class MR3AlignScores<TRNATYPE>;
-
-template
-class MR3EnergyScores<TRNATYPE>;
-
-template
-class MR3SiteScores<TRNATYPE>;
-
-template
-class MR3TotalScores<TRNATYPE>;
 
 } // namespace mr3as

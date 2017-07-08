@@ -9,22 +9,19 @@
 #include <seqan/sequence.h>
 
 using namespace seqan;
-using namespace mikan;
 
 namespace mr3as {
 
 //
 // MR3SiteCluster methods
 //
-template<class TRNAString>
-void MR3SiteCluster<TRNAString>::clear_cluster() {
+void MR3SiteCluster::clear_cluster() {
     mSiteCount = 0;
     mRNAPosSet.clear();
     mSiteMap.clear();
 }
 
-template<class TRNAString>
-void MR3SiteCluster<TRNAString>::cluster_site_pos(
+void MR3SiteCluster::cluster_site_pos(
         MR3SeedSites &pSeedSites) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
 
@@ -41,13 +38,11 @@ void MR3SiteCluster<TRNAString>::cluster_site_pos(
 //
 // MR3Overlap methods
 //
-template<class TRNAString>
-void MR3Overlap<TRNAString>::clear_cluster() {
+void MR3Overlap::clear_cluster() {
     mSiteCluster.clear_cluster();
 }
 
-template<class TRNAString>
-int MR3Overlap<TRNAString>::make_overlapped_pairs(
+int MR3Overlap::make_overlapped_pairs(
         MR3SeedSites &pSeedSites,
         int pGapLen,
         StringSet<String<unsigned> > &pPairs) {
@@ -98,10 +93,9 @@ int MR3Overlap<TRNAString>::make_overlapped_pairs(
 
 }
 
-template<class TRNAString>
-int MR3Overlap<TRNAString>::filter_overlapped_sites_by_scores(
+int MR3Overlap::filter_overlapped_sites_by_scores(
         MR3SeedSites &pSeedSites,
-        MR3SiteScores<TRNAString> &pSiteScores,
+        MR3SiteScores &pSiteScores,
         int pGapLen) {
     StringSet<String<unsigned> > pairs;
     unsigned scorePrev, scoreCur;
@@ -124,8 +118,7 @@ int MR3Overlap<TRNAString>::filter_overlapped_sites_by_scores(
     return 0;
 }
 
-template<class TRNAString>
-int MR3Overlap<TRNAString>::filter_overlapped_sites(MR3SeedSites &pSeedSites, int pGapLen) {
+int MR3Overlap::filter_overlapped_sites(MR3SeedSites &pSeedSites, int pGapLen) {
     StringSet<String<unsigned> > pairs;
 
     make_overlapped_pairs(pSeedSites, pGapLen, pairs);
@@ -136,9 +129,8 @@ int MR3Overlap<TRNAString>::filter_overlapped_sites(MR3SeedSites &pSeedSites, in
     return 0;
 }
 
-template<class TRNAString>
 void
-MR3Overlap<TRNAString>::mark_overlapped_sites(MR3SeedSites &pSeedSites, int pPrevIdx, int pCurIdx) {
+MR3Overlap::mark_overlapped_sites(MR3SeedSites &pSeedSites, int pPrevIdx, int pCurIdx) {
     StringSet<CharString> const &seedTypes = pSeedSites.get_seed_types();
     unsigned precPrev = get_seedtype_precedence(seedTypes[pPrevIdx]);
     unsigned precCur = get_seedtype_precedence(seedTypes[pCurIdx]);
@@ -151,9 +143,7 @@ MR3Overlap<TRNAString>::mark_overlapped_sites(MR3SeedSites &pSeedSites, int pPre
 
 }
 
-
-template<class TRNAString>
-unsigned MR3Overlap<TRNAString>::get_seedtype_precedence(const CharString &pSeedType) {
+unsigned MR3Overlap::get_seedtype_precedence(const CharString &pSeedType) {
     unsigned preced;
 
     if (pSeedType == "8mer") {
@@ -196,15 +186,12 @@ unsigned MR3Overlap<TRNAString>::get_seedtype_precedence(const CharString &pSeed
 //
 // MR3SortedSitePos methods
 //
-
-template<class TRNAString>
-void MR3SortedSitePos<TRNAString>::clear_site_pos() {
+void MR3SortedSitePos::clear_site_pos() {
     clear(mSortedSitePos);
     mSiteCluster.clear_cluster();
 }
 
-template<class TRNAString>
-int MR3SortedSitePos<TRNAString>::generate_sorted_mrna_pos(
+int MR3SortedSitePos::generate_sorted_mrna_pos(
         MR3SeedSites &pSeedSites) {
     TItMap itMap;
     TItSet itSet;
@@ -239,15 +226,5 @@ int MR3SortedSitePos<TRNAString>::generate_sorted_mrna_pos(
     return 0;
 
 }
-
-// Explicit template instantiation
-template
-class MR3SiteCluster<TRNATYPE>;
-
-template
-class MR3Overlap<TRNATYPE>;
-
-template
-class MR3SortedSitePos<TRNATYPE>;
 
 } // namespace mr3as

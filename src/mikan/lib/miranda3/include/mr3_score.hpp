@@ -4,6 +4,7 @@
 #include "mr3_align.hpp"          // MR3SeedSites
 #include "mr3_seed_site.hpp"      // MR3Align
 #include "vr16_fold_core.hpp"     // VR16FoldWorkSpace
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include <vector>
 #include <string>
 #include <sstream>
@@ -16,12 +17,8 @@ namespace mr3as {
 //
 // Store alignment scores
 //
-template<class TRNAString>
 class MR3AlignScores {
 public:
-    // Define types
-    typedef seqan::StringSet<TRNAString> TRNASet;
-
     // Constant values
     static const unsigned TARGET_SEQ_LEN = 40;
     static const unsigned INDEXED_SEQ_LEN = 6;
@@ -35,7 +32,7 @@ public:
 
 public:
     // Define methods
-    MR3AlignScores(vr16::VR16FoldWorkSpace &pVRws, MR3Align<TRNAString> &pAlign) :
+    MR3AlignScores(vr16::VR16FoldWorkSpace &pVRws, MR3Align &pAlign) :
             mVRws(pVRws), mAlign(pAlign), mMinAlignScore(140.0) {}
 
     void set_min_score(float pScore) { mMinAlignScore = pScore; }
@@ -43,25 +40,25 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(MR3SeedSites &pSeedSites, TRNAString const &miRNASeq, TRNASet const &pMRNASeqs);
+    int calc_scores(MR3SeedSites &pSeedSites, mikan::TRNATYPE const &miRNASeq, mikan::TRNASet const &pMRNASeqs);
 
-    void print_input(TRNAString &pInputMiRNASeq, TRNAString &pInputMRNASeq);
+    void print_input(mikan::TRNATYPE &pInputMiRNASeq, mikan::TRNATYPE &pInputMRNASeq);
 
     float get_score(int posIdx) { return mAlignScores[posIdx]; }
 
 private:
     vr16::VR16FoldWorkSpace &mVRws;
-    MR3Align<TRNAString> &mAlign;
+    MR3Align &mAlign;
     seqan::String<float> mAlignScores;
     float mMinAlignScore;
 
 private:
-    void create_input_mirna_seq(TRNAString const &pMiRNASeq, TRNAString &pInputMiRNASeq, TRNAString &pIMiRNASeedSeq,
+    void create_input_mirna_seq(mikan::TRNATYPE const &pMiRNASeq, mikan::TRNATYPE &pInputMiRNASeq, mikan::TRNATYPE &pIMiRNASeedSeq,
                                 seqan::Rna5String &pIMiRNA3pSeq);
 
-    void create_input_mrna_seq(TRNAString const &pMiRNASeq, TRNAString const &pMRNASeq, int pStart, int pEnd,
-                               const seqan::CharString &pSeedType, TRNAString &pInputMRNASeq,
-                               TRNAString &pIMRNASeedSeq,
+    void create_input_mrna_seq(mikan::TRNATYPE const &pMiRNASeq, mikan::TRNATYPE const &pMRNASeq, int pStart, int pEnd,
+                               const seqan::CharString &pSeedType, mikan::TRNATYPE &pInputMRNASeq,
+                               mikan::TRNATYPE &pIMRNASeedSeq,
                                seqan::Rna5String &pIMRNA3pSeq, bool &pNoMRNA1);
 
 };
@@ -69,12 +66,8 @@ private:
 //
 // Store energy scores
 //
-template<class TRNAString>
 class MR3EnergyScores {
 public:
-    // Define types
-    typedef seqan::StringSet<TRNAString> TRNASet;
-
     // Constant values
     static const unsigned TARGET_SEQ_LEN = 40;
     static const unsigned INDEXED_SEQ_LEN = 6;
@@ -85,7 +78,7 @@ public:
 
 public:
     // Define methods
-    MR3EnergyScores(vr16::VR16FoldWorkSpace &pVRws, MR3Align<TRNAString> &pAlign) :
+    MR3EnergyScores(vr16::VR16FoldWorkSpace &pVRws, MR3Align &pAlign) :
             mVRws(pVRws), mAlign(pAlign), mMaxEnergy(1.0) {}
 
     void set_max_score(float pScore) { mMaxEnergy = pScore; }
@@ -95,31 +88,27 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(MR3SeedSites &pSeedSites, TRNAString const &miRNASeq, TRNASet const &pMRNASeqs);
+    int calc_scores(MR3SeedSites &pSeedSites, mikan::TRNATYPE const &miRNASeq, mikan::TRNASet const &pMRNASeqs);
 
     void print_input(std::string &pInputMRNASeq);
 
 private:
     vr16::VR16FoldWorkSpace &mVRws;
-    MR3Align<TRNAString> &mAlign;
+    MR3Align &mAlign;
     seqan::String<float> mEnScores;
     float mMaxEnergy;
 
 private:
-    void create_input_seq(int pIdx, TRNAString const &pMiRNASeq, std::string &pInputMRNASeq);
+    void create_input_seq(int pIdx, mikan::TRNATYPE const &pMiRNASeq, std::string &pInputMRNASeq);
 };
 
 //
 // Store miRanda scores
 //
-template<class TRNAString>
 class MR3SiteScores {
 public:
     // Constant values
     static const unsigned RNAFOLD_MAX_INPUTLEN = 60;
-
-    // Define types
-    typedef seqan::StringSet<TRNAString> TRNASet;
 
     // Define variables
     seqan::String<bool> mEffectiveSites;
@@ -143,7 +132,7 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(MR3SeedSites &pSeedSites, TRNAString const &miRNASeq, TRNASet const &pMRNASeqs);
+    int calc_scores(MR3SeedSites &pSeedSites, mikan::TRNATYPE const &miRNASeq, mikan::TRNASet const &pMRNASeqs);
 
     void print_alignment(int pIdx);
 
@@ -151,16 +140,15 @@ public:
 
 private:
     vr16::VR16FoldWorkSpace mVRws;
-    MR3Align<TRNAString> mAlign;
-    MR3AlignScores<TRNAString> mAlignScores;
-    MR3EnergyScores<TRNAString> mEnergyScores;
+    MR3Align mAlign;
+    MR3AlignScores mAlignScores;
+    MR3EnergyScores mEnergyScores;
 
 };
 
 //
 // Total scores
 //
-template<class TRNAString>
 class MR3TotalScores {
 public:
     // Constant values
@@ -181,7 +169,7 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(MR3SeedSites &pSeedSites, MR3SiteScores<TRNAString> &pSiteScores,
+    int calc_scores(MR3SeedSites &pSeedSites, MR3SiteScores &pSiteScores,
                     const seqan::String<unsigned> &pSortedSites);
 
 private:

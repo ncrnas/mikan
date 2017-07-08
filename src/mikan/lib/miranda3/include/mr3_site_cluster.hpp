@@ -3,13 +3,12 @@
 
 #include "mr3_score.hpp"          // MR3DDGScores
 #include "mr3_seed_site.hpp"      // MR3SeedSites
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include <set>                    // set
 #include <map>                    // multimap
 #include <utility>                // pair
 
 namespace mr3as {
-
-template<class TRNAString>
 
 //
 // Cluster target sites
@@ -42,7 +41,6 @@ private:
 //
 // Identify overlapped sites
 //
-template<class TRNAString>
 class MR3Overlap {
 public:
     // Define methods
@@ -52,7 +50,7 @@ public:
     int filter_overlapped_sites(MR3SeedSites &pSeedSites, int pGapLen);
 
     int filter_overlapped_sites_by_scores(MR3SeedSites &pSeedSites,
-                                          MR3SiteScores<TRNAString> &pSiteScores, int pGapLen);
+                                          MR3SiteScores &pSiteScores, int pGapLen);
 
     void clear_cluster();
 
@@ -63,7 +61,7 @@ private:
     typedef std::multimap<unsigned, unsigned>::iterator TITStartPos;
     typedef std::pair<unsigned, unsigned> TPosPair;
 
-    MR3SiteCluster<TRNAString> mSiteCluster;
+    MR3SiteCluster mSiteCluster;
 
 private:
     int make_overlapped_pairs(MR3SeedSites &pSeedSites, int pGapLen,
@@ -77,7 +75,6 @@ private:
 //
 // Sort sites by position
 //
-template<class TRNAString>
 class MR3SortedSitePos {
 public:
     // Define methods
@@ -98,7 +95,7 @@ private:
     typedef std::pair<unsigned, unsigned> TPosPair;
 
     seqan::String<unsigned> mSortedSitePos;
-    MR3SiteCluster<TRNAString> mSiteCluster;
+    MR3SiteCluster mSiteCluster;
 
 };
 

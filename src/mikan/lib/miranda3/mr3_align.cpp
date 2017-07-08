@@ -2,15 +2,13 @@
 #include "mk_typedef.hpp"   // TRNATYPE
 
 using namespace seqan;
-using namespace mikan;
 
 namespace mr3as {
 
 //
 // MR3Align methods
 //
-template<class TRNAString>
-void MR3Align<TRNAString>::clear_align() {
+void MR3Align::clear_align() {
     clear(mEffectiveSites);
     clear(mAlignMRNA);
     clear(mAlignBars);
@@ -26,8 +24,7 @@ void MR3Align<TRNAString>::clear_align() {
     clear(mGapCount3pMRNA);
 }
 
-template<class TRNAString>
-void MR3Align<TRNAString>::resize_align(unsigned pSize) {
+void MR3Align::resize_align(unsigned pSize) {
     resize(mEffectiveSites, pSize, false);
     resize(mAlignMRNA, pSize);
     resize(mAlignBars, pSize);
@@ -43,11 +40,10 @@ void MR3Align<TRNAString>::resize_align(unsigned pSize) {
     resize(mGapCount3pMRNA, pSize);
 }
 
-template<class TRNAString>
-void MR3Align<TRNAString>::align_seed(
+void MR3Align::align_seed(
         int pIdx,
-        TRNAString &pIMiRNASeedSeq,
-        TRNAString &pIMRNASeedSeq,
+        mikan::TRNATYPE &pIMiRNASeedSeq,
+        mikan::TRNATYPE &pIMRNASeedSeq,
         int pMMpos) {
     int score = 0;
     unsigned idx2 = 0;
@@ -88,8 +84,7 @@ void MR3Align<TRNAString>::align_seed(
 
 }
 
-template<class TRNAString>
-void MR3Align<TRNAString>::init_3p_align(int pIdx) {
+void MR3Align::init_3p_align(int pIdx) {
     mAlign3PScores[pIdx] = 0;
     resize(mAlign3pMiRNA[pIdx], 0);
     resize(mAlign3pMRNA[pIdx], 0);
@@ -97,8 +92,7 @@ void MR3Align<TRNAString>::init_3p_align(int pIdx) {
     mGapCount3pMRNA[pIdx] = 0;
 }
 
-template<class TRNAString>
-void MR3Align<TRNAString>::align_3p(int pIdx, seqan::Rna5String &pIMiRNA3pSeq, seqan::Rna5String &pIMRNA3pSeq) {
+void MR3Align::align_3p(int pIdx, seqan::Rna5String &pIMiRNA3pSeq, seqan::Rna5String &pIMRNA3pSeq) {
     int score;
 
     clearClipping(mAign3P);
@@ -135,11 +129,10 @@ void MR3Align<TRNAString>::align_3p(int pIdx, seqan::Rna5String &pIMiRNA3pSeq, s
     }
 }
 
-template<class TRNAString>
-void MR3Align<TRNAString>::combine_alignments(
+void MR3Align::combine_alignments(
         int pIdx,
-        TRNAString const &pMiRNASeq,
-        TRNAString const &pMRNASeq,
+        mikan::TRNATYPE const &pMiRNASeq,
+        mikan::TRNATYPE const &pMRNASeq,
         bool noA1) {
     int maxlen = (int) length(pMiRNASeq) + mGapCount3pMiRNA[pIdx];
     int idx2;
@@ -210,8 +203,7 @@ void MR3Align<TRNAString>::combine_alignments(
 //    std::cout << mAlignMRNA[pIdx] << std::endl;
 }
 
-template<class TRNAString>
-void MR3Align<TRNAString>::set_align_bars(int pIdx) {
+void MR3Align::set_align_bars(int pIdx) {
     char miRNA, mRNA;
 
     for (unsigned i = 0; i < length(mAlignBars[pIdx]); ++i) {
@@ -253,8 +245,7 @@ void MR3Align<TRNAString>::set_align_bars(int pIdx) {
 
 }
 
-template<class TRNAString>
-void MR3Align<TRNAString>::get_mrna_seq(int pIdx, seqan::CharString &pStrMRNA) {
+void MR3Align::get_mrna_seq(int pIdx, seqan::CharString &pStrMRNA) {
     int idx = 0;
 
     resize(pStrMRNA, length(mAlignMRNA[pIdx]) - mGapCount3pMRNA[pIdx]);
@@ -268,9 +259,5 @@ void MR3Align<TRNAString>::get_mrna_seq(int pIdx, seqan::CharString &pStrMRNA) {
     resize(pStrMRNA, idx);
     reverse(pStrMRNA);
 }
-
-// Explicit template instantiation
-template
-class MR3Align<TRNATYPE>;
 
 } // namespace mr3as
