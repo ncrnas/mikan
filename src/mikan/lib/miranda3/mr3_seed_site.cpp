@@ -1,6 +1,6 @@
+#include <seqan/seq_io.h>
 #include "mk_typedef.hpp"         // TRNATYPE
 #include "mr3_seed_site.hpp"      // MR3SeedSeqs, MR3SeedSites
-#include <seqan/seq_io.h>
 
 using namespace seqan;
 

@@ -1,12 +1,12 @@
 #ifndef MR3_SITE_CLUSTER_HPP_
 #define MR3_SITE_CLUSTER_HPP_
 
-#include "mr3_score.hpp"          // MR3DDGScores
-#include "mr3_seed_site.hpp"      // MR3SeedSites
-#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include <set>                    // set
 #include <map>                    // multimap
 #include <utility>                // pair
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mr3_score.hpp"          // MR3DDGScores
+#include "mr3_seed_site.hpp"      // MR3SeedSites
 
 namespace mr3as {
 

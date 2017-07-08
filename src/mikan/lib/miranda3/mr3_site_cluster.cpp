@@ -1,12 +1,6 @@
 #include "mk_typedef.hpp"         // TRNATYPE
 #include "mr3_score.hpp"          // MR3MFEScores
-#include "mr3_seed_site.hpp"      // MR3SeedSites
 #include "mr3_site_cluster.hpp"   // MR3Overlap, MR3SortedSitePos
-#include <set>                    // set
-#include <map>                    // multimap
-#include <utility>                // pair
-#include <iostream>
-#include <seqan/sequence.h>
 
 using namespace seqan;
 

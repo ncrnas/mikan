@@ -1,16 +1,16 @@
 #ifndef MR3_SCORE_HPP_
 #define MR3_SCORE_HPP_
 
-#include "mr3_align.hpp"          // MR3SeedSites
-#include "mr3_seed_site.hpp"      // MR3Align
-#include "vr16_fold_core.hpp"     // VR16FoldWorkSpace
-#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include <vector>
 #include <string>
 #include <sstream>
 #include <seqan/sequence.h>
 #include <seqan/align.h>
 #include <seqan/score.h>
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mr3_align.hpp"          // MR3SeedSites
+#include "mr3_seed_site.hpp"      // MR3Align
+#include "vr16_fold_core.hpp"     // VR16FoldWorkSpace
 
 namespace mr3as {
 
