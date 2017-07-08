@@ -1,33 +1,29 @@
-#include "mk_typedef.hpp"  // TRNATYPE
+#include "mk_typedef.hpp"  // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "rh2_score.hpp"   // RH2MFEScores, RH2TotalScores
 
 using namespace seqan;
-using namespace mikan;
 
 namespace rh2mfe {
 
 //
 // RH2MFEScores methods
 //
-
-template<class TRNAString>
-void RH2MFEScores<TRNAString>::clear_scores() {
+void RH2MFEScores::clear_scores() {
     clear(mEffectiveSites);
     clear(mMFEScores);
     clear(mNormScores);
     mRHRetVals.clear();
 }
 
-template<class TRNAString>
-int RH2MFEScores<TRNAString>::calc_scores(
+int RH2MFEScores::calc_scores(
         RH2SeedSites &pSeedSites,
-        TRNAString const &pMiRNASeq,
-        TRNASet const &pMRNASeqs,
+        mikan::TRNATYPE const &pMiRNASeq,
+        mikan::TRNASet const &pMRNASeqs,
         CharString &) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &sitePos = pSeedSites.get_site_pos();
-    TRNAString miRNASeq = pMiRNASeq;
-    TRNAString mRNASeq;
+    mikan::TRNATYPE miRNASeq = pMiRNASeq;
+    mikan::TRNATYPE mRNASeq;
     std::vector<char> rhMiRNASeq;
     std::vector<char> rhMRNASeq;
     int seqStart = 0;
@@ -88,8 +84,7 @@ int RH2MFEScores<TRNAString>::calc_scores(
     return 0;
 }
 
-template<class TRNAString>
-void RH2MFEScores<TRNAString>::create_rh_seq(TRNAString const &pRNASeq, std::vector<char> &pRHSeq) {
+void RH2MFEScores::create_rh_seq(mikan::TRNATYPE const &pRNASeq, std::vector<char> &pRHSeq) {
     pRHSeq[0] = 5;
 
     for (unsigned i = 0; i < length(pRNASeq); ++i) {
@@ -100,14 +95,12 @@ void RH2MFEScores<TRNAString>::create_rh_seq(TRNAString const &pRNASeq, std::vec
 
 }
 
-template<class TRNAString>
-void RH2MFEScores<TRNAString>::calc_normalized_score(int pIdx, int pTargetLen, int pQueryLen) {
+void RH2MFEScores::calc_normalized_score(int pIdx, int pTargetLen, int pQueryLen) {
     float mfx = mMFEScores[pIdx];
     mNormScores[pIdx] = -1.0f * mfx / log((float) (pTargetLen * pQueryLen));
 }
 
-template<class TRNAString>
-void RH2MFEScores<TRNAString>::write_alignment(int pIdx, bool align_only) {
+void RH2MFEScores::write_alignment(int pIdx, bool align_only) {
     std::stringstream stream;
 
     if (!align_only) {
@@ -124,10 +117,9 @@ void RH2MFEScores<TRNAString>::write_alignment(int pIdx, bool align_only) {
     std::cout << stream.str();
 }
 
-template<class TRNAString>
-void RH2MFEScores<TRNAString>::write_seq_info(
-        TRNAString &pMiSeq,
-        TRNAString &pMRNASeq,
+void RH2MFEScores::write_seq_info(
+        mikan::TRNATYPE &pMiSeq,
+        mikan::TRNATYPE &pMRNASeq,
         std::vector<char> &pRhMiRNASeq,
         std::vector<char> &pRhMRNASeq) {
     std::stringstream stream;
@@ -154,18 +146,16 @@ void RH2MFEScores<TRNAString>::write_seq_info(
 //
 // RH2TotalScores methods
 //
-template<class TRNAString>
-void RH2TotalScores<TRNAString>::clear_scores() {
+void RH2TotalScores::clear_scores() {
     clear(mMRNAPos);
     clear(mSiteNum);
     clear(mTotalScores);
     clear(mTotalNormScores);
 }
 
-template<class TRNAString>
-int RH2TotalScores<TRNAString>::calc_scores(
+int RH2TotalScores::calc_scores(
         RH2SeedSites &pSeedSites,
-        RH2MFEScores<TRNAString> &pMFEScores,
+        RH2MFEScores &pMFEScores,
         const seqan::String<unsigned> &pSortedSites) {
 
     const String<unsigned> &siteMRNAPos = pSeedSites.get_mrna_pos();
@@ -209,12 +199,5 @@ int RH2TotalScores<TRNAString>::calc_scores(
 
     return 0;
 }
-
-// Explicit template instantiation
-template
-class RH2MFEScores<TRNATYPE>;
-
-template
-class RH2TotalScores<TRNATYPE>;
 
 } // namespace rh2mfe

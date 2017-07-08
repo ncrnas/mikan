@@ -7,13 +7,13 @@
 #endif
 
 #include <seqan/arg_parse.h>
-#include "mk_typedef.hpp"        // TRNATYPE
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_input.hpp"          // MKInput
 #include "rh2_option.hpp"        // RH2Options
 #include "rh2_seed_site.hpp"     // RH2Sequences, RH2SeedSites
 #include "rh2_score.hpp"         // RH2MFEScores, RH2TotalScores
 #include "rh2_site_cluster.hpp"  // RH2Overlap, RH2TopNScore, RH2SortedSitePos
 #include "rh2_core.hpp"          // RH2Core
-#include "mk_input.hpp"          // MKInput
 
 namespace rh2mfe {
 

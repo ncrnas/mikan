@@ -1,26 +1,23 @@
-#include "mk_typedef.hpp"        // TRNATYPE
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "rh2_score.hpp"         // RH2MFEScores
 #include "rh2_site_cluster.hpp"  // RH2Overlap, RH2SortedSitePos
 
 using namespace seqan;
-using namespace mikan;
 
 namespace rh2mfe {
 
 //
 // RH2SiteCluster methods
 //
-template<class TRNAString>
-void RH2SiteCluster<TRNAString>::clear_cluster() {
+void RH2SiteCluster::clear_cluster() {
     mSiteCount = 0;
     mRNAPosSet.clear();
     mSiteMap.clear();
 }
 
-template<class TRNAString>
-void RH2SiteCluster<TRNAString>::cluster_site_pos(
+void RH2SiteCluster::cluster_site_pos(
         RH2SeedSites &pSeedSites,
-        RH2MFEScores<TRNAString> &pScores) {
+        RH2MFEScores &pScores) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
@@ -36,15 +33,13 @@ void RH2SiteCluster<TRNAString>::cluster_site_pos(
 //
 // RH2Overlap methods
 //
-template<class TRNAString>
-void RH2Overlap<TRNAString>::clear_cluster() {
+void RH2Overlap::clear_cluster() {
     mSiteCluster.clear_cluster();
 }
 
-template<class TRNAString>
-int RH2Overlap<TRNAString>::filter_overlapped_sites(
+int RH2Overlap::filter_overlapped_sites(
         RH2SeedSites &pSeedSites,
-        RH2MFEScores<TRNAString> &pScores,
+        RH2MFEScores &pScores,
         CharString &pOverlapDef) {
     TItSet itSet;
 
@@ -62,10 +57,9 @@ int RH2Overlap<TRNAString>::filter_overlapped_sites(
 
 }
 
-template<class TRNAString>
-void RH2Overlap<TRNAString>::find_overlapped_sites(
+void RH2Overlap::find_overlapped_sites(
         RH2SeedSites &pSeedSites,
-        RH2MFEScores<TRNAString> &pScores,
+        RH2MFEScores &pScores,
         int pPosIdx,
         CharString &pOverlapDef) {
     TItMap itMap;
@@ -88,10 +82,9 @@ void RH2Overlap<TRNAString>::find_overlapped_sites(
     cluster_overlapped_sites(pSeedSites, pScores, startPos, pOverlapDef);
 }
 
-template<class TRNAString>
-void RH2Overlap<TRNAString>::cluster_overlapped_sites(
+void RH2Overlap::cluster_overlapped_sites(
         RH2SeedSites &pSeedSites,
-        RH2MFEScores<TRNAString> &pScores,
+        RH2MFEScores &pScores,
         std::multimap<unsigned, unsigned> &pStartPos,
         CharString &pOverlapDef) {
     const String<unsigned> &sitePos = pSeedSites.get_site_pos();
@@ -123,10 +116,9 @@ void RH2Overlap<TRNAString>::cluster_overlapped_sites(
 
 }
 
-template<class TRNAString>
-void RH2Overlap<TRNAString>::mark_overlapped_sites(
+void RH2Overlap::mark_overlapped_sites(
         RH2SeedSites &pSeedSites,
-        RH2MFEScores<TRNAString> &pScores,
+        RH2MFEScores &pScores,
         std::set<unsigned> &pOlCluster,
         CharString &pOverlapDef) {
     TItSet itSet;
@@ -180,9 +172,8 @@ void RH2Overlap<TRNAString>::mark_overlapped_sites(
 
 }
 
-template<class TRNAString>
-unsigned RH2Overlap<TRNAString>::get_pos_with_best_mfe(
-        RH2MFEScores<TRNAString> &pScores,
+unsigned RH2Overlap::get_pos_with_best_mfe(
+        RH2MFEScores &pScores,
         std::set<unsigned> &pOlCluster) {
     TItSet itSet;
     unsigned mPos = 0;
@@ -202,16 +193,14 @@ unsigned RH2Overlap<TRNAString>::get_pos_with_best_mfe(
 //
 // RH2TopNScore methods
 //
-template<class TRNAString>
-void RH2TopNScore<TRNAString>::clear_cluster() {
+void RH2TopNScore::clear_cluster() {
     mTopN = 0;
     mSiteCluster.clear_cluster();
 }
 
-template<class TRNAString>
-int RH2TopNScore<TRNAString>::filter_sites(
+int RH2TopNScore::filter_sites(
         RH2SeedSites &pSeedSites,
-        RH2MFEScores<TRNAString> &pScores,
+        RH2MFEScores &pScores,
         int pMaxHits) {
     TItSet itSet;
 
@@ -234,8 +223,7 @@ int RH2TopNScore<TRNAString>::filter_sites(
 
 }
 
-template<class TRNAString>
-void RH2TopNScore<TRNAString>::sort_sites_by_score(RH2MFEScores<TRNAString> &pScores, int pPosIdx) {
+void RH2TopNScore::sort_sites_by_score(RH2MFEScores &pScores, int pPosIdx) {
     TItMap itMap;
     TItRetPair ret;
     std::multimap<unsigned, unsigned> &siteMap = mSiteCluster.get_mrna_pos_map();
@@ -249,9 +237,8 @@ void RH2TopNScore<TRNAString>::sort_sites_by_score(RH2MFEScores<TRNAString> &pSc
     mark_non_topn_sites(pScores, sortedSites);
 }
 
-template<class TRNAString>
-void RH2TopNScore<TRNAString>::mark_non_topn_sites(
-        RH2MFEScores<TRNAString> &pScores,
+void RH2TopNScore::mark_non_topn_sites(
+        RH2MFEScores &pScores,
         std::multimap<float, unsigned> &pSortedSites) {
     TITStartScore itStart;
     int siteCount = 0;
@@ -270,17 +257,14 @@ void RH2TopNScore<TRNAString>::mark_non_topn_sites(
 //
 // RH2SortedSitePos methods
 //
-
-template<class TRNAString>
-void RH2SortedSitePos<TRNAString>::clear_site_pos() {
+void RH2SortedSitePos::clear_site_pos() {
     clear(mSortedSitePos);
     mSiteCluster.clear_cluster();
 }
 
-template<class TRNAString>
-int RH2SortedSitePos<TRNAString>::generate_sorted_mrna_pos(
+int RH2SortedSitePos::generate_sorted_mrna_pos(
         RH2SeedSites &pSeedSites,
-        RH2MFEScores<TRNAString> &pScores) {
+        RH2MFEScores &pScores) {
     TItMap itMap;
     TItSet itSet;
     TItRetPair ret;
@@ -313,18 +297,5 @@ int RH2SortedSitePos<TRNAString>::generate_sorted_mrna_pos(
     return 0;
 
 }
-
-// Explicit template instantiation
-template
-class RH2SiteCluster<TRNATYPE>;
-
-template
-class RH2Overlap<TRNATYPE>;
-
-template
-class RH2TopNScore<TRNATYPE>;
-
-template
-class RH2SortedSitePos<TRNATYPE>;
 
 } // namespace rh2mfe

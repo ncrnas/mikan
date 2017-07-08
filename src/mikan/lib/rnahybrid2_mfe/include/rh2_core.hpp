@@ -1,14 +1,13 @@
 #ifndef RH2_CORE_HPP_
 #define RH2_CORE_HPP_
 
-#include "mk_typedef.hpp"        // TRNATYPE
+#include <seqan/sequence.h>
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_sequence.hpp"       // MKSequences
 #include "rh2_option.hpp"        // RH2Options
 #include "rh2_score.hpp"         // RH2MFEScores, RH2TotalScores
 #include "rh2_seed_site.hpp"     // RH2SeedSites
 #include "rh2_site_cluster.hpp"  // RH2Overlap, RH2TopNScore, RH2SortedSitePos
-#include "mk_sequence.hpp"       // MKSequences
-#include "mk_typedef.hpp"        // TCharSet, TRNASet, TIndexQGram, TFinder
-#include <seqan/sequence.h>
 
 namespace rh2mfe {
 
@@ -67,11 +66,11 @@ private:
     std::ofstream mOFile2;
 
     RH2SeedSites mSeedSites;
-    RH2MFEScores <mikan::TRNATYPE> mMfeScores;
-    RH2Overlap <mikan::TRNATYPE> mOverlappedSites;
-    RH2TopNScore <mikan::TRNATYPE> mTopScoredSites;
-    RH2SortedSitePos <mikan::TRNATYPE> mSortedSites;
-    RH2TotalScores <mikan::TRNATYPE> mTotalScores;
+    RH2MFEScores mMfeScores;
+    RH2Overlap mOverlappedSites;
+    RH2TopNScore mTopScoredSites;
+    RH2SortedSitePos mSortedSites;
+    RH2TotalScores mTotalScores;
 
 private:
     int write_mfe_score(seqan::CharString const &pMiRNAId);
