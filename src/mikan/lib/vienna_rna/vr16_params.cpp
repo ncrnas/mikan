@@ -1,7 +1,7 @@
-#include "vr16_params.hpp"
 #include <algorithm>
 #include <iostream>
 #include "mk_nd_array.hpp"
+#include "vr16_params.hpp"
 
 namespace vr16 {
 

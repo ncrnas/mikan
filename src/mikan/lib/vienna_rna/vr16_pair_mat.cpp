@@ -1,6 +1,6 @@
-#include "vr16_pair_mat.hpp"
 #include <iostream>
 #include "mk_nd_array.hpp"
+#include "vr16_pair_mat.hpp"
 
 namespace vr16 {
 

@@ -1,5 +1,5 @@
-#include "vr16_fold_core.hpp"
 #include <iostream>
+#include "vr16_fold_core.hpp"
 
 namespace vr16 {
 

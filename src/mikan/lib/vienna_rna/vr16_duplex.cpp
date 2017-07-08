@@ -1,6 +1,6 @@
-#include "vr16_duplex.hpp"
 #include <iostream>
 #include <cstring>
+#include "vr16_duplex.hpp"
 
 namespace vr16 {
 
