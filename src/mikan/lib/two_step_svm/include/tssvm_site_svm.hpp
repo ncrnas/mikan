@@ -1,16 +1,16 @@
 #ifndef TSSVM_SITE_SVM_HPP_
 #define TSSVM_SITE_SVM_HPP_
 
-#include "tssvm_site_feature.hpp"   // TSSVMRawFeatures
 #include <Eigen/Dense>
 #include <seqan/sequence.h>
+#include "mk_typedef.hpp"           // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "tssvm_site_feature.hpp"   // TSSVMRawFeatures
 
 namespace tssvm {
 
 //
 // Site level SVM model
 //
-template<class TRNAString>
 class TSSVMSiteModel {
 public:
     // Constant values
@@ -43,7 +43,6 @@ private:
 //
 // Input vector for Site level SVM
 //
-template<class TRNAString>
 class TSSVMSiteInputVector {
 public:
     // Define types
@@ -51,22 +50,22 @@ public:
 
 public:
     // Define methods
-    TSSVMSiteInputVector(TSSVMSiteModel<TRNAString> &pModel) : mModel(pModel), mInputVec(95) {}
+    TSSVMSiteInputVector(TSSVMSiteModel &pModel) : mModel(pModel), mInputVec(95) {}
 
     const seqan::String<float> &get_scores() { return mScores; }
 
     // Method prototypes
     void clear_scores();
 
-    int classify(TSSVMRawFeatures<TRNAString> &pSiteFeatures);
+    int classify(TSSVMRawFeatures &pSiteFeatures);
 
 private:
-    TSSVMSiteModel<TRNAString> &mModel;
+    TSSVMSiteModel &mModel;
     Eigen::VectorXf mInputVec;
     seqan::String<float> mScores;
 
 private:
-    int calc_score(TSSVMRawFeatures<TRNAString> &pSiteFeatures);
+    int calc_score(TSSVMRawFeatures &pSiteFeatures);
 
     void print_input_vector();
 

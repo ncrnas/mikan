@@ -1,17 +1,16 @@
 #ifndef TSSVM_MRNA_SVM_HPP_
 #define TSSVM_MRNA_SVM_HPP_
 
-#include "tssvm_mrna_feature.hpp"    // TSSVMRNARawFeatures
 #include <Eigen/Dense>
 #include <seqan/sequence.h>
-
+#include "mk_typedef.hpp"            // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "tssvm_mrna_feature.hpp"    // TSSVMRNARawFeatures
 
 namespace tssvm {
 
 //
 // RNA level SVM model
 //
-template<class TRNAString>
 class TSSVMRNAModel {
 public:
     // Define methods
@@ -36,7 +35,6 @@ private:
 //
 // Input vector for RNA level SVM
 //
-template<class TRNAString>
 class TSSVMRNAInputVector {
 public:
     // Define types
@@ -51,15 +49,15 @@ public:
     // Method prototypes
     void clear_scores();
 
-    int classify(TSSVMRNARawFeatures <TRNAString> &pRNAFeatures);
+    int classify(TSSVMRNARawFeatures &pRNAFeatures);
 
 private:
-    TSSVMRNAModel<TRNAString> mModel;
+    TSSVMRNAModel mModel;
     Eigen::VectorXf mInputVec;
     seqan::String<float> mScores;
 
 private:
-    int calc_score(TSSVMRNARawFeatures <TRNAString> &pRNAFeatures);
+    int calc_score(TSSVMRNARawFeatures &pRNAFeatures);
 
     void print_input_vector();
 

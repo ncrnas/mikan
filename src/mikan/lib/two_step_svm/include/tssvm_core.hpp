@@ -1,16 +1,15 @@
 #ifndef TSSVM_CORE_HPP_
 #define TSSVM_CORE_HPP_
 
+#include <seqan/sequence.h>
+#include "mk_typedef.hpp"           // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_sequence.hpp"          // MKSequences
 #include "tssvm_align.hpp"          // TSAlign
-#include "mk_typedef.hpp"           // TRNATYPE
 #include "tssvm_mrna_feature.hpp"   // TSSVMRNARawFeatures
 #include "tssvm_mrna_svm.hpp"       // TSSVMRNAInputVector
 #include "tssvm_option.hpp"         // TSSVMOptions
 #include "tssvm_seed_site.hpp"      // TSSVMSeedSites, TSSVMSeedSiteOverlap
 #include "tssvm_site_svm.hpp"       // TSSVMSiteInputVector
-#include "mk_sequence.hpp"          // MKSequences
-#include "mk_typedef.hpp"           // TCharSet, TRNASet, TIndexQGram, TFinder
-#include <seqan/sequence.h>
 
 namespace tssvm {
 
@@ -69,12 +68,12 @@ private:
 
     TSSVMSeedSites mSeedSites;
     TSSVMSeedSiteOverlap mOverlappedSites;
-    TSAlign<mikan::TRNATYPE> mAlignSeqs;
-    TSSVMRawFeatures<mikan::TRNATYPE> mSiteFeatures;
-    TSSVMSiteModel<mikan::TRNATYPE> mSiteModel;
-    TSSVMSiteInputVector<mikan::TRNATYPE> mSiteInput;
-    TSSVMRNARawFeatures<mikan::TRNATYPE> mRnaFeatures;
-    TSSVMRNAInputVector<mikan::TRNATYPE> mRnaInput;
+    TSAlign mAlignSeqs;
+    TSSVMRawFeatures mSiteFeatures;
+    TSSVMSiteModel mSiteModel;
+    TSSVMSiteInputVector mSiteInput;
+    TSSVMRNARawFeatures mRnaFeatures;
+    TSSVMRNAInputVector mRnaInput;
 
 private:
     int write_ts_scores(seqan::CharString const &pMiRNAId);

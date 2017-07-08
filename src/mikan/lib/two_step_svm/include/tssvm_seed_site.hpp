@@ -3,7 +3,7 @@
 
 #include <seqan/sequence.h>
 #include <seqan/index.h>
-#include "mk_typedef.hpp"         // TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_typedef.hpp"           // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 
 namespace tssvm {
 
