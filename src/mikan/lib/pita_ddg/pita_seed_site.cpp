@@ -1,6 +1,6 @@
-#include "mk_typedef.hpp"         // TRNATYPE
-#include "pita_seed_site.hpp"     // PITASequences, PITASeedSeqs, PITASeedSites
 #include <seqan/seq_io.h>
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "pita_seed_site.hpp"     // PITASequences, PITASeedSeqs, PITASeedSites
 
 using namespace seqan;
 

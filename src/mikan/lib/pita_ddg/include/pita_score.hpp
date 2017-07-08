@@ -1,19 +1,20 @@
 #ifndef PITA_SCORE_HPP_
 #define PITA_SCORE_HPP_
 
-#include "pita_seed_site.hpp"     // PITASeedSites
-#include "vr16_ddg_core.hpp"      // VR16DDGWorkSpace
 #include <vector>
 #include <string>
 #include <sstream>
 #include <seqan/sequence.h>
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "pita_seed_site.hpp"     // PITASeedSites
+#include "vr16_ddg_core.hpp"      // VR16DDGWorkSpace
+
 
 namespace ptddg {
 
 //
 // Store alignments
 //
-template<class TRNAString>
 class PITAAlign {
 public:
     // Constant values
@@ -34,7 +35,7 @@ public:
 
     void resize_align(unsigned pSize);
 
-    void create_align(int pId, TRNAString const &pMiRNASeq, TRNAString const &pMRNASeq,
+    void create_align(int pId, mikan::TRNATYPE const &pMiRNASeq, mikan::TRNATYPE const &pMRNASeq,
                       seqan::CharString const &pSeedType, unsigned pSitePos, int pMismatchPos);
 
 private:
@@ -44,11 +45,8 @@ private:
 //
 // Store dGduplex scores
 //
-template<class TRNAString>
 class PITADGDuplexScores {
 public:
-    // Define types
-    typedef seqan::StringSet<TRNAString> TRNASet;
 
     // Constant values
     static const unsigned TARGET_SEQ_LEN = 50;
@@ -59,25 +57,25 @@ public:
 
 public:
     // Define methods
-    PITADGDuplexScores(vr16::VR16DDGWorkSpace &pVRws, PITAAlign<TRNAString> &pAlign) :
+    PITADGDuplexScores(vr16::VR16DDGWorkSpace &pVRws, PITAAlign &pAlign) :
             mVRws(pVRws), mAlign(pAlign) {}
 
     // Method prototype
     void clear_scores();
 
-    int calc_scores(PITASeedSites &pSeedSites, TRNAString const &miRNASeq, TRNASet const &pMRNASeqs);
+    int calc_scores(PITASeedSites &pSeedSites, mikan::TRNATYPE const &miRNASeq, mikan::TRNASet const &pMRNASeqs);
 
     void print_input(seqan::CharString const &pSeedType, std::string &pInputMiRNASeq, std::string &pInputMRNASeq,
                      std::vector<int> &pInputMatchSeq);
 
 private:
     vr16::VR16DDGWorkSpace &mVRws;
-    PITAAlign<TRNAString> &mAlign;
+    PITAAlign &mAlign;
 
 private:
-    void create_input_mirna_seq(TRNAString const &pMiRNASeq, std::string &pInputMiRNASeq);
+    void create_input_mirna_seq(mikan::TRNATYPE const &pMiRNASeq, std::string &pInputMiRNASeq);
 
-    void create_input_mrna_seq(TRNAString const &pMRNASeq, int pStart, int pEnd, std::string &pInputMRNASeq);
+    void create_input_mrna_seq(mikan::TRNATYPE const &pMRNASeq, int pStart, int pEnd, std::string &pInputMRNASeq);
 
     void create_input_matched_seq(seqan::CharString const &pSeedType, int pMismatchPos,
                                   std::vector<int> &pInputMatchSeq);
@@ -86,11 +84,8 @@ private:
 //
 // Store dGopen scores
 //
-template<class TRNAString>
 class PITADGOpenScores {
 public:
-    // Define types
-    typedef seqan::StringSet<TRNAString> TRNASet;
 
     // Constant values
     static const unsigned TARGET_SEQ_LEN = 50;
@@ -108,7 +103,7 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(PITASeedSites &pSeedSites, TRNASet const &pMRNASeqs, int pFlankUp, int pFlankDown);
+    int calc_scores(PITASeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs, int pFlankUp, int pFlankDown);
 
     void print_input(std::string &pInputMRNASeq);
 
@@ -116,17 +111,14 @@ private:
     vr16::VR16DDGWorkSpace &mVRws;
 
 private:
-    void create_input_mrna_seq(TRNAString const &pMRNASeq, int pStart, int pEnd, std::string &pInputMRNASeq);
+    void create_input_mrna_seq(mikan::TRNATYPE const &pMRNASeq, int pStart, int pEnd, std::string &pInputMRNASeq);
 };
 
 //
 // Store ddG scores
 //
-template<class TRNAString>
 class PITADDGScores {
 public:
-    // Define types
-    typedef seqan::StringSet<TRNAString> TRNASet;
 
     // Define variables
     seqan::String<bool> mEffectiveSites;
@@ -154,7 +146,7 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(PITASeedSites &pSeedSites, TRNAString const &miRNASeq, TRNASet const &pMRNASeqs,
+    int calc_scores(PITASeedSites &pSeedSites, mikan::TRNATYPE const &miRNASeq, mikan::TRNASet const &pMRNASeqs,
                     int pFlankUp, int pFlankDown);
 
     void print_alignment(int pIdx);
@@ -163,16 +155,15 @@ private:
     seqan::String<float> mDDGScores;
 
     vr16::VR16DDGWorkSpace mVRws;
-    PITADGDuplexScores<TRNAString> mDGDuplexScores;
-    PITADGOpenScores<TRNAString> mDGOpenScores;
-    PITAAlign<TRNAString> mAlign;
+    PITADGDuplexScores mDGDuplexScores;
+    PITADGOpenScores mDGOpenScores;
+    PITAAlign mAlign;
 
 };
 
 //
 // Total ddG scores
 //
-template<class TRNAString>
 class PITATotalScores {
 public:
     // Constant values
@@ -191,7 +182,7 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(PITASeedSites &pSeedSites, PITADDGScores<TRNAString> &pDDGScores,
+    int calc_scores(PITASeedSites &pSeedSites, PITADDGScores &pDDGScores,
                     const seqan::String<unsigned> &pSortedSites);
 
 private:

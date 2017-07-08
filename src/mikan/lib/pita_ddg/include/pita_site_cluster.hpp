@@ -1,15 +1,15 @@
 #ifndef PITA_SITE_CLUSTER_HPP_
 #define PITA_SITE_CLUSTER_HPP_
 
-#include "pita_score.hpp"         // PITADDGScores
-#include "pita_seed_site.hpp"     // PITASeedSites
 #include <set>                    // set
 #include <map>                    // multimap
 #include <utility>                // pair
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "pita_score.hpp"         // PITADDGScores
+#include "pita_seed_site.hpp"     // PITASeedSites
 
 namespace ptddg {
 
-template<class TRNAString>
 class PITASiteCluster {
 public:
     // Define methods
@@ -38,7 +38,6 @@ private:
 //
 // Identify overlapped sites
 //
-template<class TRNAString>
 class PITAOverlap {
 public:
     // Define methods
@@ -56,7 +55,7 @@ private:
     typedef std::multimap<unsigned, unsigned>::iterator TITStartPos;
     typedef std::pair<unsigned, unsigned> TPosPair;
 
-    PITASiteCluster<TRNAString> mSiteCluster;
+    PITASiteCluster mSiteCluster;
 
 private:
     void mark_overlapped_sites(PITASeedSites &pSeedSites, int pPrevIdx, int pCurIdx);
@@ -67,7 +66,6 @@ private:
 //
 // Sort sites by position
 //
-template<class TRNAString>
 class PITASortedSitePos {
 public:
     // Define methods
@@ -88,7 +86,7 @@ private:
     typedef std::pair<unsigned, unsigned> TPosPair;
 
     seqan::String<unsigned> mSortedSitePos;
-    PITASiteCluster<TRNAString> mSiteCluster;
+    PITASiteCluster mSiteCluster;
 
 };
 

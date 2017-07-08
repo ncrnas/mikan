@@ -1,14 +1,13 @@
 #ifndef PITA_CORE_HPP_
 #define PITA_CORE_HPP_
 
-#include "mk_typedef.hpp"         // TRNATYPE
+#include <seqan/sequence.h>
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_sequence.hpp"        // MKSequences
 #include "pita_option.hpp"        // PITAOptions
 #include "pita_score.hpp"         // PITAGGDScores, PITATotalScores
 #include "pita_seed_site.hpp"     // PITASeedSites
 #include "pita_site_cluster.hpp"  // PITAOverlap, PITASortedSitePos
-#include "mk_sequence.hpp"        // MKSequences
-#include "mk_typedef.hpp"         // TCharSet, TRNASet, TIndexQGram, TFinder
-#include <seqan/sequence.h>
 
 namespace ptddg {
 
@@ -74,10 +73,10 @@ private:
     std::ofstream mOFile2;
 
     PITASeedSites mSeedSites;
-    PITADDGScores <mikan::TRNATYPE> mDDGScores;
-    PITAOverlap <mikan::TRNATYPE> mOverlappedSites;
-    PITASortedSitePos <mikan::TRNATYPE> mSortedSites;
-    PITATotalScores <mikan::TRNATYPE> mTotalScores;
+    PITADDGScores mDDGScores;
+    PITAOverlap mOverlappedSites;
+    PITASortedSitePos mSortedSites;
+    PITATotalScores mTotalScores;
 
 private:
     int write_ddg_score(seqan::CharString const &pMiRNAId);

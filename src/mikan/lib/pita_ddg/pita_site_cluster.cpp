@@ -1,24 +1,21 @@
-#include "mk_typedef.hpp"         // TRNATYPE
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "pita_score.hpp"         // PITAMFEScores
 #include "pita_site_cluster.hpp"  // PITAOverlap, PITASortedSitePos
 
 using namespace seqan;
-using namespace mikan;
 
 namespace ptddg {
 
 //
 // PITASiteCluster methods
 //
-template<class TRNAString>
-void PITASiteCluster<TRNAString>::clear_cluster() {
+void PITASiteCluster::clear_cluster() {
     mSiteCount = 0;
     mRNAPosSet.clear();
     mSiteMap.clear();
 }
 
-template<class TRNAString>
-void PITASiteCluster<TRNAString>::cluster_site_pos(
+void PITASiteCluster::cluster_site_pos(
         PITASeedSites &pSeedSites) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
 
@@ -35,13 +32,11 @@ void PITASiteCluster<TRNAString>::cluster_site_pos(
 //
 // PITAOverlap methods
 //
-template<class TRNAString>
-void PITAOverlap<TRNAString>::clear_cluster() {
+void PITAOverlap::clear_cluster() {
     mSiteCluster.clear_cluster();
 }
 
-template<class TRNAString>
-int PITAOverlap<TRNAString>::filter_overlapped_sites(PITASeedSites &pSeedSites, int pGapLen) {
+int PITAOverlap::filter_overlapped_sites(PITASeedSites &pSeedSites, int pGapLen) {
     TItSet itSet;
     TItRetPair ret;
     TItMap itMap2;
@@ -86,9 +81,8 @@ int PITAOverlap<TRNAString>::filter_overlapped_sites(PITASeedSites &pSeedSites, 
 
 }
 
-template<class TRNAString>
 void
-PITAOverlap<TRNAString>::mark_overlapped_sites(PITASeedSites &pSeedSites, int pPrevIdx, int pCurIdx) {
+PITAOverlap::mark_overlapped_sites(PITASeedSites &pSeedSites, int pPrevIdx, int pCurIdx) {
     StringSet<CharString> const &seedTypes = pSeedSites.get_seed_types();
     unsigned precPrev = get_seedtype_precedence(seedTypes[pPrevIdx]);
     unsigned precCur = get_seedtype_precedence(seedTypes[pCurIdx]);
@@ -101,9 +95,7 @@ PITAOverlap<TRNAString>::mark_overlapped_sites(PITASeedSites &pSeedSites, int pP
 
 }
 
-
-template<class TRNAString>
-unsigned PITAOverlap<TRNAString>::get_seedtype_precedence(const CharString &pSeedType) {
+unsigned PITAOverlap::get_seedtype_precedence(const CharString &pSeedType) {
     unsigned preced;
 
     if (pSeedType == "8mer") {
@@ -142,15 +134,12 @@ unsigned PITAOverlap<TRNAString>::get_seedtype_precedence(const CharString &pSee
 //
 // PITASortedSitePos methods
 //
-
-template<class TRNAString>
-void PITASortedSitePos<TRNAString>::clear_site_pos() {
+void PITASortedSitePos::clear_site_pos() {
     clear(mSortedSitePos);
     mSiteCluster.clear_cluster();
 }
 
-template<class TRNAString>
-int PITASortedSitePos<TRNAString>::generate_sorted_mrna_pos(
+int PITASortedSitePos::generate_sorted_mrna_pos(
         PITASeedSites &pSeedSites) {
     TItMap itMap;
     TItSet itSet;
@@ -185,15 +174,5 @@ int PITASortedSitePos<TRNAString>::generate_sorted_mrna_pos(
     return 0;
 
 }
-
-// Explicit template instantiation
-template
-class PITASiteCluster<TRNATYPE>;
-
-template
-class PITAOverlap<TRNATYPE>;
-
-template
-class PITASortedSitePos<TRNATYPE>;
 
 } // namespace ptddg
