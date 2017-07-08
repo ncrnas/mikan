@@ -3,18 +3,15 @@
 
 #include <seqan/sequence.h>
 #include <seqan/index.h>
+#include "mk_typedef.hpp"
 
 namespace mikan {
 
 //
 // Store miRNA and mRNA sequences and ids
 //
-template<class TRNAString>
 class MKSequences {
 public:
-    // Define types
-    typedef seqan::StringSet<seqan::CharString> TCharSet;
-    typedef seqan::StringSet<TRNAString> TRNASet;
 
     // Define methods
     MKSequences() : mMaxLen(0) {}
@@ -23,7 +20,7 @@ public:
 
     seqan::CharString const &get_seq_id(unsigned const pIdx) const { return mSeqIds[pIdx]; }
 
-    TRNAString const &get_seq(unsigned const pIdx) const { return mSeqs[pIdx]; }
+    TRNAStr const &get_seq(unsigned const pIdx) const { return mSeqs[pIdx]; }
 
     TCharSet const &get_ids() const { return mSeqIds; }
 

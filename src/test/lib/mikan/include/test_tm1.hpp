@@ -7,8 +7,8 @@
 #include "tm1_core.hpp"
 #include "mk_input.hpp"
 
-typedef TestIOBase<mikan::MKInput<mikan::TRNATYPE> > TestIOTM1;
-typedef TestSeed<tm1p::TM1SeedSeqs<mikan::TRNATYPE>, TestIOTM1> TestSeedTM1;
-typedef TestSite<tm1p::TM1SeedSites<mikan::TRNATYPE>, TestIOTM1> TestSiteTM1;
+typedef TestIOBase<mikan::MKInput> TestIOTM1;
+typedef TestSeed<tm1p::TM1SeedSeqs, TestIOTM1> TestSeedTM1;
+typedef TestSite<tm1p::TM1SeedSites, TestIOTM1> TestSiteTM1;
 
 #endif //MIKAN_TEST_TM1_HPP_

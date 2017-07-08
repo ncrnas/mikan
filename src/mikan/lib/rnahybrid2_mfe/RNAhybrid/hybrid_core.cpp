@@ -16,7 +16,6 @@
 
 #include "hybrid_core.hpp"
 
-
 namespace rh2 {
 
 /* main dynamic programming loop                                                    */

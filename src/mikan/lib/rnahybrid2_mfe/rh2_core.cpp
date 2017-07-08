@@ -7,15 +7,13 @@
 #endif
 
 #include <seqan/arg_parse.h>
-#include "mk_typedef.hpp"        // TRNATYPE
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_input.hpp"          // MKInput
 #include "rh2_option.hpp"        // RH2Options
 #include "rh2_seed_site.hpp"     // RH2Sequences, RH2SeedSites
 #include "rh2_score.hpp"         // RH2MFEScores, RH2TotalScores
 #include "rh2_site_cluster.hpp"  // RH2Overlap, RH2TopNScore, RH2SortedSitePos
 #include "rh2_core.hpp"          // RH2Core
-#include "mk_input.hpp"          // MKInput
-
-using namespace mikan;
 
 namespace rh2mfe {
 
@@ -30,7 +28,7 @@ int RH2CoreMain(int argc, char const **argv) {
     }
 
     // Read input files
-    mikan::MKInput<TRNATYPE> coreInput;
+    mikan::MKInput coreInput;
     coreInput.set_options(options);
     retVal = coreInput.load_seq_from_file();
     if (retVal != 0) {
@@ -38,19 +36,19 @@ int RH2CoreMain(int argc, char const **argv) {
     }
 
     // Create index
-    rh2mfe::RH2Core<TRNATYPE>::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
-    rh2mfe::RH2Core<TRNATYPE>::TIndexQGram index(mMRNASeqs);
-    rh2mfe::RH2Core<TRNATYPE>::TFinder finder(index);
+    mikan::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
+    mikan::TIndexQGram index(mMRNASeqs);
+    mikan::TFinder finder(index);
 
     // Calculate scores for all miRNAs
-    rh2mfe::RH2Core<TRNATYPE>::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
-    rh2mfe::RH2Core<TRNATYPE>::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
-    rh2mfe::RH2Core<TRNATYPE>::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
+    mikan::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
+    mikan::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
+    mikan::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
     int mRNAMaxLen = options.mTargetLen;
     int miRNAMaxLen = options.mQueryLen;
     std::string seedDef(toCString(options.mSeedDef));
-    rh2mfe::RH2Core<TRNATYPE> rh2Core(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder,
-                                      mRNAMaxLen, miRNAMaxLen, seedDef);
+    rh2mfe::RH2Core rh2Core(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder,
+                            mRNAMaxLen, miRNAMaxLen, seedDef);
     rh2Core.init_from_args(options);
     rh2Core.open_output_file();
     retVal = rh2Core.calculate_all_scores();
@@ -64,8 +62,7 @@ int RH2CoreMain(int argc, char const **argv) {
 //
 // RH2Core methods
 //
-template<class TRNAString, int SEEDLEN>
-void RH2Core<TRNAString, SEEDLEN>::init_from_args(RH2Options &opts) {
+void RH2Core::init_from_args(RH2Options &opts) {
     mOutputAlign = opts.mOutputAlign;
     mOFileMFE = opts.mOFileSite;
     mOFileTotal = opts.mOFileTotal;
@@ -76,8 +73,7 @@ void RH2Core<TRNAString, SEEDLEN>::init_from_args(RH2Options &opts) {
 
 }
 
-template<class TRNAString, int SEEDLEN>
-int RH2Core<TRNAString, SEEDLEN>::open_output_file() {
+int RH2Core::open_output_file() {
     // Open output file 1
     mOFile1.open(toCString(mOFileMFE), std::ofstream::out);
     if (!mOFile1.good()) {
@@ -95,8 +91,7 @@ int RH2Core<TRNAString, SEEDLEN>::open_output_file() {
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int RH2Core<TRNAString, SEEDLEN>::calculate_all_scores() {
+int RH2Core::calculate_all_scores() {
     int retVal;
 
     for (unsigned i = 0; i < length(mMiRNASeqs); ++i) {
@@ -122,10 +117,9 @@ int RH2Core<TRNAString, SEEDLEN>::calculate_all_scores() {
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int RH2Core<TRNAString, SEEDLEN>::calculate_mirna_scores(unsigned pIdx) {
+int RH2Core::calculate_mirna_scores(unsigned pIdx) {
     int retVal;
-    TRNAString miRNASeq = mMiRNASeqs[pIdx];
+    mikan::TRNAStr miRNASeq = mMiRNASeqs[pIdx];
 
     // Search seed sites
     if (mExecSearchSeedSites) {
@@ -219,8 +213,7 @@ int RH2Core<TRNAString, SEEDLEN>::calculate_mirna_scores(unsigned pIdx) {
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int RH2Core<TRNAString, SEEDLEN>::write_mfe_score(seqan::CharString const &pMiRNAId) {
+int RH2Core::write_mfe_score(seqan::CharString const &pMiRNAId) {
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const seqan::StringSet<seqan::CharString> &seedTypes = mSeedSites.get_seed_types();
@@ -254,8 +247,7 @@ int RH2Core<TRNAString, SEEDLEN>::write_mfe_score(seqan::CharString const &pMiRN
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int RH2Core<TRNAString, SEEDLEN>::write_total_score(seqan::CharString const &pMiRNAId) {
+int RH2Core::write_total_score(seqan::CharString const &pMiRNAId) {
     const seqan::String<float> &totalScores = mTotalScores.get_scores();
     const seqan::String<float> &totalNormScores = mTotalScores.get_norm_scores();
     const seqan::String<int> &mRNAPos = mTotalScores.get_mrna_pos();
@@ -273,8 +265,7 @@ int RH2Core<TRNAString, SEEDLEN>::write_total_score(seqan::CharString const &pMi
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int RH2Core<TRNAString, SEEDLEN>::write_alignment(seqan::CharString const &pMiRNAId) {
+int RH2Core::write_alignment(seqan::CharString const &pMiRNAId) {
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const seqan::StringSet<seqan::CharString> &seedTypes = mSeedSites.get_seed_types();
@@ -315,11 +306,6 @@ int RH2Core<TRNAString, SEEDLEN>::write_alignment(seqan::CharString const &pMiRN
 
     return 0;
 }
-
-// Explicit template instantiation
-
-template
-class RH2Core<TRNATYPE>;
 
 } // namespace rh2mfe
 

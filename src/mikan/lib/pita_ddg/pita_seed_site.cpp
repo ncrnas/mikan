@@ -1,22 +1,20 @@
-#include "mk_typedef.hpp"         // TRNATYPE
-#include "pita_seed_site.hpp"     // PITASequences, PITASeedSeqs, PITASeedSites
 #include <seqan/seq_io.h>
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "pita_seed_site.hpp"     // PITASequences, PITASeedSeqs, PITASeedSites
 
 using namespace seqan;
-using namespace mikan;
 
 namespace ptddg {
 
 //
 // PITASeedSeqs methods
 //
-template<class TRNAString>
-int PITASeedSeqs<TRNAString>::create_seed_seqs(StringSet<CharString> &pSeedDef) {
+int PITASeedSeqs::create_seed_seqs(StringSet<CharString> &pSeedDef) {
     if (length(mMiRNASeq) == 0) {
         return 1;
     }
 
-    TRNAString seedSeq;
+    mikan::TRNAStr seedSeq;
 
     int retVal;
 
@@ -55,9 +53,8 @@ int PITASeedSeqs<TRNAString>::create_seed_seqs(StringSet<CharString> &pSeedDef) 
     return 0;
 }
 
-template<class TRNAString>
-int PITASeedSeqs<TRNAString>::create_single_guwobble_seed_seqs(TRNAString &pSeedSeq) {
-    TRNAString seedGUSeq;
+int PITASeedSeqs::create_single_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq) {
+    mikan::TRNAStr seedGUSeq;
 
     for (unsigned i = 0; i < length(pSeedSeq); ++i) {
         if (pSeedSeq[i] == 'C') {
@@ -78,9 +75,8 @@ int PITASeedSeqs<TRNAString>::create_single_guwobble_seed_seqs(TRNAString &pSeed
     return 0;
 }
 
-template<class TRNAString>
-int PITASeedSeqs<TRNAString>::create_multi_guwobble_seed_seqs(TRNAString &pSeedSeq) {
-    TRNAString seedGUSeq;
+int PITASeedSeqs::create_multi_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq) {
+    mikan::TRNAStr seedGUSeq;
 
     unsigned seedDatLen = length(mSeedSeqs);
 
@@ -109,9 +105,8 @@ int PITASeedSeqs<TRNAString>::create_multi_guwobble_seed_seqs(TRNAString &pSeedS
     return 0;
 }
 
-template<class TRNAString>
-int PITASeedSeqs<TRNAString>::create_mismatch_seed_seqs(TRNAString &pSeedSeq, bool pIsMMGU, int pGUPos) {
-    TRNAString seedLPSeq;
+int PITASeedSeqs::create_mismatch_seed_seqs(mikan::TRNAStr &pSeedSeq, bool pIsMMGU, int pGUPos) {
+    mikan::TRNAStr seedLPSeq;
     CharString seedType;
     char ch1 = 0;
     char ch2 = 0;
@@ -167,9 +162,8 @@ int PITASeedSeqs<TRNAString>::create_mismatch_seed_seqs(TRNAString &pSeedSeq, bo
     return 0;
 }
 
-template<class TRNAString>
-int PITASeedSeqs<TRNAString>::create_gu_mismatch_seed_seqs(TRNAString &pSeedSeq) {
-    TRNAString seedGUSeq;
+int PITASeedSeqs::create_gu_mismatch_seed_seqs(mikan::TRNAStr &pSeedSeq) {
+    mikan::TRNAStr seedGUSeq;
 
     for (unsigned i = 0; i < length(pSeedSeq); ++i) {
         if (pSeedSeq[i] == 'C') {
@@ -186,14 +180,10 @@ int PITASeedSeqs<TRNAString>::create_gu_mismatch_seed_seqs(TRNAString &pSeedSeq)
     return 0;
 }
 
-template<class TRNAString>
-int PITASeedSeqs<TRNAString>::check_redundant_seeds() {
-    typedef Index<StringSet<TRNAString>, IndexQGram<UngappedShape<6> > > TIndexQGram;
-    typedef Finder<TIndexQGram> TFinder;
-
-    TRNAString seedSeq;
-    TIndexQGram RNAIdx(mSeedSeqs);
-    TFinder finder(RNAIdx);
+int PITASeedSeqs::check_redundant_seeds() {
+    mikan::TRNAStr seedSeq;
+    mikan::TIndexQGram RNAIdx(mSeedSeqs);
+    mikan::TFinder finder(RNAIdx);
 
     for (unsigned i = 0; i < length(mSeedSeqs); ++i) {
         if (!mEffectiveSeeds[i]) {
@@ -212,8 +202,7 @@ int PITASeedSeqs<TRNAString>::check_redundant_seeds() {
     return 0;
 }
 
-template<class TRNAString>
-void PITASeedSeqs<TRNAString>::set_mirna_seq(TRNAString pSeq) {
+void PITASeedSeqs::set_mirna_seq(mikan::TRNAStr pSeq) {
     clear(mSeedSeqs);
     clear(mSeedTypes);
     clear(mEffectiveSeeds);
@@ -223,8 +212,7 @@ void PITASeedSeqs<TRNAString>::set_mirna_seq(TRNAString pSeq) {
 //
 // PITASeedSites methods
 //
-template<class TRNAString>
-void PITASeedSites<TRNAString>::clear_pos() {
+void PITASeedSites::clear_pos() {
     clear(mMRNAPos);
     clear(mSitePos);
     clear(mSeedTypes);
@@ -232,18 +220,16 @@ void PITASeedSites<TRNAString>::clear_pos() {
     clear(mEffectiveSites);
 }
 
-template<class TRNAString>
-void PITASeedSites<TRNAString>::reset_finder() {
+void PITASeedSites::reset_finder() {
     goBegin(mFinder);
     clear(mFinder);
 }
 
-template<class TRNAString>
-int PITASeedSites<TRNAString>::find_seed_sites(
-        TRNAString const &pMiRNA,
+int PITASeedSites::find_seed_sites(
+        mikan::TRNAStr const &pMiRNA,
         StringSet<CharString> &pSeedDef) {
-    PITASeedSeqs<TRNAString> seedSeqs;
-    TRNAString seedSeq;
+    PITASeedSeqs seedSeqs;
+    mikan::TRNAStr seedSeq;
     CharString seedType;
     int retVal;
     unsigned mRNAPos, sitePos;
@@ -291,13 +277,12 @@ int PITASeedSites<TRNAString>::find_seed_sites(
     return 0;
 }
 
-template<class TRNAString>
-void PITASeedSites<TRNAString>::set_new_seed_type(
+void PITASeedSites::set_new_seed_type(
         CharString &pCurSeedType,
         StringSet<CharString> &pSeedDef,
         unsigned pMRNAPos,
         unsigned pSitePos,
-        TRNAString const &pMiRNA,
+        mikan::TRNAStr const &pMiRNA,
         unsigned pMisMatchPos,
         bool &pEffectiveSite) {
     bool matchM8, matchM9, gutM8, gutM9, gumM8, gumM9;;
@@ -349,16 +334,15 @@ void PITASeedSites<TRNAString>::set_new_seed_type(
 
 }
 
-template<class TRNAString>
-void PITASeedSites<TRNAString>::set_mx_matches(
+void PITASeedSites::set_mx_matches(
         unsigned pMRNAPos,
         unsigned pSitePos,
-        TRNAString const &pMiRNA,
+        mikan::TRNAStr const &pMiRNA,
         int pMx,
         bool &pMatchMx,
         bool &pGutMx,
         bool &pGumMx) {
-    TRNAString cMiRNASeq, miRNAMx, mRNAMx, miRNAMxC;
+    mikan::TRNAStr cMiRNASeq, miRNAMx, mRNAMx, miRNAMxC;
 
     miRNAMx = pMiRNA[pMx - 1];
     cMiRNASeq = pMiRNA;
@@ -382,8 +366,7 @@ void PITASeedSites<TRNAString>::set_mx_matches(
 
 }
 
-template<class TRNAString>
-void PITASeedSites<TRNAString>::set_stringent_seed_type(
+void PITASeedSites::set_stringent_seed_type(
         CharString &pCurSeedType,
         StringSet<CharString> &pSeedDef,
         bool pMatchMx1,
@@ -410,8 +393,7 @@ void PITASeedSites<TRNAString>::set_stringent_seed_type(
     return;
 }
 
-template<class TRNAString>
-void PITASeedSites<TRNAString>::set_6mer_seed_type(
+void PITASeedSites::set_6mer_seed_type(
         CharString &pCurSeedType,
         StringSet<CharString> &pSeedDef,
         bool,
@@ -436,8 +418,7 @@ void PITASeedSites<TRNAString>::set_6mer_seed_type(
     return;
 }
 
-template<class TRNAString>
-void PITASeedSites<TRNAString>::set_single_gu_seed_type(
+void PITASeedSites::set_single_gu_seed_type(
         CharString &pCurSeedType,
         StringSet<CharString> &pSeedDef,
         int pM1,
@@ -508,8 +489,7 @@ void PITASeedSites<TRNAString>::set_single_gu_seed_type(
     return;
 }
 
-template<class TRNAString>
-void PITASeedSites<TRNAString>::set_multiple_gu_seed_type(
+void PITASeedSites::set_multiple_gu_seed_type(
         CharString &pCurSeedType,
         StringSet<CharString> &pSeedDef,
         int,
@@ -555,8 +535,7 @@ void PITASeedSites<TRNAString>::set_multiple_gu_seed_type(
     return;
 }
 
-template<class TRNAString>
-void PITASeedSites<TRNAString>::set_mismatch_seed_type(
+void PITASeedSites::set_mismatch_seed_type(
         CharString &pCurSeedType,
         StringSet<CharString> &pSeedDef,
         int pM1,
@@ -614,8 +593,7 @@ void PITASeedSites<TRNAString>::set_mismatch_seed_type(
     return;
 }
 
-template<class TRNAString>
-void PITASeedSites<TRNAString>::set_gu_mismatch_seed_type(
+void PITASeedSites::set_gu_mismatch_seed_type(
         CharString &pCurSeedType,
         StringSet<CharString> &pSeedDef,
         int pM1,
@@ -689,8 +667,7 @@ void PITASeedSites<TRNAString>::set_gu_mismatch_seed_type(
     return;
 }
 
-template<class TRNAString>
-void PITASeedSites<TRNAString>::check_last_match(bool pMatchM8, bool pMatchM9, seqan::CharString &pNewSeedType) {
+void PITASeedSites::check_last_match(bool pMatchM8, bool pMatchM9, seqan::CharString &pNewSeedType) {
     if (pNewSeedType == "6mer" || pNewSeedType == "7mer" || pNewSeedType == "8mer") {
         return;
     }
@@ -699,12 +676,5 @@ void PITASeedSites<TRNAString>::check_last_match(bool pMatchM8, bool pMatchM9, s
         pNewSeedType = "";
     }
 }
-
-// Explicit template instantiation
-template
-class PITASeedSeqs<TRNATYPE>;
-
-template
-class PITASeedSites<TRNATYPE>;
 
 } // namespace ptddg

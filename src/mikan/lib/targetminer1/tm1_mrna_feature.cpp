@@ -1,16 +1,14 @@
-#include "mk_typedef.hpp"        // TRNATYPE
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "tm1_mrna_feature.hpp"  // TM1ScaledFeatures, TM1RawMRNAures, TM1MRNASeedType, TM1MRNASiteCount,
 
 using namespace seqan;
-using namespace mikan;
 
 namespace tm1p {
 
 //
 // TM1ScaledFeatures methods
 //
-template<class TRNAString>
-void TM1ScaledFeatures<TRNAString>::init_max_vals() {
+void TM1ScaledFeatures::init_max_vals() {
 
     resize(mMaxFeatVals, FEATURE_NUM);
     mMaxFeatVals[0] = 22.0f;
@@ -45,8 +43,7 @@ void TM1ScaledFeatures<TRNAString>::init_max_vals() {
     mMaxFeatVals[29] = 1.0f;
 }
 
-template<class TRNAString>
-float TM1ScaledFeatures<TRNAString>::scale_feat_val(unsigned pIdx, float pVal) {
+float TM1ScaledFeatures::scale_feat_val(unsigned pIdx, float pVal) {
     float val;
 
     if (pVal == 0) {
@@ -60,15 +57,12 @@ float TM1ScaledFeatures<TRNAString>::scale_feat_val(unsigned pIdx, float pVal) {
     return val;
 }
 
-
-template<class TRNAString>
-void TM1ScaledFeatures<TRNAString>::clear_features() {
+void TM1ScaledFeatures::clear_features() {
     clear(mMRNAIDs);
     clear(mScaledFeatures);
 }
 
-template<class TRNAString>
-void TM1ScaledFeatures<TRNAString>::resize_features(unsigned pSize) {
+void TM1ScaledFeatures::resize_features(unsigned pSize) {
     resize(mMRNAIDs, pSize);
     resize(mScaledFeatures, pSize);
     for (unsigned i = 0; i < pSize; ++i) {
@@ -76,8 +70,7 @@ void TM1ScaledFeatures<TRNAString>::resize_features(unsigned pSize) {
     }
 }
 
-template<class TRNAString>
-void TM1ScaledFeatures<TRNAString>::print_features() {
+void TM1ScaledFeatures::print_features() {
     for (unsigned i = 0; i < length(mMRNAIDs); ++i) {
         for (unsigned j = 0; j < FEATURE_NUM; ++j) {
             std::cout << j << ":";
@@ -90,17 +83,16 @@ void TM1ScaledFeatures<TRNAString>::print_features() {
     }
 }
 
-template<class TRNAString>
-int TM1ScaledFeatures<TRNAString>::scale_features(
-        TM1SortedSitePos<TRNAString> &pSortedSites,
-        TM1MRNASeedType<TRNAString> &pSeedTypes,
-        TM1MRNAAURich<TRNAString> &pAURich,
-        TM1MRNASingleFreq<TRNAString> &pSingleFreqs,
-        TM1MRNASingleFreqFlank<TRNAString> &pSingleFreqFlanks,
-        TM1MRNADiFreq<TRNAString> &pDiFreqs,
-        TM1MRNADiFreqFlank<TRNAString> &pDiFreqFlanks,
-        TM1MRNASingleMatch<TRNAString> &pSingleMatches,
-        TM1MRNATwoConsecMatch<TRNAString> &pTwoMatches) {
+int TM1ScaledFeatures::scale_features(
+        TM1SortedSitePos &pSortedSites,
+        TM1MRNASeedType &pSeedTypes,
+        TM1MRNAAURich &pAURich,
+        TM1MRNASingleFreq &pSingleFreqs,
+        TM1MRNASingleFreqFlank &pSingleFreqFlanks,
+        TM1MRNADiFreq &pDiFreqs,
+        TM1MRNADiFreqFlank &pDiFreqFlanks,
+        TM1MRNASingleMatch &pSingleMatches,
+        TM1MRNATwoConsecMatch &pTwoMatches) {
     const String<unsigned> &mRNAIDs = pSortedSites.get_mrna_ids();
 
     resize_features((unsigned) length(mRNAIDs));
@@ -122,43 +114,37 @@ int TM1ScaledFeatures<TRNAString>::scale_features(
     return 0;
 }
 
-template<class TRNAString>
-void TM1ScaledFeatures<TRNAString>::scale_seed_type(unsigned pIdx, TM1MRNASeedType<TRNAString> &pSeedTypes) {
+void TM1ScaledFeatures::scale_seed_type(unsigned pIdx, TM1MRNASeedType &pSeedTypes) {
     mScaledFeatures[pIdx][0] = scale_feat_val(0, pSeedTypes.mNum6mer[pIdx]);
     mScaledFeatures[pIdx][3] = scale_feat_val(3, pSeedTypes.mNum8mer[pIdx]);
 }
 
-template<class TRNAString>
-void TM1ScaledFeatures<TRNAString>::scale_au_rich(unsigned pIdx, TM1MRNAAURich<TRNAString> &pAURich) {
+void TM1ScaledFeatures::scale_au_rich(unsigned pIdx, TM1MRNAAURich &pAURich) {
     mScaledFeatures[pIdx][1] = scale_feat_val(1, pAURich.mAU6mer[pIdx]);
     mScaledFeatures[pIdx][2] = scale_feat_val(2, pAURich.mAU7merm8[pIdx]);
     mScaledFeatures[pIdx][4] = scale_feat_val(4, pAURich.mAU8mer[pIdx]);
 }
 
-template<class TRNAString>
-void TM1ScaledFeatures<TRNAString>::scale_single_freq(unsigned pIdx, TM1MRNASingleFreq<TRNAString> &pSingleFreqs) {
+void TM1ScaledFeatures::scale_single_freq(unsigned pIdx, TM1MRNASingleFreq &pSingleFreqs) {
     mScaledFeatures[pIdx][5] = scale_feat_val(5, pSingleFreqs.mSeedFreqU[pIdx]);
     mScaledFeatures[pIdx][6] = scale_feat_val(6, pSingleFreqs.mSeedFreqC[pIdx]);
 }
 
-template<class TRNAString>
-void TM1ScaledFeatures<TRNAString>::scale_freq_flank(
+void TM1ScaledFeatures::scale_freq_flank(
         unsigned pIdx,
-        TM1MRNASingleFreqFlank<TRNAString> &pSingleFreqFlanks) {
+        TM1MRNASingleFreqFlank &pSingleFreqFlanks) {
     mScaledFeatures[pIdx][7] = scale_feat_val(7, pSingleFreqFlanks.m3PFreqA[pIdx]);
     mScaledFeatures[pIdx][8] = scale_feat_val(8, pSingleFreqFlanks.m3PFreqU[pIdx]);
 }
 
-template<class TRNAString>
-void TM1ScaledFeatures<TRNAString>::scale_di_freq(unsigned pIdx, TM1MRNADiFreq<TRNAString> &pDiFreqs) {
+void TM1ScaledFeatures::scale_di_freq(unsigned pIdx, TM1MRNADiFreq &pDiFreqs) {
     mScaledFeatures[pIdx][9] = scale_feat_val(9, pDiFreqs.mSeedFreqUC[pIdx]);
     mScaledFeatures[pIdx][10] = scale_feat_val(10, pDiFreqs.mSeedFreqCA[pIdx]);
     mScaledFeatures[pIdx][11] = scale_feat_val(11, pDiFreqs.mSeedFreqCG[pIdx]);
 }
 
-template<class TRNAString>
 void
-TM1ScaledFeatures<TRNAString>::scale_di_freq_flank(unsigned pIdx, TM1MRNADiFreqFlank<TRNAString> &pDiFreqFlanks) {
+TM1ScaledFeatures::scale_di_freq_flank(unsigned pIdx, TM1MRNADiFreqFlank &pDiFreqFlanks) {
     mScaledFeatures[pIdx][12] = scale_feat_val(12, pDiFreqFlanks.m3PFreqAA[pIdx]);
     mScaledFeatures[pIdx][13] = scale_feat_val(13, pDiFreqFlanks.m3PFreqAU[pIdx]);
     mScaledFeatures[pIdx][14] = scale_feat_val(14, pDiFreqFlanks.m3PFreqAG[pIdx]);
@@ -172,16 +158,14 @@ TM1ScaledFeatures<TRNAString>::scale_di_freq_flank(unsigned pIdx, TM1MRNADiFreqF
     mScaledFeatures[pIdx][22] = scale_feat_val(22, pDiFreqFlanks.m3PFreqCU[pIdx]);
 }
 
-template<class TRNAString>
 void
-TM1ScaledFeatures<TRNAString>::scale_single_match(unsigned pIdx, TM1MRNASingleMatch<TRNAString> &pSingleMatches) {
+TM1ScaledFeatures::scale_single_match(unsigned pIdx, TM1MRNASingleMatch &pSingleMatches) {
     mScaledFeatures[pIdx][23] = scale_feat_val(23, pSingleMatches.mFreqUG[pIdx]);
     mScaledFeatures[pIdx][24] = scale_feat_val(24, pSingleMatches.mFreqGU[pIdx]);
     mScaledFeatures[pIdx][25] = scale_feat_val(25, pSingleMatches.mFreqCG[pIdx]);
 }
 
-template<class TRNAString>
-void TM1ScaledFeatures<TRNAString>::scale_two_match(unsigned pIdx, TM1MRNATwoConsecMatch<TRNAString> &pTwoMatches) {
+void TM1ScaledFeatures::scale_two_match(unsigned pIdx, TM1MRNATwoConsecMatch &pTwoMatches) {
     mScaledFeatures[pIdx][26] = scale_feat_val(26, pTwoMatches.mFreqUACG[pIdx]);
     mScaledFeatures[pIdx][27] = scale_feat_val(27, pTwoMatches.mFreqUAUG[pIdx]);
     mScaledFeatures[pIdx][28] = scale_feat_val(28, pTwoMatches.mFreqCGGC[pIdx]);
@@ -191,8 +175,7 @@ void TM1ScaledFeatures<TRNAString>::scale_two_match(unsigned pIdx, TM1MRNATwoCon
 //
 // TM1RawFeatures methods
 //
-template<class TRNAString>
-void TM1MRNAFeatures<TRNAString>::clear_features() {
+void TM1MRNAFeatures::clear_features() {
     mSeedTypes.clear_features();
     mSiteCounts.clear_features();
     mAURich.clear_features();
@@ -206,8 +189,7 @@ void TM1MRNAFeatures<TRNAString>::clear_features() {
     mScaledFeats.clear_features();
 }
 
-template<class TRNAString>
-void TM1MRNAFeatures<TRNAString>::resize_features(unsigned pSize) {
+void TM1MRNAFeatures::resize_features(unsigned pSize) {
     mSeedTypes.resize_features(pSize);
     mSiteCounts.resize_features(pSize);
     mAURich.resize_features(pSize);
@@ -222,11 +204,10 @@ void TM1MRNAFeatures<TRNAString>::resize_features(unsigned pSize) {
 
 }
 
-template<class TRNAString>
-int TM1MRNAFeatures<TRNAString>::add_features(
-        TM1SeedSites<TRNAString> &pSeedSites,
-        TM1RawFeatures<TRNAString> &pRawFeatures,
-        TM1SortedSitePos<TRNAString> &pSortedSites) {
+int TM1MRNAFeatures::add_features(
+        TM1SeedSites &pSeedSites,
+        TM1RawFeatures &pRawFeatures,
+        TM1SortedSitePos &pSortedSites) {
     const StringSet<String<unsigned> > &sortedSites = pSortedSites.get_sorted_mrna_pos();
     const String<unsigned> &mRNAIDs = pSortedSites.get_mrna_ids();
     unsigned idx;
@@ -254,8 +235,7 @@ int TM1MRNAFeatures<TRNAString>::add_features(
     return 0;
 }
 
-template<class TRNAString>
-void TM1MRNAFeatures<TRNAString>::print_features(TM1SortedSitePos<TRNAString> &pSortedSites) {
+void TM1MRNAFeatures::print_features(TM1SortedSitePos &pSortedSites) {
     const String<unsigned> &mRNAIDs = pSortedSites.get_mrna_ids();
 
     for (unsigned i = 0; i < length(mRNAIDs); ++i) {
@@ -276,14 +256,12 @@ void TM1MRNAFeatures<TRNAString>::print_features(TM1SortedSitePos<TRNAString> &p
 //
 // TM1MRNASeedType methods
 //
-template<class TRNAString>
-void TM1MRNASeedType<TRNAString>::clear_features() {
+void TM1MRNASeedType::clear_features() {
     clear(mNum6mer);
     clear(mNum8mer);
 }
 
-template<class TRNAString>
-void TM1MRNASeedType<TRNAString>::resize_features(unsigned pSize) {
+void TM1MRNASeedType::resize_features(unsigned pSize) {
     resize(mNum6mer, pSize);
     resize(mNum8mer, pSize);
     for (unsigned i = 0; i < pSize; ++i) {
@@ -292,12 +270,11 @@ void TM1MRNASeedType<TRNAString>::resize_features(unsigned pSize) {
     }
 }
 
-template<class TRNAString>
-int TM1MRNASeedType<TRNAString>::add_features(
+int TM1MRNASeedType::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites<TRNAString> &pSeedSites,
-        TM1RawFeatures<TRNAString> &pRawFeatures) {
+        TM1SeedSites &pSeedSites,
+        TM1RawFeatures &pRawFeatures) {
     CharString seedType;
 
     for (unsigned i = 0; i < length(pSortedSites); ++i) {
@@ -315,8 +292,7 @@ int TM1MRNASeedType<TRNAString>::add_features(
     return 0;
 }
 
-template<class TRNAString>
-void TM1MRNASeedType<TRNAString>::print_feature(unsigned pIdx) {
+void TM1MRNASeedType::print_feature(unsigned pIdx) {
     std::cout << pIdx;
     std::cout << ", 1:" << mNum6mer[pIdx];
     std::cout << ", 10:" << mNum8mer[pIdx] << std::endl;
@@ -325,25 +301,22 @@ void TM1MRNASeedType<TRNAString>::print_feature(unsigned pIdx) {
 //
 // TM1MRNASiteCount methods
 //
-template<class TRNAString>
-void TM1MRNASiteCount<TRNAString>::clear_features() {
+void TM1MRNASiteCount::clear_features() {
     clear(mSiteCount);
 }
 
-template<class TRNAString>
-void TM1MRNASiteCount<TRNAString>::resize_features(unsigned pSize) {
+void TM1MRNASiteCount::resize_features(unsigned pSize) {
     resize(mSiteCount, pSize);
     for (unsigned i = 0; i < pSize; ++i) {
         mSiteCount[i] = 0;
     }
 }
 
-template<class TRNAString>
-int TM1MRNASiteCount<TRNAString>::add_features(
+int TM1MRNASiteCount::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites<TRNAString> &pSeedSites,
-        TM1RawFeatures<TRNAString> &) {
+        TM1SeedSites &pSeedSites,
+        TM1RawFeatures &) {
     for (unsigned i = 0; i < length(pSortedSites); ++i) {
         if (!pSeedSites.mEffectiveSites[pSortedSites[i]]) {
             continue;
@@ -354,8 +327,7 @@ int TM1MRNASiteCount<TRNAString>::add_features(
     return 0;
 }
 
-template<class TRNAString>
-void TM1MRNASiteCount<TRNAString>::print_feature(unsigned pIdx) {
+void TM1MRNASiteCount::print_feature(unsigned pIdx) {
     std::cout << pIdx;
     std::cout << ", site_count:" << mSiteCount[pIdx] << std::endl;
 }
@@ -363,15 +335,13 @@ void TM1MRNASiteCount<TRNAString>::print_feature(unsigned pIdx) {
 //
 // TM1MRNAAURich methods
 //
-template<class TRNAString>
-void TM1MRNAAURich<TRNAString>::clear_features() {
+void TM1MRNAAURich::clear_features() {
     clear(mAU6mer);
     clear(mAU7merm8);
     clear(mAU8mer);
 }
 
-template<class TRNAString>
-void TM1MRNAAURich<TRNAString>::resize_features(unsigned pSize) {
+void TM1MRNAAURich::resize_features(unsigned pSize) {
     resize(mAU6mer, pSize);
     resize(mAU7merm8, pSize);
     resize(mAU8mer, pSize);
@@ -383,14 +353,13 @@ void TM1MRNAAURich<TRNAString>::resize_features(unsigned pSize) {
     }
 }
 
-template<class TRNAString>
-int TM1MRNAAURich<TRNAString>::add_features(
+int TM1MRNAAURich::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites<TRNAString> &pSeedSites,
-        TM1RawFeatures<TRNAString> &pRawFeatures) {
+        TM1SeedSites &pSeedSites,
+        TM1RawFeatures &pRawFeatures) {
     CharString seedType;
-    const TM1FeatAURich<TRNAString> &auRich = pRawFeatures.get_au_rich();
+    const TM1FeatAURich &auRich = pRawFeatures.get_au_rich();
 
     for (unsigned i = 0; i < length(pSortedSites); ++i) {
         if (!pSeedSites.mEffectiveSites[pSortedSites[i]]) {
@@ -414,8 +383,7 @@ int TM1MRNAAURich<TRNAString>::add_features(
     return 0;
 }
 
-template<class TRNAString>
-void TM1MRNAAURich<TRNAString>::print_feature(unsigned pIdx) {
+void TM1MRNAAURich::print_feature(unsigned pIdx) {
     std::cout << pIdx;
     std::cout << ", 2:" << mAU6mer[pIdx];
     std::cout << ", 5:" << mAU7merm8[pIdx];
@@ -425,14 +393,12 @@ void TM1MRNAAURich<TRNAString>::print_feature(unsigned pIdx) {
 //
 // TM1MRNASingleFreq methods
 //
-template<class TRNAString>
-void TM1MRNASingleFreq<TRNAString>::clear_features() {
+void TM1MRNASingleFreq::clear_features() {
     clear(mSeedFreqU);
     clear(mSeedFreqC);
 }
 
-template<class TRNAString>
-void TM1MRNASingleFreq<TRNAString>::resize_features(unsigned pSize) {
+void TM1MRNASingleFreq::resize_features(unsigned pSize) {
     resize(mSeedFreqU, pSize);
     resize(mSeedFreqC, pSize);
 
@@ -442,13 +408,12 @@ void TM1MRNASingleFreq<TRNAString>::resize_features(unsigned pSize) {
     }
 }
 
-template<class TRNAString>
-int TM1MRNASingleFreq<TRNAString>::add_features(
+int TM1MRNASingleFreq::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites<TRNAString> &pSeedSites,
-        TM1RawFeatures<TRNAString> &pRawFeatures) {
-    const TM1FeatSingleFreq<TRNAString> &singleFreq = pRawFeatures.get_single_freq();
+        TM1SeedSites &pSeedSites,
+        TM1RawFeatures &pRawFeatures) {
+    const TM1FeatSingleFreq &singleFreq = pRawFeatures.get_single_freq();
     CharString seedType;
     unsigned idx;
     float totalFreqU = 0;
@@ -488,8 +453,7 @@ int TM1MRNASingleFreq<TRNAString>::add_features(
     return 0;
 }
 
-template<class TRNAString>
-void TM1MRNASingleFreq<TRNAString>::print_feature(unsigned pIdx) {
+void TM1MRNASingleFreq::print_feature(unsigned pIdx) {
     std::cout << pIdx;
     std::cout << ", 14:" << mSeedFreqU[pIdx];
     std::cout << ", 16:" << mSeedFreqC[pIdx] << std::endl;
@@ -498,14 +462,12 @@ void TM1MRNASingleFreq<TRNAString>::print_feature(unsigned pIdx) {
 //
 // TM1MRNASingleFreqFlank methods
 //
-template<class TRNAString>
-void TM1MRNASingleFreqFlank<TRNAString>::clear_features() {
+void TM1MRNASingleFreqFlank::clear_features() {
     clear(m3PFreqA);
     clear(m3PFreqU);
 }
 
-template<class TRNAString>
-void TM1MRNASingleFreqFlank<TRNAString>::resize_features(unsigned pSize) {
+void TM1MRNASingleFreqFlank::resize_features(unsigned pSize) {
     resize(m3PFreqA, pSize);
     resize(m3PFreqU, pSize);
 
@@ -515,13 +477,12 @@ void TM1MRNASingleFreqFlank<TRNAString>::resize_features(unsigned pSize) {
     }
 }
 
-template<class TRNAString>
-int TM1MRNASingleFreqFlank<TRNAString>::add_features(
+int TM1MRNASingleFreqFlank::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites<TRNAString> &pSeedSites,
-        TM1RawFeatures<TRNAString> &pRawFeatures) {
-    const TM1FeatSingleFreqFlank<TRNAString> &singleFreqFlank = pRawFeatures.get_single_freq_flank();
+        TM1SeedSites &pSeedSites,
+        TM1RawFeatures &pRawFeatures) {
+    const TM1FeatSingleFreqFlank &singleFreqFlank = pRawFeatures.get_single_freq_flank();
     unsigned idx;
     float totalFreqA = 0;
     float totalFreqU = 0;
@@ -555,8 +516,7 @@ int TM1MRNASingleFreqFlank<TRNAString>::add_features(
     return 0;
 }
 
-template<class TRNAString>
-void TM1MRNASingleFreqFlank<TRNAString>::print_feature(unsigned pIdx) {
+void TM1MRNASingleFreqFlank::print_feature(unsigned pIdx) {
     std::cout << pIdx;
     std::cout << ", 17:" << m3PFreqA[pIdx];
     std::cout << ", 18:" << m3PFreqU[pIdx] << std::endl;
@@ -565,15 +525,13 @@ void TM1MRNASingleFreqFlank<TRNAString>::print_feature(unsigned pIdx) {
 //
 // TM1MRNADiFreq methods
 //
-template<class TRNAString>
-void TM1MRNADiFreq<TRNAString>::clear_features() {
+void TM1MRNADiFreq::clear_features() {
     clear(mSeedFreqUC);
     clear(mSeedFreqCA);
     clear(mSeedFreqCG);
 }
 
-template<class TRNAString>
-void TM1MRNADiFreq<TRNAString>::resize_features(unsigned pSize) {
+void TM1MRNADiFreq::resize_features(unsigned pSize) {
     resize(mSeedFreqUC, pSize);
     resize(mSeedFreqCA, pSize);
     resize(mSeedFreqCG, pSize);
@@ -585,13 +543,12 @@ void TM1MRNADiFreq<TRNAString>::resize_features(unsigned pSize) {
     }
 }
 
-template<class TRNAString>
-int TM1MRNADiFreq<TRNAString>::add_features(
+int TM1MRNADiFreq::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites<TRNAString> &pSeedSites,
-        TM1RawFeatures<TRNAString> &pRawFeatures) {
-    const TM1FeatDiFreq<TRNAString> &diFreq = pRawFeatures.get_di_freq();
+        TM1SeedSites &pSeedSites,
+        TM1RawFeatures &pRawFeatures) {
+    const TM1FeatDiFreq &diFreq = pRawFeatures.get_di_freq();
     CharString seedType;
     unsigned idx;
     float totalFreqUC = 0;
@@ -635,8 +592,7 @@ int TM1MRNADiFreq<TRNAString>::add_features(
     return 0;
 }
 
-template<class TRNAString>
-void TM1MRNADiFreq<TRNAString>::print_feature(unsigned pIdx) {
+void TM1MRNADiFreq::print_feature(unsigned pIdx) {
     std::cout << pIdx;
     std::cout << ", 28:" << mSeedFreqUC[pIdx];
     std::cout << ", 33:" << mSeedFreqCA[pIdx];
@@ -646,8 +602,7 @@ void TM1MRNADiFreq<TRNAString>::print_feature(unsigned pIdx) {
 //
 // TM1MRNADiFreqFlank methods
 //
-template<class TRNAString>
-void TM1MRNADiFreqFlank<TRNAString>::clear_features() {
+void TM1MRNADiFreqFlank::clear_features() {
     clear(m3PFreqAA);
     clear(m3PFreqAU);
     clear(m3PFreqAG);
@@ -661,8 +616,7 @@ void TM1MRNADiFreqFlank<TRNAString>::clear_features() {
     clear(m3PFreqCU);
 }
 
-template<class TRNAString>
-void TM1MRNADiFreqFlank<TRNAString>::resize_features(unsigned pSize) {
+void TM1MRNADiFreqFlank::resize_features(unsigned pSize) {
     resize(m3PFreqAA, pSize);
     resize(m3PFreqAU, pSize);
     resize(m3PFreqAG, pSize);
@@ -690,13 +644,12 @@ void TM1MRNADiFreqFlank<TRNAString>::resize_features(unsigned pSize) {
     }
 }
 
-template<class TRNAString>
-int TM1MRNADiFreqFlank<TRNAString>::add_features(
+int TM1MRNADiFreqFlank::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites<TRNAString> &pSeedSites,
-        TM1RawFeatures<TRNAString> &pRawFeatures) {
-    const TM1FeatDiFreqFlank<TRNAString> &diFreqFlank = pRawFeatures.get_di_freq_flank();
+        TM1SeedSites &pSeedSites,
+        TM1RawFeatures &pRawFeatures) {
+    const TM1FeatDiFreqFlank &diFreqFlank = pRawFeatures.get_di_freq_flank();
     unsigned idx;
     float totalFreqAA = 0;
     float totalFreqAU = 0;
@@ -758,8 +711,7 @@ int TM1MRNADiFreqFlank<TRNAString>::add_features(
     return 0;
 }
 
-template<class TRNAString>
-void TM1MRNADiFreqFlank<TRNAString>::print_feature(unsigned pIdx) {
+void TM1MRNADiFreqFlank::print_feature(unsigned pIdx) {
     std::cout << pIdx;
     std::cout << ", 37:" << m3PFreqAA[pIdx];
     std::cout << ", 38:" << m3PFreqAU[pIdx];
@@ -777,15 +729,13 @@ void TM1MRNADiFreqFlank<TRNAString>::print_feature(unsigned pIdx) {
 //
 // TM1MRNASingleMatch methods
 //
-template<class TRNAString>
-void TM1MRNASingleMatch<TRNAString>::clear_features() {
+void TM1MRNASingleMatch::clear_features() {
     clear(mFreqUG);
     clear(mFreqGU);
     clear(mFreqCG);
 }
 
-template<class TRNAString>
-void TM1MRNASingleMatch<TRNAString>::resize_features(unsigned pSize) {
+void TM1MRNASingleMatch::resize_features(unsigned pSize) {
     resize(mFreqUG, pSize);
     resize(mFreqGU, pSize);
     resize(mFreqCG, pSize);
@@ -797,13 +747,12 @@ void TM1MRNASingleMatch<TRNAString>::resize_features(unsigned pSize) {
     }
 }
 
-template<class TRNAString>
-int TM1MRNASingleMatch<TRNAString>::add_features(
+int TM1MRNASingleMatch::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites<TRNAString> &pSeedSites,
-        TM1RawFeatures<TRNAString> &pRawFeatures) {
-    const TM1FeatSingleMatch<TRNAString> &singleMatch = pRawFeatures.get_single_match();
+        TM1SeedSites &pSeedSites,
+        TM1RawFeatures &pRawFeatures) {
+    const TM1FeatSingleMatch &singleMatch = pRawFeatures.get_single_match();
     int totalUG = 0;
     int totalGU = 0;
     int totalCG = 0;
@@ -828,8 +777,7 @@ int TM1MRNASingleMatch<TRNAString>::add_features(
     return 0;
 }
 
-template<class TRNAString>
-void TM1MRNASingleMatch<TRNAString>::print_feature(unsigned pIdx) {
+void TM1MRNASingleMatch::print_feature(unsigned pIdx) {
     std::cout << pIdx;
     std::cout << ", 55:" << mFreqUG[pIdx];
     std::cout << ", 57:" << mFreqGU[pIdx];
@@ -839,16 +787,14 @@ void TM1MRNASingleMatch<TRNAString>::print_feature(unsigned pIdx) {
 //
 // TM1MRNATwoConsecMatch methods
 //
-template<class TRNAString>
-void TM1MRNATwoConsecMatch<TRNAString>::clear_features() {
+void TM1MRNATwoConsecMatch::clear_features() {
     clear(mFreqUACG);
     clear(mFreqUAUG);
     clear(mFreqCGGC);
     clear(mFreqUGGC);
 }
 
-template<class TRNAString>
-void TM1MRNATwoConsecMatch<TRNAString>::resize_features(unsigned pSize) {
+void TM1MRNATwoConsecMatch::resize_features(unsigned pSize) {
     resize(mFreqUACG, pSize);
     resize(mFreqUAUG, pSize);
     resize(mFreqCGGC, pSize);
@@ -862,13 +808,12 @@ void TM1MRNATwoConsecMatch<TRNAString>::resize_features(unsigned pSize) {
     }
 }
 
-template<class TRNAString>
-int TM1MRNATwoConsecMatch<TRNAString>::add_features(
+int TM1MRNATwoConsecMatch::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites<TRNAString> &pSeedSites,
-        TM1RawFeatures<TRNAString> &pRawFeatures) {
-    const TM1FeatTwoConsecMatch<TRNAString> &twoConsecMatch = pRawFeatures.get_two_consec_match();
+        TM1SeedSites &pSeedSites,
+        TM1RawFeatures &pRawFeatures) {
+    const TM1FeatTwoConsecMatch &twoConsecMatch = pRawFeatures.get_two_consec_match();
     int totalUACG = 0;
     int totalUAUG = 0;
     int totalCGGC = 0;
@@ -896,47 +841,12 @@ int TM1MRNATwoConsecMatch<TRNAString>::add_features(
     return 0;
 }
 
-template<class TRNAString>
-void TM1MRNATwoConsecMatch<TRNAString>::print_feature(unsigned pIdx) {
+void TM1MRNATwoConsecMatch::print_feature(unsigned pIdx) {
     std::cout << pIdx;
     std::cout << ", 68:" << mFreqUACG[pIdx];
     std::cout << ", 70:" << mFreqUAUG[pIdx];
     std::cout << ", 79:" << mFreqCGGC[pIdx];
     std::cout << ", 89:" << mFreqUGGC[pIdx] << std::endl;
 }
-
-// Explicit template instantiation
-template
-class TM1MRNASeedType<TRNATYPE>;
-
-template
-class TM1MRNASiteCount<TRNATYPE>;
-
-template
-class TM1MRNAAURich<TRNATYPE>;
-
-template
-class TM1MRNASingleFreq<TRNATYPE>;
-
-template
-class TM1MRNASingleFreqFlank<TRNATYPE>;
-
-template
-class TM1MRNADiFreq<TRNATYPE>;
-
-template
-class TM1MRNADiFreqFlank<TRNATYPE>;
-
-template
-class TM1MRNASingleMatch<TRNATYPE>;
-
-template
-class TM1MRNATwoConsecMatch<TRNATYPE>;
-
-template
-class TM1ScaledFeatures<TRNATYPE>;
-
-template
-class TM1MRNAFeatures<TRNATYPE>;
 
 } // namespace tm1p

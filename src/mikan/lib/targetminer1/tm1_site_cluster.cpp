@@ -1,26 +1,23 @@
-#include "mk_typedef.hpp"         // TRNATYPE
+#include <seqan/seq_io.h>
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "tm1_seed_site.hpp"      // TM1SeedSites
 #include "tm1_site_cluster.hpp"   // TM1Overlap, TM1SortedSitePos
-#include <seqan/seq_io.h>
 
 using namespace seqan;
-using namespace mikan;
 
 namespace tm1p {
 
 //
 // TM1SiteCluster methods
 //
-template<class TRNAString>
-void TM1SiteCluster<TRNAString>::clear_cluster() {
+void TM1SiteCluster::clear_cluster() {
     mSiteCount = 0;
     mRNAPosSet.clear();
     mSiteMap.clear();
 }
 
-template<class TRNAString>
-void TM1SiteCluster<TRNAString>::cluster_site_pos(
-        TM1SeedSites<TRNAString> &pSeedSites) {
+void TM1SiteCluster::cluster_site_pos(
+        TM1SeedSites &pSeedSites) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
@@ -37,17 +34,15 @@ void TM1SiteCluster<TRNAString>::cluster_site_pos(
 // TM1SortedSitePos methods
 //
 
-template<class TRNAString>
-void TM1SortedSitePos<TRNAString>::clear_site_pos() {
+void TM1SortedSitePos::clear_site_pos() {
     clear(mSortedSites);
     clear(mMRNAIDs);
 
     mSiteCluster.clear_cluster();
 }
 
-template<class TRNAString>
-int TM1SortedSitePos<TRNAString>::generate_sorted_mrna_pos(
-        TM1SeedSites<TRNAString> &pSeedSites,
+int TM1SortedSitePos::generate_sorted_mrna_pos(
+        TM1SeedSites &pSeedSites,
         bool pRemoveOvelaps) {
     TItMMap itMap;
     TItSet itSet;
@@ -92,8 +87,7 @@ int TM1SortedSitePos<TRNAString>::generate_sorted_mrna_pos(
 
 }
 
-template<class TRNAString>
-void TM1SortedSitePos<TRNAString>::remove_overlapped_sites(TM1SeedSites<TRNAString> &pSeedSites) {
+void TM1SortedSitePos::remove_overlapped_sites(TM1SeedSites &pSeedSites) {
     TItMMap itMap;
     TItMap itSorted;
     TItSet itSet;
@@ -148,9 +142,8 @@ void TM1SortedSitePos<TRNAString>::remove_overlapped_sites(TM1SeedSites<TRNAStri
 
 }
 
-template<class TRNAString>
-void TM1SortedSitePos<TRNAString>::sort_by_pos7(
-        TM1SeedSites<TRNAString> &pSeedSites,
+void TM1SortedSitePos::sort_by_pos7(
+        TM1SeedSites &pSeedSites,
         TItRetPair &pGroupedSites,
         std::map<unsigned, unsigned> &pSortedSites) {
     TItMMap itMap;
@@ -164,9 +157,8 @@ void TM1SortedSitePos<TRNAString>::sort_by_pos7(
     }
 }
 
-template<class TRNAString>
-void TM1SortedSitePos<TRNAString>::sort_by_seed_types(
-        TM1SeedSites<TRNAString> &pSeedSites,
+void TM1SortedSitePos::sort_by_seed_types(
+        TM1SeedSites &pSeedSites,
         TItRetPair &pGroupedSites,
         std::map<unsigned, unsigned> &pSortedSites) {
     TItMMap itMap;
@@ -202,12 +194,5 @@ void TM1SortedSitePos<TRNAString>::sort_by_seed_types(
         pSortedSites.insert(TPosPair(siteOrder, siteId));
     }
 }
-
-// Explicit template instantiation
-template
-class TM1SiteCluster<TRNATYPE>;
-
-template
-class TM1SortedSitePos<TRNATYPE>;
 
 } // namespace tm1p

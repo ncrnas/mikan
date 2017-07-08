@@ -1,23 +1,20 @@
 #ifndef RH2_SCORE_HPP_
 #define RH2_SCORE_HPP_
 
-#include "rh2_seed_site.hpp"     // RH2SeedSites
-#include "hybrid_core.hpp"       // RH2WorkSpace, RH2RetValues
 #include <vector>
 #include <sstream>
 #include <seqan/sequence.h>
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "rh2_seed_site.hpp"     // RH2SeedSites
+#include "hybrid_core.hpp"       // RH2WorkSpace, RH2RetValues
 
 namespace rh2mfe {
 
 //
 // Store MFE scores
 //
-template<class TRNAString>
 class RH2MFEScores {
 public:
-    // Define types
-    typedef seqan::StringSet<TRNAString> TRNASet;
-
     // Define variables
     seqan::String<bool> mEffectiveSites;
 
@@ -39,8 +36,8 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(RH2SeedSites<TRNAString> &pSeedSites, TRNAString const &pMiRNASeq,
-                    TRNASet const &pMRNASeqs, seqan::CharString &pOverlapDef);
+    int calc_scores(RH2SeedSites &pSeedSites, mikan::TRNAStr const &pMiRNASeq,
+                    mikan::TRNASet const &pMRNASeqs, seqan::CharString &pOverlapDef);
 
     void calc_normalized_score(int pIdx, int pTargetLen, int pQueryLen);
 
@@ -55,16 +52,15 @@ private:
     std::vector<rh2::RH2RetValues> mRHRetVals;
 
 private:
-    void create_rh_seq(TRNAString const &pRNASeq, std::vector<char> &pRHSeq);
+    void create_rh_seq(mikan::TRNAStr const &pRNASeq, std::vector<char> &pRHSeq);
 
-    void write_seq_info(TRNAString &pMiSeq, TRNAString &pMRNASeq, std::vector<char> &pRhMiRNASeq,
+    void write_seq_info(mikan::TRNAStr &pMiSeq, mikan::TRNAStr &pMRNASeq, std::vector<char> &pRhMiRNASeq,
                         std::vector<char> &pRhMRNASeq);
 };
 
 //
 // Total MFE scores
 //
-template<class TRNAString>
 class RH2TotalScores {
 public:
     // Define methods
@@ -81,7 +77,7 @@ public:
     // Method prototypes
     void clear_scores();
 
-    int calc_scores(RH2SeedSites<TRNAString> &pSeedSites, RH2MFEScores<TRNAString> &pMFEScores,
+    int calc_scores(RH2SeedSites &pSeedSites, RH2MFEScores &pMFEScores,
                     const seqan::String<unsigned> &pSortedSites);
 
 private:

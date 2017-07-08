@@ -1,8 +1,8 @@
 #ifndef HYBRID_TABLE_HPP_
 #define HYBRID_TABLE_HPP_
 
-#include "hybrid_energy.hpp"
 #include <string>
+#include "hybrid_energy.hpp"
 
 namespace rh2 {
 

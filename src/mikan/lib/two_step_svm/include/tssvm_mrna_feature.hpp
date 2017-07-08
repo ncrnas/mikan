@@ -1,16 +1,16 @@
 #ifndef TSSVM_MRNA_FEATURE_HPP_
 #define TSSVM_MRNA_FEATURE_HPP_
 
+#include <seqan/sequence.h>
+#include "mk_typedef.hpp"           // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "tssvm_seed_site.hpp"      // TSSVMSeedSites
 #include "tssvm_site_svm.hpp"       // TSSVMSiteInputVector
-#include <seqan/sequence.h>
 
 namespace tssvm {
 
 //
 // UTR length feature
 //
-template<class TRNAString>
 class TSSVMFeatUTRLen {
 public:
     // Define methods
@@ -24,8 +24,8 @@ public:
 
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
-                     TSSVMSeedSites<TRNAString> &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
-                     TSSVMSiteInputVector<TRNAString> &pSiteInput);
+                     TSSVMSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
+                     TSSVMSiteInputVector &pSiteInput);
 
     void clear_features();
 
@@ -36,7 +36,6 @@ private:
 //
 // Site number feature
 //
-template<class TRNAString>
 class TSSVMFeatSiteNum {
 public:
     // Define methods
@@ -55,8 +54,8 @@ public:
 
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
-                     TSSVMSeedSites<TRNAString> &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
-                     TSSVMSiteInputVector<TRNAString> &pSiteInput);
+                     TSSVMSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
+                     TSSVMSiteInputVector &pSiteInput);
 
     void clear_features();
 
@@ -68,7 +67,6 @@ private:
 //
 // Total discriminant / UTR length feature
 //
-template<class TRNAString>
 class TSSVMFeatTotDiscUTRLen {
 public:
     // Define methods
@@ -82,8 +80,8 @@ public:
 
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
-                     TSSVMSeedSites<TRNAString> &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
-                     TSSVMSiteInputVector<TRNAString> &pSiteInput);
+                     TSSVMSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
+                     TSSVMSiteInputVector &pSiteInput);
 
     void clear_features();
 
@@ -95,7 +93,6 @@ private:
 //
 // Seed type number feature
 //
-template<class TRNAString>
 class TSSVMFeatSeedTypeNum {
 public:
     // Define methods
@@ -109,8 +106,8 @@ public:
 
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
-                     TSSVMSeedSites<TRNAString> &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
-                     TSSVMSiteInputVector<TRNAString> &pSiteInput);
+                     TSSVMSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
+                     TSSVMSiteInputVector &pSiteInput);
 
     void clear_features();
 
@@ -122,7 +119,6 @@ private:
 //
 // Discriminant bins feature
 //
-template<class TRNAString>
 class TSSVMFeatDiscBin {
 public:
     // Define methods
@@ -136,8 +132,8 @@ public:
 
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
-                     TSSVMSeedSites<TRNAString> &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
-                     TSSVMSiteInputVector<TRNAString> &pSiteInput);
+                     TSSVMSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
+                     TSSVMSiteInputVector &pSiteInput);
 
     void clear_features();
 
@@ -150,7 +146,6 @@ private:
 //
 // Optimal distance feature
 //
-template<class TRNAString>
 class TSSVMFeatOptDist {
 public:
     // Define methods
@@ -164,8 +159,8 @@ public:
 
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
-                     TSSVMSeedSites<TRNAString> &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
-                     TSSVMSiteInputVector<TRNAString> &pSiteInput);
+                     TSSVMSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
+                     TSSVMSiteInputVector &pSiteInput);
 
     void clear_features();
 
@@ -178,7 +173,6 @@ private:
 //
 // Site number flag feature
 //
-template<class TRNAString>
 class TSSVMFeatSiteNumFlg {
 public:
     // Define methods
@@ -192,8 +186,8 @@ public:
 
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
-                     TSSVMSeedSites<TRNAString> &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
-                     TSSVMSiteInputVector<TRNAString> &pSiteInput);
+                     TSSVMSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
+                     TSSVMSiteInputVector &pSiteInput);
 
     void clear_features();
 
@@ -206,7 +200,6 @@ private:
 //
 // Total discriminant feature
 //
-template<class TRNAString>
 class TSSVMFeatTotDisc {
 public:
     // Define methods
@@ -220,8 +213,8 @@ public:
 
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
-                     TSSVMSeedSites<TRNAString> &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
-                     TSSVMSiteInputVector<TRNAString> &pSiteInput);
+                     TSSVMSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
+                     TSSVMSiteInputVector &pSiteInput);
 
     void clear_features();
 
@@ -235,7 +228,6 @@ private:
 //
 // Store all raw feature values
 //
-template<class TRNAString>
 class TSSVMRNARawFeatures {
 public:
     // Define types
@@ -283,9 +275,9 @@ public:
     seqan::String<unsigned> &get_site_count() { return mSiteNum.get_site_count(); }
 
     // Method prototypes
-    int add_features(TSSVMSeedSites<TRNAString> &pSeedSites, seqan::StringSet<TRNAString> const &pMRNASeqs,
-                     TSSVMSeedSiteOverlap<TRNAString> &pOverlappedSites,
-                     TSSVMSiteInputVector<TRNAString> &pSiteInput);
+    int add_features(TSSVMSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
+                     TSSVMSeedSiteOverlap &pOverlappedSites,
+                     TSSVMSiteInputVector &pSiteInput);
 
     void clear_features();
 
@@ -294,14 +286,14 @@ public:
 private:
     typedef std::set<unsigned>::iterator TItSet;
 
-    TSSVMFeatUTRLen<TRNAString> mUTRLen;
-    TSSVMFeatSiteNum<TRNAString> mSiteNum;
-    TSSVMFeatTotDiscUTRLen<TRNAString> mTotDiscUTRLen;
-    TSSVMFeatSeedTypeNum<TRNAString> mSeedTypeNum;
-    TSSVMFeatDiscBin<TRNAString> mDiscBin;
-    TSSVMFeatOptDist<TRNAString> mOptDist;
-    TSSVMFeatSiteNumFlg<TRNAString> mSiteNumFlg;
-    TSSVMFeatTotDisc<TRNAString> mTotDisc;
+    TSSVMFeatUTRLen mUTRLen;
+    TSSVMFeatSiteNum mSiteNum;
+    TSSVMFeatTotDiscUTRLen mTotDiscUTRLen;
+    TSSVMFeatSeedTypeNum mSeedTypeNum;
+    TSSVMFeatDiscBin mDiscBin;
+    TSSVMFeatOptDist mOptDist;
+    TSSVMFeatSiteNumFlg mSiteNumFlg;
+    TSSVMFeatTotDisc mTotDisc;
 };
 
 } // namespace tssvm

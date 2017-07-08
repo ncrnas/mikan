@@ -1,5 +1,5 @@
-#include "vr16_ddg_core.hpp"
 #include <iostream>
+#include "vr16_ddg_core.hpp"
 
 namespace vr16 {
 

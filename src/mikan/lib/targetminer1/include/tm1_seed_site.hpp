@@ -3,18 +3,15 @@
 
 #include <seqan/sequence.h>
 #include <seqan/index.h>
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 
 namespace tm1p {
 
 //
 // Generate miRNA seeds
 //
-template<class TRNAString>
 class TM1SeedSeqs {
 public:
-    // Define types
-    typedef seqan::StringSet<TRNAString> TRNASet;
-
     // Define variables
     seqan::String<bool> mEffectiveSeeds;
 
@@ -22,26 +19,26 @@ public:
     // Define methods
     TM1SeedSeqs() {}
 
-    TRNAString const &get_seed_seq(int i) const { return mSeedSeqs[i]; }
+    mikan::TRNAStr const &get_seed_seq(int i) const { return mSeedSeqs[i]; }
 
     seqan::CharString const &get_seed_type(int i) const { return mSeedTypes[i]; }
 
     // Method prototypes
     int create_seed_seqs();
 
-    void set_mirna_seq(TRNAString pSeq);
+    void set_mirna_seq(mikan::TRNAStr pSeq);
 
 private:
-    TRNASet mSeedSeqs;
+    mikan::TRNASet mSeedSeqs;
     seqan::StringSet<seqan::CharString> mSeedTypes;
-    TRNAString mMiRNASeq;
+    mikan::TRNAStr mMiRNASeq;
 
 private:
-    int create_nmer_seed_seqs(TRNAString &pSeedSeq);
+    int create_nmer_seed_seqs(mikan::TRNAStr &pSeedSeq);
 
-    int create_single_guwobble_seed_seqs(TRNAString &pSeedSeq);
+    int create_single_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq);
 
-    int create_lp_seed_seqs(TRNAString &pSeedSeq, seqan::CharString &pSeedType);
+    int create_lp_seed_seqs(mikan::TRNAStr &pSeedSeq, seqan::CharString &pSeedType);
 
     int check_redundant_seeds();
 };
@@ -49,15 +46,8 @@ private:
 //
 // miRNA seed sites
 //
-template<class TRNAString>
 class TM1SeedSites {
 public:
-    // Define types
-    typedef seqan::StringSet<TRNAString> TRNASet;
-    typedef seqan::StringSet<seqan::CharString> TCharSet;
-    typedef seqan::Index<TRNASet, seqan::IndexQGram<seqan::UngappedShape<6> > > TIndexQGram;
-    typedef seqan::Finder<TIndexQGram> TFinder;
-
     // Constant values
     static const unsigned MIN_DIST_TO_CDS = 1;
     static const unsigned MIN_DIST_UTR_END = 0;
@@ -67,7 +57,7 @@ public:
 
 public:
     // Define methods
-    TM1SeedSites(TIndexQGram &pRNAIdx, TFinder &pFinder, TRNASet const &pMRNASeqs) :
+    TM1SeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
             mRNAIdx(pRNAIdx), mFinder(pFinder), mMRNASeqs(pMRNASeqs) {}
 
     unsigned get_length() const { return seqan::length(mSitePos); }
@@ -85,7 +75,7 @@ public:
     // Method prototypes
     void reset_finder();
 
-    int find_seed_sites(TRNAString const &pMiRNA);
+    int find_seed_sites(mikan::TRNAStr const &pMiRNA);
 
     void clear_pos();
 
@@ -105,9 +95,9 @@ private:
     seqan::String<unsigned> mMRNAPos;
     seqan::String<unsigned> mSitePos;
     seqan::StringSet<seqan::CharString> mSeedTypes;
-    TIndexQGram &mRNAIdx;
-    TFinder &mFinder;
-    TRNASet const &mMRNASeqs;
+    mikan::TIndexQGram &mRNAIdx;
+    mikan::TFinder &mFinder;
+    mikan::TRNASet const &mMRNASeqs;
 
     seqan::String<bool> mM8Match;
     seqan::String<bool> mM8GU;
@@ -119,12 +109,12 @@ private:
 
 private:
     void set_new_seed_type(seqan::CharString &pCurSeedType, unsigned pMRNAPos, unsigned pSitePos,
-                           TRNAString const &pMiRNA, bool &pEffectiveSite);
+                           mikan::TRNAStr const &pMiRNA, bool &pEffectiveSite);
 
-    void get_mx_match(TRNAString const &pMiRNASeq, TRNAString const &pMiRNACompSeq, TRNAString const &pMRNASeq,
+    void get_mx_match(mikan::TRNAStr const &pMiRNASeq, mikan::TRNAStr const &pMiRNACompSeq, mikan::TRNAStr const &pMRNASeq,
                       unsigned pSitePos, int pMx, bool &pMatch, bool &pGU, bool &pNoMx, bool &pIsA);
 
-    void get_match_count(TRNAString const &pMiRNASeq, TRNAString const &pMiRNACompSeq, TRNAString const &pMRNASeq,
+    void get_match_count(mikan::TRNAStr const &pMiRNASeq, mikan::TRNAStr const &pMiRNACompSeq, mikan::TRNAStr const &pMRNASeq,
                          unsigned pSitePos, int pMx1, int pMx2, int &pMatchCount, int &pGUCount);
 };
 

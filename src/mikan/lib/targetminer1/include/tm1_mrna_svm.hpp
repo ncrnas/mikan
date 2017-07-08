@@ -1,16 +1,16 @@
 #ifndef TM1_MRNA_SVM_HPP_
 #define TM1_MRNA_SVM_HPP_
 
-#include "tm1_mrna_feature.hpp"   // TM1ScaledFeatures,
 #include <Eigen/Dense>
 #include <seqan/sequence.h>
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "tm1_mrna_feature.hpp"   // TM1ScaledFeatures,
 
 namespace tm1p {
 
 //
 // mRNA level SVM model
 //
-template<class TRNAString>
 class TM1MRNAModel {
 public:
     // Constant values
@@ -48,7 +48,6 @@ private:
 //
 // Input vector for mRNA level SVM
 //
-template<class TRNAString>
 class TM1MRNAInputVector {
 public:
     // Constant values
@@ -63,15 +62,15 @@ public:
     // Method prototypes
     void clear_scores();
 
-    int classify(TM1ScaledFeatures <TRNAString> &pMRNAFeatures);
+    int classify(TM1ScaledFeatures  &pMRNAFeatures);
 
 private:
-    TM1MRNAModel<TRNAString> mModel;
+    TM1MRNAModel mModel;
     Eigen::VectorXf mInputVec;
     seqan::String<float> mScores;
 
 private:
-    int calc_score(TM1ScaledFeatures <TRNAString> &pMRNAFeatures);
+    int calc_score(TM1ScaledFeatures  &pMRNAFeatures);
 
     void print_input_vector(float pValSquared);
 

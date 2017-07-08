@@ -1,7 +1,7 @@
-#include "vr16_part_func.hpp"
 #include <iostream>
 #include <algorithm>
 #include <cfloat>
+#include "vr16_part_func.hpp"
 
 namespace vr16 {
 

@@ -1,12 +1,12 @@
 #ifndef VR16_PART_FUNC_HPP_
 #define VR16_PART_FUNC_HPP_
 
+#include <vector>
+#include <string>
 #include "vr16_energy.hpp"                // VR16EnergyParams
 #include "vr16_fold_options.hpp"          // VR16FoldOptions
 #include "vr16_pair_mat.hpp"              // VR16PairMat
 #include "vr16_params.hpp"                // VR16Params
-#include <vector>
-#include <string>
 
 namespace vr16 {
 

@@ -1,17 +1,15 @@
 #include <math.h>                   // roundf
-#include "mk_typedef.hpp"           // TRNATYPE
+#include "mk_typedef.hpp"           // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "tssvm_mrna_feature.hpp"   // TSSVMRNARawFeatures, TSSVMFeatUTRLen, TSSVMFeatSiteNum,
 
 using namespace seqan;
-using namespace mikan;
 
 namespace tssvm {
 
 //
 // TSSVMRawFeatures methods
 //
-template<class TRNAString>
-void TSSVMRNARawFeatures<TRNAString>::clear_features() {
+void TSSVMRNARawFeatures::clear_features() {
     clear(mEffectiveRNAs);
     mUTRLen.clear_features();
     mSiteNum.clear_features();
@@ -24,8 +22,7 @@ void TSSVMRNARawFeatures<TRNAString>::clear_features() {
 
 }
 
-template<class TRNAString>
-void TSSVMRNARawFeatures<TRNAString>::resize_feat(unsigned pLen) {
+void TSSVMRNARawFeatures::resize_feat(unsigned pLen) {
     resize(mEffectiveRNAs, pLen, false);
     mUTRLen.resize_feat(pLen);
     mSiteNum.resize_feat(pLen);
@@ -37,12 +34,11 @@ void TSSVMRNARawFeatures<TRNAString>::resize_feat(unsigned pLen) {
     mTotDisc.resize_feat(pLen);
 }
 
-template<class TRNAString>
-int TSSVMRNARawFeatures<TRNAString>::add_features(
-        TSSVMSeedSites<TRNAString> &pSeedSites,
-        StringSet<TRNAString> const &pMRNASeqs,
-        TSSVMSeedSiteOverlap<TRNAString> &pOverlappedSites,
-        TSSVMSiteInputVector<TRNAString> &pSiteInput) {
+int TSSVMRNARawFeatures::add_features(
+        TSSVMSeedSites &pSeedSites,
+        mikan::TRNASet const &pMRNASeqs,
+        TSSVMSeedSiteOverlap &pOverlappedSites,
+        TSSVMSiteInputVector &pSiteInput) {
     TItSet itSet;
     std::set<unsigned> &rnaPosSet = pOverlappedSites.get_mrna_pos_set();
     StringSet<String<unsigned> > &sortedMRNAPos = pOverlappedSites.get_sorted_mrna_pos();
@@ -80,18 +76,16 @@ int TSSVMRNARawFeatures<TRNAString>::add_features(
 //
 // TSSVMFeatUTRLen methods
 //
-template<class TRNAString>
-void TSSVMFeatUTRLen<TRNAString>::clear_features() {
+void TSSVMFeatUTRLen::clear_features() {
     clear(mUTRLen);
 }
 
-template<class TRNAString>
-int TSSVMFeatUTRLen<TRNAString>::add_features(
+int TSSVMFeatUTRLen::add_features(
         unsigned pMRNAPosIdx,
         String<unsigned> &,
-        TSSVMSeedSites<TRNAString> &,
-        StringSet<TRNAString> const &pMRNASeqs,
-        TSSVMSiteInputVector<TRNAString> &) {
+        TSSVMSeedSites &,
+        mikan::TRNASet const &pMRNASeqs,
+        TSSVMSiteInputVector &) {
     float mRNALen;
 
     resize(mUTRLen[pMRNAPosIdx], 1);
@@ -105,19 +99,17 @@ int TSSVMFeatUTRLen<TRNAString>::add_features(
 //
 // TSSVMFeatSiteNum methods
 //
-template<class TRNAString>
-void TSSVMFeatSiteNum<TRNAString>::clear_features() {
+void TSSVMFeatSiteNum::clear_features() {
     clear(mSiteNum);
     clear(mSiteNumRaw);
 }
 
-template<class TRNAString>
-int TSSVMFeatSiteNum<TRNAString>::add_features(
+int TSSVMFeatSiteNum::add_features(
         unsigned pMRNAPosIdx,
         String<unsigned> &pSitePosByMRNA,
-        TSSVMSeedSites<TRNAString> &,
-        StringSet<TRNAString> const &,
-        TSSVMSiteInputVector<TRNAString> &) {
+        TSSVMSeedSites &,
+        mikan::TRNASet const &,
+        TSSVMSiteInputVector &) {
     float siteNum;
 
     resize(mSiteNum[pMRNAPosIdx], 1);
@@ -133,18 +125,16 @@ int TSSVMFeatSiteNum<TRNAString>::add_features(
 //
 // TSSVMFeatTotDiscUTRLen methods
 //
-template<class TRNAString>
-void TSSVMFeatTotDiscUTRLen<TRNAString>::clear_features() {
+void TSSVMFeatTotDiscUTRLen::clear_features() {
     clear(mTotDiscUTRLen);
 }
 
-template<class TRNAString>
-int TSSVMFeatTotDiscUTRLen<TRNAString>::add_features(
+int TSSVMFeatTotDiscUTRLen::add_features(
         unsigned pMRNAPosIdx,
         String<unsigned> &pSitePosByMRNA,
-        TSSVMSeedSites<TRNAString> &,
-        StringSet<TRNAString> const &pMRNASeqs,
-        TSSVMSiteInputVector<TRNAString> &pSiteInput) {
+        TSSVMSeedSites &,
+        mikan::TRNASet const &pMRNASeqs,
+        TSSVMSiteInputVector &pSiteInput) {
     const seqan::String<float> &scors = pSiteInput.get_scores();
     float minVal = 0.0f;
     float shiftVal = -2.27441f;
@@ -176,18 +166,16 @@ int TSSVMFeatTotDiscUTRLen<TRNAString>::add_features(
 //
 // TSSVMFeatSeedTypeNum methods
 //
-template<class TRNAString>
-void TSSVMFeatSeedTypeNum<TRNAString>::clear_features() {
+void TSSVMFeatSeedTypeNum::clear_features() {
     clear(mSeedTypeNum);
 }
 
-template<class TRNAString>
-int TSSVMFeatSeedTypeNum<TRNAString>::add_features(
+int TSSVMFeatSeedTypeNum::add_features(
         unsigned pMRNAPosIdx,
         String<unsigned> &pSitePosByMRNA,
-        TSSVMSeedSites<TRNAString> &pSeedSites,
-        StringSet<TRNAString> const &,
-        TSSVMSiteInputVector<TRNAString> &) {
+        TSSVMSeedSites &pSeedSites,
+        mikan::TRNASet const &,
+        TSSVMSiteInputVector &) {
     float maxNum = 38;
     const StringSet<CharString> &seedTypes = pSeedSites.get_seed_types();
 
@@ -229,18 +217,16 @@ int TSSVMFeatSeedTypeNum<TRNAString>::add_features(
 //
 // TSSVMFeatDiscBin methods
 //
-template<class TRNAString>
-void TSSVMFeatDiscBin<TRNAString>::clear_features() {
+void TSSVMFeatDiscBin::clear_features() {
     clear(mDiscBin);
 }
 
-template<class TRNAString>
-int TSSVMFeatDiscBin<TRNAString>::add_features(
+int TSSVMFeatDiscBin::add_features(
         unsigned pMRNAPosIdx,
         String<unsigned> &pSitePosByMRNA,
-        TSSVMSeedSites<TRNAString> &,
-        StringSet<TRNAString> const &,
-        TSSVMSiteInputVector<TRNAString> &pSiteInput) {
+        TSSVMSeedSites &,
+        mikan::TRNASet const &,
+        TSSVMSiteInputVector &pSiteInput) {
     const seqan::String<float> &scors = pSiteInput.get_scores();
     float maxNum = 38.0f;
     float shiftVal = -2.27441f;
@@ -299,18 +285,16 @@ int TSSVMFeatDiscBin<TRNAString>::add_features(
 //
 // TSSVMFeatOptDist methods
 //
-template<class TRNAString>
-void TSSVMFeatOptDist<TRNAString>::clear_features() {
+void TSSVMFeatOptDist::clear_features() {
     clear(mOptDist);
 }
 
-template<class TRNAString>
-int TSSVMFeatOptDist<TRNAString>::add_features(
+int TSSVMFeatOptDist::add_features(
         unsigned pMRNAPosIdx,
         String<unsigned> &pSitePosByMRNA,
-        TSSVMSeedSites<TRNAString> &pSeedSites,
-        StringSet<TRNAString> const &,
-        TSSVMSiteInputVector<TRNAString> &) {
+        TSSVMSeedSites &pSeedSites,
+        mikan::TRNASet const &,
+        TSSVMSiteInputVector &) {
     const String<unsigned> &mS8Pos = pSeedSites.get_site_pos_s8();
     unsigned prevPos, pos, posDiff;
     String<unsigned> dist;
@@ -357,18 +341,16 @@ int TSSVMFeatOptDist<TRNAString>::add_features(
 //
 // TSSVMFeatSiteNumFlg methods
 //
-template<class TRNAString>
-void TSSVMFeatSiteNumFlg<TRNAString>::clear_features() {
+void TSSVMFeatSiteNumFlg::clear_features() {
     clear(mSiteNumFlg);
 }
 
-template<class TRNAString>
-int TSSVMFeatSiteNumFlg<TRNAString>::add_features(
+int TSSVMFeatSiteNumFlg::add_features(
         unsigned pMRNAPosIdx,
         String<unsigned> &pSitePosByMRNA,
-        TSSVMSeedSites<TRNAString> &,
-        StringSet<TRNAString> const &,
-        TSSVMSiteInputVector<TRNAString> &) {
+        TSSVMSeedSites &,
+        mikan::TRNASet const &,
+        TSSVMSiteInputVector &) {
     float siteNum;
 
     resize(mSiteNumFlg[pMRNAPosIdx], 3, 0.0);
@@ -388,18 +370,16 @@ int TSSVMFeatSiteNumFlg<TRNAString>::add_features(
 //
 // TSSVMFeatTotDisc methods
 //
-template<class TRNAString>
-void TSSVMFeatTotDisc<TRNAString>::clear_features() {
+void TSSVMFeatTotDisc::clear_features() {
     clear(mTotDisc);
 }
 
-template<class TRNAString>
-int TSSVMFeatTotDisc<TRNAString>::add_features(
+int TSSVMFeatTotDisc::add_features(
         unsigned pMRNAPosIdx,
         String<unsigned> &pSitePosByMRNA,
-        TSSVMSeedSites<TRNAString> &,
-        StringSet<TRNAString> const &,
-        TSSVMSiteInputVector<TRNAString> &pSiteInput) {
+        TSSVMSeedSites &,
+        mikan::TRNASet const &,
+        TSSVMSiteInputVector &pSiteInput) {
     const seqan::String<float> &scors = pSiteInput.get_scores();
     float divVal = 100.0f;
     float minVal = 0.0f;
@@ -421,33 +401,5 @@ int TSSVMFeatTotDisc<TRNAString>::add_features(
 
     return 0;
 }
-
-// Explicit template instantiation
-template
-class TSSVMFeatUTRLen<TRNATYPE>;
-
-template
-class TSSVMFeatSiteNum<TRNATYPE>;
-
-template
-class TSSVMFeatTotDiscUTRLen<TRNATYPE>;
-
-template
-class TSSVMFeatSeedTypeNum<TRNATYPE>;
-
-template
-class TSSVMFeatDiscBin<TRNATYPE>;
-
-template
-class TSSVMFeatOptDist<TRNATYPE>;
-
-template
-class TSSVMFeatSiteNumFlg<TRNATYPE>;
-
-template
-class TSSVMFeatTotDisc<TRNATYPE>;
-
-template
-class TSSVMRNARawFeatures<TRNATYPE>;
 
 } // namespace tssvm

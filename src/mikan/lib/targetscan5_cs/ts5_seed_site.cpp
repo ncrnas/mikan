@@ -1,22 +1,20 @@
-#include "mk_typedef.hpp"        // TRNATYPE
-#include "ts5_seed_site.hpp"     // TS5SeedSeqs, TS5SeedSites
 #include <seqan/seq_io.h>
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "ts5_seed_site.hpp"     // TS5SeedSeqs, TS5SeedSites
 
 using namespace seqan;
-using namespace mikan;
 
 namespace ts5cs {
 
 //
 // TS5SeedSeqs methods
 //
-template<class TRNAString>
-int TS5SeedSeqs<TRNAString>::create_seed_seqs() {
+int TS5SeedSeqs::create_seed_seqs() {
     if (length(mMiRNASeq) == 0) {
         return 1;
     }
 
-    TRNAString seedSeq;
+    mikan::TRNAStr seedSeq;
 
     resize(seedSeq, 6);
     for (unsigned i = 0; i < length(seedSeq); ++i) {
@@ -29,8 +27,7 @@ int TS5SeedSeqs<TRNAString>::create_seed_seqs() {
     return 0;
 }
 
-template<class TRNAString>
-void TS5SeedSeqs<TRNAString>::set_mirna_seq(TRNAString pSeq) {
+void TS5SeedSeqs::set_mirna_seq(mikan::TRNAStr pSeq) {
     clear(mSeedSeqs);
     mMiRNASeq = pSeq;
 }
@@ -38,16 +35,14 @@ void TS5SeedSeqs<TRNAString>::set_mirna_seq(TRNAString pSeq) {
 //
 // TS5SeedSites methods
 //
-template<class TRNAString, int SEEDLEN>
-void TS5SeedSites<TRNAString, SEEDLEN>::reset_finder() {
+void TS5SeedSites::reset_finder() {
     goBegin(mFinder);
     clear(mFinder);
 }
 
-template<class TRNAString, int SEEDLEN>
-int TS5SeedSites<TRNAString, SEEDLEN>::find_seed_sites(TRNAString const &pMiRNA) {
-    TS5SeedSeqs<TRNAString> seedSeqs;
-    TRNAString seedSeq;
+int TS5SeedSites::find_seed_sites(mikan::TRNAStr const &pMiRNA) {
+    TS5SeedSeqs seedSeqs;
+    mikan::TRNAStr seedSeq;
     int retVal;
 
     reset_finder();
@@ -69,18 +64,9 @@ int TS5SeedSites<TRNAString, SEEDLEN>::find_seed_sites(TRNAString const &pMiRNA)
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-void TS5SeedSites<TRNAString, SEEDLEN>::clear_pos() {
+void TS5SeedSites::clear_pos() {
     clear(mMRNAPos);
     clear(mSitePos);
 }
-
-// Explicit template instantiation
-
-template
-class TS5SeedSeqs<TRNATYPE>;
-
-template
-class TS5SeedSites<TRNATYPE>;
 
 } // namespace ts5cs

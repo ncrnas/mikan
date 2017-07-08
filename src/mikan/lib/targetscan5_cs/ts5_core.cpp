@@ -7,15 +7,13 @@
 #include <map>                   // multimap
 #include <utility>               // pair
 #include <seqan/arg_parse.h>
-#include "mk_typedef.hpp"        // TRNATYPE
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_input.hpp"          // MKInput
 #include "ts5_option.hpp"        // TS5CSOptions
 #include "ts5_seed_site.hpp"     // TS5SeedSites
 #include "ts5_feature.hpp"       // TS5RawFeatures
 #include "ts5_score.hpp"         // TS5ContextScores, TS5TotalScores
 #include "ts5_core.hpp"          // TS5Core
-#include "mk_input.hpp"          // MKInput
-
-using namespace mikan;
 
 namespace ts5cs {
 
@@ -30,7 +28,7 @@ int TS5CoreMain(int argc, char const **argv) {
     }
 
     // Read input files
-    mikan::MKInput<TRNATYPE> coreInput;
+    mikan::MKInput coreInput;
     coreInput.set_options(options);
     retVal = coreInput.load_seq_from_file();
     if (retVal != 0) {
@@ -38,15 +36,15 @@ int TS5CoreMain(int argc, char const **argv) {
     }
 
     // Create index
-    ts5cs::TS5Core<TRNATYPE>::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
-    ts5cs::TS5Core<TRNATYPE>::TIndexQGram index(mMRNASeqs);
-    ts5cs::TS5Core<TRNATYPE>::TFinder finder(index);
+    mikan::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
+    mikan::TIndexQGram index(mMRNASeqs);
+    mikan::TFinder finder(index);
 
     // Calculate scores for all miRNAs
-    ts5cs::TS5Core<TRNATYPE>::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
-    ts5cs::TS5Core<TRNATYPE>::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
-    ts5cs::TS5Core<TRNATYPE>::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
-    ts5cs::TS5Core<TRNATYPE> ts5Core(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
+    mikan::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
+    mikan::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
+    mikan::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
+    ts5cs::TS5Core ts5Core(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
     ts5Core.init_from_args(options);
     ts5Core.open_output_file();
     retVal = ts5Core.calculate_all_scores();
@@ -60,15 +58,13 @@ int TS5CoreMain(int argc, char const **argv) {
 //
 // TS5Core methods
 //
-template<class TRNAString, int SEEDLEN>
-void TS5Core<TRNAString, SEEDLEN>::init_from_args(TS5CSOptions &opts) {
+void TS5Core::init_from_args(TS5CSOptions &opts) {
     mOutputAlign = opts.mOutputAlign;
     mOFileContext = opts.mOFileSite;
     mOFileTotal = opts.mOFileTotal;
 }
 
-template<class TRNAString, int SEEDLEN>
-int TS5Core<TRNAString, SEEDLEN>::open_output_file() {
+int TS5Core::open_output_file() {
     // Open output file 1
     mOFile1.open(toCString(mOFileContext), std::ofstream::out);
     if (!mOFile1.good()) {
@@ -86,8 +82,7 @@ int TS5Core<TRNAString, SEEDLEN>::open_output_file() {
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int TS5Core<TRNAString, SEEDLEN>::calculate_all_scores() {
+int TS5Core::calculate_all_scores() {
     int retVal;
 
     for (unsigned i = 0; i < length(mMiRNASeqs); ++i) {
@@ -113,8 +108,7 @@ int TS5Core<TRNAString, SEEDLEN>::calculate_all_scores() {
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int TS5Core<TRNAString, SEEDLEN>::calculate_mirna_scores(unsigned pIdx) {
+int TS5Core::calculate_mirna_scores(unsigned pIdx) {
     int retVal;
 
     // Search seed sites
@@ -188,8 +182,7 @@ int TS5Core<TRNAString, SEEDLEN>::calculate_mirna_scores(unsigned pIdx) {
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int TS5Core<TRNAString, SEEDLEN>::write_context_score(seqan::CharString const &pMiRNAId) {
+int TS5Core::write_context_score(seqan::CharString const &pMiRNAId) {
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     seqan::CharString seedType;
@@ -223,8 +216,7 @@ int TS5Core<TRNAString, SEEDLEN>::write_context_score(seqan::CharString const &p
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int TS5Core<TRNAString, SEEDLEN>::write_total_score(seqan::CharString const &pMiRNAId) {
+int TS5Core::write_total_score(seqan::CharString const &pMiRNAId) {
     const seqan::String<float> &totalScores = mTotalScore.get_scores();
     const seqan::String<int> &mRNAPos = mTotalScore.get_mrna_pos();
     const seqan::String<int> &siteNum = mTotalScore.get_site_num();
@@ -248,11 +240,10 @@ int TS5Core<TRNAString, SEEDLEN>::write_total_score(seqan::CharString const &pMi
     return 0;
 }
 
-template<class TRNAString, int SEEDLEN>
-int TS5Core<TRNAString, SEEDLEN>::write_alignment(seqan::CharString const &pMiRNAId) {
+int TS5Core::write_alignment(seqan::CharString const &pMiRNAId) {
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
-    const TS5Alignment<TRNAString> &alignment = mRawFeatures.get_alignment();
+    const TS5Alignment &alignment = mRawFeatures.get_alignment();
     seqan::CharString seedType;
     int seedStart, seedEnd;
     int count = 0;
@@ -289,10 +280,5 @@ int TS5Core<TRNAString, SEEDLEN>::write_alignment(seqan::CharString const &pMiRN
 
     return 0;
 }
-
-// Explicit template instantiation
-
-template
-class TS5Core<TRNATYPE>;
 
 } // namespace ts5cs

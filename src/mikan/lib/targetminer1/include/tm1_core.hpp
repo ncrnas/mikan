@@ -1,7 +1,8 @@
 #ifndef TM1_CORE_HPP_
 #define TM1_CORE_HPP_
 
-#include "mk_typedef.hpp"        // TRNATYPE
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_sequence.hpp"       // MKSequences
 #include "tm1_mrna_feature.hpp"  // TM1MRNAFeatures
 #include "tm1_mrna_svm.hpp"      // TM1MRNAModel, TM1MRNAInputVector
 #include "tm1_option.hpp"        // TM1CSOptions
@@ -9,7 +10,6 @@
 #include "tm1_seed_site.hpp"     // TM1SeedSites
 #include "tm1_site_cluster.hpp"  // TM1Overlap
 #include "tm1_site_feature.hpp"  // TM1RawFeatures
-#include "mk_sequence.hpp"       // MKSequences
 
 namespace tm1p {
 
@@ -18,15 +18,8 @@ int TM1CoreMain(int argc, char const **argv);
 //
 // TargetScan context score process core
 //
-template<class TRNAString, int SEEDLEN = 6>
 class TM1Core {
 public:
-    // Define types
-    typedef seqan::StringSet<seqan::CharString> TCharSet;
-    typedef seqan::StringSet<TRNAString> TRNASet;
-    typedef seqan::Index<TRNASet, seqan::IndexQGram<seqan::UngappedShape<SEEDLEN> > > TIndexQGram;
-    typedef seqan::Finder<TIndexQGram> TFinder;
-
     // Declare variables
     bool mExecSearchSeedSites;
     bool mExecGetRawFeat;
@@ -42,9 +35,9 @@ public:
 
 public:
     // Define methods
-    TM1Core(TCharSet const &pMiRNAIds, TRNASet const &pMiRNASeqs, TCharSet const &pMRNAIds,
-            TRNASet const &pMRNASeqs,
-            TIndexQGram &pRNAIdx, TFinder &pFinder) :
+    TM1Core(mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs, 
+            mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
+            mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
             mExecSearchSeedSites(true), mExecGetRawFeat(true), mExecSortSites(true), mExecGetMRNAFeat(true),
             mExecRNAScore(true), mExecSumScores(true), mOutputSitePos(true), mOutputScore(true), mOutputAlign(true),
             mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs),
@@ -60,20 +53,20 @@ public:
     int calculate_mirna_scores(unsigned pIdx);
 
 private:
-    TCharSet const &mMiRNAIds;
-    TRNASet const &mMiRNASeqs;
-    TCharSet const &mMRNAIds;
-    TRNASet const &mMRNASeqs;
+    mikan::TCharSet const &mMiRNAIds;
+    mikan::TRNASet const &mMiRNASeqs;
+    mikan::TCharSet const &mMRNAIds;
+    mikan::TRNASet const &mMRNASeqs;
 
     std::ofstream mOFile1;
     std::ofstream mOFile2;
 
-    TM1SeedSites<TRNAString> mSeedSites;
-    TM1RawFeatures<TRNAString> mRawFeatures;
-    TM1SortedSitePos<TRNAString> mSortedSites;
-    TM1MRNAFeatures<TRNAString> mMRNAFeatures;
-    TM1MRNAInputVector<TRNAString> mMRNAInput;
-    TM1ClassifiedScores<TRNAString> mScores;
+    TM1SeedSites mSeedSites;
+    TM1RawFeatures mRawFeatures;
+    TM1SortedSitePos mSortedSites;
+    TM1MRNAFeatures mMRNAFeatures;
+    TM1MRNAInputVector mMRNAInput;
+    TM1ClassifiedScores mScores;
 
 private:
     int write_site_positions(seqan::CharString const &pMiRNAId);

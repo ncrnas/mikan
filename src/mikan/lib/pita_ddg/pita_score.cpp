@@ -1,35 +1,31 @@
-#include "mk_typedef.hpp"   // TRNATYPE
+#include "mk_typedef.hpp"   // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "pita_score.hpp"   // PITADDGScores, PITATotalScores
 
 using namespace seqan;
-using namespace mikan;
 
 namespace ptddg {
 
 //
 // PITAAlign methods
 //
-template<class TRNAString>
-void PITAAlign<TRNAString>::clear_align() {
+void PITAAlign::clear_align() {
     clear(mEffectiveSites);
     clear(mAlignMRNA);
     clear(mAlignBars);
     clear(mAlignMiRNA);
 }
 
-template<class TRNAString>
-void PITAAlign<TRNAString>::resize_align(unsigned pSize) {
+void PITAAlign::resize_align(unsigned pSize) {
     resize(mEffectiveSites, pSize, false);
     resize(mAlignMRNA, pSize);
     resize(mAlignBars, pSize);
     resize(mAlignMiRNA, pSize);
 }
 
-template<class TRNAString>
-void PITAAlign<TRNAString>::create_align(
+void PITAAlign::create_align(
         int pId,
-        TRNAString const &pMiRNASeq,
-        TRNAString const &pMRNASeq,
+        mikan::TRNAStr const &pMiRNASeq,
+        mikan::TRNAStr const &pMRNASeq,
         CharString const &pSeedType,
         unsigned pSitePos,
         int) {
@@ -74,17 +70,14 @@ void PITAAlign<TRNAString>::create_align(
 //
 // PITADGDuplexScores methods
 //
-
-template<class TRNAString>
-void PITADGDuplexScores<TRNAString>::clear_scores() {
+void PITADGDuplexScores::clear_scores() {
     clear(mEffectiveSites);
 }
 
-template<class TRNAString>
-int PITADGDuplexScores<TRNAString>::calc_scores(
-        PITASeedSites<TRNAString> &pSeedSites,
-        TRNAString const &pMiRNASeq,
-        TRNASet const &pMRNASeqs) {
+int PITADGDuplexScores::calc_scores(
+        PITASeedSites &pSeedSites,
+        mikan::TRNAStr  const &pMiRNASeq,
+        mikan::TRNASet const &pMRNASeqs) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &sitePos = pSeedSites.get_site_pos();
     StringSet<CharString> const &seedTypes = pSeedSites.get_seed_types();
@@ -131,18 +124,16 @@ int PITADGDuplexScores<TRNAString>::calc_scores(
     return 0;
 }
 
-template<class TRNAString>
-void PITADGDuplexScores<TRNAString>::create_input_mirna_seq(
-        TRNAString const &pMiRNASeq,
+void PITADGDuplexScores::create_input_mirna_seq(
+        mikan::TRNAStr  const &pMiRNASeq,
         std::string &pInputMiRNASeq) {
     for (unsigned i = 0; i < length(pMiRNASeq); ++i) {
         pInputMiRNASeq[i] = pMiRNASeq[i];
     }
 }
 
-template<class TRNAString>
-void PITADGDuplexScores<TRNAString>::create_input_mrna_seq(
-        TRNAString const &pMRNASeq,
+void PITADGDuplexScores::create_input_mrna_seq(
+        mikan::TRNAStr const &pMRNASeq,
         int pStart,
         int pEnd,
         std::string &pInputMRNASeq) {
@@ -158,8 +149,7 @@ void PITADGDuplexScores<TRNAString>::create_input_mrna_seq(
 
 }
 
-template<class TRNAString>
-void PITADGDuplexScores<TRNAString>::create_input_matched_seq(
+void PITADGDuplexScores::create_input_matched_seq(
         CharString const &pSeedType,
         int pMismatchPos,
         std::vector<int> &pInputMatchSeq) {
@@ -180,8 +170,7 @@ void PITADGDuplexScores<TRNAString>::create_input_matched_seq(
 
 }
 
-template<class TRNAString>
-void PITADGDuplexScores<TRNAString>::print_input(
+void PITADGDuplexScores::print_input(
         CharString const &pSeedType,
         std::string &pInputMiRNASeq,
         std::string &pInputMRNASeq,
@@ -205,15 +194,13 @@ void PITADGDuplexScores<TRNAString>::print_input(
 // PITADGOpenScores methods
 //
 
-template<class TRNAString>
-void PITADGOpenScores<TRNAString>::clear_scores() {
+void PITADGOpenScores::clear_scores() {
     clear(mEffectiveSites);
 }
 
-template<class TRNAString>
-int PITADGOpenScores<TRNAString>::calc_scores(
-        PITASeedSites<TRNAString> &pSeedSites,
-        TRNASet const &pMRNASeqs,
+int PITADGOpenScores::calc_scores(
+        PITASeedSites &pSeedSites,
+        mikan::TRNASet const &pMRNASeqs,
         int pFlankUp,
         int pFlankDown) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
@@ -259,9 +246,8 @@ int PITADGOpenScores<TRNAString>::calc_scores(
     return 0;
 }
 
-template<class TRNAString>
-void PITADGOpenScores<TRNAString>::create_input_mrna_seq(
-        TRNAString const &pMRNASeq,
+void PITADGOpenScores::create_input_mrna_seq(
+        mikan::TRNAStr const &pMRNASeq,
         int pStart,
         int pEnd,
         std::string &pInputMRNASeq) {
@@ -276,17 +262,14 @@ void PITADGOpenScores<TRNAString>::create_input_mrna_seq(
     }
 }
 
-template<class TRNAString>
-void PITADGOpenScores<TRNAString>::print_input(std::string &pInputMRNASeq) {
+void PITADGOpenScores::print_input(std::string &pInputMRNASeq) {
     std::cout << "mRNA seq: " << pInputMRNASeq << std::endl;
 }
 
 //
 // PITADDGScores methods
 //
-
-template<class TRNAString>
-void PITADDGScores<TRNAString>::clear_scores() {
+void PITADDGScores::clear_scores() {
     clear(mEffectiveSites);
     clear(mDDGScores);
     mDGDuplexScores.clear_scores();
@@ -294,11 +277,10 @@ void PITADDGScores<TRNAString>::clear_scores() {
     mAlign.clear_align();
 }
 
-template<class TRNAString>
-int PITADDGScores<TRNAString>::calc_scores(
-        PITASeedSites<TRNAString> &pSeedSites,
-        TRNAString const &miRNASeq,
-        TRNASet const &pMRNASeqs,
+int PITADDGScores::calc_scores(
+        PITASeedSites &pSeedSites,
+        mikan::TRNAStr const &miRNASeq,
+        mikan::TRNASet const &pMRNASeqs,
         int pFlankUp,
         int pFlankDown) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
@@ -326,8 +308,7 @@ int PITADDGScores<TRNAString>::calc_scores(
     return 0;
 }
 
-template<class TRNAString>
-void PITADDGScores<TRNAString>::print_alignment(int pIdx) {
+void PITADDGScores::print_alignment(int pIdx) {
     std::stringstream stream;
 
     stream << "mRNA   5' " << mAlign.mAlignMRNA[pIdx] << " 3'";
@@ -344,17 +325,15 @@ void PITADDGScores<TRNAString>::print_alignment(int pIdx) {
 //
 // PITATotalScores methods
 //
-template<class TRNAString>
-void PITATotalScores<TRNAString>::clear_scores() {
+void PITATotalScores::clear_scores() {
     clear(mMRNAPos);
     clear(mSiteNum);
     clear(mTotalScores);
 }
 
-template<class TRNAString>
-int PITATotalScores<TRNAString>::calc_scores(
-        PITASeedSites<TRNAString> &pSeedSites,
-        PITADDGScores<TRNAString> &pMFEScores,
+int PITATotalScores::calc_scores(
+        PITASeedSites &pSeedSites,
+        PITADDGScores &pMFEScores,
         const seqan::String<unsigned> &pSortedSites) {
 
     const String<unsigned> &siteMRNAPos = pSeedSites.get_mrna_pos();
@@ -435,21 +414,5 @@ int PITATotalScores<TRNAString>::calc_scores(
 
     return 0;
 }
-
-// Explicit template instantiation
-template
-class PITAAlign<TRNATYPE>;
-
-template
-class PITADGDuplexScores<TRNATYPE>;
-
-template
-class PITADGOpenScores<TRNATYPE>;
-
-template
-class PITADDGScores<TRNATYPE>;
-
-template
-class PITATotalScores<TRNATYPE>;
 
 } // namespace ptddg

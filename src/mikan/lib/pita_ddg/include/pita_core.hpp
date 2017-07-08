@@ -1,13 +1,13 @@
 #ifndef PITA_CORE_HPP_
 #define PITA_CORE_HPP_
 
-#include "mk_typedef.hpp"         // TRNATYPE
+#include <seqan/sequence.h>
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_sequence.hpp"        // MKSequences
 #include "pita_option.hpp"        // PITAOptions
 #include "pita_score.hpp"         // PITAGGDScores, PITATotalScores
 #include "pita_seed_site.hpp"     // PITASeedSites
 #include "pita_site_cluster.hpp"  // PITAOverlap, PITASortedSitePos
-#include "mk_sequence.hpp"        // MKSequences
-#include <seqan/sequence.h>
 
 namespace ptddg {
 
@@ -16,17 +16,10 @@ int PITACoreMain(int argc, char const **argv);
 //
 // PITA score process core
 //
-template<class TRNAString, int SEEDLEN = 6>
 class PITACore {
 public:
-    // Define types
-    typedef seqan::StringSet<seqan::CharString> TCharSet;
-    typedef seqan::StringSet<TRNAString> TRNASet;
-    typedef seqan::Index<TRNASet, seqan::IndexQGram<seqan::UngappedShape<SEEDLEN> > > TIndexQGram;
-    typedef seqan::Finder<TIndexQGram> TFinder;
-
     // Constant values
-    static const unsigned INDEXED_SEQ_LEN = SEEDLEN;
+    static const unsigned INDEXED_SEQ_LEN = mikan::SEEDLEN;
     static const unsigned OVERLAP_LEN = 0;
 
     // Declare variables
@@ -49,15 +42,15 @@ public:
 
 public:
     // Define methods
-    PITACore(TCharSet const &pMiRNAIds, TRNASet const &pMiRNASeqs, TCharSet const &pMRNAIds,
-             TRNASet const &pMRNASeqs,
-             TIndexQGram &pRNAIdx, TFinder &pFinder) :
-            mExecSearchSeedSites(true), mExecCalDDGScore(true), mExecFilterOverlap(true),
-            mExecSortSites(true), mExecSumScores(true), mOutputDDGScore(true), mOutputTotalScore(true),
-            mOutputAlign(true), mMinSeedLen(6), mMaxSeedLen(8), mFlankUp(0), mFlankDown(0),
-            mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
-            mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
-            mDDGScores() {}
+    PITACore(mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs, 
+             mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
+             mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
+             mExecSearchSeedSites(true), mExecCalDDGScore(true), mExecFilterOverlap(true),
+             mExecSortSites(true), mExecSumScores(true), mOutputDDGScore(true), mOutputTotalScore(true),
+             mOutputAlign(true), mMinSeedLen(6), mMaxSeedLen(8), mFlankUp(0), mFlankDown(0),
+             mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
+             mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
+             mDDGScores() {}
 
     void set_backtrack(bool pBT) { mDDGScores.set_backtrack(pBT); }
 
@@ -71,19 +64,19 @@ public:
     int calculate_mirna_scores(unsigned pIdx);
 
 private:
-    TCharSet const &mMiRNAIds;
-    TRNASet const &mMiRNASeqs;
-    TCharSet const &mMRNAIds;
-    TRNASet const &mMRNASeqs;
+    mikan::TCharSet const &mMiRNAIds;
+    mikan::TRNASet const &mMiRNASeqs;
+    mikan::TCharSet const &mMRNAIds;
+    mikan::TRNASet const &mMRNASeqs;
 
     std::ofstream mOFile1;
     std::ofstream mOFile2;
 
-    PITASeedSites <TRNAString> mSeedSites;
-    PITADDGScores <TRNAString> mDDGScores;
-    PITAOverlap <TRNAString> mOverlappedSites;
-    PITASortedSitePos <TRNAString> mSortedSites;
-    PITATotalScores <TRNAString> mTotalScores;
+    PITASeedSites mSeedSites;
+    PITADDGScores mDDGScores;
+    PITAOverlap mOverlappedSites;
+    PITASortedSitePos mSortedSites;
+    PITATotalScores mTotalScores;
 
 private:
     int write_ddg_score(seqan::CharString const &pMiRNAId);

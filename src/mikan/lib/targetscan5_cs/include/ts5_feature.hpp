@@ -1,23 +1,17 @@
 #ifndef TS5_FEATURE_HPP_
 #define TS5_FEATURE_HPP_
 
+#include <seqan/sequence.h>
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "ts5_align.hpp"         // TS5Alignment
 #include "ts5_seed_site.hpp"     // TS5SeedSites
-#include <seqan/sequence.h>
 
 namespace ts5cs {
 
 //
 // Seed type feature
 //
-template<class TRNAString>
 class TS5FeatSeedType {
-public:
-    // Define types
-    typedef typename seqan::StringSet<TRNAString> TRNASet;
-    typedef typename seqan::StringSet<seqan::CharString> TCharSet;
-    typedef typename seqan::String<unsigned> TSitePos;
-
 public:
     // Define methods
     TS5FeatSeedType() {}
@@ -27,8 +21,8 @@ public:
     seqan::CharString &get_val(int i) { return mSeedTypes[i]; }
 
     // Method prototype
-    int add_features(TRNAString const &pMiRNASeq, TRNASet const &pMRNASeqs,
-                     seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos, TSitePos const &pSitePos);
+    int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                     seqan::String<bool> &pEffectiveSites, mikan::TSitePos const &pMRNAPos, mikan::TSitePos const &pSitePos);
 
     void clear_features();
 
@@ -39,14 +33,8 @@ private:
 //
 // Seed site position feature
 //
-template<class TRNAString>
 class TS5FeatSitePos {
 public:
-    // Define types
-    typedef seqan::StringSet<TRNAString> TRNASet;
-    typedef seqan::StringSet<seqan::CharString> TCharSet;
-    typedef seqan::String<unsigned> TSitePos;
-
     // Constant values
     static const int MIN_DIST_TO_CDS = 15;
 
@@ -57,9 +45,9 @@ public:
     int &get_val(int i) { return mSitePos[i]; }
 
     // Method prototype
-    int add_features(TRNAString const &pMiRNASeq, TRNASet const &pMRNASeqs,
-                     seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos, TSitePos const &pSitePos,
-                     TS5FeatSeedType<TRNAString> &pSeedTypes);
+    int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                     seqan::String<bool> &pEffectiveSites, mikan::TSitePos const &pMRNAPos, mikan::TSitePos const &pSitePos,
+                     TS5FeatSeedType &pSeedTypes);
 
     void clear_features();
 
@@ -73,14 +61,7 @@ private:
 //
 // AU-rich feature
 //
-template<class TRNAString>
 class TS5FeatAURich {
-public:
-    // Define types
-    typedef seqan::StringSet<TRNAString> TRNASet;
-    typedef seqan::StringSet<seqan::CharString> TCharSet;
-    typedef seqan::String<unsigned> TSitePos;
-
 public:
     // Define methods
     TS5FeatAURich() {}
@@ -88,9 +69,9 @@ public:
     float &get_val(int i) { return mAURich[i]; }
 
     // Method prototype
-    int add_features(TRNAString const &pMiRNASeq, TRNASet const &pMRNASeqs,
-                     seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos, TSitePos const &pSitePos,
-                     TS5FeatSeedType<TRNAString> &pSeedTypes);
+    int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                     seqan::String<bool> &pEffectiveSites, mikan::TSitePos const &pMRNAPos, mikan::TSitePos const &pSitePos,
+                     TS5FeatSeedType &pSeedTypes);
 
     void clear_features();
 
@@ -101,52 +82,45 @@ private:
     void getUpDownStreamPos(seqan::CharString pSeedType, int pStartPos, int &pStartU, int &pStartD);
 
     void calcPosScores(const seqan::CharString &pSeedType, seqan::CharString &pUpOrDown,
-                       const TRNAString &pAURichRNA, int pStart, int pEnd, float &pTotalScore, float &pMaxScore);
+                       const mikan::TRNAStr &pAURichRNA, int pStart, int pEnd, float &pTotalScore, float &pMaxScore);
 };
 
 //
 //  Additional 3' paring feature
 //
-template<class TRNAString>
 class TS5FeatThreePrimePair {
-public:
-    // Define types
-    typedef seqan::StringSet<TRNAString> TRNASet;
-    typedef seqan::StringSet<seqan::CharString> TCharSet;
-    typedef seqan::String<unsigned> TSitePos;
-
 public:
     // Define methods
     TS5FeatThreePrimePair() : mIdxBestScore(0) {}
 
     float &get_val(int i) { return mThreePrimePair[i]; }
 
-    const TS5Alignment<TRNAString> &get_alignment() { return mAlign; }
+    const TS5Alignment &get_alignment() { return mAlign; }
 
     // Method prototype
-    int add_features(TRNAString const &pMiRNASeq, TRNASet const &pMRNASeqs,
-                     seqan::String<bool> &pEffectiveSites, TSitePos const &pMRNAPos, TSitePos const &pSitePos,
-                     TS5FeatSeedType<TRNAString> &pSeedTypes);
+    int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                     seqan::String<bool> &pEffectiveSites, mikan::TSitePos const &pMRNAPos, mikan::TSitePos const &pSitePos,
+                     TS5FeatSeedType &pSeedTypes);
 
     void clear_features();
 
 private:
     seqan::String<float> mThreePrimePair;
     unsigned mIdxBestScore;
-    TS5Alignment<TRNAString> mAlign;
+    TS5Alignment mAlign;
 
 private:
     void getUpDownStreamPos(seqan::CharString pSeedType, int pStartPos, int &pStart, int &pEnd);
 
-    void getMRNASeq(const seqan::CharString &pSeedType, const TRNAString &pMRNASeq, int pSitePos,
-                    TRNAString &pMRNAThreePrime);
+    void getMRNASeq(const seqan::CharString &pSeedType, const mikan::TRNAStr &pMRNASeq, int pSitePos,
+                    mikan::TRNAStr &pMRNAThreePrime);
 
-    void getMiRNASeq(const seqan::CharString &pSeedType, const TRNAString &pMiRNASeq,
-                     TRNAString &pMiRNAThreePrime);
+    void getMiRNASeq(const seqan::CharString &pSeedType, const mikan::TRNAStr &pMiRNASeq,
+                     mikan::TRNAStr &pMiRNAThreePrime);
 
-    float findBestMatch(unsigned pPosIdx, TSitePos const &pMRNAPos, TSitePos const &pSitePos,
-                        const seqan::CharString &pSeedType, const TRNAString &pMRNASeq,
-                        const TRNAString &pMiRNASeq);
+    float findBestMatch(unsigned pPosIdx, mikan::TSitePos const &pMRNAPos, mikan::TSitePos const &pSitePos,
+                        const seqan::CharString &pSeedType, const mikan::TRNAStr &pMRNASeq,
+                        const mikan::TRNAStr &pMiRNASeq);
 
     void connectMatchedSeq(seqan::String<int> &pMatchLen, seqan::String<int> &pMiRNAPos,
                            seqan::String<int> &pMRNAPos);
@@ -159,13 +133,8 @@ private:
 //
 // Store all raw feature values
 //
-template<class TRNAString>
 class TS5RawFeatures {
 public:
-    // Define types
-    typedef seqan::StringSet<TRNAString> TRNASet;
-    typedef seqan::StringSet<seqan::CharString> TCharSet;
-
     // Define variables
     seqan::String<bool> mEffectiveSites;
 
@@ -181,19 +150,19 @@ public:
 
     float &get_three_prime_pair(int i) { return mThreePrimePair.get_val(i); }
 
-    const TS5Alignment<TRNAString> &get_alignment() { return mThreePrimePair.get_alignment(); }
+    const TS5Alignment &get_alignment() { return mThreePrimePair.get_alignment(); }
 
     // Method prototypes
-    int add_features(TRNAString const &pMiRNASeq, TRNASet const &pMRNASeqs,
-                     TS5SeedSites<TRNAString> const &pSeedSites);
+    int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                     TS5SeedSites const &pSeedSites);
 
     void clear_features();
 
 private:
-    TS5FeatSeedType<TRNAString> mSeedTypes;
-    TS5FeatSitePos<TRNAString> mSitePos;
-    TS5FeatAURich<TRNAString> mAURich;
-    TS5FeatThreePrimePair<TRNAString> mThreePrimePair;
+    TS5FeatSeedType mSeedTypes;
+    TS5FeatSitePos mSitePos;
+    TS5FeatAURich mAURich;
+    TS5FeatThreePrimePair mThreePrimePair;
 };
 
 } // namespace ts5cs

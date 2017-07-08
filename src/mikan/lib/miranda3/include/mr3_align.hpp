@@ -4,6 +4,7 @@
 #include <seqan/sequence.h>
 #include <seqan/align.h>
 #include <seqan/score.h>
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 
 // Extend SeqAn by a user-define scoring matrix.
 namespace seqan {
@@ -45,7 +46,6 @@ namespace mr3as {
 //
 // Store alignments
 //
-template<class TRNAString>
 class MR3Align {
 public:
     // Constant values
@@ -71,11 +71,11 @@ public:
 
     void resize_align(unsigned pSize);
 
-    void align_seed(int pIdx, TRNAString &pIMiRNASeedSeq, TRNAString &pIMRNASeedSeq, int pMMpos);
+    void align_seed(int pIdx, mikan::TRNAStr &pIMiRNASeedSeq, mikan::TRNAStr &pIMRNASeedSeq, int pMMpos);
 
     void align_3p(int pIdx, seqan::Rna5String &pIMiRNA3pSeq, seqan::Rna5String &pIMRNA3pSeq);
 
-    void combine_alignments(int pIdx, TRNAString const &pMiRNASeq, TRNAString const &pMRNASeq, bool noA1);
+    void combine_alignments(int pIdx, mikan::TRNAStr const &pMiRNASeq, mikan::TRNAStr const &pMRNASeq, bool noA1);
 
     void get_mrna_seq(int pIdx, seqan::CharString &pStrMRNA);
 
@@ -84,7 +84,7 @@ public:
 private:
     typedef seqan::Align<seqan::Rna5String, seqan::ArrayGaps> TAlign;
     typedef seqan::Gaps<seqan::Rna5String, seqan::ArrayGaps> TGap;
-    typedef seqan::ScoreMatrix<typename seqan::Value<seqan::Rna5String>::Type, seqan::MR3RNA3P> TScore3PMat;
+    typedef seqan::ScoreMatrix<seqan::Rna5, seqan::MR3RNA3P> TScore3PMat;
 
     seqan::Score<int, TScore3PMat> mScoreMatrix3P;
 

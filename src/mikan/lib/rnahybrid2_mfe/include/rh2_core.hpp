@@ -1,15 +1,13 @@
 #ifndef RH2_CORE_HPP_
 #define RH2_CORE_HPP_
 
-#include "mk_typedef.hpp"        // TRNATYPE
+#include <seqan/sequence.h>
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_sequence.hpp"       // MKSequences
 #include "rh2_option.hpp"        // RH2Options
 #include "rh2_score.hpp"         // RH2MFEScores, RH2TotalScores
 #include "rh2_seed_site.hpp"     // RH2SeedSites
 #include "rh2_site_cluster.hpp"  // RH2Overlap, RH2TopNScore, RH2SortedSitePos
-#include "mk_sequence.hpp"       // MKSequences
-#include <seqan/sequence.h>
-
-using namespace mikan;
 
 namespace rh2mfe {
 
@@ -18,15 +16,8 @@ int RH2CoreMain(int argc, char const **argv);
 //
 // RNAhybrid MFE score process core
 //
-template<class TRNAString, int SEEDLEN = 6>
 class RH2Core {
 public:
-    // Define types
-    typedef seqan::StringSet<seqan::CharString> TCharSet;
-    typedef seqan::StringSet<TRNAString> TRNASet;
-    typedef seqan::Index<TRNASet, seqan::IndexQGram<seqan::UngappedShape<SEEDLEN> > > TIndexQGram;
-    typedef seqan::Finder<TIndexQGram> TFinder;
-
     // Declare variables
     bool mExecSearchSeedSites;
     bool mExecCalMFEScore;
@@ -46,9 +37,10 @@ public:
 
 public:
     // Define methods
-    RH2Core(TCharSet const &pMiRNAIds, TRNASet const &pMiRNASeqs, TCharSet const &pMRNAIds,
-            TRNASet const &pMRNASeqs,
-            TIndexQGram &pRNAIdx, TFinder &pFinder, int pMRNAMaxLen, int pMiRNAMaxLen, std::string &pSeedDef) :
+    RH2Core(mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
+            mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
+            mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, int pMRNAMaxLen, int pMiRNAMaxLen,
+            std::string &pSeedDef) :
             mExecSearchSeedSites(true), mExecCalMFEScore(true), mExecFilterOverlap(true),
             mExecFilterSiteNum(true), mExecSortSites(true), mExecSumScores(true), mOutputMFEScore(true),
             mOutputTotalScore(true), mOutputAlign(true), mMaxHits(0), mMiRNAIds(pMiRNAIds),
@@ -65,20 +57,20 @@ public:
     int calculate_mirna_scores(unsigned pIdx);
 
 private:
-    TCharSet const &mMiRNAIds;
-    TRNASet const &mMiRNASeqs;
-    TCharSet const &mMRNAIds;
-    TRNASet const &mMRNASeqs;
+    mikan::TCharSet const &mMiRNAIds;
+    mikan::TRNASet const &mMiRNASeqs;
+    mikan::TCharSet const &mMRNAIds;
+    mikan::TRNASet const &mMRNASeqs;
 
     std::ofstream mOFile1;
     std::ofstream mOFile2;
 
-    RH2SeedSites <TRNAString> mSeedSites;
-    RH2MFEScores <TRNAString> mMfeScores;
-    RH2Overlap <TRNAString> mOverlappedSites;
-    RH2TopNScore <TRNAString> mTopScoredSites;
-    RH2SortedSitePos <TRNAString> mSortedSites;
-    RH2TotalScores <TRNAString> mTotalScores;
+    RH2SeedSites mSeedSites;
+    RH2MFEScores mMfeScores;
+    RH2Overlap mOverlappedSites;
+    RH2TopNScore mTopScoredSites;
+    RH2SortedSitePos mSortedSites;
+    RH2TotalScores mTotalScores;
 
 private:
     int write_mfe_score(seqan::CharString const &pMiRNAId);

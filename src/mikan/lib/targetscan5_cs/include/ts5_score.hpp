@@ -1,9 +1,10 @@
 #ifndef TS5_SCORE_HPP_
 #define TS5_SCORE_HPP_
 
+#include <seqan/sequence.h>
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "ts5_feature.hpp"       // TS5RawFeatures
 #include "ts5_seed_site.hpp"     // TS5SeedSites
-#include <seqan/sequence.h>
 
 namespace ts5cs {
 
@@ -128,7 +129,6 @@ private:
 //
 // Store context scores
 //
-template<class TRNAString>
 class TS5ContextScores {
 public:
     // Define methods
@@ -152,7 +152,7 @@ public:
     // Method prototypes
     void clear_scores();
 
-    int calc_scores(TS5RawFeatures <TRNAString> &pRawFeatures);
+    int calc_scores(TS5RawFeatures &pRawFeatures);
 
     void resize_scores(int pSize);
 
@@ -168,7 +168,6 @@ private:
 //
 // Total context scores
 //
-template<class TRNAString>
 class TS5TotalScores {
 public:
     // Define methods
@@ -183,7 +182,7 @@ public:
     // Method prototypes
     void clear_scores();
 
-    int calc_scores(TS5SeedSites <TRNAString> &pSeedSites, TS5ContextScores<TRNAString> &pContextScores);
+    int calc_scores(TS5SeedSites &pSeedSites, TS5ContextScores &pContextScores);
 
 private:
     seqan::String<float> mTotalScores;

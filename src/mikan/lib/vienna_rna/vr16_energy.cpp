@@ -1,6 +1,6 @@
-#include "vr16_energy.hpp"
 #include <cstring>
 #include "mk_nd_array.hpp"
+#include "vr16_energy.hpp"
 
 namespace vr16
 {

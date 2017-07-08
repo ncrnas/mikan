@@ -1,9 +1,9 @@
 #ifndef HYBRID_PRETTYPRINT_HPP_
 #define HYBRID_PRETTYPRINT_HPP_
 
-#include "hybrid_backtrace.hpp"
 #include <string>
 #include <algorithm>
+#include "hybrid_backtrace.hpp"
 
 namespace rh2 {
 

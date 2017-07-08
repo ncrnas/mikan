@@ -1,18 +1,16 @@
 #include <math.h>
+#include "mk_typedef.hpp"           // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "tssvm_align.hpp"          // TSAlign
-#include "mk_typedef.hpp"           // TRNATYPE
 #include "tssvm_site_feature.hpp"   // TSSVMRawFeatures, TSSVMFeatSeedType, TSSVMFeatSimilarity,
 
 using namespace seqan;
-using namespace mikan;
 
 namespace tssvm {
 
 //
 // TSSVMRawFeatures methods
 //
-template<class TRNAString>
-void TSSVMRawFeatures<TRNAString>::clear_features() {
+void TSSVMRawFeatures::clear_features() {
     clear(mEffectiveSites);
     mSeedTypes.clear_features();
     mSimilarities.clear_features();
@@ -23,12 +21,11 @@ void TSSVMRawFeatures<TRNAString>::clear_features() {
     mA1Match.clear_features();
 }
 
-template<class TRNAString>
-int TSSVMRawFeatures<TRNAString>::add_features(
-        TSSVMSeedSites<TRNAString> &pSeedSites,
-        TSAlign<TRNAString> const &pAlignSeqs,
-        TRNAString const &pMiRNASeq,
-        StringSet<TRNAString> const &pMRNASeqs) {
+int TSSVMRawFeatures::add_features(
+        TSSVMSeedSites &pSeedSites,
+        TSAlign const &pAlignSeqs,
+        mikan::TRNAStr const &pMiRNASeq,
+        mikan::TRNASet const &pMRNASeqs) {
     resize(mEffectiveSites, length(pSeedSites.mEffectiveSites));
     for (unsigned i = 0; i < length(mEffectiveSites); ++i) {
         mEffectiveSites[i] = pSeedSites.mEffectiveSites[i];
@@ -48,17 +45,15 @@ int TSSVMRawFeatures<TRNAString>::add_features(
 //
 // TSSVMFeatSeedType methods
 //
-template<class TRNAString>
-void TSSVMFeatSeedType<TRNAString>::clear_features() {
+void TSSVMFeatSeedType::clear_features() {
     clear(mSeedTypes);
 }
 
-template<class TRNAString>
-int TSSVMFeatSeedType<TRNAString>::add_features(
-        TSSVMSeedSites<TRNAString> &pSeedSites,
-        TSAlign<TRNAString> const &,
-        TRNAString const &,
-        StringSet<TRNAString> const &,
+int TSSVMFeatSeedType::add_features(
+        TSSVMSeedSites &pSeedSites,
+        TSAlign const &,
+        mikan::TRNAStr const &,
+        mikan::TRNASet const &,
         String<bool> &pEffectiveSites) {
     const StringSet<CharString> &seedTypes = pSeedSites.get_seed_types();
 
@@ -98,17 +93,15 @@ int TSSVMFeatSeedType<TRNAString>::add_features(
 //
 // TSSVMFeatSimilarity methods
 //
-template<class TRNAString>
-void TSSVMFeatSimilarity<TRNAString>::clear_features() {
+void TSSVMFeatSimilarity::clear_features() {
     clear(mSimilarities);
 }
 
-template<class TRNAString>
-int TSSVMFeatSimilarity<TRNAString>::add_features(
-        TSSVMSeedSites<TRNAString> &,
-        TSAlign<TRNAString> const &pAlignSeqs,
-        TRNAString const &,
-        StringSet<TRNAString> const &,
+int TSSVMFeatSimilarity::add_features(
+        TSSVMSeedSites &,
+        TSAlign const &pAlignSeqs,
+        mikan::TRNAStr const &,
+        mikan::TRNASet const &,
         String<bool> &pEffectiveSites) {
     StringSet<CharString> const &alignBars = pAlignSeqs.get_align_bars();
     float simAll, simSeed, sim3p, simAddtional, tmpScore;
@@ -163,17 +156,15 @@ int TSSVMFeatSimilarity<TRNAString>::add_features(
 //
 // TSSVMFeatAURichUp methods
 //
-template<class TRNAString>
-void TSSVMFeatAURichUp<TRNAString>::clear_features() {
+void TSSVMFeatAURichUp::clear_features() {
     clear(mAURichUp);
 }
 
-template<class TRNAString>
-int TSSVMFeatAURichUp<TRNAString>::add_features(
-        TSSVMSeedSites<TRNAString> &pSeedSites,
-        TSAlign<TRNAString> const &,
-        TRNAString const &,
-        StringSet<TRNAString> const &pMRNASeqs,
+int TSSVMFeatAURichUp::add_features(
+        TSSVMSeedSites &pSeedSites,
+        TSAlign const &,
+        mikan::TRNAStr const &,
+        mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &siteS8Pos = pSeedSites.get_site_pos_s8();
@@ -201,8 +192,7 @@ int TSSVMFeatAURichUp<TRNAString>::add_features(
     return 0;
 }
 
-template<class TRNAString>
-void TSSVMFeatAURichUp<TRNAString>::getUpStreamPos(
+void TSSVMFeatAURichUp::getUpStreamPos(
         unsigned pS8Pos,
         unsigned &pStartPos,
         unsigned &pEndPos) {
@@ -221,17 +211,15 @@ void TSSVMFeatAURichUp<TRNAString>::getUpStreamPos(
 //
 // TSSVMFeatAURichDown methods
 //
-template<class TRNAString>
-void TSSVMFeatAURichDown<TRNAString>::clear_features() {
+void TSSVMFeatAURichDown::clear_features() {
     clear(mAURichDown);
 }
 
-template<class TRNAString>
-int TSSVMFeatAURichDown<TRNAString>::add_features(
-        TSSVMSeedSites<TRNAString> &pSeedSites,
-        TSAlign<TRNAString> const &,
-        TRNAString const &,
-        StringSet<TRNAString> const &pMRNASeqs,
+int TSSVMFeatAURichDown::add_features(
+        TSSVMSeedSites &pSeedSites,
+        TSAlign const &,
+        mikan::TRNAStr const &,
+        mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &siteS1Pos = pSeedSites.get_site_pos_s1();
@@ -260,8 +248,7 @@ int TSSVMFeatAURichDown<TRNAString>::add_features(
     return 0;
 }
 
-template<class TRNAString>
-void TSSVMFeatAURichDown<TRNAString>::getDownStreamPos(
+void TSSVMFeatAURichDown::getDownStreamPos(
         unsigned pS1Pos,
         unsigned pSeqLen,
         unsigned &pStartPos,
@@ -284,17 +271,15 @@ void TSSVMFeatAURichDown<TRNAString>::getDownStreamPos(
 //
 // TSSVMFeatSitePos methods
 //
-template<class TRNAString>
-void TSSVMFeatSitePos<TRNAString>::clear_features() {
+void TSSVMFeatSitePos::clear_features() {
     clear(mSitePos);
 }
 
-template<class TRNAString>
-int TSSVMFeatSitePos<TRNAString>::add_features(
-        TSSVMSeedSites<TRNAString> &pSeedSites,
-        TSAlign<TRNAString> const &,
-        TRNAString const &,
-        StringSet<TRNAString> const &pMRNASeqs,
+int TSSVMFeatSitePos::add_features(
+        TSSVMSeedSites &pSeedSites,
+        TSAlign const &,
+        mikan::TRNAStr const &,
+        mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &siteS8Pos = pSeedSites.get_site_pos_s8();
@@ -320,17 +305,15 @@ int TSSVMFeatSitePos<TRNAString>::add_features(
 //
 // TSSVMFeatSeqMatch methods
 //
-template<class TRNAString>
-void TSSVMFeatSeqMatch<TRNAString>::clear_features() {
+void TSSVMFeatSeqMatch::clear_features() {
     clear(mSeqMatch);
 }
 
-template<class TRNAString>
-int TSSVMFeatSeqMatch<TRNAString>::add_features(
-        TSSVMSeedSites<TRNAString> &,
-        TSAlign<TRNAString> const &pAlignSeqs,
-        TRNAString const &,
-        StringSet<TRNAString> const &,
+int TSSVMFeatSeqMatch::add_features(
+        TSSVMSeedSites &,
+        TSAlign const &pAlignSeqs,
+        mikan::TRNAStr const &,
+        mikan::TRNASet const &,
         String<bool> &pEffectiveSites) {
     StringSet<CharString> const &alignBars = pAlignSeqs.get_align_bars();
     char barChar;
@@ -368,17 +351,15 @@ int TSSVMFeatSeqMatch<TRNAString>::add_features(
 //
 // TSSVMFeatA1Match methods
 //
-template<class TRNAString>
-void TSSVMFeatA1Match<TRNAString>::clear_features() {
+void TSSVMFeatA1Match::clear_features() {
     clear(mA1Match);
 }
 
-template<class TRNAString>
-int TSSVMFeatA1Match<TRNAString>::add_features(
-        TSSVMSeedSites<TRNAString> &pSeedSites,
-        TSAlign<TRNAString> const &,
-        TRNAString const &,
-        StringSet<TRNAString> const &,
+int TSSVMFeatA1Match::add_features(
+        TSSVMSeedSites &pSeedSites,
+        TSAlign const &,
+        mikan::TRNAStr const &,
+        mikan::TRNASet const &,
         String<bool> &pEffectiveSites) {
     const StringSet<CharString> &seedTypes = pSeedSites.get_seed_types();
 
@@ -400,30 +381,5 @@ int TSSVMFeatA1Match<TRNAString>::add_features(
 
     return 0;
 }
-
-// Explicit template instantiation
-template
-class TSSVMFeatSeedType<TRNATYPE>;
-
-template
-class TSSVMFeatSimilarity<TRNATYPE>;
-
-template
-class TSSVMFeatAURichUp<TRNATYPE>;
-
-template
-class TSSVMFeatAURichDown<TRNATYPE>;
-
-template
-class TSSVMFeatSitePos<TRNATYPE>;
-
-template
-class TSSVMFeatSeqMatch<TRNATYPE>;
-
-template
-class TSSVMFeatA1Match<TRNATYPE>;
-
-template
-class TSSVMRawFeatures<TRNATYPE>;
 
 } // namespace tssvm

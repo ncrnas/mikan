@@ -1,30 +1,27 @@
-#include "mk_typedef.hpp"        // TRNATYPE
-#include "rh2_seed_site.hpp"     // RH2SeedSeqs, RH2SeedSites
 #include <seqan/seq_io.h>
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "rh2_seed_site.hpp"     // RH2SeedSeqs, RH2SeedSites
 
 using namespace seqan;
-using namespace mikan;
 
 namespace rh2mfe {
 
 //
 // RH2SeedSeqs methods
 //
-template<class TRNAString>
-void RH2SeedSeqs<TRNAString>::set_mirna_seq(TRNAString pSeq) {
+void RH2SeedSeqs::set_mirna_seq(mikan::TRNAStr pSeq) {
     clear(mSeedSeqs);
     clear(mSeedTypes);
     clear(mEffectiveSeeds);
     mMiRNASeq = pSeq;
 }
 
-template<class TRNAString>
-int RH2SeedSeqs<TRNAString>::create_seed_seqs(CharString &pSeedDef, CharString &pOverlapDef) {
+int RH2SeedSeqs::create_seed_seqs(CharString &pSeedDef, CharString &pOverlapDef) {
     if (length(mMiRNASeq) == 0) {
         return 1;
     }
 
-    TRNAString seedSeq;
+    mikan::TRNAStr seedSeq;
     CharString seedType;
 
     int retVal;
@@ -48,8 +45,7 @@ int RH2SeedSeqs<TRNAString>::create_seed_seqs(CharString &pSeedDef, CharString &
     return 0;
 }
 
-template<class TRNAString>
-int RH2SeedSeqs<TRNAString>::create_nmer_seed_seqs(TRNAString &pSeedSeq, CharString &pSeedDef) {
+int RH2SeedSeqs::create_nmer_seed_seqs(mikan::TRNAStr &pSeedSeq, CharString &pSeedDef) {
     int retVal = 0;
 
     appendValue(mSeedSeqs, pSeedSeq);
@@ -89,12 +85,11 @@ int RH2SeedSeqs<TRNAString>::create_nmer_seed_seqs(TRNAString &pSeedSeq, CharStr
     return 0;
 }
 
-template<class TRNAString>
-int RH2SeedSeqs<TRNAString>::create_single_guwobble_seed_seqs(
-        TRNAString &pSeedSeq,
+int RH2SeedSeqs::create_single_guwobble_seed_seqs(
+        mikan::TRNAStr &pSeedSeq,
         seqan::CharString &pGUT,
         seqan::CharString &pGUM) {
-    TRNAString seedGUSeq;
+    mikan::TRNAStr seedGUSeq;
 
     for (unsigned i = 0; i < length(pSeedSeq); ++i) {
         if (pSeedSeq[i] == 'C') {
@@ -113,12 +108,11 @@ int RH2SeedSeqs<TRNAString>::create_single_guwobble_seed_seqs(
     return 0;
 }
 
-template<class TRNAString>
-int RH2SeedSeqs<TRNAString>::create_multi_guwobble_seed_seqs(
-        TRNAString &pSeedSeq,
+int RH2SeedSeqs::create_multi_guwobble_seed_seqs(
+        mikan::TRNAStr &pSeedSeq,
         seqan::CharString &pGUT,
         seqan::CharString &pGUM) {
-    TRNAString seedGUSeq;
+    mikan::TRNAStr seedGUSeq;
 
     unsigned seedDatLen = (unsigned) length(mSeedSeqs);
 
@@ -146,14 +140,10 @@ int RH2SeedSeqs<TRNAString>::create_multi_guwobble_seed_seqs(
     return 0;
 }
 
-template<class TRNAString>
-int RH2SeedSeqs<TRNAString>::check_redundant_seeds(seqan::CharString &) {
-    typedef Index<StringSet<TRNAString>, IndexQGram<UngappedShape<SEED_LEN> > > TIndexQGram;
-    typedef Finder<TIndexQGram> TFinder;
-
-    TRNAString seedSeq;
-    TIndexQGram RNAIdx(mSeedSeqs);
-    TFinder finder(RNAIdx);
+int RH2SeedSeqs::check_redundant_seeds(seqan::CharString &) {
+    mikan::TRNAStr seedSeq;
+    mikan::TIndexQGram RNAIdx(mSeedSeqs);
+    mikan::TFinder finder(RNAIdx);
 
     for (unsigned i = 0; i < length(mSeedSeqs); ++i) {
         if (!mEffectiveSeeds[i]) {
@@ -175,19 +165,17 @@ int RH2SeedSeqs<TRNAString>::check_redundant_seeds(seqan::CharString &) {
 //
 // RH2SeedSites methods
 //
-template<class TRNAString>
-void RH2SeedSites<TRNAString>::reset_finder() {
+void RH2SeedSites::reset_finder() {
     goBegin(mFinder);
     clear(mFinder);
 }
 
-template<class TRNAString>
-int RH2SeedSites<TRNAString>::find_seed_sites(
-        TRNAString const &pMiRNA,
+int RH2SeedSites::find_seed_sites(
+        mikan::TRNAStr const &pMiRNA,
         CharString &pSeedDef,
         CharString &pOverlapDef) {
-    RH2SeedSeqs<TRNAString> seedSeqs;
-    TRNAString seedSeq;
+    RH2SeedSeqs seedSeqs;
+    mikan::TRNAStr seedSeq;
     CharString seedType;
     int retVal;
     unsigned mRNAPos, sitePos;
@@ -231,26 +219,24 @@ int RH2SeedSites<TRNAString>::find_seed_sites(
     return 0;
 }
 
-template<class TRNAString>
-void RH2SeedSites<TRNAString>::clear_pos() {
+void RH2SeedSites::clear_pos() {
     clear(mMRNAPos);
     clear(mSitePos);
     clear(mSeedTypes);
     clear(mEffectiveSites);
 }
 
-template<class TRNAString>
-void RH2SeedSites<TRNAString>::set_new_seed_type(
+void RH2SeedSites::set_new_seed_type(
         CharString &pCurSeedType,
         CharString &pSeedDef,
         unsigned pMRNAPos,
         unsigned pSitePos,
-        TRNAString const &pMiRNA,
+        mikan::TRNAStr const &pMiRNA,
         bool &pEffectiveSite) {
     bool IsA1, MatchM8;
-    TRNAString revMiRNASeq, miRNAM8, mRNAM8, miRNAM8c, mRNAA1;
+    mikan::TRNAStr revMiRNASeq, miRNAM8, mRNAM8, miRNAM8c, mRNAA1;
     CharString newSeedType = "";
-    TRNAString miRNASeq = pMiRNA;
+    mikan::TRNAStr miRNASeq = pMiRNA;
     bool noA1;
 
     if (!pEffectiveSite) {
@@ -320,13 +306,5 @@ void RH2SeedSites<TRNAString>::set_new_seed_type(
     return;
 
 }
-
-// Explicit template instantiation
-
-template
-class RH2SeedSeqs<TRNATYPE>;
-
-template
-class RH2SeedSites<TRNATYPE>;
 
 } // namespace rh2mfe

@@ -1,22 +1,20 @@
-#include "mk_typedef.hpp"           // TRNATYPE
-#include "tssvm_seed_site.hpp"      // TSSVMSequences, TSSVMSeedSeqs, TSSVMSeedSites, TSSVMSeedSiteOverlap
 #include <seqan/seq_io.h>
+#include "mk_typedef.hpp"           // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "tssvm_seed_site.hpp"      // TSSVMSequences, TSSVMSeedSeqs, TSSVMSeedSites, TSSVMSeedSiteOverlap
 
 using namespace seqan;
-using namespace mikan;
 
 namespace tssvm {
 
 //
 // TSSVMSeedSeqs methods
 //
-template<class TRNAString>
-int TSSVMSeedSeqs<TRNAString>::create_seed_seqs() {
+int TSSVMSeedSeqs::create_seed_seqs() {
     if (length(mMiRNASeq) == 0) {
         return 1;
     }
 
-    TRNAString seedSeq;
+    mikan::TRNAStr seedSeq;
 
     int retVal;
 
@@ -40,8 +38,7 @@ int TSSVMSeedSeqs<TRNAString>::create_seed_seqs() {
     return 0;
 }
 
-template<class TRNAString>
-int TSSVMSeedSeqs<TRNAString>::create_non_stringent_seed_seqs(TRNAString &pSeedSeq) {
+int TSSVMSeedSeqs::create_non_stringent_seed_seqs(mikan::TRNAStr &pSeedSeq) {
     int retVal;
 
     retVal = create_guwobble_seed_seqs(pSeedSeq);
@@ -67,10 +64,9 @@ int TSSVMSeedSeqs<TRNAString>::create_non_stringent_seed_seqs(TRNAString &pSeedS
     return 0;
 }
 
-template<class TRNAString>
-int TSSVMSeedSeqs<TRNAString>::create_guwobble_seed_seqs(TRNAString &pSeedSeq) {
-    TRNAString seedGUSeq;
-    TRNASet seedSeqs;
+int TSSVMSeedSeqs::create_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq) {
+    mikan::TRNAStr seedGUSeq;
+    mikan::TRNASet seedSeqs;
     StringSet<CharString> seedTypes;
     String<unsigned> misMatchPos;
     int retVal;
@@ -101,11 +97,10 @@ int TSSVMSeedSeqs<TRNAString>::create_guwobble_seed_seqs(TRNAString &pSeedSeq) {
     return 0;
 }
 
-template<class TRNAString>
-int TSSVMSeedSeqs<TRNAString>::create_lp_seed_seqs(TRNAString &pSeedSeq) {
-    TRNAString seedLPSeq;
+int TSSVMSeedSeqs::create_lp_seed_seqs(mikan::TRNAStr &pSeedSeq) {
+    mikan::TRNAStr seedLPSeq;
     bool effective;
-    TRNASet seedSeqs;
+    mikan::TRNASet seedSeqs;
     StringSet<CharString> seedTypes;
     String<unsigned> misMatchPos;
     int retVal;
@@ -146,10 +141,9 @@ int TSSVMSeedSeqs<TRNAString>::create_lp_seed_seqs(TRNAString &pSeedSeq) {
     return 0;
 }
 
-template<class TRNAString>
-int TSSVMSeedSeqs<TRNAString>::create_bm_seed_seqs(TRNAString &) {
-    TRNAString seedBMSeq;
-    TRNASet seedSeqs;
+int TSSVMSeedSeqs::create_bm_seed_seqs(mikan::TRNAStr &) {
+    mikan::TRNAStr seedBMSeq;
+    mikan::TRNASet seedSeqs;
     StringSet<CharString> seedTypes;
     String<unsigned> misMatchPos;
     int retVal;
@@ -178,10 +172,9 @@ int TSSVMSeedSeqs<TRNAString>::create_bm_seed_seqs(TRNAString &) {
     return 0;
 }
 
-template<class TRNAString>
-int TSSVMSeedSeqs<TRNAString>::create_bt_seed_seqs(TRNAString &) {
-    TRNAString seedBTSeq;
-    TRNASet seedSeqs;
+int TSSVMSeedSeqs::create_bt_seed_seqs(mikan::TRNAStr &) {
+    mikan::TRNAStr seedBTSeq;
+    mikan::TRNASet seedSeqs;
     StringSet<CharString> seedTypes;
     String<unsigned> misMatchPos;
     int retVal;
@@ -213,9 +206,8 @@ int TSSVMSeedSeqs<TRNAString>::create_bt_seed_seqs(TRNAString &) {
     return 0;
 }
 
-template<class TRNAString>
-int TSSVMSeedSeqs<TRNAString>::add_seeds_in_reverse_order(
-        TRNASet &pSeedSeqs,
+int TSSVMSeedSeqs::add_seeds_in_reverse_order(
+        mikan::TRNASet &pSeedSeqs,
         StringSet<CharString> &pSeedTypes,
         seqan::String<unsigned> &pMisMatchPos) {
     resize(mSeedSeqs, length(mSeedSeqs) + length(pSeedSeqs));
@@ -236,8 +228,7 @@ int TSSVMSeedSeqs<TRNAString>::add_seeds_in_reverse_order(
     return 0;
 }
 
-template<class TRNAString>
-void TSSVMSeedSeqs<TRNAString>::set_mirna_seq(TRNAString pSeq) {
+void TSSVMSeedSeqs::set_mirna_seq(mikan::TRNAStr pSeq) {
     clear(mSeedSeqs);
     clear(mMisMatchPos);
     clear(mEffectiveSeeds);
@@ -247,17 +238,15 @@ void TSSVMSeedSeqs<TRNAString>::set_mirna_seq(TRNAString pSeq) {
 //
 // TSSVMSeedSites methods
 //
-template<class TRNAString>
-void TSSVMSeedSites<TRNAString>::reset_finder() {
+void TSSVMSeedSites::reset_finder() {
     goBegin(mFinder);
     clear(mFinder);
 }
 
-template<class TRNAString>
-int TSSVMSeedSites<TRNAString>::find_seed_sites(
-        TRNAString const &pMiRNA) {
-    TSSVMSeedSeqs<TRNAString> seedSeqs;
-    TRNAString seedSeq;
+int TSSVMSeedSites::find_seed_sites(
+        mikan::TRNAStr const &pMiRNA) {
+    TSSVMSeedSeqs seedSeqs;
+    mikan::TRNAStr seedSeq;
     CharString newSeedType;
     int retVal;
     unsigned mRNAPos, sitePos;
@@ -308,8 +297,7 @@ int TSSVMSeedSites<TRNAString>::find_seed_sites(
     return 0;
 }
 
-template<class TRNAString>
-void TSSVMSeedSites<TRNAString>::clear_pos() {
+void TSSVMSeedSites::clear_pos() {
     clear(mMRNAPos);
     clear(mSitePos);
     clear(mSeedTypes);
@@ -319,13 +307,12 @@ void TSSVMSeedSites<TRNAString>::clear_pos() {
     clear(mEffectiveSites);
 }
 
-template<class TRNAString>
-int TSSVMSeedSites<TRNAString>::set_seed_pos(
-        TSSVMSeedSeqs<TRNAString> &pSeedSeqs,
+int TSSVMSeedSites::set_seed_pos(
+        TSSVMSeedSeqs &pSeedSeqs,
         unsigned pMRNAPos,
         unsigned pSitePos,
-        TRNAString const &pMiRNA,
-        const TRNAString &pSeedSeq,
+        mikan::TRNAStr const &pMiRNA,
+        const mikan::TRNAStr &pSeedSeq,
         unsigned pIdx) {
     unsigned m8Pos, a1Pos;
     const CharString &seedType = pSeedSeqs.get_seed_type(pIdx);
@@ -358,18 +345,17 @@ int TSSVMSeedSites<TRNAString>::set_seed_pos(
 
 }
 
-template<class TRNAString>
-int TSSVMSeedSites<TRNAString>::set_seed_type(
+int TSSVMSeedSites::set_seed_type(
         const CharString &pCurType,
-        const TRNAString &pMRNASeq,
-        const TRNAString &pMiRNASeq,
+        const mikan::TRNAStr &pMRNASeq,
+        const mikan::TRNAStr &pMiRNASeq,
         unsigned pM8Pos,
         unsigned pA1Pos,
         unsigned pMisMatchedPos,
-        const TRNAString &) {
-    TRNAString newSeedSeq, complMiRNASeq;
-    typename Value<TRNAString>::Type miRNAM2, miRNAM8;
-    typename Value<TRNAString>::Type mRNAM2, mRNAM8, mRNAA1;
+        const mikan::TRNAStr &) {
+    mikan::TRNAStr newSeedSeq, complMiRNASeq;
+    seqan::Rna miRNAM2, miRNAM8;
+    seqan::Rna mRNAM2, mRNAM8, mRNAA1;
     CharString newSeedType;
     bool IsA1, MatchM8;
 
@@ -430,16 +416,13 @@ int TSSVMSeedSites<TRNAString>::set_seed_type(
 //
 // TSSVMSeedSiteOverlap methods
 //
-
-template<class TRNAString>
-void TSSVMSeedSiteOverlap<TRNAString>::clear_site_pos() {
+void TSSVMSeedSiteOverlap::clear_site_pos() {
     mRNAPosSet.clear();
     mSiteMap.clear();
     clear(mSortedMRNAPos);
 }
 
-template<class TRNAString>
-void TSSVMSeedSiteOverlap<TRNAString>::cluster_site_pos(TSSVMSeedSites<TRNAString> &pSeedSites) {
+void TSSVMSeedSiteOverlap::cluster_site_pos(TSSVMSeedSites &pSeedSites) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
@@ -448,9 +431,8 @@ void TSSVMSeedSiteOverlap<TRNAString>::cluster_site_pos(TSSVMSeedSites<TRNAStrin
     }
 }
 
-template<class TRNAString>
-int TSSVMSeedSiteOverlap<TRNAString>::filter_overlapped_sites(
-        TSSVMSeedSites<TRNAString> &pSeedSites,
+int TSSVMSeedSiteOverlap::filter_overlapped_sites(
+        TSSVMSeedSites &pSeedSites,
         unsigned pMRNANum) {
     TItSet itSet;
 
@@ -464,9 +446,8 @@ int TSSVMSeedSiteOverlap<TRNAString>::filter_overlapped_sites(
     return 0;
 }
 
-template<class TRNAString>
-void TSSVMSeedSiteOverlap<TRNAString>::sort_by_seed_type(
-        TSSVMSeedSites<TRNAString> &pSeedSites,
+void TSSVMSeedSiteOverlap::sort_by_seed_type(
+        TSSVMSeedSites &pSeedSites,
         int pPosIdx) {
     TItMap itMap;
     TItRetPair ret;
@@ -498,8 +479,7 @@ void TSSVMSeedSiteOverlap<TRNAString>::sort_by_seed_type(
     }
 }
 
-template<class TRNAString>
-unsigned TSSVMSeedSiteOverlap<TRNAString>::get_seedtype_precedence(const CharString &pSeedType) {
+unsigned TSSVMSeedSiteOverlap::get_seedtype_precedence(const CharString &pSeedType) {
     unsigned preced;
 
     if (pSeedType == "8mer" || pSeedType == "7mer-A1" || pSeedType == "7mer-m8") {
@@ -523,9 +503,8 @@ unsigned TSSVMSeedSiteOverlap<TRNAString>::get_seedtype_precedence(const CharStr
     return preced;
 }
 
-template<class TRNAString>
-void TSSVMSeedSiteOverlap<TRNAString>::mark_overlapped_sites(
-        TSSVMSeedSites<TRNAString> &pSeedSites,
+void TSSVMSeedSiteOverlap::mark_overlapped_sites(
+        TSSVMSeedSites &pSeedSites,
         std::multimap<unsigned, unsigned> &pSortedSeeds) {
     IntervalTree<unsigned> tree;
     String<unsigned> results;
@@ -576,16 +555,5 @@ void TSSVMSeedSiteOverlap<TRNAString>::mark_overlapped_sites(
         }
     }
 }
-
-// Explicit template instantiation
-
-template
-class TSSVMSeedSeqs<TRNATYPE>;
-
-template
-class TSSVMSeedSites<TRNATYPE>;
-
-template
-class TSSVMSeedSiteOverlap<TRNATYPE>;
 
 } // namespace tssvm

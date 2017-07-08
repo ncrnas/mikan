@@ -1,15 +1,15 @@
 #ifndef PITA_SITE_CLUSTER_HPP_
 #define PITA_SITE_CLUSTER_HPP_
 
-#include "pita_score.hpp"         // PITADDGScores
-#include "pita_seed_site.hpp"     // PITASeedSites
 #include <set>                    // set
 #include <map>                    // multimap
 #include <utility>                // pair
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "pita_score.hpp"         // PITADDGScores
+#include "pita_seed_site.hpp"     // PITASeedSites
 
 namespace ptddg {
 
-template<class TRNAString>
 class PITASiteCluster {
 public:
     // Define methods
@@ -24,7 +24,7 @@ public:
     // Method prototype
     void clear_cluster();
 
-    void cluster_site_pos(PITASeedSites <TRNAString> &pSeedSites);
+    void cluster_site_pos(PITASeedSites &pSeedSites);
 
 private:
     typedef std::pair<unsigned, unsigned> TPosPair;
@@ -38,14 +38,13 @@ private:
 //
 // Identify overlapped sites
 //
-template<class TRNAString>
 class PITAOverlap {
 public:
     // Define methods
     PITAOverlap() {}
 
     // Method prototype
-    int filter_overlapped_sites(PITASeedSites <TRNAString> &pSeedSites, int pGapLen);
+    int filter_overlapped_sites(PITASeedSites &pSeedSites, int pGapLen);
 
     void clear_cluster();
 
@@ -56,10 +55,10 @@ private:
     typedef std::multimap<unsigned, unsigned>::iterator TITStartPos;
     typedef std::pair<unsigned, unsigned> TPosPair;
 
-    PITASiteCluster<TRNAString> mSiteCluster;
+    PITASiteCluster mSiteCluster;
 
 private:
-    void mark_overlapped_sites(PITASeedSites <TRNAString> &pSeedSites, int pPrevIdx, int pCurIdx);
+    void mark_overlapped_sites(PITASeedSites &pSeedSites, int pPrevIdx, int pCurIdx);
 
     unsigned get_seedtype_precedence(const seqan::CharString &pSeedType);
 };
@@ -67,14 +66,13 @@ private:
 //
 // Sort sites by position
 //
-template<class TRNAString>
 class PITASortedSitePos {
 public:
     // Define methods
     PITASortedSitePos() {}
 
     // Method prototype
-    int generate_sorted_mrna_pos(PITASeedSites <TRNAString> &pSeedSites);
+    int generate_sorted_mrna_pos(PITASeedSites &pSeedSites);
 
     const seqan::String<unsigned> &get_sorted_mrna_pos() { return mSortedSitePos; }
 
@@ -88,7 +86,7 @@ private:
     typedef std::pair<unsigned, unsigned> TPosPair;
 
     seqan::String<unsigned> mSortedSitePos;
-    PITASiteCluster<TRNAString> mSiteCluster;
+    PITASiteCluster mSiteCluster;
 
 };
 

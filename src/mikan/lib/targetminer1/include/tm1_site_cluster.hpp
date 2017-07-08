@@ -1,17 +1,17 @@
 #ifndef TM1_SITE_CLUSTER_HPP_
 #define TM1_SITE_CLUSTER_HPP_
 
-#include "tm1_seed_site.hpp"      // TM1SeedSites
 #include <set>                    // set
 #include <map>                    // multimap
 #include <utility>                // pair
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "tm1_seed_site.hpp"      // TM1SeedSites
 
 namespace tm1p {
 
 //
 // Provide basic site cluster
 //
-template<class TRNAString>
 class TM1SiteCluster {
 public:
     // Define methods
@@ -26,7 +26,7 @@ public:
     // Method prototype
     void clear_cluster();
 
-    void cluster_site_pos(TM1SeedSites <TRNAString> &pSeedSites);
+    void cluster_site_pos(TM1SeedSites &pSeedSites);
 
 private:
     typedef std::pair<unsigned, unsigned> TPosPair;
@@ -40,14 +40,13 @@ private:
 //
 // Sort sites by position
 //
-template<class TRNAString>
 class TM1SortedSitePos {
 public:
     // Define methods
     TM1SortedSitePos() {}
 
     // Method prototype
-    int generate_sorted_mrna_pos(TM1SeedSites <TRNAString> &pSeedSites, bool pRemoveOvelaps);
+    int generate_sorted_mrna_pos(TM1SeedSites &pSeedSites, bool pRemoveOvelaps);
 
     const seqan::StringSet<seqan::String<unsigned> > &get_sorted_mrna_pos() { return mSortedSites; }
 
@@ -65,15 +64,15 @@ private:
 
     seqan::StringSet<seqan::String<unsigned> > mSortedSites;
     seqan::String<unsigned> mMRNAIDs;
-    TM1SiteCluster<TRNAString> mSiteCluster;
+    TM1SiteCluster mSiteCluster;
 
 private:
-    void remove_overlapped_sites(TM1SeedSites <TRNAString> &pSeedSites);
+    void remove_overlapped_sites(TM1SeedSites &pSeedSites);
 
-    void sort_by_seed_types(TM1SeedSites <TRNAString> &pSeedSites, TItRetPair &pGroupedSites,
+    void sort_by_seed_types(TM1SeedSites &pSeedSites, TItRetPair &pGroupedSites,
                             std::map<unsigned, unsigned> &pSortedSites);
 
-    void sort_by_pos7(TM1SeedSites <TRNAString> &pSeedSites, TItRetPair &pGroupedSites,
+    void sort_by_pos7(TM1SeedSites &pSeedSites, TItRetPair &pGroupedSites,
                       std::map<unsigned, unsigned> &pSortedSites);
 
 };

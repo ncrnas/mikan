@@ -1,33 +1,30 @@
+#include "mk_typedef.hpp"     // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "tssvm_align.hpp"    // TSAlign
-#include "mk_typedef.hpp"     // TRNATYPE
 
 using namespace seqan;
-using namespace mikan;
 
 namespace tssvm {
 
 //
 // TSAlign methods
 //
-template<class TRNAString>
-void TSAlign<TRNAString>::clear_alignments() {
+void TSAlign::clear_alignments() {
     clear(mAlignBars);
     clear(mAlignMRNA);
     clear(mAlignMiRNA);
     clear(mAlignScores);
 }
 
-template<class TRNAString>
-int TSAlign<TRNAString>::align_seq(
-        TSSVMSeedSites<TRNAString> &pSeedSites,
-        TRNAString const &pMiRNASeq,
-        TRNASet const &pMRNASeqs) {
+int TSAlign::align_seq(
+        TSSVMSeedSites &pSeedSites,
+        mikan::TRNAStr const &pMiRNASeq,
+        mikan::TRNASet const &pMRNASeqs) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &sitePos = pSeedSites.get_site_pos();
     const StringSet<CharString> &seedTypes = pSeedSites.get_seed_types();
     const String<unsigned> &misMatchPos = pSeedSites.get_mismatched_pos();
-    TRNAString miRNAAlignSeq;
-    TRNAString mRNAAlignSeq;
+    mikan::TRNAStr miRNAAlignSeq;
+    mikan::TRNAStr mRNAAlignSeq;
     TAlign align;
     unsigned alignLen;
     int retVal;
@@ -89,11 +86,10 @@ int TSAlign<TRNAString>::align_seq(
     return 0;
 }
 
-template<class TRNAString>
-int TSAlign<TRNAString>::set_mirna_seq_for_align(
+int TSAlign::set_mirna_seq_for_align(
         const CharString &pSeedType,
-        TRNAString const &pMiRNASeq,
-        TRNAString &pMiRNAAlignSeq) {
+        mikan::TRNAStr const &pMiRNASeq,
+        mikan::TRNAStr &pMiRNAAlignSeq) {
     int seqStart, seqEnd;
 
     seqStart = 8;
@@ -113,13 +109,12 @@ int TSAlign<TRNAString>::set_mirna_seq_for_align(
 
 }
 
-template<class TRNAString>
-int TSAlign<TRNAString>::set_mrna_seq_for_align(
+int TSAlign::set_mrna_seq_for_align(
         const CharString &pSeedType,
         unsigned pSitePos,
         unsigned pMiRNALen,
-        const TRNAString &pMRNASeq,
-        TRNAString &pMRNAAlignSeq) {
+        const mikan::TRNAStr &pMRNASeq,
+        mikan::TRNAStr &pMRNAAlignSeq) {
     int seqStart, seqEnd;
 
     if (pSeedType == "BM") {
@@ -149,12 +144,11 @@ int TSAlign<TRNAString>::set_mrna_seq_for_align(
 
 }
 
-template<class TRNAString>
-int TSAlign<TRNAString>::set_addtional_sequences(TRNAString &pMiRNAAlignSeq, TRNAString &pMRNAAlignSeq) {
-    typename Value<TRNAString>::Type miRNAEndChar;
-    typename Value<TRNAString>::Type miAddChar;
-    typename Value<TRNAString>::Type mRNAEndChar;
-    typename Value<TRNAString>::Type mAddChar;
+int TSAlign::set_addtional_sequences(mikan::TRNAStr &pMiRNAAlignSeq, mikan::TRNAStr &pMRNAAlignSeq) {
+    Rna miRNAEndChar;
+    Rna miAddChar;
+    Rna mRNAEndChar;
+    Rna mAddChar;
 
     miRNAEndChar = pMiRNAAlignSeq[length(pMiRNAAlignSeq) - 1];
     mRNAEndChar = pMRNAAlignSeq[length(pMRNAAlignSeq) - 1];
@@ -197,8 +191,7 @@ int TSAlign<TRNAString>::set_addtional_sequences(TRNAString &pMiRNAAlignSeq, TRN
     return 0;
 }
 
-template<class TRNAString>
-unsigned TSAlign<TRNAString>::get_align_len(TAlign &pAlign) {
+unsigned TSAlign::get_align_len(TAlign &pAlign) {
     unsigned alignLen;
     TGap &miRNAAlign = row(pAlign, 0);
     TGap &mRNAAlign = row(pAlign, 1);
@@ -215,14 +208,13 @@ unsigned TSAlign<TRNAString>::get_align_len(TAlign &pAlign) {
 
 }
 
-template<class TRNAString>
-int TSAlign<TRNAString>::set_align_mrna(
+int TSAlign::set_align_mrna(
         TAlign &pAlign,
         unsigned pAlignLen,
         const CharString &pSeedType,
         unsigned pMisMatchPos,
         unsigned pSitePos,
-        const TRNAString &pMRNASeq,
+        const mikan::TRNAStr &pMRNASeq,
         int pIdx) {
     TGap &mRNAAlign = row(pAlign, 1);
     CharString seedSiteSeq;
@@ -264,13 +256,12 @@ int TSAlign<TRNAString>::set_align_mrna(
     return 0;
 }
 
-template<class TRNAString>
-int TSAlign<TRNAString>::set_align_mirna(
+int TSAlign::set_align_mirna(
         TAlign &pAlign,
         unsigned pAlignLen,
         const CharString &pSeedType,
         unsigned pMisMatchPos,
-        const TRNAString &pMiRNASeq,
+        const mikan::TRNAStr &pMiRNASeq,
         int pIdx) {
     TGap &miRNAAlign = row(pAlign, 0);
     CharString seedSeq;
@@ -296,8 +287,7 @@ int TSAlign<TRNAString>::set_align_mirna(
     return 0;
 }
 
-template<class TRNAString>
-int TSAlign<TRNAString>::set_align_bars(int pIdx, unsigned pAlignLen) {
+int TSAlign::set_align_bars(int pIdx, unsigned pAlignLen) {
     char miRNA, mRNA;
 
     resize(mAlignBars[pIdx], pAlignLen + 8);
@@ -342,8 +332,7 @@ int TSAlign<TRNAString>::set_align_bars(int pIdx, unsigned pAlignLen) {
     return 0;
 }
 
-template<class TRNAString>
-void TSAlign<TRNAString>::write_alignment(int pIdx) {
+void TSAlign::write_alignment(int pIdx) {
     std::stringstream stream;
 
     stream << "mRNA   5' " << mAlignMRNA[pIdx] << " 3'";
@@ -355,9 +344,5 @@ void TSAlign<TRNAString>::write_alignment(int pIdx) {
 
     std::cout << stream.str();
 }
-
-// Explicit template instantiation
-template
-class TSAlign<TRNATYPE>;
 
 } // namespace tssvm

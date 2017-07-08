@@ -1,5 +1,5 @@
-#ifndef MK_CORE_HPP_
-#define MK_CORE_HPP_
+#ifndef MK_INPUT_HPP_
+#define MK_INPUT_HPP_
 
 #include "mk_typedef.hpp"  // TRNATYPE
 #include "mk_option.hpp"         // MKOptions
@@ -11,12 +11,8 @@ namespace mikan {
 //
 // Input data for mikan score
 //
-template<class TRNAString>
 class MKInput {
 public:
-    // Define types
-    typedef seqan::StringSet<seqan::CharString> TCharSet;
-    typedef seqan::StringSet<TRNAString> TRNASet;
 
     // Declare variables
     seqan::CharString mMiRNAFasta;
@@ -42,10 +38,10 @@ public:
     void set_options(MKOptions &opt);
 
 private:
-    MKSequences<TRNAString> mMiRNASeqs;
-    MKSequences<TRNAString> mMRNASeqs;
+    MKSequences mMiRNASeqs;
+    MKSequences mMRNASeqs;
 };
 
 } // namespace mikan
 
-#endif /* MK_CORE_HPP_ */
+#endif /* MK_INPUT_HPP_ */
