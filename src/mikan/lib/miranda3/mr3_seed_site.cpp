@@ -14,7 +14,7 @@ int MR3SeedSeqs::create_seed_seqs(StringSet<CharString> &pSeedDef) {
         return 1;
     }
 
-    mikan::TRNATYPE seedSeq;
+    mikan::TRNAStr seedSeq;
     CharString seedType;
 
     int retVal;
@@ -60,8 +60,8 @@ int MR3SeedSeqs::create_seed_seqs(StringSet<CharString> &pSeedDef) {
     return 0;
 }
 
-int MR3SeedSeqs::create_single_guwobble_seed_seqs(mikan::TRNATYPE &pSeedSeq) {
-    mikan::TRNATYPE seedGUSeq;
+int MR3SeedSeqs::create_single_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq) {
+    mikan::TRNAStr seedGUSeq;
 
     for (unsigned i = 0; i < length(pSeedSeq); ++i) {
         if (pSeedSeq[i] == 'C') {
@@ -82,8 +82,8 @@ int MR3SeedSeqs::create_single_guwobble_seed_seqs(mikan::TRNATYPE &pSeedSeq) {
     return 0;
 }
 
-int MR3SeedSeqs::create_multi_guwobble_seed_seqs(mikan::TRNATYPE &pSeedSeq) {
-    mikan::TRNATYPE seedGUSeq;
+int MR3SeedSeqs::create_multi_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq) {
+    mikan::TRNAStr seedGUSeq;
     int mm;
 
     unsigned seedDatLen = length(mSeedSeqs);
@@ -119,8 +119,8 @@ int MR3SeedSeqs::create_multi_guwobble_seed_seqs(mikan::TRNATYPE &pSeedSeq) {
     return 0;
 }
 
-int MR3SeedSeqs::create_mismatch_seed_seqs(mikan::TRNATYPE &pSeedSeq, bool pIsMMGU, int pGUPos) {
-    mikan::TRNATYPE seedLPSeq;
+int MR3SeedSeqs::create_mismatch_seed_seqs(mikan::TRNAStr &pSeedSeq, bool pIsMMGU, int pGUPos) {
+    mikan::TRNAStr seedLPSeq;
     CharString seedType;
     char ch1 = 0;
     char ch2 = 0;
@@ -176,8 +176,8 @@ int MR3SeedSeqs::create_mismatch_seed_seqs(mikan::TRNATYPE &pSeedSeq, bool pIsMM
     return 0;
 }
 
-int MR3SeedSeqs::create_gu_mismatch_seed_seqs(mikan::TRNATYPE &pSeedSeq) {
-    mikan::TRNATYPE seedGUSeq;
+int MR3SeedSeqs::create_gu_mismatch_seed_seqs(mikan::TRNAStr &pSeedSeq) {
+    mikan::TRNAStr seedGUSeq;
 
     for (unsigned i = 0; i < length(pSeedSeq); ++i) {
         if (pSeedSeq[i] == 'C') {
@@ -194,9 +194,9 @@ int MR3SeedSeqs::create_gu_mismatch_seed_seqs(mikan::TRNATYPE &pSeedSeq) {
     return 0;
 }
 
-int MR3SeedSeqs::create_bt_seed_seqs(mikan::TRNATYPE &pSeedSeq) {
-    mikan::TRNATYPE seedBTSeq;
-    mikan::TRNATYPE allRNAs;
+int MR3SeedSeqs::create_bt_seed_seqs(mikan::TRNAStr &pSeedSeq) {
+    mikan::TRNAStr seedBTSeq;
+    mikan::TRNAStr allRNAs;
 
     resize(allRNAs, 4);
     allRNAs[0] = 'A';
@@ -226,7 +226,7 @@ int MR3SeedSeqs::create_bt_seed_seqs(mikan::TRNATYPE &pSeedSeq) {
 }
 
 int MR3SeedSeqs::check_redundant_seeds() {
-    mikan::TRNATYPE seedSeq;
+    mikan::TRNAStr seedSeq;
     mikan::TIndexQGram RNAIdx(mSeedSeqs);
     mikan::TFinder finder(RNAIdx);
 
@@ -253,7 +253,7 @@ int MR3SeedSeqs::check_redundant_seeds() {
     return 0;
 }
 
-void MR3SeedSeqs::set_mirna_seq(mikan::TRNATYPE pSeq) {
+void MR3SeedSeqs::set_mirna_seq(mikan::TRNAStr pSeq) {
     clear(mSeedSeqs);
     clear(mSeedTypes);
     clear(mEffectiveSeeds);
@@ -277,10 +277,10 @@ void MR3SeedSites::reset_finder() {
 }
 
 int MR3SeedSites::find_seed_sites(
-        mikan::TRNATYPE const &pMiRNA,
+        mikan::TRNAStr const &pMiRNA,
         StringSet<CharString> &pSeedDef) {
     MR3SeedSeqs seedSeqs;
-    mikan::TRNATYPE seedSeq;
+    mikan::TRNAStr seedSeq;
     CharString seedType;
     int retVal;
     unsigned mRNAPos, sitePos;
@@ -333,7 +333,7 @@ void MR3SeedSites::set_new_seed_type(
         StringSet<CharString> &pSeedDef,
         unsigned pMRNAPos,
         unsigned pSitePos,
-        mikan::TRNATYPE const &pMiRNA,
+        mikan::TRNAStr const &pMiRNA,
         unsigned pMisMatchPos,
         bool &pEffectiveSite) {
     bool matchM8, matchM9, gutM8, gutM9, gumM8, gumM9;;
@@ -392,12 +392,12 @@ void MR3SeedSites::set_new_seed_type(
 void MR3SeedSites::set_mx_matches(
         unsigned pMRNAPos,
         unsigned pSitePos,
-        mikan::TRNATYPE const &pMiRNA,
+        mikan::TRNAStr const &pMiRNA,
         int pMx,
         bool &pMatchMx,
         bool &pGutMx,
         bool &pGumMx) {
-    mikan::TRNATYPE cMiRNASeq, miRNAMx, mRNAMx, miRNAMxC;
+    mikan::TRNAStr cMiRNASeq, miRNAMx, mRNAMx, miRNAMxC;
 
     miRNAMx = pMiRNA[pMx - 1];
     cMiRNASeq = pMiRNA;
@@ -728,10 +728,10 @@ void MR3SeedSites::set_gu_mismatch_seed_type(
 void MR3SeedSites::set_bt_seed_type(
         unsigned pMRNAPos,
         unsigned pSitePos,
-        mikan::TRNATYPE const &pMiRNA,
+        mikan::TRNAStr const &pMiRNA,
         unsigned pMisMatchPos,
         CharString &pNewSeedType) {
-    mikan::TRNATYPE cMiRNASeq, miRNAM2C, miRNAM8C, miRNAM9C, mRNAM2, mRNAM7, mRNAM8;
+    mikan::TRNAStr cMiRNASeq, miRNAM2C, miRNAM8C, miRNAM9C, mRNAM2, mRNAM7, mRNAM8;
 
     if (pNewSeedType != "") {
         return;

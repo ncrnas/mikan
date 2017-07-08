@@ -9,7 +9,7 @@ namespace tm1p {
 //
 // TM1SeedSeqs methods
 //
-void TM1SeedSeqs::set_mirna_seq(mikan::TRNATYPE pSeq) {
+void TM1SeedSeqs::set_mirna_seq(mikan::TRNAStr pSeq) {
     clear(mSeedSeqs);
     clear(mSeedTypes);
     clear(mEffectiveSeeds);
@@ -21,7 +21,7 @@ int TM1SeedSeqs::create_seed_seqs() {
         return 1;
     }
 
-    mikan::TRNATYPE seedSeq;
+    mikan::TRNAStr seedSeq;
 
     int retVal;
 
@@ -42,7 +42,7 @@ int TM1SeedSeqs::create_seed_seqs() {
     return 0;
 }
 
-int TM1SeedSeqs::create_nmer_seed_seqs(mikan::TRNATYPE &pSeedSeq) {
+int TM1SeedSeqs::create_nmer_seed_seqs(mikan::TRNAStr &pSeedSeq) {
     int retVal = 0;
 
     appendValue(mSeedSeqs, pSeedSeq);
@@ -62,8 +62,8 @@ int TM1SeedSeqs::create_nmer_seed_seqs(mikan::TRNATYPE &pSeedSeq) {
     return 0;
 }
 
-int TM1SeedSeqs::create_single_guwobble_seed_seqs(mikan::TRNATYPE &pSeedSeq) {
-    mikan::TRNATYPE seedGUSeq;
+int TM1SeedSeqs::create_single_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq) {
+    mikan::TRNAStr seedGUSeq;
     int retVal;
     CharString lpSeedType = "GUMM";
 
@@ -92,8 +92,8 @@ int TM1SeedSeqs::create_single_guwobble_seed_seqs(mikan::TRNATYPE &pSeedSeq) {
     return 0;
 }
 
-int TM1SeedSeqs::create_lp_seed_seqs(mikan::TRNATYPE &pSeedSeq, CharString &pSeedType) {
-    mikan::TRNATYPE seedLPSeq;
+int TM1SeedSeqs::create_lp_seed_seqs(mikan::TRNAStr &pSeedSeq, CharString &pSeedType) {
+    mikan::TRNAStr seedLPSeq;
     char ch1 = 0;
     char ch2 = 0;
     char ch3 = 0;
@@ -148,10 +148,10 @@ int TM1SeedSeqs::create_lp_seed_seqs(mikan::TRNATYPE &pSeedSeq, CharString &pSee
 }
 
 int TM1SeedSeqs::check_redundant_seeds() {
-    typedef Index<StringSet<mikan::TRNATYPE>, IndexQGram<UngappedShape<6> > > TIndexQGram;
+    typedef Index<StringSet<mikan::TRNAStr>, IndexQGram<UngappedShape<6> > > TIndexQGram;
     typedef Finder<TIndexQGram> TFinder;
 
-    mikan::TRNATYPE seedSeq;
+    mikan::TRNAStr seedSeq;
     TIndexQGram RNAIdx(mSeedSeqs);
     TFinder finder(RNAIdx);
 
@@ -180,9 +180,9 @@ void TM1SeedSites::reset_finder() {
     clear(mFinder);
 }
 
-int TM1SeedSites::find_seed_sites(mikan::TRNATYPE const &pMiRNA) {
+int TM1SeedSites::find_seed_sites(mikan::TRNAStr const &pMiRNA) {
     TM1SeedSeqs seedSeqs;
-    mikan::TRNATYPE seedSeq;
+    mikan::TRNAStr seedSeq;
     CharString seedType;
     int retVal;
     unsigned mRNAPos, sitePos;
@@ -240,9 +240,9 @@ void TM1SeedSites::clear_pos() {
 }
 
 void TM1SeedSites::get_mx_match(
-        mikan::TRNATYPE const &pMiRNASeq,
-        mikan::TRNATYPE const &pMiRNACompSeq,
-        mikan::TRNATYPE const &pMRNASeq,
+        mikan::TRNAStr const &pMiRNASeq,
+        mikan::TRNAStr const &pMiRNACompSeq,
+        mikan::TRNAStr const &pMRNASeq,
         unsigned pSitePos,
         int pMx,
         bool &pMatch,
@@ -250,7 +250,7 @@ void TM1SeedSites::get_mx_match(
         bool &pNoMx,
         bool &pIsA) {
     int pos;
-    mikan::TRNATYPE miRNAMx, miRNAMxC, mRNAMx;
+    mikan::TRNAStr miRNAMx, miRNAMxC, mRNAMx;
 
     pos = pSitePos - (pMx - 7);
     miRNAMx = pMiRNASeq[pMx - 1];
@@ -278,9 +278,9 @@ void TM1SeedSites::get_mx_match(
 }
 
 void TM1SeedSites::get_match_count(
-        mikan::TRNATYPE const &pMiRNASeq,
-        mikan::TRNATYPE const &pMiRNACompSeq,
-        mikan::TRNATYPE const &pMRNASeq,
+        mikan::TRNAStr const &pMiRNASeq,
+        mikan::TRNAStr const &pMiRNACompSeq,
+        mikan::TRNAStr const &pMRNASeq,
         unsigned pSitePos,
         int pMx1,
         int pMx2,
@@ -306,7 +306,7 @@ void TM1SeedSites::set_new_seed_type(
         CharString &,
         unsigned pMRNAPos,
         unsigned pSitePos,
-        mikan::TRNATYPE const &pMiRNA,
+        mikan::TRNAStr const &pMiRNA,
         bool &pEffectiveSite) {
     CharString newSeedType = "";
     bool isA1, isAx;
@@ -314,7 +314,7 @@ void TM1SeedSites::set_new_seed_type(
     bool guM1, guM2, guM8, guM9;
     bool noM1, noM2, noM8, noM9;
     int matchCount, guCount, matchCount2, guCount2;
-    mikan::TRNATYPE revMiRNASeq;
+    mikan::TRNAStr revMiRNASeq;
 
     revMiRNASeq = pMiRNA;
     complement(revMiRNASeq);

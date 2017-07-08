@@ -119,7 +119,7 @@ int RH2Core::calculate_all_scores() {
 
 int RH2Core::calculate_mirna_scores(unsigned pIdx) {
     int retVal;
-    mikan::TRNATYPE miRNASeq = mMiRNASeqs[pIdx];
+    mikan::TRNAStr miRNASeq = mMiRNASeqs[pIdx];
 
     // Search seed sites
     if (mExecSearchSeedSites) {

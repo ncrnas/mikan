@@ -15,16 +15,16 @@ public:
     // Define methods
     TS5SeedSeqs() {}
 
-    mikan::TRNATYPE const &get_seed_seq() const { return mSeedSeqs[0]; }
+    mikan::TRNAStr const &get_seed_seq() const { return mSeedSeqs[0]; }
 
     // Method prototypes
     int create_seed_seqs();
 
-    void set_mirna_seq(mikan::TRNATYPE pSeq);
+    void set_mirna_seq(mikan::TRNAStr pSeq);
 
 private:
     mikan::TRNASet mSeedSeqs;
-    mikan::TRNATYPE mMiRNASeq;
+    mikan::TRNAStr mMiRNASeq;
 };
 
 //
@@ -45,7 +45,7 @@ public:
     // Method prototypes
     void reset_finder();
 
-    int find_seed_sites(mikan::TRNATYPE const &pMiRNA);
+    int find_seed_sites(mikan::TRNAStr const &pMiRNA);
 
     void clear_pos();
 

@@ -20,7 +20,7 @@ public:
 
     seqan::CharString const &get_seq_id(unsigned const pIdx) const { return mSeqIds[pIdx]; }
 
-    TRNATYPE const &get_seq(unsigned const pIdx) const { return mSeqs[pIdx]; }
+    TRNAStr const &get_seq(unsigned const pIdx) const { return mSeqs[pIdx]; }
 
     TCharSet const &get_ids() const { return mSeqIds; }
 

@@ -24,7 +24,7 @@ public:
 
     // Method prototypes
     void
-    align_all(mikan::TRNATYPE const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs, TM1SeedSites const &pSeedSites,
+    align_all(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs, TM1SeedSites const &pSeedSites,
               seqan::String<int> const &pA1Pos);
 
     void resize_alignments(unsigned pSize);

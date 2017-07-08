@@ -7,11 +7,11 @@
 
 namespace mikan {
 
-typedef seqan::RnaString TRNATYPE;
-//typedef seqan::Rna5String TRNATYPE;
+typedef seqan::RnaString TRNAStr;
+//typedef seqan::Rna5String TRNAStr;
 
 typedef seqan::StringSet<seqan::CharString> TCharSet;
-typedef seqan::StringSet<TRNATYPE> TRNASet;
+typedef seqan::StringSet<TRNAStr> TRNASet;
 
 typedef seqan::Index<TRNASet, seqan::IndexQGram<seqan::UngappedShape<SEEDLEN> > > TIndexQGram;
 typedef seqan::Finder<TIndexQGram> TFinder;

@@ -20,7 +20,7 @@ public:
     // Define methods
     PITASeedSeqs() {}
 
-    mikan::TRNATYPE const &get_seed_seq(int i) const { return mSeedSeqs[i]; }
+    mikan::TRNAStr const &get_seed_seq(int i) const { return mSeedSeqs[i]; }
 
     seqan::CharString const &get_seed_type(int i) const { return mSeedTypes[i]; }
 
@@ -29,24 +29,24 @@ public:
     // Method prototypes
     int create_seed_seqs(seqan::StringSet<seqan::CharString> &pSeedType);
 
-    void set_mirna_seq(mikan::TRNATYPE pSeq);
+    void set_mirna_seq(mikan::TRNAStr pSeq);
 
 private:
     mikan::TRNASet mSeedSeqs;
     seqan::StringSet<seqan::CharString> mSeedTypes;
     seqan::String<unsigned> mMisMatchPos;
-    mikan::TRNATYPE mMiRNASeq;
+    mikan::TRNAStr mMiRNASeq;
 
 private:
-    int create_nmer_seed_seqs(mikan::TRNATYPE &pSeedSeq, seqan::StringSet<seqan::CharString> &pSeedDef);
+    int create_nmer_seed_seqs(mikan::TRNAStr &pSeedSeq, seqan::StringSet<seqan::CharString> &pSeedDef);
 
-    int create_single_guwobble_seed_seqs(mikan::TRNATYPE &pSeedSeq);
+    int create_single_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq);
 
-    int create_multi_guwobble_seed_seqs(mikan::TRNATYPE &pSeedSeq);
+    int create_multi_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq);
 
-    int create_mismatch_seed_seqs(mikan::TRNATYPE &pSeedSeq, bool pIsGUMM = false, int pGUPos = 0);
+    int create_mismatch_seed_seqs(mikan::TRNAStr &pSeedSeq, bool pIsGUMM = false, int pGUPos = 0);
 
-    int create_gu_mismatch_seed_seqs(mikan::TRNATYPE &pSeedSeq);
+    int create_gu_mismatch_seed_seqs(mikan::TRNAStr &pSeedSeq);
 
     int check_redundant_seeds();
 
@@ -85,7 +85,7 @@ public:
     // Method prototypes
     void reset_finder();
 
-    int find_seed_sites(mikan::TRNATYPE const &pMiRNA, seqan::StringSet<seqan::CharString> &pSeedDef);
+    int find_seed_sites(mikan::TRNAStr const &pMiRNA, seqan::StringSet<seqan::CharString> &pSeedDef);
 
     void clear_pos();
 
@@ -100,10 +100,10 @@ private:
 
 private:
     void set_new_seed_type(seqan::CharString &pCurSeedType, seqan::StringSet<seqan::CharString> &pSeedDef,
-                           unsigned pMRNAPos, unsigned pSitePos, mikan::TRNATYPE const &pMiRNA, unsigned pMisMatchPos,
+                           unsigned pMRNAPos, unsigned pSitePos, mikan::TRNAStr const &pMiRNA, unsigned pMisMatchPos,
                            bool &pEffectiveSite);
 
-    void set_mx_matches(unsigned pMRNAPos, unsigned pSitePos, mikan::TRNATYPE const &pMiRNA, int pMx,
+    void set_mx_matches(unsigned pMRNAPos, unsigned pSitePos, mikan::TRNAStr const &pMiRNA, int pMx,
                         bool &pMatchMx, bool &pGutMx, bool &pGumMx);
 
     void set_stringent_seed_type(seqan::CharString &pCurSeedType, seqan::StringSet<seqan::CharString> &pSeedDef,

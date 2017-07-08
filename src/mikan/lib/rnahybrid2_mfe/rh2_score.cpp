@@ -17,13 +17,13 @@ void RH2MFEScores::clear_scores() {
 
 int RH2MFEScores::calc_scores(
         RH2SeedSites &pSeedSites,
-        mikan::TRNATYPE const &pMiRNASeq,
+        mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs,
         CharString &) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &sitePos = pSeedSites.get_site_pos();
-    mikan::TRNATYPE miRNASeq = pMiRNASeq;
-    mikan::TRNATYPE mRNASeq;
+    mikan::TRNAStr miRNASeq = pMiRNASeq;
+    mikan::TRNAStr mRNASeq;
     std::vector<char> rhMiRNASeq;
     std::vector<char> rhMRNASeq;
     int seqStart = 0;
@@ -84,7 +84,7 @@ int RH2MFEScores::calc_scores(
     return 0;
 }
 
-void RH2MFEScores::create_rh_seq(mikan::TRNATYPE const &pRNASeq, std::vector<char> &pRHSeq) {
+void RH2MFEScores::create_rh_seq(mikan::TRNAStr const &pRNASeq, std::vector<char> &pRHSeq) {
     pRHSeq[0] = 5;
 
     for (unsigned i = 0; i < length(pRNASeq); ++i) {
@@ -118,8 +118,8 @@ void RH2MFEScores::write_alignment(int pIdx, bool align_only) {
 }
 
 void RH2MFEScores::write_seq_info(
-        mikan::TRNATYPE &pMiSeq,
-        mikan::TRNATYPE &pMRNASeq,
+        mikan::TRNAStr &pMiSeq,
+        mikan::TRNAStr &pMRNASeq,
         std::vector<char> &pRhMiRNASeq,
         std::vector<char> &pRhMRNASeq) {
     std::stringstream stream;

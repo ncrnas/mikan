@@ -26,7 +26,7 @@ void TM1RawFeatures::clear_features() {
 }
 
 int TM1RawFeatures::add_features(
-        mikan::TRNATYPE const &pMiRNASeq,
+        mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs,
         TM1SeedSites &pSeedSites,
         TM1SortedSitePos &pSortedSites) {
@@ -85,11 +85,11 @@ void TM1FeatSeedType::resize_features(unsigned pSize) {
 }
 
 int TM1FeatSeedType::add_features(
-        mikan::TRNATYPE const &pMiRNASeq,
+        mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &,
         String<bool> &pEffectiveSites,
         TM1SeedSites &pSeedSites) {
-    mikan::TRNATYPE revMiRNASeq;
+    mikan::TRNAStr revMiRNASeq;
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
 
     const StringSet<seqan::CharString> &seedTypes = pSeedSites.get_seed_types();
@@ -321,7 +321,7 @@ int TM1FeatAURich::add_features(
 }
 
 void TM1FeatAURich::calc_pos_scores(
-        const mikan::TRNATYPE &pMRNASeq,
+        const mikan::TRNAStr &pMRNASeq,
         int pStart,
         int pEnd,
         float &pScore,
@@ -466,7 +466,7 @@ int TM1FeatSingleFreqFlank::add_features(
 }
 
 void TM1FeatSingleFreqFlank::calc_pos_scores(
-        const mikan::TRNATYPE &pMRNASeq,
+        const mikan::TRNAStr &pMRNASeq,
         int pSiteStart,
         int pSiteEnd,
         int pIdx) {
@@ -645,7 +645,7 @@ int TM1FeatDiFreqFlank::add_features(
 }
 
 void TM1FeatDiFreqFlank::calc_pos_scores(
-        const mikan::TRNATYPE &pMRNASeq,
+        const mikan::TRNAStr &pMRNASeq,
         int pSiteStart,
         int pSiteEnd,
         int pIdx) {
@@ -724,7 +724,7 @@ void TM1FeatSingleMatch::resize_features(unsigned pSize) {
 }
 
 int TM1FeatSingleMatch::add_features(
-        mikan::TRNATYPE const &pMiRNASeq,
+        mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         mikan::TSitePos const &pMRNAPos,
@@ -815,7 +815,7 @@ void TM1FeatTwoConsecMatch::resize_features(unsigned pSize) {
 }
 
 int TM1FeatTwoConsecMatch::add_features(
-        mikan::TRNATYPE const &pMiRNASeq,
+        mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         mikan::TSitePos const &pMRNAPos,

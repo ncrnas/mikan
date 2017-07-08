@@ -22,7 +22,7 @@ public:
     // Define methods
     RH2SeedSeqs() {}
 
-    mikan::TRNATYPE const &get_seed_seq(int i) const { return mSeedSeqs[i]; }
+    mikan::TRNAStr const &get_seed_seq(int i) const { return mSeedSeqs[i]; }
 
     seqan::CharString const &get_seed_type(int i) const { return mSeedTypes[i]; }
 
@@ -31,19 +31,19 @@ public:
     // Method prototypes
     int create_seed_seqs(seqan::CharString &pSeedType, seqan::CharString &pOverlapDef);
 
-    void set_mirna_seq(mikan::TRNATYPE pSeq);
+    void set_mirna_seq(mikan::TRNAStr pSeq);
 
 private:
     mikan::TRNASet mSeedSeqs;
     seqan::StringSet<seqan::CharString> mSeedTypes;
-    mikan::TRNATYPE mMiRNASeq;
+    mikan::TRNAStr mMiRNASeq;
 
 private:
-    int create_nmer_seed_seqs(mikan::TRNATYPE &pSeedSeq, seqan::CharString &pSeedDef);
+    int create_nmer_seed_seqs(mikan::TRNAStr &pSeedSeq, seqan::CharString &pSeedDef);
 
-    int create_single_guwobble_seed_seqs(mikan::TRNATYPE &pSeedSeq, seqan::CharString &pGUT, seqan::CharString &pGUM);
+    int create_single_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq, seqan::CharString &pGUT, seqan::CharString &pGUM);
 
-    int create_multi_guwobble_seed_seqs(mikan::TRNATYPE &pSeedSeq, seqan::CharString &pGUT, seqan::CharString &pGUM);
+    int create_multi_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq, seqan::CharString &pGUT, seqan::CharString &pGUM);
 
     int check_redundant_seeds(seqan::CharString &pOverlapDef);
 
@@ -78,13 +78,13 @@ public:
     // Method prototypes
     void reset_finder();
 
-    int find_seed_sites(mikan::TRNATYPE const &pMiRNA, seqan::CharString &pSeedDef,
+    int find_seed_sites(mikan::TRNAStr const &pMiRNA, seqan::CharString &pSeedDef,
                         seqan::CharString &pOverlapDef);
 
     void clear_pos();
 
     void set_new_seed_type(seqan::CharString &pCurSeedType, seqan::CharString &pSeedDef,
-                           unsigned pMRNAPos, unsigned pSitePos, mikan::TRNATYPE const &pMiRNA, bool &pEffectiveSite);
+                           unsigned pMRNAPos, unsigned pSitePos, mikan::TRNAStr const &pMiRNA, bool &pEffectiveSite);
 
 private:
     seqan::String<unsigned> mMRNAPos;

@@ -9,7 +9,7 @@ namespace rh2mfe {
 //
 // RH2SeedSeqs methods
 //
-void RH2SeedSeqs::set_mirna_seq(mikan::TRNATYPE pSeq) {
+void RH2SeedSeqs::set_mirna_seq(mikan::TRNAStr pSeq) {
     clear(mSeedSeqs);
     clear(mSeedTypes);
     clear(mEffectiveSeeds);
@@ -21,7 +21,7 @@ int RH2SeedSeqs::create_seed_seqs(CharString &pSeedDef, CharString &pOverlapDef)
         return 1;
     }
 
-    mikan::TRNATYPE seedSeq;
+    mikan::TRNAStr seedSeq;
     CharString seedType;
 
     int retVal;
@@ -45,7 +45,7 @@ int RH2SeedSeqs::create_seed_seqs(CharString &pSeedDef, CharString &pOverlapDef)
     return 0;
 }
 
-int RH2SeedSeqs::create_nmer_seed_seqs(mikan::TRNATYPE &pSeedSeq, CharString &pSeedDef) {
+int RH2SeedSeqs::create_nmer_seed_seqs(mikan::TRNAStr &pSeedSeq, CharString &pSeedDef) {
     int retVal = 0;
 
     appendValue(mSeedSeqs, pSeedSeq);
@@ -86,10 +86,10 @@ int RH2SeedSeqs::create_nmer_seed_seqs(mikan::TRNATYPE &pSeedSeq, CharString &pS
 }
 
 int RH2SeedSeqs::create_single_guwobble_seed_seqs(
-        mikan::TRNATYPE &pSeedSeq,
+        mikan::TRNAStr &pSeedSeq,
         seqan::CharString &pGUT,
         seqan::CharString &pGUM) {
-    mikan::TRNATYPE seedGUSeq;
+    mikan::TRNAStr seedGUSeq;
 
     for (unsigned i = 0; i < length(pSeedSeq); ++i) {
         if (pSeedSeq[i] == 'C') {
@@ -109,10 +109,10 @@ int RH2SeedSeqs::create_single_guwobble_seed_seqs(
 }
 
 int RH2SeedSeqs::create_multi_guwobble_seed_seqs(
-        mikan::TRNATYPE &pSeedSeq,
+        mikan::TRNAStr &pSeedSeq,
         seqan::CharString &pGUT,
         seqan::CharString &pGUM) {
-    mikan::TRNATYPE seedGUSeq;
+    mikan::TRNAStr seedGUSeq;
 
     unsigned seedDatLen = (unsigned) length(mSeedSeqs);
 
@@ -141,7 +141,7 @@ int RH2SeedSeqs::create_multi_guwobble_seed_seqs(
 }
 
 int RH2SeedSeqs::check_redundant_seeds(seqan::CharString &) {
-    mikan::TRNATYPE seedSeq;
+    mikan::TRNAStr seedSeq;
     mikan::TIndexQGram RNAIdx(mSeedSeqs);
     mikan::TFinder finder(RNAIdx);
 
@@ -171,11 +171,11 @@ void RH2SeedSites::reset_finder() {
 }
 
 int RH2SeedSites::find_seed_sites(
-        mikan::TRNATYPE const &pMiRNA,
+        mikan::TRNAStr const &pMiRNA,
         CharString &pSeedDef,
         CharString &pOverlapDef) {
     RH2SeedSeqs seedSeqs;
-    mikan::TRNATYPE seedSeq;
+    mikan::TRNAStr seedSeq;
     CharString seedType;
     int retVal;
     unsigned mRNAPos, sitePos;
@@ -231,12 +231,12 @@ void RH2SeedSites::set_new_seed_type(
         CharString &pSeedDef,
         unsigned pMRNAPos,
         unsigned pSitePos,
-        mikan::TRNATYPE const &pMiRNA,
+        mikan::TRNAStr const &pMiRNA,
         bool &pEffectiveSite) {
     bool IsA1, MatchM8;
-    mikan::TRNATYPE revMiRNASeq, miRNAM8, mRNAM8, miRNAM8c, mRNAA1;
+    mikan::TRNAStr revMiRNASeq, miRNAM8, mRNAM8, miRNAM8c, mRNAA1;
     CharString newSeedType = "";
-    mikan::TRNATYPE miRNASeq = pMiRNA;
+    mikan::TRNAStr miRNASeq = pMiRNA;
     bool noA1;
 
     if (!pEffectiveSite) {

@@ -15,17 +15,17 @@ void MR3AlignScores::clear_scores() {
 
 int MR3AlignScores::calc_scores(
         MR3SeedSites &pSeedSites,
-        mikan::TRNATYPE const &pMiRNASeq,
+        mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &sitePos = pSeedSites.get_site_pos();
     const String<int> &mmPos = pSeedSites.get_mismatched_pos();
     const StringSet<CharString> &seedTypes = pSeedSites.get_seed_types();
 
-    mikan::TRNATYPE iMiRNASeq;
-    mikan::TRNATYPE iMRNASeq;
-    mikan::TRNATYPE iMiRNASeedSeq;
-    mikan::TRNATYPE iMRNASeedSeq;
+    mikan::TRNAStr iMiRNASeq;
+    mikan::TRNAStr iMRNASeq;
+    mikan::TRNAStr iMiRNASeedSeq;
+    mikan::TRNAStr iMRNASeedSeq;
     Rna5String iMiRNA3pSeq;
     Rna5String iMRNA3pSeq;
     int seqStart = 0;
@@ -93,9 +93,9 @@ int MR3AlignScores::calc_scores(
 }
 
 void MR3AlignScores::create_input_mirna_seq(
-        mikan::TRNATYPE const &pMiRNASeq,
-        mikan::TRNATYPE &pIMiRNASeq,
-        mikan::TRNATYPE &pIMiRNASeedSeq,
+        mikan::TRNAStr const &pMiRNASeq,
+        mikan::TRNAStr &pIMiRNASeq,
+        mikan::TRNAStr &pIMiRNASeedSeq,
         Rna5String &pIMiRNA3pSeq) {
     int idxseed = 0;
     int idx3p = 1;
@@ -119,13 +119,13 @@ void MR3AlignScores::create_input_mirna_seq(
 }
 
 void MR3AlignScores::create_input_mrna_seq(
-        mikan::TRNATYPE const &pMiRNASeq,
-        mikan::TRNATYPE const &pMRNASeq,
+        mikan::TRNAStr const &pMiRNASeq,
+        mikan::TRNAStr const &pMRNASeq,
         int pStart,
         int pEnd,
         const CharString &pSeedType,
-        mikan::TRNATYPE &pIMRNASeq,
-        mikan::TRNATYPE &pIMRNASeedSeq,
+        mikan::TRNAStr &pIMRNASeq,
+        mikan::TRNAStr &pIMRNASeedSeq,
         Rna5String &pIMRNA3pSeq,
         bool &pNoMRNA1) {
     unsigned idx = 0;
@@ -181,7 +181,7 @@ void MR3AlignScores::create_input_mrna_seq(
     }
 }
 
-void MR3AlignScores::print_input(mikan::TRNATYPE &pInputMiRNASeq, mikan::TRNATYPE &pInputMRNASeq) {
+void MR3AlignScores::print_input(mikan::TRNAStr &pInputMiRNASeq, mikan::TRNAStr &pInputMRNASeq) {
     std::cout << "miRNA seq:   " << length(pInputMiRNASeq) << "," << pInputMiRNASeq;
     std::cout << std::endl;
     std::cout << "mRNA seq:    " << length(pInputMRNASeq) << "," << pInputMRNASeq;
@@ -199,7 +199,7 @@ void MR3EnergyScores::clear_scores() {
 
 int MR3EnergyScores::calc_scores(
         MR3SeedSites &pSeedSites,
-        mikan::TRNATYPE const &pMiRNASeq,
+        mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     std::string inputSeq;
@@ -237,7 +237,7 @@ int MR3EnergyScores::calc_scores(
 }
 
 void
-MR3EnergyScores::create_input_seq(int pIdx, mikan::TRNATYPE const &pMiRNASeq, std::string &pInputMRNASeq) {
+MR3EnergyScores::create_input_seq(int pIdx, mikan::TRNAStr const &pMiRNASeq, std::string &pInputMRNASeq) {
     seqan::CharString inputMRNA;
 
     mAlign.get_mrna_seq(pIdx, inputMRNA);
@@ -281,7 +281,7 @@ void MR3SiteScores::init_rnafold() {
 
 int MR3SiteScores::calc_scores(
         MR3SeedSites &pSeedSites,
-        mikan::TRNATYPE const &miRNASeq,
+        mikan::TRNAStr const &miRNASeq,
         mikan::TRNASet const &pMRNASeqs) {
     resize(mEffectiveSites, length(pSeedSites.mEffectiveSites));
 

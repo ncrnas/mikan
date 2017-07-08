@@ -14,7 +14,7 @@ int TS5SeedSeqs::create_seed_seqs() {
         return 1;
     }
 
-    mikan::TRNATYPE seedSeq;
+    mikan::TRNAStr seedSeq;
 
     resize(seedSeq, 6);
     for (unsigned i = 0; i < length(seedSeq); ++i) {
@@ -27,7 +27,7 @@ int TS5SeedSeqs::create_seed_seqs() {
     return 0;
 }
 
-void TS5SeedSeqs::set_mirna_seq(mikan::TRNATYPE pSeq) {
+void TS5SeedSeqs::set_mirna_seq(mikan::TRNAStr pSeq) {
     clear(mSeedSeqs);
     mMiRNASeq = pSeq;
 }
@@ -40,9 +40,9 @@ void TS5SeedSites::reset_finder() {
     clear(mFinder);
 }
 
-int TS5SeedSites::find_seed_sites(mikan::TRNATYPE const &pMiRNA) {
+int TS5SeedSites::find_seed_sites(mikan::TRNAStr const &pMiRNA) {
     TS5SeedSeqs seedSeqs;
-    mikan::TRNATYPE seedSeq;
+    mikan::TRNAStr seedSeq;
     int retVal;
 
     reset_finder();

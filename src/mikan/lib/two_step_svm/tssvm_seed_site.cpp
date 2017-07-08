@@ -14,7 +14,7 @@ int TSSVMSeedSeqs::create_seed_seqs() {
         return 1;
     }
 
-    mikan::TRNATYPE seedSeq;
+    mikan::TRNAStr seedSeq;
 
     int retVal;
 
@@ -38,7 +38,7 @@ int TSSVMSeedSeqs::create_seed_seqs() {
     return 0;
 }
 
-int TSSVMSeedSeqs::create_non_stringent_seed_seqs(mikan::TRNATYPE &pSeedSeq) {
+int TSSVMSeedSeqs::create_non_stringent_seed_seqs(mikan::TRNAStr &pSeedSeq) {
     int retVal;
 
     retVal = create_guwobble_seed_seqs(pSeedSeq);
@@ -64,8 +64,8 @@ int TSSVMSeedSeqs::create_non_stringent_seed_seqs(mikan::TRNATYPE &pSeedSeq) {
     return 0;
 }
 
-int TSSVMSeedSeqs::create_guwobble_seed_seqs(mikan::TRNATYPE &pSeedSeq) {
-    mikan::TRNATYPE seedGUSeq;
+int TSSVMSeedSeqs::create_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq) {
+    mikan::TRNAStr seedGUSeq;
     mikan::TRNASet seedSeqs;
     StringSet<CharString> seedTypes;
     String<unsigned> misMatchPos;
@@ -97,8 +97,8 @@ int TSSVMSeedSeqs::create_guwobble_seed_seqs(mikan::TRNATYPE &pSeedSeq) {
     return 0;
 }
 
-int TSSVMSeedSeqs::create_lp_seed_seqs(mikan::TRNATYPE &pSeedSeq) {
-    mikan::TRNATYPE seedLPSeq;
+int TSSVMSeedSeqs::create_lp_seed_seqs(mikan::TRNAStr &pSeedSeq) {
+    mikan::TRNAStr seedLPSeq;
     bool effective;
     mikan::TRNASet seedSeqs;
     StringSet<CharString> seedTypes;
@@ -141,8 +141,8 @@ int TSSVMSeedSeqs::create_lp_seed_seqs(mikan::TRNATYPE &pSeedSeq) {
     return 0;
 }
 
-int TSSVMSeedSeqs::create_bm_seed_seqs(mikan::TRNATYPE &) {
-    mikan::TRNATYPE seedBMSeq;
+int TSSVMSeedSeqs::create_bm_seed_seqs(mikan::TRNAStr &) {
+    mikan::TRNAStr seedBMSeq;
     mikan::TRNASet seedSeqs;
     StringSet<CharString> seedTypes;
     String<unsigned> misMatchPos;
@@ -172,8 +172,8 @@ int TSSVMSeedSeqs::create_bm_seed_seqs(mikan::TRNATYPE &) {
     return 0;
 }
 
-int TSSVMSeedSeqs::create_bt_seed_seqs(mikan::TRNATYPE &) {
-    mikan::TRNATYPE seedBTSeq;
+int TSSVMSeedSeqs::create_bt_seed_seqs(mikan::TRNAStr &) {
+    mikan::TRNAStr seedBTSeq;
     mikan::TRNASet seedSeqs;
     StringSet<CharString> seedTypes;
     String<unsigned> misMatchPos;
@@ -228,7 +228,7 @@ int TSSVMSeedSeqs::add_seeds_in_reverse_order(
     return 0;
 }
 
-void TSSVMSeedSeqs::set_mirna_seq(mikan::TRNATYPE pSeq) {
+void TSSVMSeedSeqs::set_mirna_seq(mikan::TRNAStr pSeq) {
     clear(mSeedSeqs);
     clear(mMisMatchPos);
     clear(mEffectiveSeeds);
@@ -244,9 +244,9 @@ void TSSVMSeedSites::reset_finder() {
 }
 
 int TSSVMSeedSites::find_seed_sites(
-        mikan::TRNATYPE const &pMiRNA) {
+        mikan::TRNAStr const &pMiRNA) {
     TSSVMSeedSeqs seedSeqs;
-    mikan::TRNATYPE seedSeq;
+    mikan::TRNAStr seedSeq;
     CharString newSeedType;
     int retVal;
     unsigned mRNAPos, sitePos;
@@ -311,8 +311,8 @@ int TSSVMSeedSites::set_seed_pos(
         TSSVMSeedSeqs &pSeedSeqs,
         unsigned pMRNAPos,
         unsigned pSitePos,
-        mikan::TRNATYPE const &pMiRNA,
-        const mikan::TRNATYPE &pSeedSeq,
+        mikan::TRNAStr const &pMiRNA,
+        const mikan::TRNAStr &pSeedSeq,
         unsigned pIdx) {
     unsigned m8Pos, a1Pos;
     const CharString &seedType = pSeedSeqs.get_seed_type(pIdx);
@@ -347,13 +347,13 @@ int TSSVMSeedSites::set_seed_pos(
 
 int TSSVMSeedSites::set_seed_type(
         const CharString &pCurType,
-        const mikan::TRNATYPE &pMRNASeq,
-        const mikan::TRNATYPE &pMiRNASeq,
+        const mikan::TRNAStr &pMRNASeq,
+        const mikan::TRNAStr &pMiRNASeq,
         unsigned pM8Pos,
         unsigned pA1Pos,
         unsigned pMisMatchedPos,
-        const mikan::TRNATYPE &) {
-    mikan::TRNATYPE newSeedSeq, complMiRNASeq;
+        const mikan::TRNAStr &) {
+    mikan::TRNAStr newSeedSeq, complMiRNASeq;
     seqan::Rna miRNAM2, miRNAM8;
     seqan::Rna mRNAM2, mRNAM8, mRNAA1;
     CharString newSeedType;

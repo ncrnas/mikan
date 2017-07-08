@@ -19,26 +19,26 @@ public:
     // Define methods
     TM1SeedSeqs() {}
 
-    mikan::TRNATYPE const &get_seed_seq(int i) const { return mSeedSeqs[i]; }
+    mikan::TRNAStr const &get_seed_seq(int i) const { return mSeedSeqs[i]; }
 
     seqan::CharString const &get_seed_type(int i) const { return mSeedTypes[i]; }
 
     // Method prototypes
     int create_seed_seqs();
 
-    void set_mirna_seq(mikan::TRNATYPE pSeq);
+    void set_mirna_seq(mikan::TRNAStr pSeq);
 
 private:
     mikan::TRNASet mSeedSeqs;
     seqan::StringSet<seqan::CharString> mSeedTypes;
-    mikan::TRNATYPE mMiRNASeq;
+    mikan::TRNAStr mMiRNASeq;
 
 private:
-    int create_nmer_seed_seqs(mikan::TRNATYPE &pSeedSeq);
+    int create_nmer_seed_seqs(mikan::TRNAStr &pSeedSeq);
 
-    int create_single_guwobble_seed_seqs(mikan::TRNATYPE &pSeedSeq);
+    int create_single_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq);
 
-    int create_lp_seed_seqs(mikan::TRNATYPE &pSeedSeq, seqan::CharString &pSeedType);
+    int create_lp_seed_seqs(mikan::TRNAStr &pSeedSeq, seqan::CharString &pSeedType);
 
     int check_redundant_seeds();
 };
@@ -75,7 +75,7 @@ public:
     // Method prototypes
     void reset_finder();
 
-    int find_seed_sites(mikan::TRNATYPE const &pMiRNA);
+    int find_seed_sites(mikan::TRNAStr const &pMiRNA);
 
     void clear_pos();
 
@@ -109,12 +109,12 @@ private:
 
 private:
     void set_new_seed_type(seqan::CharString &pCurSeedType, unsigned pMRNAPos, unsigned pSitePos,
-                           mikan::TRNATYPE const &pMiRNA, bool &pEffectiveSite);
+                           mikan::TRNAStr const &pMiRNA, bool &pEffectiveSite);
 
-    void get_mx_match(mikan::TRNATYPE const &pMiRNASeq, mikan::TRNATYPE const &pMiRNACompSeq, mikan::TRNATYPE const &pMRNASeq,
+    void get_mx_match(mikan::TRNAStr const &pMiRNASeq, mikan::TRNAStr const &pMiRNACompSeq, mikan::TRNAStr const &pMRNASeq,
                       unsigned pSitePos, int pMx, bool &pMatch, bool &pGU, bool &pNoMx, bool &pIsA);
 
-    void get_match_count(mikan::TRNATYPE const &pMiRNASeq, mikan::TRNATYPE const &pMiRNACompSeq, mikan::TRNATYPE const &pMRNASeq,
+    void get_match_count(mikan::TRNAStr const &pMiRNASeq, mikan::TRNAStr const &pMiRNACompSeq, mikan::TRNAStr const &pMRNASeq,
                          unsigned pSitePos, int pMx1, int pMx2, int &pMatchCount, int &pGUCount);
 };
 

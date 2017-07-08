@@ -21,7 +21,7 @@ public:
     seqan::CharString &get_val(int i) { return mSeedTypes[i]; }
 
     // Method prototype
-    int add_features(mikan::TRNATYPE const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+    int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
                      seqan::String<bool> &pEffectiveSites, mikan::TSitePos const &pMRNAPos, mikan::TSitePos const &pSitePos);
 
     void clear_features();
@@ -45,7 +45,7 @@ public:
     int &get_val(int i) { return mSitePos[i]; }
 
     // Method prototype
-    int add_features(mikan::TRNATYPE const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+    int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
                      seqan::String<bool> &pEffectiveSites, mikan::TSitePos const &pMRNAPos, mikan::TSitePos const &pSitePos,
                      TS5FeatSeedType &pSeedTypes);
 
@@ -69,7 +69,7 @@ public:
     float &get_val(int i) { return mAURich[i]; }
 
     // Method prototype
-    int add_features(mikan::TRNATYPE const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+    int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
                      seqan::String<bool> &pEffectiveSites, mikan::TSitePos const &pMRNAPos, mikan::TSitePos const &pSitePos,
                      TS5FeatSeedType &pSeedTypes);
 
@@ -82,7 +82,7 @@ private:
     void getUpDownStreamPos(seqan::CharString pSeedType, int pStartPos, int &pStartU, int &pStartD);
 
     void calcPosScores(const seqan::CharString &pSeedType, seqan::CharString &pUpOrDown,
-                       const mikan::TRNATYPE &pAURichRNA, int pStart, int pEnd, float &pTotalScore, float &pMaxScore);
+                       const mikan::TRNAStr &pAURichRNA, int pStart, int pEnd, float &pTotalScore, float &pMaxScore);
 };
 
 //
@@ -98,7 +98,7 @@ public:
     const TS5Alignment &get_alignment() { return mAlign; }
 
     // Method prototype
-    int add_features(mikan::TRNATYPE const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+    int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
                      seqan::String<bool> &pEffectiveSites, mikan::TSitePos const &pMRNAPos, mikan::TSitePos const &pSitePos,
                      TS5FeatSeedType &pSeedTypes);
 
@@ -112,15 +112,15 @@ private:
 private:
     void getUpDownStreamPos(seqan::CharString pSeedType, int pStartPos, int &pStart, int &pEnd);
 
-    void getMRNASeq(const seqan::CharString &pSeedType, const mikan::TRNATYPE &pMRNASeq, int pSitePos,
-                    mikan::TRNATYPE &pMRNAThreePrime);
+    void getMRNASeq(const seqan::CharString &pSeedType, const mikan::TRNAStr &pMRNASeq, int pSitePos,
+                    mikan::TRNAStr &pMRNAThreePrime);
 
-    void getMiRNASeq(const seqan::CharString &pSeedType, const mikan::TRNATYPE &pMiRNASeq,
-                     mikan::TRNATYPE &pMiRNAThreePrime);
+    void getMiRNASeq(const seqan::CharString &pSeedType, const mikan::TRNAStr &pMiRNASeq,
+                     mikan::TRNAStr &pMiRNAThreePrime);
 
     float findBestMatch(unsigned pPosIdx, mikan::TSitePos const &pMRNAPos, mikan::TSitePos const &pSitePos,
-                        const seqan::CharString &pSeedType, const mikan::TRNATYPE &pMRNASeq,
-                        const mikan::TRNATYPE &pMiRNASeq);
+                        const seqan::CharString &pSeedType, const mikan::TRNAStr &pMRNASeq,
+                        const mikan::TRNAStr &pMiRNASeq);
 
     void connectMatchedSeq(seqan::String<int> &pMatchLen, seqan::String<int> &pMiRNAPos,
                            seqan::String<int> &pMRNAPos);
@@ -153,7 +153,7 @@ public:
     const TS5Alignment &get_alignment() { return mThreePrimePair.get_alignment(); }
 
     // Method prototypes
-    int add_features(mikan::TRNATYPE const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+    int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
                      TS5SeedSites const &pSeedSites);
 
     void clear_features();

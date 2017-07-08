@@ -71,11 +71,11 @@ public:
 
     void resize_align(unsigned pSize);
 
-    void align_seed(int pIdx, mikan::TRNATYPE &pIMiRNASeedSeq, mikan::TRNATYPE &pIMRNASeedSeq, int pMMpos);
+    void align_seed(int pIdx, mikan::TRNAStr &pIMiRNASeedSeq, mikan::TRNAStr &pIMRNASeedSeq, int pMMpos);
 
     void align_3p(int pIdx, seqan::Rna5String &pIMiRNA3pSeq, seqan::Rna5String &pIMRNA3pSeq);
 
-    void combine_alignments(int pIdx, mikan::TRNATYPE const &pMiRNASeq, mikan::TRNATYPE const &pMRNASeq, bool noA1);
+    void combine_alignments(int pIdx, mikan::TRNAStr const &pMiRNASeq, mikan::TRNAStr const &pMRNASeq, bool noA1);
 
     void get_mrna_seq(int pIdx, seqan::CharString &pStrMRNA);
 

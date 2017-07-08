@@ -121,7 +121,7 @@ int TSSVMCore::calculate_all_scores() {
 
 int TSSVMCore::calculate_mirna_scores(unsigned pIdx) {
     int retVal;
-    mikan::TRNATYPE miRNASeq = mMiRNASeqs[pIdx];
+    mikan::TRNAStr miRNASeq = mMiRNASeqs[pIdx];
 
     // Search seed sites
     if (mExecSearchSeedSites) {

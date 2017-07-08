@@ -25,7 +25,7 @@ public:
         mRNAChar[3] = 'U';
     }
 
-    mikan::TRNATYPE const &get_seed_seq(int i) const { return mSeedSeqs[i]; }
+    mikan::TRNAStr const &get_seed_seq(int i) const { return mSeedSeqs[i]; }
 
     seqan::CharString const &get_seed_type(int i) const { return mSeedTypes[i]; }
 
@@ -34,25 +34,25 @@ public:
     // Method prototypes
     int create_seed_seqs();
 
-    void set_mirna_seq(mikan::TRNATYPE pSeq);
+    void set_mirna_seq(mikan::TRNAStr pSeq);
 
 private:
     mikan::TRNASet mSeedSeqs;
     seqan::StringSet<seqan::CharString> mSeedTypes;
-    mikan::TRNATYPE mMiRNASeq;
+    mikan::TRNAStr mMiRNASeq;
     seqan::String<unsigned> mMisMatchPos;
-    mikan::TRNATYPE mRNAChar;
+    mikan::TRNAStr mRNAChar;
 
 private:
-    int create_non_stringent_seed_seqs(mikan::TRNATYPE &pSeedSeq);
+    int create_non_stringent_seed_seqs(mikan::TRNAStr &pSeedSeq);
 
-    int create_guwobble_seed_seqs(mikan::TRNATYPE &pSeedSeq);
+    int create_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq);
 
-    int create_lp_seed_seqs(mikan::TRNATYPE &pSeedSeq);
+    int create_lp_seed_seqs(mikan::TRNAStr &pSeedSeq);
 
-    int create_bm_seed_seqs(mikan::TRNATYPE &pSeedSeq);
+    int create_bm_seed_seqs(mikan::TRNAStr &pSeedSeq);
 
-    int create_bt_seed_seqs(mikan::TRNATYPE &pSeedSeq);
+    int create_bt_seed_seqs(mikan::TRNAStr &pSeedSeq);
 
     int add_seeds_in_reverse_order(mikan::TRNASet &pSeedSeqs, seqan::StringSet<seqan::CharString> &pSeedTypes,
                                    seqan::String<unsigned> &pMisMatchPos);
@@ -94,7 +94,7 @@ public:
     // Method prototypes
     void reset_finder();
 
-    int find_seed_sites(mikan::TRNATYPE const &pMiRNA);
+    int find_seed_sites(mikan::TRNAStr const &pMiRNA);
 
     void clear_pos();
 
@@ -111,11 +111,11 @@ private:
 
 private:
     int set_seed_pos(TSSVMSeedSeqs &pSeedSeqs, unsigned pMRNAPos, unsigned pSitePos,
-                     mikan::TRNATYPE const &pMiRNA, const mikan::TRNATYPE &pSeedSeq, unsigned pIdx);
+                     mikan::TRNAStr const &pMiRNA, const mikan::TRNAStr &pSeedSeq, unsigned pIdx);
 
-    int set_seed_type(const seqan::CharString &pCurType, const mikan::TRNATYPE &pMRNASeq,
-                      const mikan::TRNATYPE &pMiRNASeq, unsigned pM8Pos, unsigned pA1Pos, unsigned pMisMatchedPos,
-                      const mikan::TRNATYPE &pSeedSeq);
+    int set_seed_type(const seqan::CharString &pCurType, const mikan::TRNAStr &pMRNASeq,
+                      const mikan::TRNAStr &pMiRNASeq, unsigned pM8Pos, unsigned pA1Pos, unsigned pMisMatchedPos,
+                      const mikan::TRNAStr &pSeedSeq);
 
 };
 

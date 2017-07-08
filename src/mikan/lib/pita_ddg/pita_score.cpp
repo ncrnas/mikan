@@ -24,8 +24,8 @@ void PITAAlign::resize_align(unsigned pSize) {
 
 void PITAAlign::create_align(
         int pId,
-        mikan::TRNATYPE const &pMiRNASeq,
-        mikan::TRNATYPE const &pMRNASeq,
+        mikan::TRNAStr const &pMiRNASeq,
+        mikan::TRNAStr const &pMRNASeq,
         CharString const &pSeedType,
         unsigned pSitePos,
         int) {
@@ -76,7 +76,7 @@ void PITADGDuplexScores::clear_scores() {
 
 int PITADGDuplexScores::calc_scores(
         PITASeedSites &pSeedSites,
-        mikan::TRNATYPE  const &pMiRNASeq,
+        mikan::TRNAStr  const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &sitePos = pSeedSites.get_site_pos();
@@ -125,7 +125,7 @@ int PITADGDuplexScores::calc_scores(
 }
 
 void PITADGDuplexScores::create_input_mirna_seq(
-        mikan::TRNATYPE  const &pMiRNASeq,
+        mikan::TRNAStr  const &pMiRNASeq,
         std::string &pInputMiRNASeq) {
     for (unsigned i = 0; i < length(pMiRNASeq); ++i) {
         pInputMiRNASeq[i] = pMiRNASeq[i];
@@ -133,7 +133,7 @@ void PITADGDuplexScores::create_input_mirna_seq(
 }
 
 void PITADGDuplexScores::create_input_mrna_seq(
-        mikan::TRNATYPE const &pMRNASeq,
+        mikan::TRNAStr const &pMRNASeq,
         int pStart,
         int pEnd,
         std::string &pInputMRNASeq) {
@@ -247,7 +247,7 @@ int PITADGOpenScores::calc_scores(
 }
 
 void PITADGOpenScores::create_input_mrna_seq(
-        mikan::TRNATYPE const &pMRNASeq,
+        mikan::TRNAStr const &pMRNASeq,
         int pStart,
         int pEnd,
         std::string &pInputMRNASeq) {
@@ -279,7 +279,7 @@ void PITADDGScores::clear_scores() {
 
 int PITADDGScores::calc_scores(
         PITASeedSites &pSeedSites,
-        mikan::TRNATYPE const &miRNASeq,
+        mikan::TRNAStr const &miRNASeq,
         mikan::TRNASet const &pMRNASeqs,
         int pFlankUp,
         int pFlankDown) {

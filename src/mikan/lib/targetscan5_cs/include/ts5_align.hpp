@@ -21,11 +21,11 @@ public:
     mikan::TCharSet const &get_align_mirna() const { return mAlignMiRNA; }
 
     // Method prototypes
-    int align_seed(unsigned pMRNAIdx, const seqan::CharString &pSeedType, const mikan::TRNATYPE &pMiRNASeq,
-                   const mikan::TRNATYPE &pMRNASeq, unsigned pSitePos);
+    int align_seed(unsigned pMRNAIdx, const seqan::CharString &pSeedType, const mikan::TRNAStr &pMiRNASeq,
+                   const mikan::TRNAStr &pMRNASeq, unsigned pSitePos);
 
-    int align_3p_part(unsigned pMRNAIdx, const seqan::CharString &pSeedType, const mikan::TRNATYPE &pMiRNAThreePrime,
-                      mikan::TRNATYPE &pMRNAThreePrime, seqan::String<int> &pMatchLen, seqan::String<int> &pMiRNAPos,
+    int align_3p_part(unsigned pMRNAIdx, const seqan::CharString &pSeedType, const mikan::TRNAStr &pMiRNAThreePrime,
+                      mikan::TRNAStr &pMRNAThreePrime, seqan::String<int> &pMatchLen, seqan::String<int> &pMiRNAPos,
                       seqan::String<int> &pMRNAPos, float pScore, unsigned pMatchedIdx);
 
     void resize_alignments(unsigned pSize);
@@ -40,10 +40,10 @@ private:
     mikan::TCharSet mAlignMiRNA;
 
 private:
-    int align_no_3p_part(unsigned pMRNAIdx, mikan::TRNATYPE &pMRNAThreePrime, mikan::TRNATYPE &pMiRNAThreePrime,
+    int align_no_3p_part(unsigned pMRNAIdx, mikan::TRNAStr &pMRNAThreePrime, mikan::TRNAStr &pMiRNAThreePrime,
                          unsigned pAlignLen);
 
-    void set_alignment(unsigned pMRNAIdx, mikan::TRNATYPE &pSeqThreePrime, seqan::String<int> &pSeqPos1,
+    void set_alignment(unsigned pMRNAIdx, mikan::TRNAStr &pSeqThreePrime, seqan::String<int> &pSeqPos1,
                        seqan::String<int> &pSeqPos2, unsigned pMatchedIdx, mikan::TCharSet &pAlignSeq);
 
     void set_align_bars(unsigned pMRNAIdx, seqan::String<int> &pMatchLen, seqan::String<int> &pMRNAPos,

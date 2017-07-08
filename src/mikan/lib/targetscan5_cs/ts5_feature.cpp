@@ -16,7 +16,7 @@ void TS5RawFeatures::clear_features() {
 }
 
 int TS5RawFeatures::add_features(
-        mikan::TRNATYPE const &pMiRNASeq,
+        mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs,
         TS5SeedSites const &pSeedSites) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
@@ -39,7 +39,7 @@ void TS5FeatSeedType::clear_features() {
 }
 
 int TS5FeatSeedType::add_features(
-        mikan::TRNATYPE const &pMiRNASeq,
+        mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         mikan::TSitePos const &pMRNAPos,
@@ -47,7 +47,7 @@ int TS5FeatSeedType::add_features(
     bool IsA1, MatchM8;
     int startPos;
     unsigned endPos;
-    mikan::TRNATYPE revMiRNASeq, miRNAM8, mRNAM8, mRNAA1;
+    mikan::TRNAStr revMiRNASeq, miRNAM8, mRNAM8, mRNAA1;
 
     revMiRNASeq = pMiRNASeq;
     complement(revMiRNASeq);
@@ -100,7 +100,7 @@ void TS5FeatSitePos::clear_features() {
 }
 
 int TS5FeatSitePos::add_features(
-        mikan::TRNATYPE const &,
+        mikan::TRNAStr const &,
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         mikan::TSitePos const &pMRNAPos,
@@ -153,7 +153,7 @@ void TS5FeatAURich::clear_features() {
 }
 
 int TS5FeatAURich::add_features(
-        mikan::TRNATYPE const &,
+        mikan::TRNAStr const &,
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         mikan::TSitePos const &pMRNAPos,
@@ -212,7 +212,7 @@ void TS5FeatAURich::getUpDownStreamPos(
 void TS5FeatAURich::calcPosScores(
         const CharString &pSeedType,
         CharString &pUpOrDown,
-        const mikan::TRNATYPE &pMRNASeq,
+        const mikan::TRNAStr &pMRNASeq,
         int pStart,
         int pEnd,
         float &pTotalScore,
@@ -268,7 +268,7 @@ void TS5FeatThreePrimePair::clear_features() {
 }
 
 int TS5FeatThreePrimePair::add_features(
-        mikan::TRNATYPE const &pMiRNASeq,
+        mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         mikan::TSitePos const &pMRNAPos,
@@ -294,9 +294,9 @@ int TS5FeatThreePrimePair::add_features(
 
 void TS5FeatThreePrimePair::getMRNASeq(
         CharString const &pSeedType,
-        mikan::TRNATYPE const &pMRNASeq,
+        mikan::TRNAStr const &pMRNASeq,
         int pSitePos,
-        mikan::TRNATYPE &pMRNAThreePrime) {
+        mikan::TRNAStr &pMRNAThreePrime) {
     int startUTR = 0;
     int seqLen = 15;
 
@@ -324,8 +324,8 @@ void TS5FeatThreePrimePair::getMRNASeq(
 
 void TS5FeatThreePrimePair::getMiRNASeq(
         const CharString &pSeedType,
-        const mikan::TRNATYPE &pMiRNASeq,
-        mikan::TRNATYPE &pMiRNAThreePrime) {
+        const mikan::TRNAStr &pMiRNASeq,
+        mikan::TRNAStr &pMiRNAThreePrime) {
     int startMiRNA = 0;
     int lenMiRNA;
 
@@ -353,12 +353,12 @@ float TS5FeatThreePrimePair::findBestMatch(
         mikan::TSitePos const &,
         mikan::TSitePos const &pSitePos,
         const CharString &pSeedType,
-        const mikan::TRNATYPE &pMRNASeq,
-        const mikan::TRNATYPE &pMiRNASeq) {
-    typedef Index<mikan::TRNATYPE, IndexQGram<UngappedShape<2> > > TIndexQGram;
+        const mikan::TRNAStr &pMRNASeq,
+        const mikan::TRNAStr &pMiRNASeq) {
+    typedef Index<mikan::TRNAStr, IndexQGram<UngappedShape<2> > > TIndexQGram;
     typedef Finder<TIndexQGram> TFinder;
-    mikan::TRNATYPE mRNAThreePrime;
-    mikan::TRNATYPE miRNAThreePrime;
+    mikan::TRNAStr mRNAThreePrime;
+    mikan::TRNAStr miRNAThreePrime;
     // Get mRNA and miRNA seqs
     getMRNASeq(pSeedType, pMRNASeq, pSitePos[pPosIdx], mRNAThreePrime);
     getMiRNASeq(pSeedType, pMiRNASeq, miRNAThreePrime);
@@ -366,7 +366,7 @@ float TS5FeatThreePrimePair::findBestMatch(
     float score = 0.0f;
     TIndexQGram RNAIdx(mRNAThreePrime);
     TFinder finder(RNAIdx);
-    mikan::TRNATYPE twoRNAs;
+    mikan::TRNAStr twoRNAs;
     String<int> matchLen;
     String<int> miRNAPos;
     String<int> mRNAPos;

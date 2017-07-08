@@ -36,7 +36,7 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(RH2SeedSites &pSeedSites, mikan::TRNATYPE const &pMiRNASeq,
+    int calc_scores(RH2SeedSites &pSeedSites, mikan::TRNAStr const &pMiRNASeq,
                     mikan::TRNASet const &pMRNASeqs, seqan::CharString &pOverlapDef);
 
     void calc_normalized_score(int pIdx, int pTargetLen, int pQueryLen);
@@ -52,9 +52,9 @@ private:
     std::vector<rh2::RH2RetValues> mRHRetVals;
 
 private:
-    void create_rh_seq(mikan::TRNATYPE const &pRNASeq, std::vector<char> &pRHSeq);
+    void create_rh_seq(mikan::TRNAStr const &pRNASeq, std::vector<char> &pRHSeq);
 
-    void write_seq_info(mikan::TRNATYPE &pMiSeq, mikan::TRNATYPE &pMRNASeq, std::vector<char> &pRhMiRNASeq,
+    void write_seq_info(mikan::TRNAStr &pMiSeq, mikan::TRNAStr &pMRNASeq, std::vector<char> &pRhMiRNASeq,
                         std::vector<char> &pRhMRNASeq);
 };
 

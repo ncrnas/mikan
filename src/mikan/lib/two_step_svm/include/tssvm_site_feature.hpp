@@ -22,7 +22,7 @@ public:
 
     // Method prototype
     int add_features(TSSVMSeedSites &pSeedSites, TSAlign const &pAlignSeqs,
-                     mikan::TRNATYPE const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                     mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
                      seqan::String<bool> &pEffectiveSites);
 
     void clear_features();
@@ -45,7 +45,7 @@ public:
 
     // Method prototype
     int add_features(TSSVMSeedSites &pSeedSites, TSAlign const &pAlignSeqs,
-                     mikan::TRNATYPE const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                     mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
                      seqan::String<bool> &pEffectiveSites);
 
     void clear_features();
@@ -68,7 +68,7 @@ public:
 
     // Method prototype
     int add_features(TSSVMSeedSites &pSeedSites, TSAlign const &pAlignSeqs,
-                     mikan::TRNATYPE const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                     mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
                      seqan::String<bool> &pEffectiveSites);
 
     void clear_features();
@@ -94,7 +94,7 @@ public:
 
     // Method prototype
     int add_features(TSSVMSeedSites &pSeedSites, TSAlign const &pAlignSeqs,
-                     mikan::TRNATYPE const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                     mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
                      seqan::String<bool> &pEffectiveSites);
 
     void clear_features();
@@ -120,7 +120,7 @@ public:
 
     // Method prototype
     int add_features(TSSVMSeedSites &pSeedSites, TSAlign const &pAlignSeqs,
-                     mikan::TRNATYPE const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                     mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
                      seqan::String<bool> &pEffectiveSites);
 
     void clear_features();
@@ -145,7 +145,7 @@ public:
 
     // Method prototype
     int add_features(TSSVMSeedSites &pSeedSites, TSAlign const &pAlignSeqs,
-                     mikan::TRNATYPE const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                     mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
                      seqan::String<bool> &pEffectiveSites);
 
     void clear_features();
@@ -170,7 +170,7 @@ public:
 
     // Method prototype
     int add_features(TSSVMSeedSites &pSeedSites, TSAlign const &pAlignSeqs,
-                     mikan::TRNATYPE const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                     mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
                      seqan::String<bool> &pEffectiveSites);
 
     void clear_features();
@@ -226,7 +226,7 @@ public:
 
     // Method prototypes
     int add_features(TSSVMSeedSites &pSeedSites, TSAlign const &pAlignSeqs,
-                     mikan::TRNATYPE const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs);
+                     mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs);
 
     void clear_features();
 

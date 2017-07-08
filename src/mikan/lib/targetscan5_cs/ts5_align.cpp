@@ -25,8 +25,8 @@ void TS5Alignment::resize_alignments(unsigned pSize) {
 int TS5Alignment::align_seed(
         unsigned pMRNAIdx,
         CharString const &pSeedType,
-        mikan::TRNATYPE const &pMiRNASeq,
-        mikan::TRNATYPE const &pMRNASeq,
+        mikan::TRNAStr const &pMiRNASeq,
+        mikan::TRNAStr const &pMRNASeq,
         unsigned pSitePos) {
     int startUTR = 0;
     int seqLen = 0;
@@ -68,15 +68,15 @@ int TS5Alignment::align_seed(
 int TS5Alignment::align_3p_part(
         unsigned pMRNAIdx,
         const CharString &,
-        const mikan::TRNATYPE &pMiRNAThreePrime,
-        mikan::TRNATYPE &pMRNAThreePrime,
+        const mikan::TRNAStr &pMiRNAThreePrime,
+        mikan::TRNAStr &pMRNAThreePrime,
         String<int> &pMatchLen,
         String<int> &pMiRNAPos,
         String<int> &pMRNAPos,
         float pScore,
         unsigned pMatchedIdx) {
     unsigned maxLen, lenDiff;
-    mikan::TRNATYPE miRNAThreePrime = pMiRNAThreePrime;
+    mikan::TRNAStr miRNAThreePrime = pMiRNAThreePrime;
 
     maxLen = std::max(length(miRNAThreePrime), length(pMRNAThreePrime));
     if (pScore < 3) {
@@ -106,10 +106,10 @@ int TS5Alignment::align_3p_part(
 
 int TS5Alignment::align_no_3p_part(
         unsigned pMRNAIdx,
-        mikan::TRNATYPE &pMRNAThreePrime,
-        mikan::TRNATYPE &pMiRNAThreePrime,
+        mikan::TRNAStr &pMRNAThreePrime,
+        mikan::TRNAStr &pMiRNAThreePrime,
         unsigned pAlignLen) {
-    mikan::TRNATYPE miRNAThreePrime = pMiRNAThreePrime;
+    mikan::TRNAStr miRNAThreePrime = pMiRNAThreePrime;
     complement(miRNAThreePrime);
 
     resize(mAlignBars[pMRNAIdx], pAlignLen, ' ');
@@ -142,7 +142,7 @@ void TS5Alignment::set_align_bars(
 
 void TS5Alignment::set_alignment(
         unsigned pMRNAIdx,
-        mikan::TRNATYPE &pSeqThreePrime,
+        mikan::TRNAStr &pSeqThreePrime,
         String<int> &pSeqPos1,
         String<int> &pSeqPos2,
         unsigned pMatchedIdx,

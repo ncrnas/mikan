@@ -84,7 +84,7 @@ public:
     mikan::TCharSet const &get_align_mirna() const { return mAlignMiRNA; }
 
     // Method prototypes
-    int align_seq(TSSVMSeedSites &pSeedSites, mikan::TRNATYPE const &pMiRNASeq,
+    int align_seq(TSSVMSeedSites &pSeedSites, mikan::TRNAStr const &pMiRNASeq,
                   mikan::TRNASet const &pMRNASeqs);
 
     void clear_alignments();
@@ -100,25 +100,25 @@ private:
     typedef seqan::ScoreMatrix<seqan::Rna, seqan::ERNAGUWOB> TScoreMat;
     seqan::Score<int, TScoreMat> mScoreMatrix;
 
-    typedef seqan::Align<mikan::TRNATYPE, seqan::ArrayGaps> TAlign;
-    typedef seqan::Gaps<mikan::TRNATYPE, seqan::ArrayGaps> TGap;
+    typedef seqan::Align<mikan::TRNAStr, seqan::ArrayGaps> TAlign;
+    typedef seqan::Gaps<mikan::TRNAStr, seqan::ArrayGaps> TGap;
 
 private:
-    int set_mirna_seq_for_align(const seqan::CharString &pSeedType, mikan::TRNATYPE const &pMiRNASeq,
-                                mikan::TRNATYPE &pMiRNAAlignSeq);
+    int set_mirna_seq_for_align(const seqan::CharString &pSeedType, mikan::TRNAStr const &pMiRNASeq,
+                                mikan::TRNAStr &pMiRNAAlignSeq);
 
     int set_mrna_seq_for_align(const seqan::CharString &pSeedType, unsigned pSitePos, unsigned pMiRNALen,
-                               const mikan::TRNATYPE &pMRNASeq, mikan::TRNATYPE &pMRNAAlignSeq);
+                               const mikan::TRNAStr &pMRNASeq, mikan::TRNAStr &pMRNAAlignSeq);
 
-    int set_addtional_sequences(mikan::TRNATYPE &pMiRNAAlignSeq, mikan::TRNATYPE &pMRNAAlignSeq);
+    int set_addtional_sequences(mikan::TRNAStr &pMiRNAAlignSeq, mikan::TRNAStr &pMRNAAlignSeq);
 
     unsigned get_align_len(TAlign &pAlign);
 
     int set_align_mrna(TAlign &pAlign, unsigned pAlignLen, const seqan::CharString &pSeedType,
-                       unsigned pMisMatchPos, unsigned pSitePos, const mikan::TRNATYPE &pMRNASeq, int pIdx);
+                       unsigned pMisMatchPos, unsigned pSitePos, const mikan::TRNAStr &pMRNASeq, int pIdx);
 
     int set_align_mirna(TAlign &pAlign, unsigned pAlignLen, const seqan::CharString &pSeedType,
-                        unsigned pMisMatchPos, const mikan::TRNATYPE &pMiRNASeq, int pIdx);
+                        unsigned pMisMatchPos, const mikan::TRNAStr &pMiRNASeq, int pIdx);
 
     int set_align_bars(int pIdx, unsigned pAlignLen);
 };

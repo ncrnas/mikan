@@ -42,8 +42,8 @@ void MR3Align::resize_align(unsigned pSize) {
 
 void MR3Align::align_seed(
         int pIdx,
-        mikan::TRNATYPE &pIMiRNASeedSeq,
-        mikan::TRNATYPE &pIMRNASeedSeq,
+        mikan::TRNAStr &pIMiRNASeedSeq,
+        mikan::TRNAStr &pIMRNASeedSeq,
         int pMMpos) {
     int score = 0;
     unsigned idx2 = 0;
@@ -131,8 +131,8 @@ void MR3Align::align_3p(int pIdx, seqan::Rna5String &pIMiRNA3pSeq, seqan::Rna5St
 
 void MR3Align::combine_alignments(
         int pIdx,
-        mikan::TRNATYPE const &pMiRNASeq,
-        mikan::TRNATYPE const &pMRNASeq,
+        mikan::TRNAStr const &pMiRNASeq,
+        mikan::TRNAStr const &pMRNASeq,
         bool noA1) {
     int maxlen = (int) length(pMiRNASeq) + mGapCount3pMiRNA[pIdx];
     int idx2;

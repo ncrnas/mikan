@@ -40,9 +40,9 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(MR3SeedSites &pSeedSites, mikan::TRNATYPE const &miRNASeq, mikan::TRNASet const &pMRNASeqs);
+    int calc_scores(MR3SeedSites &pSeedSites, mikan::TRNAStr const &miRNASeq, mikan::TRNASet const &pMRNASeqs);
 
-    void print_input(mikan::TRNATYPE &pInputMiRNASeq, mikan::TRNATYPE &pInputMRNASeq);
+    void print_input(mikan::TRNAStr &pInputMiRNASeq, mikan::TRNAStr &pInputMRNASeq);
 
     float get_score(int posIdx) { return mAlignScores[posIdx]; }
 
@@ -53,12 +53,12 @@ private:
     float mMinAlignScore;
 
 private:
-    void create_input_mirna_seq(mikan::TRNATYPE const &pMiRNASeq, mikan::TRNATYPE &pInputMiRNASeq, mikan::TRNATYPE &pIMiRNASeedSeq,
+    void create_input_mirna_seq(mikan::TRNAStr const &pMiRNASeq, mikan::TRNAStr &pInputMiRNASeq, mikan::TRNAStr &pIMiRNASeedSeq,
                                 seqan::Rna5String &pIMiRNA3pSeq);
 
-    void create_input_mrna_seq(mikan::TRNATYPE const &pMiRNASeq, mikan::TRNATYPE const &pMRNASeq, int pStart, int pEnd,
-                               const seqan::CharString &pSeedType, mikan::TRNATYPE &pInputMRNASeq,
-                               mikan::TRNATYPE &pIMRNASeedSeq,
+    void create_input_mrna_seq(mikan::TRNAStr const &pMiRNASeq, mikan::TRNAStr const &pMRNASeq, int pStart, int pEnd,
+                               const seqan::CharString &pSeedType, mikan::TRNAStr &pInputMRNASeq,
+                               mikan::TRNAStr &pIMRNASeedSeq,
                                seqan::Rna5String &pIMRNA3pSeq, bool &pNoMRNA1);
 
 };
@@ -88,7 +88,7 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(MR3SeedSites &pSeedSites, mikan::TRNATYPE const &miRNASeq, mikan::TRNASet const &pMRNASeqs);
+    int calc_scores(MR3SeedSites &pSeedSites, mikan::TRNAStr const &miRNASeq, mikan::TRNASet const &pMRNASeqs);
 
     void print_input(std::string &pInputMRNASeq);
 
@@ -99,7 +99,7 @@ private:
     float mMaxEnergy;
 
 private:
-    void create_input_seq(int pIdx, mikan::TRNATYPE const &pMiRNASeq, std::string &pInputMRNASeq);
+    void create_input_seq(int pIdx, mikan::TRNAStr const &pMiRNASeq, std::string &pInputMRNASeq);
 };
 
 //
@@ -132,7 +132,7 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(MR3SeedSites &pSeedSites, mikan::TRNATYPE const &miRNASeq, mikan::TRNASet const &pMRNASeqs);
+    int calc_scores(MR3SeedSites &pSeedSites, mikan::TRNAStr const &miRNASeq, mikan::TRNASet const &pMRNASeqs);
 
     void print_alignment(int pIdx);
 
