@@ -1,13 +1,12 @@
 #ifndef TS5_CORE_HPP_
 #define TS5_CORE_HPP_
 
+#include "mk_typedef.hpp"        // TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_sequence.hpp"       // MKSequences
 #include "ts5_feature.hpp"       // TS5RawFeatures
-#include "mk_typedef.hpp"        // TRNATYPE
 #include "ts5_option.hpp"        // TS5CSOptions
 #include "ts5_score.hpp"         // TS5ContextScores, TS5TotalScores
 #include "ts5_seed_site.hpp"     // TS5SeedSites
-#include "mk_sequence.hpp"       // MKSequences
-#include "mk_typedef.hpp"        // TCharSet, TRNASet, TIndexQGram, TFinder
 
 namespace ts5cs {
 
@@ -58,9 +57,9 @@ private:
     std::ofstream mOFile2;
 
     TS5SeedSites mSeedSites;
-    TS5RawFeatures <mikan::TRNATYPE> mRawFeatures;
-    TS5ContextScores <mikan::TRNATYPE> mCsScores;
-    TS5TotalScores <mikan::TRNATYPE> mTotalScore;
+    TS5RawFeatures mRawFeatures;
+    TS5ContextScores mCsScores;
+    TS5TotalScores mTotalScore;
 
 private:
     int write_context_score(seqan::CharString const &pMiRNAId);

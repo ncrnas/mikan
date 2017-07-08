@@ -7,13 +7,13 @@
 #include <map>                   // multimap
 #include <utility>               // pair
 #include <seqan/arg_parse.h>
-#include "mk_typedef.hpp"        // TRNATYPE
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_input.hpp"          // MKInput
 #include "ts5_option.hpp"        // TS5CSOptions
 #include "ts5_seed_site.hpp"     // TS5SeedSites
 #include "ts5_feature.hpp"       // TS5RawFeatures
 #include "ts5_score.hpp"         // TS5ContextScores, TS5TotalScores
 #include "ts5_core.hpp"          // TS5Core
-#include "mk_input.hpp"          // MKInput
 
 namespace ts5cs {
 
@@ -243,7 +243,7 @@ int TS5Core::write_total_score(seqan::CharString const &pMiRNAId) {
 int TS5Core::write_alignment(seqan::CharString const &pMiRNAId) {
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
-    const TS5Alignment<mikan::TRNATYPE> &alignment = mRawFeatures.get_alignment();
+    const TS5Alignment &alignment = mRawFeatures.get_alignment();
     seqan::CharString seedType;
     int seedStart, seedEnd;
     int count = 0;

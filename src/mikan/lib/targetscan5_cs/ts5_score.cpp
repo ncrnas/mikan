@@ -1,18 +1,16 @@
 #include <math.h>                // roundf
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "ts5_feature.hpp"       // TS5RawFeatures
-#include "mk_typedef.hpp"        // TRNATYPE
 #include "ts5_score.hpp"         // TS5ContextScores, TS5ScoreSeedType, TS5FeatSitePos, TS5FeatAURich,
 
 using namespace seqan;
-using namespace mikan;
 
 namespace ts5cs {
 
 //
 // TS5ContextScores methods
 //
-template<class TRNAString>
-void TS5ContextScores<TRNAString>::resize_scores(int pSize) {
+void TS5ContextScores::resize_scores(int pSize) {
     resize(mContextScores, pSize);
 
     mSeedTypes.resize_scores(pSize);
@@ -21,8 +19,7 @@ void TS5ContextScores<TRNAString>::resize_scores(int pSize) {
     mThreePrimePair.resize_scores(pSize);
 }
 
-template<class TRNAString>
-void TS5ContextScores<TRNAString>::clear_scores() {
+void TS5ContextScores::clear_scores() {
     clear(mContextScores);
 
     mSeedTypes.clear_scores();
@@ -31,8 +28,7 @@ void TS5ContextScores<TRNAString>::clear_scores() {
     mThreePrimePair.clear_scores();
 }
 
-template<class TRNAString>
-int TS5ContextScores<TRNAString>::calc_scores(TS5RawFeatures<TRNAString> &pRawFeatures) {
+int TS5ContextScores::calc_scores(TS5RawFeatures &pRawFeatures) {
     CharString seedType;
     int sitePos;
     float auRich, threePrimePair;
@@ -192,16 +188,14 @@ float TS5ScoreThreePrimePair::calc_score(int pIdx, CharString &pSeedType, float 
 //
 // TS5TotalScores methods
 //
-template<class TRNAString>
-void TS5TotalScores<TRNAString>::clear_scores() {
+void TS5TotalScores::clear_scores() {
     clear(mTotalScores);
     clear(mMRNAPos);
     clear(mSiteNum);
 }
 
-template<class TRNAString>
-int TS5TotalScores<TRNAString>::calc_scores(TS5SeedSites &pSeedSites,
-                                            TS5ContextScores<TRNAString> &pContextScores) {
+int TS5TotalScores::calc_scores(TS5SeedSites &pSeedSites,
+                                            TS5ContextScores &pContextScores) {
     const String<unsigned> &siteMRNAPos = pSeedSites.get_mrna_pos();
     int prevPos = -1;
     int newIdx = -1;
@@ -236,12 +230,5 @@ int TS5TotalScores<TRNAString>::calc_scores(TS5SeedSites &pSeedSites,
 
     return 0;
 }
-
-// Explicit template instantiation
-template
-class TS5ContextScores<TRNATYPE>;
-
-template
-class TS5TotalScores<TRNATYPE>;
 
 } // namespace ts5cs
