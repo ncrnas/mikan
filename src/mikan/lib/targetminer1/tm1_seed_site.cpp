@@ -1,6 +1,6 @@
-#include "mk_typedef.hpp"        // TRNATYPE
-#include "tm1_seed_site.hpp"     // TM1SeedSeqs, TM1SeedSites
 #include <seqan/seq_io.h>
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "tm1_seed_site.hpp"     // TM1SeedSeqs, TM1SeedSites
 
 using namespace seqan;
 

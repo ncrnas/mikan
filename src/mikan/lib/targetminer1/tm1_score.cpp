@@ -1,24 +1,21 @@
 #include <math.h>                // roundf
-#include "mk_typedef.hpp"        // TRNATYPE
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "tm1_score.hpp"         // TM1ClassifiedScores
 
 using namespace seqan;
-using namespace mikan;
 
 namespace tm1p {
 
 //
 // TM1TotalScores methods
 //
-template<class TRNAString>
-void TM1ClassifiedScores<TRNAString>::clear_scores() {
+void TM1ClassifiedScores::clear_scores() {
     clear(mScores);
     clear(mPredictions);
     clear(mSiteNum);
 }
 
-template<class TRNAString>
-int TM1ClassifiedScores<TRNAString>::calc_scores(
+int TM1ClassifiedScores::calc_scores(
         const seqan::String<unsigned> &pSiteCoutns,
         const seqan::String<float> &pScores) {
     resize(mScores, length(pSiteCoutns));
@@ -38,9 +35,5 @@ int TM1ClassifiedScores<TRNAString>::calc_scores(
 
     return 0;
 }
-
-// Explicit template instantiation
-template
-class TM1ClassifiedScores<TRNATYPE>;
 
 } // namespace tm1p

@@ -3,7 +3,7 @@
 
 #include <seqan/sequence.h>
 #include <seqan/index.h>
-#include "mk_typedef.hpp"         // TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 
 namespace tm1p {
 
@@ -48,12 +48,6 @@ private:
 //
 class TM1SeedSites {
 public:
-    // Define types
-    typedef seqan::StringSet<mikan::TRNATYPE> TRNASet;
-    typedef seqan::StringSet<seqan::CharString> TCharSet;
-    typedef seqan::Index<TRNASet, seqan::IndexQGram<seqan::UngappedShape<6> > > TIndexQGram;
-    typedef seqan::Finder<TIndexQGram> TFinder;
-
     // Constant values
     static const unsigned MIN_DIST_TO_CDS = 1;
     static const unsigned MIN_DIST_UTR_END = 0;
@@ -63,7 +57,7 @@ public:
 
 public:
     // Define methods
-    TM1SeedSites(TIndexQGram &pRNAIdx, TFinder &pFinder, TRNASet const &pMRNASeqs) :
+    TM1SeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
             mRNAIdx(pRNAIdx), mFinder(pFinder), mMRNASeqs(pMRNASeqs) {}
 
     unsigned get_length() const { return seqan::length(mSitePos); }

@@ -1,29 +1,25 @@
-#include "mk_typedef.hpp"         // TRNATYPE
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "tm1_mrna_feature.hpp"   // TM1ScaledFeatures
 #include "tm1_mrna_svm.hpp"       // TM1MRNAModel, TM1MRNAInputVector
 
 using namespace seqan;
-using namespace mikan;
 
 namespace tm1p {
 
 //
 // TM1MRNAInputVector methods
 //
-template<class TRNAString>
-void TM1MRNAInputVector<TRNAString>::clear_scores() {
+void TM1MRNAInputVector::clear_scores() {
     clear(mScores);
 }
 
-template<class TRNAString>
-int TM1MRNAInputVector<TRNAString>::classify(TM1ScaledFeatures<TRNAString> &pMRNAFeatures) {
+int TM1MRNAInputVector::classify(TM1ScaledFeatures &pMRNAFeatures) {
     calc_score(pMRNAFeatures);
 
     return 0;
 }
 
-template<class TRNAString>
-int TM1MRNAInputVector<TRNAString>::calc_score(TM1ScaledFeatures<TRNAString> &pMRNAFeatures) {
+int TM1MRNAInputVector::calc_score(TM1ScaledFeatures &pMRNAFeatures) {
     const String<unsigned> &mRNAIds = pMRNAFeatures.get_mrna_ids();
     const StringSet<String<float> > &mRNAFeatures = pMRNAFeatures.get_mrna_features();
     float valSquared;
@@ -44,8 +40,7 @@ int TM1MRNAInputVector<TRNAString>::calc_score(TM1ScaledFeatures<TRNAString> &pM
     return 0;
 }
 
-template<class TRNAString>
-void TM1MRNAInputVector<TRNAString>::print_input_vector(float pValSquared) {
+void TM1MRNAInputVector::print_input_vector(float pValSquared) {
     std::cout << mInputVec.transpose();
     std::cout << std::endl;
     std::cout << pValSquared;
@@ -55,8 +50,7 @@ void TM1MRNAInputVector<TRNAString>::print_input_vector(float pValSquared) {
 //
 // TM1MRNAModel methods
 //
-template<class TRNAString>
-float TM1MRNAModel<TRNAString>::calc_score(Eigen::VectorXf &pInput, float pValSquared) {
+float TM1MRNAModel::calc_score(Eigen::VectorXf &pInput, float pValSquared) {
     float score = 0.0f;
 
     mMatProd = mSVs * pInput;
@@ -70,15 +64,13 @@ float TM1MRNAModel<TRNAString>::calc_score(Eigen::VectorXf &pInput, float pValSq
     return score;
 }
 
-template<class TRNAString>
-void TM1MRNAModel<TRNAString>::init_model() {
+void TM1MRNAModel::init_model() {
     init_alpha();
     init_sv();
     init_sv_squared();
 }
 
-template<class TRNAString>
-void TM1MRNAModel<TRNAString>::init_sv_squared() {
+void TM1MRNAModel::init_sv_squared() {
     for (unsigned i = 0; i < MODEL_M; ++i) {
         mSquaredSVs(i) = 0.0f;
         for (unsigned j = 0; j < INPUT_FEAT_NUM; ++j) {
@@ -87,8 +79,7 @@ void TM1MRNAModel<TRNAString>::init_sv_squared() {
     }
 }
 
-template<class TRNAString>
-void TM1MRNAModel<TRNAString>::init_alpha() {
+void TM1MRNAModel::init_alpha() {
     mAlphas(0) = 0.165f;
     mAlphas(1) = 0.165f;
     mAlphas(2) = 0.165f;
@@ -526,8 +517,7 @@ void TM1MRNAModel<TRNAString>::init_alpha() {
     mAlphas(434) = -0.165f;
 }
 
-template<class TRNAString>
-void TM1MRNAModel<TRNAString>::init_sv() {
+void TM1MRNAModel::init_sv() {
     mSVs(0, 0) = -0.181818f;
     mSVs(0, 1) = -0.625f;
     mSVs(0, 2) = 0.5f;
@@ -13579,12 +13569,5 @@ void TM1MRNAModel<TRNAString>::init_sv() {
     mSVs(434, 28) = -1.0f;
     mSVs(434, 29) = -1.0f;
 }
-
-// Explicit template instantiation
-template
-class TM1MRNAModel<TRNATYPE>;
-
-template
-class TM1MRNAInputVector<TRNATYPE>;
 
 } // namespace tm1p

@@ -1,32 +1,28 @@
+#include "mk_typedef.hpp"  // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "tm1_align.hpp"   // TM1Alignment
-#include "mk_typedef.hpp"  // TRNATYPE
 
 using namespace seqan;
-using namespace mikan;
 
 namespace tm1p {
 
 //
 // TM1Alignment methods
 //
-template<class TRNAString>
-void TM1Alignment<TRNAString>::clear_alignments() {
+void TM1Alignment::clear_alignments() {
     clear(mAlignBars);
     clear(mAlignMRNA);
     clear(mAlignMiRNA);
 }
 
-template<class TRNAString>
-void TM1Alignment<TRNAString>::resize_alignments(unsigned pSize) {
+void TM1Alignment::resize_alignments(unsigned pSize) {
     resize(mAlignBars, pSize);
     resize(mAlignMRNA, pSize);
     resize(mAlignMiRNA, pSize);
 }
 
-template<class TRNAString>
-void TM1Alignment<TRNAString>::align_all(
-        TRNAString const &pMiRNASeq,
-        TRNASet const &pMRNASeqs,
+void TM1Alignment::align_all(
+        mikan::TRNATYPE const &pMiRNASeq,
+        mikan::TRNASet const &pMRNASeqs,
         TM1SeedSites const &pSeedSites,
         String<int> const &pA1Pos) {
     unsigned miLen;
@@ -83,8 +79,7 @@ void TM1Alignment<TRNAString>::align_all(
 
 }
 
-template<class TRNAString>
-void TM1Alignment<TRNAString>::write_alignment(int pIdx) const {
+void TM1Alignment::write_alignment(int pIdx) const {
     std::stringstream stream;
 
     stream << "mRNA   5' " << mAlignMRNA[pIdx] << " 3'";
@@ -96,9 +91,5 @@ void TM1Alignment<TRNAString>::write_alignment(int pIdx) const {
 
     std::cout << stream.str();
 }
-
-// Explicit template instantiation
-template
-class TM1Alignment<TRNATYPE>;
 
 } // namespace tm1p

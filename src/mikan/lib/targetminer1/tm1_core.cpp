@@ -7,10 +7,10 @@
 #include <map>                   // multimap
 #include <utility>               // pair
 #include <seqan/arg_parse.h>
-#include "mk_typedef.hpp"        // TRNATYPE
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_input.hpp"          // MKInput
 #include "tm1_option.hpp"        // TM1CSOptions
 #include "tm1_core.hpp"          // TM1Core
-#include "mk_input.hpp"          // MKInput
 
 namespace tm1p {
 
@@ -271,7 +271,7 @@ int TM1Core::write_alignment(seqan::CharString const &pMiRNAId) {
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const seqan::StringSet<seqan::CharString> &mSeedTypes = mSeedSites.get_seed_types();
-    const TM1Alignment<mikan::TRNATYPE> &alignment = mRawFeatures.get_alignment();
+    const TM1Alignment &alignment = mRawFeatures.get_alignment();
 
     seqan::CharString seedType;
     int seedStart, seedEnd;

@@ -1,7 +1,8 @@
 #ifndef TM1_CORE_HPP_
 #define TM1_CORE_HPP_
 
-#include "mk_typedef.hpp"        // TRNATYPE
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_sequence.hpp"       // MKSequences
 #include "tm1_mrna_feature.hpp"  // TM1MRNAFeatures
 #include "tm1_mrna_svm.hpp"      // TM1MRNAModel, TM1MRNAInputVector
 #include "tm1_option.hpp"        // TM1CSOptions
@@ -9,8 +10,6 @@
 #include "tm1_seed_site.hpp"     // TM1SeedSites
 #include "tm1_site_cluster.hpp"  // TM1Overlap
 #include "tm1_site_feature.hpp"  // TM1RawFeatures
-#include "mk_sequence.hpp"       // MKSequences
-#include "mk_typedef.hpp"        // TCharSet, TRNASet, TIndexQGram, TFinder
 
 namespace tm1p {
 
@@ -63,11 +62,11 @@ private:
     std::ofstream mOFile2;
 
     TM1SeedSites mSeedSites;
-    TM1RawFeatures<mikan::TRNATYPE> mRawFeatures;
-    TM1SortedSitePos<mikan::TRNATYPE> mSortedSites;
-    TM1MRNAFeatures<mikan::TRNATYPE> mMRNAFeatures;
-    TM1MRNAInputVector<mikan::TRNATYPE> mMRNAInput;
-    TM1ClassifiedScores<mikan::TRNATYPE> mScores;
+    TM1RawFeatures mRawFeatures;
+    TM1SortedSitePos mSortedSites;
+    TM1MRNAFeatures mMRNAFeatures;
+    TM1MRNAInputVector mMRNAInput;
+    TM1ClassifiedScores mScores;
 
 private:
     int write_site_positions(seqan::CharString const &pMiRNAId);

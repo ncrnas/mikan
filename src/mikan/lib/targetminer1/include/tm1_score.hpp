@@ -1,17 +1,17 @@
 #ifndef TM1_SCORE_HPP_
 #define TM1_SCORE_HPP_
 
+#include <seqan/sequence.h>
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_typedef.hpp"         // TRNATYPE
 #include "tm1_mrna_svm.hpp"       // TM1MRNAInputVector
 #include "tm1_site_cluster.hpp"   // TM1SortedSitePos
-#include <seqan/sequence.h>
 
 namespace tm1p {
 
 //
 // Classified scores
 //
-template<class TRNAString>
 class TM1ClassifiedScores {
 public:
     // Define methods
