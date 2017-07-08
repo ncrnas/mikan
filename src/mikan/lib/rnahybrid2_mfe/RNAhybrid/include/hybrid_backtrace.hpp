@@ -1,10 +1,10 @@
 #ifndef HYBRID_BACKTRACE_HPP_
 #define HYBRID_BACKTRACE_HPP_
 
-#include "hybrid_energy.hpp"
-#include "hybrid_table.hpp"
 #include <vector>
 #include <set>
+#include "hybrid_energy.hpp"
+#include "hybrid_table.hpp"
 
 namespace rh2 {
 

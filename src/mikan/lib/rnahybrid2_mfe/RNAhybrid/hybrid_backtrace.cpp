@@ -1,6 +1,5 @@
 #include "hybrid_backtrace.hpp"
 
-
 namespace rh2 {
 
 int RH2BackTrace::move_next_bt_string() {
