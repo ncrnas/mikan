@@ -26,6 +26,8 @@ public:
         mRNAChar[3] = 'U';
 
         init_temp(TEMP_SEED_SEQ_SIZE);
+        mGUTLab = "GUT";
+        mGUMLab = "GUM";
     }
 
     mikan::TRNAStr const &get_seed_seq(int i) const { return mSeedSeqs[i]; }
@@ -57,6 +59,9 @@ protected:
     bool mBM;
     bool mLP;
     bool mAddInReverse;
+
+    seqan::CharString mGUTLab;
+    seqan::CharString mGUMLab;
 
     unsigned nNumNewSeq;
     mikan::TRNASet mTmpSeedSeqs;

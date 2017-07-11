@@ -108,14 +108,14 @@ int MKSeedSeqs::create_single_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq) {
             seedGUSeq = pSeedSeq;
             seedGUSeq[i] = 'U';
             mTmpSeedSeqs[nNumNewSeq] = seedGUSeq;
-            mTmpSeedTypes[nNumNewSeq] = "GUT";
+            mTmpSeedTypes[nNumNewSeq] = mGUTLab;
             mTmpMisMatchPos[nNumNewSeq] = i;
             nNumNewSeq++;
         } else if (pSeedSeq[i] == 'A') {
             seedGUSeq = pSeedSeq;
             seedGUSeq[i] = 'G';
             mTmpSeedSeqs[nNumNewSeq] = seedGUSeq;
-            mTmpSeedTypes[nNumNewSeq] = "GUM";
+            mTmpSeedTypes[nNumNewSeq] = mGUMLab;
             mTmpMisMatchPos[nNumNewSeq] = i;
             nNumNewSeq++;
         }
