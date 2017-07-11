@@ -1,4 +1,4 @@
-#include "mk_typedef.hpp"   // TRNATYPE
+#include "mk_typedef.hpp"   // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mr3_score.hpp"    // MR3DDGScores, MR3TotalScores
 
 using namespace seqan;

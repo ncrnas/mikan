@@ -6,13 +6,13 @@
 #endif
 
 #include <seqan/arg_parse.h>
-#include "mk_typedef.hpp"         // TRNATYPE
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_input.hpp"           // MKInput
 #include "mr3_option.hpp"         // MR3Options
 #include "mr3_seed_site.hpp"      // MR3SeedSites
 #include "mr3_score.hpp"          // MR3SiteScores, MR3TotalScores
 #include "mr3_site_cluster.hpp"   // MR3Overlap, MR3TopNScore, MR3SortedSitePos
 #include "mr3_core.hpp"           // MR3Core
-#include "mk_input.hpp"           // MKInput
 
 namespace mr3as {
 

@@ -1,5 +1,5 @@
 #include <seqan/seq_io.h>
-#include "mk_typedef.hpp"         // TRNATYPE
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mr3_seed_site.hpp"      // MR3SeedSeqs, MR3SeedSites
 
 using namespace seqan;

@@ -1,6 +1,7 @@
-#include "mk_typedef.hpp"  // TRNATYPE
-#include "mk_sequence.hpp"       // MKSequences
 #include <seqan/seq_io.h>
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_sequence.hpp"       // MKSequences
+
 
 using namespace seqan;
 
