@@ -67,7 +67,8 @@ void RH2Core::init_from_args(RH2Options &opts) {
     mOFileMFE = opts.mOFileSite;
     mOFileTotal = opts.mOFileTotal;
 
-    mSeedDef = opts.mSeedDef;
+    resize(mSeedTypeDef, 1);
+    mSeedTypeDef[0] = opts.mSeedDef;
     mOverlapDef = opts.mOverlapDef;
     mMaxHits = opts.mMaxHits;
 
@@ -123,7 +124,7 @@ int RH2Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Search seed sites
     if (mExecSearchSeedSites) {
-        retVal = mSeedSites.find_seed_sites(miRNASeq, mSeedDef, mOverlapDef);
+        retVal = mSeedSites.find_seed_sites(miRNASeq, mSeedTypeDef);
         if (retVal != 0) {
             std::cerr << "ERROR: Seed site search failed." << std::endl;
             return 1;

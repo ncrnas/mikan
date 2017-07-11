@@ -16,7 +16,8 @@ protected:
         O2FNAME2 = (char *) "test_output2_mrna_1.txt";
         OMPATH = (char *) "mk_rh2/";
 
-        mSeedDef1 = "6mer";
+        resize(mSeedDef, 1);
+        mSeedDef[0] = "6mer";
         mOverlapDef = "orig";
     }
 };
@@ -26,8 +27,8 @@ TEST_F(SeedNmer, mir124_6mer) {
 
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedSeqs.set_mirna_seq(mirna_seqs[0]);
-
-    int n = mSeedSeqs.create_seed_seqs(mSeedDef1, mOverlapDef);
+    mSeedSeqs.set_flags(mSeedDef);
+    int n = mSeedSeqs.create_seed_seqs();
     EXPECT_EQ(0, n);
     EXPECT_EQ(1u, length(mSeedSeqs.mEffectiveSeeds));
 
@@ -39,8 +40,8 @@ TEST_F(SeedNmer, mir1_6mer) {
 
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedSeqs.set_mirna_seq(mirna_seqs[1]);
-
-    int n = mSeedSeqs.create_seed_seqs(mSeedDef1, mOverlapDef);
+    mSeedSeqs.set_flags(mSeedDef);
+    int n = mSeedSeqs.create_seed_seqs();
     EXPECT_EQ(0, n);
     EXPECT_EQ(1u, length(mSeedSeqs.mEffectiveSeeds));
 
@@ -51,10 +52,10 @@ TEST_F(SeedNmer, mir124_7mer) {
     read_files();
 
     mirna_seqs = coreInput.get_mirna_seqs();
-    mSeedDef1 = "7mer";
+    mSeedDef[0] = "7mer";
     mSeedSeqs.set_mirna_seq(mirna_seqs[0]);
-
-    int n = mSeedSeqs.create_seed_seqs(mSeedDef1, mOverlapDef);
+    mSeedSeqs.set_flags(mSeedDef);
+    int n = mSeedSeqs.create_seed_seqs();
     EXPECT_EQ(0, n);
     EXPECT_EQ(1u, length(mSeedSeqs.mEffectiveSeeds));
 
@@ -65,10 +66,10 @@ TEST_F(SeedNmer, mir1_7mer) {
     read_files();
 
     mirna_seqs = coreInput.get_mirna_seqs();
-    mSeedDef1 = "7mer";
+    mSeedDef[0] = "7mer";
     mSeedSeqs.set_mirna_seq(mirna_seqs[1]);
-
-    int n = mSeedSeqs.create_seed_seqs(mSeedDef1, mOverlapDef);
+    mSeedSeqs.set_flags(mSeedDef);
+    int n = mSeedSeqs.create_seed_seqs();
     EXPECT_EQ(0, n);
     EXPECT_EQ(1u, length(mSeedSeqs.mEffectiveSeeds));
 

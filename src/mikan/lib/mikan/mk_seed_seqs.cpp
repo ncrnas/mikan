@@ -38,7 +38,7 @@ int MKSeedSeqs::create_seed_seqs() {
     reverseComplement(seedSeq);
 
     appendValue(mSeedSeqs, seedSeq);
-    appendValue(mSeedTypes, "6mer");
+    appendValue(mSeedTypes, mNMerLab);
     appendValue(mMisMatchPos, 0);
 
     if (mSingleGU) {
@@ -148,7 +148,7 @@ int MKSeedSeqs::create_multi_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq) {
                 if (seedGUSeq[i] != 'U' && mm > i) {
                     seedGUSeq[i] = 'U';
                     mTmpSeedSeqs[nNumNewSeq] = seedGUSeq;
-                    mTmpSeedTypes[nNumNewSeq] = "GU+";
+                    mTmpSeedTypes[nNumNewSeq] = mMultiGUTLab;
                     mTmpMisMatchPos[nNumNewSeq] = mm;
                     nNumNewSeq++;
                 }
@@ -165,7 +165,7 @@ int MKSeedSeqs::create_multi_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq) {
                 if (seedGUSeq[i] != 'G' && mm > i) {
                     seedGUSeq[i] = 'G';
                     mTmpSeedSeqs[nNumNewSeq] = seedGUSeq;
-                    mTmpSeedTypes[nNumNewSeq] = "GU+";
+                    mTmpSeedTypes[nNumNewSeq] = mMultiGUMLab;
                     mTmpMisMatchPos[nNumNewSeq] = mm;
                     nNumNewSeq++;
                 }

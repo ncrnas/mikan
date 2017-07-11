@@ -54,7 +54,7 @@ public:
     // Method prototypes
     void reset_finder();
 
-    int find_seed_sites(mikan::TRNAStr const &pMiRNA, seqan::StringSet<seqan::CharString> &pSeedDef);
+    int find_seed_sites(mikan::TRNAStr const &pMiRNA, mikan::TCharSet &pSeedDef);
 
     void clear_pos();
 

@@ -53,9 +53,7 @@ void PITASeedSites::reset_finder() {
     clear(mFinder);
 }
 
-int PITASeedSites::find_seed_sites(
-        mikan::TRNAStr const &pMiRNA,
-        StringSet<CharString> &pSeedDef) {
+int PITASeedSites::find_seed_sites(mikan::TRNAStr const &pMiRNA, mikan::TCharSet &pSeedDef) {
     PITASeedSeqs seedSeqs;
     mikan::TRNAStr seedSeq;
     CharString seedType;

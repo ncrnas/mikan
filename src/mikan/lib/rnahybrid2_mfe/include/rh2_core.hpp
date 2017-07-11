@@ -31,7 +31,7 @@ public:
     seqan::CharString mOFileMFE;
     seqan::CharString mOFileTotal;
 
-    seqan::CharString mSeedDef;
+    mikan::TCharSet mSeedTypeDef;
     seqan::CharString mOverlapDef;
     int mMaxHits;
 

@@ -67,25 +67,25 @@ void PITACore::init_from_args(PITAOptions &opts) {
     mFlankUp = opts.mFlankUp;
     mFlankDown = opts.mFlankDown;
 
-    resize(mSeedDef, 5);
-    mSeedDef[0] = 'Y';
-    mSeedDef[1] = 'Y';
-    mSeedDef[2] = 'Y';
+    resize(mSeedTypeDef, 5);
+    mSeedTypeDef[0] = 'Y';
+    mSeedTypeDef[1] = 'Y';
+    mSeedTypeDef[2] = 'Y';
     if (opts.mMinSeedLen == 7) {
-        mSeedDef[0] = 'N';
+        mSeedTypeDef[0] = 'N';
     } else if (opts.mMinSeedLen == 8) {
-        mSeedDef[0] = 'N';
-        mSeedDef[1] = 'N';
+        mSeedTypeDef[0] = 'N';
+        mSeedTypeDef[1] = 'N';
     }
 
     if (opts.mMaxSeedLen == 7) {
-        mSeedDef[2] = 'N';
+        mSeedTypeDef[2] = 'N';
     } else if (opts.mMaxSeedLen == 6) {
-        mSeedDef[2] = 'N';
-        mSeedDef[1] = 'N';
+        mSeedTypeDef[2] = 'N';
+        mSeedTypeDef[1] = 'N';
     }
-    mSeedDef[3] = opts.mAllowGUWobble;
-    mSeedDef[4] = opts.mAllowMismatch;
+    mSeedTypeDef[3] = opts.mAllowGUWobble;
+    mSeedTypeDef[4] = opts.mAllowMismatch;
 
     set_backtrack(mOutputAlign);
 }
@@ -140,7 +140,7 @@ int PITACore::calculate_mirna_scores(unsigned pIdx) {
 
     // Search seed sites
     if (mExecSearchSeedSites) {
-        retVal = mSeedSites.find_seed_sites(miRNASeq, mSeedDef);
+        retVal = mSeedSites.find_seed_sites(miRNASeq, mSeedTypeDef);
         if (retVal != 0) {
             std::cerr << "ERROR: Seed site search failed." << std::endl;
             return 1;

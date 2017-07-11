@@ -56,9 +56,7 @@ void MR3SeedSites::reset_finder() {
     clear(mFinder);
 }
 
-int MR3SeedSites::find_seed_sites(
-        mikan::TRNAStr const &pMiRNA,
-        StringSet<CharString> &pSeedDef) {
+int MR3SeedSites::find_seed_sites(mikan::TRNAStr const &pMiRNA, mikan::TCharSet &pSeedDef) {
     MR3SeedSeqs seedSeqs;
     mikan::TRNAStr seedSeq;
     CharString seedType;
