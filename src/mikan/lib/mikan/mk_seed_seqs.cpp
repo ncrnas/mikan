@@ -129,16 +129,23 @@ int MKSeedSeqs::create_single_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq) {
 int MKSeedSeqs::create_multi_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq) {
     mikan::TRNAStr seedGUSeq;
     nNumNewSeq = 0;
-    int mm;
+    unsigned mm;
 
-    unsigned seedDatLen = length(mSeedSeqs);
+    unsigned baseLen = length(mSeedSeqs);
+    unsigned vecSize;
 
     for (unsigned i = 0; i < length(pSeedSeq); ++i) {
+        vecSize = baseLen + nNumNewSeq;
         if (pSeedSeq[i] == 'C') {
-            for (unsigned j = 1; j < seedDatLen; ++j) {
-                seedGUSeq = get_seed_seq(j);
-                mm = get_mismatched_pos(j);
-                if (seedGUSeq[i] != 'U' && mm > (int) i) {
+            for (unsigned j = 1; j < vecSize; ++j) {
+                if (j < baseLen) {
+                    seedGUSeq = get_seed_seq(j);
+                    mm = get_mismatched_pos(j);
+                } else {
+                    seedGUSeq = mTmpSeedSeqs[j - baseLen];
+                    mm = mTmpMisMatchPos[j - baseLen];
+                }
+                if (seedGUSeq[i] != 'U' && mm > i) {
                     seedGUSeq[i] = 'U';
                     mTmpSeedSeqs[nNumNewSeq] = seedGUSeq;
                     mTmpSeedTypes[nNumNewSeq] = "GU+";
@@ -146,12 +153,16 @@ int MKSeedSeqs::create_multi_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq) {
                     nNumNewSeq++;
                 }
             }
-            seedDatLen = length(mSeedSeqs);
         } else if (pSeedSeq[i] == 'A') {
-            for (unsigned j = 1; j < seedDatLen; ++j) {
-                seedGUSeq = get_seed_seq(j);
-                mm = get_mismatched_pos(j);
-                if (seedGUSeq[i] != 'G' && mm > (int) i) {
+            for (unsigned j = 1; j < vecSize; ++j) {
+                if (j < baseLen) {
+                    seedGUSeq = get_seed_seq(j);
+                    mm = get_mismatched_pos(j);
+                } else {
+                    seedGUSeq = mTmpSeedSeqs[j - baseLen];
+                    mm = mTmpMisMatchPos[j - baseLen];
+                }
+                if (seedGUSeq[i] != 'G' && mm > i) {
                     seedGUSeq[i] = 'G';
                     mTmpSeedSeqs[nNumNewSeq] = seedGUSeq;
                     mTmpSeedTypes[nNumNewSeq] = "GU+";
@@ -159,7 +170,6 @@ int MKSeedSeqs::create_multi_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq) {
                     nNumNewSeq++;
                 }
             }
-            seedDatLen = length(mSeedSeqs);
         }
     }
 
@@ -408,6 +418,22 @@ int MKSeedSeqs::add_seed_seqs() {
     }
 
     return 0;
+}
+
+void MKSeedSeqs::print_all() {
+    unsigned numSeqs = length(mSeedSeqs);
+    mikan::TRNAStr seedRC;
+
+    std::cout << "The number of seeds: " << numSeqs << std::endl;
+
+    for (unsigned i = 0; i < numSeqs; i++) {
+        seedRC = mSeedSeqs[i];
+        reverseComplement(seedRC);
+        std::cout << i << ", ";
+        std::cout << mSeedSeqs[i] << ", " << seedRC << ", ";
+        std::cout << mSeedTypes[i] << ", ";
+        std::cout << mMisMatchPos[i] << std::endl;
+    }
 }
 
 } // namespace mikan

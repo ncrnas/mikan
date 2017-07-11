@@ -41,6 +41,8 @@ public:
 
     void set_mirna_seq(mikan::TRNAStr pSeq);
 
+    void print_all();
+
 protected:
     mikan::TRNASet mSeedSeqs;
     mikan::TCharSet mSeedTypes;
