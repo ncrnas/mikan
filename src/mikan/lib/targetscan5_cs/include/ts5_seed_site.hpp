@@ -4,27 +4,20 @@
 #include <seqan/sequence.h>
 #include <seqan/index.h>
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_seed_seqs.hpp"      // MKSeedSeqs
 
 namespace ts5cs {
 
 //
 // Generate miRNA seeds
 //
-class TS5SeedSeqs {
+class TS5SeedSeqs : public mikan::MKSeedSeqs {
 public:
     // Define methods
-    TS5SeedSeqs() {}
-
-    mikan::TRNAStr const &get_seed_seq() const { return mSeedSeqs[0]; }
+    TS5SeedSeqs(): MKSeedSeqs() {}
 
     // Method prototypes
-    int create_seed_seqs();
-
-    void set_mirna_seq(mikan::TRNAStr pSeq);
-
-private:
-    mikan::TRNASet mSeedSeqs;
-    mikan::TRNAStr mMiRNASeq;
+    void set_flags(mikan::TCharSet &pSeedTypeDef);
 };
 
 //

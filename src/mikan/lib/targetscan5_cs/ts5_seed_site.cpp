@@ -9,27 +9,16 @@ namespace ts5cs {
 //
 // TS5SeedSeqs methods
 //
-int TS5SeedSeqs::create_seed_seqs() {
-    if (length(mMiRNASeq) == 0) {
-        return 1;
-    }
-
-    mikan::TRNAStr seedSeq;
-
-    resize(seedSeq, 6);
-    for (unsigned i = 0; i < length(seedSeq); ++i) {
-        seedSeq[i] = mMiRNASeq[i + 1];
-    }
-    reverseComplement(seedSeq);
-
-    appendValue(mSeedSeqs, seedSeq);
-
-    return 0;
-}
-
-void TS5SeedSeqs::set_mirna_seq(mikan::TRNAStr pSeq) {
-    clear(mSeedSeqs);
-    mMiRNASeq = pSeq;
+void TS5SeedSeqs::set_flags(mikan::TCharSet &) {
+    mSingleGU = false;
+    mMultiGU = false;
+    mMisMatch = false;
+    mGUMisMatch = false;
+    mBT = false;
+    mBM = false;
+    mLP = false;
+    mOther = false;
+    mAddInReverse = false;
 }
 
 //
@@ -48,6 +37,8 @@ int TS5SeedSites::find_seed_sites(mikan::TRNAStr const &pMiRNA) {
     reset_finder();
 
     seedSeqs.set_mirna_seq(pMiRNA);
+    mikan::TCharSet mNullSet;
+    seedSeqs.set_flags(mNullSet);
     retVal = seedSeqs.create_seed_seqs();
     if (retVal != 0) {
         std::cerr << "ERROR: Could not get the seed sequence for " << pMiRNA;
@@ -55,7 +46,7 @@ int TS5SeedSites::find_seed_sites(mikan::TRNAStr const &pMiRNA) {
         return 1;
     }
 
-    seedSeq = seedSeqs.get_seed_seq();
+    seedSeq = seedSeqs.get_seed_seq(0);
     while (find(mFinder, seedSeq)) {
         appendValue(mMRNAPos, position(mFinder).i1);
         appendValue(mSitePos, position(mFinder).i2);

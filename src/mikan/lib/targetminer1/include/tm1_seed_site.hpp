@@ -12,7 +12,6 @@ namespace tm1p {
 // Generate miRNA seeds
 //
 class TM1SeedSeqs : public mikan::MKSeedSeqs {
-
 public:
     // Define methods
     TM1SeedSeqs(): MKSeedSeqs() {}
