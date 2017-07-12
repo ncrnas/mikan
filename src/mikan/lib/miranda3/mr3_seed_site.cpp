@@ -9,7 +9,7 @@ namespace mr3as {
 //
 // MR3SeedSeqs methods
 //
-void MR3SeedSeqs::set_flags(mikan::TCharSet pSeedTypeDef) {
+void MR3SeedSeqs::set_flags(mikan::TCharSet &pSeedTypeDef) {
     mSingleGU = false;
     mMultiGU = false;
     mMisMatch = false;
@@ -17,6 +17,7 @@ void MR3SeedSeqs::set_flags(mikan::TCharSet pSeedTypeDef) {
     mBT = false;
     mBM = false;
     mLP = false;
+    mOther = false;
     mAddInReverse = false;
 
     if (pSeedTypeDef[2] == 'Y' || pSeedTypeDef[1] == 'Y') {

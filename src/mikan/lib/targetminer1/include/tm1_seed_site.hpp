@@ -4,43 +4,24 @@
 #include <seqan/sequence.h>
 #include <seqan/index.h>
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_seed_seqs.hpp"      // MKSeedSeqs
 
 namespace tm1p {
 
 //
 // Generate miRNA seeds
 //
-class TM1SeedSeqs {
-public:
-    // Define variables
-    seqan::String<bool> mEffectiveSeeds;
+class TM1SeedSeqs : public mikan::MKSeedSeqs {
 
 public:
     // Define methods
-    TM1SeedSeqs() {}
-
-    mikan::TRNAStr const &get_seed_seq(int i) const { return mSeedSeqs[i]; }
-
-    seqan::CharString const &get_seed_type(int i) const { return mSeedTypes[i]; }
+    TM1SeedSeqs(): MKSeedSeqs() {}
 
     // Method prototypes
-    int create_seed_seqs();
+    void set_flags(mikan::TCharSet &pSeedTypeDef);
 
-    void set_mirna_seq(mikan::TRNAStr pSeq);
-
-private:
-    mikan::TRNASet mSeedSeqs;
-    seqan::StringSet<seqan::CharString> mSeedTypes;
-    mikan::TRNAStr mMiRNASeq;
-
-private:
-    int create_nmer_seed_seqs(mikan::TRNAStr &pSeedSeq);
-
-    int create_single_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq);
-
-    int create_lp_seed_seqs(mikan::TRNAStr &pSeedSeq, seqan::CharString &pSeedType);
-
-    int check_redundant_seeds();
+protected:
+    virtual int create_other_seed_seqs(mikan::TRNAStr &pSeedSeq);
 };
 
 //
@@ -90,6 +71,8 @@ public:
     int get_seed_end_pos2(int pIdx);
 
     int get_length_to_cds(int pIdx);
+
+    void print_all();
 
 private:
     seqan::String<unsigned> mMRNAPos;

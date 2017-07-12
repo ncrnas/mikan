@@ -10,7 +10,7 @@ namespace mikan {
 // MKSeedSeqs methods
 //
 
-void MKSeedSeqs::set_flags(mikan::TCharSet) {
+void MKSeedSeqs::set_flags(mikan::TCharSet &) {
     mSingleGU = true;
     mMultiGU = true;
     mMisMatch = true;
@@ -18,6 +18,7 @@ void MKSeedSeqs::set_flags(mikan::TCharSet) {
     mBT = true;
     mBM = true;
     mLP = true;
+    mOther = true;
     mAddInReverse = false;
 }
 
@@ -85,6 +86,13 @@ int MKSeedSeqs::create_seed_seqs() {
 
     if (mLP) {
         retVal = create_lp_seed_seqs(seedSeq);
+        if (retVal != 0) {
+            return 1;
+        }
+    }
+
+    if (mOther) {
+        retVal = create_other_seed_seqs(seedSeq);
         if (retVal != 0) {
             return 1;
         }
@@ -355,6 +363,10 @@ int MKSeedSeqs::create_lp_seed_seqs(mikan::TRNAStr &pSeedSeq) {
     return retVal;
 }
 
+int MKSeedSeqs::create_other_seed_seqs(mikan::TRNAStr &) {
+    return 0;
+}
+
 int MKSeedSeqs::check_redundant_seeds() {
     mikan::TRNAStr seedSeq;
     mikan::TIndexQGram RNAIdx(mSeedSeqs);
@@ -432,7 +444,8 @@ void MKSeedSeqs::print_all() {
         std::cout << i << ", ";
         std::cout << mSeedSeqs[i] << ", " << seedRC << ", ";
         std::cout << mSeedTypes[i] << ", ";
-        std::cout << mMisMatchPos[i] << std::endl;
+        std::cout << mMisMatchPos[i] << ", ";
+        std::cout << mEffectiveSeeds[i] << std::endl;
     }
 }
 

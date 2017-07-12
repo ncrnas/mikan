@@ -23,25 +23,26 @@ TEST_F(SeedAll, mir124_def) {
 
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedSeqs.set_mirna_seq(mirna_seqs[0]);
-
+    mikan::TCharSet mNullSet;
+    mSeedSeqs.set_flags(mNullSet);
     int n = mSeedSeqs.create_seed_seqs();
     EXPECT_EQ(0, n);
     EXPECT_EQ(12u, length(mSeedSeqs.mEffectiveSeeds));
 
     test_seed2("AAGGCA", 0, "6mer", true);
-    test_seed2("GAGGCA", 1, "MM", true);
-    test_seed2("CAGGCA", 2, "MM", true);
+    test_seed2("AAGACA", 1, "GUT", true);
+    test_seed2("AAAGCA", 2, "GUT", true);
+
     test_seed2("UAGGCA", 3, "MM", true);
+    test_seed2("GAGGCA", 4, "MM", true);
+    test_seed2("CAGGCA", 5, "MM", true);
 
-    test_seed2("AAGACA", 4, "GUT", true);
-    test_seed2("GAGACA", 5, "GUMM", true);
-    test_seed2("CAGACA", 6, "GUMM", true);
-    test_seed2("UAGACA", 7, "GUMM", true);
-
-    test_seed2("AAAGCA", 8, "GUT", true);
-    test_seed2("GAAGCA", 9, "GUMM", true);
-    test_seed2("CAAGCA", 10, "GUMM", true);
-    test_seed2("UAAGCA", 11, "GUMM", true);
+    test_seed2("UAGACA", 6, "GUMM", true);
+    test_seed2("GAGACA", 7, "GUMM", true);
+    test_seed2("CAGACA", 8, "GUMM", true);
+    test_seed2("UAAGCA", 9, "GUMM", true);
+    test_seed2("GAAGCA", 10, "GUMM", true);
+    test_seed2("CAAGCA", 11, "GUMM", true);
 }
 
 TEST_F(SeedAll, mir1_def) {
@@ -49,34 +50,36 @@ TEST_F(SeedAll, mir1_def) {
 
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedSeqs.set_mirna_seq(mirna_seqs[1]);
-
+    mikan::TCharSet mNullSet;
+    mSeedSeqs.set_flags(mNullSet);
     int n = mSeedSeqs.create_seed_seqs();
     EXPECT_EQ(0, n);
-    EXPECT_EQ(20u, length(mSeedSeqs.mEffectiveSeeds));
+    EXPECT_EQ(19u, length(mSeedSeqs.mEffectiveSeeds));
 
     test_seed2("GGAAUG", 0, "6mer", true);
-    test_seed2("UGAAUG", 1, "MM", true);
-    test_seed2("AGAAUG", 2, "GUT", true);
-    test_seed2("CGAAUG", 3, "MM", true);
+    test_seed2("GGAAUA", 1, "GUT", true);
+    test_seed2("GGAACG", 2, "GUM", true);
+    test_seed2("GAAAUG", 3, "GUT", true);
+    test_seed2("AGAAUG", 4, "GUT", true);
 
-    test_seed2("GGAAUA", 4, "GUT", true);
-    test_seed2("UGAAUA", 5, "GUMM", true);
-    test_seed2("AGAAUA", 6, "GUGU", true);
-    test_seed2("CGAAUA", 7, "GUMM", true);
+    test_seed2("UGAAUG", 5, "MM", false);
+    test_seed2("CGAAUG", 6, "MM", false);
 
-    test_seed2("GGAACG", 8, "GUM", true);
-    test_seed2("UGAACG", 9, "GUMM", true);
-    test_seed2("AGAACG", 10, "GUGU", true);
+    test_seed2("UGAAUA", 7, "GUMM", true);
+    test_seed2("CGAAUA", 8, "GUMM", true);
+    test_seed2("AGAAUA", 9, "GUGU", true);
+
+    test_seed2("UGAACG", 10, "GUMM", true);
     test_seed2("CGAACG", 11, "GUMM", true);
+    test_seed2("AGAACG", 12, "GUGU", true);
 
-    test_seed2("GAAAUG", 12, "GUT", true);
     test_seed2("UAAAUG", 13, "GUMM", true);
-    test_seed2("AAAAUG", 14, "GUGU", true);
-    test_seed2("CAAAUG", 15, "GUMM", true);
+    test_seed2("CAAAUG", 14, "GUMM", true);
+    test_seed2("AAAAUG", 15, "GUGU", true);
 
-    test_seed2("AGAAUG", 16, "GUT", false);
+    test_seed2("UGAAUG", 16, "GUMM", true);
     test_seed2("GGAAUG", 17, "GUMM", false);
-    test_seed2("CGAAUG", 18, "GUMM", false);
-    test_seed2("UGAAUG", 19, "GUMM", false);
+    test_seed2("CGAAUG", 18, "GUMM", true);
 }
+
 }

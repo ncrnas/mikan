@@ -42,7 +42,7 @@ public:
     // Method prototypes
     int create_seed_seqs();
 
-    void set_flags(mikan::TCharSet pSeedTypeDef);
+    void set_flags(mikan::TCharSet &pSeedTypeDef);
 
     void set_mirna_seq(mikan::TRNAStr pSeq);
 
@@ -61,6 +61,7 @@ protected:
     bool mBT;
     bool mBM;
     bool mLP;
+    bool mOther;
     bool mAddInReverse;
 
     seqan::CharString mNMerLab;
@@ -88,6 +89,8 @@ protected:
     int create_bm_seed_seqs();
 
     int create_lp_seed_seqs(mikan::TRNAStr &pSeedSeq);
+
+    virtual int create_other_seed_seqs(mikan::TRNAStr &pSeedSeq);
 
     int check_redundant_seeds();
 

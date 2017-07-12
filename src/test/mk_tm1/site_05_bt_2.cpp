@@ -34,13 +34,15 @@ TEST_F(Site05BT2, mir1_bt) {
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(7u, sites.get_length());
 
-    test_sites2(sites, 0, "6mer", 20, 24, true);
-    test_sites2(sites, 1, "6mer", 21, 24, true);
-    test_sites2(sites, 2, "6mer", 22, 24, true);
-    test_sites2(sites, 3, "7mer-m8", 24, 24, true);
-    test_sites2(sites, 4, "6mer", 23, 24, true);
-    test_sites2(sites, 5, "6mer", 5, 25, true);
-    test_sites2(sites, 6, "7mer-m8", 10, 24, true);
+    test_sites2(sites, 0, "6mer", 5, 25, true);
+    test_sites2(sites, 1, "7mer-m8", 10, 24, true);
+    test_sites2(sites, 2, "7mer-m8", 24, 24, true);
+    test_sites2(sites, 3, "6mer", 20, 24, true);
+    test_sites2(sites, 4, "6mer", 21, 24, true);
+    test_sites2(sites, 5, "6mer", 22, 24, true);
+    test_sites2(sites, 6, "6mer", 23, 24, true);
+
+
 }
 
 }

@@ -17,7 +17,7 @@ public:
     RH2SeedSeqs() : MKSeedSeqs() {}
 
     // Method prototypes
-    void set_flags(mikan::TCharSet pSeedTypeDef);
+    void set_flags(mikan::TCharSet &pSeedTypeDef);
 };
 
 //

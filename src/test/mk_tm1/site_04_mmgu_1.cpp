@@ -37,27 +37,27 @@ TEST_F(Site04MMGU1, mir124_mmgu) {
     test_sites2(sites, 0, "6mer", 0, 24, true);
     test_sites2(sites, 1, "7mer-A1", 1, 24, true);
 
-    test_sites2(sites, 2, "6mer", 24, 24, true);
-    test_sites2(sites, 3, "6mer", 25, 24, true);
+    test_sites2(sites, 2, "6mer", 2, 24, true);
+    test_sites2(sites, 3, "7mer-A1", 3, 24, true);
+    test_sites2(sites, 4, "7mer-m8", 4, 24, true);
+    test_sites2(sites, 5, "8mer", 5, 24, true);
+    test_sites2(sites, 6, "6mer", 6, 24, true);
+    test_sites2(sites, 7, "7mer-A1", 7, 24, true);
 
-    test_sites2(sites, 4, "6mer", 2, 24, true);
-    test_sites2(sites, 5, "7mer-A1", 3, 24, true);
-    test_sites2(sites, 6, "7mer-m8", 4, 24, true);
-    test_sites2(sites, 7, "8mer", 5, 24, true);
-    test_sites2(sites, 8, "6mer", 6, 24, true);
-    test_sites2(sites, 9, "7mer-A1", 7, 24, true);
+    test_sites2(sites, 8, "6mer", 8, 24, true);
+    test_sites2(sites, 9, "7mer-A1", 9, 24, true);
+    test_sites2(sites, 10, "7mer-m8", 10, 24, true);
+    test_sites2(sites, 11, "8mer", 11, 24, true);
+    test_sites2(sites, 12, "6mer", 12, 24, true);
+    test_sites2(sites, 13, "7mer-A1", 13, 24, true);
 
-    test_sites2(sites, 10, "6mer", 42, 24, true);
-    test_sites2(sites, 11, "6mer", 43, 24, true);
-    test_sites2(sites, 12, "6mer", 44, 24, true);
-    test_sites2(sites, 13, "6mer", 45, 24, true);
+    test_sites2(sites, 14, "6mer", 24, 24, true);
+    test_sites2(sites, 15, "6mer", 25, 24, true);
 
-    test_sites2(sites, 14, "6mer", 8, 24, true);
-    test_sites2(sites, 15, "7mer-A1", 9, 24, true);
-    test_sites2(sites, 16, "7mer-m8", 10, 24, true);
-    test_sites2(sites, 17, "8mer", 11, 24, true);
-    test_sites2(sites, 18, "6mer", 12, 24, true);
-    test_sites2(sites, 19, "7mer-A1", 13, 24, true);
+    test_sites2(sites, 16, "6mer", 42, 24, true);
+    test_sites2(sites, 17, "6mer", 43, 24, true);
+    test_sites2(sites, 18, "6mer", 44, 24, true);
+    test_sites2(sites, 19, "6mer", 45, 24, true);
 
     test_sites2(sites, 20, "6mer", 62, 24, true);
     test_sites2(sites, 21, "6mer", 63, 24, true);

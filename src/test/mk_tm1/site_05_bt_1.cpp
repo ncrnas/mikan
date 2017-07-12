@@ -34,11 +34,11 @@ TEST_F(Site05BT1, mir124_bt) {
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(5u, sites.get_length());
 
-    test_sites2(sites, 0, "6mer", 23, 24, true);
-    test_sites2(sites, 1, "6mer", 24, 24, true);
-    test_sites2(sites, 2, "6mer", 20, 24, true);
-    test_sites2(sites, 3, "6mer", 21, 24, true);
-    test_sites2(sites, 4, "6mer", 22, 24, true);
+    test_sites2(sites, 0, "6mer", 20, 24, true);
+    test_sites2(sites, 1, "6mer", 21, 24, true);
+    test_sites2(sites, 2, "6mer", 22, 24, true);
+    test_sites2(sites, 3, "6mer", 23, 24, true);
+    test_sites2(sites, 4, "6mer", 24, 24, true);
 }
 
 }

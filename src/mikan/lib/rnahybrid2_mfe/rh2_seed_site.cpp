@@ -9,7 +9,7 @@ namespace rh2mfe {
 //
 // RH2SeedSeqs methods
 //
-void RH2SeedSeqs::set_flags(mikan::TCharSet pSeedTypeDef) {
+void RH2SeedSeqs::set_flags(mikan::TCharSet &pSeedTypeDef) {
     mSingleGU = false;
     mMultiGU = false;
     mMisMatch = false;
@@ -17,6 +17,7 @@ void RH2SeedSeqs::set_flags(mikan::TCharSet pSeedTypeDef) {
     mBT = false;
     mBM = false;
     mLP = false;
+    mOther = false;
     mAddInReverse = false;
 
     if (pSeedTypeDef[0][0] == '6') {

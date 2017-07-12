@@ -9,7 +9,7 @@ namespace ptddg {
 //
 // PITASeedSeqs methods
 //
-void PITASeedSeqs::set_flags(mikan::TCharSet pSeedTypeDef) {
+void PITASeedSeqs::set_flags(mikan::TCharSet &pSeedTypeDef) {
     mSingleGU = false;
     mMultiGU = false;
     mMisMatch = false;
@@ -17,6 +17,7 @@ void PITASeedSeqs::set_flags(mikan::TCharSet pSeedTypeDef) {
     mBT = false;
     mBM = false;
     mLP = false;
+    mOther = false;
     mAddInReverse = false;
 
     if (pSeedTypeDef[2] == 'Y' || pSeedTypeDef[1] == 'Y') {
