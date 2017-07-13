@@ -49,14 +49,16 @@ public:
 
     void set_flags(mikan::TCharSet &pSeedTypeDef);
 
-    void set_mirna_seq(mikan::TRNAStr pSeq);
+    void set_mirna_seq(mikan::TRNAStr const &pSeq);
+
+    mikan::TRNAStr const get_mirna_seq() const { return mMiRNASeq; };
 
     void print_all();
 
 protected:
     mikan::TRNASet mSeedSeqs;
     mikan::TCharSet mSeedTypes;
-    mikan::TSitePos mMisMatchPos;
+    mikan::TSitePosSet mMisMatchPos;
     mikan::TRNAStr mMiRNASeq;
     mikan::TRNAStr mRNAChar;
     bool mSingleGU;
@@ -83,7 +85,7 @@ protected:
     unsigned nNumNewSeq;
     mikan::TRNASet mTmpSeedSeqs;
     mikan::TCharSet mTmpSeedTypes;
-    mikan::TSitePos mTmpMisMatchPos;
+    mikan::TSitePosSet mTmpMisMatchPos;
 
 protected:
     int create_single_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq);

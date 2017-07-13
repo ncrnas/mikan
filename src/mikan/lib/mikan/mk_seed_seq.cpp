@@ -412,7 +412,7 @@ int MKSeedSeqs::check_redundant_seeds() {
     return 0;
 }
 
-void MKSeedSeqs::set_mirna_seq(mikan::TRNAStr pSeq) {
+void MKSeedSeqs::set_mirna_seq(mikan::TRNAStr const &pSeq) {
     clear(mSeedSeqs);
     clear(mSeedTypes);
     clear(mEffectiveSeeds);
