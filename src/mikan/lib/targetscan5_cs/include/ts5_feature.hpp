@@ -22,7 +22,7 @@ public:
 
     // Method prototype
     int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                     seqan::String<bool> &pEffectiveSites, mikan::TSitePos const &pMRNAPos, mikan::TSitePos const &pSitePos);
+                     seqan::String<bool> &pEffectiveSites, mikan::TSitePosSet const &pMRNAPos, mikan::TSitePosSet const &pSitePos);
 
     void clear_features();
 
@@ -46,7 +46,7 @@ public:
 
     // Method prototype
     int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                     seqan::String<bool> &pEffectiveSites, mikan::TSitePos const &pMRNAPos, mikan::TSitePos const &pSitePos,
+                     seqan::String<bool> &pEffectiveSites, mikan::TSitePosSet const &pMRNAPos, mikan::TSitePosSet const &pSitePos,
                      TS5FeatSeedType &pSeedTypes);
 
     void clear_features();
@@ -70,7 +70,7 @@ public:
 
     // Method prototype
     int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                     seqan::String<bool> &pEffectiveSites, mikan::TSitePos const &pMRNAPos, mikan::TSitePos const &pSitePos,
+                     seqan::String<bool> &pEffectiveSites, mikan::TSitePosSet const &pMRNAPos, mikan::TSitePosSet const &pSitePos,
                      TS5FeatSeedType &pSeedTypes);
 
     void clear_features();
@@ -99,7 +99,7 @@ public:
 
     // Method prototype
     int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                     seqan::String<bool> &pEffectiveSites, mikan::TSitePos const &pMRNAPos, mikan::TSitePos const &pSitePos,
+                     seqan::String<bool> &pEffectiveSites, mikan::TSitePosSet const &pMRNAPos, mikan::TSitePosSet const &pSitePos,
                      TS5FeatSeedType &pSeedTypes);
 
     void clear_features();
@@ -118,7 +118,7 @@ private:
     void getMiRNASeq(const seqan::CharString &pSeedType, const mikan::TRNAStr &pMiRNASeq,
                      mikan::TRNAStr &pMiRNAThreePrime);
 
-    float findBestMatch(unsigned pPosIdx, mikan::TSitePos const &pMRNAPos, mikan::TSitePos const &pSitePos,
+    float findBestMatch(unsigned pPosIdx, mikan::TSitePosSet const &pMRNAPos, mikan::TSitePosSet const &pSitePos,
                         const seqan::CharString &pSeedType, const mikan::TRNAStr &pMRNASeq,
                         const mikan::TRNAStr &pMiRNASeq);
 

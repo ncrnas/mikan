@@ -1,10 +1,10 @@
 #ifndef MK_INPUT_HPP_
 #define MK_INPUT_HPP_
 
-#include "mk_typedef.hpp"  // TRNATYPE
+#include <seqan/sequence.h>
+#include "mk_typedef.hpp"        // TRNATYPE
 #include "mk_option.hpp"         // MKOptions
 #include "mk_sequence.hpp"       // MKSequences
-#include <seqan/sequence.h>
 
 namespace mikan {
 
@@ -13,7 +13,6 @@ namespace mikan {
 //
 class MKInput {
 public:
-
     // Declare variables
     seqan::CharString mMiRNAFasta;
     seqan::CharString mMRNAFasta;

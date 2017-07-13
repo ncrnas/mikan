@@ -139,9 +139,9 @@ void TM1FeatSitePos::resize_features(unsigned pSize) {
 int TM1FeatSitePos::add_features(
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
-        mikan::TSitePos const &pMRNAPos,
+        mikan::TSitePosSet const &pMRNAPos,
         TM1SeedSites &pSeedSites,
-        mikan::TSitePos const &pSitePos) {
+        mikan::TSitePosSet const &pSitePos) {
     int seqLen;
     int relEndPosInt;
     float relEndPos;
@@ -206,7 +206,7 @@ void TM1FeatDistance::resize_features(unsigned pSize) {
 int TM1FeatDistance::add_features(
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
-        mikan::TSitePos const &pMRNAPos,
+        mikan::TSitePosSet const &pMRNAPos,
         TM1SeedSites &pSeedSites,
         TM1SortedSitePos &pSortedSites) {
     const StringSet<String<unsigned> > &sortedSites = pSortedSites.get_sorted_mrna_pos();
@@ -285,7 +285,7 @@ void TM1FeatAURich::resize_features(unsigned pSize) {
 int TM1FeatAURich::add_features(
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
-        mikan::TSitePos const &pMRNAPos,
+        mikan::TSitePosSet const &pMRNAPos,
         TM1SeedSites &pSeedSites,
         TM1FeatDistance &pDistance) {
     (void) pDistance;
@@ -369,7 +369,7 @@ void TM1FeatSingleFreq::resize_features(unsigned pSize) {
 int TM1FeatSingleFreq::add_features(
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
-        mikan::TSitePos const &pMRNAPos,
+        mikan::TSitePosSet const &pMRNAPos,
         TM1SeedSites &pSeedSites) {
     int seedStart, seedEnd, curpos, seqLen;
 
@@ -435,7 +435,7 @@ void TM1FeatSingleFreqFlank::resize_features(unsigned pSize) {
 int TM1FeatSingleFreqFlank::add_features(
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
-        mikan::TSitePos const &pMRNAPos,
+        mikan::TSitePosSet const &pMRNAPos,
         TM1SeedSites &pSeedSites,
         TM1FeatDistance &pDistance) {
     int seqLen, startU, endU, startD, endD;
@@ -518,7 +518,7 @@ void TM1FeatDiFreq::resize_features(unsigned pSize) {
 int TM1FeatDiFreq::add_features(
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
-        mikan::TSitePos const &pMRNAPos,
+        mikan::TSitePosSet const &pMRNAPos,
         TM1SeedSites &pSeedSites) {
     int seedStart, seedEnd, seqLen, curpos1, curpos2;
 
@@ -613,7 +613,7 @@ void TM1FeatDiFreqFlank::resize_features(unsigned pSize) {
 int TM1FeatDiFreqFlank::add_features(
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
-        mikan::TSitePos const &pMRNAPos,
+        mikan::TSitePosSet const &pMRNAPos,
         TM1SeedSites &pSeedSites,
         TM1FeatDistance &pDistance) {
     int seqLen, startU, endU, startD, endD, lenUp, lenDown;
@@ -727,7 +727,7 @@ int TM1FeatSingleMatch::add_features(
         mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
-        mikan::TSitePos const &pMRNAPos,
+        mikan::TSitePosSet const &pMRNAPos,
         TM1SeedSites &pSeedSites,
         TM1FeatSitePos &pSeedPos) {
     int seedStart, m1pos, curpos;
@@ -818,7 +818,7 @@ int TM1FeatTwoConsecMatch::add_features(
         mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
-        mikan::TSitePos const &pMRNAPos,
+        mikan::TSitePosSet const &pMRNAPos,
         TM1SeedSites &pSeedSites,
         TM1FeatSitePos &pSeedPos) {
     int seedStart, m1pos, curpos1, curpos2;

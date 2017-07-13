@@ -42,8 +42,8 @@ int TS5FeatSeedType::add_features(
         mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
-        mikan::TSitePos const &pMRNAPos,
-        mikan::TSitePos const &pSitePos) {
+        mikan::TSitePosSet const &pMRNAPos,
+        mikan::TSitePosSet const &pSitePos) {
     bool IsA1, MatchM8;
     int startPos;
     unsigned endPos;
@@ -103,8 +103,8 @@ int TS5FeatSitePos::add_features(
         mikan::TRNAStr const &,
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
-        mikan::TSitePos const &pMRNAPos,
-        mikan::TSitePos const &pSitePos,
+        mikan::TSitePosSet const &pMRNAPos,
+        mikan::TSitePosSet const &pSitePos,
         TS5FeatSeedType &pSeedTypes) {
     int seqLen, lenUp, lenDown, scoreLen;
 
@@ -156,8 +156,8 @@ int TS5FeatAURich::add_features(
         mikan::TRNAStr const &,
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
-        mikan::TSitePos const &pMRNAPos,
-        mikan::TSitePos const &pSitePos,
+        mikan::TSitePosSet const &pMRNAPos,
+        mikan::TSitePosSet const &pSitePos,
         TS5FeatSeedType &pSeedTypes) {
     int seqLen, startU, endU, startD, endD;
     float totalScore, upTotalScore, upMaxScore, downTotalScore, downMaxScore;
@@ -271,8 +271,8 @@ int TS5FeatThreePrimePair::add_features(
         mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
-        mikan::TSitePos const &pMRNAPos,
-        mikan::TSitePos const &pSitePos,
+        mikan::TSitePosSet const &pMRNAPos,
+        mikan::TSitePosSet const &pSitePos,
         TS5FeatSeedType &pSeedTypes) {
     resize(mThreePrimePair, length(pMRNAPos));
     mAlign.resize_alignments((unsigned) length(pMRNAPos));
@@ -350,8 +350,8 @@ void TS5FeatThreePrimePair::getMiRNASeq(
 
 float TS5FeatThreePrimePair::findBestMatch(
         unsigned pPosIdx,
-        mikan::TSitePos const &,
-        mikan::TSitePos const &pSitePos,
+        mikan::TSitePosSet const &,
+        mikan::TSitePosSet const &pSitePos,
         const CharString &pSeedType,
         const mikan::TRNAStr &pMRNASeq,
         const mikan::TRNAStr &pMiRNASeq) {
