@@ -167,7 +167,6 @@ TEST_F(SeedGU, mir1_7m_gu_plus) {
     mSeedSeqs.set_mirna_seq(mirna_seqs[1]);
     mSeedSeqs.set_flags(mSeedDef);
     int n = mSeedSeqs.create_seed_seqs();
-    mSeedSeqs.print_all();
     EXPECT_EQ(0, n);
     EXPECT_EQ(16u, length(mSeedSeqs.mEffectiveSeeds));
 

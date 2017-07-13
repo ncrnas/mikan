@@ -23,7 +23,8 @@ TEST_F(SeedAll, mir124_def) {
 
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedSeqs.set_mirna_seq(mirna_seqs[0]);
-
+    mikan::TCharSet mNullSet;
+    mSeedSeqs.set_flags(mNullSet);
     int n = mSeedSeqs.create_seed_seqs();
     EXPECT_EQ(0, n);
     EXPECT_EQ(49u, length(mSeedSeqs.mEffectiveSeeds));
@@ -70,13 +71,13 @@ TEST_F(SeedAll, mir124_def) {
     test_seed("AGGCAC", 31, "BM", true, 2);
     test_seed("AGGCAC", 32, "BM", true, 1);
 
-    test_seed("CAGGCA", 33, "LP", true, 1);
-    test_seed("GAGGCA", 34, "LP", true, 1);
-    test_seed("UAGGCA", 35, "LP", true, 1);
+    test_seed("UAGGCA", 33, "LP", true, 1);
+    test_seed("CAGGCA", 34, "LP", true, 1);
+    test_seed("GAGGCA", 35, "LP", true, 1);
 
-    test_seed("ACGGCA", 36, "LP", true, 2);
-    test_seed("AGGGCA", 37, "LP", true, 2);
-    test_seed("AUGGCA", 38, "LP", true, 2);
+    test_seed("AUGGCA", 36, "LP", true, 2);
+    test_seed("ACGGCA", 37, "LP", true, 2);
+    test_seed("AGGGCA", 38, "LP", true, 2);
 
     test_seed("AACGCA", 39, "LP", true, 3);
     test_seed("AAUGCA", 40, "LP", true, 3);
@@ -84,13 +85,13 @@ TEST_F(SeedAll, mir124_def) {
     test_seed("AAGCCA", 41, "LP", true, 4);
     test_seed("AAGUCA", 42, "LP", true, 4);
 
-    test_seed("AAGGAA", 43, "LP", true, 5);
-    test_seed("AAGGGA", 44, "LP", true, 5);
+    test_seed("AAGGGA", 43, "LP", true, 5);
+    test_seed("AAGGAA", 44, "LP", true, 5);
     test_seed("AAGGUA", 45, "LP", true, 5);
 
-    test_seed("AAGGCC", 46, "LP", true, 6);
-    test_seed("AAGGCG", 47, "LP", true, 6);
-    test_seed("AAGGCU", 48, "LP", true, 6);
+    test_seed("AAGGCU", 46, "LP", true, 6);
+    test_seed("AAGGCC", 47, "LP", true, 6);
+    test_seed("AAGGCG", 48, "LP", true, 6);
 }
 
 TEST_F(SeedAll, mir1_def) {
@@ -98,7 +99,8 @@ TEST_F(SeedAll, mir1_def) {
 
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedSeqs.set_mirna_seq(mirna_seqs[1]);
-
+    mikan::TCharSet mNullSet;
+    mSeedSeqs.set_flags(mNullSet);
     int n = mSeedSeqs.create_seed_seqs();
     EXPECT_EQ(0, n);
     EXPECT_EQ(49u, length(mSeedSeqs.mEffectiveSeeds));
@@ -153,13 +155,13 @@ TEST_F(SeedAll, mir1_def) {
     test_seed("GCAAUG", 37, "LP", true, 2);
     test_seed("GUAAUG", 38, "LP", true, 2);
 
-    test_seed("GGCAUG", 39, "LP", true, 3);
-    test_seed("GGGAUG", 40, "LP", true, 3);
-    test_seed("GGUAUG", 41, "LP", true, 3);
+    test_seed("GGUAUG", 39, "LP", true, 3);
+    test_seed("GGCAUG", 40, "LP", true, 3);
+    test_seed("GGGAUG", 41, "LP", true, 3);
 
-    test_seed("GGACUG", 42, "LP", true, 4);
-    test_seed("GGAGUG", 43, "LP", true, 4);
-    test_seed("GGAUUG", 44, "LP", true, 4);
+    test_seed("GGAUUG", 42, "LP", true, 4);
+    test_seed("GGACUG", 43, "LP", true, 4);
+    test_seed("GGAGUG", 44, "LP", true, 4);
 
     test_seed("GGAAAG", 45, "LP", true, 5);
     test_seed("GGAAGG", 46, "LP", true, 5);

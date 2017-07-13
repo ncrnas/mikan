@@ -15,6 +15,7 @@ void RH2SeedSeqs::set_flags(mikan::TCharSet &pSeedTypeDef) {
     mMisMatch = false;
     mGUMisMatch = false;
     mBT = false;
+    mBTM8 = false;
     mBM = false;
     mLP = false;
     mOther = false;

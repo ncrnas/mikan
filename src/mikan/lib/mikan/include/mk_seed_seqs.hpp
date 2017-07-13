@@ -31,6 +31,11 @@ public:
         mGUMLab = "GUM";
         mMultiGUTLab = "GU+";
         mMultiGUMLab = "GU+";
+        mMMGULab = "MMGU";
+        mMMLab = "MM";
+
+        mFilterRedundant = true;
+        mTSSVMMismatch = false;
     }
 
     mikan::TRNAStr const &get_seed_seq(int i) const { return mSeedSeqs[i]; }
@@ -59,16 +64,21 @@ protected:
     bool mMisMatch;
     bool mGUMisMatch;
     bool mBT;
+    bool mBTM8;
     bool mBM;
     bool mLP;
     bool mOther;
     bool mAddInReverse;
+    bool mFilterRedundant;
+    bool mTSSVMMismatch;
 
     seqan::CharString mNMerLab;
     seqan::CharString mGUTLab;
     seqan::CharString mGUMLab;
     seqan::CharString mMultiGUTLab;
     seqan::CharString mMultiGUMLab;
+    seqan::CharString mMMGULab;
+    seqan::CharString mMMLab;
 
     unsigned nNumNewSeq;
     mikan::TRNASet mTmpSeedSeqs;
@@ -86,9 +96,9 @@ protected:
 
     int create_bt_seed_seqs(mikan::TRNAStr &pSeedSeq);
 
-    int create_bm_seed_seqs();
+    int create_bt_m8_seed_seqs();
 
-    int create_lp_seed_seqs(mikan::TRNAStr &pSeedSeq);
+    int create_bm_seed_seqs();
 
     virtual int create_other_seed_seqs(mikan::TRNAStr &pSeedSeq);
 

@@ -15,6 +15,7 @@ void TM1SeedSeqs::set_flags(mikan::TCharSet &) {
     mMisMatch = false;
     mGUMisMatch = false;
     mBT = false;
+    mBTM8 = false;
     mBM = false;
     mLP = false;
     mOther = true;

@@ -16,6 +16,7 @@ void MKSeedSeqs::set_flags(mikan::TCharSet &) {
     mMisMatch = true;
     mGUMisMatch = true;
     mBT = true;
+    mBTM8 = true;
     mBM = true;
     mLP = true;
     mOther = true;
@@ -77,6 +78,13 @@ int MKSeedSeqs::create_seed_seqs() {
         }
     }
 
+    if (mBTM8) {
+        retVal = create_bt_m8_seed_seqs();
+        if (retVal != 0) {
+            return 1;
+        }
+    }
+
     if (mBM) {
         retVal = create_bm_seed_seqs();
         if (retVal != 0) {
@@ -85,7 +93,8 @@ int MKSeedSeqs::create_seed_seqs() {
     }
 
     if (mLP) {
-        retVal = create_lp_seed_seqs(seedSeq);
+        mMMLab = "LP";
+        retVal = create_mismatch_seed_seqs(seedSeq);
         if (retVal != 0) {
             return 1;
         }
@@ -99,9 +108,12 @@ int MKSeedSeqs::create_seed_seqs() {
     }
 
     resize(mEffectiveSeeds, length(mSeedSeqs), true);
-    retVal = check_redundant_seeds();
-    if (retVal != 0) {
-        return 1;
+
+    if (mFilterRedundant) {
+        retVal = check_redundant_seeds();
+        if (retVal != 0) {
+            return 1;
+        }
     }
 
     return 0;
@@ -110,21 +122,28 @@ int MKSeedSeqs::create_seed_seqs() {
 int MKSeedSeqs::create_single_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq) {
     mikan::TRNAStr seedGUSeq;
     nNumNewSeq = 0;
+    unsigned mmPos;
 
     for (unsigned i = 0; i < length(pSeedSeq); ++i) {
+        if (mTSSVMMismatch) {
+            mmPos = length(pSeedSeq) - i;
+        } else {
+            mmPos = i;
+        }
+
         if (pSeedSeq[i] == 'C') {
             seedGUSeq = pSeedSeq;
             seedGUSeq[i] = 'U';
             mTmpSeedSeqs[nNumNewSeq] = seedGUSeq;
             mTmpSeedTypes[nNumNewSeq] = mGUTLab;
-            mTmpMisMatchPos[nNumNewSeq] = i;
+            mTmpMisMatchPos[nNumNewSeq] = mmPos;
             nNumNewSeq++;
         } else if (pSeedSeq[i] == 'A') {
             seedGUSeq = pSeedSeq;
             seedGUSeq[i] = 'G';
             mTmpSeedSeqs[nNumNewSeq] = seedGUSeq;
             mTmpSeedTypes[nNumNewSeq] = mGUMLab;
-            mTmpMisMatchPos[nNumNewSeq] = i;
+            mTmpMisMatchPos[nNumNewSeq] = mmPos;
             nNumNewSeq++;
         }
     }
@@ -193,11 +212,12 @@ int MKSeedSeqs::create_mismatch_seed_seqs(mikan::TRNAStr &pSeedSeq, bool pIsMMGU
     char ch1 = 0;
     char ch2 = 0;
     char ch3 = 0;
+    unsigned mmPos;
 
     if (pIsMMGU) {
-        seedType = "MMGU";
+        seedType = mMMGULab;
     } else {
-        seedType = "MM";
+        seedType = mMMLab;
     }
 
     for (unsigned i = 0; i < length(pSeedSeq); ++i) {
@@ -222,25 +242,31 @@ int MKSeedSeqs::create_mismatch_seed_seqs(mikan::TRNAStr &pSeedSeq, bool pIsMMGU
             ch3 = 'A';
         }
 
+        if (mTSSVMMismatch) {
+            mmPos = length(pSeedSeq) - i;
+        } else {
+            mmPos = i;
+        }
+
         seedLPSeq = pSeedSeq;
         seedLPSeq[i] = ch1;
         mTmpSeedSeqs[nNumNewSeq] = seedLPSeq;
         mTmpSeedTypes[nNumNewSeq] = seedType;
-        mTmpMisMatchPos[nNumNewSeq] = i;
+        mTmpMisMatchPos[nNumNewSeq] = mmPos;
         nNumNewSeq++;
         if (ch2 != 'x') {
             seedLPSeq = pSeedSeq;
             seedLPSeq[i] = ch2;
             mTmpSeedSeqs[nNumNewSeq] = seedLPSeq;
             mTmpSeedTypes[nNumNewSeq] = seedType;
-            mTmpMisMatchPos[nNumNewSeq] = i;
+            mTmpMisMatchPos[nNumNewSeq] = mmPos;
             nNumNewSeq++;
         }
         seedLPSeq = pSeedSeq;
         seedLPSeq[i] = ch3;
         mTmpSeedSeqs[nNumNewSeq] = seedLPSeq;
         mTmpSeedTypes[nNumNewSeq] = seedType;
-        mTmpMisMatchPos[nNumNewSeq] = i;
+        mTmpMisMatchPos[nNumNewSeq] = mmPos;
         nNumNewSeq++;
     }
 
@@ -299,6 +325,35 @@ int MKSeedSeqs::create_bt_seed_seqs(mikan::TRNAStr &pSeedSeq) {
     return retVal;
 }
 
+int MKSeedSeqs::create_bt_m8_seed_seqs() {
+    mikan::TRNAStr seedBTSeq;
+    nNumNewSeq = 0;
+
+    resize(seedBTSeq, 6);
+    for (unsigned i = 0; i < length(seedBTSeq); ++i) {
+        for (unsigned j = 0; j < length(mRNAChar); ++j) {
+            int l = 0;
+            for (unsigned k = 0; k < length(seedBTSeq); ++k) {
+                if (i == k) {
+                    seedBTSeq[k] = mRNAChar[j];
+                } else {
+                    seedBTSeq[k] = mMiRNASeq[l + 2];
+                    ++l;
+                }
+            }
+            reverseComplement(seedBTSeq);
+            mTmpSeedSeqs[nNumNewSeq] = seedBTSeq;
+            mTmpSeedTypes[nNumNewSeq] = "BT";
+            mTmpMisMatchPos[nNumNewSeq] = i + 2;
+            nNumNewSeq++;
+        }
+    }
+
+    int retVal = add_seed_seqs();
+
+    return retVal;
+}
+
 int MKSeedSeqs::create_bm_seed_seqs() {
     mikan::TRNAStr seedBMSeq;
     nNumNewSeq = 0;
@@ -318,44 +373,6 @@ int MKSeedSeqs::create_bm_seed_seqs() {
         mTmpSeedTypes[nNumNewSeq] = "BM";
         mTmpMisMatchPos[nNumNewSeq] = i + 1;
         nNumNewSeq++;
-    }
-
-    int retVal = add_seed_seqs();
-
-    return retVal;
-}
-
-int MKSeedSeqs::create_lp_seed_seqs(mikan::TRNAStr &pSeedSeq) {
-    mikan::TRNAStr seedLPSeq;
-    nNumNewSeq = 0;
-    bool effective;
-
-    resize(seedLPSeq, 6);
-    for (unsigned i = 0; i < length(pSeedSeq); ++i) {
-        for (unsigned j = 0; j < length(mRNAChar); ++j) {
-            effective = true;
-            for (unsigned k = 0; k < length(pSeedSeq); ++k) {
-                if (i == k) {
-                    if ((mRNAChar[j] == pSeedSeq[k])
-                        || (mRNAChar[j] == 'G' && pSeedSeq[k] == 'A')
-                        || (mRNAChar[j] == 'U' && pSeedSeq[k] == 'C')) {
-                        effective = false;
-                        break;
-                    }
-
-                    seedLPSeq[k] = mRNAChar[j];
-                } else {
-                    seedLPSeq[k] = pSeedSeq[k];
-                }
-            }
-
-            if (effective) {
-                mTmpSeedSeqs[nNumNewSeq] = seedLPSeq;
-                mTmpSeedTypes[nNumNewSeq] = "LP";
-                mTmpMisMatchPos[nNumNewSeq] = length(pSeedSeq) - i;
-                nNumNewSeq++;
-            }
-        }
     }
 
     int retVal = add_seed_seqs();
