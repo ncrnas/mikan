@@ -4,7 +4,7 @@
 #include <seqan/sequence.h>
 #include <seqan/index.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
-#include "mk_seed_seqs.hpp"       // MKSeedSeqs
+#include "mk_seed_seq.hpp"        // MKSeedSeqs
 
 namespace ptddg {
 
