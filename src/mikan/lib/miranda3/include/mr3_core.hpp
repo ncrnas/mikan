@@ -38,7 +38,7 @@ public:
     float mMinAlignScore;
     float mMaxEnergy;
 
-    seqan::StringSet<seqan::CharString> mSeedDef;
+    mikan::TCharSet mSeedTypeDef;
 
 public:
     // Define methods

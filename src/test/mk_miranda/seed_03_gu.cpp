@@ -32,7 +32,8 @@ TEST_F(SeedGU, mir124_gu) {
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedSeqs.set_mirna_seq(mirna_seqs[0]);
 
-    int n = mSeedSeqs.create_seed_seqs(mSeedDef);
+    mSeedSeqs.set_flags(mSeedDef);
+    int n = mSeedSeqs.create_seed_seqs();
     EXPECT_EQ(0, n);
     EXPECT_EQ(3u, length(mSeedSeqs.mEffectiveSeeds));
 
@@ -47,7 +48,8 @@ TEST_F(SeedGU, mir1_gu) {
     mirna_seqs = coreInput.get_mirna_seqs();
     mSeedSeqs.set_mirna_seq(mirna_seqs[1]);
 
-    int n = mSeedSeqs.create_seed_seqs(mSeedDef);
+    mSeedSeqs.set_flags(mSeedDef);
+    int n = mSeedSeqs.create_seed_seqs();
     EXPECT_EQ(0, n);
     EXPECT_EQ(5u, length(mSeedSeqs.mEffectiveSeeds));
 
@@ -65,7 +67,8 @@ TEST_F(SeedGU, mir124_gu_plus) {
     mSeedDef[3] = "+";
     mSeedSeqs.set_mirna_seq(mirna_seqs[0]);
 
-    int n = mSeedSeqs.create_seed_seqs(mSeedDef);
+    mSeedSeqs.set_flags(mSeedDef);
+    int n = mSeedSeqs.create_seed_seqs();
     EXPECT_EQ(0, n);
     EXPECT_EQ(4u, length(mSeedSeqs.mEffectiveSeeds));
 
@@ -83,7 +86,8 @@ TEST_F(SeedGU, mir1_gu_plus) {
     mSeedDef[3] = "+";
     mSeedSeqs.set_mirna_seq(mirna_seqs[1]);
 
-    int n = mSeedSeqs.create_seed_seqs(mSeedDef);
+    mSeedSeqs.set_flags(mSeedDef);
+    int n = mSeedSeqs.create_seed_seqs();
     EXPECT_EQ(0, n);
     EXPECT_EQ(16u, length(mSeedSeqs.mEffectiveSeeds));
 

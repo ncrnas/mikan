@@ -42,7 +42,7 @@ protected:
         seqan::RnaString seedseq = rnastr;
 
         reverseComplement(seedseq);
-        comp_two_rnas(mSeedSeqs.get_seed_seq(), seedseq);
+        comp_two_rnas(mSeedSeqs.get_seed_seq(0), seedseq);
     }
 
     TSeedSeqs mSeedSeqs;

@@ -1,4 +1,4 @@
-#include "mk_typedef.hpp"         // TRNATYPE
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mr3_score.hpp"          // MR3MFEScores
 #include "mr3_site_cluster.hpp"   // MR3Overlap, MR3SortedSitePos
 

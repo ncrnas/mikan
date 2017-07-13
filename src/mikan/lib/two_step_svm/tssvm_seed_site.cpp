@@ -9,230 +9,22 @@ namespace tssvm {
 //
 // TSSVMSeedSeqs methods
 //
-int TSSVMSeedSeqs::create_seed_seqs() {
-    if (length(mMiRNASeq) == 0) {
-        return 1;
-    }
+void TSSVMSeedSeqs::set_flags(mikan::TCharSet &) {
+    mSingleGU = true;
+    mMultiGU = false;
+    mMisMatch = false;
+    mGUMisMatch = false;
+    mBT = false;
+    mBTM8 = true;
+    mBM = true;
+    mLP = true;
+    mOther = true;
+    mAddInReverse = true;
+    mFilterRedundant = false;
+    mTSSVMMismatch = true;
 
-    mikan::TRNAStr seedSeq;
-
-    int retVal;
-
-    resize(seedSeq, 6);
-    for (unsigned i = 0; i < length(seedSeq); ++i) {
-        seedSeq[i] = mMiRNASeq[i + 1];
-    }
-    reverseComplement(seedSeq);
-
-    appendValue(mSeedSeqs, seedSeq);
-    appendValue(mSeedTypes, "6mer");
-    appendValue(mMisMatchPos, 0);
-
-    retVal = create_non_stringent_seed_seqs(seedSeq);
-    if (retVal != 0) {
-        return 1;
-    }
-
-    resize(mEffectiveSeeds, length(mSeedSeqs), true);
-
-    return 0;
-}
-
-int TSSVMSeedSeqs::create_non_stringent_seed_seqs(mikan::TRNAStr &pSeedSeq) {
-    int retVal;
-
-    retVal = create_guwobble_seed_seqs(pSeedSeq);
-    if (retVal != 0) {
-        return 1;
-    }
-
-    retVal = create_bt_seed_seqs(pSeedSeq);
-    if (retVal != 0) {
-        return 1;
-    }
-
-    retVal = create_bm_seed_seqs(pSeedSeq);
-    if (retVal != 0) {
-        return 1;
-    }
-
-    retVal = create_lp_seed_seqs(pSeedSeq);
-    if (retVal != 0) {
-        return 1;
-    }
-
-    return 0;
-}
-
-int TSSVMSeedSeqs::create_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq) {
-    mikan::TRNAStr seedGUSeq;
-    mikan::TRNASet seedSeqs;
-    StringSet<CharString> seedTypes;
-    String<unsigned> misMatchPos;
-    int retVal;
-
-    // Add GUM first
-    for (unsigned i = 0; i < length(pSeedSeq); ++i) {
-        if (pSeedSeq[i] == 'C') {
-            seedGUSeq = pSeedSeq;
-            seedGUSeq[i] = 'U';
-            appendValue(seedSeqs, seedGUSeq);
-            appendValue(seedTypes, "GUM");
-            appendValue(misMatchPos, length(pSeedSeq) - i);
-        } else if (pSeedSeq[i] == 'A') {
-            seedGUSeq = pSeedSeq;
-            seedGUSeq[i] = 'G';
-            appendValue(seedSeqs, seedGUSeq);
-            appendValue(seedTypes, "GUT");
-            appendValue(misMatchPos, length(pSeedSeq) - i);
-        }
-
-    }
-
-    retVal = add_seeds_in_reverse_order(seedSeqs, seedTypes, misMatchPos);
-    if (retVal != 0) {
-        return 1;
-    }
-
-    return 0;
-}
-
-int TSSVMSeedSeqs::create_lp_seed_seqs(mikan::TRNAStr &pSeedSeq) {
-    mikan::TRNAStr seedLPSeq;
-    bool effective;
-    mikan::TRNASet seedSeqs;
-    StringSet<CharString> seedTypes;
-    String<unsigned> misMatchPos;
-    int retVal;
-
-    resize(seedLPSeq, 6);
-
-    for (unsigned i = 0; i < length(pSeedSeq); ++i) {
-        for (unsigned j = 0; j < length(mRNAChar); ++j) {
-            effective = true;
-            for (unsigned k = 0; k < length(pSeedSeq); ++k) {
-                if (i == k) {
-                    if ((mRNAChar[j] == pSeedSeq[k])
-                        || (mRNAChar[j] == 'G' && pSeedSeq[k] == 'A')
-                        || (mRNAChar[j] == 'U' && pSeedSeq[k] == 'C')) {
-                        effective = false;
-                        break;
-                    }
-
-                    seedLPSeq[k] = mRNAChar[j];
-                } else {
-                    seedLPSeq[k] = pSeedSeq[k];
-                }
-            }
-
-            if (effective) {
-                appendValue(seedSeqs, seedLPSeq);
-                appendValue(seedTypes, "LP");
-                appendValue(misMatchPos, length(pSeedSeq) - i);
-            }
-        }
-    }
-
-    retVal = add_seeds_in_reverse_order(seedSeqs, seedTypes, misMatchPos);
-    if (retVal != 0) {
-        return 1;
-    }
-
-    return 0;
-}
-
-int TSSVMSeedSeqs::create_bm_seed_seqs(mikan::TRNAStr &) {
-    mikan::TRNAStr seedBMSeq;
-    mikan::TRNASet seedSeqs;
-    StringSet<CharString> seedTypes;
-    String<unsigned> misMatchPos;
-    int retVal;
-
-    resize(seedBMSeq, 6);
-    for (unsigned i = 0; i < length(seedBMSeq); ++i) {
-        int k = 0;
-        for (unsigned j = 0; j < length(seedBMSeq) + 1; ++j) {
-            if (i == j) {
-                continue;
-            }
-            seedBMSeq[k] = mMiRNASeq[j + 1];
-            ++k;
-        }
-        reverseComplement(seedBMSeq);
-        appendValue(seedSeqs, seedBMSeq);
-        appendValue(seedTypes, "BM");
-        appendValue(misMatchPos, i + 1);
-    }
-
-    retVal = add_seeds_in_reverse_order(seedSeqs, seedTypes, misMatchPos);
-    if (retVal != 0) {
-        return 1;
-    }
-
-    return 0;
-}
-
-int TSSVMSeedSeqs::create_bt_seed_seqs(mikan::TRNAStr &) {
-    mikan::TRNAStr seedBTSeq;
-    mikan::TRNASet seedSeqs;
-    StringSet<CharString> seedTypes;
-    String<unsigned> misMatchPos;
-    int retVal;
-
-    resize(seedBTSeq, 6);
-    for (unsigned i = 0; i < length(seedBTSeq); ++i) {
-        for (unsigned j = 0; j < length(mRNAChar); ++j) {
-            int l = 0;
-            for (unsigned k = 0; k < length(seedBTSeq); ++k) {
-                if (i == k) {
-                    seedBTSeq[k] = mRNAChar[j];
-                } else {
-                    seedBTSeq[k] = mMiRNASeq[l + 2];
-                    ++l;
-                }
-            }
-            reverseComplement(seedBTSeq);
-            appendValue(seedSeqs, seedBTSeq);
-            appendValue(seedTypes, "BT");
-            appendValue(misMatchPos, i + 2);
-        }
-    }
-
-    retVal = add_seeds_in_reverse_order(seedSeqs, seedTypes, misMatchPos);
-    if (retVal != 0) {
-        return 1;
-    }
-
-    return 0;
-}
-
-int TSSVMSeedSeqs::add_seeds_in_reverse_order(
-        mikan::TRNASet &pSeedSeqs,
-        StringSet<CharString> &pSeedTypes,
-        seqan::String<unsigned> &pMisMatchPos) {
-    resize(mSeedSeqs, length(mSeedSeqs) + length(pSeedSeqs));
-    for (unsigned i = 0; i < length(pSeedSeqs); ++i) {
-        mSeedSeqs[length(mSeedSeqs) - length(pSeedSeqs) + i] = pSeedSeqs[length(pSeedSeqs) - i - 1];
-    }
-
-    resize(mSeedTypes, length(mSeedTypes) + length(pSeedTypes));
-    for (unsigned i = 0; i < length(pSeedTypes); ++i) {
-        mSeedTypes[length(mSeedTypes) - length(pSeedTypes) + i] = pSeedTypes[length(pSeedTypes) - i - 1];
-    }
-
-    resize(mMisMatchPos, length(mMisMatchPos) + length(pMisMatchPos));
-    for (unsigned i = 0; i < length(pMisMatchPos); ++i) {
-        mMisMatchPos[length(mMisMatchPos) - length(pMisMatchPos) + i] = pMisMatchPos[length(pMisMatchPos) - i - 1];
-    }
-
-    return 0;
-}
-
-void TSSVMSeedSeqs::set_mirna_seq(mikan::TRNAStr pSeq) {
-    clear(mSeedSeqs);
-    clear(mMisMatchPos);
-    clear(mEffectiveSeeds);
-    mMiRNASeq = pSeq;
+    mGUTLab = "GUM";
+    mGUMLab = "GUT";
 }
 
 //
@@ -254,6 +46,8 @@ int TSSVMSeedSites::find_seed_sites(
     reset_finder();
 
     seedSeqs.set_mirna_seq(pMiRNA);
+    mikan::TCharSet mNullSet;
+    seedSeqs.set_flags(mNullSet);
     retVal = seedSeqs.create_seed_seqs();
     if (retVal != 0) {
         std::cerr << "ERROR: Could not get the seed sequence for " << pMiRNA;

@@ -6,13 +6,13 @@
 #endif
 
 #include <seqan/arg_parse.h>
-#include "mk_typedef.hpp"         // TRNATYPE
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_input.hpp"           // MKInput
 #include "mr3_option.hpp"         // MR3Options
 #include "mr3_seed_site.hpp"      // MR3SeedSites
 #include "mr3_score.hpp"          // MR3SiteScores, MR3TotalScores
 #include "mr3_site_cluster.hpp"   // MR3Overlap, MR3TopNScore, MR3SortedSitePos
 #include "mr3_core.hpp"           // MR3Core
-#include "mk_input.hpp"           // MKInput
 
 namespace mr3as {
 
@@ -64,26 +64,26 @@ void MR3Core::init_from_args(MR3Options &opts) {
     mMinAlignScore = opts.mMinAlignScore;
     mMaxEnergy = opts.mMaxEnergy;
 
-    resize(mSeedDef, 6);
-    mSeedDef[0] = 'Y';
-    mSeedDef[1] = 'Y';
-    mSeedDef[2] = 'Y';
+    resize(mSeedTypeDef, 6);
+    mSeedTypeDef[0] = 'Y';
+    mSeedTypeDef[1] = 'Y';
+    mSeedTypeDef[2] = 'Y';
     if (opts.mMinSeedLen == 7) {
-        mSeedDef[0] = 'N';
+        mSeedTypeDef[0] = 'N';
     } else if (opts.mMinSeedLen == 8) {
-        mSeedDef[0] = 'N';
-        mSeedDef[1] = 'N';
+        mSeedTypeDef[0] = 'N';
+        mSeedTypeDef[1] = 'N';
     }
 
     if (opts.mMaxSeedLen == 7) {
-        mSeedDef[2] = 'N';
+        mSeedTypeDef[2] = 'N';
     } else if (opts.mMaxSeedLen == 6) {
-        mSeedDef[2] = 'N';
-        mSeedDef[1] = 'N';
+        mSeedTypeDef[2] = 'N';
+        mSeedTypeDef[1] = 'N';
     }
-    mSeedDef[3] = opts.mAllowGUWobble;
-    mSeedDef[4] = opts.mAllowMismatch;
-    mSeedDef[5] = opts.mAllowBT;
+    mSeedTypeDef[3] = opts.mAllowGUWobble;
+    mSeedTypeDef[4] = opts.mAllowMismatch;
+    mSeedTypeDef[5] = opts.mAllowBT;
 
     mSiteScores.set_min_align_score(mMinAlignScore);
     mSiteScores.set_max_energy(mMaxEnergy);
@@ -140,7 +140,7 @@ int MR3Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Search seed sites
     if (mExecSearchSeedSites) {
-        retVal = mSeedSites.find_seed_sites(miRNASeq, mSeedDef);
+        retVal = mSeedSites.find_seed_sites(miRNASeq, mSeedTypeDef);
         if (retVal != 0) {
             std::cerr << "ERROR: Seed site search failed." << std::endl;
             return 1;

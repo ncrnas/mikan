@@ -41,8 +41,8 @@ TEST_F(Site06BM1, mir124_bm) {
     test_sites(sites, 4, "BM", 7, 25, true, 2);
     test_sites(sites, 5, "BM", 7, 25, true, 1);
 
-    test_sites(sites, 6, "LP", 6, 26, true, 1);
-    test_sites(sites, 7, "LP", 7, 26, true, 1);
+    test_sites(sites, 6, "LP", 7, 26, true, 1);
+    test_sites(sites, 7, "LP", 6, 26, true, 1);
 }
 
 }

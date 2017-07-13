@@ -4,59 +4,20 @@
 #include <seqan/sequence.h>
 #include <seqan/index.h>
 #include "mk_typedef.hpp"           // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_seed_seqs.hpp"         // MKSeedSeqs
 
 namespace tssvm {
 
 //
 // Generate miRNA seeds
 //
-class TSSVMSeedSeqs {
-public:
-    // Define variables
-    seqan::String<bool> mEffectiveSeeds;
-
+class TSSVMSeedSeqs : public mikan::MKSeedSeqs {
 public:
     // Define methods
-    TSSVMSeedSeqs() {
-        resize(mRNAChar, 4);
-        mRNAChar[0] = 'A';
-        mRNAChar[1] = 'C';
-        mRNAChar[2] = 'G';
-        mRNAChar[3] = 'U';
-    }
-
-    mikan::TRNAStr const &get_seed_seq(int i) const { return mSeedSeqs[i]; }
-
-    seqan::CharString const &get_seed_type(int i) const { return mSeedTypes[i]; }
-
-    unsigned get_mismatched_pos(int i) { return mMisMatchPos[i]; }
+    TSSVMSeedSeqs() : MKSeedSeqs() {}
 
     // Method prototypes
-    int create_seed_seqs();
-
-    void set_mirna_seq(mikan::TRNAStr pSeq);
-
-private:
-    mikan::TRNASet mSeedSeqs;
-    seqan::StringSet<seqan::CharString> mSeedTypes;
-    mikan::TRNAStr mMiRNASeq;
-    seqan::String<unsigned> mMisMatchPos;
-    mikan::TRNAStr mRNAChar;
-
-private:
-    int create_non_stringent_seed_seqs(mikan::TRNAStr &pSeedSeq);
-
-    int create_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq);
-
-    int create_lp_seed_seqs(mikan::TRNAStr &pSeedSeq);
-
-    int create_bm_seed_seqs(mikan::TRNAStr &pSeedSeq);
-
-    int create_bt_seed_seqs(mikan::TRNAStr &pSeedSeq);
-
-    int add_seeds_in_reverse_order(mikan::TRNASet &pSeedSeqs, seqan::StringSet<seqan::CharString> &pSeedTypes,
-                                   seqan::String<unsigned> &pMisMatchPos);
-
+    void set_flags(mikan::TCharSet &pSeedTypeDef);
 };
 
 //

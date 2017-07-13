@@ -4,6 +4,7 @@
 namespace mikan {
 
 static const unsigned SEEDLEN = 6;
+static const unsigned TEMP_SEED_SEQ_SIZE = 100;
 
 } // namespace mikan
 

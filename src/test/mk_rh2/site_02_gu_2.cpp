@@ -16,7 +16,8 @@ protected:
         O2FNAME2 = (char *) "test_output2_mrna_1.txt";
         OMPATH = (char *) "mk_pita/";
 
-        mSeedDef1 = "6mGU1";
+        resize(mSeedDef, 1);
+        mSeedDef[0] = "6mGU1";
         mOverlapDef = "orig";
     }
 
@@ -33,7 +34,7 @@ TEST_F(Site02GU2, mir1_6mer_gu) {
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
 
-    int ret_val = sites.find_seed_sites(mirna_seqs[1], mSeedDef1, mOverlapDef);
+    int ret_val = sites.find_seed_sites(mirna_seqs[1], mSeedDef);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(40u, sites.get_length());
 
@@ -94,8 +95,8 @@ TEST_F(Site02GU2, mir1_6mer_gu_plus) {
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
 
-    mSeedDef1 = "6mGU+";
-    int ret_val = sites.find_seed_sites(mirna_seqs[1], mSeedDef1, mOverlapDef);
+    mSeedDef[0] = "6mGU+";
+    int ret_val = sites.find_seed_sites(mirna_seqs[1], mSeedDef);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(40u, sites.get_length());
 
@@ -156,8 +157,8 @@ TEST_F(Site02GU2, mir1_7mer_gu) {
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
 
-    mSeedDef1 = "7mGU1";
-    int ret_val = sites.find_seed_sites(mirna_seqs[1], mSeedDef1, mOverlapDef);
+    mSeedDef[0] = "7mGU1";
+    int ret_val = sites.find_seed_sites(mirna_seqs[1], mSeedDef);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(40u, sites.get_length());
 
@@ -218,8 +219,8 @@ TEST_F(Site02GU2, mir1_def) {
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
 
-    mSeedDef1 = "7mGU+";
-    int ret_val = sites.find_seed_sites(mirna_seqs[1], mSeedDef1, mOverlapDef);
+    mSeedDef[0] = "7mGU+";
+    int ret_val = sites.find_seed_sites(mirna_seqs[1], mSeedDef);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(40u, sites.get_length());
 

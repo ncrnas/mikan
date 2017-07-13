@@ -38,7 +38,7 @@ public:
     int mFlankUp;
     int mFlankDown;
 
-    seqan::StringSet<seqan::CharString> mSeedDef;
+    mikan::TCharSet mSeedTypeDef;
 
 public:
     // Define methods

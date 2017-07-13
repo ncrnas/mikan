@@ -9,164 +9,50 @@ namespace tm1p {
 //
 // TM1SeedSeqs methods
 //
-void TM1SeedSeqs::set_mirna_seq(mikan::TRNAStr pSeq) {
-    clear(mSeedSeqs);
-    clear(mSeedTypes);
-    clear(mEffectiveSeeds);
-    mMiRNASeq = pSeq;
+void TM1SeedSeqs::set_flags(mikan::TCharSet &) {
+    mSingleGU = true;
+    mMultiGU = false;
+    mMisMatch = false;
+    mGUMisMatch = false;
+    mBT = false;
+    mBTM8 = false;
+    mBM = false;
+    mLP = false;
+    mOther = true;
+    mAddInReverse = false;
 }
 
-int TM1SeedSeqs::create_seed_seqs() {
-    if (length(mMiRNASeq) == 0) {
-        return 1;
-    }
-
-    mikan::TRNAStr seedSeq;
-
-    int retVal;
-
-    resize(seedSeq, 6);
-    for (unsigned i = 0; i < length(seedSeq); ++i) {
-        seedSeq[i] = mMiRNASeq[i + 1];
-    }
-    reverseComplement(seedSeq);
-
-    (void) create_nmer_seed_seqs(seedSeq);
-
-    resize(mEffectiveSeeds, length(mSeedSeqs), true);
-    retVal = check_redundant_seeds();
-    if (retVal != 0) {
-        return 1;
-    }
-
-    return 0;
-}
-
-int TM1SeedSeqs::create_nmer_seed_seqs(mikan::TRNAStr &pSeedSeq) {
-    int retVal = 0;
-
-    appendValue(mSeedSeqs, pSeedSeq);
-    appendValue(mSeedTypes, "6mer");
-
-    CharString lpSeedType = "MM";
-    retVal = create_lp_seed_seqs(pSeedSeq, lpSeedType);
-    if (retVal != 0) {
-        return 1;
-    }
-
-    retVal = create_single_guwobble_seed_seqs(pSeedSeq);
-    if (retVal != 0) {
-        return 1;
-    }
-
-    return 0;
-}
-
-int TM1SeedSeqs::create_single_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq) {
-    mikan::TRNAStr seedGUSeq;
-    int retVal;
-    CharString lpSeedType = "GUMM";
-
-    for (unsigned i = 0; i < length(pSeedSeq); ++i) {
-        if (pSeedSeq[i] == 'C') {
-            seedGUSeq = pSeedSeq;
-            seedGUSeq[i] = 'U';
-            appendValue(mSeedSeqs, seedGUSeq);
-            appendValue(mSeedTypes, "GUT");
-            retVal = create_lp_seed_seqs(seedGUSeq, lpSeedType);
-            if (retVal != 0) {
-                return 1;
-            }
-        } else if (pSeedSeq[i] == 'A') {
-            seedGUSeq = pSeedSeq;
-            seedGUSeq[i] = 'G';
-            appendValue(mSeedSeqs, seedGUSeq);
-            appendValue(mSeedTypes, "GUM");
-            retVal = create_lp_seed_seqs(seedGUSeq, lpSeedType);
-            if (retVal != 0) {
-                return 1;
-            }
-        }
-    }
-
-    return 0;
-}
-
-int TM1SeedSeqs::create_lp_seed_seqs(mikan::TRNAStr &pSeedSeq, CharString &pSeedType) {
+int TM1SeedSeqs::create_other_seed_seqs(mikan::TRNAStr &pSeedSeq) {
     mikan::TRNAStr seedLPSeq;
-    char ch1 = 0;
-    char ch2 = 0;
-    char ch3 = 0;
-    int m2pos = length(pSeedSeq) - 1;
-    CharString seedType2;
+    CharString seedType;
+    unsigned m2pos = length(pSeedSeq) - 1;
 
-    seedType2 = pSeedType;
-    if (pSeedSeq[m2pos] == 'A') {
-        ch1 = 'C';
-        ch2 = 'G';
-        ch3 = 'U';
-        if (pSeedType == "GUMM") {
-            seedType2 = "GUGU";
-        } else {
-            seedType2 = "GUM";
-        }
-    } else if (pSeedSeq[m2pos] == 'C') {
-        ch1 = 'A';
-        ch2 = 'U';
-        ch3 = 'G';
-        if (pSeedType == "GUMM") {
-            seedType2 = "GUGU";
-        } else {
-            seedType2 = "GUT";
-        }
-    } else if (pSeedSeq[m2pos] == 'G') {
-        ch1 = 'A';
-        ch2 = 'U';
-        ch3 = 'C';
-    } else if (pSeedSeq[m2pos] == 'U') {
-        ch1 = 'C';
-        ch2 = 'G';
-        ch3 = 'A';
-    }
-
-    seedLPSeq = pSeedSeq;
-    seedLPSeq[m2pos] = ch1;
-    appendValue(mSeedSeqs, seedLPSeq);
-    appendValue(mSeedTypes, pSeedType);
-
-    seedLPSeq = pSeedSeq;
-    seedLPSeq[m2pos] = ch2;
-    appendValue(mSeedSeqs, seedLPSeq);
-    appendValue(mSeedTypes, seedType2);
-
-    seedLPSeq = pSeedSeq;
-    seedLPSeq[m2pos] = ch3;
-    appendValue(mSeedSeqs, seedLPSeq);
-    appendValue(mSeedTypes, pSeedType);
-
-    return 0;
-}
-
-int TM1SeedSeqs::check_redundant_seeds() {
-    typedef Index<StringSet<mikan::TRNAStr>, IndexQGram<UngappedShape<6> > > TIndexQGram;
-    typedef Finder<TIndexQGram> TFinder;
-
-    mikan::TRNAStr seedSeq;
-    TIndexQGram RNAIdx(mSeedSeqs);
-    TFinder finder(RNAIdx);
-
-    for (unsigned i = 0; i < length(mSeedSeqs); ++i) {
-        if (!mEffectiveSeeds[i]) {
-            continue;
-        }
-        seedSeq = mSeedSeqs[i];
-        while (find(finder, seedSeq)) {
-            if (i != position(finder).i1) {
-                mEffectiveSeeds[position(finder).i1] = false;
+    for (unsigned i = 0; i < length(mSeedSeqs); i++) {
+        for (unsigned j = 0; j < length(mRNAChar); j++) {
+            if (mSeedSeqs[i][m2pos] != mRNAChar[j]) {
+                if (mSeedTypes[i] == "6mer") {
+                    if ((mSeedSeqs[i][m2pos] == 'A' && mRNAChar[j] == 'G')
+                        || (mSeedSeqs[i][m2pos] == 'C' && mRNAChar[j] == 'U')) {
+                        continue;
+                    }
+                    seedType = "MM";
+                } else if (mSeedTypes[i] == "GUM" || mSeedTypes[i] == "GUT") {
+                    if ((mSeedSeqs[i][m2pos] == 'A' && mRNAChar[j] == 'G')
+                        || (mSeedSeqs[i][m2pos] == 'C' && mRNAChar[j] == 'U')) {
+                        seedType = "GUGU";
+                    } else {
+                        seedType = "GUMM";
+                    }
+                } else {
+                    continue;
+                }
+                seedLPSeq = mSeedSeqs[i];
+                seedLPSeq[m2pos] = mRNAChar[j];
+                appendValue(mSeedSeqs, seedLPSeq);
+                appendValue(mSeedTypes, seedType);
+                appendValue(mMisMatchPos, m2pos);
             }
         }
-        goBegin(finder);
-        clear(finder);
     }
 
     return 0;
@@ -192,6 +78,8 @@ int TM1SeedSites::find_seed_sites(mikan::TRNAStr const &pMiRNA) {
     reset_finder();
 
     seedSeqs.set_mirna_seq(pMiRNA);
+    mikan::TCharSet mNullSet;
+    seedSeqs.set_flags(mNullSet);
     retVal = seedSeqs.create_seed_seqs();
     if (retVal != 0) {
         std::cerr << "ERROR: Could not get the seed sequence for " << pMiRNA;
@@ -468,6 +356,17 @@ int TM1SeedSites::get_seed_end_pos2(int pIdx) {
 
 
     return std::min((int) mM8Pos[pIdx] + offset, (int) mMRNASeqLen[pIdx]);
+}
+
+void TM1SeedSites::print_all() {
+    for (unsigned i = 0 ; i < length(mEffectiveSites); i++) {
+        std::cout << i << ", ";
+        std::cout << mSeedTypes[i] << ", ";
+        std::cout << mMRNAPos[i] << ", ";
+        std::cout << mSitePos[i] << ", ";
+        std::cout << mEffectiveSites[i] << std::endl;
+    }
+
 }
 
 } // namespace tm1p

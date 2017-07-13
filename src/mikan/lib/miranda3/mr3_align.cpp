@@ -1,5 +1,5 @@
 #include "mr3_align.hpp"    // MR3Align
-#include "mk_typedef.hpp"   // TRNATYPE
+#include "mk_typedef.hpp"   // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 
 using namespace seqan;
 
