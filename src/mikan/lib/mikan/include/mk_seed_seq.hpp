@@ -56,7 +56,7 @@ public:
 protected:
     mikan::TRNASet mSeedSeqs;
     mikan::TCharSet mSeedTypes;
-    seqan::String<unsigned> mMisMatchPos;
+    mikan::TSitePos mMisMatchPos;
     mikan::TRNAStr mMiRNASeq;
     mikan::TRNAStr mRNAChar;
     bool mSingleGU;
@@ -83,7 +83,7 @@ protected:
     unsigned nNumNewSeq;
     mikan::TRNASet mTmpSeedSeqs;
     mikan::TCharSet mTmpSeedTypes;
-    seqan::String<unsigned> mTmpMisMatchPos;
+    mikan::TSitePos mTmpMisMatchPos;
 
 protected:
     int create_single_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq);
