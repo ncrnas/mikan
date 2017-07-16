@@ -138,9 +138,19 @@ int PITACore::calculate_mirna_scores(unsigned pIdx) {
     int retVal;
     mikan::TRNAStr miRNASeq = mMiRNASeqs[pIdx];
 
+    // Generate seed sequences
+    PITASeedSeqs seedSeqs;
+    seedSeqs.set_mirna_seq(miRNASeq);
+    seedSeqs.set_flags(mSeedTypeDef);
+    retVal = seedSeqs.create_seed_seqs();
+    if (retVal != 0) {
+        std::cerr << "ERROR: Generate seed sequences failed." << std::endl;
+        return 1;
+    }
+
     // Search seed sites
     if (mExecSearchSeedSites) {
-        retVal = mSeedSites.find_seed_sites(miRNASeq, mSeedTypeDef);
+        retVal = mSeedSites.find_seed_sites(seedSeqs, mSeedTypeDef);
         if (retVal != 0) {
             std::cerr << "ERROR: Seed site search failed." << std::endl;
             return 1;

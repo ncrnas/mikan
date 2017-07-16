@@ -42,122 +42,68 @@ void PITASeedSeqs::set_flags(mikan::TCharSet &pSeedTypeDef) {
 //
 // PITASeedSites methods
 //
-void PITASeedSites::clear_pos() {
-    clear(mMRNAPos);
-    clear(mSitePos);
-    clear(mSeedTypes);
-    clear(mMisMatchPos);
-    clear(mEffectiveSites);
-}
-
-void PITASeedSites::reset_finder() {
-    goBegin(mFinder);
-    clear(mFinder);
-}
-
-int PITASeedSites::find_seed_sites(mikan::TRNAStr const &pMiRNA, mikan::TCharSet &pSeedDef) {
-    PITASeedSeqs seedSeqs;
-    mikan::TRNAStr seedSeq;
-    CharString seedType;
-    int retVal;
-    unsigned mRNAPos, sitePos;
+bool PITASeedSites::check_position(unsigned pMRNAPos, unsigned pSitePos) {
     bool effectiveSite;
-    unsigned misMatchPos;
     unsigned endPos;
 
-    reset_finder();
-
-    seedSeqs.set_mirna_seq(pMiRNA);
-    seedSeqs.set_flags(pSeedDef);
-    retVal = seedSeqs.create_seed_seqs();
-    if (retVal != 0) {
-        std::cerr << "ERROR: Could not get the seed sequence for " << pMiRNA;
-        std::cerr << std::endl;
-        return 1;
+    effectiveSite = true;
+    endPos = pSitePos + INDEXED_SEQ_LEN;
+    if ((endPos < MIN_DIST_TO_CDS) || (endPos + MIN_DIST_UTR_END > length(mMRNASeqs[pMRNAPos]))) {
+        effectiveSite = false;
     }
 
-    for (unsigned i = 0; i < length(seedSeqs.mEffectiveSeeds); ++i) {
-        if (!seedSeqs.mEffectiveSeeds[i]) {
-            continue;
-        }
-
-        seedSeq = seedSeqs.get_seed_seq(i);
-        seedType = seedSeqs.get_seed_type(i);
-        misMatchPos = seedSeqs.get_mismatched_pos(i);
-
-        while (find(mFinder, seedSeq)) {
-            mRNAPos = position(mFinder).i1;
-            sitePos = position(mFinder).i2;
-
-            effectiveSite = true;
-            endPos = sitePos + INDEXED_SEQ_LEN;
-            if ((endPos < MIN_DIST_TO_CDS) || (endPos + MIN_DIST_UTR_END > length(mMRNASeqs[mRNAPos]))) {
-                effectiveSite = false;
-            }
-
-            appendValue(mMRNAPos, mRNAPos);
-            appendValue(mSitePos, sitePos);
-            set_new_seed_type(seedType, pSeedDef, mRNAPos, sitePos, pMiRNA, misMatchPos, effectiveSite);
-            appendValue(mEffectiveSites, effectiveSite);
-        }
-        reset_finder();
-    }
-
-    return 0;
+    return effectiveSite;
 }
 
 void PITASeedSites::set_new_seed_type(
-        CharString &pCurSeedType,
-        StringSet<CharString> &pSeedDef,
         unsigned pMRNAPos,
         unsigned pSitePos,
-        mikan::TRNAStr const &pMiRNA,
-        unsigned pMisMatchPos,
-        bool &pEffectiveSite) {
+        mikan::TRNAStr &pMiRNASeq,
+        mikan::TCharSet &pSeedTypeDef,
+        seqan::CharString &pSeedType,
+        int pMisMatchPos,
+        bool pEffectiveSite) {
+
     bool matchM8, matchM9, gutM8, gutM9, gumM8, gumM9;;
     CharString newSeedType = "";
 
-    if (!pEffectiveSite) {
-        appendValue(mSeedTypes, "");
-        appendValue(mMisMatchPos, 0);
-        return;
-    }
+    set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 8, matchM8, gutM8, gumM8);
+    set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 9, matchM9, gutM9, gumM9);
 
-    set_mx_matches(pMRNAPos, pSitePos, pMiRNA, 8, matchM8, gutM8, gumM8);
-    set_mx_matches(pMRNAPos, pSitePos, pMiRNA, 9, matchM9, gutM9, gumM9);
+    set_stringent_seed_type(pSeedType, pSeedTypeDef, matchM8, matchM9, pMisMatchPos, newSeedType);
 
-    set_stringent_seed_type(pCurSeedType, pSeedDef, matchM8, matchM9, pMisMatchPos, newSeedType);
-
-    if (newSeedType == "" && (pSeedDef[2] == 'Y' || pSeedDef[1] == 'Y')) {
-        if (pSeedDef[3] == '1' || pSeedDef[3] == '+') {
-            set_single_gu_seed_type(pCurSeedType, pSeedDef, -1, -2, matchM8, matchM9, gutM8, gutM9, gumM8, gumM9,
+    if (newSeedType == "" && (pSeedTypeDef[2] == 'Y' || pSeedTypeDef[1] == 'Y')) {
+        if (pSeedTypeDef[3] == '1' || pSeedTypeDef[3] == '+') {
+            set_single_gu_seed_type(pSeedType, pSeedTypeDef, -1, -2, matchM8, matchM9, gutM8, gutM9, gumM8, gumM9,
                                     pMisMatchPos, newSeedType);
         }
 
-        if (newSeedType == "" && pSeedDef[3] == '+') {
-            set_multiple_gu_seed_type(pCurSeedType, pSeedDef, -1, -2, matchM8, matchM9, gutM8, gutM9, gumM8, gumM9,
+        if (newSeedType == "" && pSeedTypeDef[3] == '+') {
+            set_multiple_gu_seed_type(pSeedType, pSeedTypeDef, -1, -2, matchM8, matchM9, gutM8, gutM9, gumM8, gumM9,
                                       pMisMatchPos, newSeedType);
         }
 
-        if (newSeedType == "" && pSeedDef[4] != "0:0") {
-            set_mismatch_seed_type(pCurSeedType, pSeedDef, -1, -2, matchM8, matchM9, gutM8, gutM9, gumM8, gumM9,
+        if (newSeedType == "" && pSeedTypeDef[4] != "0:0") {
+            set_mismatch_seed_type(pSeedType, pSeedTypeDef, -1, -2, matchM8, matchM9, gutM8, gutM9, gumM8, gumM9,
                                    pMisMatchPos, newSeedType);
         }
 
-        if (newSeedType == "" && pSeedDef[4] != "0:0" && (pSeedDef[3] == '1' || pSeedDef[3] == '+')) {
-            set_gu_mismatch_seed_type(pCurSeedType, pSeedDef, -1, -2, matchM8, matchM9, gutM8, gutM9, gumM8, gumM9,
+        if (newSeedType == "" && pSeedTypeDef[4] != "0:0" && (pSeedTypeDef[3] == '1' || pSeedTypeDef[3] == '+')) {
+            set_gu_mismatch_seed_type(pSeedType, pSeedTypeDef, -1, -2, matchM8, matchM9, gutM8, gutM9, gumM8, gumM9,
                                       pMisMatchPos, newSeedType);
         }
 
     }
 
-    set_6mer_seed_type(pCurSeedType, pSeedDef, matchM8, matchM9, pMisMatchPos, newSeedType);
+    set_6mer_seed_type(pSeedType, pSeedTypeDef, matchM8, matchM9, pMisMatchPos, newSeedType);
 
     if (newSeedType == "") {
         pEffectiveSite = false;
-        appendValue(mSeedTypes, pCurSeedType);
+        appendValue(mSeedTypes, pSeedType);
         appendValue(mMisMatchPos, 0);
     }
+
+    appendValue(mEffectiveSites, pEffectiveSite);
 
     return;
 

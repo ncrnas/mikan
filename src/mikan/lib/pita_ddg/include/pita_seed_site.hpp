@@ -5,6 +5,7 @@
 #include <seqan/index.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_seed_seq.hpp"        // MKSeedSeqs
+#include "mk_seed_site.hpp"       // MKSeedSites
 
 namespace ptddg {
 
@@ -24,53 +25,24 @@ public:
 //
 // miRNA seed sites
 //
-class PITASeedSites {
+class PITASeedSites : public mikan::MKSeedSites {
 public:
-
     // Constant values
     static const unsigned MIN_DIST_TO_CDS = 22;
     static const unsigned MIN_DIST_UTR_END = 1;
     static const unsigned INDEXED_SEQ_LEN = 6;
     static const bool FORCE_LAST_MATCH = true;
 
-    // Define variables
-    seqan::String<bool> mEffectiveSites;
-
-public:
     // Define methods
     PITASeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
-            mRNAIdx(pRNAIdx), mFinder(pFinder), mMRNASeqs(pMRNASeqs) {}
-
-    unsigned get_length() const { return seqan::length(mSitePos); }
-
-    seqan::String<unsigned> const &get_mrna_pos() const { return mMRNAPos; }
-
-    seqan::String<unsigned> const &get_site_pos() const { return mSitePos; }
-
-    seqan::StringSet<seqan::CharString> const &get_seed_types() const { return mSeedTypes; }
-
-    seqan::String<int> const &get_mismatched_pos() const { return mMisMatchPos; }
-
-    // Method prototypes
-    void reset_finder();
-
-    int find_seed_sites(mikan::TRNAStr const &pMiRNA, mikan::TCharSet &pSeedDef);
-
-    void clear_pos();
+            MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {}
 
 private:
-    seqan::String<unsigned> mMRNAPos;
-    seqan::String<unsigned> mSitePos;
-    seqan::StringSet<seqan::CharString> mSeedTypes;
-    seqan::String<int> mMisMatchPos;
-    mikan::TIndexQGram &mRNAIdx;
-    mikan::TFinder &mFinder;
-    mikan::TRNASet const &mMRNASeqs;
+    virtual bool check_position(unsigned pMRNAPos, unsigned pSitePos);
 
-private:
-    void set_new_seed_type(seqan::CharString &pCurSeedType, seqan::StringSet<seqan::CharString> &pSeedDef,
-                           unsigned pMRNAPos, unsigned pSitePos, mikan::TRNAStr const &pMiRNA, unsigned pMisMatchPos,
-                           bool &pEffectiveSite);
+    virtual void set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
+                                   mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
+                                   seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 
     void set_mx_matches(unsigned pMRNAPos, unsigned pSitePos, mikan::TRNAStr const &pMiRNA, int pMx,
                         bool &pMatchMx, bool &pGutMx, bool &pGumMx);
