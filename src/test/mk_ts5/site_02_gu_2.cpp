@@ -20,7 +20,8 @@ protected:
     typedef mikan::TIndexQGram TIdx;
     typedef mikan::TFinder TFin;
     typedef ts5cs::TS5SeedSites TSit;
-
+    typedef ts5cs::TS5SeedSeqs TSeed;
+    
 };
 
 TEST_F(Site02GU2, mir1_gu) {
@@ -28,9 +29,14 @@ TEST_F(Site02GU2, mir1_gu) {
     set_seqs();
     TIdx index(mrna_seqs);
     TFin finder(index);
-    TSit sites(index, finder);
+    TSit sites(index, finder, mrna_seqs);
+    TSeed seedSeqs;
 
-    int ret_val = sites.find_seed_sites(mirna_seqs[1]);
+    seedSeqs.set_mirna_seq(mirna_seqs[1]);
+    seedSeqs.set_flags(mSeedDef);
+    seedSeqs.create_seed_seqs();
+
+    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(4u, sites.get_length());
 
