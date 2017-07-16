@@ -45,7 +45,7 @@ void MR3SeedSeqs::set_flags(mikan::TCharSet &pSeedTypeDef) {
 //
 // MR3SeedSites methods
 //
-bool MR3SeedSites::check_position(unsigned pMRNAPos, unsigned pSitePos) {
+bool MR3SeedSites::check_position(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType) {
     bool effectiveSite;
     unsigned endPos;
 
@@ -58,7 +58,7 @@ bool MR3SeedSites::check_position(unsigned pMRNAPos, unsigned pSitePos) {
     return effectiveSite;
 }
 
-void MR3SeedSites::set_new_seed_type(
+bool MR3SeedSites::set_new_seed_type(
         unsigned pMRNAPos,
         unsigned pSitePos,
         mikan::TRNAStr &pMiRNASeq,
@@ -104,13 +104,14 @@ void MR3SeedSites::set_new_seed_type(
 
     set_6mer_seed_type(pSeedType, pSeedTypeDef, matchM8, matchM9, pMisMatchPos, newSeedType);
 
-    if (newSeedType == "") {
+    if (newSeedType != "") {
+        appendValue(mEffectiveSites, true);
+        pEffectiveSite = true;
+    } else {
         pEffectiveSite = false;
-        appendValue(mSeedTypes, pSeedType);
-        appendValue(mMisMatchPos, 0);
     }
 
-    appendValue(mEffectiveSites, pEffectiveSite);
+    return pEffectiveSite;
 
 }
 

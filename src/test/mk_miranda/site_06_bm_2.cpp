@@ -46,17 +46,17 @@ TEST_F(Site06BM2, mir1_bm) {
 
     int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
-    EXPECT_EQ(8u, sites.get_length());
+    EXPECT_EQ(2u, sites.get_length());
 
-    test_sites(sites, 0, "MM", 0, 25, false, 0);
-    test_sites(sites, 1, "MM", 1, 25, false, 0);
-    test_sites(sites, 2, "8mer_MM", 7, 26, true, 5);
-    test_sites(sites, 3, "8mer_MM", 6, 26, true, 5);
+//    test_sites(sites, 0, "MM", 0, 25, false, 0);
+//    test_sites(sites, 1, "MM", 1, 25, false, 0);
+    test_sites(sites, 0, "8mer_MM", 7, 26, true, 5);
+    test_sites(sites, 1, "8mer_MM", 6, 26, true, 5);
 
-    test_sites(sites, 4, "BT", 6, 25, false, 0);
-    test_sites(sites, 5, "BT", 7, 25, false, 0);
-    test_sites(sites, 6, "BT", 7, 26, false, 0);
-    test_sites(sites, 7, "BT", 6, 26, false, 0);
+//    test_sites(sites, 4, "BT", 6, 25, false, 0);
+//    test_sites(sites, 5, "BT", 7, 25, false, 0);
+//    test_sites(sites, 6, "BT", 7, 26, false, 0);
+//    test_sites(sites, 7, "BT", 6, 26, false, 0);
 }
 
 TEST_F(Site06BM2, mir1_def) {
@@ -76,7 +76,7 @@ TEST_F(Site06BM2, mir1_def) {
 
     int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
-    EXPECT_EQ(16u, sites.get_length());
+    EXPECT_EQ(10u, sites.get_length());
 
     test_sites(sites, 0, "7mer_GU+", 0, 15, true, 0);
     test_sites(sites, 1, "7mer_GU+", 1, 15, true, 0);
@@ -86,14 +86,14 @@ TEST_F(Site06BM2, mir1_def) {
     test_sites(sites, 5, "7mer_GU+", 5, 15, true, 0);
     test_sites(sites, 6, "7mer_GU+", 6, 15, true, 0);
     test_sites(sites, 7, "7mer_GU+", 7, 15, true, 0);
-    test_sites(sites, 8, "MM", 0, 25, false, 0);
-    test_sites(sites, 9, "MM", 1, 25, false, 0);
-    test_sites(sites, 10, "8mer_MM", 7, 26, true, 5);
-    test_sites(sites, 11, "8mer_MM", 6, 26, true, 5);
+//    test_sites(sites, 8, "MM", 0, 25, false, 0);
+//    test_sites(sites, 9, "MM", 1, 25, false, 0);
+    test_sites(sites, 8, "8mer_MM", 7, 26, true, 5);
+    test_sites(sites, 9, "8mer_MM", 6, 26, true, 5);
 
-    test_sites(sites, 12, "BT", 6, 25, false, 0);
-    test_sites(sites, 13, "BT", 7, 25, false, 0);
-    test_sites(sites, 14, "BT", 7, 26, false, 0);
-    test_sites(sites, 15, "BT", 6, 26, false, 0);
+//    test_sites(sites, 12, "BT", 6, 25, false, 0);
+//    test_sites(sites, 13, "BT", 7, 25, false, 0);
+//    test_sites(sites, 14, "BT", 7, 26, false, 0);
+//    test_sites(sites, 15, "BT", 6, 26, false, 0);
 }
 }

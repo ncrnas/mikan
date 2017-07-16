@@ -38,9 +38,9 @@ public:
             MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {}
 
 private:
-    virtual bool check_position(unsigned pMRNAPos, unsigned pSitePos);
+    virtual bool check_position(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType);
 
-    virtual void set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
+    virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
                                    mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
                                    seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 
