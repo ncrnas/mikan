@@ -18,7 +18,7 @@ typedef seqan::Finder<TIndexQGram> TFinder;
 
 typedef seqan::String<unsigned> TMRNAPosSet;
 typedef seqan::String<unsigned> TSitePosSet;
-
+typedef seqan::String<int> TMismatchSet;
 
 } // namespace mikan
 

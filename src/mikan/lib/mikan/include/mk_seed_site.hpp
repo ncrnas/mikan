@@ -29,31 +29,33 @@ public:
 
     mikan::TCharSet const &get_seed_types() const { return mSeedTypes; }
 
-    mikan::TSitePosSet const &get_mismatched_pos() const { return mMisMatchPos; }
+    mikan::TMismatchSet const &get_mismatched_pos() const { return mMisMatchPos; }
 
     // Method prototypes
     void reset_finder();
 
-    int find_seed_sites(mikan::MKSeedSeqs &seedSeqs);
+    int find_seed_sites(mikan::MKSeedSeqs &seedSeqs, mikan::TCharSet &pSeedTypeDef);
 
     void clear_pos();
+
+    void print_all();
 
 protected:
     mikan::TMRNAPosSet mMRNAPos;
     mikan::TSitePosSet mSitePos;
+    mikan::TCharSet mSeedTypes;
+    mikan::TMismatchSet mMisMatchPos;
 
     mikan::TRNASet const &mMRNASeqs;
-    mikan::TCharSet mSeedTypes;
-    mikan::TSitePosSet mMisMatchPos;
-
     mikan::TIndexQGram &mRNAIdx;
     mikan::TFinder &mFinder;
 
 protected:
     virtual bool check_position(unsigned pMRNAPos, unsigned pSitePos);
 
-    virtual void set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos, mikan::TRNAStr &pSeedSeq,
-                                   seqan::CharString &pSeedType, unsigned pMisMatchPos, bool pEffectiveSite);
+    virtual void set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
+                                   mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
+                                   seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 
 };
 

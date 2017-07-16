@@ -23,12 +23,14 @@ void MKSeedSites::clear_pos() {
     clear(mEffectiveSites);
 }
 
-int MKSeedSites::find_seed_sites(mikan::MKSeedSeqs &seedSeqs) {
+int MKSeedSites::find_seed_sites(mikan::MKSeedSeqs &seedSeqs, mikan::TCharSet &pSeedTypeDef) {
     mikan::TRNAStr seedSeq;
     CharString seedType;
     unsigned mRNAPos, sitePos;
     bool effectiveSite;
     unsigned misMatchPos;
+
+    mikan::TRNAStr miRNASeq = seedSeqs.get_mirna_seq();
 
     reset_finder();
 
@@ -49,8 +51,14 @@ int MKSeedSites::find_seed_sites(mikan::MKSeedSeqs &seedSeqs) {
 
             appendValue(mMRNAPos, mRNAPos);
             appendValue(mSitePos, sitePos);
-            set_new_seed_type(mRNAPos, sitePos, seedSeq, seedType, misMatchPos, effectiveSite);
 
+            if (effectiveSite) {
+                set_new_seed_type(mRNAPos, sitePos, miRNASeq, pSeedTypeDef, seedType, misMatchPos, effectiveSite);
+            } else {
+                appendValue(mSeedTypes, "");
+                appendValue(mMisMatchPos, 0);
+                appendValue(mEffectiveSites, false);
+            }
         }
         reset_finder();
     }
@@ -66,8 +74,9 @@ void MKSeedSites::set_new_seed_type(
         unsigned,
         unsigned,
         mikan::TRNAStr &,
+        mikan::TCharSet &,
         seqan::CharString &pSeedType,
-        unsigned,
+        int,
         bool pEffectiveSite) {
 
     appendValue(mSeedTypes, pSeedType);
@@ -76,4 +85,15 @@ void MKSeedSites::set_new_seed_type(
 
 }
 
-} // namespace ts5cs
+void MKSeedSites::print_all() {
+    for (unsigned i = 0 ; i < length(mEffectiveSites); i++) {
+        std::cout << i << ", ";
+        std::cout << mSeedTypes[i] << ", ";
+        std::cout << mMRNAPos[i] << ", ";
+        std::cout << mSitePos[i] << ", ";
+        std::cout << mMisMatchPos[i] << ", ";
+        std::cout << mEffectiveSites[i] << std::endl;
+    }
+}
+
+} // namespace mikan
