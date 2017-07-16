@@ -5,6 +5,7 @@
 #include <seqan/index.h>
 #include "mk_typedef.hpp"         // TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_seed_seq.hpp"        // MKSeedSeqs
+#include "mk_seed_site.hpp"       // MKSeedSites
 
 namespace rh2mfe {
 
@@ -23,46 +24,23 @@ public:
 //
 // miRNA seed sites
 //
-class RH2SeedSites {
+class RH2SeedSites : public mikan::MKSeedSites {
 public:
     // Constant values
     static const unsigned MIN_DIST_TO_CDS = 1;
     static const unsigned MIN_DIST_UTR_END = 0;
     static const unsigned SEED_LEN = 6;
 
-    // Define variables
-    seqan::String<bool> mEffectiveSites;
-
-public:
     // Define methods
     RH2SeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
-            mRNAIdx(pRNAIdx), mFinder(pFinder), mMRNASeqs(pMRNASeqs) {}
-
-    unsigned get_length() const { return seqan::length(mSitePos); }
-
-    seqan::String<unsigned> const &get_mrna_pos() const { return mMRNAPos; }
-
-    seqan::String<unsigned> const &get_site_pos() const { return mSitePos; }
-
-    seqan::StringSet<seqan::CharString> const &get_seed_types() const { return mSeedTypes; }
-
-    // Method prototypes
-    void reset_finder();
-
-    int find_seed_sites(mikan::TRNAStr const &pMiRNA, mikan::TCharSet &pSeedDef);
-
-    void clear_pos();
-
-    void set_new_seed_type(seqan::CharString &pCurSeedType, seqan::CharString &pSeedDef,
-                           unsigned pMRNAPos, unsigned pSitePos, mikan::TRNAStr const &pMiRNA, bool &pEffectiveSite);
+            MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {}
 
 private:
-    seqan::String<unsigned> mMRNAPos;
-    seqan::String<unsigned> mSitePos;
-    seqan::StringSet<seqan::CharString> mSeedTypes;
-    mikan::TIndexQGram &mRNAIdx;
-    mikan::TFinder &mFinder;
-    mikan::TRNASet const &mMRNASeqs;
+    virtual bool check_position(unsigned pMRNAPos, unsigned pSitePos);
+
+    virtual void set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
+                                   mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
+                                   seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 
 };
 

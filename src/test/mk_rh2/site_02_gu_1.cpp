@@ -24,6 +24,7 @@ protected:
     typedef mikan::TIndexQGram TIdx;
     typedef mikan::TFinder TFin;
     typedef rh2mfe::RH2SeedSites TSit;
+    typedef rh2mfe::RH2SeedSeqs TSeed;
 
 };
 
@@ -33,8 +34,13 @@ TEST_F(Site02GU1, mir124_6mer_gu1) {
     TIdx index(mrna_seqs);
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
+    TSeed seedSeqs;
 
-    int ret_val = sites.find_seed_sites(mirna_seqs[0], mSeedDef);
+    seedSeqs.set_mirna_seq(mirna_seqs[0]);
+    seedSeqs.set_flags(mSeedDef);
+    seedSeqs.create_seed_seqs();
+
+    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(11u, sites.get_length());
 
@@ -59,9 +65,14 @@ TEST_F(Site02GU1, mir124_6mer_gu_plus) {
     TIdx index(mrna_seqs);
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
+    TSeed seedSeqs;
 
     mSeedDef[0] = "6mGU+";
-    int ret_val = sites.find_seed_sites(mirna_seqs[0], mSeedDef);
+    seedSeqs.set_mirna_seq(mirna_seqs[0]);
+    seedSeqs.set_flags(mSeedDef);
+    seedSeqs.create_seed_seqs();
+
+    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(16u, sites.get_length());
 
@@ -92,9 +103,14 @@ TEST_F(Site02GU1, mir124_7mer_gu1) {
     TIdx index(mrna_seqs);
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
+    TSeed seedSeqs;
 
     mSeedDef[0] = "7mGU1";
-    int ret_val = sites.find_seed_sites(mirna_seqs[0], mSeedDef);
+    seedSeqs.set_mirna_seq(mirna_seqs[0]);
+    seedSeqs.set_flags(mSeedDef);
+    seedSeqs.create_seed_seqs();
+
+    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(11u, sites.get_length());
 
@@ -119,9 +135,14 @@ TEST_F(Site02GU1, mir124_def) {
     TIdx index(mrna_seqs);
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
+    TSeed seedSeqs;
 
     mSeedDef[0] = "7mGU+";
-    int ret_val = sites.find_seed_sites(mirna_seqs[0], mSeedDef);
+    seedSeqs.set_mirna_seq(mirna_seqs[0]);
+    seedSeqs.set_flags(mSeedDef);
+    seedSeqs.create_seed_seqs();
+
+    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(16u, sites.get_length());
 
