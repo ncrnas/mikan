@@ -47,17 +47,14 @@ int MKSeedSites::find_seed_sites(mikan::MKSeedSeqs &seedSeqs, mikan::TCharSet &p
             mRNAPos = position(mFinder).i1;
             sitePos = position(mFinder).i2;
 
-            effectiveSite = check_position(mRNAPos, sitePos);
-
-            appendValue(mMRNAPos, mRNAPos);
-            appendValue(mSitePos, sitePos);
-
+            effectiveSite = check_position(mRNAPos, sitePos, seedType);
             if (effectiveSite) {
-                set_new_seed_type(mRNAPos, sitePos, miRNASeq, pSeedTypeDef, seedType, misMatchPos, effectiveSite);
-            } else {
-                appendValue(mSeedTypes, "");
-                appendValue(mMisMatchPos, 0);
-                appendValue(mEffectiveSites, false);
+                effectiveSite = set_new_seed_type(mRNAPos, sitePos, miRNASeq, pSeedTypeDef, seedType, misMatchPos,
+                                                  effectiveSite);
+            }
+            if (effectiveSite) {
+                appendValue(mMRNAPos, mRNAPos);
+                appendValue(mSitePos, sitePos);
             }
         }
         reset_finder();
@@ -66,11 +63,11 @@ int MKSeedSites::find_seed_sites(mikan::MKSeedSeqs &seedSeqs, mikan::TCharSet &p
     return 0;
 }
 
-bool MKSeedSites::check_position(unsigned, unsigned) {
+bool MKSeedSites::check_position(unsigned, unsigned, seqan::CharString &) {
     return true;
 }
 
-void MKSeedSites::set_new_seed_type(
+bool MKSeedSites::set_new_seed_type(
         unsigned,
         unsigned,
         mikan::TRNAStr &,
@@ -83,6 +80,7 @@ void MKSeedSites::set_new_seed_type(
     appendValue(mMisMatchPos, 0);
     appendValue(mEffectiveSites, pEffectiveSite);
 
+    return pEffectiveSite;
 }
 
 void MKSeedSites::print_all() {
