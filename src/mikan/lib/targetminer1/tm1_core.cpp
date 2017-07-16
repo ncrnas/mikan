@@ -59,6 +59,9 @@ void TM1Core::init_from_args(TM1CSOptions &opts) {
     mOutputAlign = opts.mOutputAlign;
     mOFileSite = opts.mOFileSite;
     mOFileScore = opts.mOFileTotal;
+
+    resize(mSeedTypeDef, 1);
+    mSeedTypeDef[0] = "";
 }
 
 int TM1Core::open_output_file() {
@@ -107,10 +110,21 @@ int TM1Core::calculate_all_scores() {
 
 int TM1Core::calculate_mirna_scores(unsigned pIdx) {
     int retVal;
+    mikan::TRNAStr miRNASeq = mMiRNASeqs[pIdx];
+
+    // Generate seed sequences
+    TM1SeedSeqs seedSeqs;
+    seedSeqs.set_mirna_seq(miRNASeq);
+    seedSeqs.set_flags(mSeedTypeDef);
+    retVal = seedSeqs.create_seed_seqs();
+    if (retVal != 0) {
+        std::cerr << "ERROR: Generate seed sequences failed." << std::endl;
+        return 1;
+    }
 
     // Search seed sites
     if (mExecSearchSeedSites) {
-        retVal = mSeedSites.find_seed_sites(mMiRNASeqs[pIdx]);
+        retVal = mSeedSites.find_seed_sites(seedSeqs, mSeedTypeDef);
         if (retVal != 0) {
             std::cerr << "ERROR: Seed site search failed." << std::endl;
             return 1;

@@ -36,7 +36,7 @@ public:
 
     int find_seed_sites(mikan::MKSeedSeqs &seedSeqs, mikan::TCharSet &pSeedTypeDef);
 
-    void clear_pos();
+    virtual void clear_pos();
 
     void print_all();
 

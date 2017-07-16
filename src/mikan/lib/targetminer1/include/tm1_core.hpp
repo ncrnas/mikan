@@ -33,6 +33,8 @@ public:
     seqan::CharString mOFileSite;
     seqan::CharString mOFileScore;
 
+    mikan::TCharSet mSeedTypeDef;
+
 public:
     // Define methods
     TM1Core(mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs, 
