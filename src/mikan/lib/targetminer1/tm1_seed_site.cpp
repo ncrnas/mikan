@@ -138,7 +138,7 @@ void TM1SeedSites::get_match_count(
     }
 }
 
-void TM1SeedSites::set_new_seed_type(
+bool TM1SeedSites::set_new_seed_type(
         unsigned pMRNAPos,
         unsigned pSitePos,
         mikan::TRNAStr &pMiRNASeq,
@@ -178,23 +178,25 @@ void TM1SeedSites::set_new_seed_type(
     }
 
     if (newSeedType != "") {
+        appendValue(mSeedTypes, newSeedType);
+
+        appendValue(mM8Match, matchM8);
+        appendValue(mM8GU, guM8);
+        appendValue(mM1A, isA1);
+        appendValue(mM1Match, matchM1);
+        appendValue(mM1GU, guM1);
+
+        appendValue(mMRNASeqLen, length(mMRNASeqs[pMRNAPos]));
+        appendValue(mM8Pos, pSitePos - 1);
+
+        appendValue(mEffectiveSites, true);
+
         pEffectiveSite = true;
     } else {
         pEffectiveSite = false;
     }
 
-    appendValue(mSeedTypes, newSeedType);
-
-    appendValue(mM8Match, matchM8);
-    appendValue(mM8GU, guM8);
-    appendValue(mM1A, isA1);
-    appendValue(mM1Match, matchM1);
-    appendValue(mM1GU, guM1);
-
-    appendValue(mMRNASeqLen, length(mMRNASeqs[pMRNAPos]));
-    appendValue(mM8Pos, pSitePos - 1);
-
-    appendValue(mEffectiveSites, pEffectiveSite);
+    return pEffectiveSite;
 
 }
 
@@ -309,7 +311,6 @@ int TM1SeedSites::get_seed_end_pos2(int pIdx) {
             offset = 7;
         }
     }
-
 
     return std::min((int) mM8Pos[pIdx] + offset, (int) mMRNASeqLen[pIdx]);
 }

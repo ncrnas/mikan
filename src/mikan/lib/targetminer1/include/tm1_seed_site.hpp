@@ -67,7 +67,7 @@ private:
     seqan::String<unsigned> mM8Pos;
 
 private:
-    virtual void set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
+    virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
                                    mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
                                    seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 
