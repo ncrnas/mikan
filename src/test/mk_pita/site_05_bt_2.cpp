@@ -66,51 +66,51 @@ TEST_F(Site05BT2, mir1_def) {
 
     int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
-    EXPECT_EQ(32u, sites.get_length());
+    EXPECT_EQ(17u, sites.get_length());
 
-    test_sites(sites, 0, "GUT", 5, 25, false, 0);
+//    test_sites(sites, 0, "GUT", 5, 25, false, 0);
 
-    test_sites(sites, 1, "8mer_GUT", 10, 24, true, 4);
+    test_sites(sites, 0, "8mer_GUT", 10, 24, true, 4);
 
-    test_sites(sites, 2, "8mer_GUT", 24, 24, true, 5);
+    test_sites(sites, 1, "8mer_GUT", 24, 24, true, 5);
 
-    test_sites(sites, 3, "MM", 0, 25, false, 0);
-    test_sites(sites, 4, "MM", 1, 25, false, 0);
-    test_sites(sites, 5, "MM", 2, 25, false, 0);
-    test_sites(sites, 6, "MM", 3, 25, false, 0);
-    test_sites(sites, 7, "MM", 4, 25, false, 0);
+//    test_sites(sites, 3, "MM", 0, 25, false, 0);
+//    test_sites(sites, 4, "MM", 1, 25, false, 0);
+//    test_sites(sites, 5, "MM", 2, 25, false, 0);
+//    test_sites(sites, 6, "MM", 3, 25, false, 0);
+//    test_sites(sites, 7, "MM", 4, 25, false, 0);
 
-    test_sites(sites, 8, "MM", 16, 24, false, 0);
-    test_sites(sites, 9, "8mer_MM", 17, 24, true, 4);
-    test_sites(sites, 10, "8mer_MM", 18, 24, true, 4);
-    test_sites(sites, 11, "8mer_MM", 19, 24, true, 4);
+//    test_sites(sites, 8, "MM", 16, 24, false, 0);
+    test_sites(sites, 2, "8mer_MM", 17, 24, true, 4);
+    test_sites(sites, 3, "8mer_MM", 18, 24, true, 4);
+    test_sites(sites, 4, "8mer_MM", 19, 24, true, 4);
 
-    test_sites(sites, 12, "MM", 20, 24, false, 0);
-    test_sites(sites, 13, "8mer_MM", 21, 24, true, 5);
-    test_sites(sites, 14, "8mer_MM", 22, 24, true, 5);
-    test_sites(sites, 15, "8mer_MM", 23, 24, true, 5);
+//    test_sites(sites, 12, "MM", 20, 24, false, 0);
+    test_sites(sites, 5, "8mer_MM", 21, 24, true, 5);
+    test_sites(sites, 6, "8mer_MM", 22, 24, true, 5);
+    test_sites(sites, 7, "8mer_MM", 23, 24, true, 5);
 
-    test_sites(sites, 16, "MMGU", 11, 26, false, 0);
-    test_sites(sites, 17, "MMGU", 12, 26, false, 0);
+//    test_sites(sites, 16, "MMGU", 11, 26, false, 0);
+//    test_sites(sites, 17, "MMGU", 12, 26, false, 0);
 
-    test_sites(sites, 18, "MMGU", 9, 25, false, 0);
+//    test_sites(sites, 18, "MMGU", 9, 25, false, 0);
 
-    test_sites(sites, 19, "MMGU", 6, 24, false, 0);
-    test_sites(sites, 20, "8mer_MMGU", 7, 24, true, 2);
-    test_sites(sites, 21, "8mer_MMGU", 8, 24, true, 2);
-    test_sites(sites, 22, "8mer_MMGU", 9, 24, true, 2);
+//    test_sites(sites, 19, "MMGU", 6, 24, false, 0);
+    test_sites(sites, 8, "8mer_MMGU", 7, 24, true, 2);
+    test_sites(sites, 9, "8mer_MMGU", 8, 24, true, 2);
+    test_sites(sites, 10, "8mer_MMGU", 9, 24, true, 2);
 
-    test_sites(sites, 23, "MMGU", 0, 24, false, 0);
-    test_sites(sites, 24, "MMGU", 1, 24, false, 0);
-    test_sites(sites, 25, "8mer_MMGU", 2, 24, true, 2);
-    test_sites(sites, 26, "8mer_MMGU", 3, 24, true, 2);
+//    test_sites(sites, 23, "MMGU", 0, 24, false, 0);
+//    test_sites(sites, 24, "MMGU", 1, 24, false, 0);
+    test_sites(sites, 11, "8mer_MMGU", 2, 24, true, 2);
+    test_sites(sites, 12, "8mer_MMGU", 3, 24, true, 2);
 
-    test_sites(sites, 27, "8mer_MMGU", 14, 24, true, 3);
-    test_sites(sites, 28, "8mer_MMGU", 15, 24, true, 3);
+    test_sites(sites, 13, "8mer_MMGU", 14, 24, true, 3);
+    test_sites(sites, 14, "8mer_MMGU", 15, 24, true, 3);
 
-    test_sites(sites, 29, "MMGU", 11, 24, false, 0);
-    test_sites(sites, 30, "8mer_MMGU", 12, 24, true, 3);
-    test_sites(sites, 31, "8mer_MMGU", 13, 24, true, 3);
+//    test_sites(sites, 29, "MMGU", 11, 24, false, 0);
+    test_sites(sites, 15, "8mer_MMGU", 12, 24, true, 3);
+    test_sites(sites, 16, "8mer_MMGU", 13, 24, true, 3);
 }
 
 }

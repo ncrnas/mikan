@@ -121,7 +121,7 @@ TEST_F(Site01Nmer2, mir1_def) {
 
     int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
-    EXPECT_EQ(10u, sites.get_length());
+    EXPECT_EQ(5u, sites.get_length());
 
     test_sites(sites, 0, "6mer", 0, 25, true, 0);
     test_sites(sites, 1, "6mer", 1, 25, true, 0);
@@ -129,10 +129,10 @@ TEST_F(Site01Nmer2, mir1_def) {
     test_sites(sites, 3, "7mer", 3, 25, true, 0);
     test_sites(sites, 4, "8mer", 4, 25, true, 0);
 
-    test_sites(sites, 5, "", 0, 13, false, 0);
-    test_sites(sites, 6, "", 1, 13, false, 0);
-    test_sites(sites, 7, "", 2, 13, false, 0);
-    test_sites(sites, 8, "", 3, 13, false, 0);
-    test_sites(sites, 9, "", 4, 13, false, 0);
+//    test_sites(sites, 5, "", 0, 13, false, 0);
+//    test_sites(sites, 6, "", 1, 13, false, 0);
+//    test_sites(sites, 7, "", 2, 13, false, 0);
+//    test_sites(sites, 8, "", 3, 13, false, 0);
+//    test_sites(sites, 9, "", 4, 13, false, 0);
 }
 }

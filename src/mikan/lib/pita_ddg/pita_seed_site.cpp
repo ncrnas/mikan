@@ -42,7 +42,7 @@ void PITASeedSeqs::set_flags(mikan::TCharSet &pSeedTypeDef) {
 //
 // PITASeedSites methods
 //
-bool PITASeedSites::check_position(unsigned pMRNAPos, unsigned pSitePos) {
+bool PITASeedSites::check_position(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &) {
     bool effectiveSite;
     unsigned endPos;
 
@@ -55,7 +55,7 @@ bool PITASeedSites::check_position(unsigned pMRNAPos, unsigned pSitePos) {
     return effectiveSite;
 }
 
-void PITASeedSites::set_new_seed_type(
+bool PITASeedSites::set_new_seed_type(
         unsigned pMRNAPos,
         unsigned pSitePos,
         mikan::TRNAStr &pMiRNASeq,
@@ -97,15 +97,14 @@ void PITASeedSites::set_new_seed_type(
 
     set_6mer_seed_type(pSeedType, pSeedTypeDef, matchM8, matchM9, pMisMatchPos, newSeedType);
 
-    if (newSeedType == "") {
+    if (newSeedType != "") {
+        appendValue(mEffectiveSites, true);
+        pEffectiveSite = true;
+    } else {
         pEffectiveSite = false;
-        appendValue(mSeedTypes, pSeedType);
-        appendValue(mMisMatchPos, 0);
     }
 
-    appendValue(mEffectiveSites, pEffectiveSite);
-
-    return;
+    return pEffectiveSite;
 
 }
 

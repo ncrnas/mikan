@@ -46,12 +46,12 @@ TEST_F(Site06BM2, mir1_bm) {
 
     int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
-    EXPECT_EQ(4u, sites.get_length());
+    EXPECT_EQ(2u, sites.get_length());
 
-    test_sites(sites, 0, "MM", 0, 25, false, 0);
-    test_sites(sites, 1, "MM", 1, 25, false, 0);
-    test_sites(sites, 2, "8mer_MM", 7, 26, true, 5);
-    test_sites(sites, 3, "8mer_MM", 6, 26, true, 5);
+//    test_sites(sites, 0, "MM", 0, 25, false, 0);
+//    test_sites(sites, 1, "MM", 1, 25, false, 0);
+    test_sites(sites, 0, "8mer_MM", 7, 26, true, 5);
+    test_sites(sites, 1, "8mer_MM", 6, 26, true, 5);
 }
 
 TEST_F(Site06BM2, mir1_def) {
@@ -71,12 +71,12 @@ TEST_F(Site06BM2, mir1_def) {
 
     int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
-    EXPECT_EQ(4u, sites.get_length());
+    EXPECT_EQ(2u, sites.get_length());
 
-    test_sites(sites, 0, "MM", 0, 25, false, 0);
-    test_sites(sites, 1, "MM", 1, 25, false, 0);
-    test_sites(sites, 2, "8mer_MM", 7, 26, true, 5);
-    test_sites(sites, 3, "8mer_MM", 6, 26, true, 5);
+//    test_sites(sites, 0, "MM", 0, 25, false, 0);
+//    test_sites(sites, 1, "MM", 1, 25, false, 0);
+    test_sites(sites, 0, "8mer_MM", 7, 26, true, 5);
+    test_sites(sites, 1, "8mer_MM", 6, 26, true, 5);
 }
 
 }
