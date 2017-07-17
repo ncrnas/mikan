@@ -66,13 +66,13 @@ TEST_F(Site01Nmer2, mir1_7mer) {
 
     int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
-    EXPECT_EQ(5u, sites.get_length());
+    EXPECT_EQ(3u, sites.get_length());
 
-    test_sites2(sites, 0, "7mer", 0, 25, false);
-    test_sites2(sites, 1, "7mer", 1, 25, false);
-    test_sites2(sites, 2, "7mer", 2, 25, true);
-    test_sites2(sites, 3, "7mer", 3, 25, true);
-    test_sites2(sites, 4, "7mer", 4, 25, true);
+//    test_sites2(sites, 0, "7mer", 0, 25, false);
+//    test_sites2(sites, 1, "7mer", 1, 25, false);
+    test_sites2(sites, 0, "7mer", 2, 25, true);
+    test_sites2(sites, 1, "7mer", 3, 25, true);
+    test_sites2(sites, 2, "7mer", 4, 25, true);
 }
 
 TEST_F(Site01Nmer2, mir1_def) {
@@ -90,12 +90,12 @@ TEST_F(Site01Nmer2, mir1_def) {
 
     int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
-    EXPECT_EQ(5u, sites.get_length());
+    EXPECT_EQ(3u, sites.get_length());
 
-    test_sites2(sites, 0, "7mer", 0, 25, false);
-    test_sites2(sites, 1, "7mer", 1, 25, false);
-    test_sites2(sites, 2, "7mer", 2, 25, true);
-    test_sites2(sites, 3, "7mer", 3, 25, true);
-    test_sites2(sites, 4, "7mer", 4, 25, true);
+//    test_sites2(sites, 0, "7mer", 0, 25, false);
+//    test_sites2(sites, 1, "7mer", 1, 25, false);
+    test_sites2(sites, 0, "7mer", 2, 25, true);
+    test_sites2(sites, 1, "7mer", 3, 25, true);
+    test_sites2(sites, 2, "7mer", 4, 25, true);
 }
 }

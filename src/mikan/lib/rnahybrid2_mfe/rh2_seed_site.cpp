@@ -56,7 +56,7 @@ void RH2SeedSeqs::set_flags(mikan::TCharSet &pSeedTypeDef) {
 //
 // RH2SeedSites methods
 //
-bool RH2SeedSites::check_position(unsigned pMRNAPos, unsigned pSitePos) {
+bool RH2SeedSites::check_position(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &) {
     bool effectiveSite;
 
     effectiveSite = true;
@@ -67,7 +67,7 @@ bool RH2SeedSites::check_position(unsigned pMRNAPos, unsigned pSitePos) {
     return effectiveSite;
 }
 
-void RH2SeedSites::set_new_seed_type(
+bool RH2SeedSites::set_new_seed_type(
         unsigned pMRNAPos,
         unsigned pSitePos,
         mikan::TRNAStr &pMiRNASeq,
@@ -139,9 +139,13 @@ void RH2SeedSites::set_new_seed_type(
         }
     }
 
-    appendValue(mSeedTypes, newSeedType);
-    appendValue(mMisMatchPos, 0);
-    appendValue(mEffectiveSites, pEffectiveSite);
+    if (pEffectiveSite) {
+        appendValue(mSeedTypes, newSeedType);
+        appendValue(mMisMatchPos, 0);
+        appendValue(mEffectiveSites, pEffectiveSite);
+    }
+
+    return pEffectiveSite;
 
 }
 

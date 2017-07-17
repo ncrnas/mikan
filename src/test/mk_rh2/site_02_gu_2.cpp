@@ -176,56 +176,48 @@ TEST_F(Site02GU2, mir1_7mer_gu) {
 
     int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
-    EXPECT_EQ(40u, sites.get_length());
+    EXPECT_EQ(20u, sites.get_length());
 
     test_sites2(sites, 0, "7mer_GUM", 0, 24, true);
     test_sites2(sites, 1, "7mer_GUM", 1, 24, true);
     test_sites2(sites, 2, "7mer_GUM", 2, 24, true);
     test_sites2(sites, 3, "7mer_GUM", 3, 24, true);
-
     test_sites2(sites, 4, "7mer_GUT", 4, 24, true);
     test_sites2(sites, 5, "7mer_GUT", 5, 24, true);
     test_sites2(sites, 6, "7mer_GUT", 6, 24, true);
     test_sites2(sites, 7, "7mer_GUT", 7, 24, true);
-
-    test_sites2(sites, 8, "7mer_GUT", 8, 24, false);
-    test_sites2(sites, 9, "7mer_GUT", 9, 24, false);
-    test_sites2(sites, 10, "7mer_GUT", 10, 24, false);
-    test_sites2(sites, 11, "7mer_GUT", 11, 24, false);
-    test_sites2(sites, 12, "7mer_GUT", 12, 24, false);
-
-    test_sites2(sites, 13, "7mer_GUM", 13, 24, true);
-    test_sites2(sites, 14, "7mer_GUM", 14, 24, true);
-    test_sites2(sites, 15, "7mer_GUM", 15, 24, true);
-    test_sites2(sites, 16, "7mer_GUM", 16, 24, true);
-
-    test_sites2(sites, 17, "7mer_GUM", 17, 24, false);
-    test_sites2(sites, 18, "7mer_GUM", 18, 24, false);
-    test_sites2(sites, 19, "7mer_GUM", 19, 24, false);
-    test_sites2(sites, 20, "7mer_GUM", 20, 24, false);
-    test_sites2(sites, 21, "7mer_GUM", 21, 24, false);
-
-    test_sites2(sites, 22, "7mer_GUT", 22, 24, true);
-    test_sites2(sites, 23, "7mer_GUT", 23, 24, true);
-    test_sites2(sites, 24, "7mer_GUT", 24, 24, true);
-    test_sites2(sites, 25, "7mer_GUT", 25, 24, true);
-
-    test_sites2(sites, 26, "7mer_GUT", 26, 24, false);
-    test_sites2(sites, 27, "7mer_GUT", 27, 24, false);
-    test_sites2(sites, 28, "7mer_GUT", 28, 24, false);
-    test_sites2(sites, 29, "7mer_GUT", 29, 24, false);
-    test_sites2(sites, 30, "7mer_GUT", 30, 24, false);
-
-    test_sites2(sites, 31, "7mer_GUT", 31, 24, true);
-    test_sites2(sites, 32, "7mer_GUT", 32, 24, true);
-    test_sites2(sites, 33, "7mer_GUT", 33, 24, true);
-    test_sites2(sites, 34, "7mer_GUT", 34, 24, true);
-
-    test_sites2(sites, 35, "7mer_GUT", 35, 24, false);
-    test_sites2(sites, 36, "7mer_GUT", 36, 24, false);
-    test_sites2(sites, 37, "7mer_GUT", 37, 24, false);
-    test_sites2(sites, 38, "7mer_GUT", 38, 24, false);
-    test_sites2(sites, 39, "7mer_GUT", 39, 24, false);
+//    test_sites2(sites, 8, "7mer_GUT", 8, 24, false);
+//    test_sites2(sites, 9, "7mer_GUT", 9, 24, false);
+//    test_sites2(sites, 10, "7mer_GUT", 10, 24, false);
+//    test_sites2(sites, 11, "7mer_GUT", 11, 24, false);
+//    test_sites2(sites, 12, "7mer_GUT", 12, 24, false);
+    test_sites2(sites, 8, "7mer_GUM", 13, 24, true);
+    test_sites2(sites, 9, "7mer_GUM", 14, 24, true);
+    test_sites2(sites, 10, "7mer_GUM", 15, 24, true);
+    test_sites2(sites, 11, "7mer_GUM", 16, 24, true);
+//    test_sites2(sites, 17, "7mer_GUM", 17, 24, false);
+//    test_sites2(sites, 18, "7mer_GUM", 18, 24, false);
+//    test_sites2(sites, 19, "7mer_GUM", 19, 24, false);
+//    test_sites2(sites, 20, "7mer_GUM", 20, 24, false);
+//    test_sites2(sites, 21, "7mer_GUM", 21, 24, false);
+    test_sites2(sites, 12, "7mer_GUT", 22, 24, true);
+    test_sites2(sites, 13, "7mer_GUT", 23, 24, true);
+    test_sites2(sites, 14, "7mer_GUT", 24, 24, true);
+    test_sites2(sites, 15, "7mer_GUT", 25, 24, true);
+//    test_sites2(sites, 26, "7mer_GUT", 26, 24, false);
+//    test_sites2(sites, 27, "7mer_GUT", 27, 24, false);
+//    test_sites2(sites, 28, "7mer_GUT", 28, 24, false);
+//    test_sites2(sites, 29, "7mer_GUT", 29, 24, false);
+//    test_sites2(sites, 30, "7mer_GUT", 30, 24, false);
+    test_sites2(sites, 16, "7mer_GUT", 31, 24, true);
+    test_sites2(sites, 17, "7mer_GUT", 32, 24, true);
+    test_sites2(sites, 18, "7mer_GUT", 33, 24, true);
+    test_sites2(sites, 19, "7mer_GUT", 34, 24, true);
+//    test_sites2(sites, 35, "7mer_GUT", 35, 24, false);
+//    test_sites2(sites, 36, "7mer_GUT", 36, 24, false);
+//    test_sites2(sites, 37, "7mer_GUT", 37, 24, false);
+//    test_sites2(sites, 38, "7mer_GUT", 38, 24, false);
+//    test_sites2(sites, 39, "7mer_GUT", 39, 24, false);
 }
 
 TEST_F(Site02GU2, mir1_def) {
@@ -243,55 +235,47 @@ TEST_F(Site02GU2, mir1_def) {
 
     int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
-    EXPECT_EQ(40u, sites.get_length());
+    EXPECT_EQ(36u, sites.get_length());
 
     test_sites2(sites, 0, "7mer_GUM", 0, 24, true);
     test_sites2(sites, 1, "7mer_GUM", 1, 24, true);
     test_sites2(sites, 2, "7mer_GUM", 2, 24, true);
     test_sites2(sites, 3, "7mer_GUM", 3, 24, true);
-
     test_sites2(sites, 4, "7mer_GUT", 4, 24, true);
     test_sites2(sites, 5, "7mer_GUT", 5, 24, true);
     test_sites2(sites, 6, "7mer_GUT", 6, 24, true);
     test_sites2(sites, 7, "7mer_GUT", 7, 24, true);
-
-    test_sites2(sites, 8, "7mer_GUT", 8, 24, false);
-    test_sites2(sites, 9, "7mer_GUM", 9, 24, true);
-    test_sites2(sites, 10, "7mer_GUM", 10, 24, true);
-    test_sites2(sites, 11, "7mer_GUM", 11, 24, true);
-    test_sites2(sites, 12, "7mer_GUM", 12, 24, true);
-
-    test_sites2(sites, 13, "7mer_GUM", 13, 24, true);
-    test_sites2(sites, 14, "7mer_GUM", 14, 24, true);
-    test_sites2(sites, 15, "7mer_GUM", 15, 24, true);
-    test_sites2(sites, 16, "7mer_GUM", 16, 24, true);
-
-    test_sites2(sites, 17, "7mer_GUM", 17, 24, false);
-    test_sites2(sites, 18, "7mer_GUM", 18, 24, true);
-    test_sites2(sites, 19, "7mer_GUM", 19, 24, true);
-    test_sites2(sites, 20, "7mer_GUM", 20, 24, true);
-    test_sites2(sites, 21, "7mer_GUM", 21, 24, true);
-
-    test_sites2(sites, 22, "7mer_GUT", 22, 24, true);
-    test_sites2(sites, 23, "7mer_GUT", 23, 24, true);
-    test_sites2(sites, 24, "7mer_GUT", 24, 24, true);
-    test_sites2(sites, 25, "7mer_GUT", 25, 24, true);
-
-    test_sites2(sites, 26, "7mer_GUT", 26, 24, false);
-    test_sites2(sites, 27, "7mer_GUM", 27, 24, true);
-    test_sites2(sites, 28, "7mer_GUM", 28, 24, true);
-    test_sites2(sites, 29, "7mer_GUM", 29, 24, true);
-    test_sites2(sites, 30, "7mer_GUM", 30, 24, true);
-
-    test_sites2(sites, 31, "7mer_GUT", 31, 24, true);
-    test_sites2(sites, 32, "7mer_GUT", 32, 24, true);
-    test_sites2(sites, 33, "7mer_GUT", 33, 24, true);
-    test_sites2(sites, 34, "7mer_GUT", 34, 24, true);
-
-    test_sites2(sites, 35, "7mer_GUT", 35, 24, false);
-    test_sites2(sites, 36, "7mer_GUM", 36, 24, true);
-    test_sites2(sites, 37, "7mer_GUM", 37, 24, true);
-    test_sites2(sites, 38, "7mer_GUM", 38, 24, true);
-    test_sites2(sites, 39, "7mer_GUM", 39, 24, true);
+//    test_sites2(sites, 8, "7mer_GUT", 8, 24, false);
+    test_sites2(sites, 8, "7mer_GUM", 9, 24, true);
+    test_sites2(sites, 9, "7mer_GUM", 10, 24, true);
+    test_sites2(sites, 10, "7mer_GUM", 11, 24, true);
+    test_sites2(sites, 11, "7mer_GUM", 12, 24, true);
+    test_sites2(sites, 12, "7mer_GUM", 13, 24, true);
+    test_sites2(sites, 13, "7mer_GUM", 14, 24, true);
+    test_sites2(sites, 14, "7mer_GUM", 15, 24, true);
+    test_sites2(sites, 15, "7mer_GUM", 16, 24, true);
+//    test_sites2(sites, 17, "7mer_GUM", 17, 24, false);
+    test_sites2(sites, 16, "7mer_GUM", 18, 24, true);
+    test_sites2(sites, 17, "7mer_GUM", 19, 24, true);
+    test_sites2(sites, 18, "7mer_GUM", 20, 24, true);
+    test_sites2(sites, 19, "7mer_GUM", 21, 24, true);
+    test_sites2(sites, 20, "7mer_GUT", 22, 24, true);
+    test_sites2(sites, 21, "7mer_GUT", 23, 24, true);
+    test_sites2(sites, 22, "7mer_GUT", 24, 24, true);
+    test_sites2(sites, 23, "7mer_GUT", 25, 24, true);
+//    test_sites2(sites, 26, "7mer_GUT", 26, 24, false);
+    test_sites2(sites, 24, "7mer_GUM", 27, 24, true);
+    test_sites2(sites, 25, "7mer_GUM", 28, 24, true);
+    test_sites2(sites, 26, "7mer_GUM", 29, 24, true);
+    test_sites2(sites, 27, "7mer_GUM", 30, 24, true);
+    test_sites2(sites, 28, "7mer_GUT", 31, 24, true);
+    test_sites2(sites, 29, "7mer_GUT", 32, 24, true);
+    test_sites2(sites, 30, "7mer_GUT", 33, 24, true);
+    test_sites2(sites, 31, "7mer_GUT", 34, 24, true);
+//    test_sites2(sites, 35, "7mer_GUT", 35, 24, false);
+    test_sites2(sites, 32, "7mer_GUM", 36, 24, true);
+    test_sites2(sites, 33, "7mer_GUM", 37, 24, true);
+    test_sites2(sites, 34, "7mer_GUM", 38, 24, true);
+    test_sites2(sites, 35, "7mer_GUM", 39, 24, true);
 }
 }
