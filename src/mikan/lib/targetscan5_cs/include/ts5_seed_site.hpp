@@ -28,7 +28,14 @@ class TS5SeedSites : public mikan::MKSeedSites {
 public:
     // Define methods
     TS5SeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
-            MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {}
+            MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {
+        mMinToCDS = 14;
+    }
+
+private:
+    bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
+                           mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
+                           seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 
 };
 

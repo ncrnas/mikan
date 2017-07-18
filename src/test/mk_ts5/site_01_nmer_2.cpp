@@ -38,13 +38,12 @@ TEST_F(Site01Nmer2, mir1) {
 
     int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
-    EXPECT_EQ(5u, sites.get_length());
+    EXPECT_EQ(4u, sites.get_length());
 
-    test_sites3(sites, 0, 0, 25);
-    test_sites3(sites, 1, 1, 25);
-    test_sites3(sites, 2, 2, 25);
-    test_sites3(sites, 3, 3, 25);
-    test_sites3(sites, 4, 4, 25);
+    test_sites2(sites, 0, "7mer-A1", 1, 25, true);
+    test_sites2(sites, 1, "7mer-m8", 2, 25, true);
+    test_sites2(sites, 2, "8mer", 3, 25, true);
+    test_sites2(sites, 3, "7mer-m8", 4, 25, true);
 }
 
 }

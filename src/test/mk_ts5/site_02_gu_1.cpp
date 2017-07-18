@@ -40,6 +40,6 @@ TEST_F(Site02GU1, mir124_gu) {
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(1u, sites.get_length());
 
-    test_sites3(sites, 0, 0, 24);
+    test_sites2(sites, 0, "7mer-m8", 0, 24, true);
 }
 }

@@ -18,7 +18,7 @@ public:
 
     seqan::CharString get_seed_type(unsigned idx) { return mSeedTypes[idx]; }
 
-    seqan::CharString &get_val(int i) { return mSeedTypes[i]; }
+    seqan::CharString const &get_val(int i) { return mSeedTypes[i]; }
 
     // Method prototype
     int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
@@ -42,7 +42,7 @@ public:
     // Define methods
     TS5FeatSitePos() : mMaxLen(1500) {}
 
-    int &get_val(int i) { return mSitePos[i]; }
+    int get_val(int i) { return mSitePos[i]; }
 
     // Method prototype
     int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
@@ -66,7 +66,7 @@ public:
     // Define methods
     TS5FeatAURich() {}
 
-    float &get_val(int i) { return mAURich[i]; }
+    float get_val(int i) { return mAURich[i]; }
 
     // Method prototype
     int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
@@ -93,7 +93,7 @@ public:
     // Define methods
     TS5FeatThreePrimePair() : mIdxBestScore(0) {}
 
-    float &get_val(int i) { return mThreePrimePair[i]; }
+    float get_val(int i) { return mThreePrimePair[i]; }
 
     const TS5Alignment &get_alignment() { return mAlign; }
 
@@ -142,13 +142,13 @@ public:
     // Define methods
     TS5RawFeatures() {}
 
-    seqan::CharString &get_seed_type(int i) { return mSeedTypes.get_val(i); }
+    seqan::CharString const &get_seed_type(int i) { return mSeedTypes.get_val(i); }
 
-    int &get_site_pos(int i) { return mSitePos.get_val(i); }
+    int get_site_pos(int i) { return mSitePos.get_val(i); }
 
-    float &get_au_rich(int i) { return mAURich.get_val(i); }
+    float get_au_rich(int i) { return mAURich.get_val(i); }
 
-    float &get_three_prime_pair(int i) { return mThreePrimePair.get_val(i); }
+    float get_three_prime_pair(int i) { return mThreePrimePair.get_val(i); }
 
     const TS5Alignment &get_alignment() { return mThreePrimePair.get_alignment(); }
 
