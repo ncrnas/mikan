@@ -34,16 +34,6 @@ public:
         mMinToEnd = 0;
     }
 
-    seqan::String<unsigned> const &get_site_pos_s1() const { return mS1Pos; }
-
-    seqan::String<unsigned> const &get_site_pos_s8() const { return mS8Pos; }
-
-    void clear_pos();
-
-private:
-    seqan::String<unsigned> mS1Pos;
-    seqan::String<unsigned> mS8Pos;
-
 private:
     bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
                            mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,

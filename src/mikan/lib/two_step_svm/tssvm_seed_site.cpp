@@ -30,17 +30,6 @@ void TSSVMSeedSeqs::set_flags(mikan::TCharSet &) {
 //
 // TSSVMSeedSites methods
 //
-void TSSVMSeedSites::clear_pos() {
-    clear(mMRNAPos);
-    clear(mSitePos);
-    clear(mSeedTypes);
-    clear(mMisMatchPos);
-    clear(mEffectiveSites);
-
-    clear(mS1Pos);
-    clear(mS8Pos);
-}
-
 bool TSSVMSeedSites::set_new_seed_type(
         unsigned pMRNAPos,
         unsigned pSitePos,

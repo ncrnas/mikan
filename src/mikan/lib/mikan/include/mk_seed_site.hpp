@@ -37,6 +37,10 @@ public:
 
     mikan::TMismatchSet const &get_mismatched_pos() const { return mMisMatchPos; }
 
+    mikan::TSitePosSet const &get_site_pos_s1() const { return mS1Pos; }
+
+    mikan::TSitePosSet const &get_site_pos_s8() const { return mS8Pos; }
+
     // Method prototypes
     void reset_finder();
 
@@ -60,8 +64,11 @@ protected:
     unsigned mMinToCDS;
     unsigned mMinToEnd;
 
+    mikan::TSitePosSet mS1Pos;
+    mikan::TSitePosSet mS8Pos;
+
 protected:
-    virtual bool check_position(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType);
+    bool check_position(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType);
 
     virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
                                    mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,

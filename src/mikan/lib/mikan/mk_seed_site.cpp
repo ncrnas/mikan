@@ -21,6 +21,9 @@ void MKSeedSites::clear_pos() {
     clear(mSeedTypes);
     clear(mMisMatchPos);
     clear(mEffectiveSites);
+
+    clear(mS1Pos);
+    clear(mS8Pos);
 }
 
 int MKSeedSites::find_seed_sites(mikan::MKSeedSeqs &seedSeqs, mikan::TCharSet &pSeedTypeDef) {
