@@ -125,8 +125,7 @@ void MKSeedSites::set_mx_matches(
 
     int pos;
     mikan::TRNAStr cMiRNASeq, miRNAMx, mRNAMx, miRNAMxC;
-
-    pos = (int) pSitePos - pMx + 1 + (int) INDEXED_SEQ_LEN;
+    
     miRNAMx = pMiRNA[pMx - 1];
     cMiRNASeq = pMiRNA;
     complement(cMiRNASeq);
@@ -137,6 +136,7 @@ void MKSeedSites::set_mx_matches(
     pGumMx = false;
     pIsA = false;
 
+    pos = (int) pSitePos - pMx + 1 + (int) INDEXED_SEQ_LEN;
     if (pos >= 0 && pos < (int) length(mMRNASeqs[pMRNAPos])) {
         mRNAMx = mMRNASeqs[pMRNAPos][pos];
         if (mRNAMx == 'A') {

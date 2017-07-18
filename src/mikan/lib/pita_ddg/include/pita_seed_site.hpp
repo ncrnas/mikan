@@ -43,30 +43,30 @@ private:
                            seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 
     void set_stringent_seed_type(seqan::CharString &pCurSeedType, seqan::StringSet<seqan::CharString> &pSeedDef,
-                                 bool pMatchMx1, bool pMatchMx2, unsigned pMisMatchPos,
+                                 bool pMatchM8, bool pMatchM9, unsigned pMisMatchPos,
                                  seqan::CharString &pNewSeedType);
 
     void set_single_gu_seed_type(seqan::CharString &pCurSeedType, seqan::StringSet<seqan::CharString> &pSeedDef,
-                                 int pM1, int pM2, bool pMatchMx1, bool pMatchMx2, bool pGutMx1, bool pGutMx2,
-                                 bool pGumMx1, bool pGumMx2, unsigned pMisMatchPos,
+                                 int pM1, int pM2, bool pMatchM8, bool pMatchM9, bool pGutM8, bool pGutM9,
+                                 bool pGumM8, bool pGumM9, unsigned pMisMatchPos,
                                  seqan::CharString &pNewSeedType);
 
     void set_multiple_gu_seed_type(seqan::CharString &pCurSeedType, seqan::StringSet<seqan::CharString> &pSeedDef,
-                                   int pM1, int pM2, bool pMatchMx1, bool pMatchMx2, bool pGutMx1, bool pGutMx2,
-                                   bool pGumMx1, bool pGumMx2, unsigned pMisMatchPos,
+                                   int pM1, int pM2, bool pMatchM8, bool pMatchM9, bool pGutM8, bool pGutM9,
+                                   bool pGumM8, bool pGumM9, unsigned pMisMatchPos,
                                    seqan::CharString &pNewSeedType);
 
     void set_mismatch_seed_type(seqan::CharString &pCurSeedType, seqan::StringSet<seqan::CharString> &pSeedDef,
-                                int pM1, int pM2, bool pMatchMx1, bool pMatchMx2, bool pGutMx1, bool pGutMx2,
-                                bool pGumMx1, bool pGumMx2, unsigned pMisMatchPos, seqan::CharString &pNewSeedType);
+                                int pM1, int pM2, bool pMatchM8, bool pMatchM9, bool pGutM8, bool pGutM9,
+                                bool pGumM8, bool pGumM9, unsigned pMisMatchPos, seqan::CharString &pNewSeedType);
 
     void set_gu_mismatch_seed_type(seqan::CharString &pCurSeedType, seqan::StringSet<seqan::CharString> &pSeedDef,
-                                   int pM1, int pM2, bool pMatchMx1, bool pMatchMx2, bool pGutMx1, bool pGutMx2,
-                                   bool pGumMx1, bool pGumMx2, unsigned pMisMatchPos,
+                                   int pM1, int pM2, bool pMatchM8, bool pMatchM9, bool pGutM8, bool pGutM9,
+                                   bool pGumM8, bool pGumM9, unsigned pMisMatchPos,
                                    seqan::CharString &pNewSeedType);
 
     void set_6mer_seed_type(seqan::CharString &pCurSeedType, seqan::StringSet<seqan::CharString> &pSeedDef,
-                            bool pMatchMx1, bool pMatchMx2, unsigned pMisMatchPos, seqan::CharString &pNewSeedType);
+                            bool pMatchM8, bool pMatchM9, unsigned pMisMatchPos, seqan::CharString &pNewSeedType);
 
     void check_last_match(bool pMatchM8, bool pMatchM9, seqan::CharString &pNewSeedType);
 

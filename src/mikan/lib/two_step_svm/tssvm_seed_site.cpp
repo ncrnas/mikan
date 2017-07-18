@@ -39,64 +39,35 @@ bool TSSVMSeedSites::set_new_seed_type(
         int pMisMatchPos,
         bool pEffectiveSite) {
 
-    unsigned m8Pos, a1Pos;
-    CharString newSeedType;
+    bool matchM8, matchM2, matchM1, gutMx, gumMx, isAx, isA1, noMx, noM1;
+    CharString newSeedType = "";
 
-    mikan::TRNAStr newSeedSeq, complMiRNASeq;
-    seqan::Rna miRNAM2, miRNAM8;
-    seqan::Rna mRNAM2, mRNAM8, mRNAA1;
-    bool IsA1, MatchM8;
-
-    m8Pos = pSitePos - 1;
+    unsigned s8pos = pSitePos;
+    unsigned s1pos = pSitePos;
     if (pSeedType == "BM") {
-        m8Pos = pSitePos;
+        s8pos = pSitePos + 1;
+    } else if (pSeedType == "BT") {
+        s1pos = pSitePos + 1;
     }
+    set_mx_matches(pMRNAPos, s8pos, pMiRNASeq, 8, noMx, matchM8, gutMx, gumMx, isAx);
+    set_mx_matches(pMRNAPos, s1pos, pMiRNASeq, 2, noMx, matchM2, gutMx, gumMx, isAx);
+    set_mx_matches(pMRNAPos, s1pos, pMiRNASeq, 1, noM1, matchM1, gutMx, gumMx, isA1);
 
-    a1Pos = pSitePos + 6;
-    if (pSeedType == "BT") {
-        a1Pos = pSitePos + 7;
-    }
-    if ((pSeedType != "6mer") && (a1Pos >= length(mMRNASeqs[pMRNAPos]))) {
+    if ((pSeedType != "6mer") && noM1) {
         return false;
-    }
-
-    complMiRNASeq = pMiRNASeq;
-    complement(complMiRNASeq);
-    miRNAM8 = complMiRNASeq[7];
-    miRNAM2 = complMiRNASeq[1];
-
-    mRNAM8 = mMRNASeqs[pMRNAPos][m8Pos];
-    mRNAM2 = mMRNASeqs[pMRNAPos][a1Pos - 1];
-    if (a1Pos < length(mMRNASeqs[pMRNAPos])) {
-        mRNAA1 = mMRNASeqs[pMRNAPos][a1Pos];
-    } else {
-        mRNAA1 = 'A';
-    }
-
-    MatchM8 = false;
-    if (miRNAM8 == mRNAM8) {
-        MatchM8 = true;
-    }
-
-    IsA1 = false;
-    if (mRNAA1 == 'A') {
-        IsA1 = true;
-    }
-
-    newSeedType = "";
-    if (pSeedType == "6mer") {
-        if (IsA1 && MatchM8) {
+    } else if (pSeedType == "6mer") {
+        if ((isA1 || noM1) && matchM8) {
             newSeedType = "8mer";
-        } else if (IsA1) {
+        } else if (isA1 || noM1) {
             newSeedType = "7mer-A1";
-        } else if (MatchM8) {
+        } else if (matchM8) {
             newSeedType = "7mer-m8";
         } else {
             newSeedType = "6mer";
         }
-    } else if (IsA1 && MatchM8) {
+    } else if (isA1 && matchM8) {
         if (pSeedType == "BT") {
-            if (miRNAM2 == mRNAM2) {
+            if (matchM2) {
                 newSeedType = pSeedType;
             }
         } else {
@@ -110,15 +81,14 @@ bool TSSVMSeedSites::set_new_seed_type(
         appendValue(mSeedTypes, newSeedType);
         appendValue(mMisMatchPos, pMisMatchPos);
 
-        appendValue(mS1Pos, a1Pos);
-        appendValue(mS8Pos, m8Pos);
+        appendValue(mS1Pos, s1pos + 6);
+        appendValue(mS8Pos, s8pos - 1);
         
         appendValue(mEffectiveSites, true);
         pEffectiveSite = true;
     }
     
     return pEffectiveSite;
-
 }
 
 //
