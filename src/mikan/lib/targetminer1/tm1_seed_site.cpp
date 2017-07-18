@@ -75,63 +75,26 @@ void TM1SeedSites::clear_pos() {
     clear(mM8Pos);
 }
 
-void TM1SeedSites::get_mx_match(
-        mikan::TRNAStr const &pMiRNASeq,
-        mikan::TRNAStr const &pMiRNACompSeq,
-        mikan::TRNAStr const &pMRNASeq,
-        unsigned pSitePos,
-        int pMx,
-        bool &pMatch,
-        bool &pGU,
-        bool &pNoMx,
-        bool &pIsA) {
-    int pos;
-    mikan::TRNAStr miRNAMx, miRNAMxC, mRNAMx;
-
-    pos = pSitePos - (pMx - 7);
-    miRNAMx = pMiRNASeq[pMx - 1];
-    miRNAMxC = pMiRNACompSeq[pMx - 1];
-
-    pMatch = false;
-    pGU = false;
-    pIsA = false;
-
-    if (pos >= 0 && pos < (int) length(pMRNASeq)) {
-        mRNAMx = pMRNASeq[pos];
-        if (mRNAMx == 'A') {
-            pIsA = true;
-        }
-        if (miRNAMxC == mRNAMx) {
-            pMatch = true;
-        }
-        if (((miRNAMx == 'G') && (mRNAMx == 'U')) || ((miRNAMx == 'U') && (mRNAMx == 'G'))) {
-            pGU = true;
-        }
-        pNoMx = false;
-    } else {
-        pNoMx = true;
-    }
-}
-
 void TM1SeedSites::get_match_count(
-        mikan::TRNAStr const &pMiRNASeq,
-        mikan::TRNAStr const &pMiRNACompSeq,
-        mikan::TRNAStr const &pMRNASeq,
+        unsigned pMRNAPos,
         unsigned pSitePos,
+        mikan::TRNAStr const &pMiRNASeq,
         int pMx1,
         int pMx2,
         int &pMatchCount,
         int &pGUCount) {
-    bool isAx, matchMx, guMx, noMx;
+
+    bool isAx, matchMx, gutMx, gumMx, noMx;
     pMatchCount = 0;
     pGUCount = 0;
 
     for (int i = pMx1; i < pMx2 + 1; ++i) {
-        get_mx_match(pMiRNASeq, pMiRNACompSeq, pMRNASeq, pSitePos, i, matchMx, guMx, noMx, isAx);
+        set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, i, noMx, matchMx, gutMx, gumMx, isAx);
+
         if (!noMx) {
             if (matchMx) {
                 ++pMatchCount;
-            } else if (guMx) {
+            } else if (gutMx || gumMx) {
                 ++pGUCount;
             }
         }
@@ -150,22 +113,19 @@ bool TM1SeedSites::set_new_seed_type(
     CharString newSeedType = "";
     bool isA1, isAx;
     bool matchM1, matchM2, matchM8, matchM9;
-    bool guM1, guM2, guM8, guM9;
+    bool gumM1, gutM2, gutM8, gutM9;
+    bool gutM1, gumM2, gumM8, gumM9;
     bool noM1, noM2, noM8, noM9;
     int matchCount, guCount, matchCount2, guCount2;
-    mikan::TRNAStr revMiRNASeq;
-
-    revMiRNASeq = pMiRNASeq;
-    complement(revMiRNASeq);
 
     // check m8, m2, m1 match
-    get_mx_match(pMiRNASeq, revMiRNASeq, mMRNASeqs[pMRNAPos], pSitePos, 9, matchM9, guM9, noM9, isAx);
-    get_mx_match(pMiRNASeq, revMiRNASeq, mMRNASeqs[pMRNAPos], pSitePos, 8, matchM8, guM8, noM8, isAx);
-    get_mx_match(pMiRNASeq, revMiRNASeq, mMRNASeqs[pMRNAPos], pSitePos, 2, matchM2, guM2, noM2, isAx);
-    get_mx_match(pMiRNASeq, revMiRNASeq, mMRNASeqs[pMRNAPos], pSitePos, 1, matchM1, guM1, noM1, isA1);
-
-    get_match_count(pMiRNASeq, revMiRNASeq, mMRNASeqs[pMRNAPos], pSitePos, 2, 7, matchCount, guCount);
-    get_match_count(pMiRNASeq, revMiRNASeq, mMRNASeqs[pMRNAPos], pSitePos, 2, 8, matchCount2, guCount2);
+    set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 9, noM9, matchM9, gutM9, gumM9, isAx);
+    set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 8, noM8, matchM8, gutM8, gumM8, isAx);
+    set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 2, noM2, matchM2, gutM2, gumM2, isAx);
+    set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 1, noM1, matchM1, gutM1, gumM1, isA1);
+    
+    get_match_count(pMRNAPos, pSitePos, pMiRNASeq, 2, 7, matchCount, guCount);
+    get_match_count(pMRNAPos, pSitePos, pMiRNASeq, 2, 8, matchCount2, guCount2);
 
     if (isA1 && matchM8 && (matchCount + guCount == 6) && guCount < 2) {
         newSeedType = "8mer";
@@ -181,10 +141,10 @@ bool TM1SeedSites::set_new_seed_type(
         appendValue(mSeedTypes, newSeedType);
 
         appendValue(mM8Match, matchM8);
-        appendValue(mM8GU, guM8);
+        appendValue(mM8GU, gutM8 || gumM8);
         appendValue(mM1A, isA1);
         appendValue(mM1Match, matchM1);
-        appendValue(mM1GU, guM1);
+        appendValue(mM1GU, gutM1 || gumM1);
 
         appendValue(mMRNASeqLen, length(mMRNASeqs[pMRNAPos]));
         appendValue(mM8Pos, pSitePos - 1);

@@ -42,9 +42,6 @@ private:
                            mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
                            seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 
-    void set_mx_matches(unsigned pMRNAPos, unsigned pSitePos, mikan::TRNAStr const &pMiRNA, int pMx,
-                        bool &pMatchMx, bool &pGutMx, bool &pGumMx);
-
     void set_stringent_seed_type(seqan::CharString &pCurSeedType, seqan::StringSet<seqan::CharString> &pSeedDef,
                                  bool pMatchMx1, bool pMatchMx2, unsigned pMisMatchPos,
                                  seqan::CharString &pNewSeedType);

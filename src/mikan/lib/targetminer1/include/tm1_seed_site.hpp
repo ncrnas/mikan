@@ -67,11 +67,8 @@ private:
                            mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
                            seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 
-    void get_mx_match(mikan::TRNAStr const &pMiRNASeq, mikan::TRNAStr const &pMiRNACompSeq, mikan::TRNAStr const &pMRNASeq,
-                      unsigned pSitePos, int pMx, bool &pMatch, bool &pGU, bool &pNoMx, bool &pIsA);
-
-    void get_match_count(mikan::TRNAStr const &pMiRNASeq, mikan::TRNAStr const &pMiRNACompSeq, mikan::TRNAStr const &pMRNASeq,
-                         unsigned pSitePos, int pMx1, int pMx2, int &pMatchCount, int &pGUCount);
+    void get_match_count(unsigned pSitePos, unsigned pMRNAPos, mikan::TRNAStr const &pMiRNASeq,
+                         int pMx1, int pMx2, int &pMatchCount, int &pGUCount);
 };
 
 

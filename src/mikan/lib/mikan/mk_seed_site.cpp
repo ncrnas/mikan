@@ -101,6 +101,49 @@ bool MKSeedSites::set_new_seed_type(
     return pEffectiveSite;
 }
 
+void MKSeedSites::set_mx_matches(
+        unsigned pMRNAPos,
+        unsigned pSitePos,
+        mikan::TRNAStr const &pMiRNA,
+        int pMx,
+        bool &pNoMx,
+        bool &pMatchMx,
+        bool &pGutMx,
+        bool &pGumMx,
+        bool &pIsA) {
+
+    int pos;
+    mikan::TRNAStr cMiRNASeq, miRNAMx, mRNAMx, miRNAMxC;
+
+    pos = (int) pSitePos - pMx + 1 + (int) INDEXED_SEQ_LEN;
+    miRNAMx = pMiRNA[pMx - 1];
+    cMiRNASeq = pMiRNA;
+    complement(cMiRNASeq);
+    miRNAMxC = cMiRNASeq[pMx - 1];
+
+    pMatchMx = false;
+    pGutMx = false;
+    pGumMx = false;
+    pIsA = false;
+
+    if (pos >= 0 && pos < (int) length(mMRNASeqs[pMRNAPos])) {
+        mRNAMx = mMRNASeqs[pMRNAPos][pos];
+        if (mRNAMx == 'A') {
+            pIsA = true;
+        }
+        if (miRNAMxC == mRNAMx) {
+            pMatchMx = true;
+        } else if (miRNAMx == 'G' && mRNAMx == 'U') {
+            pGutMx = true;
+        } else if (miRNAMx == 'U' && mRNAMx == 'G') {
+            pGumMx = true;
+        }
+        pNoMx = false;
+    } else {
+        pNoMx = true;
+    }
+}
+
 void MKSeedSites::print_all() {
     for (unsigned i = 0 ; i < length(mEffectiveSites); i++) {
         std::cout << i << ", ";

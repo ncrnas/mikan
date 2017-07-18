@@ -51,11 +51,11 @@ bool PITASeedSites::set_new_seed_type(
         int pMisMatchPos,
         bool pEffectiveSite) {
 
-    bool matchM8, matchM9, gutM8, gutM9, gumM8, gumM9;;
+    bool matchM8, matchM9, gutM8, gutM9, gumM8, gumM9, isAx, noMx;
     CharString newSeedType = "";
 
-    set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 8, matchM8, gutM8, gumM8);
-    set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 9, matchM9, gutM9, gumM9);
+    set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 8, noMx, matchM8, gutM8, gumM8, isAx);
+    set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 9, noMx, matchM9, gutM9, gumM9, isAx);
 
     set_stringent_seed_type(pSeedType, pSeedTypeDef, matchM8, matchM9, pMisMatchPos, newSeedType);
 
@@ -92,38 +92,6 @@ bool PITASeedSites::set_new_seed_type(
     }
 
     return pEffectiveSite;
-
-}
-
-void PITASeedSites::set_mx_matches(
-        unsigned pMRNAPos,
-        unsigned pSitePos,
-        mikan::TRNAStr const &pMiRNA,
-        int pMx,
-        bool &pMatchMx,
-        bool &pGutMx,
-        bool &pGumMx) {
-    mikan::TRNAStr cMiRNASeq, miRNAMx, mRNAMx, miRNAMxC;
-
-    miRNAMx = pMiRNA[pMx - 1];
-    cMiRNASeq = pMiRNA;
-    complement(cMiRNASeq);
-    miRNAMxC = cMiRNASeq[pMx - 1];
-
-    mRNAMx = mMRNASeqs[pMRNAPos][pSitePos - (pMx - 1 - INDEXED_SEQ_LEN)];
-
-    pMatchMx = false;
-    if (miRNAMxC == mRNAMx) {
-        pMatchMx = true;
-    }
-
-    pGutMx = false;
-    pGumMx = false;
-    if ((miRNAMx == 'G' && mRNAMx == 'U')) {
-        pGutMx = true;
-    } else if ((miRNAMx == 'U' && mRNAMx == 'G')) {
-        pGumMx = true;
-    }
 
 }
 
