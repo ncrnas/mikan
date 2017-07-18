@@ -13,13 +13,19 @@ namespace mikan {
 //
 class MKSeedSites {
 public:
+    // Constant values
+    static const unsigned INDEXED_SEQ_LEN = SEEDLEN;
+
     // Define variables
     seqan::String<bool> mEffectiveSites;
 
-public:
     // Define methods
     MKSeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
-            mMRNASeqs(pMRNASeqs), mRNAIdx(pRNAIdx), mFinder(pFinder) {}
+            mMRNASeqs(pMRNASeqs), mRNAIdx(pRNAIdx), mFinder(pFinder) {
+        mCheckPosMethod = "";
+        mMinToCDS = 0;
+        mMinToEnd = 0;
+    }
 
     unsigned get_length() const { return seqan::length(mSitePos); }
 
@@ -36,7 +42,7 @@ public:
 
     int find_seed_sites(mikan::MKSeedSeqs &seedSeqs, mikan::TCharSet &pSeedTypeDef);
 
-    virtual void clear_pos();
+    void clear_pos();
 
     void print_all();
 
@@ -49,6 +55,10 @@ protected:
     mikan::TRNASet const &mMRNASeqs;
     mikan::TIndexQGram &mRNAIdx;
     mikan::TFinder &mFinder;
+
+    seqan::CharString mCheckPosMethod;
+    unsigned mMinToCDS;
+    unsigned mMinToEnd;
 
 protected:
     virtual bool check_position(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType);

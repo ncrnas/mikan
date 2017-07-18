@@ -26,18 +26,13 @@ public:
 //
 class RH2SeedSites : public mikan::MKSeedSites {
 public:
-    // Constant values
-    static const unsigned MIN_DIST_TO_CDS = 1;
-    static const unsigned MIN_DIST_UTR_END = 0;
-    static const unsigned SEED_LEN = 6;
-
     // Define methods
     RH2SeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
-            MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {}
+            MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {
+        mMinToCDS = 1;
+    }
 
 private:
-    virtual bool check_position(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType);
-
     virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
                                    mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
                                    seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);

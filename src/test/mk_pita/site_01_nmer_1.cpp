@@ -122,7 +122,6 @@ TEST_F(Site01Nmer1, mir124_7mer) {
     seedSeqs.create_seed_seqs();
 
     int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
-    sites.print_all();
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(28u, sites.get_length());
 

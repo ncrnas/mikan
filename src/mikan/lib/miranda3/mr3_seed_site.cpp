@@ -45,19 +45,6 @@ void MR3SeedSeqs::set_flags(mikan::TCharSet &pSeedTypeDef) {
 //
 // MR3SeedSites methods
 //
-bool MR3SeedSites::check_position(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType) {
-    bool effectiveSite;
-    unsigned endPos;
-
-    effectiveSite = true;
-    endPos = pSitePos + INDEXED_SEQ_LEN;
-    if ((endPos < MIN_DIST_TO_CDS) || (endPos + MIN_DIST_UTR_END > length(mMRNASeqs[pMRNAPos]))) {
-        effectiveSite = false;
-    }
-
-    return effectiveSite;
-}
-
 bool MR3SeedSites::set_new_seed_type(
         unsigned pMRNAPos,
         unsigned pSitePos,

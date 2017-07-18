@@ -26,13 +26,13 @@ public:
 //
 class TSSVMSeedSites : public mikan::MKSeedSites {
 public:
-    // Constant values
-    static const unsigned MIN_DIST_TO_CDS = 15;
-    static const unsigned MIN_DIST_UTR_END = 0;
-
     // Define methods
     TSSVMSeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
-            MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {}
+            MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {
+        mCheckPosMethod = "tssvm";
+        mMinToCDS = 15;
+        mMinToEnd = 0;
+    }
 
     seqan::String<unsigned> const &get_site_pos_s1() const { return mS1Pos; }
 
@@ -45,8 +45,6 @@ private:
     seqan::String<unsigned> mS8Pos;
 
 private:
-    virtual bool check_position(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType);
-
     virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
                                    mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
                                    seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);

@@ -56,17 +56,6 @@ void RH2SeedSeqs::set_flags(mikan::TCharSet &pSeedTypeDef) {
 //
 // RH2SeedSites methods
 //
-bool RH2SeedSites::check_position(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &) {
-    bool effectiveSite;
-
-    effectiveSite = true;
-    if ((pSitePos < MIN_DIST_TO_CDS) || (pSitePos + MIN_DIST_UTR_END > length(mMRNASeqs[pMRNAPos]))) {
-        effectiveSite = false;
-    }
-
-    return effectiveSite;
-}
-
 bool RH2SeedSites::set_new_seed_type(
         unsigned pMRNAPos,
         unsigned pSitePos,
@@ -88,8 +77,8 @@ bool RH2SeedSites::set_new_seed_type(
 
     mRNAM8 = mMRNASeqs[pMRNAPos][pSitePos - 1];
 
-    if (pSitePos + SEED_LEN < length(mMRNASeqs[pMRNAPos])) {
-        mRNAA1 = mMRNASeqs[pMRNAPos][pSitePos + SEED_LEN];
+    if (pSitePos + mikan::SEEDLEN < length(mMRNASeqs[pMRNAPos])) {
+        mRNAA1 = mMRNASeqs[pMRNAPos][pSitePos + mikan::SEEDLEN];
         noA1 = false;
     } else {
         mRNAA1 = 'A';

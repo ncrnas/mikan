@@ -27,19 +27,17 @@ public:
 class MR3SeedSites : public mikan::MKSeedSites {
 public:
     // Constant values
-    static const unsigned MIN_DIST_TO_CDS = 7;
-    static const unsigned MIN_DIST_UTR_END = 0;
-    static const unsigned INDEXED_SEQ_LEN = 6;
     static const bool FORCE_LAST_MATCH = false;
 
 public:
     // Define methods
     MR3SeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
-            MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {}
+            MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {
+        mMinToCDS = 1;
+        mMinToEnd = 6;
+    }
 
 private:
-    virtual bool check_position(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType);
-
     virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
                                    mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
                                    seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);

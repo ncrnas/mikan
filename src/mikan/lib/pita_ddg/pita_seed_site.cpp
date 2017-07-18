@@ -42,19 +42,6 @@ void PITASeedSeqs::set_flags(mikan::TCharSet &pSeedTypeDef) {
 //
 // PITASeedSites methods
 //
-bool PITASeedSites::check_position(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &) {
-    bool effectiveSite;
-    unsigned endPos;
-
-    effectiveSite = true;
-    endPos = pSitePos + INDEXED_SEQ_LEN;
-    if ((endPos < MIN_DIST_TO_CDS) || (endPos + MIN_DIST_UTR_END > length(mMRNASeqs[pMRNAPos]))) {
-        effectiveSite = false;
-    }
-
-    return effectiveSite;
-}
-
 bool PITASeedSites::set_new_seed_type(
         unsigned pMRNAPos,
         unsigned pSitePos,

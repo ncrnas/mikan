@@ -63,8 +63,23 @@ int MKSeedSites::find_seed_sites(mikan::MKSeedSeqs &seedSeqs, mikan::TCharSet &p
     return 0;
 }
 
-bool MKSeedSites::check_position(unsigned, unsigned, seqan::CharString &) {
-    return true;
+bool MKSeedSites::check_position(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType) {
+    bool effectiveSite = true;
+    unsigned mrnalen;
+
+    if (mCheckPosMethod == "tssvm"
+        && (pSeedType == "GUM" || pSeedType == "GUT" || pSeedType == "LP" || pSeedType == "BT")) {
+        pSitePos -= 1;
+        mrnalen = length(mMRNASeqs[pMRNAPos]) - 1;
+    } else {
+        mrnalen = length(mMRNASeqs[pMRNAPos]);
+    }
+
+    if ((pSitePos < mMinToCDS) || (pSitePos + mMinToEnd > mrnalen)) {
+        effectiveSite = false;;
+    }
+
+    return effectiveSite;
 }
 
 bool MKSeedSites::set_new_seed_type(

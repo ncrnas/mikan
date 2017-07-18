@@ -29,10 +29,6 @@ protected:
 //
 class TM1SeedSites : public mikan::MKSeedSites {
 public:
-    // Constant values
-    static const unsigned MIN_DIST_TO_CDS = 1;
-    static const unsigned MIN_DIST_UTR_END = 0;
-
     // Define methods
     TM1SeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
             MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {}

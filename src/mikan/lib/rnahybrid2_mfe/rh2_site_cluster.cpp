@@ -102,7 +102,7 @@ void RH2Overlap::cluster_overlapped_sites(
             olCluster.clear();
         }
         if (pOverlapDef == "seed") {
-            prevStartPos = (*itStart).first + RH2SeedSites::SEED_LEN;
+            prevStartPos = (*itStart).first + mikan::SEEDLEN;
         } else {
             prevStartPos = (*itStart).first + pScores.get_hit_length((*itStart).second);
         }

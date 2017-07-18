@@ -28,18 +28,16 @@ public:
 class PITASeedSites : public mikan::MKSeedSites {
 public:
     // Constant values
-    static const unsigned MIN_DIST_TO_CDS = 22;
-    static const unsigned MIN_DIST_UTR_END = 1;
-    static const unsigned INDEXED_SEQ_LEN = 6;
     static const bool FORCE_LAST_MATCH = true;
 
     // Define methods
     PITASeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
-            MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {}
+            MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {
+        mMinToCDS = 16;
+        mMinToEnd = 7;
+    }
 
 private:
-    virtual bool check_position(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType);
-
     virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
                                    mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
                                    seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
