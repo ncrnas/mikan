@@ -136,8 +136,8 @@ void MKSeedSites::set_mx_matches(
     pGumMx = false;
     pIsA = false;
 
-    pos = (int) pSitePos - pMx + 1 + (int) INDEXED_SEQ_LEN;
-    if (pos >= 0 && pos < (int) length(mMRNASeqs[pMRNAPos])) {
+    pos = static_cast<int>(pSitePos) - pMx + 1 + static_cast<int>(INDEXED_SEQ_LEN);
+    if (pos >= 0 && pos < static_cast<int>(length(mMRNASeqs[pMRNAPos]))) {
         mRNAMx = mMRNASeqs[pMRNAPos][pos];
         if (mRNAMx == 'A') {
             pIsA = true;

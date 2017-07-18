@@ -37,8 +37,8 @@ int MKSequences::read_fasta(CharString const &pFasta) {
             appendValue(mSeqs, seq);
         }
 
-        if (mMaxLen < (int) length(seq)) {
-            mMaxLen = (int) length(seq);
+        if (mMaxLen < static_cast<int>(length(seq))) {
+            mMaxLen = static_cast<int>(length(seq));
         }
     }
 

@@ -221,7 +221,7 @@ int MKSeedSeqs::create_mismatch_seed_seqs(mikan::TRNAStr &pSeedSeq, bool pIsMMGU
     }
 
     for (unsigned i = 0; i < length(pSeedSeq); ++i) {
-        if (pIsMMGU && (pGUPos == (int) i)) {
+        if (pIsMMGU && (pGUPos == static_cast<int>(i))) {
             continue;
         }
         if (pSeedSeq[i] == 'A') {
