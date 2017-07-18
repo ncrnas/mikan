@@ -38,9 +38,9 @@ public:
     }
 
 private:
-    virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
-                                   mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
-                                   seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
+    bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
+                           mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
+                           seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 
     void set_mx_matches(unsigned pMRNAPos, unsigned pSitePos, mikan::TRNAStr const &pMiRNA, int pMx,
                         bool &pMatchMx, bool &pGutMx, bool &pGumMx);

@@ -51,7 +51,7 @@ public:
 
     int get_length_to_cds(int pIdx);
 
-    virtual void clear_pos();
+    void clear_pos();
     
 private:
     seqan::String<bool> mM8Match;
@@ -63,9 +63,9 @@ private:
     seqan::String<unsigned> mM8Pos;
 
 private:
-    virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
-                                   mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
-                                   seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
+    bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
+                           mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
+                           seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 
     void get_mx_match(mikan::TRNAStr const &pMiRNASeq, mikan::TRNAStr const &pMiRNACompSeq, mikan::TRNAStr const &pMRNASeq,
                       unsigned pSitePos, int pMx, bool &pMatch, bool &pGU, bool &pNoMx, bool &pIsA);

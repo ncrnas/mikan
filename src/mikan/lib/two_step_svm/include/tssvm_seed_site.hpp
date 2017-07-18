@@ -38,16 +38,16 @@ public:
 
     seqan::String<unsigned> const &get_site_pos_s8() const { return mS8Pos; }
 
-    virtual void clear_pos();
+    void clear_pos();
 
 private:
     seqan::String<unsigned> mS1Pos;
     seqan::String<unsigned> mS8Pos;
 
 private:
-    virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
-                                   mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
-                                   seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
+    bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
+                           mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
+                           seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 
 };
 
