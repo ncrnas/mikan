@@ -30,138 +30,45 @@ void TSSVMSeedSeqs::set_flags(mikan::TCharSet &) {
 //
 // TSSVMSeedSites methods
 //
-void TSSVMSeedSites::reset_finder() {
-    goBegin(mFinder);
-    clear(mFinder);
-}
-
-int TSSVMSeedSites::find_seed_sites(
-        mikan::TRNAStr const &pMiRNA) {
-    TSSVMSeedSeqs seedSeqs;
-    mikan::TRNAStr seedSeq;
-    CharString newSeedType;
-    int retVal;
-    unsigned mRNAPos, sitePos;
-
-    reset_finder();
-
-    seedSeqs.set_mirna_seq(pMiRNA);
-    mikan::TCharSet mNullSet;
-    seedSeqs.set_flags(mNullSet);
-    retVal = seedSeqs.create_seed_seqs();
-    if (retVal != 0) {
-        std::cerr << "ERROR: Could not get the seed sequence for " << pMiRNA;
-        std::cerr << std::endl;
-        return 1;
-    }
-
-    for (unsigned i = 0; i < length(seedSeqs.mEffectiveSeeds); ++i) {
-        if (!seedSeqs.mEffectiveSeeds[i]) {
-            continue;
-        }
-
-        seedSeq = seedSeqs.get_seed_seq(i);
-
-        while (find(mFinder, seedSeq)) {
-            mRNAPos = position(mFinder).i1;
-            sitePos = position(mFinder).i2;
-
-            const CharString &seedType = seedSeqs.get_seed_type(i);
-            if (seedType == "GUM" || seedType == "GUT" || seedType == "LP" || seedType == "BT") {
-                if ((sitePos < MIN_DIST_TO_CDS + 1) ||
-                    (sitePos + MIN_DIST_UTR_END > length(mMRNASeqs[mRNAPos]) - 1)) {
-                    continue;
-                }
-            } else {
-                if ((sitePos < MIN_DIST_TO_CDS) || (sitePos + MIN_DIST_UTR_END > length(mMRNASeqs[mRNAPos]))) {
-                    continue;
-                }
-            }
-
-            retVal = set_seed_pos(seedSeqs, mRNAPos, sitePos, pMiRNA, seedSeq, i);
-            if (retVal == 0) {
-                appendValue(mMRNAPos, mRNAPos);
-                appendValue(mSitePos, sitePos);
-                appendValue(mEffectiveSites, true);
-            }
-        }
-        reset_finder();
-    }
-
-    return 0;
-}
-
-void TSSVMSeedSites::clear_pos() {
-    clear(mMRNAPos);
-    clear(mSitePos);
-    clear(mSeedTypes);
-    clear(mS1Pos);
-    clear(mS8Pos);
-    clear(mMisMatchPos);
-    clear(mEffectiveSites);
-}
-
-int TSSVMSeedSites::set_seed_pos(
-        TSSVMSeedSeqs &pSeedSeqs,
+bool TSSVMSeedSites::set_new_seed_type(
         unsigned pMRNAPos,
         unsigned pSitePos,
-        mikan::TRNAStr const &pMiRNA,
-        const mikan::TRNAStr &pSeedSeq,
-        unsigned pIdx) {
+        mikan::TRNAStr &pMiRNASeq,
+        mikan::TCharSet &,
+        seqan::CharString &pSeedType,
+        int pMisMatchPos,
+        bool pEffectiveSite) {
+
     unsigned m8Pos, a1Pos;
-    const CharString &seedType = pSeedSeqs.get_seed_type(pIdx);
-    unsigned mmPos = pSeedSeqs.get_mismatched_pos(pIdx);
-    int retVal;
+    CharString newSeedType;
+
+    mikan::TRNAStr newSeedSeq, complMiRNASeq;
+    seqan::Rna miRNAM2, miRNAM8;
+    seqan::Rna mRNAM2, mRNAM8, mRNAA1;
+    bool IsA1, MatchM8;
 
     m8Pos = pSitePos - 1;
-    if (seedType == "BM") {
+    if (pSeedType == "BM") {
         m8Pos = pSitePos;
     }
 
     a1Pos = pSitePos + 6;
-    if (seedType == "BT") {
+    if (pSeedType == "BT") {
         a1Pos = pSitePos + 7;
     }
-
-    if ((seedType != "6mer") && (a1Pos >= length(mMRNASeqs[pMRNAPos]))) {
-        return 1;
+    if ((pSeedType != "6mer") && (a1Pos >= length(mMRNASeqs[pMRNAPos]))) {
+        return false;
     }
-
-    retVal = set_seed_type(seedType, mMRNASeqs[pMRNAPos], pMiRNA, m8Pos, a1Pos, mmPos, pSeedSeq);
-    if (retVal != 0) {
-        return 1;
-    }
-
-    appendValue(mS1Pos, a1Pos);
-    appendValue(mS8Pos, m8Pos);
-
-    return 0;
-
-}
-
-int TSSVMSeedSites::set_seed_type(
-        const CharString &pCurType,
-        const mikan::TRNAStr &pMRNASeq,
-        const mikan::TRNAStr &pMiRNASeq,
-        unsigned pM8Pos,
-        unsigned pA1Pos,
-        unsigned pMisMatchedPos,
-        const mikan::TRNAStr &) {
-    mikan::TRNAStr newSeedSeq, complMiRNASeq;
-    seqan::Rna miRNAM2, miRNAM8;
-    seqan::Rna mRNAM2, mRNAM8, mRNAA1;
-    CharString newSeedType;
-    bool IsA1, MatchM8;
 
     complMiRNASeq = pMiRNASeq;
     complement(complMiRNASeq);
     miRNAM8 = complMiRNASeq[7];
     miRNAM2 = complMiRNASeq[1];
 
-    mRNAM8 = pMRNASeq[pM8Pos];
-    mRNAM2 = pMRNASeq[pA1Pos - 1];
-    if (pA1Pos < length(pMRNASeq)) {
-        mRNAA1 = pMRNASeq[pA1Pos];
+    mRNAM8 = mMRNASeqs[pMRNAPos][m8Pos];
+    mRNAM2 = mMRNASeqs[pMRNAPos][a1Pos - 1];
+    if (a1Pos < length(mMRNASeqs[pMRNAPos])) {
+        mRNAA1 = mMRNASeqs[pMRNAPos][a1Pos];
     } else {
         mRNAA1 = 'A';
     }
@@ -177,7 +84,7 @@ int TSSVMSeedSites::set_seed_type(
     }
 
     newSeedType = "";
-    if (pCurType == "6mer") {
+    if (pSeedType == "6mer") {
         if (IsA1 && MatchM8) {
             newSeedType = "8mer";
         } else if (IsA1) {
@@ -188,23 +95,30 @@ int TSSVMSeedSites::set_seed_type(
             newSeedType = "6mer";
         }
     } else if (IsA1 && MatchM8) {
-        if (pCurType == "BT") {
+        if (pSeedType == "BT") {
             if (miRNAM2 == mRNAM2) {
-                newSeedType = pCurType;
+                newSeedType = pSeedType;
             }
         } else {
-            newSeedType = pCurType;
+            newSeedType = pSeedType;
         }
     }
 
     if (newSeedType == "") {
-        return 1;
+        pEffectiveSite = false;
+    } else {
+        appendValue(mSeedTypes, newSeedType);
+        appendValue(mMisMatchPos, pMisMatchPos);
+
+        appendValue(mS1Pos, a1Pos);
+        appendValue(mS8Pos, m8Pos);
+        
+        appendValue(mEffectiveSites, true);
+        pEffectiveSite = true;
     }
+    
+    return pEffectiveSite;
 
-    appendValue(mSeedTypes, newSeedType);
-    appendValue(mMisMatchPos, pMisMatchedPos);
-
-    return 0;
 }
 
 //

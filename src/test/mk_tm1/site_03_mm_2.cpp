@@ -20,6 +20,7 @@ protected:
     typedef mikan::TIndexQGram TIdx;
     typedef mikan::TFinder TFin;
     typedef tm1p::TM1SeedSites TSit;
+    typedef tm1p::TM1SeedSeqs TSeed;
 
 };
 
@@ -29,22 +30,27 @@ TEST_F(Site03MM2, mir1_mm) {
     TIdx index(mrna_seqs);
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
+    TSeed seedSeqs;
 
-    int ret_val = sites.find_seed_sites(mirna_seqs[1]);
+    seedSeqs.set_mirna_seq(mirna_seqs[1]);
+    seedSeqs.set_flags(mSeedDef);
+    seedSeqs.create_seed_seqs();
+
+    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
-    EXPECT_EQ(10u, sites.get_length());
+    EXPECT_EQ(8u, sites.get_length());
 
     test_sites2(sites, 0, "6mer", 0, 24, true);
     test_sites2(sites, 1, "7mer-A1", 1, 24, true);
     test_sites2(sites, 2, "6mer", 2, 24, true);
     test_sites2(sites, 3, "7mer-A1", 3, 24, true);
 
-    test_sites2(sites, 4, "", 34, 24, false);
-    test_sites2(sites, 5, "", 35, 24, false);
-    test_sites2(sites, 6, "6mer", 36, 24, true);
-    test_sites2(sites, 7, "6mer", 37, 24, true);
-    test_sites2(sites, 8, "6mer", 38, 24, true);
-    test_sites2(sites, 9, "6mer", 39, 24, true);
+//    test_sites2(sites, 4, "", 34, 24, false);
+//    test_sites2(sites, 5, "", 35, 24, false);
+    test_sites2(sites, 4, "6mer", 36, 24, true);
+    test_sites2(sites, 5, "6mer", 37, 24, true);
+    test_sites2(sites, 6, "6mer", 38, 24, true);
+    test_sites2(sites, 7, "6mer", 39, 24, true);
 }
 
 }

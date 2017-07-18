@@ -24,6 +24,7 @@ protected:
     typedef mikan::TIndexQGram TIdx;
     typedef mikan::TFinder TFin;
     typedef rh2mfe::RH2SeedSites TSit;
+    typedef rh2mfe::RH2SeedSeqs TSeed;
 
 };
 
@@ -33,8 +34,13 @@ TEST_F(Site04MMGU1, mir124_mmgu) {
     TIdx index(mrna_seqs);
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
+    TSeed seedSeqs;
 
-    int ret_val = sites.find_seed_sites(mirna_seqs[0], mSeedDef);
+    seedSeqs.set_mirna_seq(mirna_seqs[0]);
+    seedSeqs.set_flags(mSeedDef);
+    seedSeqs.create_seed_seqs();
+
+    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(14u, sites.get_length());
 
@@ -62,27 +68,30 @@ TEST_F(Site04MMGU1, mir124_def) {
     TIdx index(mrna_seqs);
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
+    TSeed seedSeqs;
 
     mSeedDef[0] = "7mGU+";
-    int ret_val = sites.find_seed_sites(mirna_seqs[0], mSeedDef);
+    seedSeqs.set_mirna_seq(mirna_seqs[0]);
+    seedSeqs.set_flags(mSeedDef);
+    seedSeqs.create_seed_seqs();
+
+    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
-    EXPECT_EQ(14u, sites.get_length());
+    EXPECT_EQ(4u, sites.get_length());
 
-    test_sites2(sites, 0, "7mer", 0, 24, false);
-    test_sites2(sites, 1, "7mer", 1, 24, false);
-
-    test_sites2(sites, 2, "7mer_GUT", 2, 24, false);
-    test_sites2(sites, 3, "7mer_GUT", 3, 24, false);
-    test_sites2(sites, 4, "7mer_GUT", 4, 24, true);
-    test_sites2(sites, 5, "7mer_GUT", 5, 24, true);
-    test_sites2(sites, 6, "7mer_GUT", 6, 24, false);
-    test_sites2(sites, 7, "7mer_GUT", 7, 24, false);
-
-    test_sites2(sites, 8, "7mer_GUT", 8, 24, false);
-    test_sites2(sites, 9, "7mer_GUT", 9, 24, false);
-    test_sites2(sites, 10, "7mer_GUT", 10, 24, true);
-    test_sites2(sites, 11, "7mer_GUT", 11, 24, true);
-    test_sites2(sites, 12, "7mer_GUT", 12, 24, false);
-    test_sites2(sites, 13, "7mer_GUT", 13, 24, false);
+//    test_sites2(sites, 0, "7mer", 0, 24, false);
+//    test_sites2(sites, 1, "7mer", 1, 24, false);
+//    test_sites2(sites, 2, "7mer_GUT", 2, 24, false);
+//    test_sites2(sites, 3, "7mer_GUT", 3, 24, false);
+    test_sites2(sites, 0, "7mer_GUT", 4, 24, true);
+    test_sites2(sites, 1, "7mer_GUT", 5, 24, true);
+//    test_sites2(sites, 6, "7mer_GUT", 6, 24, false);
+//    test_sites2(sites, 7, "7mer_GUT", 7, 24, false);
+//    test_sites2(sites, 8, "7mer_GUT", 8, 24, false);
+//    test_sites2(sites, 9, "7mer_GUT", 9, 24, false);
+    test_sites2(sites, 2, "7mer_GUT", 10, 24, true);
+    test_sites2(sites, 3, "7mer_GUT", 11, 24, true);
+//    test_sites2(sites, 12, "7mer_GUT", 12, 24, false);
+//    test_sites2(sites, 13, "7mer_GUT", 13, 24, false);
 }
 }

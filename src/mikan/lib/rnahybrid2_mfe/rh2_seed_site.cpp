@@ -56,116 +56,54 @@ void RH2SeedSeqs::set_flags(mikan::TCharSet &pSeedTypeDef) {
 //
 // RH2SeedSites methods
 //
-void RH2SeedSites::reset_finder() {
-    goBegin(mFinder);
-    clear(mFinder);
-}
-
-int RH2SeedSites::find_seed_sites(mikan::TRNAStr const &pMiRNA, mikan::TCharSet &pSeedDef) {
-    RH2SeedSeqs seedSeqs;
-    mikan::TRNAStr seedSeq;
-    CharString seedType;
-    int retVal;
-    unsigned mRNAPos, sitePos;
-    bool effectiveSite;
-
-    reset_finder();
-
-    seedSeqs.set_mirna_seq(pMiRNA);
-    seedSeqs.set_flags(pSeedDef);
-    retVal = seedSeqs.create_seed_seqs();
-    if (retVal != 0) {
-        std::cerr << "ERROR: Could not get the seed sequence for " << pMiRNA;
-        std::cerr << std::endl;
-        return 1;
-    }
-
-    for (unsigned i = 0; i < length(seedSeqs.mEffectiveSeeds); ++i) {
-        if (!seedSeqs.mEffectiveSeeds[i]) {
-            continue;
-        }
-
-        seedSeq = seedSeqs.get_seed_seq(i);
-        seedType = seedSeqs.get_seed_type(i);
-
-        while (find(mFinder, seedSeq)) {
-            mRNAPos = position(mFinder).i1;
-            sitePos = position(mFinder).i2;
-
-            effectiveSite = true;
-            if ((sitePos < MIN_DIST_TO_CDS) || (sitePos + MIN_DIST_UTR_END > length(mMRNASeqs[mRNAPos]))) {
-                effectiveSite = false;
-            }
-
-            appendValue(mMRNAPos, mRNAPos);
-            appendValue(mSitePos, sitePos);
-            set_new_seed_type(seedType, pSeedDef[0], mRNAPos, sitePos, pMiRNA, effectiveSite);
-            appendValue(mEffectiveSites, effectiveSite);
-        }
-        reset_finder();
-    }
-
-    return 0;
-}
-
-void RH2SeedSites::clear_pos() {
-    clear(mMRNAPos);
-    clear(mSitePos);
-    clear(mSeedTypes);
-    clear(mEffectiveSites);
-}
-
-void RH2SeedSites::set_new_seed_type(
-        CharString &pCurSeedType,
-        CharString &pSeedDef,
+bool RH2SeedSites::set_new_seed_type(
         unsigned pMRNAPos,
         unsigned pSitePos,
-        mikan::TRNAStr const &pMiRNA,
-        bool &pEffectiveSite) {
+        mikan::TRNAStr &pMiRNASeq,
+        mikan::TCharSet &pSeedTypeDef,
+        seqan::CharString &pSeedType,
+        int,
+        bool pEffectiveSite) {
+
     bool IsA1, MatchM8;
     mikan::TRNAStr revMiRNASeq, miRNAM8, mRNAM8, miRNAM8c, mRNAA1;
     CharString newSeedType = "";
-    mikan::TRNAStr miRNASeq = pMiRNA;
     bool noA1;
 
-    if (!pEffectiveSite) {
-        appendValue(mSeedTypes, "");
-        return;
-    }
-    revMiRNASeq = pMiRNA;
+    revMiRNASeq = pMiRNASeq;
     miRNAM8 = revMiRNASeq[7];
     complement(revMiRNASeq);
     miRNAM8c = revMiRNASeq[7];
 
     mRNAM8 = mMRNASeqs[pMRNAPos][pSitePos - 1];
 
-    if (pSitePos + SEED_LEN < length(mMRNASeqs[pMRNAPos])) {
-        mRNAA1 = mMRNASeqs[pMRNAPos][pSitePos + SEED_LEN];
+    if (pSitePos + mikan::SEEDLEN < length(mMRNASeqs[pMRNAPos])) {
+        mRNAA1 = mMRNASeqs[pMRNAPos][pSitePos + mikan::SEEDLEN];
         noA1 = false;
     } else {
         mRNAA1 = 'A';
         noA1 = true;
     }
 
-    if (pSeedDef[0] == '6') {
-        newSeedType = pCurSeedType;
-    } else if (pSeedDef[0] == '7') {
+    if (pSeedTypeDef[0][0] == '6') {
+        newSeedType = pSeedType;
+    } else if (pSeedTypeDef[0][0] == '7') {
         if (miRNAM8c == mRNAM8) {
-            newSeedType = pCurSeedType;
-        } else if (pCurSeedType == "7mer" || pSeedDef == "7mGU+") {
+            newSeedType = pSeedType;
+        } else if (pSeedType == "7mer" || pSeedTypeDef[0] == "7mGU+") {
             if ((miRNAM8 == 'G') && (mRNAM8 == 'U')) {
                 newSeedType = "7mer_GUT";
             } else if ((miRNAM8 == 'U') && (mRNAM8 == 'G')) {
                 newSeedType = "7mer_GUM";
             } else {
-                newSeedType = pCurSeedType;
+                newSeedType = pSeedType;
                 pEffectiveSite = false;
             }
         } else {
-            newSeedType = pCurSeedType;
+            newSeedType = pSeedType;
             pEffectiveSite = false;
         }
-    } else if (pSeedDef == "targetscan") {
+    } else if (pSeedTypeDef[0] == "targetscan") {
         if (miRNAM8 == mRNAM8) {
             MatchM8 = true;
         } else {
@@ -190,9 +128,13 @@ void RH2SeedSites::set_new_seed_type(
         }
     }
 
-    appendValue(mSeedTypes, newSeedType);
+    if (pEffectiveSite) {
+        appendValue(mSeedTypes, newSeedType);
+        appendValue(mMisMatchPos, 0);
+        appendValue(mEffectiveSites, pEffectiveSite);
+    }
 
-    return;
+    return pEffectiveSite;
 
 }
 

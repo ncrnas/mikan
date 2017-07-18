@@ -28,6 +28,7 @@ protected:
     typedef mikan::TIndexQGram TIdx;
     typedef mikan::TFinder TFin;
     typedef ptddg::PITASeedSites TSit;
+    typedef ptddg::PITASeedSeqs TSeed;
 
 };
 
@@ -37,17 +38,22 @@ TEST_F(Site06BM1, mir124_bm) {
     TIdx index(mrna_seqs);
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
+    TSeed seedSeqs;
 
-    int ret_val = sites.find_seed_sites(mirna_seqs[0], mSeedDef);
+    seedSeqs.set_mirna_seq(mirna_seqs[0]);
+    seedSeqs.set_flags(mSeedDef);
+    seedSeqs.create_seed_seqs();
+
+    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
-    EXPECT_EQ(6u, sites.get_length());
+    EXPECT_EQ(4u, sites.get_length());
 
-    test_sites(sites, 0, "MM", 0, 25, false, 0);
-    test_sites(sites, 1, "MM", 1, 25, false, 0);
-    test_sites(sites, 2, "8mer_MM", 6, 26, true, 5);
-    test_sites(sites, 3, "8mer_MM", 7, 26, true, 5);
-    test_sites(sites, 4, "8mer_MMGU", 4, 26, true, 5);
-    test_sites(sites, 5, "8mer_MMGU", 5, 26, true, 5);
+//    test_sites(sites, 0, "MM", 0, 25, false, 0);
+//    test_sites(sites, 1, "MM", 1, 25, false, 0);
+    test_sites(sites, 0, "8mer_MM", 6, 26, true, 5);
+    test_sites(sites, 1, "8mer_MM", 7, 26, true, 5);
+    test_sites(sites, 2, "8mer_MMGU", 4, 26, true, 5);
+    test_sites(sites, 3, "8mer_MMGU", 5, 26, true, 5);
 }
 
 TEST_F(Site06BM1, mir124_def) {
@@ -56,20 +62,25 @@ TEST_F(Site06BM1, mir124_def) {
     TIdx index(mrna_seqs);
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
+    TSeed seedSeqs;
 
     mSeedDef[3] = "1";
     mSeedDef[4] = "0:1";
     mSeedDef[5] = "1";
-    int ret_val = sites.find_seed_sites(mirna_seqs[0], mSeedDef);
-    EXPECT_EQ(0, ret_val);
-    EXPECT_EQ(6u, sites.get_length());
+    seedSeqs.set_mirna_seq(mirna_seqs[0]);
+    seedSeqs.set_flags(mSeedDef);
+    seedSeqs.create_seed_seqs();
 
-    test_sites(sites, 0, "MM", 0, 25, false, 0);
-    test_sites(sites, 1, "MM", 1, 25, false, 0);
-    test_sites(sites, 2, "8mer_MM", 6, 26, true, 5);
-    test_sites(sites, 3, "8mer_MM", 7, 26, true, 5);
-    test_sites(sites, 4, "8mer_MMGU", 4, 26, true, 5);
-    test_sites(sites, 5, "8mer_MMGU", 5, 26, true, 5);
+    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
+    EXPECT_EQ(0, ret_val);
+    EXPECT_EQ(4u, sites.get_length());
+
+//    test_sites(sites, 0, "MM", 0, 25, false, 0);
+//    test_sites(sites, 1, "MM", 1, 25, false, 0);
+    test_sites(sites, 0, "8mer_MM", 6, 26, true, 5);
+    test_sites(sites, 1, "8mer_MM", 7, 26, true, 5);
+    test_sites(sites, 2, "8mer_MMGU", 4, 26, true, 5);
+    test_sites(sites, 3, "8mer_MMGU", 5, 26, true, 5);
 }
 
 }

@@ -35,6 +35,8 @@ public:
     seqan::CharString mOFileTargetSite;
     seqan::CharString mOFileMRNA;
 
+    mikan::TCharSet mSeedTypeDef;
+
 public:
     // Define methods
     TSSVMCore(mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs, 

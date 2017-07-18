@@ -16,7 +16,9 @@ typedef seqan::StringSet<TRNAStr> TRNASet;
 typedef seqan::Index<TRNASet, seqan::IndexQGram<seqan::UngappedShape<SEEDLEN> > > TIndexQGram;
 typedef seqan::Finder<TIndexQGram> TFinder;
 
-typedef seqan::String<unsigned> TSitePos;
+typedef seqan::String<unsigned> TMRNAPosSet;
+typedef seqan::String<unsigned> TSitePosSet;
+typedef seqan::String<int> TMismatchSet;
 
 } // namespace mikan
 

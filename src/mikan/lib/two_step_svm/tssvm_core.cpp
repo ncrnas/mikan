@@ -69,6 +69,9 @@ void TSSVMCore::init_from_args(TSSVMOptions &opts) {
     mOFileTargetSite = opts.mOFileSite;
     mOFileMRNA = opts.mOFileTotal;
     mOutputAlign = opts.mOutputAlign;
+
+    resize(mSeedTypeDef, 1);
+    mSeedTypeDef[0] = "";
 }
 
 int TSSVMCore::init_site_svm() {
@@ -123,9 +126,19 @@ int TSSVMCore::calculate_mirna_scores(unsigned pIdx) {
     int retVal;
     mikan::TRNAStr miRNASeq = mMiRNASeqs[pIdx];
 
+    // Generate seed sequences
+    TSSVMSeedSeqs seedSeqs;
+    seedSeqs.set_mirna_seq(miRNASeq);
+    seedSeqs.set_flags(mSeedTypeDef);
+    retVal = seedSeqs.create_seed_seqs();
+    if (retVal != 0) {
+        std::cerr << "ERROR: Generate seed sequences failed." << std::endl;
+        return 1;
+    }
+
     // Search seed sites
     if (mExecSearchSeedSites) {
-        retVal = mSeedSites.find_seed_sites(miRNASeq);
+        retVal = mSeedSites.find_seed_sites(seedSeqs, mSeedTypeDef);
         if (retVal != 0) {
             std::cerr << "ERROR: Seed site search failed." << std::endl;
             return 1;

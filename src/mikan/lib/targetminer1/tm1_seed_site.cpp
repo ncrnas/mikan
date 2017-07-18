@@ -61,160 +61,68 @@ int TM1SeedSeqs::create_other_seed_seqs(mikan::TRNAStr &pSeedSeq) {
 //
 // TM1SeedSites methods
 //
-void TM1SeedSites::reset_finder() {
-    goBegin(mFinder);
-    clear(mFinder);
-}
-
-int TM1SeedSites::find_seed_sites(mikan::TRNAStr const &pMiRNA) {
-    TM1SeedSeqs seedSeqs;
-    mikan::TRNAStr seedSeq;
-    CharString seedType;
-    int retVal;
-    unsigned mRNAPos, sitePos;
-    bool effectiveSite;
-    unsigned idx;
-
-    reset_finder();
-
-    seedSeqs.set_mirna_seq(pMiRNA);
-    mikan::TCharSet mNullSet;
-    seedSeqs.set_flags(mNullSet);
-    retVal = seedSeqs.create_seed_seqs();
-    if (retVal != 0) {
-        std::cerr << "ERROR: Could not get the seed sequence for " << pMiRNA;
-        std::cerr << std::endl;
-        return 1;
-    }
-
-    idx = 0;
-    for (unsigned i = 0; i < length(seedSeqs.mEffectiveSeeds); ++i) {
-        if (!seedSeqs.mEffectiveSeeds[i]) {
-            continue;
-        }
-
-        seedSeq = seedSeqs.get_seed_seq(i);
-        seedType = seedSeqs.get_seed_type(i);
-
-        while (find(mFinder, seedSeq)) {
-            mRNAPos = position(mFinder).i1;
-            sitePos = position(mFinder).i2;
-
-            appendValue(mMRNAPos, mRNAPos);
-            appendValue(mSitePos, sitePos);
-            effectiveSite = false;
-            set_new_seed_type(seedType, mRNAPos, sitePos, pMiRNA, effectiveSite);
-            appendValue(mEffectiveSites, effectiveSite);
-            ++idx;
-        }
-        reset_finder();
-    }
-
-    return 0;
-}
-
 void TM1SeedSites::clear_pos() {
-    clear(mMRNAPos);
-    clear(mSitePos);
-    clear(mSeedTypes);
-    clear(mEffectiveSites);
+    mikan::MKSeedSites::clear_pos();
+
     clear(mM8Match);
     clear(mM8GU);
     clear(mM1A);
     clear(mM1Match);
     clear(mM1GU);
     clear(mMRNASeqLen);
-    clear(mM8Pos);
-}
-
-void TM1SeedSites::get_mx_match(
-        mikan::TRNAStr const &pMiRNASeq,
-        mikan::TRNAStr const &pMiRNACompSeq,
-        mikan::TRNAStr const &pMRNASeq,
-        unsigned pSitePos,
-        int pMx,
-        bool &pMatch,
-        bool &pGU,
-        bool &pNoMx,
-        bool &pIsA) {
-    int pos;
-    mikan::TRNAStr miRNAMx, miRNAMxC, mRNAMx;
-
-    pos = pSitePos - (pMx - 7);
-    miRNAMx = pMiRNASeq[pMx - 1];
-    miRNAMxC = pMiRNACompSeq[pMx - 1];
-
-    pMatch = false;
-    pGU = false;
-    pIsA = false;
-
-    if (pos >= 0 && pos < (int) length(pMRNASeq)) {
-        mRNAMx = pMRNASeq[pos];
-        if (mRNAMx == 'A') {
-            pIsA = true;
-        }
-        if (miRNAMxC == mRNAMx) {
-            pMatch = true;
-        }
-        if (((miRNAMx == 'G') && (mRNAMx == 'U')) || ((miRNAMx == 'U') && (mRNAMx == 'G'))) {
-            pGU = true;
-        }
-        pNoMx = false;
-    } else {
-        pNoMx = true;
-    }
 }
 
 void TM1SeedSites::get_match_count(
-        mikan::TRNAStr const &pMiRNASeq,
-        mikan::TRNAStr const &pMiRNACompSeq,
-        mikan::TRNAStr const &pMRNASeq,
+        unsigned pMRNAPos,
         unsigned pSitePos,
+        mikan::TRNAStr const &pMiRNASeq,
         int pMx1,
         int pMx2,
         int &pMatchCount,
         int &pGUCount) {
-    bool isAx, matchMx, guMx, noMx;
+
+    bool isAx, matchMx, gutMx, gumMx, noMx;
     pMatchCount = 0;
     pGUCount = 0;
 
     for (int i = pMx1; i < pMx2 + 1; ++i) {
-        get_mx_match(pMiRNASeq, pMiRNACompSeq, pMRNASeq, pSitePos, i, matchMx, guMx, noMx, isAx);
+        set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, i, noMx, matchMx, gutMx, gumMx, isAx);
+
         if (!noMx) {
             if (matchMx) {
                 ++pMatchCount;
-            } else if (guMx) {
+            } else if (gutMx || gumMx) {
                 ++pGUCount;
             }
         }
     }
 }
 
-void TM1SeedSites::set_new_seed_type(
-        CharString &,
+bool TM1SeedSites::set_new_seed_type(
         unsigned pMRNAPos,
         unsigned pSitePos,
-        mikan::TRNAStr const &pMiRNA,
-        bool &pEffectiveSite) {
+        mikan::TRNAStr &pMiRNASeq,
+        mikan::TCharSet &,
+        seqan::CharString &,
+        int,
+        bool pEffectiveSite) {
+
     CharString newSeedType = "";
     bool isA1, isAx;
     bool matchM1, matchM2, matchM8, matchM9;
-    bool guM1, guM2, guM8, guM9;
+    bool gumM1, gutM2, gutM8, gutM9;
+    bool gutM1, gumM2, gumM8, gumM9;
     bool noM1, noM2, noM8, noM9;
     int matchCount, guCount, matchCount2, guCount2;
-    mikan::TRNAStr revMiRNASeq;
-
-    revMiRNASeq = pMiRNA;
-    complement(revMiRNASeq);
 
     // check m8, m2, m1 match
-    get_mx_match(pMiRNA, revMiRNASeq, mMRNASeqs[pMRNAPos], pSitePos, 9, matchM9, guM9, noM9, isAx);
-    get_mx_match(pMiRNA, revMiRNASeq, mMRNASeqs[pMRNAPos], pSitePos, 8, matchM8, guM8, noM8, isAx);
-    get_mx_match(pMiRNA, revMiRNASeq, mMRNASeqs[pMRNAPos], pSitePos, 2, matchM2, guM2, noM2, isAx);
-    get_mx_match(pMiRNA, revMiRNASeq, mMRNASeqs[pMRNAPos], pSitePos, 1, matchM1, guM1, noM1, isA1);
-
-    get_match_count(pMiRNA, revMiRNASeq, mMRNASeqs[pMRNAPos], pSitePos, 2, 7, matchCount, guCount);
-    get_match_count(pMiRNA, revMiRNASeq, mMRNASeqs[pMRNAPos], pSitePos, 2, 8, matchCount2, guCount2);
+    set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 9, noM9, matchM9, gutM9, gumM9, isAx);
+    set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 8, noM8, matchM8, gutM8, gumM8, isAx);
+    set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 2, noM2, matchM2, gutM2, gumM2, isAx);
+    set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 1, noM1, matchM1, gutM1, gumM1, isA1);
+    
+    get_match_count(pMRNAPos, pSitePos, pMiRNASeq, 2, 7, matchCount, guCount);
+    get_match_count(pMRNAPos, pSitePos, pMiRNASeq, 2, 8, matchCount2, guCount2);
 
     if (isA1 && matchM8 && (matchCount + guCount == 6) && guCount < 2) {
         newSeedType = "8mer";
@@ -227,19 +135,25 @@ void TM1SeedSites::set_new_seed_type(
     }
 
     if (newSeedType != "") {
+        appendValue(mSeedTypes, newSeedType);
+
+        appendValue(mM8Match, matchM8);
+        appendValue(mM8GU, gutM8 || gumM8);
+        appendValue(mM1A, isA1);
+        appendValue(mM1Match, matchM1);
+        appendValue(mM1GU, gutM1 || gumM1);
+
+        appendValue(mMRNASeqLen, length(mMRNASeqs[pMRNAPos]));
+
+        appendValue(mEffectiveSites, true);
+
         pEffectiveSite = true;
+    } else {
+        pEffectiveSite = false;
     }
 
-    appendValue(mSeedTypes, newSeedType);
+    return pEffectiveSite;
 
-    appendValue(mM8Match, matchM8);
-    appendValue(mM8GU, guM8);
-    appendValue(mM1A, isA1);
-    appendValue(mM1Match, matchM1);
-    appendValue(mM1GU, guM1);
-
-    appendValue(mMRNASeqLen, length(mMRNASeqs[pMRNAPos]));
-    appendValue(mM8Pos, pSitePos - 1);
 }
 
 int TM1SeedSites::get_seed_len(int pIdx) {
@@ -273,7 +187,7 @@ int TM1SeedSites::get_seed_start_pos(int pIdx) {
         }
     }
 
-    return std::max((int) mM8Pos[pIdx] + offset, 0);
+    return std::max((int) mS8Pos[pIdx] + offset, 0);
 }
 
 int TM1SeedSites::get_seed_start_pos2(int pIdx) {
@@ -293,7 +207,7 @@ int TM1SeedSites::get_seed_start_pos2(int pIdx) {
         }
     }
 
-    return std::max((int) mM8Pos[pIdx] + offset, 0);
+    return std::max((int) mS8Pos[pIdx] + offset, 0);
 }
 
 int TM1SeedSites::get_length_to_cds(int pIdx) {
@@ -313,7 +227,7 @@ int TM1SeedSites::get_length_to_cds(int pIdx) {
         }
     }
 
-    return std::max((int) mM8Pos[pIdx] + offset, 0);
+    return std::max((int) mS8Pos[pIdx] + offset, 0);
 }
 
 int TM1SeedSites::get_seed_end_pos(int pIdx) {
@@ -334,7 +248,7 @@ int TM1SeedSites::get_seed_end_pos(int pIdx) {
     }
 
 
-    return std::min((int) mM8Pos[pIdx] + offset, (int) mMRNASeqLen[pIdx]);
+    return std::min((int) mS8Pos[pIdx] + offset, (int) mMRNASeqLen[pIdx]);
 }
 
 int TM1SeedSites::get_seed_end_pos2(int pIdx) {
@@ -354,19 +268,7 @@ int TM1SeedSites::get_seed_end_pos2(int pIdx) {
         }
     }
 
-
-    return std::min((int) mM8Pos[pIdx] + offset, (int) mMRNASeqLen[pIdx]);
-}
-
-void TM1SeedSites::print_all() {
-    for (unsigned i = 0 ; i < length(mEffectiveSites); i++) {
-        std::cout << i << ", ";
-        std::cout << mSeedTypes[i] << ", ";
-        std::cout << mMRNAPos[i] << ", ";
-        std::cout << mSitePos[i] << ", ";
-        std::cout << mEffectiveSites[i] << std::endl;
-    }
-
+    return std::min((int) mS8Pos[pIdx] + offset, (int) mMRNASeqLen[pIdx]);
 }
 
 } // namespace tm1p
