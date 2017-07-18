@@ -62,17 +62,14 @@ int TM1SeedSeqs::create_other_seed_seqs(mikan::TRNAStr &pSeedSeq) {
 // TM1SeedSites methods
 //
 void TM1SeedSites::clear_pos() {
-    clear(mMRNAPos);
-    clear(mSitePos);
-    clear(mSeedTypes);
-    clear(mEffectiveSites);
+    mikan::MKSeedSites::clear_pos();
+
     clear(mM8Match);
     clear(mM8GU);
     clear(mM1A);
     clear(mM1Match);
     clear(mM1GU);
     clear(mMRNASeqLen);
-    clear(mM8Pos);
 }
 
 void TM1SeedSites::get_match_count(
@@ -147,7 +144,6 @@ bool TM1SeedSites::set_new_seed_type(
         appendValue(mM1GU, gutM1 || gumM1);
 
         appendValue(mMRNASeqLen, length(mMRNASeqs[pMRNAPos]));
-        appendValue(mM8Pos, pSitePos - 1);
 
         appendValue(mEffectiveSites, true);
 
@@ -191,7 +187,7 @@ int TM1SeedSites::get_seed_start_pos(int pIdx) {
         }
     }
 
-    return std::max((int) mM8Pos[pIdx] + offset, 0);
+    return std::max((int) mS8Pos[pIdx] + offset, 0);
 }
 
 int TM1SeedSites::get_seed_start_pos2(int pIdx) {
@@ -211,7 +207,7 @@ int TM1SeedSites::get_seed_start_pos2(int pIdx) {
         }
     }
 
-    return std::max((int) mM8Pos[pIdx] + offset, 0);
+    return std::max((int) mS8Pos[pIdx] + offset, 0);
 }
 
 int TM1SeedSites::get_length_to_cds(int pIdx) {
@@ -231,7 +227,7 @@ int TM1SeedSites::get_length_to_cds(int pIdx) {
         }
     }
 
-    return std::max((int) mM8Pos[pIdx] + offset, 0);
+    return std::max((int) mS8Pos[pIdx] + offset, 0);
 }
 
 int TM1SeedSites::get_seed_end_pos(int pIdx) {
@@ -252,7 +248,7 @@ int TM1SeedSites::get_seed_end_pos(int pIdx) {
     }
 
 
-    return std::min((int) mM8Pos[pIdx] + offset, (int) mMRNASeqLen[pIdx]);
+    return std::min((int) mS8Pos[pIdx] + offset, (int) mMRNASeqLen[pIdx]);
 }
 
 int TM1SeedSites::get_seed_end_pos2(int pIdx) {
@@ -272,7 +268,7 @@ int TM1SeedSites::get_seed_end_pos2(int pIdx) {
         }
     }
 
-    return std::min((int) mM8Pos[pIdx] + offset, (int) mMRNASeqLen[pIdx]);
+    return std::min((int) mS8Pos[pIdx] + offset, (int) mMRNASeqLen[pIdx]);
 }
 
 } // namespace tm1p

@@ -32,6 +32,8 @@ public:
         mCheckPosMethod = "tssvm";
         mMinToCDS = 15;
         mMinToEnd = 0;
+
+        mUpdatePos = false;
     }
 
 private:

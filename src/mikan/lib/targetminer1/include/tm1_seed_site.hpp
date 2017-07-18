@@ -60,7 +60,6 @@ private:
     seqan::String<bool> mM1Match;
     seqan::String<bool> mM1GU;
     seqan::String<unsigned> mMRNASeqLen;
-    seqan::String<unsigned> mM8Pos;
 
 private:
     bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,

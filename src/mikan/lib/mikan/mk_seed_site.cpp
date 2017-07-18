@@ -63,6 +63,17 @@ int MKSeedSites::find_seed_sites(mikan::MKSeedSeqs &seedSeqs, mikan::TCharSet &p
         reset_finder();
     }
 
+    if (mUpdatePos) {
+        resize(mS1Pos, length(mEffectiveSites));
+        resize(mS8Pos, length(mEffectiveSites));
+
+        for (unsigned i = 0; i < length(mEffectiveSites); i++) {
+            mS1Pos[i] = mSitePos[i] + 6;
+            mS8Pos[i] = mSitePos[i] - 1;
+        }
+
+    }
+
     return 0;
 }
 

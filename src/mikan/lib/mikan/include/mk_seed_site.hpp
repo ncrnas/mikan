@@ -25,6 +25,8 @@ public:
         mCheckPosMethod = "";
         mMinToCDS = 0;
         mMinToEnd = 0;
+
+        mUpdatePos = true;
     }
 
     unsigned get_length() const { return seqan::length(mSitePos); }
@@ -64,6 +66,7 @@ protected:
     unsigned mMinToCDS;
     unsigned mMinToEnd;
 
+    bool mUpdatePos;
     mikan::TSitePosSet mS1Pos;
     mikan::TSitePosSet mS8Pos;
 
