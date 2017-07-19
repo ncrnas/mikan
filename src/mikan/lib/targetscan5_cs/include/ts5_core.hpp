@@ -32,7 +32,7 @@ public:
 
 public:
     // Define methods
-    TS5Core(mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs, 
+    TS5Core(mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
             mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
             mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
             mExecSearchSeedSites(true), mExecGetRawFeat(true), mExecCalcContexScore(true),

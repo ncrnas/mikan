@@ -37,7 +37,7 @@ public:
 
 public:
     // Define methods
-    TM1Core(mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs, 
+    TM1Core(mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
             mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
             mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
             mExecSearchSeedSites(true), mExecGetRawFeat(true), mExecSortSites(true), mExecGetMRNAFeat(true),

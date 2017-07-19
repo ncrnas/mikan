@@ -76,7 +76,7 @@ void PITADGDuplexScores::clear_scores() {
 
 int PITADGDuplexScores::calc_scores(
         PITASeedSites &pSeedSites,
-        mikan::TRNAStr  const &pMiRNASeq,
+        mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &sitePos = pSeedSites.get_site_pos();
@@ -125,7 +125,7 @@ int PITADGDuplexScores::calc_scores(
 }
 
 void PITADGDuplexScores::create_input_mirna_seq(
-        mikan::TRNAStr  const &pMiRNASeq,
+        mikan::TRNAStr const &pMiRNASeq,
         std::string &pInputMiRNASeq) {
     for (unsigned i = 0; i < length(pMiRNASeq); ++i) {
         pInputMiRNASeq[i] = pMiRNASeq[i];

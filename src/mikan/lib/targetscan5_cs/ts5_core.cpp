@@ -136,7 +136,7 @@ int TS5Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Get raw features
     if (mExecGetRawFeat) {
-        retVal = mRawFeatures.add_features(miRNASeq, mMRNASeqs, mSeedSites) ;
+        retVal = mRawFeatures.add_features(miRNASeq, mMRNASeqs, mSeedSites);
         if (retVal != 0) {
             std::cerr << "ERROR: Feature calculation failed." << std::endl;
             return 1;
@@ -203,7 +203,6 @@ int TS5Core::write_context_score(seqan::CharString const &pMiRNAId) {
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     seqan::CharString seedType;
     int seedStart, seedEnd;
-
 
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {

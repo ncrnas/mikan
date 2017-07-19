@@ -49,7 +49,7 @@ bool TS5SeedSites::set_new_seed_type(
         newSeedType = "7mer-m8";
     }
 
-    lenToCds =pSitePos;
+    lenToCds = pSitePos;
     if (newSeedType == "8mer" || newSeedType == "7mer-m8") {
         lenToCds -= 1;
     }

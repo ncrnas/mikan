@@ -15,7 +15,7 @@ namespace tm1p {
 class TM1SeedSeqs : public mikan::MKSeedSeqs {
 public:
     // Define methods
-    TM1SeedSeqs(): MKSeedSeqs() {}
+    TM1SeedSeqs() : MKSeedSeqs() {}
 
     // Method prototypes
     void set_flags(mikan::TCharSet &pSeedTypeDef);
@@ -32,7 +32,7 @@ public:
     // Define methods
     TM1SeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
             MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {}
-    
+
     bool is_m8_match_gu(int i) { return (mM8Match[i] || mM8GU[i]); }
 
     bool is_m8_match(int i) { return (mM8Match[i]); }
@@ -52,7 +52,7 @@ public:
     int get_length_to_cds(int pIdx);
 
     void clear_pos();
-    
+
 private:
     seqan::String<bool> mM8Match;
     seqan::String<bool> mM8GU;

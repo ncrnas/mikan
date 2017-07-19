@@ -53,7 +53,8 @@ private:
     float mMinAlignScore;
 
 private:
-    void create_input_mirna_seq(mikan::TRNAStr const &pMiRNASeq, mikan::TRNAStr &pInputMiRNASeq, mikan::TRNAStr &pIMiRNASeedSeq,
+    void create_input_mirna_seq(mikan::TRNAStr const &pMiRNASeq, mikan::TRNAStr &pInputMiRNASeq,
+                                mikan::TRNAStr &pIMiRNASeedSeq,
                                 seqan::Rna5String &pIMiRNA3pSeq);
 
     void create_input_mrna_seq(mikan::TRNAStr const &pMiRNASeq, mikan::TRNAStr const &pMRNASeq, int pStart, int pEnd,

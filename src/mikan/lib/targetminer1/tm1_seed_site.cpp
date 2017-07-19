@@ -120,7 +120,7 @@ bool TM1SeedSites::set_new_seed_type(
     set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 8, noM8, matchM8, gutM8, gumM8, isAx);
     set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 2, noM2, matchM2, gutM2, gumM2, isAx);
     set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 1, noM1, matchM1, gutM1, gumM1, isA1);
-    
+
     get_match_count(pMRNAPos, pSitePos, pMiRNASeq, 2, 7, matchCount, guCount);
     get_match_count(pMRNAPos, pSitePos, pMiRNASeq, 2, 8, matchCount2, guCount2);
 

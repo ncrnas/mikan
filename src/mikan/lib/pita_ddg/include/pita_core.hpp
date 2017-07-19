@@ -42,15 +42,15 @@ public:
 
 public:
     // Define methods
-    PITACore(mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs, 
+    PITACore(mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
              mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
              mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
-             mExecSearchSeedSites(true), mExecCalDDGScore(true), mExecFilterOverlap(true),
-             mExecSortSites(true), mExecSumScores(true), mOutputDDGScore(true), mOutputTotalScore(true),
-             mOutputAlign(true), mMinSeedLen(6), mMaxSeedLen(8), mFlankUp(0), mFlankDown(0),
-             mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
-             mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
-             mDDGScores() {}
+            mExecSearchSeedSites(true), mExecCalDDGScore(true), mExecFilterOverlap(true),
+            mExecSortSites(true), mExecSumScores(true), mOutputDDGScore(true), mOutputTotalScore(true),
+            mOutputAlign(true), mMinSeedLen(6), mMaxSeedLen(8), mFlankUp(0), mFlankDown(0),
+            mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
+            mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
+            mDDGScores() {}
 
     void set_backtrack(bool pBT) { mDDGScores.set_backtrack(pBT); }
 

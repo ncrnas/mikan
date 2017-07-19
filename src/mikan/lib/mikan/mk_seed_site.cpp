@@ -125,7 +125,7 @@ void MKSeedSites::set_mx_matches(
 
     int pos;
     mikan::TRNAStr cMiRNASeq, miRNAMx, mRNAMx, miRNAMxC;
-    
+
     miRNAMx = pMiRNA[pMx - 1];
     cMiRNASeq = pMiRNA;
     complement(cMiRNASeq);
@@ -156,7 +156,7 @@ void MKSeedSites::set_mx_matches(
 }
 
 void MKSeedSites::print_all() {
-    for (unsigned i = 0 ; i < length(mEffectiveSites); i++) {
+    for (unsigned i = 0; i < length(mEffectiveSites); i++) {
         std::cout << i << ", ";
         std::cout << mSeedTypes[i] << ", ";
         std::cout << mMRNAPos[i] << ", ";

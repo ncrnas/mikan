@@ -64,10 +64,10 @@ bool RH2SeedSites::set_new_seed_type(
         seqan::CharString &pSeedType,
         int,
         bool pEffectiveSite) {
-    
+
     bool matchM8, matchM1, gutM8, gutM1, gumM8, gumM1, isA8, isA1, noM8, noM1;
     CharString newSeedType = "";
-    
+
     set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 8, noM8, matchM8, gutM8, gumM8, isA8);
     set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 1, noM1, matchM1, gutM1, gumM1, isA1);
 

@@ -198,7 +198,7 @@ void TS5TotalScores::clear_scores() {
 }
 
 int TS5TotalScores::calc_scores(TS5SeedSites &pSeedSites,
-                                            TS5ContextScores &pContextScores) {
+                                TS5ContextScores &pContextScores) {
     const String<unsigned> &siteMRNAPos = pSeedSites.get_mrna_pos();
     int prevPos = -1;
     int newIdx = -1;

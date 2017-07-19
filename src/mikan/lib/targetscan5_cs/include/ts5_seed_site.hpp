@@ -15,7 +15,7 @@ namespace ts5cs {
 class TS5SeedSeqs : public mikan::MKSeedSeqs {
 public:
     // Define methods
-    TS5SeedSeqs(): MKSeedSeqs() {}
+    TS5SeedSeqs() : MKSeedSeqs() {}
 
     // Method prototypes
     void set_flags(mikan::TCharSet &pSeedTypeDef);
