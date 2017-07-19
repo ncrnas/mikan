@@ -28,19 +28,22 @@ void TS5ContextScores::clear_scores() {
     mThreePrimePair.clear_scores();
 }
 
-int TS5ContextScores::calc_scores(TS5RawFeatures &pRawFeatures) {
+int TS5ContextScores::calc_scores(TS5RawFeatures &pRawFeatures, TS5SeedSites &pSeedSites) {
     CharString seedType;
     int sitePos;
     float auRich, threePrimePair;
     float seedTypeScore, sitePosScore, auRichScore, threePrimePairScore, totalScore;
     int lenScores;
 
-    lenScores = (int) length(pRawFeatures.mEffectiveSites);
+    seqan::String<bool> &effectiveSites = pSeedSites.mEffectiveSites;
+    const mikan::TCharSet &seedTypes = pSeedSites.get_seed_types();
+
+    lenScores = (int) length(effectiveSites);
     resize(mEffectiveSites, lenScores);
     resize_scores(lenScores);
 
     for (int i = 0; i < lenScores; ++i) {
-        if (!pRawFeatures.mEffectiveSites[i]) {
+        if (!effectiveSites[i]) {
             set_score(i, 0.0);
             mSeedTypes.set_score(i, 0.0);
             mSitePos.set_score(i, 0.0);
@@ -52,7 +55,7 @@ int TS5ContextScores::calc_scores(TS5RawFeatures &pRawFeatures) {
 
         mEffectiveSites[i] = true;
 
-        seedType = pRawFeatures.get_seed_type(i);
+        seedType = seedTypes[i];
         sitePos = pRawFeatures.get_site_pos(i);
         auRich = pRawFeatures.get_au_rich(i);
         threePrimePair = pRawFeatures.get_three_prime_pair(i);
