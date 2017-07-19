@@ -20,11 +20,11 @@ public:
 
     seqan::CharString const &get_seq_id(unsigned const pIdx) const { return mSeqIds[pIdx]; }
 
-    TRNAStr const &get_seq(unsigned const pIdx) const { return mSeqs[pIdx]; }
+    mikan::TRNAStr const &get_seq(unsigned const pIdx) const { return mSeqs[pIdx]; }
 
-    TCharSet const &get_ids() const { return mSeqIds; }
+    mikan::TCharSet const &get_ids() const { return mSeqIds; }
 
-    TRNASet const &get_seqs() const { return mSeqs; }
+    mikan::TRNASet const &get_seqs() const { return mSeqs; }
 
     int get_max_seq_len() { return mMaxLen; }
 
@@ -32,8 +32,8 @@ public:
     int read_fasta(seqan::CharString const &pFasta);
 
 private:
-    TCharSet mSeqIds;
-    TRNASet mSeqs;
+    mikan::TCharSet mSeqIds;
+    mikan::TRNASet mSeqs;
     int mMaxLen;
 };
 

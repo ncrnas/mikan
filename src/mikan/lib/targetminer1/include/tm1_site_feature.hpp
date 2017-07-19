@@ -20,8 +20,9 @@ public:
     seqan::CharString &get_seed_type(unsigned idx) { return mSeedTypes[idx]; }
 
     // Method prototype
-    int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
-                     TM1SeedSites &pSeedSites);
+    int
+    add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
+                 TM1SeedSites &pSeedSites);
 
     void clear_features();
 
@@ -57,7 +58,8 @@ public:
     int get_m8_pos(int i) { return mM8Pos[i]; }
 
     // Method prototype
-    int add_features(mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, mikan::TSitePosSet const &pMRNAPos,
+    int add_features(mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
+                     mikan::TSitePosSet const &pMRNAPos,
                      TM1SeedSites &pSeedSites, mikan::TSitePosSet const &pSeedPos);
 
     void clear_features();
@@ -82,7 +84,8 @@ public:
     int get_downstream_len(int i) { return mDownstream[i]; }
 
     // Method prototype
-    int add_features(mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, mikan::TSitePosSet const &pMRNAPos,
+    int add_features(mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
+                     mikan::TSitePosSet const &pMRNAPos,
                      TM1SeedSites &pSeedSites, TM1SortedSitePos &pSortedSites);
 
     void clear_features();
@@ -111,7 +114,8 @@ public:
     TM1FeatAURich() {}
 
     // Method prototype
-    int add_features(mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, mikan::TSitePosSet const &pMRNAPos,
+    int add_features(mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
+                     mikan::TSitePosSet const &pMRNAPos,
                      TM1SeedSites &pSeedSites, TM1FeatDistance &pDistance);
 
     void clear_features();
@@ -139,7 +143,8 @@ public:
     TM1FeatSingleFreq() {}
 
     // Method prototype
-    int add_features(mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, mikan::TSitePosSet const &pMRNAPos,
+    int add_features(mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
+                     mikan::TSitePosSet const &pMRNAPos,
                      TM1SeedSites &pSeedSites);
 
     void clear_features();
@@ -166,7 +171,8 @@ public:
     TM1FeatSingleFreqFlank() {}
 
     // Method prototype
-    int add_features(mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, mikan::TSitePosSet const &pMRNAPos,
+    int add_features(mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
+                     mikan::TSitePosSet const &pMRNAPos,
                      TM1SeedSites &pSeedSites, TM1FeatDistance &pDistance);
 
     void clear_features();
@@ -195,7 +201,8 @@ public:
     TM1FeatDiFreq() {}
 
     // Method prototype
-    int add_features(mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, mikan::TSitePosSet const &pMRNAPos,
+    int add_features(mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
+                     mikan::TSitePosSet const &pMRNAPos,
                      TM1SeedSites &pSeedSites);
 
     void clear_features();
@@ -230,7 +237,8 @@ public:
     TM1FeatDiFreqFlank() {}
 
     // Method prototype
-    int add_features(mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites, mikan::TSitePosSet const &pMRNAPos,
+    int add_features(mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
+                     mikan::TSitePosSet const &pMRNAPos,
                      TM1SeedSites &pSeedSites, TM1FeatDistance &pDistance);
 
     void clear_features();
@@ -259,9 +267,10 @@ public:
     TM1FeatSingleMatch() {}
 
     // Method prototype
-    int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
-                     mikan::TSitePosSet const &pMRNAPos, TM1SeedSites &pSeedSites,
-                     TM1FeatSitePos &pSeedPos);
+    int
+    add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
+                 mikan::TSitePosSet const &pMRNAPos, TM1SeedSites &pSeedSites,
+                 TM1FeatSitePos &pSeedPos);
 
     void clear_features();
 
@@ -289,9 +298,10 @@ public:
     TM1FeatTwoConsecMatch() {}
 
     // Method prototype
-    int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
-                     mikan::TSitePosSet const &pMRNAPos, TM1SeedSites &pSeedSites,
-                     TM1FeatSitePos &pSeedPos);
+    int
+    add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
+                 mikan::TSitePosSet const &pMRNAPos, TM1SeedSites &pSeedSites,
+                 TM1FeatSitePos &pSeedPos);
 
     void clear_features();
 

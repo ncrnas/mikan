@@ -152,7 +152,7 @@ public:
     // Method prototypes
     void clear_scores();
 
-    int calc_scores(TS5RawFeatures &pRawFeatures);
+    int calc_scores(TS5RawFeatures &pRawFeatures, TS5SeedSites &pSeedSites);
 
     void resize_scores(int pSize);
 

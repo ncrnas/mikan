@@ -21,13 +21,13 @@ public:
     // Define methods
     MKInput() {}
 
-    TCharSet const &get_mirna_ids() { return mMiRNASeqs.get_ids(); }
+    mikan::TCharSet const &get_mirna_ids() { return mMiRNASeqs.get_ids(); }
 
-    TRNASet const &get_mirna_seqs() { return mMiRNASeqs.get_seqs(); }
+    mikan::TRNASet const &get_mirna_seqs() { return mMiRNASeqs.get_seqs(); }
 
-    TCharSet const &get_mrna_ids() { return mMRNASeqs.get_ids(); }
+    mikan::TCharSet const &get_mrna_ids() { return mMRNASeqs.get_ids(); }
 
-    TRNASet const &get_mrna_seqs() { return mMRNASeqs.get_seqs(); }
+    mikan::TRNASet const &get_mrna_seqs() { return mMRNASeqs.get_seqs(); }
 
     // Method prototypes
     int load_seq_from_file();
@@ -37,8 +37,8 @@ public:
     void set_options(MKOptions &opt);
 
 private:
-    MKSequences mMiRNASeqs;
-    MKSequences mMRNASeqs;
+    mikan::MKSequences mMiRNASeqs;
+    mikan::MKSequences mMRNASeqs;
 };
 
 } // namespace mikan

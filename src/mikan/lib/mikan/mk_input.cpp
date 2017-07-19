@@ -1,10 +1,3 @@
-#include <cmath>                  // roundf
-#include <iostream>
-//#define SEQAN_ENABLE_DEBUG 1
-#if SEQAN_ENABLE_DEBUG
-#include <ctime>                  // clock_t, clock, CLOCKS_PER_SEC
-#endif
-
 #include <seqan/arg_parse.h>
 #include "mk_input.hpp"          // MKInput
 
@@ -14,12 +7,12 @@ namespace mikan {
 // MKInput methods
 //
 void MKInput::set_file_names(seqan::CharString &pMiRNAFasta,
-                                         seqan::CharString &pMRNAFasta) {
+                             seqan::CharString &pMRNAFasta) {
     mMiRNAFasta = pMiRNAFasta;
     mMRNAFasta = pMRNAFasta;
 }
 
-void MKInput::set_options(MKOptions & opt) {
+void MKInput::set_options(MKOptions &opt) {
     mMiRNAFasta = opt.mMiRNAFasta;
     mMRNAFasta = opt.mMRNAFasta;
 }

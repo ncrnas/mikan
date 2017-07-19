@@ -98,8 +98,8 @@ bool PITASeedSites::set_new_seed_type(
 void PITASeedSites::set_stringent_seed_type(
         CharString &pCurSeedType,
         StringSet<CharString> &pSeedDef,
-        bool pMatchMx1,
-        bool pMatchMx2,
+        bool pMatchM8,
+        bool pMatchM9,
         unsigned,
         CharString &pNewSeedType) {
     if (pNewSeedType != "") {
@@ -107,9 +107,9 @@ void PITASeedSites::set_stringent_seed_type(
     }
 
     if (pCurSeedType == "6mer") {
-        if (pSeedDef[2] == 'Y' && pMatchMx1 && pMatchMx2) {
+        if (pSeedDef[2] == 'Y' && pMatchM8 && pMatchM9) {
             pNewSeedType = "8mer";
-        } else if (pSeedDef[1] == 'Y' && pMatchMx1) {
+        } else if (pSeedDef[1] == 'Y' && pMatchM8) {
             pNewSeedType = "7mer";
         }
     }
@@ -152,12 +152,12 @@ void PITASeedSites::set_single_gu_seed_type(
         StringSet<CharString> &pSeedDef,
         int pM1,
         int pM2,
-        bool pMatchMx1,
-        bool pMatchMx2,
-        bool pGutMx1,
-        bool pGutMx2,
-        bool pGumMx1,
-        bool pGumMx2,
+        bool pMatchM8,
+        bool pMatchM9,
+        bool pGutM8,
+        bool pGutM9,
+        bool pGumM8,
+        bool pGumM9,
         unsigned pMisMatchPos,
         CharString &pNewSeedType) {
     int mm;
@@ -167,47 +167,47 @@ void PITASeedSites::set_single_gu_seed_type(
     }
 
     if (pCurSeedType == "6mer") {
-        if (pSeedDef[2] == 'Y' && ((pMatchMx1 && pGutMx2) || (pMatchMx2 && pGutMx1))) {
+        if (pSeedDef[2] == 'Y' && ((pMatchM8 && pGutM9) || (pMatchM9 && pGutM8))) {
             pNewSeedType = "8mer_GUT";
-            if (pMatchMx1) {
+            if (pMatchM8) {
                 mm = pM2;
             } else {
                 mm = pM1;
             }
-        } else if (pSeedDef[2] == 'Y' && ((pMatchMx1 && pGumMx2) || (pMatchMx2 && pGumMx1))) {
+        } else if (pSeedDef[2] == 'Y' && ((pMatchM8 && pGumM9) || (pMatchM9 && pGumM8))) {
             pNewSeedType = "8mer_GUM";
-            if (pMatchMx1) {
+            if (pMatchM8) {
                 mm = pM2;
             } else {
                 mm = pM1;
             }
-        } else if (pSeedDef[1] == 'Y' && pGutMx1) {
+        } else if (pSeedDef[1] == 'Y' && pGutM8) {
             pNewSeedType = "7mer_GUT";
             mm = pM1;
-        } else if (pSeedDef[1] == 'Y' && pGumMx1) {
+        } else if (pSeedDef[1] == 'Y' && pGumM8) {
             pNewSeedType = "7mer_GUM";
             mm = pM1;
         }
     } else if (pCurSeedType == "GUT") {
-        if (pSeedDef[2] == 'Y' && pMatchMx1 && pMatchMx2) {
+        if (pSeedDef[2] == 'Y' && pMatchM8 && pMatchM9) {
             pNewSeedType = "8mer_GUT";
             mm = pMisMatchPos;
-        } else if (pSeedDef[1] == 'Y' && pMatchMx1) {
+        } else if (pSeedDef[1] == 'Y' && pMatchM8) {
             pNewSeedType = "7mer_GUT";
             mm = pMisMatchPos;
         }
     } else if (pCurSeedType == "GUM") {
-        if (pSeedDef[2] == 'Y' && pMatchMx1 && pMatchMx2) {
+        if (pSeedDef[2] == 'Y' && pMatchM8 && pMatchM9) {
             pNewSeedType = "8mer_GUM";
             mm = pMisMatchPos;
-        } else if (pSeedDef[1] == 'Y' && pMatchMx1) {
+        } else if (pSeedDef[1] == 'Y' && pMatchM8) {
             pNewSeedType = "7mer_GUM";
             mm = pMisMatchPos;
         }
     }
 
     if (FORCE_LAST_MATCH && pNewSeedType != "") {
-        check_last_match(pMatchMx1, pMatchMx2, pNewSeedType);
+        check_last_match(pMatchM8, pMatchM9, pNewSeedType);
     }
 
     if (pNewSeedType != "") {
@@ -223,37 +223,37 @@ void PITASeedSites::set_multiple_gu_seed_type(
         StringSet<CharString> &pSeedDef,
         int,
         int,
-        bool pMatchMx1,
-        bool pMatchMx2,
-        bool pGutMx1,
-        bool pGutMx2,
-        bool pGumMx1,
-        bool pGumMx2,
+        bool pMatchM8,
+        bool pMatchM9,
+        bool pGutM8,
+        bool pGutM9,
+        bool pGumM8,
+        bool pGumM9,
         unsigned,
         CharString &pNewSeedType) {
     if (pNewSeedType != "") {
         return;
     }
 
-    if (pCurSeedType == "6mer" && pSeedDef[2] == 'Y' && (pGumMx1 || pGutMx1) && (pGumMx2 || pGutMx2)) {
+    if (pCurSeedType == "6mer" && pSeedDef[2] == 'Y' && (pGumM8 || pGutM8) && (pGumM9 || pGutM9)) {
         pNewSeedType = "8mer_GU+";
     } else if (pCurSeedType == "GUT" || pCurSeedType == "GUM") {
-        if (pSeedDef[2] == 'Y' && (pGumMx1 || pGutMx1 || pMatchMx1) && (pGumMx2 || pGutMx2 || pMatchMx2)) {
+        if (pSeedDef[2] == 'Y' && (pGumM8 || pGutM8 || pMatchM8) && (pGumM9 || pGutM9 || pMatchM9)) {
             pNewSeedType = "8mer_GU+";
-        } else if (pSeedDef[1] == 'Y' && (pGumMx1 || pGutMx1)) //TODO: Check pGumMx1 || pGutMx1 || pMatchMx1
+        } else if (pSeedDef[1] == 'Y' && (pGumM8 || pGutM8)) //TODO: Check pGumM8 || pGutM8 || pMatchM8
         {
             pNewSeedType = "7mer_GU+";
         }
     } else if (pCurSeedType == "GU+") {
-        if (pSeedDef[2] == 'Y' && (pGumMx1 || pGutMx1 || pMatchMx1) && (pGumMx2 || pGutMx2 || pMatchMx2)) {
+        if (pSeedDef[2] == 'Y' && (pGumM8 || pGutM8 || pMatchM8) && (pGumM9 || pGutM9 || pMatchM9)) {
             pNewSeedType = "8mer_GU+";
-        } else if (pSeedDef[1] == 'Y' && (pGumMx1 || pGutMx1 || pMatchMx1)) {
+        } else if (pSeedDef[1] == 'Y' && (pGumM8 || pGutM8 || pMatchM8)) {
             pNewSeedType = "7mer_GU+";
         }
     }
 
     if (FORCE_LAST_MATCH && pNewSeedType != "") {
-        check_last_match(pMatchMx1, pMatchMx2, pNewSeedType);
+        check_last_match(pMatchM8, pMatchM9, pNewSeedType);
     }
 
     if (pNewSeedType != "") {
@@ -269,12 +269,12 @@ void PITASeedSites::set_mismatch_seed_type(
         StringSet<CharString> &pSeedDef,
         int pM1,
         int pM2,
-        bool pMatchMx1,
-        bool pMatchMx2,
-        bool pGutMx1,
-        bool pGutMx2,
-        bool pGumMx1,
-        bool pGumMx2,
+        bool pMatchM8,
+        bool pMatchM9,
+        bool pGutM8,
+        bool pGutM9,
+        bool pGumM8,
+        bool pGumM9,
         unsigned pMisMatchPos,
         CharString &pNewSeedType) {
     int mm;
@@ -284,34 +284,34 @@ void PITASeedSites::set_mismatch_seed_type(
     }
 
     if (pSeedDef[2] == 'Y') {
-        if (pCurSeedType == "6mer" && ((pMatchMx1 && !pMatchMx2 && !pGutMx2 && !pGumMx2)
-                                       || (!pMatchMx1 && !pGutMx1 && !pGumMx1 && pMatchMx2))) {
+        if (pCurSeedType == "6mer" && ((pMatchM8 && !pMatchM9 && !pGutM9 && !pGumM9)
+                                       || (!pMatchM8 && !pGutM8 && !pGumM8 && pMatchM9))) {
             pNewSeedType = "8mer_MM";
-            if (pMatchMx1) {
+            if (pMatchM8) {
                 mm = pM2;
             } else {
                 mm = pM1;
             }
-        } else if (pCurSeedType == "MM" && pMatchMx1 && pMatchMx2) {
+        } else if (pCurSeedType == "MM" && pMatchM8 && pMatchM9) {
             pNewSeedType = "8mer_MM";
             mm = pMisMatchPos;
         }
     }
 
     if (pNewSeedType == "" && pSeedDef[1] == 'Y' && pSeedDef[4] == "1:1") {
-        if (pCurSeedType == "6mer" && !pMatchMx1 && !pGutMx1 &&
-            !pGumMx1) //TODO: Check !pMatchMx1 && !pGutMx1 && !pGumMx1
+        if (pCurSeedType == "6mer" && !pMatchM8 && !pGutM8 &&
+            !pGumM8) //TODO: Check !pMatchM8 && !pGutM8 && !pGumM8
         {
             pNewSeedType = "7mer_MM";
             mm = pM1;
-        } else if (pCurSeedType == "MM" && pMatchMx1) {
+        } else if (pCurSeedType == "MM" && pMatchM8) {
             pNewSeedType = "7mer_MM";
             mm = pMisMatchPos;
         }
     }
 
     if (FORCE_LAST_MATCH && pNewSeedType != "") {
-        check_last_match(pMatchMx1, pMatchMx2, pNewSeedType);
+        check_last_match(pMatchM8, pMatchM9, pNewSeedType);
     }
 
     if (pNewSeedType != "") {
@@ -327,12 +327,12 @@ void PITASeedSites::set_gu_mismatch_seed_type(
         StringSet<CharString> &pSeedDef,
         int pM1,
         int pM2,
-        bool pMatchMx1,
-        bool pMatchMx2,
-        bool pGutMx1,
-        bool pGutMx2,
-        bool pGumMx1,
-        bool pGumMx2,
+        bool pMatchM8,
+        bool pMatchM9,
+        bool pGutM8,
+        bool pGutM9,
+        bool pGumM8,
+        bool pGumM9,
         unsigned pMisMatchPos,
         CharString &pNewSeedType) {
     int mm;
@@ -342,42 +342,42 @@ void PITASeedSites::set_gu_mismatch_seed_type(
     }
 
     if (pSeedDef[2] == 'Y') {
-        if (pCurSeedType == "6mer" && ((!pMatchMx1 && !pMatchMx2 && (pGutMx1 || pGumMx1) && !(pGutMx2 || pGumMx2))
-                                       || (!pMatchMx1 && !pMatchMx2 && !(pGutMx1 || pGumMx1) &&
-                                           (pGutMx2 || pGumMx2)))) {
+        if (pCurSeedType == "6mer" && ((!pMatchM8 && !pMatchM9 && (pGutM8 || pGumM8) && !(pGutM9 || pGumM9))
+                                       || (!pMatchM8 && !pMatchM9 && !(pGutM8 || pGumM8) &&
+                                           (pGutM9 || pGumM9)))) {
             pNewSeedType = "8mer_MMGU";
-            if (pGutMx1 || pGumMx1) {
+            if (pGutM8 || pGumM8) {
                 mm = pM2;
             } else {
                 mm = pM1;
             }
         } else if ((pCurSeedType == "GUT" || pCurSeedType == "GUM") &&
-                   ((pMatchMx1 && !pMatchMx2 && !pGutMx2 && !pGumMx2)
-                    || (!pMatchMx1 && pMatchMx2 && !pGutMx1 && !pGumMx1))) {
+                   ((pMatchM8 && !pMatchM9 && !pGutM9 && !pGumM9)
+                    || (!pMatchM8 && pMatchM9 && !pGutM8 && !pGumM8))) {
             pNewSeedType = "8mer_MMGU";
-            if (pMatchMx1) {
+            if (pMatchM8) {
                 mm = pM2;
             } else {
                 mm = pM1;
             }
-        } else if (pCurSeedType == "MM" && ((pMatchMx1 && (pGutMx2 || pGumMx2))
-                                            || ((pGutMx1 || pGumMx1) && pMatchMx2))) {
+        } else if (pCurSeedType == "MM" && ((pMatchM8 && (pGutM9 || pGumM9))
+                                            || ((pGutM8 || pGumM8) && pMatchM9))) {
             pNewSeedType = "8mer_MMGU";
             mm = pMisMatchPos;
-        } else if (pCurSeedType == "MMGU" && pMatchMx1 && pMatchMx2) {
+        } else if (pCurSeedType == "MMGU" && pMatchM8 && pMatchM9) {
             pNewSeedType = "8mer_MMGU";
             mm = pMisMatchPos;
         }
     }
 
     if (pNewSeedType == "" && pSeedDef[1] == 'Y' && pSeedDef[4] == "1:1") {
-        if (pCurSeedType == "MM" && (pGutMx2 || pGumMx2)) {
+        if (pCurSeedType == "MM" && (pGutM9 || pGumM9)) {
             pNewSeedType = "7mer_MMGU";
             mm = pMisMatchPos;
-        } else if ((pCurSeedType == "GUT" || pCurSeedType == "GUM") && (!pMatchMx1 && !pGutMx1 && !pGumMx1)) {
+        } else if ((pCurSeedType == "GUT" || pCurSeedType == "GUM") && (!pMatchM8 && !pGutM8 && !pGumM8)) {
             pNewSeedType = "7mer_MMGU";
             mm = pM1;
-        } else if (pCurSeedType == "MMGU" && pMatchMx1) {
+        } else if (pCurSeedType == "MMGU" && pMatchM8) {
             pNewSeedType = "7mer_MMGU";
             mm = pMisMatchPos;
         }
@@ -385,7 +385,7 @@ void PITASeedSites::set_gu_mismatch_seed_type(
     }
 
     if (FORCE_LAST_MATCH && pNewSeedType != "") {
-        check_last_match(pMatchMx1, pMatchMx2, pNewSeedType);
+        check_last_match(pMatchM8, pMatchM9, pNewSeedType);
     }
 
     if (pNewSeedType != "") {

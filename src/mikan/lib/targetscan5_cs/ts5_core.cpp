@@ -136,7 +136,7 @@ int TS5Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Get raw features
     if (mExecGetRawFeat) {
-        retVal = mRawFeatures.add_features(mMiRNASeqs[pIdx], mMRNASeqs, mSeedSites);
+        retVal = mRawFeatures.add_features(miRNASeq, mMRNASeqs, mSeedSites);
         if (retVal != 0) {
             std::cerr << "ERROR: Feature calculation failed." << std::endl;
             return 1;
@@ -145,7 +145,7 @@ int TS5Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Calculate context scores
     if (mExecCalcContexScore) {
-        retVal = mCsScores.calc_scores(mRawFeatures);
+        retVal = mCsScores.calc_scores(mRawFeatures, mSeedSites);
         if (retVal != 0) {
             std::cerr << "ERROR: Calculate regression values failed." << std::endl;
             return 1;
@@ -197,24 +197,26 @@ int TS5Core::calculate_mirna_scores(unsigned pIdx) {
 }
 
 int TS5Core::write_context_score(seqan::CharString const &pMiRNAId) {
+
+    const mikan::TCharSet &seedTypes = mSeedSites.get_seed_types();
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     seqan::CharString seedType;
     int seedStart, seedEnd;
+
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
         if (!mCsScores.mEffectiveSites[i]) {
             continue;
         }
 
-        seedType = mRawFeatures.get_seed_type(i);
         seedStart = sitePos[i];
-        if (seedType == "7mer-A1") {
+        if (seedTypes[i] == "7mer-A1") {
             seedStart += 1;
         }
 
         seedEnd = seedStart + 6;
-        if (seedType == "8mer") {
+        if (seedTypes[i] == "8mer") {
             seedEnd += 1;
         }
 
@@ -222,7 +224,7 @@ int TS5Core::write_context_score(seqan::CharString const &pMiRNAId) {
         mOFile1 << toCString((seqan::CharString) mMRNAIds[mRNAPos[i]]) << "\t";
         mOFile1 << seedStart << "\t";
         mOFile1 << seedEnd << "\t";
-        mOFile1 << toCString(mRawFeatures.get_seed_type(i)) << "\t";
+        mOFile1 << seedTypes[i] << "\t";
         mOFile1 << mCsScores.get_score(i);
         mOFile1 << std::endl;
     }
@@ -231,6 +233,7 @@ int TS5Core::write_context_score(seqan::CharString const &pMiRNAId) {
 }
 
 int TS5Core::write_total_score(seqan::CharString const &pMiRNAId) {
+
     const seqan::String<float> &totalScores = mTotalScore.get_scores();
     const seqan::String<int> &mRNAPos = mTotalScore.get_mrna_pos();
     const seqan::String<int> &siteNum = mTotalScore.get_site_num();
@@ -255,6 +258,8 @@ int TS5Core::write_total_score(seqan::CharString const &pMiRNAId) {
 }
 
 int TS5Core::write_alignment(seqan::CharString const &pMiRNAId) {
+
+    const mikan::TCharSet &seedTypes = mSeedSites.get_seed_types();
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const TS5Alignment &alignment = mRawFeatures.get_alignment();
@@ -267,14 +272,13 @@ int TS5Core::write_alignment(seqan::CharString const &pMiRNAId) {
             continue;
         }
 
-        seedType = mRawFeatures.get_seed_type(i);
         seedStart = sitePos[i];
-        if (seedType == "7mer-A1") {
+        if (seedTypes[i] == "7mer-A1") {
             seedStart += 1;
         }
 
         seedEnd = seedStart + 6;
-        if (seedType == "8mer") {
+        if (seedTypes[i] == "8mer") {
             seedEnd += 1;
         }
 
@@ -282,7 +286,7 @@ int TS5Core::write_alignment(seqan::CharString const &pMiRNAId) {
         alignment.write_alignment(i);
         std::cout << "  miRNA:                " << toCString(pMiRNAId) << std::endl;
         std::cout << "  mRNA:                 " << toCString((seqan::CharString) mMRNAIds[mRNAPos[i]]) << std::endl;
-        std::cout << "  seed type:            " << toCString(seedType) << std::endl;
+        std::cout << "  seed type:            " << seedTypes[i] << std::endl;
         std::cout << "  position(seed start): " << seedStart << std::endl;
         std::cout << "  position(seed end):   " << seedEnd << std::endl;
         std::cout << "  context score:        " << mCsScores.get_score(i);

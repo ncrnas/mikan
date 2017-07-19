@@ -9,7 +9,6 @@ namespace ts5cs {
 // TS5RawFeatures methods
 //
 void TS5RawFeatures::clear_features() {
-    mSeedTypes.clear_features();
     mSitePos.clear_features();
     mAURich.clear_features();
     mThreePrimePair.clear_features();
@@ -19,75 +18,10 @@ int TS5RawFeatures::add_features(
         mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs,
         TS5SeedSites const &pSeedSites) {
-    const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
-    const String<unsigned> &sitePos = pSeedSites.get_site_pos();
 
-    resize(mEffectiveSites, length(mRNAPos));
-    mSeedTypes.add_features(pMiRNASeq, pMRNASeqs, mEffectiveSites, mRNAPos, sitePos);
-    mSitePos.add_features(pMiRNASeq, pMRNASeqs, mEffectiveSites, mRNAPos, sitePos, mSeedTypes);
-    mAURich.add_features(pMiRNASeq, pMRNASeqs, mEffectiveSites, mRNAPos, sitePos, mSeedTypes);
-    mThreePrimePair.add_features(pMiRNASeq, pMRNASeqs, mEffectiveSites, mRNAPos, sitePos, mSeedTypes);
-
-    return 0;
-}
-
-//
-// TS5FeatSeedType methods
-//
-void TS5FeatSeedType::clear_features() {
-    clear(mSeedTypes);
-}
-
-int TS5FeatSeedType::add_features(
-        mikan::TRNAStr const &pMiRNASeq,
-        mikan::TRNASet const &pMRNASeqs,
-        String<bool> &pEffectiveSites,
-        mikan::TSitePosSet const &pMRNAPos,
-        mikan::TSitePosSet const &pSitePos) {
-    bool IsA1, MatchM8;
-    int startPos;
-    unsigned endPos;
-    mikan::TRNAStr revMiRNASeq, miRNAM8, mRNAM8, mRNAA1;
-
-    revMiRNASeq = pMiRNASeq;
-    complement(revMiRNASeq);
-    miRNAM8 = revMiRNASeq[7];
-
-    resize(mSeedTypes, length(pMRNAPos));
-    for (unsigned i = 0; i < length(pMRNAPos); ++i) {
-        // check m8 match
-        startPos = pSitePos[i];
-        MatchM8 = false;
-        if (startPos > 0) {
-            mRNAM8 = pMRNASeqs[pMRNAPos[i]][startPos - 1];
-            if (miRNAM8 == mRNAM8) {
-                MatchM8 = true;
-            }
-        }
-
-        // check A1 site
-        IsA1 = false;
-        endPos = (unsigned) startPos + 6;
-        if (endPos < length(pMRNASeqs[pMRNAPos[i]])) {
-            mRNAA1 = pMRNASeqs[pMRNAPos[i]][endPos];
-
-            if (mRNAA1 == 'A') {
-                IsA1 = true;
-            }
-        }
-
-        pEffectiveSites[i] = true;
-        if (IsA1 && MatchM8) {
-            mSeedTypes[i] = "8mer";
-        } else if (IsA1) {
-            mSeedTypes[i] = "7mer-A1";
-        } else if (MatchM8) {
-            mSeedTypes[i] = "7mer-m8";
-        } else {
-            mSeedTypes[i] = "6mer";
-            pEffectiveSites[i] = false;
-        }
-    }
+    mSitePos.add_features(pMiRNASeq, pMRNASeqs, pSeedSites);
+    mAURich.add_features(pMiRNASeq, pMRNASeqs, pSeedSites);
+    mThreePrimePair.add_features(pMiRNASeq, pMRNASeqs, pSeedSites);
 
     return 0;
 }
@@ -102,36 +36,30 @@ void TS5FeatSitePos::clear_features() {
 int TS5FeatSitePos::add_features(
         mikan::TRNAStr const &,
         mikan::TRNASet const &pMRNASeqs,
-        String<bool> &pEffectiveSites,
-        mikan::TSitePosSet const &pMRNAPos,
-        mikan::TSitePosSet const &pSitePos,
-        TS5FeatSeedType &pSeedTypes) {
+        TS5SeedSites const &pSeedSites) {
+
     int seqLen, lenUp, lenDown, scoreLen;
+    const seqan::String<bool> &effectiveSites = pSeedSites.mEffectiveSites;
+    const mikan::TCharSet &seedTypes = pSeedSites.get_seed_types();
+    const mikan::TMRNAPosSet &mRNAPos = pSeedSites.get_mrna_pos();
+    const mikan::TSitePosSet &sitePos = pSeedSites.get_site_pos();
 
-    resize(mSitePos, length(pMRNAPos));
+    resize(mSitePos, length(effectiveSites));
 
-    for (unsigned i = 0; i < length(pMRNAPos); ++i) {
-        if (!pEffectiveSites[i]) {
+    for (unsigned i = 0; i < length(effectiveSites); ++i) {
+        if (!effectiveSites[i]) {
             mSitePos[i] = -1;
             continue;
         }
-
-        // Alias
-        CharString const &seedType = pSeedTypes.get_seed_type(i);
 
         // Get length to UTR start
-        lenUp = pSitePos[i];
-        if (seedType == "8mer" || seedType == "7mer-m8") {
+        lenUp = sitePos[i];
+        if (seedTypes[i] == "8mer" || seedTypes[i] == "7mer-m8") {
             lenUp -= 1;
-        }
-        if (lenUp < (MIN_DIST_TO_CDS - 1)) {
-            pEffectiveSites[i] = false;
-            mSitePos[i] = -1;
-            continue;
         }
 
         // Get length to UTR end
-        seqLen = (int) length(pMRNASeqs[pMRNAPos[i]]);
+        seqLen = static_cast<int>(length(pMRNASeqs[mRNAPos[i]]));
         lenDown = seqLen - (lenUp + 7);
 
         // Get score
@@ -155,35 +83,35 @@ void TS5FeatAURich::clear_features() {
 int TS5FeatAURich::add_features(
         mikan::TRNAStr const &,
         mikan::TRNASet const &pMRNASeqs,
-        String<bool> &pEffectiveSites,
-        mikan::TSitePosSet const &pMRNAPos,
-        mikan::TSitePosSet const &pSitePos,
-        TS5FeatSeedType &pSeedTypes) {
+        TS5SeedSites const &pSeedSites) {
+
     int seqLen, startU, endU, startD, endD;
     float totalScore, upTotalScore, upMaxScore, downTotalScore, downMaxScore;
+    const seqan::String<bool> &effectiveSites = pSeedSites.mEffectiveSites;
+    const mikan::TCharSet &seedTypes = pSeedSites.get_seed_types();
+    const mikan::TMRNAPosSet &mRNAPos = pSeedSites.get_mrna_pos();
+    const mikan::TSitePosSet &sitePos = pSeedSites.get_site_pos();
+
     CharString chrUp = "up";
     CharString chrDown = "down";
 
-    resize(mAURich, length(pMRNAPos));
+    resize(mAURich, length(effectiveSites));
     startU = 0;
     startD = 0;
-    for (unsigned i = 0; i < length(pMRNAPos); ++i) {
-        if (!pEffectiveSites[i]) {
+    for (unsigned i = 0; i < length(mRNAPos); ++i) {
+        if (!effectiveSites[i]) {
             mAURich[i] = -1.0;
             continue;
         }
 
-        // Alias
-        CharString const &seedType = pSeedTypes.get_seed_type(i);
-
         // Get start and end positions for upstream and downstream
-        getUpDownStreamPos(seedType, pSitePos[i], startU, startD);
-        endU = pSitePos[i] - 1;
-        seqLen = (int) length(pMRNASeqs[pMRNAPos[i]]);
+        getUpDownStreamPos(seedTypes[i], sitePos[i], startU, startD);
+        endU = sitePos[i] - 1;
+        seqLen = (int) length(pMRNASeqs[mRNAPos[i]]);
         endD = std::min(startD + 30, seqLen);
 
-        calcPosScores(seedType, chrUp, pMRNASeqs[pMRNAPos[i]], startU, endU, upTotalScore, upMaxScore);
-        calcPosScores(seedType, chrDown, pMRNASeqs[pMRNAPos[i]], startD, endD, downTotalScore, downMaxScore);
+        calcPosScores(seedTypes[i], chrUp, pMRNASeqs[mRNAPos[i]], startU, endU, upTotalScore, upMaxScore);
+        calcPosScores(seedTypes[i], chrDown, pMRNASeqs[mRNAPos[i]], startD, endD, downTotalScore, downMaxScore);
 
         totalScore = (upTotalScore + downTotalScore) / (upMaxScore + downMaxScore);
 
@@ -270,23 +198,23 @@ void TS5FeatThreePrimePair::clear_features() {
 int TS5FeatThreePrimePair::add_features(
         mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs,
-        String<bool> &pEffectiveSites,
-        mikan::TSitePosSet const &pMRNAPos,
-        mikan::TSitePosSet const &pSitePos,
-        TS5FeatSeedType &pSeedTypes) {
-    resize(mThreePrimePair, length(pMRNAPos));
-    mAlign.resize_alignments((unsigned) length(pMRNAPos));
-    for (unsigned i = 0; i < length(pMRNAPos); ++i) {
-        if (!pEffectiveSites[i]) {
+        TS5SeedSites const &pSeedSites) {
+
+    const seqan::String<bool> &effectiveSites = pSeedSites.mEffectiveSites;
+    const mikan::TCharSet &seedTypes = pSeedSites.get_seed_types();
+    const mikan::TMRNAPosSet &mRNAPos = pSeedSites.get_mrna_pos();
+    const mikan::TSitePosSet &sitePos = pSeedSites.get_site_pos();
+
+    resize(mThreePrimePair, length(mRNAPos));
+    mAlign.resize_alignments((unsigned) length(mRNAPos));
+    for (unsigned i = 0; i < length(mRNAPos); ++i) {
+        if (!effectiveSites[i]) {
             mThreePrimePair[i] = -1.0;
             continue;
         }
 
-        // Alias
-        CharString const &seedType = pSeedTypes.get_seed_type(i);
-
-        mThreePrimePair[i] = findBestMatch(i, pMRNAPos, pSitePos, seedType, pMRNASeqs[pMRNAPos[i]], pMiRNASeq);
-        mAlign.align_seed(i, seedType, pMiRNASeq, pMRNASeqs[pMRNAPos[i]], (unsigned) pSitePos[i]);
+        mThreePrimePair[i] = findBestMatch(i, mRNAPos, sitePos, seedTypes[i], pMRNASeqs[mRNAPos[i]], pMiRNASeq);
+        mAlign.align_seed(i, seedTypes[i], pMiRNASeq, pMRNASeqs[mRNAPos[i]], static_cast<unsigned>(sitePos[i]));
     }
 
     return 0;

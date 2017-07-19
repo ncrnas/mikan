@@ -65,35 +65,21 @@ bool RH2SeedSites::set_new_seed_type(
         int,
         bool pEffectiveSite) {
 
-    bool IsA1, MatchM8;
-    mikan::TRNAStr revMiRNASeq, miRNAM8, mRNAM8, miRNAM8c, mRNAA1;
+    bool matchM8, matchM1, gutM8, gutM1, gumM8, gumM1, isA8, isA1, noM8, noM1;
     CharString newSeedType = "";
-    bool noA1;
 
-    revMiRNASeq = pMiRNASeq;
-    miRNAM8 = revMiRNASeq[7];
-    complement(revMiRNASeq);
-    miRNAM8c = revMiRNASeq[7];
-
-    mRNAM8 = mMRNASeqs[pMRNAPos][pSitePos - 1];
-
-    if (pSitePos + mikan::SEEDLEN < length(mMRNASeqs[pMRNAPos])) {
-        mRNAA1 = mMRNASeqs[pMRNAPos][pSitePos + mikan::SEEDLEN];
-        noA1 = false;
-    } else {
-        mRNAA1 = 'A';
-        noA1 = true;
-    }
+    set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 8, noM8, matchM8, gutM8, gumM8, isA8);
+    set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 1, noM1, matchM1, gutM1, gumM1, isA1);
 
     if (pSeedTypeDef[0][0] == '6') {
         newSeedType = pSeedType;
     } else if (pSeedTypeDef[0][0] == '7') {
-        if (miRNAM8c == mRNAM8) {
+        if (matchM8) {
             newSeedType = pSeedType;
         } else if (pSeedType == "7mer" || pSeedTypeDef[0] == "7mGU+") {
-            if ((miRNAM8 == 'G') && (mRNAM8 == 'U')) {
+            if (gutM8) {
                 newSeedType = "7mer_GUT";
-            } else if ((miRNAM8 == 'U') && (mRNAM8 == 'G')) {
+            } else if (gumM8) {
                 newSeedType = "7mer_GUM";
             } else {
                 newSeedType = pSeedType;
@@ -104,23 +90,11 @@ bool RH2SeedSites::set_new_seed_type(
             pEffectiveSite = false;
         }
     } else if (pSeedTypeDef[0] == "targetscan") {
-        if (miRNAM8 == mRNAM8) {
-            MatchM8 = true;
-        } else {
-            MatchM8 = false;
-        }
-
-        if (!noA1 && mRNAA1 == 'A') {
-            IsA1 = true;
-        } else {
-            IsA1 = false;
-        }
-
-        if (!noA1 && IsA1 && MatchM8) {
+        if (!noM1 && isA1 && matchM8) {
             newSeedType = "8mer";
-        } else if (!noA1 && IsA1) {
+        } else if (!noM1 && isA1) {
             newSeedType = "7mer-A1";
-        } else if (MatchM8) {
+        } else if (matchM8) {
             newSeedType = "7mer-m8";
         } else {
             newSeedType = "6mer";

@@ -37,10 +37,10 @@ TEST_F(Site04MMGU1, mir124_mmgu) {
     seedSeqs.create_seed_seqs();
 
     int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
+    sites.print_all();
     EXPECT_EQ(0, ret_val);
-    EXPECT_EQ(2u, sites.get_length());
+    EXPECT_EQ(1u, sites.get_length());
 
-    test_sites3(sites, 0, 0, 24);
-    test_sites3(sites, 1, 1, 24);
+    test_sites2(sites, 0, "7mer-A1", 1, 24, true);
 }
 }

@@ -126,7 +126,6 @@ void MKSeedSites::set_mx_matches(
     int pos;
     mikan::TRNAStr cMiRNASeq, miRNAMx, mRNAMx, miRNAMxC;
 
-    pos = (int) pSitePos - pMx + 1 + (int) INDEXED_SEQ_LEN;
     miRNAMx = pMiRNA[pMx - 1];
     cMiRNASeq = pMiRNA;
     complement(cMiRNASeq);
@@ -137,7 +136,8 @@ void MKSeedSites::set_mx_matches(
     pGumMx = false;
     pIsA = false;
 
-    if (pos >= 0 && pos < (int) length(mMRNASeqs[pMRNAPos])) {
+    pos = static_cast<int>(pSitePos) - pMx + 1 + static_cast<int>(INDEXED_SEQ_LEN);
+    if (pos >= 0 && pos < static_cast<int>(length(mMRNASeqs[pMRNAPos]))) {
         mRNAMx = mMRNASeqs[pMRNAPos][pos];
         if (mRNAMx == 'A') {
             pIsA = true;
@@ -156,7 +156,7 @@ void MKSeedSites::set_mx_matches(
 }
 
 void MKSeedSites::print_all() {
-    for (unsigned i = 0 ; i < length(mEffectiveSites); i++) {
+    for (unsigned i = 0; i < length(mEffectiveSites); i++) {
         std::cout << i << ", ";
         std::cout << mSeedTypes[i] << ", ";
         std::cout << mMRNAPos[i] << ", ";

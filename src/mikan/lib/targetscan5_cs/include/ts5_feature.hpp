@@ -9,45 +9,18 @@
 namespace ts5cs {
 
 //
-// Seed type feature
-//
-class TS5FeatSeedType {
-public:
-    // Define methods
-    TS5FeatSeedType() {}
-
-    seqan::CharString get_seed_type(unsigned idx) { return mSeedTypes[idx]; }
-
-    seqan::CharString &get_val(int i) { return mSeedTypes[i]; }
-
-    // Method prototype
-    int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                     seqan::String<bool> &pEffectiveSites, mikan::TSitePosSet const &pMRNAPos, mikan::TSitePosSet const &pSitePos);
-
-    void clear_features();
-
-private:
-    seqan::StringSet<seqan::CharString> mSeedTypes;
-};
-
-//
 // Seed site position feature
 //
 class TS5FeatSitePos {
 public:
-    // Constant values
-    static const int MIN_DIST_TO_CDS = 15;
-
-public:
     // Define methods
     TS5FeatSitePos() : mMaxLen(1500) {}
 
-    int &get_val(int i) { return mSitePos[i]; }
+    int get_val(int i) { return mSitePos[i]; }
 
     // Method prototype
     int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                     seqan::String<bool> &pEffectiveSites, mikan::TSitePosSet const &pMRNAPos, mikan::TSitePosSet const &pSitePos,
-                     TS5FeatSeedType &pSeedTypes);
+                     TS5SeedSites const &pSeedSites);
 
     void clear_features();
 
@@ -66,12 +39,11 @@ public:
     // Define methods
     TS5FeatAURich() {}
 
-    float &get_val(int i) { return mAURich[i]; }
+    float get_val(int i) { return mAURich[i]; }
 
     // Method prototype
     int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                     seqan::String<bool> &pEffectiveSites, mikan::TSitePosSet const &pMRNAPos, mikan::TSitePosSet const &pSitePos,
-                     TS5FeatSeedType &pSeedTypes);
+                     TS5SeedSites const &pSeedSites);
 
     void clear_features();
 
@@ -93,14 +65,13 @@ public:
     // Define methods
     TS5FeatThreePrimePair() : mIdxBestScore(0) {}
 
-    float &get_val(int i) { return mThreePrimePair[i]; }
+    float get_val(int i) { return mThreePrimePair[i]; }
 
     const TS5Alignment &get_alignment() { return mAlign; }
 
     // Method prototype
     int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                     seqan::String<bool> &pEffectiveSites, mikan::TSitePosSet const &pMRNAPos, mikan::TSitePosSet const &pSitePos,
-                     TS5FeatSeedType &pSeedTypes);
+                     TS5SeedSites const &pSeedSites);
 
     void clear_features();
 
@@ -135,20 +106,14 @@ private:
 //
 class TS5RawFeatures {
 public:
-    // Define variables
-    seqan::String<bool> mEffectiveSites;
-
-public:
     // Define methods
     TS5RawFeatures() {}
 
-    seqan::CharString &get_seed_type(int i) { return mSeedTypes.get_val(i); }
+    int get_site_pos(int i) { return mSitePos.get_val(i); }
 
-    int &get_site_pos(int i) { return mSitePos.get_val(i); }
+    float get_au_rich(int i) { return mAURich.get_val(i); }
 
-    float &get_au_rich(int i) { return mAURich.get_val(i); }
-
-    float &get_three_prime_pair(int i) { return mThreePrimePair.get_val(i); }
+    float get_three_prime_pair(int i) { return mThreePrimePair.get_val(i); }
 
     const TS5Alignment &get_alignment() { return mThreePrimePair.get_alignment(); }
 
@@ -159,7 +124,6 @@ public:
     void clear_features();
 
 private:
-    TS5FeatSeedType mSeedTypes;
     TS5FeatSitePos mSitePos;
     TS5FeatAURich mAURich;
     TS5FeatThreePrimePair mThreePrimePair;

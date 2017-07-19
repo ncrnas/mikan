@@ -62,7 +62,7 @@ public:
     // Method prototypes
     void clear_scores();
 
-    int classify(TM1ScaledFeatures  &pMRNAFeatures);
+    int classify(TM1ScaledFeatures &pMRNAFeatures);
 
 private:
     TM1MRNAModel mModel;
@@ -70,7 +70,7 @@ private:
     seqan::String<float> mScores;
 
 private:
-    int calc_score(TM1ScaledFeatures  &pMRNAFeatures);
+    int calc_score(TM1ScaledFeatures &pMRNAFeatures);
 
     void print_input_vector(float pValSquared);
 
