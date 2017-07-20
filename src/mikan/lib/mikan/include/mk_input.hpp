@@ -13,13 +13,12 @@ namespace mikan {
 //
 class MKInput {
 public:
-    // Declare variables
+    // Define variables
     seqan::CharString mMiRNAFasta;
     seqan::CharString mMRNAFasta;
 
-public:
     // Define methods
-    MKInput() {}
+    explicit MKInput() {}
 
     mikan::TCharSet const &get_mirna_ids() { return mMiRNASeqs.get_ids(); }
 
@@ -37,6 +36,7 @@ public:
     void set_options(MKOptions &opt);
 
 private:
+    // Define variables
     mikan::MKSequences mMiRNASeqs;
     mikan::MKSequences mMRNASeqs;
 };
