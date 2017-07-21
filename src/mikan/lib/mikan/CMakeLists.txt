@@ -7,6 +7,7 @@ set(MIKAN_SOURCE
         ${CMAKE_CURRENT_SOURCE_DIR}/mk_input.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/mk_seed_seq.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/mk_seed_site.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/mk_site_score.cpp
         PARENT_SCOPE
         )
 set(MIKAN_HEADERS

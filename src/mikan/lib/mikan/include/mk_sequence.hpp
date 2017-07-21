@@ -12,9 +12,8 @@ namespace mikan {
 //
 class MKSequences {
 public:
-
     // Define methods
-    MKSequences() : mMaxLen(0) {}
+    explicit MKSequences() : mMaxLen(0) {}
 
     unsigned get_length() const { return length(mSeqIds); }
 
@@ -28,13 +27,15 @@ public:
 
     int get_max_seq_len() { return mMaxLen; }
 
-    // Method prototypes
+    // Method prototype
     int read_fasta(seqan::CharString const &pFasta);
 
 private:
+    // Define variables
     mikan::TCharSet mSeqIds;
     mikan::TRNASet mSeqs;
     int mMaxLen;
+
 };
 
 } // namespace mikan

@@ -6,9 +6,10 @@
 #include <sstream>
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_site_score.hpp"      // MKSiteScores
+#include "pita_option.hpp"        // PITAOptions
 #include "pita_seed_site.hpp"     // PITASeedSites
 #include "vr16_ddg_core.hpp"      // VR16DDGWorkSpace
-
 
 namespace ptddg {
 
@@ -63,7 +64,7 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(PITASeedSites &pSeedSites, mikan::TRNAStr const &miRNASeq, mikan::TRNASet const &pMRNASeqs);
+    int calc_scores(mikan::TRNAStr const &miRNASeq, mikan::TRNASet const &pMRNASeqs, mikan::MKSeedSites &pSeedSites);
 
     void print_input(seqan::CharString const &pSeedType, std::string &pInputMiRNASeq, std::string &pInputMRNASeq,
                      std::vector<int> &pInputMatchSeq);
@@ -86,7 +87,6 @@ private:
 //
 class PITADGOpenScores {
 public:
-
     // Constant values
     static const unsigned TARGET_SEQ_LEN = 50;
     static const unsigned INDEXED_SEQ_LEN = 6;
@@ -95,37 +95,35 @@ public:
 
     // Define variables
     seqan::String<bool> mEffectiveSites;
+    int mFlankUp;
+    int mFlankDown;
 
-public:
     // Define methods
-    PITADGOpenScores(vr16::VR16DDGWorkSpace &pVRws) : mVRws(pVRws) {}
+    PITADGOpenScores(vr16::VR16DDGWorkSpace &pVRws) : mFlankUp(0), mFlankDown(0), mVRws(pVRws) {}
 
-    // Method prototype
+    // Method prototypes
     void clear_scores();
 
-    int calc_scores(PITASeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs, int pFlankUp, int pFlankDown);
+    int calc_scores(mikan::TRNASet const &pMRNASeqs, mikan::MKSeedSites &pSeedSites);
 
     void print_input(std::string &pInputMRNASeq);
 
 private:
+    // Define variable
     vr16::VR16DDGWorkSpace &mVRws;
 
-private:
+    // Method prototype
     void create_input_mrna_seq(mikan::TRNAStr const &pMRNASeq, int pStart, int pEnd, std::string &pInputMRNASeq);
+
 };
 
 //
 // Store ddG scores
 //
-class PITADDGScores {
-public:
-
-    // Define variables
-    seqan::String<bool> mEffectiveSites;
-
+class PITASiteScores : public mikan::MKSiteScores {
 public:
     // Define methods
-    PITADDGScores() : mDGDuplexScores(mVRws, mAlign), mDGOpenScores(mVRws), mAlign(mVRws) {}
+    PITASiteScores() : MKSiteScores(), mDGDuplexScores(mVRws, mAlign), mDGOpenScores(mVRws), mAlign(mVRws) {}
 
     float const &get_score(int i) const { return mDDGScores[i]; }
 
@@ -144,14 +142,17 @@ public:
     void set_backtrack(bool pBT) { mVRws.set_duplex_backtrack(pBT); }
 
     // Method prototype
+    void init_from_args(PITAOptions &opts) ;
+
     void clear_scores();
 
-    int calc_scores(PITASeedSites &pSeedSites, mikan::TRNAStr const &miRNASeq, mikan::TRNASet const &pMRNASeqs,
-                    int pFlankUp, int pFlankDown);
+    int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                    mikan::MKSeedSites &pSeedSites);
 
     void print_alignment(int pIdx);
 
 private:
+    // Define variables
     seqan::String<float> mDDGScores;
 
     vr16::VR16DDGWorkSpace mVRws;
@@ -182,7 +183,7 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(PITASeedSites &pSeedSites, PITADDGScores &pDDGScores,
+    int calc_scores(PITASeedSites &pSeedSites, PITASiteScores &pDDGScores,
                     const seqan::String<unsigned> &pSortedSites);
 
 private:

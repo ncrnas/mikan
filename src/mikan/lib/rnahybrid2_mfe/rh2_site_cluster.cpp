@@ -1,5 +1,5 @@
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
-#include "rh2_score.hpp"         // RH2MFEScores
+#include "rh2_score.hpp"         // RH2SiteScores
 #include "rh2_site_cluster.hpp"  // RH2Overlap, RH2SortedSitePos
 
 using namespace seqan;
@@ -17,7 +17,7 @@ void RH2SiteCluster::clear_cluster() {
 
 void RH2SiteCluster::cluster_site_pos(
         RH2SeedSites &pSeedSites,
-        RH2MFEScores &pScores) {
+        RH2SiteScores &pScores) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
@@ -39,7 +39,7 @@ void RH2Overlap::clear_cluster() {
 
 int RH2Overlap::filter_overlapped_sites(
         RH2SeedSites &pSeedSites,
-        RH2MFEScores &pScores,
+        RH2SiteScores &pScores,
         CharString &pOverlapDef) {
     TItSet itSet;
 
@@ -59,7 +59,7 @@ int RH2Overlap::filter_overlapped_sites(
 
 void RH2Overlap::find_overlapped_sites(
         RH2SeedSites &pSeedSites,
-        RH2MFEScores &pScores,
+        RH2SiteScores &pScores,
         int pPosIdx,
         CharString &pOverlapDef) {
     TItMap itMap;
@@ -84,7 +84,7 @@ void RH2Overlap::find_overlapped_sites(
 
 void RH2Overlap::cluster_overlapped_sites(
         RH2SeedSites &pSeedSites,
-        RH2MFEScores &pScores,
+        RH2SiteScores &pScores,
         std::multimap<unsigned, unsigned> &pStartPos,
         CharString &pOverlapDef) {
     const String<unsigned> &sitePos = pSeedSites.get_site_pos();
@@ -118,7 +118,7 @@ void RH2Overlap::cluster_overlapped_sites(
 
 void RH2Overlap::mark_overlapped_sites(
         RH2SeedSites &pSeedSites,
-        RH2MFEScores &pScores,
+        RH2SiteScores &pScores,
         std::set<unsigned> &pOlCluster,
         CharString &pOverlapDef) {
     TItSet itSet;
@@ -173,7 +173,7 @@ void RH2Overlap::mark_overlapped_sites(
 }
 
 unsigned RH2Overlap::get_pos_with_best_mfe(
-        RH2MFEScores &pScores,
+        RH2SiteScores &pScores,
         std::set<unsigned> &pOlCluster) {
     TItSet itSet;
     unsigned mPos = 0;
@@ -200,7 +200,7 @@ void RH2TopNScore::clear_cluster() {
 
 int RH2TopNScore::filter_sites(
         RH2SeedSites &pSeedSites,
-        RH2MFEScores &pScores,
+        RH2SiteScores &pScores,
         int pMaxHits) {
     TItSet itSet;
 
@@ -223,7 +223,7 @@ int RH2TopNScore::filter_sites(
 
 }
 
-void RH2TopNScore::sort_sites_by_score(RH2MFEScores &pScores, int pPosIdx) {
+void RH2TopNScore::sort_sites_by_score(RH2SiteScores &pScores, int pPosIdx) {
     TItMap itMap;
     TItRetPair ret;
     std::multimap<unsigned, unsigned> &siteMap = mSiteCluster.get_mrna_pos_map();
@@ -238,7 +238,7 @@ void RH2TopNScore::sort_sites_by_score(RH2MFEScores &pScores, int pPosIdx) {
 }
 
 void RH2TopNScore::mark_non_topn_sites(
-        RH2MFEScores &pScores,
+        RH2SiteScores &pScores,
         std::multimap<float, unsigned> &pSortedSites) {
     TITStartScore itStart;
     int siteCount = 0;
@@ -264,7 +264,7 @@ void RH2SortedSitePos::clear_site_pos() {
 
 int RH2SortedSitePos::generate_sorted_mrna_pos(
         RH2SeedSites &pSeedSites,
-        RH2MFEScores &pScores) {
+        RH2SiteScores &pScores) {
     TItMap itMap;
     TItSet itSet;
     TItRetPair ret;

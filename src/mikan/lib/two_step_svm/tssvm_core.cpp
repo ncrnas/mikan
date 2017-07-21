@@ -41,18 +41,12 @@ int TSSVMCoreMain(int argc, char const **argv) {
     mikan::TIndexQGram index(mMRNASeqs);
     mikan::TFinder finder(index);
 
-    // Prepare models
+    // Calculate scores for all miRNAs
     mikan::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
     mikan::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
     mikan::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
     tssvm::TSSVMCore tssvmCore(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
     tssvmCore.init_from_args(options);
-    retVal = tssvmCore.init_site_svm();
-    if (retVal != 0) {
-        return 1;
-    }
-
-    // Calculate scores for all miRNAs
     tssvmCore.open_output_file();
     retVal = tssvmCore.calculate_all_scores();
     if (retVal != 0) {
@@ -72,10 +66,6 @@ void TSSVMCore::init_from_args(TSSVMOptions &opts) {
 
     resize(mSeedTypeDef, 1);
     mSeedTypeDef[0] = "";
-}
-
-int TSSVMCore::init_site_svm() {
-    return mSiteModel.init_model();
 }
 
 int TSSVMCore::open_output_file() {
@@ -154,36 +144,18 @@ int TSSVMCore::calculate_mirna_scores(unsigned pIdx) {
         }
     }
 
-    // Align sequences
-    if (mExecAlignSeq) {
-        retVal = mAlignSeqs.align_seq(mSeedSites, miRNASeq, mMRNASeqs);
-        if (retVal != 0) {
-            std::cerr << "ERROR: Align sequences failed." << std::endl;
-            return 1;
-        }
-    }
-
-    // Generate site features
-    if (mExecSiteFeat) {
-        retVal = mSiteFeatures.add_features(mSeedSites, mAlignSeqs, miRNASeq, mMRNASeqs);
-        if (retVal != 0) {
-            std::cerr << "ERROR: Site feature calculation failed." << std::endl;
-            return 1;
-        }
-    }
-
     // Calculate site SVM scores
     if (mExecSiteScore) {
-        retVal = mSiteInput.classify(mSiteFeatures);
+        retVal = mSiteScores.calc_scores(miRNASeq, mMRNASeqs, mSeedSites);
         if (retVal != 0) {
-            std::cerr << "ERROR: Site SVM classification failed." << std::endl;
+            std::cerr << "ERROR: Calculate site SVM scores failed." << std::endl;
             return 1;
         }
     }
 
     // Generate RNA features
     if (mExecRNAFeat) {
-        retVal = mRnaFeatures.add_features(mSeedSites, mMRNASeqs, mOverlappedSites, mSiteInput);
+        retVal = mRnaFeatures.add_features(mSeedSites, mMRNASeqs, mOverlappedSites, mSiteScores);
         if (retVal != 0) {
             std::cerr << "ERROR: RNA feature calculation failed." << std::endl;
             return 1;
@@ -228,9 +200,7 @@ int TSSVMCore::calculate_mirna_scores(unsigned pIdx) {
 
     mSeedSites.clear_pos();
     mOverlappedSites.clear_site_pos();
-    mAlignSeqs.clear_alignments();
-    mSiteFeatures.clear_features();
-    mSiteInput.clear_scores();
+    mSiteScores.clear_scores();
     mRnaFeatures.clear_features();
     mRnaInput.clear_scores();
 
@@ -246,7 +216,7 @@ int TSSVMCore::write_ts_scores(seqan::CharString const &pMiRNAId) {
     std::set<unsigned>::iterator itSet;
     std::set<unsigned> &rnaPosSet = mOverlappedSites.get_mrna_pos_set();
     seqan::StringSet<seqan::String<unsigned> > &sortedMRNAPos = mOverlappedSites.get_sorted_mrna_pos();
-    const seqan::String<float> &scors = mSiteInput.get_scores();
+    const seqan::String<float> &scors = mSiteScores.get_scores();
 
     for (itSet = rnaPosSet.begin(); itSet != rnaPosSet.end(); ++itSet) {
         for (unsigned i = 0; i < length(sortedMRNAPos[*itSet]); ++i) {
@@ -313,7 +283,7 @@ int TSSVMCore::write_alignment(seqan::CharString const &pMiRNAId) {
     std::set<unsigned>::iterator itSet;
     std::set<unsigned> &rnaPosSet = mOverlappedSites.get_mrna_pos_set();
     seqan::StringSet<seqan::String<unsigned> > &sortedMRNAPos = mOverlappedSites.get_sorted_mrna_pos();
-    const seqan::String<float> &scors = mSiteInput.get_scores();
+    const seqan::String<float> &scors = mSiteScores.get_scores();
     int count = 0;
 
     for (itSet = rnaPosSet.begin(); itSet != rnaPosSet.end(); ++itSet) {
@@ -329,7 +299,7 @@ int TSSVMCore::write_alignment(seqan::CharString const &pMiRNAId) {
             }
 
             std::cout << "### " << count + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
-            mAlignSeqs.write_alignment(sortedMRNAPos[*itSet][i]);
+            mSiteScores.write_alignment(sortedMRNAPos[*itSet][i]);
             std::cout << "  miRNA:                " << toCString(pMiRNAId) << std::endl;
             std::cout << "  mRNA:                 ";
             std::cout << toCString((seqan::CharString) mMRNAIds[mRNAPos[sortedMRNAPos[*itSet][i]]]) << std::endl;

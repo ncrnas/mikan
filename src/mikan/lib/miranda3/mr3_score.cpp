@@ -14,9 +14,10 @@ void MR3AlignScores::clear_scores() {
 }
 
 int MR3AlignScores::calc_scores(
-        MR3SeedSites &pSeedSites,
         mikan::TRNAStr const &pMiRNASeq,
-        mikan::TRNASet const &pMRNASeqs) {
+        mikan::TRNASet const &pMRNASeqs,
+        mikan::MKSeedSites &pSeedSites) {
+
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &sitePos = pSeedSites.get_site_pos();
     const String<int> &mmPos = pSeedSites.get_mismatched_pos();
@@ -198,9 +199,10 @@ void MR3EnergyScores::clear_scores() {
 }
 
 int MR3EnergyScores::calc_scores(
-        MR3SeedSites &pSeedSites,
         mikan::TRNAStr const &pMiRNASeq,
-        mikan::TRNASet const &) {
+        mikan::TRNASet const &,
+        mikan::MKSeedSites &pSeedSites) {
+
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     std::string inputSeq;
     float score;
@@ -267,7 +269,8 @@ void MR3EnergyScores::print_input(std::string &pInputSeq) {
 // MR3SiteScores methods
 //
 void MR3SiteScores::clear_scores() {
-    clear(mEffectiveSites);
+    mikan::MKSiteScores::clear_scores();
+
     mAlignScores.clear_scores();
     mEnergyScores.clear_scores();
     mAlign.clear_align();
@@ -280,15 +283,16 @@ void MR3SiteScores::init_rnafold() {
 }
 
 int MR3SiteScores::calc_scores(
-        MR3SeedSites &pSeedSites,
-        mikan::TRNAStr const &miRNASeq,
-        mikan::TRNASet const &pMRNASeqs) {
+        mikan::TRNAStr const &pMiRNASeq,
+        mikan::TRNASet const &pMRNASeqs,
+        mikan::MKSeedSites &pSeedSites) {
+
     resize(mEffectiveSites, length(pSeedSites.mEffectiveSites));
 
     mAlign.resize_align((int) length(pSeedSites.mEffectiveSites));
 
-    mAlignScores.calc_scores(pSeedSites, miRNASeq, pMRNASeqs);
-    mEnergyScores.calc_scores(pSeedSites, miRNASeq, pMRNASeqs);
+    mAlignScores.calc_scores(pMiRNASeq, pMRNASeqs, pSeedSites);
+    mEnergyScores.calc_scores(pMiRNASeq, pMRNASeqs, pSeedSites);
 
     for (unsigned i = 0; i < length(mEffectiveSites); ++i) {
         if (mAlignScores.mEffectiveSites[i] && mEnergyScores.mEffectiveSites[i]) {

@@ -5,6 +5,8 @@
 #include <sstream>
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_site_score.hpp"     // MKSiteScores
+#include "rh2_option.hpp"        // RH2Options
 #include "rh2_seed_site.hpp"     // RH2SeedSites
 #include "hybrid_core.hpp"       // RH2WorkSpace, RH2RetValues
 
@@ -13,14 +15,10 @@ namespace rh2mfe {
 //
 // Store MFE scores
 //
-class RH2MFEScores {
-public:
-    // Define variables
-    seqan::String<bool> mEffectiveSites;
-
+class RH2SiteScores : public mikan::MKSiteScores {
 public:
     // Define methods
-    RH2MFEScores(int pMaxMRNALen, int pMaxMiRNALen, std::string &pSeedDef) :
+    RH2SiteScores(int pMaxMRNALen, int pMaxMiRNALen, std::string &pSeedDef) :
             mMaxMRNALen(pMaxMRNALen), mMaxMiRNALen(pMaxMiRNALen), mRHCore(pMaxMRNALen, pMaxMiRNALen, pSeedDef) {}
 
     void set_score(int i, float val) { mMFEScores[i] = val; };
@@ -34,10 +32,12 @@ public:
     int get_hit_length(int pIdx) { return mRHRetVals[pIdx].mHitLen; }
 
     // Method prototype
+    void init_from_args(RH2Options &opts) ;
+
     void clear_scores();
 
-    int calc_scores(RH2SeedSites &pSeedSites, mikan::TRNAStr const &pMiRNASeq,
-                    mikan::TRNASet const &pMRNASeqs, seqan::CharString &pOverlapDef);
+    int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                    mikan::MKSeedSites &pSeedSites);
 
     void calc_normalized_score(int pIdx, int pTargetLen, int pQueryLen);
 
@@ -50,6 +50,7 @@ private:
     seqan::String<float> mNormScores;
     rh2::RH2WorkSpace mRHCore;
     std::vector<rh2::RH2RetValues> mRHRetVals;
+    seqan::CharString mOverlapDef;
 
 private:
     void create_rh_seq(mikan::TRNAStr const &pRNASeq, std::vector<char> &pRHSeq);
@@ -77,7 +78,7 @@ public:
     // Method prototypes
     void clear_scores();
 
-    int calc_scores(RH2SeedSites &pSeedSites, RH2MFEScores &pMFEScores,
+    int calc_scores(RH2SeedSites &pSeedSites, RH2SiteScores &pMFEScores,
                     const seqan::String<unsigned> &pSortedSites);
 
 private:

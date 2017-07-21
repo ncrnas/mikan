@@ -3,6 +3,8 @@
 
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_site_score.hpp"     // MKSiteScores
+#include "ts5_feature.hpp"       // TS5RawFeatures
 #include "ts5_feature.hpp"       // TS5RawFeatures
 #include "ts5_seed_site.hpp"     // TS5SeedSites
 
@@ -129,10 +131,10 @@ private:
 //
 // Store context scores
 //
-class TS5ContextScores {
+class TS5SiteScores : public mikan::MKSiteScores {
 public:
     // Define methods
-    TS5ContextScores() {}
+    TS5SiteScores() : MKSiteScores() {}
 
     void set_score(int i, float val) { mContextScores[i] = val; };
 
@@ -146,22 +148,23 @@ public:
 
     float &get_three_prime_pair_score(int i) { return mThreePrimePair.get_score(i); }
 
-    // Define variables
-    seqan::String<bool> mEffectiveSites;
+    const TS5Alignment &get_alignment() { return mRawFeatures.get_alignment(); }
 
     // Method prototypes
     void clear_scores();
 
-    int calc_scores(TS5RawFeatures &pRawFeatures, TS5SeedSites &pSeedSites);
-
-    void resize_scores(int pSize);
+    int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                    mikan::MKSeedSites &pSeedSites);
 
 private:
     seqan::String<float> mContextScores;
+    TS5RawFeatures mRawFeatures;
     TS5ScoreSeedType mSeedTypes;
     TS5ScoreSitePos mSitePos;
     TS5ScoreAURich mAURich;
     TS5ScoreThreePrimePair mThreePrimePair;
+
+    void resize_scores(int pSize);
 
 };
 
@@ -182,7 +185,7 @@ public:
     // Method prototypes
     void clear_scores();
 
-    int calc_scores(TS5SeedSites &pSeedSites, TS5ContextScores &pContextScores);
+    int calc_scores(TS5SeedSites &pSeedSites, TS5SiteScores &pContextScores);
 
 private:
     seqan::String<float> mTotalScores;

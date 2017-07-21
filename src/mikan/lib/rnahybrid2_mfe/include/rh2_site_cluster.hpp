@@ -5,7 +5,7 @@
 #include <map>                   // multimap
 #include <utility>               // pair
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
-#include "rh2_score.hpp"         // RH2MFEScores
+#include "rh2_score.hpp"         // RH2SiteScores
 #include "rh2_seed_site.hpp"     // RH2SeedSites
 
 namespace rh2mfe {
@@ -24,7 +24,7 @@ public:
     // Method prototype
     void clear_cluster();
 
-    void cluster_site_pos(RH2SeedSites &pSeedSites, RH2MFEScores &pScores);
+    void cluster_site_pos(RH2SeedSites &pSeedSites, RH2SiteScores &pScores);
 
 private:
     typedef std::pair<unsigned, unsigned> TPosPair;
@@ -44,7 +44,7 @@ public:
     RH2Overlap() {}
 
     // Method prototype
-    int filter_overlapped_sites(RH2SeedSites &pSeedSites, RH2MFEScores &pScores,
+    int filter_overlapped_sites(RH2SeedSites &pSeedSites, RH2SiteScores &pScores,
                                 seqan::CharString &pOverlapDef);
 
     void clear_cluster();
@@ -59,17 +59,17 @@ private:
     RH2SiteCluster mSiteCluster;
 
 private:
-    void find_overlapped_sites(RH2SeedSites &pSeedSites, RH2MFEScores &pScores,
+    void find_overlapped_sites(RH2SeedSites &pSeedSites, RH2SiteScores &pScores,
                                int pPosIdx, seqan::CharString &pOverlapDef);
 
     void cluster_overlapped_sites(RH2SeedSites &pSeedSites,
-                                  RH2MFEScores &pScores, std::multimap<unsigned, unsigned> &pStartPos,
+                                  RH2SiteScores &pScores, std::multimap<unsigned, unsigned> &pStartPos,
                                   seqan::CharString &pOverlapDef);
 
-    void mark_overlapped_sites(RH2SeedSites &pSeedSites, RH2MFEScores &pScores,
+    void mark_overlapped_sites(RH2SeedSites &pSeedSites, RH2SiteScores &pScores,
                                std::set<unsigned> &pOlCluster, seqan::CharString &pOverlapDef);
 
-    unsigned get_pos_with_best_mfe(RH2MFEScores &pScores, std::set<unsigned> &pOlCluster);
+    unsigned get_pos_with_best_mfe(RH2SiteScores &pScores, std::set<unsigned> &pOlCluster);
 
 };
 
@@ -82,7 +82,7 @@ public:
     RH2TopNScore() : mTopN(0) {}
 
     // Method prototype
-    int filter_sites(RH2SeedSites &pSeedSites, RH2MFEScores &pScores, int pMaxHits);
+    int filter_sites(RH2SeedSites &pSeedSites, RH2SiteScores &pScores, int pMaxHits);
 
     void clear_cluster();
 
@@ -97,9 +97,9 @@ private:
     int mTopN;
 
 private:
-    void sort_sites_by_score(RH2MFEScores &pScores, int pPosIdx);
+    void sort_sites_by_score(RH2SiteScores &pScores, int pPosIdx);
 
-    void mark_non_topn_sites(RH2MFEScores &pScores, std::multimap<float, unsigned> &pSortedSites);
+    void mark_non_topn_sites(RH2SiteScores &pScores, std::multimap<float, unsigned> &pSortedSites);
 
 
 };
@@ -115,7 +115,7 @@ public:
     const seqan::String<unsigned> &get_sorted_mrna_pos() { return mSortedSitePos; }
 
     // Method prototype
-    int generate_sorted_mrna_pos(RH2SeedSites &pSeedSites, RH2MFEScores &pScores);
+    int generate_sorted_mrna_pos(RH2SeedSites &pSeedSites, RH2SiteScores &pScores);
 
     void clear_site_pos();
 
@@ -131,7 +131,7 @@ private:
 
 private:
     void cluster_site_pos(RH2SeedSites &pSeedSites,
-                          RH2MFEScores &pScores);
+                          RH2SiteScores &pScores);
 
 };
 

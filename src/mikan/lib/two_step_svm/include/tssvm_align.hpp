@@ -5,7 +5,7 @@
 #include <seqan/align.h>
 #include <seqan/score.h>
 #include "mk_typedef.hpp"           // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
-#include "tssvm_seed_site.hpp"      // TSSVMSeedSites
+#include "mk_seed_site.hpp"         // MKSeedSites
 
 // Extend SeqAn by a user-define scoring matrix.
 namespace seqan {
@@ -84,8 +84,8 @@ public:
     mikan::TCharSet const &get_align_mirna() const { return mAlignMiRNA; }
 
     // Method prototypes
-    int align_seq(TSSVMSeedSites &pSeedSites, mikan::TRNAStr const &pMiRNASeq,
-                  mikan::TRNASet const &pMRNASeqs);
+    int align_seq(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                  mikan::MKSeedSites &pSeedSites);
 
     void clear_alignments();
 

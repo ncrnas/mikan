@@ -4,7 +4,7 @@
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"           // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "tssvm_align.hpp"          // TSAlign
-#include "tssvm_seed_site.hpp"      // TSSVMSeedSite
+#include "mk_seed_site.hpp"         // MKSeedSites
 
 namespace tssvm {
 
@@ -21,8 +21,8 @@ public:
     seqan::StringSet<seqan::String<float> > &get_all_val() { return mSeedTypes; }
 
     // Method prototype
-    int add_features(TSSVMSeedSites &pSeedSites, TSAlign const &pAlignSeqs,
-                     mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+    int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                     mikan::MKSeedSites &pSeedSites, TSAlign const &pAlignSeqs,
                      seqan::String<bool> &pEffectiveSites);
 
     void clear_features();
@@ -44,8 +44,8 @@ public:
     seqan::StringSet<seqan::String<float> > &get_all_val() { return mSimilarities; }
 
     // Method prototype
-    int add_features(TSSVMSeedSites &pSeedSites, TSAlign const &pAlignSeqs,
-                     mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+    int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                     mikan::MKSeedSites &pSeedSites, TSAlign const &pAlignSeqs,
                      seqan::String<bool> &pEffectiveSites);
 
     void clear_features();
@@ -67,8 +67,8 @@ public:
     seqan::StringSet<seqan::String<float> > &get_all_val() { return mAURichUp; }
 
     // Method prototype
-    int add_features(TSSVMSeedSites &pSeedSites, TSAlign const &pAlignSeqs,
-                     mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+    int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                     mikan::MKSeedSites &pSeedSites, TSAlign const &pAlignSeqs,
                      seqan::String<bool> &pEffectiveSites);
 
     void clear_features();
@@ -93,8 +93,8 @@ public:
     seqan::StringSet<seqan::String<float> > &get_all_val() { return mAURichDown; }
 
     // Method prototype
-    int add_features(TSSVMSeedSites &pSeedSites, TSAlign const &pAlignSeqs,
-                     mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+    int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                     mikan::MKSeedSites &pSeedSites, TSAlign const &pAlignSeqs,
                      seqan::String<bool> &pEffectiveSites);
 
     void clear_features();
@@ -119,8 +119,8 @@ public:
     seqan::StringSet<seqan::String<float> > &get_all_val() { return mSitePos; }
 
     // Method prototype
-    int add_features(TSSVMSeedSites &pSeedSites, TSAlign const &pAlignSeqs,
-                     mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+    int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                     mikan::MKSeedSites &pSeedSites, TSAlign const &pAlignSeqs,
                      seqan::String<bool> &pEffectiveSites);
 
     void clear_features();
@@ -144,8 +144,8 @@ public:
     seqan::StringSet<seqan::String<float> > &get_all_val() { return mSeqMatch; }
 
     // Method prototype
-    int add_features(TSSVMSeedSites &pSeedSites, TSAlign const &pAlignSeqs,
-                     mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+    int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                     mikan::MKSeedSites &pSeedSites, TSAlign const &pAlignSeqs,
                      seqan::String<bool> &pEffectiveSites);
 
     void clear_features();
@@ -169,8 +169,8 @@ public:
     seqan::StringSet<seqan::String<float> > &get_all_val() { return mA1Match; }
 
     // Method prototype
-    int add_features(TSSVMSeedSites &pSeedSites, TSAlign const &pAlignSeqs,
-                     mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+    int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                     mikan::MKSeedSites &pSeedSites, TSAlign const &pAlignSeqs,
                      seqan::String<bool> &pEffectiveSites);
 
     void clear_features();
@@ -225,8 +225,8 @@ public:
     TFeatSet &get_all_a1_match() { return mA1Match.get_all_val(); }
 
     // Method prototypes
-    int add_features(TSSVMSeedSites &pSeedSites, TSAlign const &pAlignSeqs,
-                     mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs);
+    int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                     mikan::MKSeedSites &pSeedSites, TSAlign const &pAlignSeqs);
 
     void clear_features();
 

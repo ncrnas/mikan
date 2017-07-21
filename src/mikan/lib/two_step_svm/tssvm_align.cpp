@@ -16,9 +16,10 @@ void TSAlign::clear_alignments() {
 }
 
 int TSAlign::align_seq(
-        TSSVMSeedSites &pSeedSites,
         mikan::TRNAStr const &pMiRNASeq,
-        mikan::TRNASet const &pMRNASeqs) {
+        mikan::TRNASet const &pMRNASeqs,
+        mikan::MKSeedSites &pSeedSites) {
+
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &sitePos = pSeedSites.get_site_pos();
     const StringSet<CharString> &seedTypes = pSeedSites.get_seed_types();

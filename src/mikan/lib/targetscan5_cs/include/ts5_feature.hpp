@@ -20,7 +20,7 @@ public:
 
     // Method prototype
     int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                     TS5SeedSites const &pSeedSites);
+                     mikan::MKSeedSites &pSeedSites);
 
     void clear_features();
 
@@ -43,7 +43,7 @@ public:
 
     // Method prototype
     int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                     TS5SeedSites const &pSeedSites);
+                     mikan::MKSeedSites &pSeedSites);
 
     void clear_features();
 
@@ -71,7 +71,7 @@ public:
 
     // Method prototype
     int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                     TS5SeedSites const &pSeedSites);
+                     mikan::MKSeedSites &pSeedSites);
 
     void clear_features();
 
@@ -119,7 +119,7 @@ public:
 
     // Method prototypes
     int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                     TS5SeedSites const &pSeedSites);
+                     mikan::MKSeedSites &pSeedSites);
 
     void clear_features();
 

@@ -3,6 +3,7 @@
 
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_sequence.hpp"       // MKSequences
+#include "mk_site_score.hpp"     // MKSiteScores
 #include "tm1_mrna_feature.hpp"  // TM1MRNAFeatures
 #include "tm1_mrna_svm.hpp"      // TM1MRNAModel, TM1MRNAInputVector
 #include "tm1_option.hpp"        // TM1CSOptions
@@ -22,6 +23,7 @@ class TM1Core {
 public:
     // Declare variables
     bool mExecSearchSeedSites;
+    bool mExecCalSiteScore;
     bool mExecGetRawFeat;
     bool mExecSortSites;
     bool mExecGetMRNAFeat;
@@ -40,10 +42,10 @@ public:
     TM1Core(mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
             mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
             mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
-            mExecSearchSeedSites(true), mExecGetRawFeat(true), mExecSortSites(true), mExecGetMRNAFeat(true),
-            mExecRNAScore(true), mExecSumScores(true), mOutputSitePos(true), mOutputScore(true), mOutputAlign(true),
-            mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs),
-            mSeedSites(pRNAIdx, pFinder, pMRNASeqs) {}
+            mExecSearchSeedSites(true), mExecCalSiteScore(false), mExecGetRawFeat(true), mExecSortSites(true),
+            mExecGetMRNAFeat(true), mExecRNAScore(true), mExecSumScores(true), mOutputSitePos(true),
+            mOutputScore(true), mOutputAlign(true), mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
+            mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs) {}
 
     // Method prototypes
     void init_from_args(TM1CSOptions &opts);
@@ -64,6 +66,7 @@ private:
     std::ofstream mOFile2;
 
     TM1SeedSites mSeedSites;
+    mikan::MKSiteScores mSiteScores;
     TM1RawFeatures mRawFeatures;
     TM1SortedSitePos mSortedSites;
     TM1MRNAFeatures mMRNAFeatures;

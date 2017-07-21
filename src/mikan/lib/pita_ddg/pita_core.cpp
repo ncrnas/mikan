@@ -64,8 +64,6 @@ void PITACore::init_from_args(PITAOptions &opts) {
     mOFileTotal = opts.mOFileTotal;
     mMinSeedLen = opts.mMinSeedLen;
     mMaxSeedLen = opts.mMaxSeedLen;
-    mFlankUp = opts.mFlankUp;
-    mFlankDown = opts.mFlankDown;
 
     resize(mSeedTypeDef, 5);
     mSeedTypeDef[0] = 'Y';
@@ -88,6 +86,8 @@ void PITACore::init_from_args(PITAOptions &opts) {
     mSeedTypeDef[4] = opts.mAllowMismatch;
 
     set_backtrack(mOutputAlign);
+
+    mSiteScores.init_from_args(opts);
 }
 
 int PITACore::open_output_file() {
@@ -167,8 +167,8 @@ int PITACore::calculate_mirna_scores(unsigned pIdx) {
     }
 
     // Calculate ddG values
-    if (mExecCalDDGScore) {
-        retVal = mDDGScores.calc_scores(mSeedSites, miRNASeq, mMRNASeqs, mFlankUp, mFlankDown);
+    if (mExecCalSiteScore) {
+        retVal = mSiteScores.calc_scores(miRNASeq, mMRNASeqs, mSeedSites);
         if (retVal != 0) {
             std::cerr << "ERROR: Calculate ddG scores failed." << std::endl;
             return 1;
@@ -187,7 +187,7 @@ int PITACore::calculate_mirna_scores(unsigned pIdx) {
     // Summarize ddG values
     if (mExecSumScores) {
         const seqan::String<unsigned> &sortedPos = mSortedSites.get_sorted_mrna_pos();
-        retVal = mTotalScores.calc_scores(mSeedSites, mDDGScores, sortedPos);
+        retVal = mTotalScores.calc_scores(mSeedSites, mSiteScores, sortedPos);
         if (retVal != 0) {
             std::cerr << "ERROR: Calculate total ddG scores failed." << std::endl;
             return 1;
@@ -223,7 +223,7 @@ int PITACore::calculate_mirna_scores(unsigned pIdx) {
 
     mSeedSites.clear_pos();
     mOverlappedSites.clear_cluster();
-    mDDGScores.clear_scores();
+    mSiteScores.clear_scores();
     mSortedSites.clear_site_pos();
     mTotalScores.clear_scores();
 
@@ -242,12 +242,12 @@ int PITACore::write_ddg_score(seqan::CharString const &pMiRNAId) {
 
     for (unsigned i = 0; i < length(sortedPos); ++i) {
         posIdx = sortedPos[i];
-        if (!mDDGScores.mEffectiveSites[posIdx]) {
+        if (!mSiteScores.mEffectiveSites[posIdx]) {
             continue;
         }
 
         seedStart = sitePos[posIdx];
-        score = mDDGScores.get_score(posIdx);
+        score = mSiteScores.get_score(posIdx);
         score = roundf(score * 100.0f) / 100.0f;
 
         mOFile1 << toCString(pMiRNAId) << "\t";
@@ -303,29 +303,29 @@ int PITACore::write_alignment(seqan::CharString const &pMiRNAId) {
     for (unsigned i = 0; i < length(sortedPos); ++i) {
         posIdx = sortedPos[i];
 
-        if (!mDDGScores.mEffectiveSites[posIdx]) {
+        if (!mSiteScores.mEffectiveSites[posIdx]) {
             continue;
         }
 
         seedStart = sitePos[posIdx];
-        score = mDDGScores.get_score(posIdx);
+        score = mSiteScores.get_score(posIdx);
         score = roundf(score * 100.0f) / 100.0f;
 
-        dGduplex = (float) mDDGScores.get_dgall(posIdx);
+        dGduplex = (float) mSiteScores.get_dgall(posIdx);
         dGduplex = roundf(dGduplex * 100.0f) / 100.0f;
-        dG5 = (float) mDDGScores.get_dg5(posIdx);
+        dG5 = (float) mSiteScores.get_dg5(posIdx);
         dG5 = roundf(dG5 * 100.0f) / 100.0f;
-        dG3 = (float) mDDGScores.get_dg3(posIdx);
+        dG3 = (float) mSiteScores.get_dg3(posIdx);
         dG3 = roundf(dG3 * 100.0f) / 100.0f;
-        dGopen = (float) mDDGScores.get_dg0(posIdx) - (float) mDDGScores.get_dg1(posIdx);
+        dGopen = (float) mSiteScores.get_dg0(posIdx) - (float) mSiteScores.get_dg1(posIdx);
         dGopen = roundf(dGopen * 100.0f) / 100.0f;
-        dG0 = (float) mDDGScores.get_dg0(posIdx);
+        dG0 = (float) mSiteScores.get_dg0(posIdx);
         dG0 = roundf(dG0 * 100.0f) / 100.0f;
-        dG1 = (float) mDDGScores.get_dg1(posIdx);
+        dG1 = (float) mSiteScores.get_dg1(posIdx);
         dG1 = roundf(dG1 * 100.0f) / 100.0f;
 
         std::cout << "### " << count + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
-        mDDGScores.print_alignment(posIdx);
+        mSiteScores.print_alignment(posIdx);
         std::cout << "  miRNA:               " << toCString(pMiRNAId) << std::endl;
         std::cout << "  mRNA:                " << toCString((seqan::CharString) (mMRNAIds[mRNAPos[posIdx]]));
         std::cout << std::endl;

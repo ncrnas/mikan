@@ -13,12 +13,11 @@ namespace mikan {
 //
 class MKSeedSeqs {
 public:
-    // Define variables
+    // Define variable
     seqan::String<bool> mEffectiveSeeds;
 
-public:
     // Define methods
-    MKSeedSeqs() {
+    explicit MKSeedSeqs() {
         resize(mRNAChar, 4);
         mRNAChar[0] = 'A';
         mRNAChar[1] = 'C';
@@ -38,11 +37,11 @@ public:
         mTSSVMMismatch = false;
     }
 
-    mikan::TRNAStr const &get_seed_seq(int i) const { return mSeedSeqs[i]; }
+    mikan::TRNAStr const &get_seed_seq(int pIdx) const { return mSeedSeqs[pIdx]; }
 
-    seqan::CharString const &get_seed_type(int i) const { return mSeedTypes[i]; }
+    seqan::CharString const &get_seed_type(int pIdx) const { return mSeedTypes[pIdx]; }
 
-    unsigned get_mismatched_pos(int i) { return mMisMatchPos[i]; }
+    unsigned get_mismatched_pos(int pIdx) { return mMisMatchPos[pIdx]; }
 
     // Method prototypes
     int create_seed_seqs();
@@ -56,6 +55,7 @@ public:
     void print_all();
 
 protected:
+    // Define variables
     mikan::TRNASet mSeedSeqs;
     mikan::TCharSet mSeedTypes;
     mikan::TSitePosSet mMisMatchPos;
@@ -87,7 +87,7 @@ protected:
     mikan::TCharSet mTmpSeedTypes;
     mikan::TSitePosSet mTmpMisMatchPos;
 
-protected:
+    // Method prototypes
     int create_single_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq);
 
     int create_multi_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq);

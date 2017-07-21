@@ -131,6 +131,15 @@ int TM1Core::calculate_mirna_scores(unsigned pIdx) {
         }
     }
 
+    // Calculate site scores
+    if (mExecCalSiteScore) {
+        retVal = mSiteScores.calc_scores(miRNASeq, mMRNASeqs, mSeedSites);
+        if (retVal != 0) {
+            std::cerr << "ERROR: Calculate MFE values failed." << std::endl;
+            return 1;
+        }
+    }
+
     // Sort target sites
     if (mExecSortSites) {
         retVal = mSortedSites.generate_sorted_mrna_pos(mSeedSites, true);

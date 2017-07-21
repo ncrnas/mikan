@@ -11,29 +11,31 @@ namespace mikan {
 //
 class MKOptions {
 public:
-    // Define types
+    // Define type
     typedef seqan::ArgumentParser::ParseResult TParseResult;
 
-    // Declare variables
+    // Define variables
     seqan::CharString mMiRNAFasta;
     seqan::CharString mMRNAFasta;
     seqan::CharString mOFileSite;
     seqan::CharString mOFileTotal;
 
-public:
-    // Define methods
-    MKOptions() {}
+    // Define method
+    explicit MKOptions() {}
 
-    // Method prototypes
+    // Method prototype
     seqan::ArgumentParser::ParseResult parseCommandLine(int argc, char const **argv);
 
-private:
-    static void setProgramDescription(seqan::ArgumentParser &pParser);
-
 protected:
+    // Method prototypes
     seqan::ArgumentParser::ParseResult validateFiles(seqan::ArgumentParser &parser);
 
     static void addIOArgs(seqan::ArgumentParser &parser);
+
+private:
+    // Method prototype
+    static void setProgramDescription(seqan::ArgumentParser &pParser);
+
 };
 
 } // namespace mikan

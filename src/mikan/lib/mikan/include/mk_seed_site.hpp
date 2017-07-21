@@ -13,14 +13,14 @@ namespace mikan {
 //
 class MKSeedSites {
 public:
-    // Constant values
+    // Constant value
     static const unsigned INDEXED_SEQ_LEN = SEEDLEN;
 
-    // Define variables
+    // Define variable
     seqan::String<bool> mEffectiveSites;
 
     // Define methods
-    MKSeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
+    explicit MKSeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
             mMRNASeqs(pMRNASeqs), mRNAIdx(pRNAIdx), mFinder(pFinder) {
         mCheckPosMethod = "";
         mMinToCDS = 0;
@@ -53,6 +53,7 @@ public:
     void print_all();
 
 protected:
+    // Define variables
     mikan::TMRNAPosSet mMRNAPos;
     mikan::TSitePosSet mSitePos;
     mikan::TCharSet mSeedTypes;
@@ -70,7 +71,7 @@ protected:
     mikan::TSitePosSet mS1Pos;
     mikan::TSitePosSet mS8Pos;
 
-protected:
+    // Method prototypes
     bool check_position(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType);
 
     virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
@@ -79,6 +80,7 @@ protected:
 
     void set_mx_matches(unsigned pMRNAPos, unsigned pSitePos, mikan::TRNAStr const &pMiRNA, int pMx,
                         bool &pNoMx, bool &pMatchMx, bool &pGutMx, bool &pGumMx, bool &pIsA);
+
 };
 
 } // namespace mikan
