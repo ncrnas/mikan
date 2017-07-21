@@ -3,7 +3,7 @@
 
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
-#include "mk_typedef.hpp"         // TRNATYPE
+#include "mk_site_score.hpp"      // MKSiteScores
 #include "tm1_mrna_svm.hpp"       // TM1MRNAInputVector
 #include "tm1_site_cluster.hpp"   // TM1SortedSitePos
 

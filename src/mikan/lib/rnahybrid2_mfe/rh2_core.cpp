@@ -11,7 +11,7 @@
 #include "mk_input.hpp"          // MKInput
 #include "rh2_option.hpp"        // RH2Options
 #include "rh2_seed_site.hpp"     // RH2Sequences, RH2SeedSites
-#include "rh2_score.hpp"         // RH2MFEScores, RH2TotalScores
+#include "rh2_score.hpp"         // RH2SiteScores, RH2TotalScores
 #include "rh2_site_cluster.hpp"  // RH2Overlap, RH2TopNScore, RH2SortedSitePos
 #include "rh2_core.hpp"          // RH2Core
 
@@ -69,8 +69,11 @@ void RH2Core::init_from_args(RH2Options &opts) {
 
     resize(mSeedTypeDef, 1);
     mSeedTypeDef[0] = opts.mSeedDef;
-    mOverlapDef = opts.mOverlapDef;
     mMaxHits = opts.mMaxHits;
+
+    mOverlapDef = opts.mOverlapDef;
+
+    mSiteScores.init_from_args(opts);
 
 }
 
@@ -142,8 +145,8 @@ int RH2Core::calculate_mirna_scores(unsigned pIdx) {
     }
 
     // Calculate MFE values
-    if (mExecCalMFEScore) {
-        retVal = mMfeScores.calc_scores(mSeedSites, miRNASeq, mMRNASeqs, mOverlapDef);
+    if (mExecCalSiteScore) {
+        retVal = mSiteScores.calc_scores(miRNASeq, mMRNASeqs, mSeedSites);
         if (retVal != 0) {
             std::cerr << "ERROR: Calculate MFE values failed." << std::endl;
             return 1;
@@ -152,7 +155,7 @@ int RH2Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Filter overlapped sites
     if (mExecFilterOverlap) {
-        retVal = mOverlappedSites.filter_overlapped_sites(mSeedSites, mMfeScores, mOverlapDef);
+        retVal = mOverlappedSites.filter_overlapped_sites(mSeedSites, mSiteScores, mOverlapDef);
         if (retVal != 0) {
             std::cerr << "ERROR: Check overlapped sites failed." << std::endl;
             return 1;
@@ -161,7 +164,7 @@ int RH2Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Filter sites by the numbers of sites
     if (mExecFilterSiteNum) {
-        retVal = mTopScoredSites.filter_sites(mSeedSites, mMfeScores, mMaxHits);
+        retVal = mTopScoredSites.filter_sites(mSeedSites, mSiteScores, mMaxHits);
         if (retVal != 0) {
             std::cerr << "ERROR: Filter top scored sites failed." << std::endl;
             return 1;
@@ -170,7 +173,7 @@ int RH2Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Sort target sites
     if (mExecSortSites) {
-        retVal = mSortedSites.generate_sorted_mrna_pos(mSeedSites, mMfeScores);
+        retVal = mSortedSites.generate_sorted_mrna_pos(mSeedSites, mSiteScores);
         if (retVal != 0) {
             std::cerr << "ERROR: Sort target sites failed." << std::endl;
             return 1;
@@ -180,7 +183,7 @@ int RH2Core::calculate_mirna_scores(unsigned pIdx) {
     // Summarize MFE values
     if (mExecSumScores) {
         const seqan::String<unsigned> &sortedPos = mSortedSites.get_sorted_mrna_pos();
-        retVal = mTotalScores.calc_scores(mSeedSites, mMfeScores, sortedPos);
+        retVal = mTotalScores.calc_scores(mSeedSites, mSiteScores, sortedPos);
         if (retVal != 0) {
             std::cerr << "ERROR: Calculate total MFE values failed." << std::endl;
             return 1;
@@ -215,7 +218,7 @@ int RH2Core::calculate_mirna_scores(unsigned pIdx) {
     }
 
     mSeedSites.clear_pos();
-    mMfeScores.clear_scores();
+    mSiteScores.clear_scores();
     mOverlappedSites.clear_cluster();
     mTopScoredSites.clear_cluster();
     mSortedSites.clear_site_pos();
@@ -236,22 +239,22 @@ int RH2Core::write_mfe_score(seqan::CharString const &pMiRNAId) {
 
     for (unsigned i = 0; i < length(sortedPos); ++i) {
         posIdx = sortedPos[i];
-        if (!mMfeScores.mEffectiveSites[posIdx]) {
+        if (!mSiteScores.mEffectiveSites[posIdx]) {
             continue;
         }
 
         seedStart = sitePos[posIdx];
-        score = mMfeScores.get_score(posIdx);
+        score = mSiteScores.get_score(posIdx);
         score = roundf(score * 10.0f) / 10.0f;
 
         mOFile1 << toCString(pMiRNAId) << "\t";
         mOFile1 << toCString((seqan::CharString) mMRNAIds[mRNAPos[posIdx]]) << "\t";
         mOFile1 << seedStart + 1 << "\t";
         mOFile1 << seedStart + 7 << "\t";
-        //        mOFile1 << mMfeScores.get_hit_start(posIdx) + 1  << "\t";
+        //        mOFile1 << mSiteScores.get_hit_start(posIdx) + 1  << "\t";
         mOFile1 << toCString((seqan::CharString) seedTypes[posIdx]) << "\t";
         mOFile1 << score << "\t";
-        mOFile1 << mMfeScores.get_norm_score(posIdx);
+        mOFile1 << mSiteScores.get_norm_score(posIdx);
         mOFile1 << std::endl;
     }
 
@@ -290,25 +293,25 @@ int RH2Core::write_alignment(seqan::CharString const &pMiRNAId) {
     for (unsigned i = 0; i < length(sortedPos); ++i) {
         posIdx = sortedPos[i];
 
-        if (!mMfeScores.mEffectiveSites[posIdx]) {
+        if (!mSiteScores.mEffectiveSites[posIdx]) {
             continue;
         }
 
         seedStart = sitePos[posIdx];
-        score = mMfeScores.get_score(posIdx);
+        score = mSiteScores.get_score(posIdx);
         score = roundf(score * 10.0f) / 10.0f;
 
         std::cout << "### " << count + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
-        mMfeScores.write_alignment(posIdx);
+        mSiteScores.write_alignment(posIdx);
         std::cout << "  miRNA:               " << toCString(pMiRNAId) << std::endl;
         std::cout << "  mRNA:                " << toCString((seqan::CharString) mMRNAIds[mRNAPos[posIdx]])
                   << std::endl;
         std::cout << "  seed type:           " << toCString((seqan::CharString) seedTypes[posIdx]) << std::endl;
-        std::cout << "  position(target 5'): " << mMfeScores.get_hit_start(posIdx) + 1;
+        std::cout << "  position(target 5'): " << mSiteScores.get_hit_start(posIdx) + 1;
         std::cout << std::endl;
         std::cout << "  position(seed):      " << seedStart + 1 << std::endl;
         std::cout << "  mfe:                 " << score << " kcal/mol" << std::endl;
-        std::cout << "  normalized score:    " << mMfeScores.get_norm_score(posIdx);
+        std::cout << "  normalized score:    " << mSiteScores.get_norm_score(posIdx);
         std::cout << std::endl << std::endl;
 
         ++count;

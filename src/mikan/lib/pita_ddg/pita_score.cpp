@@ -1,5 +1,5 @@
 #include "mk_typedef.hpp"   // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
-#include "pita_score.hpp"   // PITADDGScores, PITATotalScores
+#include "pita_score.hpp"   // PITASiteScores, PITATotalScores
 
 using namespace seqan;
 
@@ -75,9 +75,10 @@ void PITADGDuplexScores::clear_scores() {
 }
 
 int PITADGDuplexScores::calc_scores(
-        PITASeedSites &pSeedSites,
         mikan::TRNAStr const &pMiRNASeq,
-        mikan::TRNASet const &pMRNASeqs) {
+        mikan::TRNASet const &pMRNASeqs,
+        mikan::MKSeedSites &pSeedSites) {
+
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &sitePos = pSeedSites.get_site_pos();
     StringSet<CharString> const &seedTypes = pSeedSites.get_seed_types();
@@ -199,10 +200,9 @@ void PITADGOpenScores::clear_scores() {
 }
 
 int PITADGOpenScores::calc_scores(
-        PITASeedSites &pSeedSites,
         mikan::TRNASet const &pMRNASeqs,
-        int pFlankUp,
-        int pFlankDown) {
+        mikan::MKSeedSites &pSeedSites) {
+
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &sitePos = pSeedSites.get_site_pos();
     std::string inputMRNASeq;
@@ -214,12 +214,12 @@ int PITADGOpenScores::calc_scores(
 
     resize(mEffectiveSites, length(pSeedSites.mEffectiveSites));
 
-    paramU = pFlankUp;
-    paramS = DDG_OPEN + DDG_AREA + pFlankDown - 1;
-    paramFT = DDG_OPEN + pFlankDown;
+    paramU = mFlankUp;
+    paramS = DDG_OPEN + DDG_AREA + mFlankDown - 1;
+    paramFT = DDG_OPEN + mFlankDown;
     mVRws.prepare_ddg4((int) length(pSeedSites.mEffectiveSites), paramU, paramS, paramFT, paramFT);
 
-    seqLen = DDG_OPEN + DDG_AREA * 2 + pFlankUp + pFlankDown;
+    seqLen = DDG_OPEN + DDG_AREA * 2 + mFlankUp + mFlankDown;
     resize(inputMRNASeq, seqLen);
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
@@ -230,8 +230,8 @@ int PITADGOpenScores::calc_scores(
 
         seqEnd = sitePos[i] + (INDEXED_SEQ_LEN + 1);
         seqStart = seqEnd - DDG_OPEN;
-        seqStart2 = seqStart - (DDG_AREA + pFlankDown);
-        seqEnd2 = seqEnd + (DDG_AREA + pFlankUp);
+        seqStart2 = seqStart - (DDG_AREA + mFlankDown);
+        seqEnd2 = seqEnd + (DDG_AREA + mFlankUp);
 
         create_input_mrna_seq(pMRNASeqs[mRNAPos[i]], seqStart2, seqEnd2, inputMRNASeq);
 //        print_input(inputMRNASeq);
@@ -267,30 +267,35 @@ void PITADGOpenScores::print_input(std::string &pInputMRNASeq) {
 }
 
 //
-// PITADDGScores methods
+// PITASiteScores methods
 //
-void PITADDGScores::clear_scores() {
-    clear(mEffectiveSites);
+void PITASiteScores::init_from_args(PITAOptions &opts) {
+    mDGOpenScores.mFlankUp = opts.mFlankUp;
+    mDGOpenScores.mFlankDown = opts.mFlankDown;
+}
+
+void PITASiteScores::clear_scores() {
+    mikan::MKSiteScores::clear_scores();
+
     clear(mDDGScores);
     mDGDuplexScores.clear_scores();
     mDGOpenScores.clear_scores();
     mAlign.clear_align();
 }
 
-int PITADDGScores::calc_scores(
-        PITASeedSites &pSeedSites,
+int PITASiteScores::calc_scores(
         mikan::TRNAStr const &miRNASeq,
         mikan::TRNASet const &pMRNASeqs,
-        int pFlankUp,
-        int pFlankDown) {
+        mikan::MKSeedSites &pSeedSites) {
+
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
 
     resize(mEffectiveSites, length(pSeedSites.mEffectiveSites));
     resize(mDDGScores, length(pSeedSites.mEffectiveSites));
     mAlign.resize_align((int) length(pSeedSites.mEffectiveSites));
 
-    mDGDuplexScores.calc_scores(pSeedSites, miRNASeq, pMRNASeqs);
-    mDGOpenScores.calc_scores(pSeedSites, pMRNASeqs, pFlankUp, pFlankDown);
+    mDGDuplexScores.calc_scores(miRNASeq, pMRNASeqs, pSeedSites);
+    mDGOpenScores.calc_scores(pMRNASeqs, pSeedSites);
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
         if (!pSeedSites.mEffectiveSites[i] || !mDGDuplexScores.mEffectiveSites[i] ||
@@ -308,7 +313,7 @@ int PITADDGScores::calc_scores(
     return 0;
 }
 
-void PITADDGScores::print_alignment(int pIdx) {
+void PITASiteScores::print_alignment(int pIdx) {
     std::stringstream stream;
 
     stream << "mRNA   5' " << mAlign.mAlignMRNA[pIdx] << " 3'";
@@ -333,7 +338,7 @@ void PITATotalScores::clear_scores() {
 
 int PITATotalScores::calc_scores(
         PITASeedSites &pSeedSites,
-        PITADDGScores &pMFEScores,
+        PITASiteScores &pMFEScores,
         const seqan::String<unsigned> &pSortedSites) {
 
     const String<unsigned> &siteMRNAPos = pSeedSites.get_mrna_pos();

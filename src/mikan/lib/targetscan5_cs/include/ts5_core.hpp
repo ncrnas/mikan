@@ -5,7 +5,7 @@
 #include "mk_sequence.hpp"       // MKSequences
 #include "ts5_feature.hpp"       // TS5RawFeatures
 #include "ts5_option.hpp"        // TS5CSOptions
-#include "ts5_score.hpp"         // TS5ContextScores, TS5TotalScores
+#include "ts5_score.hpp"         // TS5SiteScores, TS5TotalScores
 #include "ts5_seed_site.hpp"     // TS5SeedSites
 
 namespace ts5cs {
@@ -19,8 +19,7 @@ class TS5Core {
 public:
     // Declare variables
     bool mExecSearchSeedSites;
-    bool mExecGetRawFeat;
-    bool mExecCalcContexScore;
+    bool mExecCalcSiteScore;
     bool mExecSumScores;
     bool mOutputContexScore;
     bool mOutputTotalScore;
@@ -35,7 +34,7 @@ public:
     TS5Core(mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
             mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
             mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
-            mExecSearchSeedSites(true), mExecGetRawFeat(true), mExecCalcContexScore(true),
+            mExecSearchSeedSites(true), mExecCalcSiteScore(true),
             mExecSumScores(true), mOutputContexScore(true), mOutputTotalScore(true),
             mOutputAlign(true), mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
             mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs) {}
@@ -59,8 +58,7 @@ private:
     std::ofstream mOFile2;
 
     TS5SeedSites mSeedSites;
-    TS5RawFeatures mRawFeatures;
-    TS5ContextScores mCsScores;
+    TS5SiteScores mSiteScores;
     TS5TotalScores mTotalScore;
 
 private:

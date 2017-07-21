@@ -12,7 +12,7 @@
 #include "ts5_option.hpp"        // TS5CSOptions
 #include "ts5_seed_site.hpp"     // TS5SeedSites
 #include "ts5_feature.hpp"       // TS5RawFeatures
-#include "ts5_score.hpp"         // TS5ContextScores, TS5TotalScores
+#include "ts5_score.hpp"         // TS5SiteScores, TS5TotalScores
 #include "ts5_core.hpp"          // TS5Core
 
 namespace ts5cs {
@@ -134,29 +134,20 @@ int TS5Core::calculate_mirna_scores(unsigned pIdx) {
         }
     }
 
-    // Get raw features
-    if (mExecGetRawFeat) {
-        retVal = mRawFeatures.add_features(miRNASeq, mMRNASeqs, mSeedSites);
-        if (retVal != 0) {
-            std::cerr << "ERROR: Feature calculation failed." << std::endl;
-            return 1;
-        }
-    }
-
     // Calculate context scores
-    if (mExecCalcContexScore) {
-        retVal = mCsScores.calc_scores(mRawFeatures, mSeedSites);
+    if (mExecCalcSiteScore) {
+        retVal = mSiteScores.calc_scores(miRNASeq, mMRNASeqs, mSeedSites);
         if (retVal != 0) {
-            std::cerr << "ERROR: Calculate regression values failed." << std::endl;
+            std::cerr << "ERROR: Calculate site context values failed." << std::endl;
             return 1;
         }
     }
 
     // Summarize context scores
     if (mExecSumScores) {
-        retVal = mTotalScore.calc_scores(mSeedSites, mCsScores);
+        retVal = mTotalScore.calc_scores(mSeedSites, mSiteScores);
         if (retVal != 0) {
-            std::cerr << "ERROR: Calculate total regression values failed." << std::endl;
+            std::cerr << "ERROR: Calculate total scores failed." << std::endl;
             return 1;
         }
     }
@@ -189,8 +180,7 @@ int TS5Core::calculate_mirna_scores(unsigned pIdx) {
     }
 
     mSeedSites.clear_pos();
-    mRawFeatures.clear_features();
-    mCsScores.clear_scores();
+    mSiteScores.clear_scores();
     mTotalScore.clear_scores();
 
     return 0;
@@ -206,7 +196,7 @@ int TS5Core::write_context_score(seqan::CharString const &pMiRNAId) {
 
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
-        if (!mCsScores.mEffectiveSites[i]) {
+        if (!mSiteScores.mEffectiveSites[i]) {
             continue;
         }
 
@@ -225,7 +215,7 @@ int TS5Core::write_context_score(seqan::CharString const &pMiRNAId) {
         mOFile1 << seedStart << "\t";
         mOFile1 << seedEnd << "\t";
         mOFile1 << seedTypes[i] << "\t";
-        mOFile1 << mCsScores.get_score(i);
+        mOFile1 << mSiteScores.get_score(i);
         mOFile1 << std::endl;
     }
 
@@ -262,13 +252,13 @@ int TS5Core::write_alignment(seqan::CharString const &pMiRNAId) {
     const mikan::TCharSet &seedTypes = mSeedSites.get_seed_types();
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
-    const TS5Alignment &alignment = mRawFeatures.get_alignment();
+    const TS5Alignment &alignment = mSiteScores.get_alignment();
     seqan::CharString seedType;
     int seedStart, seedEnd;
     int count = 0;
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
-        if (!mCsScores.mEffectiveSites[i]) {
+        if (!mSiteScores.mEffectiveSites[i]) {
             continue;
         }
 
@@ -289,7 +279,7 @@ int TS5Core::write_alignment(seqan::CharString const &pMiRNAId) {
         std::cout << "  seed type:            " << seedTypes[i] << std::endl;
         std::cout << "  position(seed start): " << seedStart << std::endl;
         std::cout << "  position(seed end):   " << seedEnd << std::endl;
-        std::cout << "  context score:        " << mCsScores.get_score(i);
+        std::cout << "  context score:        " << mSiteScores.get_score(i);
         std::cout << std::endl << std::endl;
 
         ++count;

@@ -5,7 +5,7 @@
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_sequence.hpp"       // MKSequences
 #include "rh2_option.hpp"        // RH2Options
-#include "rh2_score.hpp"         // RH2MFEScores, RH2TotalScores
+#include "rh2_score.hpp"         // RH2SiteScores, RH2TotalScores
 #include "rh2_seed_site.hpp"     // RH2SeedSites
 #include "rh2_site_cluster.hpp"  // RH2Overlap, RH2TopNScore, RH2SortedSitePos
 
@@ -20,7 +20,7 @@ class RH2Core {
 public:
     // Declare variables
     bool mExecSearchSeedSites;
-    bool mExecCalMFEScore;
+    bool mExecCalSiteScore;
     bool mExecFilterOverlap;
     bool mExecFilterSiteNum;
     bool mExecSortSites;
@@ -30,9 +30,8 @@ public:
     bool mOutputAlign;
     seqan::CharString mOFileMFE;
     seqan::CharString mOFileTotal;
-
-    mikan::TCharSet mSeedTypeDef;
     seqan::CharString mOverlapDef;
+    mikan::TCharSet mSeedTypeDef;
     int mMaxHits;
 
 public:
@@ -41,11 +40,11 @@ public:
             mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
             mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, int pMRNAMaxLen, int pMiRNAMaxLen,
             std::string &pSeedDef) :
-            mExecSearchSeedSites(true), mExecCalMFEScore(true), mExecFilterOverlap(true),
+            mExecSearchSeedSites(true), mExecCalSiteScore(true), mExecFilterOverlap(true),
             mExecFilterSiteNum(true), mExecSortSites(true), mExecSumScores(true), mOutputMFEScore(true),
             mOutputTotalScore(true), mOutputAlign(true), mMaxHits(0), mMiRNAIds(pMiRNAIds),
             mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs),
-            mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mMfeScores(pMRNAMaxLen, pMiRNAMaxLen, pSeedDef) {}
+            mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mSiteScores(pMRNAMaxLen, pMiRNAMaxLen, pSeedDef) {}
 
     // Method prototypes
     void init_from_args(RH2Options &opts);
@@ -66,7 +65,7 @@ private:
     std::ofstream mOFile2;
 
     RH2SeedSites mSeedSites;
-    RH2MFEScores mMfeScores;
+    RH2SiteScores mSiteScores;
     RH2Overlap mOverlappedSites;
     RH2TopNScore mTopScoredSites;
     RH2SortedSitePos mSortedSites;

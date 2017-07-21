@@ -24,7 +24,7 @@ public:
 
     // Declare variables
     bool mExecSearchSeedSites;
-    bool mExecCalDDGScore;
+    bool mExecCalSiteScore;
     bool mExecFilterOverlap;
     bool mExecSortSites;
     bool mExecSumScores;
@@ -35,8 +35,6 @@ public:
     seqan::CharString mOFileTotal;
     int mMinSeedLen;
     int mMaxSeedLen;
-    int mFlankUp;
-    int mFlankDown;
 
     mikan::TCharSet mSeedTypeDef;
 
@@ -45,14 +43,14 @@ public:
     PITACore(mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
              mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
              mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
-            mExecSearchSeedSites(true), mExecCalDDGScore(true), mExecFilterOverlap(true),
+            mExecSearchSeedSites(true), mExecCalSiteScore(true), mExecFilterOverlap(true),
             mExecSortSites(true), mExecSumScores(true), mOutputDDGScore(true), mOutputTotalScore(true),
-            mOutputAlign(true), mMinSeedLen(6), mMaxSeedLen(8), mFlankUp(0), mFlankDown(0),
+            mOutputAlign(true), mMinSeedLen(6), mMaxSeedLen(8),
             mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
             mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
-            mDDGScores() {}
+            mSiteScores() {}
 
-    void set_backtrack(bool pBT) { mDDGScores.set_backtrack(pBT); }
+    void set_backtrack(bool pBT) { mSiteScores.set_backtrack(pBT); }
 
     // Method prototypes
     void init_from_args(PITAOptions &opts);
@@ -73,7 +71,7 @@ private:
     std::ofstream mOFile2;
 
     PITASeedSites mSeedSites;
-    PITADDGScores mDDGScores;
+    PITASiteScores mSiteScores;
     PITAOverlap mOverlappedSites;
     PITASortedSitePos mSortedSites;
     PITATotalScores mTotalScores;

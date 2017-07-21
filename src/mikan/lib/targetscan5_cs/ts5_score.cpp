@@ -1,16 +1,16 @@
 #include <math.h>                // roundf
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "ts5_feature.hpp"       // TS5RawFeatures
-#include "ts5_score.hpp"         // TS5ContextScores, TS5ScoreSeedType, TS5FeatSitePos, TS5FeatAURich,
+#include "ts5_score.hpp"         // TS5SiteScores, TS5ScoreSeedType, TS5FeatSitePos, TS5FeatAURich,
 
 using namespace seqan;
 
 namespace ts5cs {
 
 //
-// TS5ContextScores methods
+// TS5SiteScores methods
 //
-void TS5ContextScores::resize_scores(int pSize) {
+void TS5SiteScores::resize_scores(int pSize) {
     resize(mContextScores, pSize);
 
     mSeedTypes.resize_scores(pSize);
@@ -19,7 +19,11 @@ void TS5ContextScores::resize_scores(int pSize) {
     mThreePrimePair.resize_scores(pSize);
 }
 
-void TS5ContextScores::clear_scores() {
+void TS5SiteScores::clear_scores() {
+    mRawFeatures.clear_features();
+
+    mikan::MKSiteScores::clear_scores();
+
     clear(mContextScores);
 
     mSeedTypes.clear_scores();
@@ -28,22 +32,31 @@ void TS5ContextScores::clear_scores() {
     mThreePrimePair.clear_scores();
 }
 
-int TS5ContextScores::calc_scores(TS5RawFeatures &pRawFeatures, TS5SeedSites &pSeedSites) {
+int TS5SiteScores::calc_scores(
+        mikan::TRNAStr const &pMiRNASeq,
+        mikan::TRNASet const &pMRNASeqs,
+        mikan::MKSeedSites &pSeedSites) {
+
+    int retVal;
     CharString seedType;
     int sitePos;
     float auRich, threePrimePair;
     float seedTypeScore, sitePosScore, auRichScore, threePrimePairScore, totalScore;
     int lenScores;
 
-    seqan::String<bool> &effectiveSites = pSeedSites.mEffectiveSites;
+    retVal = mRawFeatures.add_features(pMiRNASeq, pMRNASeqs, pSeedSites);
+    if (retVal != 0) {
+        return retVal;
+    }
+
     const mikan::TCharSet &seedTypes = pSeedSites.get_seed_types();
 
-    lenScores = (int) length(effectiveSites);
+    lenScores = (int) length(pSeedSites.mEffectiveSites);
     resize(mEffectiveSites, lenScores);
     resize_scores(lenScores);
 
     for (int i = 0; i < lenScores; ++i) {
-        if (!effectiveSites[i]) {
+        if (!pSeedSites.mEffectiveSites[i]) {
             set_score(i, 0.0);
             mSeedTypes.set_score(i, 0.0);
             mSitePos.set_score(i, 0.0);
@@ -56,9 +69,9 @@ int TS5ContextScores::calc_scores(TS5RawFeatures &pRawFeatures, TS5SeedSites &pS
         mEffectiveSites[i] = true;
 
         seedType = seedTypes[i];
-        sitePos = pRawFeatures.get_site_pos(i);
-        auRich = pRawFeatures.get_au_rich(i);
-        threePrimePair = pRawFeatures.get_three_prime_pair(i);
+        sitePos = mRawFeatures.get_site_pos(i);
+        auRich = mRawFeatures.get_au_rich(i);
+        threePrimePair = mRawFeatures.get_three_prime_pair(i);
 
         seedTypeScore = mSeedTypes.calc_score(i, seedType);
         sitePosScore = mSitePos.calc_score(i, seedType, sitePos);
@@ -198,7 +211,7 @@ void TS5TotalScores::clear_scores() {
 }
 
 int TS5TotalScores::calc_scores(TS5SeedSites &pSeedSites,
-                                TS5ContextScores &pContextScores) {
+                                TS5SiteScores &pContextScores) {
     const String<unsigned> &siteMRNAPos = pSeedSites.get_mrna_pos();
     int prevPos = -1;
     int newIdx = -1;

@@ -1,25 +1,30 @@
 #include "mk_typedef.hpp"  // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
-#include "rh2_score.hpp"   // RH2MFEScores, RH2TotalScores
+#include "rh2_score.hpp"   // RH2SiteScores, RH2TotalScores
 
 using namespace seqan;
 
 namespace rh2mfe {
 
 //
-// RH2MFEScores methods
+// RH2SiteScores methods
 //
-void RH2MFEScores::clear_scores() {
-    clear(mEffectiveSites);
+void RH2SiteScores::init_from_args(RH2Options &opts) {
+    mOverlapDef = opts.mOverlapDef;
+}
+
+void RH2SiteScores::clear_scores() {
+    mikan::MKSiteScores::clear_scores();
+
     clear(mMFEScores);
     clear(mNormScores);
     mRHRetVals.clear();
 }
 
-int RH2MFEScores::calc_scores(
-        RH2SeedSites &pSeedSites,
+int RH2SiteScores::calc_scores(
         mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs,
-        CharString &) {
+        mikan::MKSeedSites &pSeedSites) {
+    
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &sitePos = pSeedSites.get_site_pos();
     mikan::TRNAStr miRNASeq = pMiRNASeq;
@@ -84,7 +89,7 @@ int RH2MFEScores::calc_scores(
     return 0;
 }
 
-void RH2MFEScores::create_rh_seq(mikan::TRNAStr const &pRNASeq, std::vector<char> &pRHSeq) {
+void RH2SiteScores::create_rh_seq(mikan::TRNAStr const &pRNASeq, std::vector<char> &pRHSeq) {
     pRHSeq[0] = 5;
 
     for (unsigned i = 0; i < length(pRNASeq); ++i) {
@@ -95,12 +100,12 @@ void RH2MFEScores::create_rh_seq(mikan::TRNAStr const &pRNASeq, std::vector<char
 
 }
 
-void RH2MFEScores::calc_normalized_score(int pIdx, int pTargetLen, int pQueryLen) {
+void RH2SiteScores::calc_normalized_score(int pIdx, int pTargetLen, int pQueryLen) {
     float mfx = mMFEScores[pIdx];
     mNormScores[pIdx] = -1.0f * mfx / log((float) (pTargetLen * pQueryLen));
 }
 
-void RH2MFEScores::write_alignment(int pIdx, bool align_only) {
+void RH2SiteScores::write_alignment(int pIdx, bool align_only) {
     std::stringstream stream;
 
     if (!align_only) {
@@ -117,7 +122,7 @@ void RH2MFEScores::write_alignment(int pIdx, bool align_only) {
     std::cout << stream.str();
 }
 
-void RH2MFEScores::write_seq_info(
+void RH2SiteScores::write_seq_info(
         mikan::TRNAStr &pMiSeq,
         mikan::TRNAStr &pMRNASeq,
         std::vector<char> &pRhMiRNASeq,
@@ -155,7 +160,7 @@ void RH2TotalScores::clear_scores() {
 
 int RH2TotalScores::calc_scores(
         RH2SeedSites &pSeedSites,
-        RH2MFEScores &pMFEScores,
+        RH2SiteScores &pMFEScores,
         const seqan::String<unsigned> &pSortedSites) {
 
     const String<unsigned> &siteMRNAPos = pSeedSites.get_mrna_pos();

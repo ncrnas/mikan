@@ -17,7 +17,7 @@ void TS5RawFeatures::clear_features() {
 int TS5RawFeatures::add_features(
         mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs,
-        TS5SeedSites const &pSeedSites) {
+        mikan::MKSeedSites &pSeedSites) {
 
     mSitePos.add_features(pMiRNASeq, pMRNASeqs, pSeedSites);
     mAURich.add_features(pMiRNASeq, pMRNASeqs, pSeedSites);
@@ -36,7 +36,7 @@ void TS5FeatSitePos::clear_features() {
 int TS5FeatSitePos::add_features(
         mikan::TRNAStr const &,
         mikan::TRNASet const &pMRNASeqs,
-        TS5SeedSites const &pSeedSites) {
+        mikan::MKSeedSites &pSeedSites) {
 
     int seqLen, lenUp, lenDown, scoreLen;
     const seqan::String<bool> &effectiveSites = pSeedSites.mEffectiveSites;
@@ -83,7 +83,7 @@ void TS5FeatAURich::clear_features() {
 int TS5FeatAURich::add_features(
         mikan::TRNAStr const &,
         mikan::TRNASet const &pMRNASeqs,
-        TS5SeedSites const &pSeedSites) {
+        mikan::MKSeedSites &pSeedSites) {
 
     int seqLen, startU, endU, startD, endD;
     float totalScore, upTotalScore, upMaxScore, downTotalScore, downMaxScore;
@@ -198,7 +198,7 @@ void TS5FeatThreePrimePair::clear_features() {
 int TS5FeatThreePrimePair::add_features(
         mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs,
-        TS5SeedSites const &pSeedSites) {
+        mikan::MKSeedSites &pSeedSites) {
 
     const seqan::String<bool> &effectiveSites = pSeedSites.mEffectiveSites;
     const mikan::TCharSet &seedTypes = pSeedSites.get_seed_types();

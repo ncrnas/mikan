@@ -8,6 +8,8 @@
 #include <seqan/align.h>
 #include <seqan/score.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_site_score.hpp"      // MKSiteScores
+#include "mr3_option.hpp"         // MR3Options
 #include "mr3_align.hpp"          // MR3SeedSites
 #include "mr3_seed_site.hpp"      // MR3Align
 #include "vr16_fold_core.hpp"     // VR16FoldWorkSpace
@@ -40,7 +42,8 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(MR3SeedSites &pSeedSites, mikan::TRNAStr const &miRNASeq, mikan::TRNASet const &pMRNASeqs);
+    int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                    mikan::MKSeedSites &pSeedSites);
 
     void print_input(mikan::TRNAStr &pInputMiRNASeq, mikan::TRNAStr &pInputMRNASeq);
 
@@ -89,7 +92,8 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(MR3SeedSites &pSeedSites, mikan::TRNAStr const &miRNASeq, mikan::TRNASet const &pMRNASeqs);
+    int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                    mikan::MKSeedSites &pSeedSites);
 
     void print_input(std::string &pInputMRNASeq);
 
@@ -106,17 +110,14 @@ private:
 //
 // Store miRanda scores
 //
-class MR3SiteScores {
+class MR3SiteScores : public mikan::MKSiteScores {
 public:
     // Constant values
     static const unsigned RNAFOLD_MAX_INPUTLEN = 60;
 
-    // Define variables
-    seqan::String<bool> mEffectiveSites;
-
-public:
     // Define methods
-    MR3SiteScores() : mVRws(30.0), mAlign(), mAlignScores(mVRws, mAlign), mEnergyScores(mVRws, mAlign) {
+    MR3SiteScores() : MKSiteScores(), mVRws(30.0), mAlign(), mAlignScores(mVRws, mAlign),
+                      mEnergyScores(mVRws, mAlign) {
         init_rnafold();
     }
 
@@ -133,7 +134,8 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(MR3SeedSites &pSeedSites, mikan::TRNAStr const &miRNASeq, mikan::TRNASet const &pMRNASeqs);
+    int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                    mikan::MKSeedSites &pSeedSites);
 
     void print_alignment(int pIdx);
 
