@@ -22,22 +22,23 @@ void TSSVMRawFeatures::clear_features() {
 }
 
 int TSSVMRawFeatures::add_features(
-        TSSVMSeedSites &pSeedSites,
-        TSAlign const &pAlignSeqs,
         mikan::TRNAStr const &pMiRNASeq,
-        mikan::TRNASet const &pMRNASeqs) {
+        mikan::TRNASet const &pMRNASeqs,
+        mikan::MKSeedSites &pSeedSites,
+        TSAlign const &pAlignSeqs) {
+
     resize(mEffectiveSites, length(pSeedSites.mEffectiveSites));
     for (unsigned i = 0; i < length(mEffectiveSites); ++i) {
         mEffectiveSites[i] = pSeedSites.mEffectiveSites[i];
     }
 
-    mSeedTypes.add_features(pSeedSites, pAlignSeqs, pMiRNASeq, pMRNASeqs, mEffectiveSites);
-    mSimilarities.add_features(pSeedSites, pAlignSeqs, pMiRNASeq, pMRNASeqs, mEffectiveSites);
-    mAURichUp.add_features(pSeedSites, pAlignSeqs, pMiRNASeq, pMRNASeqs, mEffectiveSites);
-    mAURichDown.add_features(pSeedSites, pAlignSeqs, pMiRNASeq, pMRNASeqs, mEffectiveSites);
-    mSitePos.add_features(pSeedSites, pAlignSeqs, pMiRNASeq, pMRNASeqs, mEffectiveSites);
-    mSeqMatch.add_features(pSeedSites, pAlignSeqs, pMiRNASeq, pMRNASeqs, mEffectiveSites);
-    mA1Match.add_features(pSeedSites, pAlignSeqs, pMiRNASeq, pMRNASeqs, mEffectiveSites);
+    mSeedTypes.add_features(pMiRNASeq, pMRNASeqs, pSeedSites, pAlignSeqs, mEffectiveSites);
+    mSimilarities.add_features(pMiRNASeq, pMRNASeqs, pSeedSites, pAlignSeqs, mEffectiveSites);
+    mAURichUp.add_features(pMiRNASeq, pMRNASeqs, pSeedSites, pAlignSeqs, mEffectiveSites);
+    mAURichDown.add_features(pMiRNASeq, pMRNASeqs, pSeedSites, pAlignSeqs, mEffectiveSites);
+    mSitePos.add_features(pMiRNASeq, pMRNASeqs, pSeedSites, pAlignSeqs, mEffectiveSites);
+    mSeqMatch.add_features(pMiRNASeq, pMRNASeqs, pSeedSites, pAlignSeqs, mEffectiveSites);
+    mA1Match.add_features(pMiRNASeq, pMRNASeqs, pSeedSites, pAlignSeqs, mEffectiveSites);
 
     return 0;
 }
@@ -50,10 +51,10 @@ void TSSVMFeatSeedType::clear_features() {
 }
 
 int TSSVMFeatSeedType::add_features(
-        TSSVMSeedSites &pSeedSites,
-        TSAlign const &,
         mikan::TRNAStr const &,
         mikan::TRNASet const &,
+        mikan::MKSeedSites &pSeedSites,
+        TSAlign const &,
         String<bool> &pEffectiveSites) {
     const StringSet<CharString> &seedTypes = pSeedSites.get_seed_types();
 
@@ -98,10 +99,10 @@ void TSSVMFeatSimilarity::clear_features() {
 }
 
 int TSSVMFeatSimilarity::add_features(
-        TSSVMSeedSites &,
-        TSAlign const &pAlignSeqs,
         mikan::TRNAStr const &,
         mikan::TRNASet const &,
+        mikan::MKSeedSites &,
+        TSAlign const &pAlignSeqs,
         String<bool> &pEffectiveSites) {
     StringSet<CharString> const &alignBars = pAlignSeqs.get_align_bars();
     float simAll, simSeed, sim3p, simAddtional, tmpScore;
@@ -161,10 +162,10 @@ void TSSVMFeatAURichUp::clear_features() {
 }
 
 int TSSVMFeatAURichUp::add_features(
-        TSSVMSeedSites &pSeedSites,
-        TSAlign const &,
         mikan::TRNAStr const &,
         mikan::TRNASet const &pMRNASeqs,
+        mikan::MKSeedSites &pSeedSites,
+        TSAlign const &,
         String<bool> &pEffectiveSites) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &siteS8Pos = pSeedSites.get_site_pos_s8();
@@ -216,10 +217,10 @@ void TSSVMFeatAURichDown::clear_features() {
 }
 
 int TSSVMFeatAURichDown::add_features(
-        TSSVMSeedSites &pSeedSites,
-        TSAlign const &,
         mikan::TRNAStr const &,
         mikan::TRNASet const &pMRNASeqs,
+        mikan::MKSeedSites &pSeedSites,
+        TSAlign const &,
         String<bool> &pEffectiveSites) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &siteS1Pos = pSeedSites.get_site_pos_s1();
@@ -276,10 +277,10 @@ void TSSVMFeatSitePos::clear_features() {
 }
 
 int TSSVMFeatSitePos::add_features(
-        TSSVMSeedSites &pSeedSites,
-        TSAlign const &,
         mikan::TRNAStr const &,
         mikan::TRNASet const &pMRNASeqs,
+        mikan::MKSeedSites &pSeedSites,
+        TSAlign const &,
         String<bool> &pEffectiveSites) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &siteS8Pos = pSeedSites.get_site_pos_s8();
@@ -310,10 +311,10 @@ void TSSVMFeatSeqMatch::clear_features() {
 }
 
 int TSSVMFeatSeqMatch::add_features(
-        TSSVMSeedSites &,
-        TSAlign const &pAlignSeqs,
         mikan::TRNAStr const &,
         mikan::TRNASet const &,
+        mikan::MKSeedSites &,
+        TSAlign const &pAlignSeqs,
         String<bool> &pEffectiveSites) {
     StringSet<CharString> const &alignBars = pAlignSeqs.get_align_bars();
     char barChar;
@@ -356,10 +357,10 @@ void TSSVMFeatA1Match::clear_features() {
 }
 
 int TSSVMFeatA1Match::add_features(
-        TSSVMSeedSites &pSeedSites,
-        TSAlign const &,
         mikan::TRNAStr const &,
         mikan::TRNASet const &,
+        mikan::MKSeedSites &pSeedSites,
+        TSAlign const &,
         String<bool> &pEffectiveSites) {
     const StringSet<CharString> &seedTypes = pSeedSites.get_seed_types();
 

@@ -4,12 +4,11 @@
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"           // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_sequence.hpp"          // MKSequences
-#include "tssvm_align.hpp"          // TSAlign
 #include "tssvm_mrna_feature.hpp"   // TSSVMRNARawFeatures
 #include "tssvm_mrna_svm.hpp"       // TSSVMRNAInputVector
 #include "tssvm_option.hpp"         // TSSVMOptions
 #include "tssvm_seed_site.hpp"      // TSSVMSeedSites, TSSVMSeedSiteOverlap
-#include "tssvm_site_svm.hpp"       // TSSVMSiteInputVector
+#include "tssvm_site_score.hpp"     // TSSVMSiteScores
 
 namespace tssvm {
 
@@ -23,8 +22,6 @@ public:
     // Declare variables
     bool mExecSearchSeedSites;
     bool mExecFilterOverlap;
-    bool mExecAlignSeq;
-    bool mExecSiteFeat;
     bool mExecSiteScore;
     bool mExecRNAFeat;
     bool mExecRNAScore;
@@ -42,11 +39,10 @@ public:
     TSSVMCore(mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
               mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
               mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
-            mExecSearchSeedSites(true), mExecFilterOverlap(true), mExecAlignSeq(true), mExecSiteFeat(true),
+            mExecSearchSeedSites(true), mExecFilterOverlap(true),
             mExecSiteScore(true), mExecRNAFeat(true), mExecRNAScore(true), mOutputSiteScore(true),
             mOutputRNAScore(true), mOutputAlign(true), mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs),
-            mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
-            mSiteInput(mSiteModel) {}
+            mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs) {}
 
     // Method prototypes
     void init_from_args(TSSVMOptions &opts);
@@ -56,8 +52,6 @@ public:
     int calculate_all_scores();
 
     int calculate_mirna_scores(unsigned pIdx);
-
-    int init_site_svm();
 
 private:
     mikan::TCharSet const &mMiRNAIds;
@@ -70,10 +64,7 @@ private:
 
     TSSVMSeedSites mSeedSites;
     TSSVMSeedSiteOverlap mOverlappedSites;
-    TSAlign mAlignSeqs;
-    TSSVMRawFeatures mSiteFeatures;
-    TSSVMSiteModel mSiteModel;
-    TSSVMSiteInputVector mSiteInput;
+    TSSVMSiteScores mSiteScores;
     TSSVMRNARawFeatures mRnaFeatures;
     TSSVMRNAInputVector mRnaInput;
 

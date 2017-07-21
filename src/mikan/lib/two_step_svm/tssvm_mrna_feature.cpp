@@ -38,7 +38,8 @@ int TSSVMRNARawFeatures::add_features(
         TSSVMSeedSites &pSeedSites,
         mikan::TRNASet const &pMRNASeqs,
         TSSVMSeedSiteOverlap &pOverlappedSites,
-        TSSVMSiteInputVector &pSiteInput) {
+        TSSVMSiteScores &pSiteScores) {
+
     TItSet itSet;
     std::set<unsigned> &rnaPosSet = pOverlappedSites.get_mrna_pos_set();
     StringSet<String<unsigned> > &sortedMRNAPos = pOverlappedSites.get_sorted_mrna_pos();
@@ -60,14 +61,14 @@ int TSSVMRNARawFeatures::add_features(
         }
         mEffectiveRNAs[*itSet] = true;
 
-        mUTRLen.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteInput);
-        mSiteNum.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteInput);
-        mTotDiscUTRLen.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteInput);
-        mSeedTypeNum.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteInput);
-        mDiscBin.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteInput);
-        mOptDist.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteInput);
-        mSiteNumFlg.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteInput);
-        mTotDisc.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteInput);
+        mUTRLen.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteScores);
+        mSiteNum.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteScores);
+        mTotDiscUTRLen.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteScores);
+        mSeedTypeNum.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteScores);
+        mDiscBin.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteScores);
+        mOptDist.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteScores);
+        mSiteNumFlg.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteScores);
+        mTotDisc.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteScores);
     }
 
     return 0;
@@ -85,7 +86,7 @@ int TSSVMFeatUTRLen::add_features(
         String<unsigned> &,
         TSSVMSeedSites &,
         mikan::TRNASet const &pMRNASeqs,
-        TSSVMSiteInputVector &) {
+        TSSVMSiteScores &) {
     float mRNALen;
 
     resize(mUTRLen[pMRNAPosIdx], 1);
@@ -109,7 +110,7 @@ int TSSVMFeatSiteNum::add_features(
         String<unsigned> &pSitePosByMRNA,
         TSSVMSeedSites &,
         mikan::TRNASet const &,
-        TSSVMSiteInputVector &) {
+        TSSVMSiteScores &) {
     float siteNum;
 
     resize(mSiteNum[pMRNAPosIdx], 1);
@@ -134,8 +135,9 @@ int TSSVMFeatTotDiscUTRLen::add_features(
         String<unsigned> &pSitePosByMRNA,
         TSSVMSeedSites &,
         mikan::TRNASet const &pMRNASeqs,
-        TSSVMSiteInputVector &pSiteInput) {
-    const seqan::String<float> &scors = pSiteInput.get_scores();
+        TSSVMSiteScores &pSiteScores) {
+
+    const seqan::String<float> &scors = pSiteScores.get_scores();
     float minVal = 0.0f;
     float shiftVal = -2.27441f;
     float totVal = 0.0f;
@@ -175,7 +177,8 @@ int TSSVMFeatSeedTypeNum::add_features(
         String<unsigned> &pSitePosByMRNA,
         TSSVMSeedSites &pSeedSites,
         mikan::TRNASet const &,
-        TSSVMSiteInputVector &) {
+        TSSVMSiteScores &) {
+
     float maxNum = 38;
     const StringSet<CharString> &seedTypes = pSeedSites.get_seed_types();
 
@@ -226,8 +229,9 @@ int TSSVMFeatDiscBin::add_features(
         String<unsigned> &pSitePosByMRNA,
         TSSVMSeedSites &,
         mikan::TRNASet const &,
-        TSSVMSiteInputVector &pSiteInput) {
-    const seqan::String<float> &scors = pSiteInput.get_scores();
+        TSSVMSiteScores &pSiteScores) {
+
+    const seqan::String<float> &scors = pSiteScores.get_scores();
     float maxNum = 38.0f;
     float shiftVal = -2.27441f;
 
@@ -294,7 +298,8 @@ int TSSVMFeatOptDist::add_features(
         String<unsigned> &pSitePosByMRNA,
         TSSVMSeedSites &pSeedSites,
         mikan::TRNASet const &,
-        TSSVMSiteInputVector &) {
+        TSSVMSiteScores &) {
+
     const String<unsigned> &mS8Pos = pSeedSites.get_site_pos_s8();
     unsigned prevPos, pos, posDiff;
     String<unsigned> dist;
@@ -350,7 +355,7 @@ int TSSVMFeatSiteNumFlg::add_features(
         String<unsigned> &pSitePosByMRNA,
         TSSVMSeedSites &,
         mikan::TRNASet const &,
-        TSSVMSiteInputVector &) {
+        TSSVMSiteScores &) {
     float siteNum;
 
     resize(mSiteNumFlg[pMRNAPosIdx], 3, 0.0);
@@ -379,8 +384,9 @@ int TSSVMFeatTotDisc::add_features(
         String<unsigned> &pSitePosByMRNA,
         TSSVMSeedSites &,
         mikan::TRNASet const &,
-        TSSVMSiteInputVector &pSiteInput) {
-    const seqan::String<float> &scors = pSiteInput.get_scores();
+        TSSVMSiteScores &pSiteScores) {
+
+    const seqan::String<float> &scors = pSiteScores.get_scores();
     float divVal = 100.0f;
     float minVal = 0.0f;
     float shiftVal = -2.27441f;

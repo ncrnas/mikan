@@ -5,6 +5,7 @@
 #include "mk_typedef.hpp"           // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "tssvm_seed_site.hpp"      // TSSVMSeedSites
 #include "tssvm_site_svm.hpp"       // TSSVMSiteInputVector
+#include "tssvm_site_score.hpp"     // TSSVMSiteScores
 
 namespace tssvm {
 
@@ -25,7 +26,7 @@ public:
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
                      TSSVMSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
-                     TSSVMSiteInputVector &pSiteInput);
+                     TSSVMSiteScores &pSiteScores);
 
     void clear_features();
 
@@ -55,7 +56,7 @@ public:
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
                      TSSVMSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
-                     TSSVMSiteInputVector &pSiteInput);
+                     TSSVMSiteScores &pSiteScores);
 
     void clear_features();
 
@@ -81,7 +82,7 @@ public:
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
                      TSSVMSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
-                     TSSVMSiteInputVector &pSiteInput);
+                     TSSVMSiteScores &pSiteScores);
 
     void clear_features();
 
@@ -107,7 +108,7 @@ public:
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
                      TSSVMSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
-                     TSSVMSiteInputVector &pSiteInput);
+                     TSSVMSiteScores &pSiteScores);
 
     void clear_features();
 
@@ -133,7 +134,7 @@ public:
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
                      TSSVMSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
-                     TSSVMSiteInputVector &pSiteInput);
+                     TSSVMSiteScores &pSiteScores);
 
     void clear_features();
 
@@ -160,7 +161,7 @@ public:
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
                      TSSVMSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
-                     TSSVMSiteInputVector &pSiteInput);
+                     TSSVMSiteScores &pSiteScores);
 
     void clear_features();
 
@@ -187,7 +188,7 @@ public:
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
                      TSSVMSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
-                     TSSVMSiteInputVector &pSiteInput);
+                     TSSVMSiteScores &pSiteScores);
 
     void clear_features();
 
@@ -214,7 +215,7 @@ public:
     // Method prototype
     int add_features(unsigned pMRNAPosIdx, seqan::String<unsigned> &pSitePosByMRNA,
                      TSSVMSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
-                     TSSVMSiteInputVector &pSiteInput);
+                     TSSVMSiteScores &pSiteScores);
 
     void clear_features();
 
@@ -277,7 +278,7 @@ public:
     // Method prototypes
     int add_features(TSSVMSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
                      TSSVMSeedSiteOverlap &pOverlappedSites,
-                     TSSVMSiteInputVector &pSiteInput);
+                     TSSVMSiteScores & pSiteScores);
 
     void clear_features();
 

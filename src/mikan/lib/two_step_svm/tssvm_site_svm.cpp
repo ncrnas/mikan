@@ -10,31 +10,18 @@ namespace tssvm {
 //
 // TSSVMSiteModel methods
 //
-int TSSVMSiteModel::init_model() {
-    int retVal;
-
-    retVal = init_alpha();
-    if (retVal != 0) {
-        return retVal;
-    }
-
-    retVal = init_sv();
-    if (retVal != 0) {
-        return retVal;
-    }
-
-    return 0;
+void TSSVMSiteModel::init_model() {
+    init_alpha();
+    init_sv();
 }
 
-int TSSVMSiteModel::init_alpha() {
-    return init_alpha_vector(mAlphas);
+void TSSVMSiteModel::init_alpha() {
+    init_alpha_vector(mAlphas);
 }
 
-int TSSVMSiteModel::init_sv() {
+void TSSVMSiteModel::init_sv() {
     TSSVMSiteModelSV sitesv(mSVs);
     sitesv.init_sv_matix();
-
-    return 0;
 }
 
 float TSSVMSiteModel::calc_score(Eigen::VectorXf &pInput) {

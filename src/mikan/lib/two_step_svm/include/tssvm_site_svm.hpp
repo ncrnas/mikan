@@ -20,10 +20,12 @@ public:
 
 public:
     // Define methods
-    TSSVMSiteModel() : mB(-1.26691213422f), mAlphas(15391), mSVs(15391, 95), mMatProd(15391) {}
+    TSSVMSiteModel() : mB(-1.26691213422f), mAlphas(15391), mSVs(15391, 95), mMatProd(15391) {
+        init_model();
+    }
 
     // Define methods
-    int init_model();
+    void init_model();
 
     float calc_score(Eigen::VectorXf &pInput);
 
@@ -34,9 +36,9 @@ private:
     Eigen::VectorXf mMatProd;
 
 private:
-    int init_alpha();
+    void init_alpha();
 
-    int init_sv();
+    void init_sv();
 
 };
 
