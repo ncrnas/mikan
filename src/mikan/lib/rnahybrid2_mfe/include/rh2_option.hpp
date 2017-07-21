@@ -12,23 +12,22 @@ namespace rh2mfe {
 //
 class RH2Options : public mikan::MKOptions {
 public:
-    // Declare variables
-    bool mOutputAlign;
-    seqan::CharString mSeedDef;
-    seqan::CharString mOverlapDef;
-    int mTargetLen;
-    int mQueryLen;
-    int mMaxHits;
+    // Define method
+    RH2Options() {
+        mProgName = "mk-rnahybrid";
 
-    // Define methods
-    RH2Options() : mOutputAlign(false), mSeedDef("7mGU+"), mOverlapDef("seed"), mTargetLen(50), mQueryLen(30),
-                   mMaxHits(0) {}
+        mSeedDef = "7mGU+";
+        mOverlapDef = "seed";
+        mTargetLen = 50;
+        mQueryLen = 30;
+        mMaxHits = 0;
+    }
 
     // Method prototypes
     seqan::ArgumentParser::ParseResult parseCommandLine(int argc, char const **argv);
 
 private:
-    static void setProgramDescription(seqan::ArgumentParser &pParser);
+    void setProgramDescription(seqan::ArgumentParser &pParser);
 };
 
 } // namespace rh2mfe

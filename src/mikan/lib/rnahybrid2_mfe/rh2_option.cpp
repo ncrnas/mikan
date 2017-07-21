@@ -52,8 +52,8 @@ ArgumentParser::ParseResult RH2Options::parseCommandLine(
 void RH2Options::setProgramDescription(seqan::ArgumentParser &parser) {
     // Set short description, version, and date
     setShortDescription(parser, "Calculate RNAhybrid MFE values.");
-    setVersion(parser, "1.0");
-    setDate(parser, "January 2014");
+    setVersion(parser, toCString(mProgVer));
+    setDate(parser, toCString(mProgDate));
 
     // Define usage line and long description
     addUsageLine(parser,

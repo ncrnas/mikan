@@ -12,17 +12,13 @@ namespace tssvm {
 //
 class TSSVMOptions : public mikan::MKOptions {
 public:
-    // Declare variables
-    bool mOutputAlign;
-
     // Define methods
-    TSSVMOptions() : mOutputAlign(false) {}
-
-    // Method prototypes
-    seqan::ArgumentParser::ParseResult parseCommandLine(int argc, char const **argv);
+    TSSVMOptions() {
+        mProgName = "mk-twostep-svm";
+    }
 
 private:
-    static void setProgramDescription(seqan::ArgumentParser &pParser);
+    void setProgramDescription(seqan::ArgumentParser &pParser);
 };
 
 } // namespace tssvm
