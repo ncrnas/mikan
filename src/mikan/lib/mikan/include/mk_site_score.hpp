@@ -20,13 +20,14 @@ public:
     seqan::String<bool> mEffectiveSites;
 
     // Define methods
-    explicit MKSiteScores() {}
+    explicit MKSiteScores(mikan::MKOptions const &opts) :
+            mOpts(opts) {}
 
     virtual float get_score(int pIdx) { return mSiteScores[pIdx]; }
 
-    // Method prototypes
-    void init_from_args(MKOptions &opts);
+    void init_from_args() {}
 
+    // Method prototypes
     void clear_scores();
 
     int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
@@ -34,6 +35,8 @@ public:
 
 protected:
     // Define variable
+    mikan::MKOptions const &mOpts;
+
     mikan::TScoreSet mSiteScores;
 
 };

@@ -57,7 +57,7 @@ int TS5CoreMain(int argc, char const **argv) {
 //
 // TS5Core methods
 //
-void TS5Core::init_from_args(mikan::MKOptions &opts) {
+void TS5Core::init_from_args(mikan::MKOptions const &opts) {
     mOutputAlign = opts.mOutputAlign;
     mOFileContext = opts.mOFileSite;
     mOFileTotal = opts.mOFileTotal;

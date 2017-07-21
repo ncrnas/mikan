@@ -12,7 +12,7 @@ class RH2Table {
 public:
     void table_alloc(int max_target_len, int max_query_len);
 
-    RH2Table(RH2EnergyFunc &pEn, int max_target_len, int max_query_len, std::string &p_seed_def) :
+    RH2Table(RH2EnergyFunc &pEn, const int &max_target_len, const int &max_query_len, const std::string &p_seed_def) :
             en(pEn),
             target_seq(0),
             query_seq(0),
@@ -21,7 +21,10 @@ public:
             bloop_upper_limit(15),
             mTargetHelixStart(0),
             mTargetHelixEnd(0) {
-        table_alloc(max_target_len, max_query_len);
+
+        int tlen = max_target_len;
+        int qlen = max_query_len;
+        table_alloc(tlen, qlen);
     }
 
     int inpx(int i) { return (int) (*target_seq)[i]; }
@@ -72,7 +75,7 @@ private:
     std::vector<char> *target_seq;
     std::vector<char> *query_seq;
 
-    std::string &seed_def;
+    const std::string &seed_def;
 
     int iloop_upper_limit, bloop_upper_limit;
     int seed_start, seed_end;

@@ -58,7 +58,7 @@ int TSSVMCoreMain(int argc, char const **argv) {
 //
 // TSSVMCore methods
 //
-void TSSVMCore::init_from_args(mikan::MKOptions &opts) {
+void TSSVMCore::init_from_args(mikan::MKOptions const &opts) {
     mOFileTargetSite = opts.mOFileSite;
     mOFileMRNA = opts.mOFileTotal;
     mOutputAlign = opts.mOutputAlign;

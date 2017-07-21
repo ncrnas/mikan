@@ -44,11 +44,7 @@ int RH2CoreMain(int argc, char const **argv) {
     mikan::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
     mikan::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
     mikan::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
-    int mRNAMaxLen = options.mTargetLen;
-    int miRNAMaxLen = options.mQueryLen;
-    std::string seedDef(toCString(options.mSeedDef));
-    rh2mfe::RH2Core rh2Core(options, mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder,
-                            mRNAMaxLen, miRNAMaxLen, seedDef);
+    rh2mfe::RH2Core rh2Core(options, mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
     rh2Core.open_output_file();
     retVal = rh2Core.calculate_all_scores();
     if (retVal != 0) {
@@ -61,7 +57,7 @@ int RH2CoreMain(int argc, char const **argv) {
 //
 // RH2Core methods
 //
-void RH2Core::init_from_args(mikan::MKOptions &opts) {
+void RH2Core::init_from_args(mikan::MKOptions const &opts) {
     mOutputAlign = opts.mOutputAlign;
     mOFileMFE = opts.mOFileSite;
     mOFileTotal = opts.mOFileTotal;
@@ -72,7 +68,7 @@ void RH2Core::init_from_args(mikan::MKOptions &opts) {
 
     mOverlapDef = opts.mOverlapDef;
 
-    mSiteScores.init_from_args(opts);
+    mSiteScores.init_from_args();
 
 }
 

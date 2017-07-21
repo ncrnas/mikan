@@ -133,7 +133,7 @@ public:
         mBTStrng.resize(size, RH2Signature());
     }
 
-    RH2BackTrace(RH2EnergyFunc &pEn, RH2Table &pTbl, int max_target_len, int max_query_len) :
+    RH2BackTrace(RH2EnergyFunc &pEn, RH2Table &pTbl, const int &max_target_len, const int &max_query_len) :
             mCurPos(0), mEndPos(0), gx(0), mMinMfe(-65000),
             en(pEn), tbl(pTbl),
             mIloopUpperLimit(15),
@@ -142,7 +142,10 @@ public:
             mQueryHelixEnd(0),
             mTargetHelixStart(0),
             mTargetHelixEnd(0) {
-        alloc_string(max_target_len, max_query_len);
+
+        int tlen = max_target_len;
+        int qlen = max_query_len;
+        alloc_string(tlen, qlen);
     }
 
     void set_iloop_upper_limit(int l) { mIloopUpperLimit = l; }

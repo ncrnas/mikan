@@ -43,7 +43,7 @@ public:
 
 public:
     // Define methods
-    MR3Core(mikan::MKOptions pOpts, mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
+    MR3Core(mikan::MKOptions const &pOpts, mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
             mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
             mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
             mExecSearchSeedSites(true), mExecCalSiteScore(true), mExecFilterOverlap(true),
@@ -51,12 +51,12 @@ public:
             mOutputAlign(true), mMinSeedLen(6), mMaxSeedLen(8), mMinAlignScore(120.0), mMaxEnergy(1.0),
             mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
             mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
-            mSiteScores() {
+            mSiteScores(pOpts) {
         init_from_args(pOpts);
     }
 
     // Method prototypes
-    void init_from_args(mikan::MKOptions &opts);
+    void init_from_args(mikan::MKOptions const &opts);
 
     int open_output_file();
 

@@ -8,8 +8,8 @@ namespace rh2mfe {
 //
 // RH2SiteScores methods
 //
-void RH2SiteScores::init_from_args(mikan::MKOptions &opts) {
-    mOverlapDef = opts.mOverlapDef;
+void RH2SiteScores::init_from_args() {
+    mOverlapDef = mOpts.mOverlapDef;
 }
 
 void RH2SiteScores::clear_scores() {

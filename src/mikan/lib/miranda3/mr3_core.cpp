@@ -54,7 +54,7 @@ int MR3CoreMain(int argc, char const **argv) {
 //
 // MR3Core methods
 //
-void MR3Core::init_from_args(mikan::MKOptions &opts) {
+void MR3Core::init_from_args(mikan::MKOptions const &opts) {
     mOutputAlign = opts.mOutputAlign;
     mOFileSite = opts.mOFileSite;
     mOFileTotal = opts.mOFileTotal;

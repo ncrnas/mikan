@@ -57,7 +57,7 @@ int PITACoreMain(int argc, char const **argv) {
 //
 // PITACore methods
 //
-void PITACore::init_from_args(mikan::MKOptions &opts) {
+void PITACore::init_from_args(mikan::MKOptions const &opts) {
     mOutputAlign = opts.mOutputAlign;
     mOFileDDG = opts.mOFileSite;
     mOFileTotal = opts.mOFileTotal;
@@ -86,7 +86,7 @@ void PITACore::init_from_args(mikan::MKOptions &opts) {
 
     set_backtrack(mOutputAlign);
 
-    mSiteScores.init_from_args(opts);
+    mSiteScores.init_from_args();
 }
 
 int PITACore::open_output_file() {

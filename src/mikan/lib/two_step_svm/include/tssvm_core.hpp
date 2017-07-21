@@ -37,18 +37,19 @@ public:
 
 public:
     // Define methods
-    TSSVMCore(mikan::MKOptions pOpts, mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
+    TSSVMCore(mikan::MKOptions const &pOpts, mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
               mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
               mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
             mExecSearchSeedSites(true), mExecFilterOverlap(true),
             mExecSiteScore(true), mExecRNAFeat(true), mExecRNAScore(true), mOutputSiteScore(true),
             mOutputRNAScore(true), mOutputAlign(true), mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs),
-            mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs) {
+            mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
+            mSiteScores(pOpts) {
         init_from_args(pOpts);
     }
 
     // Method prototypes
-    void init_from_args(mikan::MKOptions &opts);
+    void init_from_args(mikan::MKOptions const &opts);
 
     int open_output_file();
 

@@ -32,18 +32,18 @@ public:
 
 public:
     // Define methods
-    TS5Core(mikan::MKOptions pOpts, mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
+    TS5Core(mikan::MKOptions const &pOpts, mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
             mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
             mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
             mExecSearchSeedSites(true), mExecCalcSiteScore(true),
             mExecSumScores(true), mOutputContexScore(true), mOutputTotalScore(true),
             mOutputAlign(true), mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
-            mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs) {
+            mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mSiteScores(pOpts) {
         init_from_args(pOpts);
     }
 
     // Method prototypes
-    void init_from_args(mikan::MKOptions &opts);
+    void init_from_args(mikan::MKOptions const &opts);
 
     int open_output_file();
 

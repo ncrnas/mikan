@@ -21,10 +21,13 @@ public:
         r4 = t4.begin();
     }
 
-    RH2PrettyPrinter(RH2BackTrace &pBt, int targetlength, int querylength) :
+    RH2PrettyPrinter(RH2BackTrace &pBt, const int &targetlength, const int &querylength) :
             bt(pBt), a1(0), a2(0), a3(0), a4(0), a5(0), a6(0), target_seq(0), query_seq(0),
             mCountToA1(0) {
-        alloc_string(targetlength, querylength);
+
+        int tlen = targetlength;
+        int qlen = querylength;
+        alloc_string(tlen, qlen);
     }
 
     int inpx(int i) { return (int) (*target_seq)[i]; }

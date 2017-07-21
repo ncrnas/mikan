@@ -39,7 +39,7 @@ public:
     int mFlankDown;
 
     // RH2
-    seqan::CharString mSeedDef;
+    std::string mSeedDef;
     seqan::CharString mOverlapDef;
     int mTargetLen;
     int mQueryLen;

@@ -123,7 +123,11 @@ private:
 class PITASiteScores : public mikan::MKSiteScores {
 public:
     // Define methods
-    PITASiteScores() : MKSiteScores(), mDGDuplexScores(mVRws, mAlign), mDGOpenScores(mVRws), mAlign(mVRws) {}
+    PITASiteScores(mikan::MKOptions const &opts) :
+            MKSiteScores(opts),
+            mDGDuplexScores(mVRws, mAlign),
+            mDGOpenScores(mVRws),
+            mAlign(mVRws) {}
 
     float const &get_score(int i) const { return mDDGScores[i]; }
 
@@ -142,7 +146,7 @@ public:
     void set_backtrack(bool pBT) { mVRws.set_duplex_backtrack(pBT); }
 
     // Method prototype
-    void init_from_args(mikan::MKOptions &opts) ;
+    void init_from_args() ;
 
     void clear_scores();
 

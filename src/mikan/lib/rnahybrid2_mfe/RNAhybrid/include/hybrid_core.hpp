@@ -57,7 +57,7 @@ public:
 
 class RH2WorkSpace {
 public:
-    RH2WorkSpace(int max_target_len, int max_query_len, std::string &seed_def) :
+    RH2WorkSpace(const int &max_target_len, const int &max_query_len, const std::string &seed_def) :
             en(), tbl(en, max_target_len, max_query_len, seed_def),
             bt(en, tbl, max_target_len, max_query_len),
             pp(bt, max_target_len, max_query_len),
@@ -83,7 +83,8 @@ private:
     RH2PrettyPrinter pp;
     std::vector<char> target_seq;
     std::vector<char> query_seq;
-    int mTargetMaxLen, mQueryMaxLen;
+    const int &mTargetMaxLen;
+    const int &mQueryMaxLen;
     int mTargetLen, mQueryLen;
 
     bool is_effective_site();

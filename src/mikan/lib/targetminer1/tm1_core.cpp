@@ -54,7 +54,7 @@ int TM1CoreMain(int argc, char const **argv) {
 //
 // TM1Core methods
 //
-void TM1Core::init_from_args(mikan::MKOptions &opts) {
+void TM1Core::init_from_args(mikan::MKOptions const &opts) {
     mOutputAlign = opts.mOutputAlign;
     mOFileSite = opts.mOFileSite;
     mOFileScore = opts.mOFileTotal;
