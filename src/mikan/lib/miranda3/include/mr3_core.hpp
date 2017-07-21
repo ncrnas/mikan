@@ -4,6 +4,7 @@
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_sequence.hpp"        // MKSequences
+#include "mk_option.hpp"          // MKOptions
 #include "mr3_option.hpp"         // MR3Options
 #include "mr3_score.hpp"          // MR3GGDScores, MR3TotalScores
 #include "mr3_seed_site.hpp"      // MR3SeedSites
@@ -42,7 +43,7 @@ public:
 
 public:
     // Define methods
-    MR3Core(mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
+    MR3Core(mikan::MKOptions pOpts, mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
             mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
             mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
             mExecSearchSeedSites(true), mExecCalSiteScore(true), mExecFilterOverlap(true),
@@ -50,10 +51,12 @@ public:
             mOutputAlign(true), mMinSeedLen(6), mMaxSeedLen(8), mMinAlignScore(120.0), mMaxEnergy(1.0),
             mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
             mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
-            mSiteScores() {}
+            mSiteScores() {
+        init_from_args(pOpts);
+    }
 
     // Method prototypes
-    void init_from_args(MR3Options &opts);
+    void init_from_args(mikan::MKOptions &opts);
 
     int open_output_file();
 

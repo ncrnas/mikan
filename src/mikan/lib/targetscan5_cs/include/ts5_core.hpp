@@ -3,6 +3,7 @@
 
 #include "mk_typedef.hpp"        // TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_sequence.hpp"       // MKSequences
+#include "mk_option.hpp"         // MKOptions
 #include "ts5_feature.hpp"       // TS5RawFeatures
 #include "ts5_option.hpp"        // TS5CSOptions
 #include "ts5_score.hpp"         // TS5SiteScores, TS5TotalScores
@@ -31,16 +32,18 @@ public:
 
 public:
     // Define methods
-    TS5Core(mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
+    TS5Core(mikan::MKOptions pOpts, mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
             mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
             mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
             mExecSearchSeedSites(true), mExecCalcSiteScore(true),
             mExecSumScores(true), mOutputContexScore(true), mOutputTotalScore(true),
             mOutputAlign(true), mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
-            mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs) {}
+            mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs) {
+        init_from_args(pOpts);
+    }
 
     // Method prototypes
-    void init_from_args(TS5CSOptions &opts);
+    void init_from_args(mikan::MKOptions &opts);
 
     int open_output_file();
 

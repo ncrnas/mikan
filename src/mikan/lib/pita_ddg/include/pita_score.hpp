@@ -142,7 +142,7 @@ public:
     void set_backtrack(bool pBT) { mVRws.set_duplex_backtrack(pBT); }
 
     // Method prototype
-    void init_from_args(PITAOptions &opts) ;
+    void init_from_args(mikan::MKOptions &opts) ;
 
     void clear_scores();
 

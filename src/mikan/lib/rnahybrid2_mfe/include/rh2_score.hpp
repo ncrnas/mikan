@@ -32,7 +32,7 @@ public:
     int get_hit_length(int pIdx) { return mRHRetVals[pIdx].mHitLen; }
 
     // Method prototype
-    void init_from_args(RH2Options &opts) ;
+    void init_from_args(mikan::MKOptions &opts) ;
 
     void clear_scores();
 

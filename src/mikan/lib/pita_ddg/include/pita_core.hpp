@@ -4,6 +4,7 @@
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_sequence.hpp"        // MKSequences
+#include "mk_option.hpp"          // MKOptions
 #include "pita_option.hpp"        // PITAOptions
 #include "pita_score.hpp"         // PITAGGDScores, PITATotalScores
 #include "pita_seed_site.hpp"     // PITASeedSites
@@ -40,7 +41,7 @@ public:
 
 public:
     // Define methods
-    PITACore(mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
+    PITACore(mikan::MKOptions pOpts, mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
              mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
              mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
             mExecSearchSeedSites(true), mExecCalSiteScore(true), mExecFilterOverlap(true),
@@ -48,12 +49,14 @@ public:
             mOutputAlign(true), mMinSeedLen(6), mMaxSeedLen(8),
             mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
             mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
-            mSiteScores() {}
+            mSiteScores() {
+        init_from_args(pOpts);
+    }
 
     void set_backtrack(bool pBT) { mSiteScores.set_backtrack(pBT); }
 
     // Method prototypes
-    void init_from_args(PITAOptions &opts);
+    void init_from_args(mikan::MKOptions &opts);
 
     int open_output_file();
 

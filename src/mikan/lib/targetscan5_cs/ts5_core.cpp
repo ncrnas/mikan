@@ -44,8 +44,7 @@ int TS5CoreMain(int argc, char const **argv) {
     mikan::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
     mikan::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
     mikan::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
-    ts5cs::TS5Core ts5Core(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
-    ts5Core.init_from_args(options);
+    ts5cs::TS5Core ts5Core(options, mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
     ts5Core.open_output_file();
     retVal = ts5Core.calculate_all_scores();
     if (retVal != 0) {
@@ -58,7 +57,7 @@ int TS5CoreMain(int argc, char const **argv) {
 //
 // TS5Core methods
 //
-void TS5Core::init_from_args(TS5CSOptions &opts) {
+void TS5Core::init_from_args(mikan::MKOptions &opts) {
     mOutputAlign = opts.mOutputAlign;
     mOFileContext = opts.mOFileSite;
     mOFileTotal = opts.mOFileTotal;

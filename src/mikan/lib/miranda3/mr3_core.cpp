@@ -44,8 +44,7 @@ int MR3CoreMain(int argc, char const **argv) {
     mikan::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
     mikan::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
 
-    mr3as::MR3Core mr3Core(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
-    mr3Core.init_from_args(options);
+    mr3as::MR3Core mr3Core(options, mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
     mr3Core.open_output_file();
     retVal = mr3Core.calculate_all_scores();
 
@@ -55,7 +54,7 @@ int MR3CoreMain(int argc, char const **argv) {
 //
 // MR3Core methods
 //
-void MR3Core::init_from_args(MR3Options &opts) {
+void MR3Core::init_from_args(mikan::MKOptions &opts) {
     mOutputAlign = opts.mOutputAlign;
     mOFileSite = opts.mOFileSite;
     mOFileTotal = opts.mOFileTotal;

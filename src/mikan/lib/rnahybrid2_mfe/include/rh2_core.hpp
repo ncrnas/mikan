@@ -4,6 +4,7 @@
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_sequence.hpp"       // MKSequences
+#include "mk_option.hpp"         // MKOptions
 #include "rh2_option.hpp"        // RH2Options
 #include "rh2_score.hpp"         // RH2SiteScores, RH2TotalScores
 #include "rh2_seed_site.hpp"     // RH2SeedSites
@@ -36,7 +37,7 @@ public:
 
 public:
     // Define methods
-    RH2Core(mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
+    RH2Core(mikan::MKOptions pOpts, mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
             mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
             mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, int pMRNAMaxLen, int pMiRNAMaxLen,
             std::string &pSeedDef) :
@@ -44,10 +45,12 @@ public:
             mExecFilterSiteNum(true), mExecSortSites(true), mExecSumScores(true), mOutputMFEScore(true),
             mOutputTotalScore(true), mOutputAlign(true), mMaxHits(0), mMiRNAIds(pMiRNAIds),
             mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs),
-            mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mSiteScores(pMRNAMaxLen, pMiRNAMaxLen, pSeedDef) {}
+            mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mSiteScores(pMRNAMaxLen, pMiRNAMaxLen, pSeedDef) {
+        init_from_args(pOpts);
+    }
 
     // Method prototypes
-    void init_from_args(RH2Options &opts);
+    void init_from_args(mikan::MKOptions &opts);
 
     int open_output_file();
 

@@ -41,8 +41,7 @@ int TM1CoreMain(int argc, char const **argv) {
     mikan::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
     mikan::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
     mikan::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
-    tm1p::TM1Core tm1Core(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
-    tm1Core.init_from_args(options);
+    tm1p::TM1Core tm1Core(options, mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
     tm1Core.open_output_file();
     retVal = tm1Core.calculate_all_scores();
     if (retVal != 0) {
@@ -55,7 +54,7 @@ int TM1CoreMain(int argc, char const **argv) {
 //
 // TM1Core methods
 //
-void TM1Core::init_from_args(TM1CSOptions &opts) {
+void TM1Core::init_from_args(mikan::MKOptions &opts) {
     mOutputAlign = opts.mOutputAlign;
     mOFileSite = opts.mOFileSite;
     mOFileScore = opts.mOFileTotal;

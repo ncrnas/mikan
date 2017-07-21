@@ -269,7 +269,7 @@ void PITADGOpenScores::print_input(std::string &pInputMRNASeq) {
 //
 // PITASiteScores methods
 //
-void PITASiteScores::init_from_args(PITAOptions &opts) {
+void PITASiteScores::init_from_args(mikan::MKOptions &opts) {
     mDGOpenScores.mFlankUp = opts.mFlankUp;
     mDGOpenScores.mFlankDown = opts.mFlankDown;
 }

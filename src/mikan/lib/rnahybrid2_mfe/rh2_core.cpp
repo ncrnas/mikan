@@ -47,9 +47,8 @@ int RH2CoreMain(int argc, char const **argv) {
     int mRNAMaxLen = options.mTargetLen;
     int miRNAMaxLen = options.mQueryLen;
     std::string seedDef(toCString(options.mSeedDef));
-    rh2mfe::RH2Core rh2Core(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder,
+    rh2mfe::RH2Core rh2Core(options, mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder,
                             mRNAMaxLen, miRNAMaxLen, seedDef);
-    rh2Core.init_from_args(options);
     rh2Core.open_output_file();
     retVal = rh2Core.calculate_all_scores();
     if (retVal != 0) {
@@ -62,7 +61,7 @@ int RH2CoreMain(int argc, char const **argv) {
 //
 // RH2Core methods
 //
-void RH2Core::init_from_args(RH2Options &opts) {
+void RH2Core::init_from_args(mikan::MKOptions &opts) {
     mOutputAlign = opts.mOutputAlign;
     mOFileMFE = opts.mOFileSite;
     mOFileTotal = opts.mOFileTotal;
