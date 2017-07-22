@@ -10,8 +10,9 @@ namespace mikan {
 ArgumentParser::ParseResult MKOptions::parseCommandLine(
         int argc,
         char const **argv) {
+
     // Setup ArgumentParser
-    ArgumentParser parser("mikan");
+    ArgumentParser parser(toCString(mProgName));
     setProgramDescription(parser);
 
     // Parse command line
@@ -20,14 +21,23 @@ ArgumentParser::ParseResult MKOptions::parseCommandLine(
         return res;
     }
 
+    // Validate files
+    res = validateFiles(parser);
+    if (res != ArgumentParser::PARSE_OK) {
+        return res;
+    }
+
+    // Extract options
+    mOutputAlign = isSet(parser, "output_align");
+
     return ArgumentParser::PARSE_OK;
 }
 
 void MKOptions::setProgramDescription(seqan::ArgumentParser &parser) {
     // Set short description, version, and date
     setShortDescription(parser, "Calculate mikan scores.");
-    setVersion(parser, "1.0");
-    setDate(parser, "July 2017");
+    setVersion(parser, toCString(mProgVer));
+    setDate(parser, toCString(mProgDate));
 
     // Define usage line and long description
     addUsageLine(parser,

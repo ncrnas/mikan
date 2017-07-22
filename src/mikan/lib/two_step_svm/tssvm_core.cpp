@@ -45,8 +45,7 @@ int TSSVMCoreMain(int argc, char const **argv) {
     mikan::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
     mikan::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
     mikan::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
-    tssvm::TSSVMCore tssvmCore(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
-    tssvmCore.init_from_args(options);
+    tssvm::TSSVMCore tssvmCore(options, mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
     tssvmCore.open_output_file();
     retVal = tssvmCore.calculate_all_scores();
     if (retVal != 0) {
@@ -59,7 +58,7 @@ int TSSVMCoreMain(int argc, char const **argv) {
 //
 // TSSVMCore methods
 //
-void TSSVMCore::init_from_args(TSSVMOptions &opts) {
+void TSSVMCore::init_from_args(mikan::MKOptions const &opts) {
     mOFileTargetSite = opts.mOFileSite;
     mOFileMRNA = opts.mOFileTotal;
     mOutputAlign = opts.mOutputAlign;

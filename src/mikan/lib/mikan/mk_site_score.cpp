@@ -13,10 +13,6 @@ void MKSiteScores::clear_scores() {
     clear(mSiteScores);
 }
 
-void MKSiteScores::init_from_args(MKOptions &) {
-
-}
-
 int MKSiteScores::calc_scores(
         mikan::TRNAStr const &,
         mikan::TRNASet const &,

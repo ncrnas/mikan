@@ -4,6 +4,7 @@
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"           // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_sequence.hpp"          // MKSequences
+#include "mk_option.hpp"            // MKOptions
 #include "tssvm_mrna_feature.hpp"   // TSSVMRNARawFeatures
 #include "tssvm_mrna_svm.hpp"       // TSSVMRNAInputVector
 #include "tssvm_option.hpp"         // TSSVMOptions
@@ -36,16 +37,19 @@ public:
 
 public:
     // Define methods
-    TSSVMCore(mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
+    TSSVMCore(mikan::MKOptions const &pOpts, mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
               mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
               mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
             mExecSearchSeedSites(true), mExecFilterOverlap(true),
             mExecSiteScore(true), mExecRNAFeat(true), mExecRNAScore(true), mOutputSiteScore(true),
             mOutputRNAScore(true), mOutputAlign(true), mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs),
-            mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs) {}
+            mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
+            mSiteScores(pOpts) {
+        init_from_args(pOpts);
+    }
 
     // Method prototypes
-    void init_from_args(TSSVMOptions &opts);
+    void init_from_args(mikan::MKOptions const &opts);
 
     int open_output_file();
 

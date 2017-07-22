@@ -18,8 +18,11 @@ namespace rh2mfe {
 class RH2SiteScores : public mikan::MKSiteScores {
 public:
     // Define methods
-    RH2SiteScores(int pMaxMRNALen, int pMaxMiRNALen, std::string &pSeedDef) :
-            mMaxMRNALen(pMaxMRNALen), mMaxMiRNALen(pMaxMiRNALen), mRHCore(pMaxMRNALen, pMaxMiRNALen, pSeedDef) {}
+    RH2SiteScores(mikan::MKOptions const &opts) :
+            MKSiteScores(opts),
+            mMaxMRNALen(opts.mTargetLen),
+            mMaxMiRNALen(opts.mQueryLen),
+            mRHCore(opts.mTargetLen, opts.mQueryLen, opts.mSeedDef) {}
 
     void set_score(int i, float val) { mMFEScores[i] = val; };
 
@@ -32,7 +35,7 @@ public:
     int get_hit_length(int pIdx) { return mRHRetVals[pIdx].mHitLen; }
 
     // Method prototype
-    void init_from_args(RH2Options &opts) ;
+    void init_from_args() ;
 
     void clear_scores();
 

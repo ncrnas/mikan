@@ -12,17 +12,13 @@ namespace tm1p {
 //
 class TM1CSOptions : public mikan::MKOptions {
 public:
-    // Declare variables
-    bool mOutputAlign;
-
     // Define methods
-    TM1CSOptions() : mOutputAlign(false) {}
-
-    // Method prototypes
-    seqan::ArgumentParser::ParseResult parseCommandLine(int argc, char const **argv);
+    TM1CSOptions() {
+        mProgName = "mk-targetminer";
+    }
 
 private:
-    static void setProgramDescription(seqan::ArgumentParser &pParser);
+    void setProgramDescription(seqan::ArgumentParser &pParser);
 };
 
 } // namespace tm1p

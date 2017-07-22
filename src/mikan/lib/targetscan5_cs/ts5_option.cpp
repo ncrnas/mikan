@@ -7,36 +7,11 @@ namespace ts5cs {
 //
 // TS5CSOptions methods
 //
-ArgumentParser::ParseResult TS5CSOptions::parseCommandLine(
-        int argc,
-        char const **argv) {
-    // Setup ArgumentParser
-    ArgumentParser parser("targetscan5_cs");
-    setProgramDescription(parser);
-
-    // Parse command line
-    ArgumentParser::ParseResult res = parse(parser, argc, argv);
-    if (res != ArgumentParser::PARSE_OK) {
-        return res;
-    }
-
-    // Validate files
-    res = validateFiles(parser);
-    if (res != ArgumentParser::PARSE_OK) {
-        return res;
-    }
-
-    // Extract options
-    mOutputAlign = isSet(parser, "output_align");
-
-    return ArgumentParser::PARSE_OK;
-}
-
 void TS5CSOptions::setProgramDescription(seqan::ArgumentParser &parser) {
     // Set short description, version, and date
     setShortDescription(parser, "Calculate TargetScan 5 context scores.");
-    setVersion(parser, "1.0");
-    setDate(parser, "January 2014");
+    setVersion(parser, toCString(mProgVer));
+    setDate(parser, toCString(mProgDate));
 
     // Define usage line and long description
     addUsageLine(parser,

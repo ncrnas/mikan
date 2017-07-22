@@ -134,7 +134,8 @@ private:
 class TS5SiteScores : public mikan::MKSiteScores {
 public:
     // Define methods
-    TS5SiteScores() : MKSiteScores() {}
+    TS5SiteScores(mikan::MKOptions const &opts) :
+            MKSiteScores(opts) {}
 
     void set_score(int i, float val) { mContextScores[i] = val; };
 

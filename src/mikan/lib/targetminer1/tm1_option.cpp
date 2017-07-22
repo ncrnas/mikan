@@ -7,36 +7,11 @@ namespace tm1p {
 //
 // TM1CSOptions methods
 //
-ArgumentParser::ParseResult TM1CSOptions::parseCommandLine(
-        int argc,
-        char const **argv) {
-    // Setup ArgumentParser
-    ArgumentParser parser("targetminer1");
-    setProgramDescription(parser);
-
-    // Parse command line
-    ArgumentParser::ParseResult res = parse(parser, argc, argv);
-    if (res != ArgumentParser::PARSE_OK) {
-        return res;
-    }
-
-    // Validate files
-    res = validateFiles(parser);
-    if (res != ArgumentParser::PARSE_OK) {
-        return res;
-    }
-
-    // Extract options
-    mOutputAlign = isSet(parser, "output_align");
-
-    return ArgumentParser::PARSE_OK;
-}
-
 void TM1CSOptions::setProgramDescription(seqan::ArgumentParser &parser) {
     // Set short description, version, and date
     setShortDescription(parser, "Calculate TargetMiner scores.");
-    setVersion(parser, "1.0");
-    setDate(parser, "January 2014");
+    setVersion(parser, toCString(mProgVer));
+    setDate(parser, toCString(mProgDate));
 
     // Define usage line and long description
     addUsageLine(parser,

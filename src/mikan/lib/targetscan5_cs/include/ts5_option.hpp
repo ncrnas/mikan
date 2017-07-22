@@ -12,17 +12,13 @@ namespace ts5cs {
 //
 class TS5CSOptions : public mikan::MKOptions {
 public:
-    // Declare variables
-    bool mOutputAlign;
-
-    // Define methods
-    TS5CSOptions() : mOutputAlign(false) {}
-
-    // Method prototypes
-    seqan::ArgumentParser::ParseResult parseCommandLine(int argc, char const **argv);
+    // Define method
+    TS5CSOptions() {
+        mProgName = "mk-targetscan";
+    }
 
 private:
-    static void setProgramDescription(seqan::ArgumentParser &pParser);
+    void setProgramDescription(seqan::ArgumentParser &pParser);
 };
 
 } // namespace ts5cs

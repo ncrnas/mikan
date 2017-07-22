@@ -7,36 +7,11 @@ namespace tssvm {
 //
 // TSSVMOptions methods
 //
-ArgumentParser::ParseResult TSSVMOptions::parseCommandLine(
-        int argc,
-        char const **argv) {
-    // Setup ArgumentParser
-    ArgumentParser parser("two_step_svm");
-    setProgramDescription(parser);
-
-    // Parse command line
-    ArgumentParser::ParseResult res = parse(parser, argc, argv);
-    if (res != ArgumentParser::PARSE_OK) {
-        return res;
-    }
-
-    // Validate files
-    res = validateFiles(parser);
-    if (res != ArgumentParser::PARSE_OK) {
-        return res;
-    }
-
-    // Extract options
-    mOutputAlign = isSet(parser, "output_align");
-
-    return ArgumentParser::PARSE_OK;
-}
-
 void TSSVMOptions::setProgramDescription(seqan::ArgumentParser &parser) {
     // Set short description, version, and date
     setShortDescription(parser, "Calculate Two-step SVM scores.");
-    setVersion(parser, "1.0");
-    setDate(parser, "January 2014");
+    setVersion(parser, toCString(mProgVer));
+    setDate(parser, toCString(mProgDate));
 
     // Define usage line and long description
     addUsageLine(parser,

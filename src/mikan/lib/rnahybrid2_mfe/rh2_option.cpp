@@ -28,13 +28,16 @@ ArgumentParser::ParseResult RH2Options::parseCommandLine(
 
     // Extract options
     mOutputAlign = isSet(parser, "output_align");
-    getOptionValue(mSeedDef, parser, "seed_def");
-    if (mSeedDef != "6mer" && mSeedDef != "7mer" && mSeedDef != "6mGU+" && mSeedDef != "7mGU+"
-        && mSeedDef != "6mGU1" && mSeedDef != "7mGU1") {
+
+    seqan::CharString seeddef;
+    getOptionValue(seeddef, parser, "seed_def");
+    if (seeddef != "6mer" && seeddef != "7mer" && seeddef != "6mGU+" && seeddef != "7mGU+"
+        && seeddef != "6mGU1" && seeddef != "7mGU1") {
         std::cerr << "ERROR: seed_type must be one of the following options: "
                 "6mer, 7mer, 6mGU+, 7mGU+, 6mGU1, 7mGU1." << std::endl;
         return ArgumentParser::PARSE_ERROR;
     }
+    mSeedDef = seqan::toCString(seeddef);
 
     getOptionValue(mOverlapDef, parser, "overlap");
     if (mOverlapDef != "orig" && mOverlapDef != "seed") {
@@ -52,8 +55,8 @@ ArgumentParser::ParseResult RH2Options::parseCommandLine(
 void RH2Options::setProgramDescription(seqan::ArgumentParser &parser) {
     // Set short description, version, and date
     setShortDescription(parser, "Calculate RNAhybrid MFE values.");
-    setVersion(parser, "1.0");
-    setDate(parser, "January 2014");
+    setVersion(parser, toCString(mProgVer));
+    setDate(parser, toCString(mProgDate));
 
     // Define usage line and long description
     addUsageLine(parser,

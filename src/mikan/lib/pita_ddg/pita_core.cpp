@@ -44,8 +44,7 @@ int PITACoreMain(int argc, char const **argv) {
     mikan::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
     mikan::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
 
-    ptddg::PITACore pitaCore(mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
-    pitaCore.init_from_args(options);
+    ptddg::PITACore pitaCore(options, mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
     pitaCore.open_output_file();
     retVal = pitaCore.calculate_all_scores();
     if (retVal != 0) {
@@ -58,7 +57,7 @@ int PITACoreMain(int argc, char const **argv) {
 //
 // PITACore methods
 //
-void PITACore::init_from_args(PITAOptions &opts) {
+void PITACore::init_from_args(mikan::MKOptions const &opts) {
     mOutputAlign = opts.mOutputAlign;
     mOFileDDG = opts.mOFileSite;
     mOFileTotal = opts.mOFileTotal;
@@ -87,7 +86,7 @@ void PITACore::init_from_args(PITAOptions &opts) {
 
     set_backtrack(mOutputAlign);
 
-    mSiteScores.init_from_args(opts);
+    mSiteScores.init_from_args();
 }
 
 int PITACore::open_output_file() {

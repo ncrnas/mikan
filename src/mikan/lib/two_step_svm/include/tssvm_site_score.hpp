@@ -19,7 +19,9 @@ namespace tssvm {
 class TSSVMSiteScores : public mikan::MKSiteScores {
 public:
     // Define methods
-    TSSVMSiteScores() : MKSiteScores(), mSiteInput(mSiteModel) {}
+    TSSVMSiteScores(mikan::MKOptions const &opts) :
+            MKSiteScores(opts),
+            mSiteInput(mSiteModel) {}
 
     const seqan::String<float> &get_scores() { return mSiteInput.get_scores(); }
 

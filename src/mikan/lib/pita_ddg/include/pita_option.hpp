@@ -12,23 +12,21 @@ namespace ptddg {
 //
 class PITAOptions : public mikan::MKOptions {
 public:
-    // Declare variables
-    bool mOutputAlign;
-    int mMinSeedLen;
-    int mMaxSeedLen;
-    int mFlankUp;
-    int mFlankDown;
-    seqan::CharString mAllowGUWobble;
-    seqan::CharString mAllowMismatch;
+    // Define method
+    PITAOptions() {
+        mProgName = "mk-pita";
 
-    // Define methods
-    PITAOptions() : mOutputAlign(false), mMinSeedLen(6), mMaxSeedLen(8), mFlankUp(0), mFlankDown(0) {}
+        mMinSeedLen = 6;
+        mMaxSeedLen = 8;
+        mFlankUp = 0;
+        mFlankDown = 0;
+    }
 
     // Method prototypes
     seqan::ArgumentParser::ParseResult parseCommandLine(int argc, char const **argv);
 
 private:
-    static void setProgramDescription(seqan::ArgumentParser &pParser);
+    void setProgramDescription(seqan::ArgumentParser &pParser);
 };
 
 } // namespace ptddg
