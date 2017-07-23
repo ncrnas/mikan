@@ -20,12 +20,11 @@ void TS5SiteScores::resize_scores(int pSize) {
 }
 
 void TS5SiteScores::clear_scores() {
-    mRawFeatures.clear_features();
-
     mikan::MKSiteScores::clear_scores();
 
     clear(mContextScores);
 
+    mRawFeatures.clear_features();
     mSeedTypes.clear_scores();
     mSitePos.clear_scores();
     mAURich.clear_scores();

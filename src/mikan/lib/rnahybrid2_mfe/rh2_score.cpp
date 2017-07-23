@@ -82,6 +82,9 @@ int RH2SiteScores::calc_scores(
 
         mMFEScores[i] = mRHRetVals[i].mMfe;
         mEffectiveSites[i] = mRHRetVals[i].mEffective;
+        if (!mEffectiveSites[i]) {
+            pSeedSites.mEffectiveSites[i] = false;
+        }
         calc_normalized_score(i, targetLen, queryLen);
 
     }

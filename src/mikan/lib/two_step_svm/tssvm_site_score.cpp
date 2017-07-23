@@ -42,6 +42,7 @@ int TSSVMSiteScores::calc_scores(
         return 1;
     }
 
+    mEffectiveSites = pSeedSites.mEffectiveSites;
 
     return 0;
 }

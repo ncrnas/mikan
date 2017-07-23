@@ -301,12 +301,12 @@ int PITASiteScores::calc_scores(
         if (!pSeedSites.mEffectiveSites[i] || !mDGDuplexScores.mEffectiveSites[i] ||
             !mDGOpenScores.mEffectiveSites[i]) {
             mEffectiveSites[i] = false;
+            pSeedSites.mEffectiveSites[i] = false;
             mDDGScores[i] = 0.0;
-            continue;
+        } else {
+            mDDGScores[i] = mVRws.get_dgall(i) + (mVRws.get_dg1(i) - mVRws.get_dg0(i));
+            mEffectiveSites[i] = true;
         }
-
-        mDDGScores[i] = mVRws.get_dgall(i) + (mVRws.get_dg1(i) - mVRws.get_dg0(i));
-        mEffectiveSites[i] = true;
 
     }
 
