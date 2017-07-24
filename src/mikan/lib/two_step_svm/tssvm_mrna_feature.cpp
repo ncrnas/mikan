@@ -37,23 +37,24 @@ void TSSVMRNARawFeatures::resize_feat(unsigned pLen) {
 int TSSVMRNARawFeatures::add_features(
         TSSVMSeedSites &pSeedSites,
         mikan::TRNASet const &pMRNASeqs,
-        TSSVMSeedSiteOverlap &pOverlappedSites,
+        mikan::MKRMAWithSites mRNAWithSites,
         TSSVMSiteScores &pSiteScores) {
 
     TItSet itSet;
-    std::set<unsigned> &rnaPosSet = pOverlappedSites.get_mrna_pos_set();
-    StringSet<String<unsigned> > &sortedMRNAPos = pOverlappedSites.get_sorted_mrna_pos();
+    std::set<unsigned> &rnaPosSet = mRNAWithSites.get_uniq_mrna_set();
+    StringSet<String<unsigned> > &sortedMRNAPos = mRNAWithSites.get_sorted_mrna_pos();
     String<unsigned> sitePosByMRNA;
 
     resize_feat(length(pMRNASeqs));
 
+    unsigned idx = 0;
     for (itSet = rnaPosSet.begin(); itSet != rnaPosSet.end(); ++itSet) {
         clear(sitePosByMRNA);
-        for (unsigned i = 0; i < length(sortedMRNAPos[*itSet]); ++i) {
-            if (!pSeedSites.mEffectiveSites[sortedMRNAPos[*itSet][i]]) {
+        for (unsigned i = 0; i < length(sortedMRNAPos[idx]); ++i) {
+            if (!pSeedSites.mEffectiveSites[sortedMRNAPos[idx][i]]) {
                 continue;
             }
-            appendValue(sitePosByMRNA, sortedMRNAPos[*itSet][i]);
+            appendValue(sitePosByMRNA, sortedMRNAPos[idx][i]);
         }
 
         if (length(sitePosByMRNA) == 0) {
@@ -69,6 +70,8 @@ int TSSVMRNARawFeatures::add_features(
         mOptDist.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteScores);
         mSiteNumFlg.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteScores);
         mTotDisc.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteScores);
+
+        ++idx;
     }
 
     return 0;

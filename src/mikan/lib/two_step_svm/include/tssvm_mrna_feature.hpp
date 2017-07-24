@@ -277,8 +277,7 @@ public:
 
     // Method prototypes
     int add_features(TSSVMSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
-                     TSSVMSeedSiteOverlap &pOverlappedSites,
-                     TSSVMSiteScores & pSiteScores);
+                     mikan::MKRMAWithSites mRNAWithSites, TSSVMSiteScores & pSiteScores);
 
     void clear_features();
 

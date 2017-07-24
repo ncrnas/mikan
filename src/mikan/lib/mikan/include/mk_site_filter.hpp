@@ -14,13 +14,7 @@ namespace mikan {
 //
 class MKSiteFilter {
 public:
-    // Define methods
-    MKSiteFilter() {}
-
-    // Method prototype
-    int filter_sites_by_seed_type(mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
-
-private:
+    // Define types
     typedef std::set<unsigned> TSet;
     typedef std::multimap<unsigned, unsigned> TPosMap;
     typedef std::set<unsigned>::iterator TItSet;
@@ -28,12 +22,24 @@ private:
     typedef std::pair<TItMap, TItMap> TItMapPair;
     typedef std::pair<unsigned, unsigned> TPosPair;
 
-private:
-    virtual void mark_overlap_by_seed_type(mikan::MKSeedSites &pSeedSites, TPosMap &pSortedPos, unsigned pCount);
+    // Define methods
+    MKSiteFilter() {}
 
-    virtual void sort_by_seed_type(mikan::MKSeedSites &pSeedSites, TPosMap &pSortedPos, int pCount, TPosMap &sortedSeeds);
+    // Method prototype
+    int filter_sites_by_seed_type(mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
 
-};
+protected:
+
+    void mark_overlap_by_seed_type(mikan::MKSeedSites &, TPosMap &, unsigned);
+
+    void sort_by_seed_type(mikan::MKSeedSites &, TPosMap &, int, TPosMap &);
+
+    virtual unsigned get_seedtype_precedence(seqan::CharString const &) { return 0; }
+
+    virtual void set_intervals(mikan::MKSeedSites &, unsigned, unsigned &, unsigned &,
+                               unsigned &, unsigned &, bool &) {}
+
+    };
 
 } // namespace mikan
 
