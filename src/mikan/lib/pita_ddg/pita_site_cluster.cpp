@@ -1,101 +1,15 @@
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "pita_score.hpp"         // PITAMFEScores
-#include "pita_site_cluster.hpp"  // PITAOverlap, PITASortedSitePos
+#include "pita_site_cluster.hpp"  // PITASiteFilter, PITASortedSitePos
 
 using namespace seqan;
 
 namespace ptddg {
 
 //
-// PITASiteCluster methods
+// PITASiteFilter methods
 //
-void PITASiteCluster::clear_cluster() {
-    mSiteCount = 0;
-    mRNAPosSet.clear();
-    mSiteMap.clear();
-}
-
-void PITASiteCluster::cluster_site_pos(
-        PITASeedSites &pSeedSites) {
-    const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
-
-    for (unsigned i = 0; i < length(mRNAPos); ++i) {
-        if (!pSeedSites.mEffectiveSites[i]) {
-            continue;
-        }
-        mRNAPosSet.insert((unsigned) mRNAPos[i]);
-        mSiteMap.insert(TPosPair((unsigned) mRNAPos[i], i));
-        ++mSiteCount;
-    }
-}
-
-//
-// PITAOverlap methods
-//
-void PITAOverlap::clear_cluster() {
-    mSiteCluster.clear_cluster();
-}
-
-int PITAOverlap::filter_overlapped_sites(PITASeedSites &pSeedSites, int pGapLen) {
-    TItSet itSet;
-    TItRetPair ret;
-    TItMap itMap2;
-
-    mSiteCluster.cluster_site_pos(pSeedSites);
-    std::set<unsigned> &mRNAPosSet = mSiteCluster.get_mrna_pos_set();
-    std::multimap<unsigned, unsigned> &siteMap = mSiteCluster.get_mrna_pos_map();
-    const String<unsigned> &sitePos = pSeedSites.get_site_pos();
-    std::multimap<unsigned, unsigned> startPos;
-    TITStartPos itStart;
-    int curPos, curIdx, prevPos, prevIdx;
-
-    for (itSet = mRNAPosSet.begin(); itSet != mRNAPosSet.end(); ++itSet) {
-        if (siteMap.count(*itSet) < 2) {
-            continue;
-        }
-
-        ret = siteMap.equal_range(*itSet);
-        for (itMap2 = ret.first; itMap2 != ret.second; ++itMap2) {
-            startPos.insert(TPosPair((unsigned) sitePos[(*itMap2).second], (*itMap2).second));
-        }
-
-        prevPos = 0;
-        prevIdx = 0;
-        for (itStart = startPos.begin(); itStart != startPos.end(); ++itStart) {
-            curPos = (*itStart).first;
-            curIdx = (*itStart).second;
-
-            if (prevPos != 0 && ((curPos - prevPos) < (pGapLen + 1))) {
-                mark_overlapped_sites(pSeedSites, prevIdx, curIdx);
-            }
-
-            prevPos = curPos;
-            prevIdx = curIdx;
-        }
-
-        startPos.clear();
-
-    }
-
-    return 0;
-
-}
-
-void
-PITAOverlap::mark_overlapped_sites(PITASeedSites &pSeedSites, int pPrevIdx, int pCurIdx) {
-    StringSet<CharString> const &seedTypes = pSeedSites.get_seed_types();
-    unsigned precPrev = get_seedtype_precedence(seedTypes[pPrevIdx]);
-    unsigned precCur = get_seedtype_precedence(seedTypes[pCurIdx]);
-
-    if (precPrev < precCur) {
-        pSeedSites.mEffectiveSites[pCurIdx] = false;
-    } else {
-        pSeedSites.mEffectiveSites[pPrevIdx] = false;
-    }
-
-}
-
-unsigned PITAOverlap::get_seedtype_precedence(const CharString &pSeedType) {
+unsigned PITASiteFilter::get_seedtype_precedence(CharString const &pSeedType) {
     unsigned preced;
 
     if (pSeedType == "8mer") {
@@ -131,48 +45,22 @@ unsigned PITAOverlap::get_seedtype_precedence(const CharString &pSeedType) {
     return preced;
 }
 
-//
-// PITASortedSitePos methods
-//
-void PITASortedSitePos::clear_site_pos() {
-    clear(mSortedSitePos);
-    mSiteCluster.clear_cluster();
-}
+void PITASiteFilter::set_intervals(
+        mikan::MKSeedSites &pSeedSites,
+        unsigned pSiteIdx,
+        unsigned &pStartSearch,
+        unsigned &pEndSearch,
+        unsigned &pStartAdd,
+        unsigned &pEndAdd,
+        bool &pSearchOverlap) {
 
-int PITASortedSitePos::generate_sorted_mrna_pos(
-        PITASeedSites &pSeedSites) {
-    TItMap itMap;
-    TItSet itSet;
-    TItRetPair ret;
-    TITStartPos itStart;
-    std::multimap<unsigned, unsigned> startPos;
-    int curPos = 0;
+    String<unsigned> const &sitePos = pSeedSites.get_site_pos();
 
-    mSiteCluster.cluster_site_pos(pSeedSites);
-    std::set<unsigned> &mRNAPosSet = mSiteCluster.get_mrna_pos_set();
-    std::multimap<unsigned, unsigned> &siteMap = mSiteCluster.get_mrna_pos_map();
-    int siteCount = mSiteCluster.get_site_count();
-    const String<unsigned> &sitePos = pSeedSites.get_site_pos();
-
-    resize(mSortedSitePos, siteCount);
-
-    for (itSet = mRNAPosSet.begin(); itSet != mRNAPosSet.end(); ++itSet) {
-
-        ret = siteMap.equal_range((*itSet));
-        for (itMap = ret.first; itMap != ret.second; ++itMap) {
-            startPos.insert(TPosPair((unsigned) sitePos[(*itMap).second], (*itMap).second));
-        }
-
-        for (itStart = startPos.begin(); itStart != startPos.end(); ++itStart) {
-            mSortedSitePos[curPos] = (*itStart).second;
-            ++curPos;
-        }
-
-        startPos.clear();
-    }
-
-    return 0;
-
+    pStartSearch = sitePos[pSiteIdx];
+    pEndSearch = pStartSearch + mGapLen;
+    pStartAdd = pStartSearch;
+    pEndAdd = pEndSearch;
+    pSearchOverlap = true;
 }
 
 } // namespace ptddg

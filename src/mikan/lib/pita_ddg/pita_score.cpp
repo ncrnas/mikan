@@ -338,83 +338,63 @@ void PITATotalScores::clear_scores() {
 
 int PITATotalScores::calc_scores(
         PITASeedSites &pSeedSites,
-        PITASiteScores &pMFEScores,
-        const seqan::String<unsigned> &pSortedSites) {
+        mikan::TRNASet const &,
+        mikan::MKRMAWithSites mRNAWithSites,
+        PITASiteScores &pSiteScores) {
 
-    const String<unsigned> &siteMRNAPos = pSeedSites.get_mrna_pos();
-    int prevPos = -1;
-    int newIdx = -1;
-    String<int> newIdices;
-    unsigned posIdx;
-    String<double> maxScores;
-    String<int> maxScoreIds;
-    String<bool> maxScoreProcessed;
-    double score;
-    double exp_diff;
+    TItSet itSet;
+    std::set<unsigned> &rnaPosSet = mRNAWithSites.get_uniq_mrna_set();
+    StringSet<String<unsigned> > &sortedMRNAPos = mRNAWithSites.get_sorted_mrna_pos();
+    String<unsigned> sitePosByMRNA;
 
-    resize(newIdices, length(siteMRNAPos));
-    for (unsigned i = 0; i < length(pSortedSites); ++i) {
-        posIdx = (unsigned) pSortedSites[i];
+    float score, max_score, exp_diff, total_score;
+    unsigned site_count, max_idx;
 
-        if (!pMFEScores.mEffectiveSites[posIdx]) {
+    resize(mTotalScores, rnaPosSet.size(), 0.0);
+    resize(mSiteNum, rnaPosSet.size(), 0);
+    resize(mMRNAPos, rnaPosSet.size());
+
+    unsigned idx = 0;
+    for (itSet = rnaPosSet.begin(); itSet != rnaPosSet.end(); ++itSet) {
+        clear(sitePosByMRNA);
+        score = 0;
+        max_score = -FLT_MAX;
+        site_count = 0;
+        max_idx = 0;
+        clear(sitePosByMRNA);
+        for (unsigned i = 0; i < length(sortedMRNAPos[idx]); ++i) {
+            if (!pSeedSites.mEffectiveSites[sortedMRNAPos[idx][i]]) {
+                continue;
+            }
+            appendValue(sitePosByMRNA, sortedMRNAPos[idx][i]);
+            score = -1.0 * pSiteScores.get_score(sortedMRNAPos[idx][i]);
+            if (score > max_score) {
+                max_score = score;
+                max_idx = i;
+            }
+            ++site_count;
+        }
+        if (site_count == 0) {
             continue;
         }
 
-        if (prevPos != (int) siteMRNAPos[posIdx]) {
-            ++newIdx;
-        }
-        newIdices[i] = newIdx;
-        prevPos = (int) siteMRNAPos[posIdx];
-    }
-
-    resize(mTotalScores, newIdx + 1, 0.0);
-    resize(mMRNAPos, newIdx + 1);
-    resize(mSiteNum, newIdx + 1, 0);
-    resize(maxScores, newIdx + 1);
-    resize(maxScoreIds, newIdx + 1);
-    resize(maxScoreProcessed, newIdx + 1, false);
-
-    for (unsigned i = 0; i < length(pSortedSites); ++i) {
-        posIdx = (unsigned) pSortedSites[i];
-
-        if (!pMFEScores.mEffectiveSites[posIdx]) {
-            continue;
-        }
-
-        score = -1.0 * pMFEScores.get_score(posIdx);
-//        score = roundf(score * 100.0) / 100.0;
-        if (!maxScoreProcessed[newIdices[i]] || score > maxScores[newIdices[i]]) {
-            maxScores[newIdices[i]] = score;
-            maxScoreIds[newIdices[i]] = i;
-            if (!maxScoreProcessed[newIdices[i]]) {
-                maxScoreProcessed[newIdices[i]] = true;
-                mTotalScores[newIdices[i]] = 1.0;
-                mSiteNum[newIdices[i]] = 1;
-                mMRNAPos[newIdices[i]] = siteMRNAPos[posIdx];
+        total_score = 1.0;
+        for (unsigned i = 0; i < length(sitePosByMRNA); ++i) {
+            if (i == max_idx) {
+                continue;
+            }
+            score = -1.0 * pSiteScores.get_score(sitePosByMRNA[i]);
+            exp_diff = score - max_score;
+            if (exp_diff > MIN_EXP_DIFF) {
+                total_score += std::exp(exp_diff);
             }
         }
-    }
 
+        mTotalScores[idx] = -1.0 * (max_score + std::log(total_score));
+        mMRNAPos[idx] = *itSet;
+        mSiteNum[idx] = site_count;
 
-    for (unsigned i = 0; i < length(pSortedSites); ++i) {
-        posIdx = (unsigned) pSortedSites[i];
-
-        if (!pMFEScores.mEffectiveSites[posIdx] || maxScoreIds[newIdices[i]] == (int) i) {
-            continue;
-        }
-
-        score = -1.0 * pMFEScores.get_score(posIdx);
-//        score = roundf(score * 100.0) / 100.0;
-        exp_diff = score - maxScores[newIdices[i]];
-        if (exp_diff > MIN_EXP_DIFF) {
-            mTotalScores[newIdices[i]] += std::exp(exp_diff);
-        }
-
-        mSiteNum[newIdices[i]] += 1;
-    }
-
-    for (unsigned i = 0; i < length(mTotalScores); ++i) {
-        mTotalScores[i] = -1.0 * (maxScores[i] + std::log(mTotalScores[i]));
+        ++idx;
     }
 
     return 0;

@@ -7,6 +7,7 @@
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_site_score.hpp"      // MKSiteScores
+#include "mk_rna_with_sites.hpp"  // MKRMAWithSites
 #include "pita_option.hpp"        // PITAOptions
 #include "pita_seed_site.hpp"     // PITASeedSites
 #include "vr16_ddg_core.hpp"      // VR16DDGWorkSpace
@@ -174,6 +175,8 @@ public:
     // Constant values
     const double MIN_EXP_DIFF;
 
+    typedef std::set<unsigned>::iterator TItSet;
+
 public:
     // Define methods
     PITATotalScores() : MIN_EXP_DIFF(-100.0) {}
@@ -187,8 +190,8 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(PITASeedSites &pSeedSites, PITASiteScores &pDDGScores,
-                    const seqan::String<unsigned> &pSortedSites);
+    int calc_scores(PITASeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
+                     mikan::MKRMAWithSites mRNAWithSites, PITASiteScores &pDDGScores);
 
 private:
     seqan::String<float> mTotalScores;

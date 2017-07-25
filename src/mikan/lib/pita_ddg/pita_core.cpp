@@ -11,7 +11,7 @@
 #include "pita_option.hpp"        // PITAOptions
 #include "pita_seed_site.hpp"     // PITASeedSites
 #include "pita_score.hpp"         // PITAMFEScores, PITATotalScores
-#include "pita_site_cluster.hpp"  // PITAOverlap, PITATopNScore, PITASortedSitePos
+#include "pita_site_cluster.hpp"  // PITASiteFilter, PITATopNScore, PITASortedSitePos
 #include "pita_core.hpp"          // PITACore
 
 namespace ptddg {
@@ -157,8 +157,9 @@ int PITACore::calculate_mirna_scores(unsigned pIdx) {
     }
 
     // Filter overlapped sites
-    if (OVERLAP_LEN != 0 && mExecFilterOverlap) {
-        retVal = mOverlappedSites.filter_overlapped_sites(mSeedSites, OVERLAP_LEN);
+    mRNAWithSites.cluster_sites(mSeedSites);
+    if (mExecFilterOverlap) {
+        retVal = mSiteFilter.filter_sites_by_seed_type(mSeedSites, mRNAWithSites);
         if (retVal != 0) {
             std::cerr << "ERROR: Check overlapped sites failed." << std::endl;
             return 1;
@@ -174,19 +175,10 @@ int PITACore::calculate_mirna_scores(unsigned pIdx) {
         }
     }
 
-    // Sort target sites
-    if (mExecSortSites) {
-        retVal = mSortedSites.generate_sorted_mrna_pos(mSeedSites);
-        if (retVal != 0) {
-            std::cerr << "ERROR: Sort target sites failed." << std::endl;
-            return 1;
-        }
-    }
-
     // Summarize ddG values
+    mRNAWithSites.sort_mrna_pos(mSeedSites);
     if (mExecSumScores) {
-        const seqan::String<unsigned> &sortedPos = mSortedSites.get_sorted_mrna_pos();
-        retVal = mTotalScores.calc_scores(mSeedSites, mSiteScores, sortedPos);
+        retVal = mTotalScores.calc_scores(mSeedSites, mMRNASeqs, mRNAWithSites, mSiteScores);
         if (retVal != 0) {
             std::cerr << "ERROR: Calculate total ddG scores failed." << std::endl;
             return 1;
@@ -221,9 +213,8 @@ int PITACore::calculate_mirna_scores(unsigned pIdx) {
     }
 
     mSeedSites.clear_pos();
-    mOverlappedSites.clear_cluster();
+    mRNAWithSites.clear_sets();
     mSiteScores.clear_scores();
-    mSortedSites.clear_site_pos();
     mTotalScores.clear_scores();
 
     return 0;
@@ -233,29 +224,39 @@ int PITACore::write_ddg_score(seqan::CharString const &pMiRNAId) {
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const seqan::StringSet<seqan::CharString> &seedTypes = mSeedSites.get_seed_types();
-    const seqan::String<unsigned> &sortedPos = mSortedSites.get_sorted_mrna_pos();
-    seqan::CharString seedType;
-    int seedStart = 0;
-    int posIdx;
+
+    int seedStart;
+    std::set<unsigned>::iterator itSet;
+    std::set<unsigned> &rnaPosSet = mRNAWithSites.get_uniq_mrna_set();
+    seqan::StringSet<seqan::String<unsigned> > &sortedMRNAPos = mRNAWithSites.get_sorted_mrna_pos();
+
+    int count = 0;
     float score;
 
-    for (unsigned i = 0; i < length(sortedPos); ++i) {
-        posIdx = sortedPos[i];
-        if (!mSiteScores.mEffectiveSites[posIdx]) {
-            continue;
+    unsigned idx = 0;
+    for (itSet = rnaPosSet.begin(); itSet != rnaPosSet.end(); ++itSet) {
+        for (unsigned i = 0; i < seqan::length(sortedMRNAPos[idx]); ++i) {
+            unsigned rnapos = sortedMRNAPos[idx][i];
+            if (!mSeedSites.mEffectiveSites[rnapos]) {
+                continue;
+            }
+
+            seedStart = sitePos[rnapos];
+            score = mSiteScores.get_score(sortedMRNAPos[idx][i]);
+            score = roundf(score * 100.0f) / 100.0f;
+
+            mOFile1 << toCString(pMiRNAId) << "\t";
+            mOFile1 << toCString((seqan::CharString) (mMRNAIds[mRNAPos[rnapos]])) << "\t";
+            mOFile1 << seedStart + 1 << "\t";
+            mOFile1 << seedStart + 1 + INDEXED_SEQ_LEN << "\t";
+            mOFile1 << toCString((seqan::CharString) (seedTypes[sortedMRNAPos[idx][i]])) << "\t";
+            mOFile1 << score << "\t";
+            mOFile1 << std::endl;
+
+            ++count;
         }
 
-        seedStart = sitePos[posIdx];
-        score = mSiteScores.get_score(posIdx);
-        score = roundf(score * 100.0f) / 100.0f;
-
-        mOFile1 << toCString(pMiRNAId) << "\t";
-        mOFile1 << toCString((seqan::CharString) (mMRNAIds[mRNAPos[posIdx]])) << "\t";
-        mOFile1 << seedStart + 1 << "\t";
-        mOFile1 << seedStart + 1 + INDEXED_SEQ_LEN << "\t";
-        mOFile1 << toCString((seqan::CharString) (seedTypes[posIdx])) << "\t";
-        mOFile1 << score << "\t";
-        mOFile1 << std::endl;
+        ++idx;
     }
 
     return 0;
@@ -285,12 +286,16 @@ int PITACore::write_alignment(seqan::CharString const &pMiRNAId) {
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const seqan::StringSet<seqan::CharString> &seedTypes = mSeedSites.get_seed_types();
-    const seqan::String<unsigned> &sortedPos = mSortedSites.get_sorted_mrna_pos();
-    seqan::CharString seedType;
-    int seedStart = 0;
-    int posIdx;
-    float score;
+
+    int seedStart;
+    std::set<unsigned>::iterator itSet;
+    std::set<unsigned> &rnaPosSet = mRNAWithSites.get_uniq_mrna_set();
+    seqan::StringSet<seqan::String<unsigned> > &sortedMRNAPos = mRNAWithSites.get_sorted_mrna_pos();
+
     int count = 0;
+    float score;
+
+    seqan::CharString seedType;
     float dGduplex;
     float dG5;
     float dG3;
@@ -298,50 +303,53 @@ int PITACore::write_alignment(seqan::CharString const &pMiRNAId) {
     float dG0;
     float dG1;
 
+    count = 0;
+    unsigned idx = 0;
+    for (itSet = rnaPosSet.begin(); itSet != rnaPosSet.end(); ++itSet) {
+        for (unsigned i = 0; i < seqan::length(sortedMRNAPos[idx]); ++i) {
+            unsigned rnapos = sortedMRNAPos[idx][i];
+            if (!mSeedSites.mEffectiveSites[rnapos]) {
+                continue;
+            }
 
-    for (unsigned i = 0; i < length(sortedPos); ++i) {
-        posIdx = sortedPos[i];
+            seedStart = sitePos[rnapos];
+            score = mSiteScores.get_score(rnapos);
+            score = roundf(score * 100.0f) / 100.0f;
 
-        if (!mSiteScores.mEffectiveSites[posIdx]) {
-            continue;
+            dGduplex = (float) mSiteScores.get_dgall(rnapos);
+            dGduplex = roundf(dGduplex * 100.0f) / 100.0f;
+            dG5 = (float) mSiteScores.get_dg5(rnapos);
+            dG5 = roundf(dG5 * 100.0f) / 100.0f;
+            dG3 = (float) mSiteScores.get_dg3(rnapos);
+            dG3 = roundf(dG3 * 100.0f) / 100.0f;
+            dGopen = (float) mSiteScores.get_dg0(rnapos) - (float) mSiteScores.get_dg1(rnapos);
+            dGopen = roundf(dGopen * 100.0f) / 100.0f;
+            dG0 = (float) mSiteScores.get_dg0(rnapos);
+            dG0 = roundf(dG0 * 100.0f) / 100.0f;
+            dG1 = (float) mSiteScores.get_dg1(rnapos);
+            dG1 = roundf(dG1 * 100.0f) / 100.0f;
+
+            std::cout << "### " << count + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
+            mSiteScores.print_alignment(rnapos);
+            std::cout << "  miRNA:               " << toCString(pMiRNAId) << std::endl;
+            std::cout << "  mRNA:                " << toCString((seqan::CharString) (mMRNAIds[mRNAPos[rnapos]]));
+            std::cout << std::endl;
+            std::cout << "  seed type:           " << toCString((seqan::CharString) (seedTypes[rnapos])) << std::endl;
+            std::cout << "  position(start):     " << seedStart + 1 << std::endl;
+            std::cout << "  position(end):       " << seedStart + 1 + INDEXED_SEQ_LEN << std::endl;
+            std::cout << "  ddG:                 " << score << std::endl;
+            std::cout << "  dGduplex(dG5 + dG3): " << dGduplex << std::endl;
+            std::cout << "  dG5:                 " << dG5 << std::endl;
+            std::cout << "  dG3:                 " << dG3 << std::endl;
+            std::cout << "  dGopen(dG0 - dG1):   " << dGopen << std::endl;
+            std::cout << "  dG0:                 " << dG0 << std::endl;
+            std::cout << "  dG1:                 " << dG1 << std::endl;
+            std::cout << std::endl;
+
+            ++count;
         }
 
-        seedStart = sitePos[posIdx];
-        score = mSiteScores.get_score(posIdx);
-        score = roundf(score * 100.0f) / 100.0f;
-
-        dGduplex = (float) mSiteScores.get_dgall(posIdx);
-        dGduplex = roundf(dGduplex * 100.0f) / 100.0f;
-        dG5 = (float) mSiteScores.get_dg5(posIdx);
-        dG5 = roundf(dG5 * 100.0f) / 100.0f;
-        dG3 = (float) mSiteScores.get_dg3(posIdx);
-        dG3 = roundf(dG3 * 100.0f) / 100.0f;
-        dGopen = (float) mSiteScores.get_dg0(posIdx) - (float) mSiteScores.get_dg1(posIdx);
-        dGopen = roundf(dGopen * 100.0f) / 100.0f;
-        dG0 = (float) mSiteScores.get_dg0(posIdx);
-        dG0 = roundf(dG0 * 100.0f) / 100.0f;
-        dG1 = (float) mSiteScores.get_dg1(posIdx);
-        dG1 = roundf(dG1 * 100.0f) / 100.0f;
-
-        std::cout << "### " << count + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
-        mSiteScores.print_alignment(posIdx);
-        std::cout << "  miRNA:               " << toCString(pMiRNAId) << std::endl;
-        std::cout << "  mRNA:                " << toCString((seqan::CharString) (mMRNAIds[mRNAPos[posIdx]]));
-        std::cout << std::endl;
-        std::cout << "  seed type:           " << toCString((seqan::CharString) (seedTypes[posIdx])) << std::endl;
-        std::cout << "  position(start):     " << seedStart + 1 << std::endl;
-        std::cout << "  position(end):       " << seedStart + 1 + INDEXED_SEQ_LEN << std::endl;
-        std::cout << "  ddG:                 " << score << std::endl;
-        std::cout << "  dGduplex(dG5 + dG3): " << dGduplex << std::endl;
-        std::cout << "  dG5:                 " << dG5 << std::endl;
-        std::cout << "  dG3:                 " << dG3 << std::endl;
-        std::cout << "  dGopen(dG0 - dG1):   " << dGopen << std::endl;
-        std::cout << "  dG0:                 " << dG0 << std::endl;
-        std::cout << "  dG1:                 " << dG1 << std::endl;
-        std::cout << std::endl;
-
-        ++count;
-
+        ++idx;
     }
 
     return 0;

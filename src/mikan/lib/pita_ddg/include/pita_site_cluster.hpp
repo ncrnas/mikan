@@ -5,90 +5,40 @@
 #include <map>                    // multimap
 #include <utility>                // pair
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_site_filter.hpp"     // MKSiteFilter
 #include "pita_score.hpp"         // PITASiteScores
 #include "pita_seed_site.hpp"     // PITASeedSites
 
 namespace ptddg {
 
-class PITASiteCluster {
-public:
-    // Define methods
-    PITASiteCluster() : mSiteCount(0) {}
-
-    std::set<unsigned> &get_mrna_pos_set() { return mRNAPosSet; }
-
-    std::multimap<unsigned, unsigned> &get_mrna_pos_map() { return mSiteMap; }
-
-    int get_site_count() { return mSiteCount; }
-
-    // Method prototype
-    void clear_cluster();
-
-    void cluster_site_pos(PITASeedSites &pSeedSites);
-
-private:
-    typedef std::pair<unsigned, unsigned> TPosPair;
-
-    int mSiteCount;
-    std::set<unsigned> mRNAPosSet;
-    std::multimap<unsigned, unsigned> mSiteMap;
-
-};
-
 //
 // Identify overlapped sites
 //
-class PITAOverlap {
+class PITASiteFilter : public mikan::MKSiteFilter {
 public:
-    // Define methods
-    PITAOverlap() {}
-
-    // Method prototype
-    int filter_overlapped_sites(PITASeedSites &pSeedSites, int pGapLen);
-
-    void clear_cluster();
-
-private:
+    // Define types
     typedef std::set<unsigned>::iterator TItSet;
     typedef std::multimap<unsigned, unsigned>::iterator TItMap;
-    typedef std::pair<TItMap, TItMap> TItRetPair;
-    typedef std::multimap<unsigned, unsigned>::iterator TITStartPos;
     typedef std::pair<unsigned, unsigned> TPosPair;
 
-    PITASiteCluster mSiteCluster;
-
-private:
-    void mark_overlapped_sites(PITASeedSites &pSeedSites, int pPrevIdx, int pCurIdx);
-
-    unsigned get_seedtype_precedence(const seqan::CharString &pSeedType);
-};
-
-//
-// Sort sites by position
-//
-class PITASortedSitePos {
-public:
     // Define methods
-    PITASortedSitePos() {}
+    PITASiteFilter() : MKSiteFilter() {
+        set_gap_len(0);
+    }
 
-    // Method prototype
-    int generate_sorted_mrna_pos(PITASeedSites &pSeedSites);
-
-    const seqan::String<unsigned> &get_sorted_mrna_pos() { return mSortedSitePos; }
-
-    void clear_site_pos();
+    void set_gap_len(unsigned pGapLen) { mGapLen = pGapLen; }
 
 private:
-    typedef std::set<unsigned>::iterator TItSet;
-    typedef std::multimap<unsigned, unsigned>::iterator TItMap;
-    typedef std::pair<TItMap, TItMap> TItRetPair;
-    typedef std::multimap<unsigned, unsigned>::iterator TITStartPos;
-    typedef std::pair<unsigned, unsigned> TPosPair;
+    unsigned mGapLen;
 
-    seqan::String<unsigned> mSortedSitePos;
-    PITASiteCluster mSiteCluster;
+    unsigned get_seedtype_precedence(seqan::CharString const &pSeedType);
+
+    void set_intervals(mikan::MKSeedSites &pSeedSites, unsigned pSiteIdx, unsigned &pStartSearch,
+                       unsigned &pEndSearch, unsigned &pStartAdd, unsigned &pEndAdd,
+                       bool &pSearchOverlap);
 
 };
+
 
 } // namespace ptddg
 
