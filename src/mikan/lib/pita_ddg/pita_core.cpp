@@ -11,7 +11,7 @@
 #include "pita_option.hpp"        // PITAOptions
 #include "pita_seed_site.hpp"     // PITASeedSites
 #include "pita_score.hpp"         // PITAMFEScores, PITATotalScores
-#include "pita_site_cluster.hpp"  // PITASiteFilter, PITATopNScore, PITASortedSitePos
+#include "pita_site_filter.hpp"  // PITASiteFilter, PITATopNScore, PITASortedSitePos
 #include "pita_core.hpp"          // PITACore
 
 namespace ptddg {
@@ -159,7 +159,7 @@ int PITACore::calculate_mirna_scores(unsigned pIdx) {
     // Filter overlapped sites
     mRNAWithSites.create_mrna_site_map(mSeedSites);
     if (mExecFilterOverlap) {
-        retVal = mSiteFilter.filter_sites_by_seed_type(mSeedSites, mRNAWithSites);
+        retVal = mSiteFilter.filter_sites(mSeedSites, mRNAWithSites, mSiteScores);
         if (retVal != 0) {
             std::cerr << "ERROR: Check overlapped sites failed." << std::endl;
             return 1;
@@ -220,7 +220,6 @@ int PITACore::calculate_mirna_scores(unsigned pIdx) {
 }
 
 int PITACore::write_ddg_score(seqan::CharString const &pMiRNAId) {
-    const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const seqan::StringSet<seqan::CharString> &seedTypes = mSeedSites.get_seed_types();
 

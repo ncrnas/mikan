@@ -9,6 +9,7 @@
 #include <seqan/score.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_site_score.hpp"      // MKSiteScores
+#include "mk_rna_with_sites.hpp"  // MKRMAWithSites
 #include "mr3_option.hpp"         // MR3Options
 #include "mr3_align.hpp"          // MR3SeedSites
 #include "mr3_seed_site.hpp"      // MR3Align
@@ -125,6 +126,8 @@ public:
         init_rnafold();
     }
 
+    float get_score(int pIdx) { return get_align_score(pIdx); }
+
     float get_align_score(int posIdx) { return mAlignScores.get_score(posIdx); }
 
     float get_energy_score(int posIdx) { return mEnergyScores.get_score(posIdx); }
@@ -176,8 +179,8 @@ public:
     // Method prototype
     void clear_scores();
 
-    int calc_scores(MR3SeedSites &pSeedSites, MR3SiteScores &pSiteScores,
-                    const seqan::String<unsigned> &pSortedSites);
+    int calc_scores(MR3SeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
+                    mikan::MKRMAWithSites &pRNAWithSites, MR3SiteScores &pSiteScores);
 
 private:
     seqan::String<float> mTotalAlignScores;

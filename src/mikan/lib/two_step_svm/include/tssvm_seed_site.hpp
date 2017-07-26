@@ -58,7 +58,8 @@ public:
     TSSVMSiteFilter() : MKSiteFilter() {}
 
 private:
-    unsigned get_seedtype_precedence(seqan::CharString const &pSeedType);
+    float get_precedence(unsigned pSitePos, mikan::MKSeedSites &pSeedSites,
+                         mikan::MKSiteScores &pSiteScores);
 
     void set_intervals(mikan::MKSeedSites &pSeedSites, unsigned pSiteIdx, unsigned &pStartSearch,
                        unsigned &pEndSearch, unsigned &pStartAdd, unsigned &pEndAdd,

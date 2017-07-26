@@ -75,8 +75,8 @@ private:
 
     MR3SeedSites mSeedSites;
     MR3SiteScores mSiteScores;
-    MR3Overlap mOverlappedSites;
-    MR3SortedSitePos mSortedSites;
+    mikan::MKRMAWithSites mRNAWithSites;
+    MR3SiteFilter mSiteFilter;
     MR3TotalScores mTotalScores;
 
 private:

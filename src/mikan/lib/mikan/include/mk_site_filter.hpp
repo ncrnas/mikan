@@ -5,6 +5,7 @@
 #include <seqan/index.h>
 #include "mk_typedef.hpp"           // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_seed_site.hpp"         // MKSeedSites
+#include "mk_site_score.hpp"        // MKSiteScores
 #include "mk_rna_with_sites.hpp"    // MKRMAWithSites
 
 namespace mikan {
@@ -15,29 +16,37 @@ namespace mikan {
 class MKSiteFilter {
 public:
     // Define methods
-    MKSiteFilter() {}
+    MKSiteFilter() {
+        set_gap_len(0);
+    }
+
+    void set_gap_len(unsigned pGapLen) { mGapLen = pGapLen; }
 
     // Method prototype
-    int filter_sites_by_seed_type(mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
+    int filter_sites(mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites,
+                     mikan::MKSiteScores &pSiteScores);
 
-private:
-    // Define methods
-    virtual unsigned get_seedtype_precedence(seqan::CharString const &) { return 0; }
-
-    virtual void set_intervals(mikan::MKSeedSites &, unsigned, unsigned &, unsigned &,
-                               unsigned &, unsigned &, bool &) {}
+protected:
+    // Define method
+    virtual float get_precedence(unsigned, mikan::MKSeedSites &, mikan::MKSiteScores &) { return 0; }
 
     // Method prototypes
-    void mark_overlap_by_seed_type(mikan::MKSeedSites &pSeedSites, mikan::TMRNAPosSet &pSortedPos);
+    virtual void set_intervals(mikan::MKSeedSites &pSeedSites, unsigned pSiteIdx, unsigned &pStartSearch,
+                               unsigned &pEndSearch, unsigned &pStartAdd, unsigned &pEndAdd, bool &pSearchOverlap);
 
-    void sort_by_seed_type(mikan::MKSeedSites &pSeedSites, mikan::TMRNAPosSet &pSortedPos,
-                           mikan::TMRNAPosSet &pSortedSeeds);
+    void mark_overlap(mikan::MKSeedSites &pSeedSites, mikan::TMRNAPosSet &pSortedPos,
+                      mikan::MKSiteScores &pSiteScores);
+
+    void sort_sites(mikan::TMRNAPosSet &pSortedPos, mikan::MKSeedSites &pSeedSites,
+                    mikan::MKSiteScores &pSiteScores, mikan::TMRNAPosSet &pSortedSeeds);
 
     // Define types
-    typedef std::multimap<unsigned, unsigned> TPosMap;
-    typedef std::set<unsigned>::iterator TItSet;
-    typedef std::multimap<unsigned, unsigned>::iterator TItMap;
-    typedef std::pair<unsigned, unsigned> TPosPair;
+    typedef std::multimap<float, unsigned> TPosMap;
+    typedef std::multimap<float, unsigned>::iterator TItMap;
+    typedef std::pair<float, unsigned> TPosPair;
+
+    // Define variable
+    unsigned mGapLen;
 
 };
 

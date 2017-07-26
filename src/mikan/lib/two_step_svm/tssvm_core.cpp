@@ -137,7 +137,7 @@ int TSSVMCore::calculate_mirna_scores(unsigned pIdx) {
     // Filter overlapped sites
     mRNAWithSites.create_mrna_site_map(mSeedSites);
     if (mExecFilterOverlap) {
-        retVal = mSiteFilter.filter_sites_by_seed_type(mSeedSites, mRNAWithSites);
+        retVal = mSiteFilter.filter_sites(mSeedSites, mRNAWithSites, mSiteScores);
         if (retVal != 0) {
             std::cerr << "ERROR: Check overlapped sites failed." << std::endl;
             return 1;

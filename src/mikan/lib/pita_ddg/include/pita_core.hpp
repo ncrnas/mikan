@@ -8,7 +8,7 @@
 #include "pita_option.hpp"        // PITAOptions
 #include "pita_score.hpp"         // PITAGGDScores, PITATotalScores
 #include "pita_seed_site.hpp"     // PITASeedSites
-#include "pita_site_cluster.hpp"  // PITASiteFilter, PITASortedSitePos
+#include "pita_site_filter.hpp"  // PITASiteFilter, PITASortedSitePos
 
 namespace ptddg {
 

@@ -94,22 +94,28 @@ bool TSSVMSeedSites::set_new_seed_type(
 //
 // TSSVMSiteFilter methods
 //
-unsigned TSSVMSiteFilter::get_seedtype_precedence(CharString const &pSeedType) {
-    unsigned preced;
+float TSSVMSiteFilter::get_precedence(
+        unsigned pSitePos,
+        mikan::MKSeedSites &pSeedSites,
+        mikan::MKSiteScores &) {
 
-    if (pSeedType == "8mer" || pSeedType == "7mer-A1" || pSeedType == "7mer-m8") {
+    StringSet<CharString> const &seedTypes = pSeedSites.get_seed_types();
+    seqan::CharString seedType = seedTypes[pSitePos];
+    float preced;
+
+    if (seedType == "8mer" || seedType == "7mer-A1" || seedType == "7mer-m8") {
         preced = 0;
-    } else if (pSeedType == "6mer") {
+    } else if (seedType == "6mer") {
         preced = 1;
-    } else if (pSeedType == "GUM") {
+    } else if (seedType == "GUM") {
         preced = 2;
-    } else if (pSeedType == "GUT") {
+    } else if (seedType == "GUT") {
         preced = 3;
-    } else if (pSeedType == "BT") {
+    } else if (seedType == "BT") {
         preced = 4;
-    } else if (pSeedType == "BM") {
+    } else if (seedType == "BM") {
         preced = 5;
-    } else if (pSeedType == "LP") {
+    } else if (seedType == "LP") {
         preced = 6;
     } else {
         preced = 7;
