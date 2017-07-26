@@ -37,41 +37,43 @@ void TSSVMRNARawFeatures::resize_feat(unsigned pLen) {
 int TSSVMRNARawFeatures::add_features(
         TSSVMSeedSites &pSeedSites,
         mikan::TRNASet const &pMRNASeqs,
-        mikan::MKRMAWithSites mRNAWithSites,
+        mikan::MKRMAWithSites &pRNAWithSites,
         TSSVMSiteScores &pSiteScores) {
 
-    TItSet itSet;
-    std::set<unsigned> &rnaPosSet = mRNAWithSites.get_uniq_mrna_set();
-    StringSet<String<unsigned> > &sortedMRNAPos = mRNAWithSites.get_sorted_mrna_pos();
-    String<unsigned> sitePosByMRNA;
+    mikan::TMRNAPosSet &mUniqRNAPosSet = pRNAWithSites.get_uniq_mrna_pos_set();
+    seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = pRNAWithSites.get_rna_site_pos_map();
+    resize_feat(length(pRNAWithSites.mEffectiveRNAs));
 
-    resize_feat(length(pMRNASeqs));
-
-    unsigned idx = 0;
-    for (itSet = rnaPosSet.begin(); itSet != rnaPosSet.end(); ++itSet) {
-        clear(sitePosByMRNA);
-        for (unsigned i = 0; i < length(sortedMRNAPos[idx]); ++i) {
-            if (!pSeedSites.mEffectiveSites[sortedMRNAPos[idx][i]]) {
-                continue;
-            }
-            appendValue(sitePosByMRNA, sortedMRNAPos[idx][i]);
-        }
-
-        if (length(sitePosByMRNA) == 0) {
+    mikan::TSitePosSet sitePos;
+    for (unsigned i = 0; i < length(pRNAWithSites.mEffectiveRNAs); i++) {
+        if (!pRNAWithSites.mEffectiveRNAs[i]) {
             continue;
         }
-        mEffectiveRNAs[*itSet] = true;
 
-        mUTRLen.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteScores);
-        mSiteNum.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteScores);
-        mTotDiscUTRLen.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteScores);
-        mSeedTypeNum.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteScores);
-        mDiscBin.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteScores);
-        mOptDist.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteScores);
-        mSiteNumFlg.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteScores);
-        mTotDisc.add_features(*itSet, sitePosByMRNA, pSeedSites, pMRNASeqs, pSiteScores);
+        for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
+            if (!pSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
+                continue;
+            }
+            appendValue(sitePos, rnaSitePosMap[i][j]);
+        }
 
-        ++idx;
+        if (length(sitePos) == 0) {
+            continue;
+        }
+
+        unsigned seqIdx = mUniqRNAPosSet[i];
+        mEffectiveRNAs[i] = true;
+
+        mUTRLen.add_features(i, sitePos, pSeedSites, pMRNASeqs[seqIdx], pSiteScores);
+        mSiteNum.add_features(i, sitePos, pSeedSites, pMRNASeqs[seqIdx], pSiteScores);
+        mTotDiscUTRLen.add_features(i, sitePos, pSeedSites, pMRNASeqs[seqIdx], pSiteScores);
+        mSeedTypeNum.add_features(i, sitePos, pSeedSites, pMRNASeqs[seqIdx], pSiteScores);
+        mDiscBin.add_features(i, sitePos, pSeedSites, pMRNASeqs[seqIdx], pSiteScores);
+        mOptDist.add_features(i,sitePos, pSeedSites, pMRNASeqs[seqIdx], pSiteScores);
+        mSiteNumFlg.add_features(i, sitePos, pSeedSites, pMRNASeqs[seqIdx], pSiteScores);
+        mTotDisc.add_features(i, sitePos, pSeedSites, pMRNASeqs[seqIdx], pSiteScores);
+
+        clear(sitePos);
     }
 
     return 0;
@@ -85,17 +87,18 @@ void TSSVMFeatUTRLen::clear_features() {
 }
 
 int TSSVMFeatUTRLen::add_features(
-        unsigned pMRNAPosIdx,
-        String<unsigned> &,
+        unsigned pIdx,
+        mikan::TSitePosSet &,
         TSSVMSeedSites &,
-        mikan::TRNASet const &pMRNASeqs,
+        mikan::TRNAStr const &pMRNASeq,
         TSSVMSiteScores &) {
+
     float mRNALen;
 
-    resize(mUTRLen[pMRNAPosIdx], 1);
-    mRNALen = (float) length(pMRNASeqs[pMRNAPosIdx]);
+    resize(mUTRLen[pIdx], 1);
+    mRNALen = (float) length(pMRNASeq);
     mRNALen = mRNALen / 22559;
-    mUTRLen[pMRNAPosIdx][0] = roundf(mRNALen * 10000) / 10000;
+    mUTRLen[pIdx][0] = roundf(mRNALen * 10000) / 10000;
 
     return 0;
 }
@@ -109,18 +112,19 @@ void TSSVMFeatSiteNum::clear_features() {
 }
 
 int TSSVMFeatSiteNum::add_features(
-        unsigned pMRNAPosIdx,
-        String<unsigned> &pSitePosByMRNA,
+        unsigned pIdx,
+        mikan::TSitePosSet &pSitePosSet,
         TSSVMSeedSites &,
-        mikan::TRNASet const &,
+        mikan::TRNAStr const &,
         TSSVMSiteScores &) {
+
     float siteNum;
 
-    resize(mSiteNum[pMRNAPosIdx], 1);
-    siteNum = (float) length(pSitePosByMRNA);
-    mSiteNumRaw[pMRNAPosIdx] = (int) siteNum;
+    resize(mSiteNum[pIdx], 1);
+    siteNum = (float) length(pSitePosSet);
+    mSiteNumRaw[pIdx] = (int) siteNum;
     siteNum = siteNum / 38;
-    mSiteNum[pMRNAPosIdx][0] = roundf(siteNum * 10000) / 10000;
+    mSiteNum[pIdx][0] = roundf(siteNum * 10000) / 10000;
 
     return 0;
 
@@ -134,25 +138,25 @@ void TSSVMFeatTotDiscUTRLen::clear_features() {
 }
 
 int TSSVMFeatTotDiscUTRLen::add_features(
-        unsigned pMRNAPosIdx,
-        String<unsigned> &pSitePosByMRNA,
+        unsigned pIdx,
+        mikan::TSitePosSet &pSitePosSet,
         TSSVMSeedSites &,
-        mikan::TRNASet const &pMRNASeqs,
+        mikan::TRNAStr const &pMRNASeq,
         TSSVMSiteScores &pSiteScores) {
 
-    const seqan::String<float> &scors = pSiteScores.get_scores();
+    const seqan::String<float> &scores = pSiteScores.get_scores();
     float minVal = 0.0f;
     float shiftVal = -2.27441f;
     float totVal = 0.0f;
     float mRNALen;
     float discUTRLen;
 
-    resize(mTotDiscUTRLen[pMRNAPosIdx], 1);
+    resize(mTotDiscUTRLen[pIdx], 1);
 
-    mRNALen = (float) length(pMRNASeqs[pMRNAPosIdx]);
+    mRNALen = (float) length(pMRNASeq);
 
-    for (unsigned i = 0; i < length(pSitePosByMRNA); ++i) {
-        float score = scors[pSitePosByMRNA[i]];
+    for (unsigned i = 0; i < length(pSitePosSet); ++i) {
+        float score = scores[pSitePosSet[i]];
         score = score - shiftVal;
         if (score > minVal) {
             totVal += score;
@@ -163,7 +167,7 @@ int TSSVMFeatTotDiscUTRLen::add_features(
     discUTRLen = roundf(discUTRLen * 10000000) / 10000000;
     discUTRLen = roundf(discUTRLen * 1000000) / 1000000;
 
-    mTotDiscUTRLen[pMRNAPosIdx] = discUTRLen;
+    mTotDiscUTRLen[pIdx] = discUTRLen;
 
     return 0;
 }
@@ -176,45 +180,45 @@ void TSSVMFeatSeedTypeNum::clear_features() {
 }
 
 int TSSVMFeatSeedTypeNum::add_features(
-        unsigned pMRNAPosIdx,
-        String<unsigned> &pSitePosByMRNA,
+        unsigned pIdx,
+        mikan::TSitePosSet &pSitePosSet,
         TSSVMSeedSites &pSeedSites,
-        mikan::TRNASet const &,
+        mikan::TRNAStr const &,
         TSSVMSiteScores &) {
 
     float maxNum = 38;
     const StringSet<CharString> &seedTypes = pSeedSites.get_seed_types();
 
-    resize(mSeedTypeNum[pMRNAPosIdx], 9, 0);
+    resize(mSeedTypeNum[pIdx], 9, 0);
 
-    for (unsigned i = 0; i < length(pSitePosByMRNA); ++i) {
+    for (unsigned i = 0; i < length(pSitePosSet); ++i) {
 
-        if (seedTypes[pSitePosByMRNA[i]] == "8mer") {
-            mSeedTypeNum[pMRNAPosIdx][0] += 1;
-        } else if (seedTypes[pSitePosByMRNA[i]] == "7mer-m8") {
-            mSeedTypeNum[pMRNAPosIdx][1] += 1;
-        } else if (seedTypes[pSitePosByMRNA[i]] == "7mer-A1") {
-            mSeedTypeNum[pMRNAPosIdx][2] += 1;
-        } else if (seedTypes[pSitePosByMRNA[i]] == "6mer") {
-            mSeedTypeNum[pMRNAPosIdx][3] += 1;
-        } else if (seedTypes[pSitePosByMRNA[i]] == "GUM") {
-            mSeedTypeNum[pMRNAPosIdx][4] += 1;
-        } else if (seedTypes[pSitePosByMRNA[i]] == "GUT") {
-            mSeedTypeNum[pMRNAPosIdx][5] += 1;
-        } else if (seedTypes[pSitePosByMRNA[i]] == "LP") {
-            mSeedTypeNum[pMRNAPosIdx][6] += 1;
-        } else if (seedTypes[pSitePosByMRNA[i]] == "BT") {
-            mSeedTypeNum[pMRNAPosIdx][7] += 1;
-        } else if (seedTypes[pSitePosByMRNA[i]] == "BM") {
-            mSeedTypeNum[pMRNAPosIdx][8] += 1;
+        if (seedTypes[pSitePosSet[i]] == "8mer") {
+            mSeedTypeNum[pIdx][0] += 1;
+        } else if (seedTypes[pSitePosSet[i]] == "7mer-m8") {
+            mSeedTypeNum[pIdx][1] += 1;
+        } else if (seedTypes[pSitePosSet[i]] == "7mer-A1") {
+            mSeedTypeNum[pIdx][2] += 1;
+        } else if (seedTypes[pSitePosSet[i]] == "6mer") {
+            mSeedTypeNum[pIdx][3] += 1;
+        } else if (seedTypes[pSitePosSet[i]] == "GUM") {
+            mSeedTypeNum[pIdx][4] += 1;
+        } else if (seedTypes[pSitePosSet[i]] == "GUT") {
+            mSeedTypeNum[pIdx][5] += 1;
+        } else if (seedTypes[pSitePosSet[i]] == "LP") {
+            mSeedTypeNum[pIdx][6] += 1;
+        } else if (seedTypes[pSitePosSet[i]] == "BT") {
+            mSeedTypeNum[pIdx][7] += 1;
+        } else if (seedTypes[pSitePosSet[i]] == "BM") {
+            mSeedTypeNum[pIdx][8] += 1;
         }
     }
 
-    for (unsigned i = 0; i < length(mSeedTypeNum[pMRNAPosIdx]); ++i) {
-        float seedTypeNum = mSeedTypeNum[pMRNAPosIdx][i];
+    for (unsigned i = 0; i < length(mSeedTypeNum[pIdx]); ++i) {
+        float seedTypeNum = mSeedTypeNum[pIdx][i];
         seedTypeNum /= maxNum;
         seedTypeNum = roundf(seedTypeNum * 10000) / 10000;
-        mSeedTypeNum[pMRNAPosIdx][i] = seedTypeNum;
+        mSeedTypeNum[pIdx][i] = seedTypeNum;
     }
 
     return 0;
@@ -228,62 +232,62 @@ void TSSVMFeatDiscBin::clear_features() {
 }
 
 int TSSVMFeatDiscBin::add_features(
-        unsigned pMRNAPosIdx,
-        String<unsigned> &pSitePosByMRNA,
+        unsigned pIdx,
+        mikan::TSitePosSet &pSitePosSet,
         TSSVMSeedSites &,
-        mikan::TRNASet const &,
+        mikan::TRNAStr const &,
         TSSVMSiteScores &pSiteScores) {
 
-    const seqan::String<float> &scors = pSiteScores.get_scores();
+    const seqan::String<float> &scores = pSiteScores.get_scores();
     float maxNum = 38.0f;
     float shiftVal = -2.27441f;
 
-    resize(mDiscBin[pMRNAPosIdx], 17, 0.0);
+    resize(mDiscBin[pIdx], 17, 0.0);
 
-    for (unsigned i = 0; i < length(pSitePosByMRNA); ++i) {
-        float score = scors[pSitePosByMRNA[i]];
+    for (unsigned i = 0; i < length(pSitePosSet); ++i) {
+        float score = scores[pSitePosSet[i]];
         score = score - shiftVal;
 
         if (score > 3.4031112) {
-            mDiscBin[pMRNAPosIdx][15] += 1;
+            mDiscBin[pIdx][15] += 1;
         } else if (score > 3.3554676432) {
-            mDiscBin[pMRNAPosIdx][14] += 1;
+            mDiscBin[pIdx][14] += 1;
         } else if (score > 3.30748377528) {
-            mDiscBin[pMRNAPosIdx][13] += 1;
+            mDiscBin[pIdx][13] += 1;
         } else if (score > 3.25949990736) {
-            mDiscBin[pMRNAPosIdx][12] += 1;
+            mDiscBin[pIdx][12] += 1;
         } else if (score > 3.21151603944) {
-            mDiscBin[pMRNAPosIdx][11] += 1;
+            mDiscBin[pIdx][11] += 1;
         } else if (score > 3.14753754888) {
-            mDiscBin[pMRNAPosIdx][10] += 1;
+            mDiscBin[pIdx][10] += 1;
         } else if (score > 3.062459768888) {
-            mDiscBin[pMRNAPosIdx][9] += 1;
+            mDiscBin[pIdx][9] += 1;
         } else if (score > 2.9487958548) {
-            mDiscBin[pMRNAPosIdx][8] += 1;
+            mDiscBin[pIdx][8] += 1;
         } else if (score > 2.7973574064) {
-            mDiscBin[pMRNAPosIdx][7] += 1;
+            mDiscBin[pIdx][7] += 1;
         } else if (score > 2.59555291224) {
-            mDiscBin[pMRNAPosIdx][6] += 1;
+            mDiscBin[pIdx][6] += 1;
         } else if (score > 2.32636681632) {
-            mDiscBin[pMRNAPosIdx][5] += 1;
+            mDiscBin[pIdx][5] += 1;
         } else if (score > 1.96733858472) {
-            mDiscBin[pMRNAPosIdx][4] += 1;
+            mDiscBin[pIdx][4] += 1;
         } else if (score > 1.48886115) {
-            mDiscBin[pMRNAPosIdx][3] += 1;
+            mDiscBin[pIdx][3] += 1;
         } else if (score > 0.8507778) {
-            mDiscBin[pMRNAPosIdx][2] += 1;
+            mDiscBin[pIdx][2] += 1;
         } else if (score > 0) {
-            mDiscBin[pMRNAPosIdx][1] += 1;
+            mDiscBin[pIdx][1] += 1;
         } else {
-            mDiscBin[pMRNAPosIdx][0] += 1;
+            mDiscBin[pIdx][0] += 1;
         }
     }
 
-    for (unsigned i = 0; i < length(mDiscBin[pMRNAPosIdx]); ++i) {
-        float binCount = mDiscBin[pMRNAPosIdx][i];
+    for (unsigned i = 0; i < length(mDiscBin[pIdx]); ++i) {
+        float binCount = mDiscBin[pIdx][i];
         binCount /= maxNum;
         binCount = roundf(binCount * 1000000) / 1000000;
-        mDiscBin[pMRNAPosIdx][i] = binCount;
+        mDiscBin[pIdx][i] = binCount;
     }
 
     return 0;
@@ -297,27 +301,27 @@ void TSSVMFeatOptDist::clear_features() {
 }
 
 int TSSVMFeatOptDist::add_features(
-        unsigned pMRNAPosIdx,
-        String<unsigned> &pSitePosByMRNA,
+        unsigned pIdx,
+        mikan::TSitePosSet &pSitePosSet,
         TSSVMSeedSites &pSeedSites,
-        mikan::TRNASet const &,
+        mikan::TRNAStr const &,
         TSSVMSiteScores &) {
 
     const String<unsigned> &mS8Pos = pSeedSites.get_site_pos_s8();
     unsigned prevPos, pos, posDiff;
     String<unsigned> dist;
 
-    resize(mOptDist[pMRNAPosIdx], 2, 0.0);
+    resize(mOptDist[pIdx], 2, 0.0);
 
-    if (length(pSitePosByMRNA) < 2) {
+    if (length(pSitePosSet) < 2) {
         return 0;
     }
 
-    resize(dist, length(pSitePosByMRNA));
+    resize(dist, length(pSitePosSet));
 
-    prevPos = (unsigned) mS8Pos[pSitePosByMRNA[0]];
-    for (unsigned i = 1; i < length(pSitePosByMRNA); ++i) {
-        pos = (unsigned) mS8Pos[pSitePosByMRNA[i]];
+    prevPos = (unsigned) mS8Pos[pSitePosSet[0]];
+    for (unsigned i = 1; i < length(pSitePosSet); ++i) {
+        pos = (unsigned) mS8Pos[pSitePosSet[i]];
         posDiff = pos - prevPos;
         dist[i] = posDiff;
 
@@ -333,15 +337,15 @@ int TSSVMFeatOptDist::add_features(
     for (unsigned i = 0; i < length(dist); ++i) {
 
         if (dist[i] >= 14 && dist[i] <= 46) {
-            mOptDist[pMRNAPosIdx][0] += 1;
+            mOptDist[pIdx][0] += 1;
         }
         if (dist[i] >= 17 && dist[i] <= 25) {
-            mOptDist[pMRNAPosIdx][1] += 1;
+            mOptDist[pIdx][1] += 1;
         }
     }
 
-    mOptDist[pMRNAPosIdx][0] /= 100;
-    mOptDist[pMRNAPosIdx][1] /= 100;
+    mOptDist[pIdx][0] /= 100;
+    mOptDist[pIdx][1] /= 100;
 
     return 0;
 }
@@ -354,22 +358,23 @@ void TSSVMFeatSiteNumFlg::clear_features() {
 }
 
 int TSSVMFeatSiteNumFlg::add_features(
-        unsigned pMRNAPosIdx,
-        String<unsigned> &pSitePosByMRNA,
+        unsigned pIdx,
+        mikan::TSitePosSet &pSitePosSet,
         TSSVMSeedSites &,
-        mikan::TRNASet const &,
+        mikan::TRNAStr const &,
         TSSVMSiteScores &) {
+
     float siteNum;
 
-    resize(mSiteNumFlg[pMRNAPosIdx], 3, 0.0);
-    siteNum = (float) length(pSitePosByMRNA);
+    resize(mSiteNumFlg[pIdx], 3, 0.0);
+    siteNum = (float) length(pSitePosSet);
 
     if (siteNum <= 1) {
-        mSiteNumFlg[pMRNAPosIdx][0] = 1;
+        mSiteNumFlg[pIdx][0] = 1;
     } else if (siteNum >= 8) {
-        mSiteNumFlg[pMRNAPosIdx][2] = 1;
+        mSiteNumFlg[pIdx][2] = 1;
     } else {
-        mSiteNumFlg[pMRNAPosIdx][1] = 1;
+        mSiteNumFlg[pIdx][1] = 1;
     }
 
     return 0;
@@ -383,22 +388,22 @@ void TSSVMFeatTotDisc::clear_features() {
 }
 
 int TSSVMFeatTotDisc::add_features(
-        unsigned pMRNAPosIdx,
-        String<unsigned> &pSitePosByMRNA,
+        unsigned pIdx,
+        mikan::TSitePosSet &pSitePosSet,
         TSSVMSeedSites &,
-        mikan::TRNASet const &,
+        mikan::TRNAStr const &,
         TSSVMSiteScores &pSiteScores) {
 
-    const seqan::String<float> &scors = pSiteScores.get_scores();
+    const seqan::String<float> &scores = pSiteScores.get_scores();
     float divVal = 100.0f;
     float minVal = 0.0f;
     float shiftVal = -2.27441f;
     float totVal = 0.0f;
 
-    resize(mTotDisc[pMRNAPosIdx], 1);
+    resize(mTotDisc[pIdx], 1);
 
-    for (unsigned i = 0; i < length(pSitePosByMRNA); ++i) {
-        float score = scors[pSitePosByMRNA[i]];
+    for (unsigned i = 0; i < length(pSitePosSet); ++i) {
+        float score = scores[pSitePosSet[i]];
         score = score - shiftVal;
         if (score > minVal) {
             totVal += score;
@@ -406,7 +411,7 @@ int TSSVMFeatTotDisc::add_features(
     }
 
     totVal /= divVal;
-    mTotDisc[pMRNAPosIdx] = totVal;
+    mTotDisc[pIdx] = totVal;
 
     return 0;
 }

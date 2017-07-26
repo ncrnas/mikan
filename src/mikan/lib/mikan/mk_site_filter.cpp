@@ -13,24 +13,15 @@ int MKSiteFilter::filter_sites_by_seed_type(
         mikan::MKSeedSites &pSeedSites,
         mikan::MKRMAWithSites &pRNAWithSites) {
 
-    String<unsigned> const &sitePos = pSeedSites.get_site_pos();
-    TSet uniqRNASet = pRNAWithSites.get_uniq_mrna_set();
-    TPosMap rnaSiteMap = pRNAWithSites.get_rna_site_map();
+    seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = pRNAWithSites.get_rna_site_pos_map();
 
-    for (TItSet itSet = uniqRNASet.begin(); itSet != uniqRNASet.end(); ++itSet) {
-        unsigned count = rnaSiteMap.count(*itSet);
-        if (count < 2) {
+    for (unsigned i = 0; i < length(pRNAWithSites.mEffectiveRNAs); i++) {
+        if (!pRNAWithSites.mEffectiveRNAs[i]) {
             continue;
         }
 
-        TItMapPair itPair = rnaSiteMap.equal_range(*itSet);
-        TPosMap sortedPos;
-        for (TItMap itMap = itPair.first; itMap != itPair.second; ++itMap) {
-            sortedPos.insert(TPosPair(static_cast<unsigned>(sitePos[(*itMap).second]),
-                                      (*itMap).second));
-        }
+        mark_overlap_by_seed_type(pSeedSites, rnaSitePosMap[i]);
 
-        mark_overlap_by_seed_type(pSeedSites, sortedPos, count);
     }
 
     return 0;
@@ -38,20 +29,18 @@ int MKSiteFilter::filter_sites_by_seed_type(
 
 void MKSiteFilter::mark_overlap_by_seed_type(
         mikan::MKSeedSites &pSeedSites,
-        TPosMap &pSortedPos,
-        unsigned pCount) {
+        mikan::TMRNAPosSet &pSortedPos) {
 
     IntervalTree<unsigned> tree;
     String<unsigned> results;
-    TPosMap sortedSeeds;
+    mikan::TMRNAPosSet sortedSeeds;
     unsigned startAdd, endAdd, startSearch, endSearch;
     bool searchOverlap;
 
-    sort_by_seed_type(pSeedSites, pSortedPos, pCount, sortedSeeds);
+    sort_by_seed_type(pSeedSites, pSortedPos, sortedSeeds);
 
-    for (TItMap itMap = sortedSeeds.begin(); itMap != sortedSeeds.end(); ++itMap) {
-
-        set_intervals(pSeedSites, (*itMap).second, startAdd, endAdd, startSearch, endSearch, searchOverlap);
+    for (unsigned i = 0; i < length(sortedSeeds); i++) {
+        set_intervals(pSeedSites, sortedSeeds[i], startAdd, endAdd, startSearch, endSearch, searchOverlap);
 
         clear(results);
         if (searchOverlap) {
@@ -63,7 +52,7 @@ void MKSiteFilter::mark_overlap_by_seed_type(
         }
 
         if (searchOverlap && length(results) > 0) {
-            pSeedSites.mEffectiveSites[(*itMap).second] = false;
+            pSeedSites.mEffectiveSites[sortedSeeds[i]] = false;
         }
     }
 
@@ -71,18 +60,23 @@ void MKSiteFilter::mark_overlap_by_seed_type(
 
 void MKSiteFilter::sort_by_seed_type(
         mikan::MKSeedSites &pSeedSites,
-        TPosMap &pSortedPos,
-        int pCount,
-        TPosMap &pSortedSeeds) {
+        mikan::TMRNAPosSet &pSortedPos,
+        mikan::TMRNAPosSet &pSortedSeeds) {
 
     StringSet<CharString> const &seedTypes = pSeedSites.get_seed_types();
     unsigned preced;
+    TPosMap sortedSeeds;
 
-    int n = 0;
-    for (TItMap itPos = pSortedPos.begin(); itPos != pSortedPos.end(); ++itPos) {
-        preced = get_seedtype_precedence(seedTypes[(*itPos).second]);
-        pSortedSeeds.insert(TPosPair(preced * (pCount + 1) + n, (*itPos).second));
-        ++n;
+    for (unsigned i = 0; i < length(pSortedPos); i++) {
+        preced = get_seedtype_precedence(seedTypes[pSortedPos[i]]);
+        sortedSeeds.insert(TPosPair(preced * (length(pSortedPos) + 1) + i, pSortedPos[i]));
+    }
+
+    resize(pSortedSeeds, length(pSortedPos));
+    unsigned idx = 0;
+    for (TItMap itPos = sortedSeeds.begin(); itPos != sortedSeeds.end(); ++itPos) {
+        pSortedSeeds[idx] = (*itPos).second;
+        ++idx;
     }
 
 }

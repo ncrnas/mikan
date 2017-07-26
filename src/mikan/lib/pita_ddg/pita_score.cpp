@@ -339,65 +339,67 @@ void PITATotalScores::clear_scores() {
 int PITATotalScores::calc_scores(
         PITASeedSites &pSeedSites,
         mikan::TRNASet const &,
-        mikan::MKRMAWithSites mRNAWithSites,
+        mikan::MKRMAWithSites &pRNAWithSites,
         PITASiteScores &pSiteScores) {
 
-    TItSet itSet;
-    std::set<unsigned> &rnaPosSet = mRNAWithSites.get_uniq_mrna_set();
-    StringSet<String<unsigned> > &sortedMRNAPos = mRNAWithSites.get_sorted_mrna_pos();
-    String<unsigned> sitePosByMRNA;
+    mikan::TMRNAPosSet &mUniqRNAPosSet = pRNAWithSites.get_uniq_mrna_pos_set();
+    seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = pRNAWithSites.get_rna_site_pos_map();
+
+    resize(mTotalScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
+    resize(mSiteNum, length(pRNAWithSites.mEffectiveRNAs), 0);
+    resize(mMRNAPos, length(pRNAWithSites.mEffectiveRNAs));
 
     float score, max_score, exp_diff, total_score;
     unsigned site_count, max_idx;
+    mikan::TSitePosSet sitePos;
+    for (unsigned i = 0; i < length(pRNAWithSites.mEffectiveRNAs); i++) {
+        if (!pRNAWithSites.mEffectiveRNAs[i]) {
+            continue;
+        }
 
-    resize(mTotalScores, rnaPosSet.size(), 0.0);
-    resize(mSiteNum, rnaPosSet.size(), 0);
-    resize(mMRNAPos, rnaPosSet.size());
-
-    unsigned idx = 0;
-    for (itSet = rnaPosSet.begin(); itSet != rnaPosSet.end(); ++itSet) {
-        clear(sitePosByMRNA);
         score = 0;
         max_score = -FLT_MAX;
         site_count = 0;
         max_idx = 0;
-        clear(sitePosByMRNA);
-        for (unsigned i = 0; i < length(sortedMRNAPos[idx]); ++i) {
-            if (!pSeedSites.mEffectiveSites[sortedMRNAPos[idx][i]]) {
+
+        for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
+            if (!pSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
                 continue;
             }
-            appendValue(sitePosByMRNA, sortedMRNAPos[idx][i]);
-            score = -1.0 * pSiteScores.get_score(sortedMRNAPos[idx][i]);
+            appendValue(sitePos, rnaSitePosMap[i][j]);
+            score = -1.0 * pSiteScores.get_score(rnaSitePosMap[i][j]);
             if (score > max_score) {
                 max_score = score;
-                max_idx = i;
+                max_idx = j;
             }
             ++site_count;
         }
-        if (site_count == 0) {
+
+        if (length(sitePos) == 0) {
             continue;
         }
 
         total_score = 1.0;
-        for (unsigned i = 0; i < length(sitePosByMRNA); ++i) {
-            if (i == max_idx) {
+        for (unsigned j = 0; j < length(sitePos); ++j) {
+            if (j == max_idx) {
                 continue;
             }
-            score = -1.0 * pSiteScores.get_score(sitePosByMRNA[i]);
+            score = -1.0 * pSiteScores.get_score(sitePos[j]);
             exp_diff = score - max_score;
             if (exp_diff > MIN_EXP_DIFF) {
                 total_score += std::exp(exp_diff);
             }
         }
 
-        mTotalScores[idx] = -1.0 * (max_score + std::log(total_score));
-        mMRNAPos[idx] = *itSet;
-        mSiteNum[idx] = site_count;
+        mTotalScores[i] = -1.0 * (max_score + std::log(total_score));
+        mMRNAPos[i] = mUniqRNAPosSet[i];
+        mSiteNum[i] = site_count;
 
-        ++idx;
+        clear(sitePos);
     }
 
     return 0;
+
 }
 
 } // namespace ptddg

@@ -14,32 +14,32 @@ namespace mikan {
 //
 class MKSiteFilter {
 public:
-    // Define types
-    typedef std::set<unsigned> TSet;
-    typedef std::multimap<unsigned, unsigned> TPosMap;
-    typedef std::set<unsigned>::iterator TItSet;
-    typedef std::multimap<unsigned, unsigned>::iterator TItMap;
-    typedef std::pair<TItMap, TItMap> TItMapPair;
-    typedef std::pair<unsigned, unsigned> TPosPair;
-
     // Define methods
     MKSiteFilter() {}
 
     // Method prototype
     int filter_sites_by_seed_type(mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
 
-protected:
-
-    void mark_overlap_by_seed_type(mikan::MKSeedSites &, TPosMap &, unsigned);
-
-    void sort_by_seed_type(mikan::MKSeedSites &, TPosMap &, int, TPosMap &);
-
+private:
+    // Define methods
     virtual unsigned get_seedtype_precedence(seqan::CharString const &) { return 0; }
 
     virtual void set_intervals(mikan::MKSeedSites &, unsigned, unsigned &, unsigned &,
                                unsigned &, unsigned &, bool &) {}
 
-    };
+    // Method prototypes
+    void mark_overlap_by_seed_type(mikan::MKSeedSites &pSeedSites, mikan::TMRNAPosSet &pSortedPos);
+
+    void sort_by_seed_type(mikan::MKSeedSites &pSeedSites, mikan::TMRNAPosSet &pSortedPos,
+                           mikan::TMRNAPosSet &pSortedSeeds);
+
+    // Define types
+    typedef std::multimap<unsigned, unsigned> TPosMap;
+    typedef std::set<unsigned>::iterator TItSet;
+    typedef std::multimap<unsigned, unsigned>::iterator TItMap;
+    typedef std::pair<unsigned, unsigned> TPosPair;
+
+};
 
 } // namespace mikan
 

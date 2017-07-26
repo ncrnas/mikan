@@ -13,6 +13,22 @@ namespace mikan {
 //
 class MKRMAWithSites {
 public:
+    // Define variable
+    seqan::String<bool> mEffectiveRNAs;
+
+    // Define methods
+    MKRMAWithSites() {}
+
+    mikan::TMRNAPosSet &get_uniq_mrna_pos_set() { return mUniqRNAPosSet; }
+
+    seqan::StringSet<seqan::String<unsigned> > &get_rna_site_pos_map() { return mRNASitePosMap; }
+
+    // Method prototypes
+    void clear_maps();
+
+    void create_mrna_site_map(MKSeedSites &pSeedSites);
+
+private:
     // Define types
     typedef std::set<unsigned> TSet;
     typedef std::pair<unsigned, unsigned> TPosPair;
@@ -21,34 +37,10 @@ public:
     typedef std::multimap<unsigned, unsigned>::iterator TItMap;
     typedef std::pair<TItMap, TItMap> TItMapPair;
 
-    // Define methods
-    MKRMAWithSites() {
-        mEffectiveSiteCount = 0;
-    }
-
-    TSet &get_uniq_mrna_set() { return mUniqRNASet; }
-
-    TPosMap &get_rna_site_map() { return mRNASiteMap; }
-
-    unsigned get_effective_site_count() { return mEffectiveSiteCount; }
-
-    seqan::StringSet<seqan::String<unsigned> > &get_sorted_mrna_pos() { return mSortedMRNAPos; }
-
-    // Method prototypes
-    void clear_sets();
-
-    void cluster_sites(MKSeedSites &pSeedSites);
-
-    void sort_mrna_pos(MKSeedSites &pSeedSites);
-
-private:
-
     // Define variables
-    unsigned mEffectiveSiteCount;
-    std::set<unsigned> mUniqRNASet;
-    std::multimap<unsigned, unsigned> mRNASiteMap;
+    mikan::TMRNAPosSet mUniqRNAPosSet;
+    seqan::StringSet<seqan::String<unsigned> > mRNASitePosMap;
 
-    seqan::StringSet<seqan::String<unsigned> > mSortedMRNAPos;
 };
 
 } // namespace mikan

@@ -135,7 +135,7 @@ int TSSVMCore::calculate_mirna_scores(unsigned pIdx) {
     }
 
     // Filter overlapped sites
-    mRNAWithSites.cluster_sites(mSeedSites);
+    mRNAWithSites.create_mrna_site_map(mSeedSites);
     if (mExecFilterOverlap) {
         retVal = mSiteFilter.filter_sites_by_seed_type(mSeedSites, mRNAWithSites);
         if (retVal != 0) {
@@ -154,7 +154,6 @@ int TSSVMCore::calculate_mirna_scores(unsigned pIdx) {
     }
 
     // Generate RNA features
-    mRNAWithSites.sort_mrna_pos(mSeedSites);
     if (mExecRNAFeat) {
         retVal = mRnaFeatures.add_features(mSeedSites, mMRNASeqs, mRNAWithSites, mSiteScores);
         if (retVal != 0) {
@@ -200,7 +199,7 @@ int TSSVMCore::calculate_mirna_scores(unsigned pIdx) {
     }
 
     mSeedSites.clear_pos();
-    mRNAWithSites.clear_sets();
+    mRNAWithSites.clear_maps();
     mSiteScores.clear_scores();
     mRnaFeatures.clear_features();
     mRnaInput.clear_scores();
@@ -212,65 +211,62 @@ int TSSVMCore::write_ts_scores(seqan::CharString const &pMiRNAId) {
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const seqan::StringSet<seqan::CharString> &seedTypes = mSeedSites.get_seed_types();
-    seqan::CharString seedType;
-    int seedStart;
-    std::set<unsigned>::iterator itSet;
-    std::set<unsigned> &rnaPosSet = mRNAWithSites.get_uniq_mrna_set();
-    seqan::StringSet<seqan::String<unsigned> > &sortedMRNAPos = mRNAWithSites.get_sorted_mrna_pos();
-    const seqan::String<float> &scors = mSiteScores.get_scores();
+    const seqan::String<float> &scores = mSiteScores.get_scores();
 
-    unsigned idx = 0;
-    for (itSet = rnaPosSet.begin(); itSet != rnaPosSet.end(); ++itSet) {
-        for (unsigned i = 0; i < length(sortedMRNAPos[idx]); ++i) {
-            if (!mSeedSites.mEffectiveSites[sortedMRNAPos[idx][i]]) {
+    seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = mRNAWithSites.get_rna_site_pos_map();
+
+    for (unsigned i = 0; i < length(mRNAWithSites.mEffectiveRNAs); i++) {
+        if (!mRNAWithSites.mEffectiveRNAs[i]) {
+            continue;
+        }
+
+        for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
+            if (!mSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
                 continue;
             }
 
-            seedType = seedTypes[sortedMRNAPos[idx][i]];
-            seedStart = sitePos[sortedMRNAPos[idx][i]];
+            seqan::CharString seedType = seedTypes[rnaSitePosMap[i][j]];
+            int seedStart = sitePos[rnaSitePosMap[i][j]];
             if (seedType == "7mer-A1") {
                 seedStart += 1;
             }
 
             mOFile1 << toCString(pMiRNAId) << "\t";
-            mOFile1 << toCString((seqan::CharString) mMRNAIds[mRNAPos[sortedMRNAPos[idx][i]]]) << "\t";
+            mOFile1 << toCString((seqan::CharString) mMRNAIds[mRNAPos[rnaSitePosMap[i][j]]]) << "\t";
             mOFile1 << seedStart + 1 << "\t";
             mOFile1 << seedStart + 7 << "\t";
-            mOFile1 << toCString((seqan::CharString) seedTypes[sortedMRNAPos[idx][i]]) << "\t";
-            mOFile1 << scors[sortedMRNAPos[idx][i]] << "\t";
+            mOFile1 << toCString((seqan::CharString) seedTypes[rnaSitePosMap[i][j]]) << "\t";
+            mOFile1 << scores[rnaSitePosMap[i][j]] << "\t";
             mOFile1 << std::endl;
         }
 
-        ++idx;
     }
 
     return 0;
+
 }
 
 int TSSVMCore::write_mrna_scores(seqan::CharString const &pMiRNAId) {
     typedef std::multimap<float, unsigned>::reverse_iterator TItMap;
     typedef std::pair<float, unsigned> TPosPair;
-    std::set<unsigned>::iterator itSet;
-    TItMap itPos;
-    std::set<unsigned> &rnaPosSet = mRNAWithSites.get_uniq_mrna_set();
-    const seqan::String<float> &scors = mRnaInput.get_scores();
-    std::multimap<float, unsigned> sortedMRNAByScore;
+
+    const seqan::String<float> &scores = mRnaInput.get_scores();
     seqan::String<unsigned> &siteCount = mRnaFeatures.get_site_count();
+    mikan::TMRNAPosSet &uniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
 
-    for (itSet = rnaPosSet.begin(); itSet != rnaPosSet.end(); ++itSet) {
-
-        if (!mRnaFeatures.mEffectiveRNAs[*itSet]) {
+    std::multimap<float, unsigned> sortedMRNAByScore;
+    for (unsigned i = 0; i < length(mRNAWithSites.mEffectiveRNAs); i++) {
+        if (!mRNAWithSites.mEffectiveRNAs[i]) {
             continue;
         }
 
-        sortedMRNAByScore.insert(TPosPair((float) scors[*itSet], *itSet));
-
+        sortedMRNAByScore.insert(TPosPair((float) scores[i], i));
     }
 
-    for (itPos = sortedMRNAByScore.rbegin(); itPos != sortedMRNAByScore.rend(); ++itPos) {
+    for (TItMap itPos = sortedMRNAByScore.rbegin(); itPos != sortedMRNAByScore.rend(); ++itPos) {
         mOFile2 << toCString(pMiRNAId) << "\t";
-        mOFile2 << toCString((seqan::CharString) mMRNAIds[(*itPos).second]) << "\t";
-        mOFile2 << scors[(*itPos).second] << "\t";
+        mOFile2 << toCString((seqan::CharString) mMRNAIds[uniqRNAPosSet[(*itPos).second]]) << "\t";
+        mOFile2 << scores[(*itPos).second] << "\t";
         mOFile2 << siteCount[(*itPos).second] << "\t";
         mOFile2 << std::endl;
     }
@@ -279,47 +275,46 @@ int TSSVMCore::write_mrna_scores(seqan::CharString const &pMiRNAId) {
 }
 
 int TSSVMCore::write_alignment(seqan::CharString const &pMiRNAId) {
+
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const seqan::StringSet<seqan::CharString> &seedTypes = mSeedSites.get_seed_types();
-    seqan::CharString seedType;
-    int seedStart;
-    std::set<unsigned>::iterator itSet;
-    std::set<unsigned> &rnaPosSet = mRNAWithSites.get_uniq_mrna_set();
-    seqan::StringSet<seqan::String<unsigned> > &sortedMRNAPos = mRNAWithSites.get_sorted_mrna_pos();
-    const seqan::String<float> &scors = mSiteScores.get_scores();
-    int count = 0;
+    const seqan::String<float> &scores = mSiteScores.get_scores();
 
-    unsigned idx = 0;
-    for (itSet = rnaPosSet.begin(); itSet != rnaPosSet.end(); ++itSet) {
-        for (unsigned i = 0; i < seqan::length(sortedMRNAPos[idx]); ++i) {
-            if (!mSeedSites.mEffectiveSites[sortedMRNAPos[idx][i]]) {
+    seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = mRNAWithSites.get_rna_site_pos_map();
+
+    for (unsigned i = 0; i < length(mRNAWithSites.mEffectiveRNAs); i++) {
+        if (!mRNAWithSites.mEffectiveRNAs[i]) {
+            continue;
+        }
+
+        for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
+            if (!mSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
                 continue;
             }
 
-            seedType = seedTypes[sortedMRNAPos[idx][i]];
-            seedStart = sitePos[sortedMRNAPos[idx][i]];
+            seqan::CharString seedType = seedTypes[rnaSitePosMap[i][j]];
+            int seedStart = sitePos[rnaSitePosMap[i][j]];
             if (seedType == "7mer-A1") {
                 seedStart += 1;
             }
 
-            std::cout << "### " << count + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
-            mSiteScores.write_alignment(sortedMRNAPos[idx][i]);
+            std::cout << "### " << (i + j) + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
+            mSiteScores.write_alignment(rnaSitePosMap[i][j]);
             std::cout << "  miRNA:                " << toCString(pMiRNAId) << std::endl;
             std::cout << "  mRNA:                 ";
-            std::cout << toCString((seqan::CharString) mMRNAIds[mRNAPos[sortedMRNAPos[idx][i]]]) << std::endl;
+            std::cout << toCString((seqan::CharString) mMRNAIds[mRNAPos[rnaSitePosMap[i][j]]]) << std::endl;
             std::cout << "  seed type:            " << toCString(seedType) << std::endl;
             std::cout << "  position(seed start): " << seedStart + 1 << std::endl;
-            std::cout << "  site level score:     " << scors[sortedMRNAPos[idx][i]];
+            std::cout << "  site level score:     " << scores[rnaSitePosMap[i][j]];
             std::cout << std::endl << std::endl;
 
-            ++count;
-        }
 
-        ++idx;
+        }
     }
 
     return 0;
+
 }
 
 } // namespace tssvm

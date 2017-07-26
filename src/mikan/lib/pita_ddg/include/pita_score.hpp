@@ -191,7 +191,7 @@ public:
     void clear_scores();
 
     int calc_scores(PITASeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
-                     mikan::MKRMAWithSites mRNAWithSites, PITASiteScores &pDDGScores);
+                     mikan::MKRMAWithSites &pRNAWithSites, PITASiteScores &pDDGScores);
 
 private:
     seqan::String<float> mTotalScores;

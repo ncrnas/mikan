@@ -9,58 +9,57 @@ namespace mikan {
 //
 // MKSiteCluster methods
 //
-void MKRMAWithSites::clear_sets() {
-    mEffectiveSiteCount = 0;
-    mUniqRNASet.clear();
-    mRNASiteMap.clear();
-    clear(mSortedMRNAPos);
+void MKRMAWithSites::clear_maps() {
+    clear(mUniqRNAPosSet);
+    clear(mRNASitePosMap);
+    clear(mEffectiveRNAs);
 }
 
-void MKRMAWithSites::cluster_sites(mikan::MKSeedSites &pSeedSites) {
+void MKRMAWithSites::create_mrna_site_map(mikan::MKSeedSites &pSeedSites) {
 
-    String<unsigned> const &mRNAPos = pSeedSites.get_mrna_pos();
+    TMRNAPosSet const &mRNAPos = pSeedSites.get_mrna_pos();
+    TSitePosSet const &sitePos = pSeedSites.get_site_pos();
+
+    TSet uniqSet;
+    TPosMap siteMap;
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
         if (!pSeedSites.mEffectiveSites[i]) {
             continue;
         }
-        mUniqRNASet.insert((unsigned) mRNAPos[i]);
-        mRNASiteMap.insert(TPosPair((unsigned) mRNAPos[i], i));
-        ++mEffectiveSiteCount;
+        uniqSet.insert((unsigned) mRNAPos[i]);
+        siteMap.insert(TPosPair((unsigned) mRNAPos[i], i));
     }
-}
 
-void MKRMAWithSites::sort_mrna_pos(MKSeedSites &pSeedSites) {
-    clear_sets();
-    cluster_sites(pSeedSites);
+    resize(mUniqRNAPosSet, uniqSet.size());
+    resize(mRNASitePosMap, uniqSet.size());
+    resize(mEffectiveRNAs, uniqSet.size(), true);
 
-    String<unsigned> const &sitePos = pSeedSites.get_site_pos();
-
-    resize(mSortedMRNAPos, mUniqRNASet.size());
-
-    TPosMap sortedPos;
     unsigned idx = 0;
-    for (TItSet itSet = mUniqRNASet.begin(); itSet != mUniqRNASet.end(); ++itSet) {
+    TPosMap sortedPos;
+    for (TItSet itSet = uniqSet.begin(); itSet != uniqSet.end(); ++itSet) {
 
-        TItMapPair itPair = mRNASiteMap.equal_range(*itSet);
+        mUniqRNAPosSet[idx] = *itSet;
+
+        TItMapPair itPair = siteMap.equal_range(*itSet);
         sortedPos.clear();
         unsigned count = 0;
-
         for (TItMap itMap = itPair.first; itMap != itPair.second; ++itMap) {
             sortedPos.insert(TPosPair(static_cast<unsigned>(sitePos[(*itMap).second]),
                                       (*itMap).second));
             ++count;
         }
 
-        resize(mSortedMRNAPos[idx], count);
+        resize(mRNASitePosMap[idx], count);
         int n = 0;
         for (TItMap itMap = sortedPos.begin(); itMap != sortedPos.end(); ++itMap) {
-            mSortedMRNAPos[idx][n] = (*itMap).second;
+            mRNASitePosMap[idx][n] = (*itMap).second;
             ++n;
         }
 
         ++idx;
     }
+
 }
 
 } // namespace mikan
