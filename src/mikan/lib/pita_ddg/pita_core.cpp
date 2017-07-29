@@ -11,7 +11,7 @@
 #include "pita_option.hpp"        // PITAOptions
 #include "pita_seed_site.hpp"     // PITASeedSites
 #include "pita_score.hpp"         // PITAMFEScores, PITATotalScores
-#include "pita_site_filter.hpp"  // PITASiteFilter, PITATopNScore, PITASortedSitePos
+#include "pita_site_filter.hpp"   // PITASiteFilter
 #include "pita_core.hpp"          // PITACore
 
 namespace ptddg {

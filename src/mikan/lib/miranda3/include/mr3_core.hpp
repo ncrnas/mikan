@@ -51,7 +51,7 @@ public:
             mOutputAlign(true), mMinSeedLen(6), mMaxSeedLen(8), mMinAlignScore(120.0), mMaxEnergy(1.0),
             mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
             mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
-            mSiteScores(pOpts) {
+            mSiteScores(pOpts), mSiteFilter(pOpts) {
         init_from_args(pOpts);
     }
 

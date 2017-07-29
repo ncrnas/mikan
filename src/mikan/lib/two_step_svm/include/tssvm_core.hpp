@@ -44,7 +44,7 @@ public:
             mExecSiteScore(true), mExecRNAFeat(true), mExecRNAScore(true), mOutputSiteScore(true),
             mOutputRNAScore(true), mOutputAlign(true), mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs),
             mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
-            mSiteScores(pOpts) {
+            mSiteScores(pOpts), mSiteFilter(pOpts) {
         init_from_args(pOpts);
     }
 
@@ -68,8 +68,8 @@ private:
 
     TSSVMSeedSites mSeedSites;
     mikan::MKRMAWithSites mRNAWithSites;
-    TSSVMSiteFilter mSiteFilter;
     TSSVMSiteScores mSiteScores;
+    TSSVMSiteFilter mSiteFilter;
     TSSVMRNARawFeatures mRnaFeatures;
     TSSVMRNAInputVector mRnaInput;
 

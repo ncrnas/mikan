@@ -8,7 +8,7 @@
 #include "pita_option.hpp"        // PITAOptions
 #include "pita_score.hpp"         // PITAGGDScores, PITATotalScores
 #include "pita_seed_site.hpp"     // PITASeedSites
-#include "pita_site_filter.hpp"  // PITASiteFilter, PITASortedSitePos
+#include "pita_site_filter.hpp"   // PITASiteFilter
 
 namespace ptddg {
 
@@ -49,7 +49,7 @@ public:
             mOutputAlign(true), mMinSeedLen(6), mMaxSeedLen(8),
             mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
             mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
-            mSiteScores(pOpts) {
+            mSiteScores(pOpts), mSiteFilter(pOpts) {
         init_from_args(pOpts);
     }
 
@@ -75,8 +75,8 @@ private:
 
     PITASeedSites mSeedSites;
     mikan::MKRMAWithSites mRNAWithSites;
-    PITASiteFilter mSiteFilter;
     PITASiteScores mSiteScores;
+    PITASiteFilter mSiteFilter;
     PITATotalScores mTotalScores;
 
 private:

@@ -7,6 +7,7 @@
 #include "mk_seed_seq.hpp"          // MKSeedSeqs
 #include "mk_seed_site.hpp"         // MKSeedSites
 #include "mk_site_filter.hpp"       // MKSiteFilter
+#include "mk_option.hpp"            // MKOptions
 
 namespace tssvm {
 
@@ -55,7 +56,7 @@ public:
     typedef std::pair<unsigned, unsigned> TPosPair;
 
     // Define methods
-    TSSVMSiteFilter() : MKSiteFilter() {}
+    TSSVMSiteFilter(mikan::MKOptions const &opts) : MKSiteFilter(opts) {}
 
 private:
     float get_precedence(unsigned pSitePos, mikan::MKSeedSites &pSeedSites,
