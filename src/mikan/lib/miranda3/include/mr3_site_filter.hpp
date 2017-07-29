@@ -1,5 +1,5 @@
-#ifndef MR3_SITE_CLUSTER_HPP_
-#define MR3_SITE_CLUSTER_HPP_
+#ifndef MR3_SITE_FILTER_HPP_
+#define MR3_SITE_FILTER_HPP_
 
 #include <set>                    // set
 #include <map>                    // multimap
@@ -29,4 +29,4 @@ private:
 
 } // namespace mr3as
 
-#endif /* MR3_SITE_CLUSTER_HPP_ */
+#endif /* MR3_SITE_FILTER_HPP_ */
