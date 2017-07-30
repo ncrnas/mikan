@@ -4,11 +4,12 @@
 #include <vector>
 #include <sstream>
 #include <seqan/sequence.h>
-#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
-#include "mk_site_score.hpp"     // MKSiteScores
-#include "rh2_option.hpp"        // RH2Options
-#include "rh2_seed_site.hpp"     // RH2SeedSites
-#include "hybrid_core.hpp"       // RH2WorkSpace, RH2RetValues
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_site_score.hpp"      // MKSiteScores
+#include "mk_rna_with_sites.hpp"  // MKRMAWithSites
+#include "rh2_option.hpp"         // RH2Options
+#include "rh2_seed_site.hpp"      // RH2SeedSites
+#include "hybrid_core.hpp"        // RH2WorkSpace, RH2RetValues
 
 namespace rh2mfe {
 
@@ -26,13 +27,13 @@ public:
 
     void set_score(int i, float val) { mMFEScores[i] = val; };
 
-    float const &get_score(int i) const { return mMFEScores[i]; }
+    float get_score(int i) { return mMFEScores[i]; }
 
-    float const &get_norm_score(int i) const { return mNormScores[i]; }
+    float get_norm_score(int i) { return mNormScores[i]; }
 
-    int get_hit_start(int pIdx) { return mRHRetVals[pIdx].mTargetPos0; }
+    int get_wide_site_start(int pIdx) { return mRHRetVals[pIdx].mTargetPos0; }
 
-    int get_hit_length(int pIdx) { return mRHRetVals[pIdx].mHitLen; }
+    int get_wide_site_length(int pIdx) { return mRHRetVals[pIdx].mHitLen; }
 
     // Method prototype
     void init_from_args() ;
@@ -82,7 +83,7 @@ public:
     void clear_scores();
 
     int calc_scores(RH2SeedSites &pSeedSites, RH2SiteScores &pMFEScores,
-                    const seqan::String<unsigned> &pSortedSites);
+                    mikan::MKRMAWithSites &pRNAWithSites);
 
 private:
     seqan::String<float> mTotalScores;

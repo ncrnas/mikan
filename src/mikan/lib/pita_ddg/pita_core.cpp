@@ -157,7 +157,7 @@ int PITACore::calculate_mirna_scores(unsigned pIdx) {
     }
 
     // Filter overlapped sites
-    mRNAWithSites.create_mrna_site_map(mSeedSites);
+    mRNAWithSites.create_mrna_site_map(mSeedSites, mSiteScores);
     if (mExecFilterOverlap) {
         retVal = mSiteFilter.filter_sites(mSeedSites, mRNAWithSites, mSiteScores);
         if (retVal != 0) {

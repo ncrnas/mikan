@@ -42,7 +42,8 @@ void MKSiteFilter::mark_overlap(
     sort_sites(pSortedPos, pSeedSites, pSiteScores, sortedSeeds);
 
     for (unsigned i = 0; i < length(sortedSeeds); i++) {
-        set_intervals(pSeedSites, sortedSeeds[i], startAdd, endAdd, startSearch, endSearch, searchOverlap);
+        set_intervals(pSeedSites, pSiteScores, sortedSeeds[i], startAdd, endAdd,
+                      startSearch, endSearch, searchOverlap);
 
         clear(results);
         if (searchOverlap) {
@@ -85,6 +86,7 @@ void MKSiteFilter::sort_sites(
 
 void MKSiteFilter::set_intervals(
         mikan::MKSeedSites &pSeedSites,
+        mikan::MKSiteScores &,
         unsigned pSiteIdx,
         unsigned &pStartSearch,
         unsigned &pEndSearch,

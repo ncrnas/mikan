@@ -126,6 +126,7 @@ float TSSVMSiteFilter::get_precedence(
 
 void TSSVMSiteFilter::set_intervals(
         mikan::MKSeedSites &pSeedSites,
+        mikan::MKSiteScores &,
         unsigned pSiteIdx,
         unsigned &pStartSearch,
         unsigned &pEndSearch,

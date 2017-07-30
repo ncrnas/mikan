@@ -31,162 +31,46 @@ void RH2SiteCluster::cluster_site_pos(
 }
 
 //
-// RH2Overlap methods
+// RH2SiteFilter methods
 //
-void RH2Overlap::clear_cluster() {
-    mSiteCluster.clear_cluster();
-}
-
-int RH2Overlap::filter_overlapped_sites(
-        RH2SeedSites &pSeedSites,
-        RH2SiteScores &pScores,
-        CharString &pOverlapDef) {
-    TItSet itSet;
-
-    mSiteCluster.cluster_site_pos(pSeedSites, pScores);
-    std::set<unsigned> &mRNAPosSet = mSiteCluster.get_mrna_pos_set();
-    std::multimap<unsigned, unsigned> &siteMap = mSiteCluster.get_mrna_pos_map();
-
-    for (itSet = mRNAPosSet.begin(); itSet != mRNAPosSet.end(); ++itSet) {
-        if (siteMap.count(*itSet) > 1) {
-            find_overlapped_sites(pSeedSites, pScores, *itSet, pOverlapDef);
-        }
-    }
-
-    return 0;
+void RH2SiteFilter::init_from_args() {
+    mOverlapMethod = mOpts.mOverlapDef;
 
 }
 
-void RH2Overlap::find_overlapped_sites(
-        RH2SeedSites &pSeedSites,
-        RH2SiteScores &pScores,
-        int pPosIdx,
-        CharString &pOverlapDef) {
-    TItMap itMap;
-    TItRetPair ret;
-    std::multimap<unsigned, unsigned> &siteMap = mSiteCluster.get_mrna_pos_map();
-    std::multimap<unsigned, unsigned> startPos;
-    const seqan::String<unsigned> &sitePos = pSeedSites.get_site_pos();
-    unsigned stpos;
+float RH2SiteFilter::get_precedence(
+        unsigned pSitePos,
+        mikan::MKSeedSites &,
+        mikan::MKSiteScores &pSiteScores) {
 
-    ret = siteMap.equal_range((unsigned) pPosIdx);
-    for (itMap = ret.first; itMap != ret.second; ++itMap) {
-        if (pOverlapDef == "seed") {
-            stpos = sitePos[(*itMap).second];
-        } else {
-            stpos = (unsigned) pScores.get_hit_start((*itMap).second);
-        }
-        startPos.insert(TPosPair(stpos, (*itMap).second));
-    }
+    float preced = pSiteScores.get_score(pSitePos);
 
-    cluster_overlapped_sites(pSeedSites, pScores, startPos, pOverlapDef);
+    return preced;
 }
 
-void RH2Overlap::cluster_overlapped_sites(
-        RH2SeedSites &pSeedSites,
-        RH2SiteScores &pScores,
-        std::multimap<unsigned, unsigned> &pStartPos,
-        CharString &pOverlapDef) {
-    const String<unsigned> &sitePos = pSeedSites.get_site_pos();
-    TITStartPos itStart;
-    std::set<unsigned> olCluster;
-    unsigned prevStartPos = 0;
-    unsigned prevMRNAPos = 0;
+void RH2SiteFilter::set_intervals(
+        mikan::MKSeedSites &pSeedSites,
+        mikan::MKSiteScores &pSiteScores,
+        unsigned pSiteIdx,
+        unsigned &pStartSearch,
+        unsigned &pEndSearch,
+        unsigned &pStartAdd,
+        unsigned &pEndAdd,
+        bool &pSearchOverlap) {
 
-    for (itStart = pStartPos.begin(); itStart != pStartPos.end(); ++itStart) {
-        if (sitePos[(*itStart).second] < prevStartPos) {
-            olCluster.insert(prevMRNAPos);
-            olCluster.insert((*itStart).second);
-        } else if (olCluster.size() > 0) {
-            mark_overlapped_sites(pSeedSites, pScores, olCluster, pOverlapDef);;
-            olCluster.clear();
-        }
-        if (pOverlapDef == "seed") {
-            prevStartPos = (*itStart).first + mikan::SEEDLEN;
-        } else {
-            prevStartPos = (*itStart).first + pScores.get_hit_length((*itStart).second);
-        }
-        prevMRNAPos = (*itStart).second;
-    }
-    if (olCluster.size() > 0) {
-        mark_overlapped_sites(pSeedSites, pScores, olCluster, pOverlapDef);
+    String<unsigned> const &sitePos = pSeedSites.get_site_pos();
 
-        olCluster.clear();
-    }
-
-}
-
-void RH2Overlap::mark_overlapped_sites(
-        RH2SeedSites &pSeedSites,
-        RH2SiteScores &pScores,
-        std::set<unsigned> &pOlCluster,
-        CharString &pOverlapDef) {
-    TItSet itSet;
-    unsigned mPos;
-    std::multimap<unsigned, unsigned> startPos;
-    const seqan::String<unsigned> &sitePos = pSeedSites.get_site_pos();
-    unsigned stpos1;
-    unsigned stpos2;
-
-    mPos = get_pos_with_best_mfe(pScores, pOlCluster);
-
-    if (pOlCluster.size() > 2) {
-        for (itSet = pOlCluster.begin(); itSet != pOlCluster.end(); ++itSet) {
-            if (mPos == (*itSet) || !pScores.mEffectiveSites[(*itSet)]) {
-                continue;
-            }
-            if (pOverlapDef == "seed") {
-                stpos1 = sitePos[mPos];
-                stpos2 = sitePos[(*itSet)];
-            } else {
-                stpos1 = (unsigned) pScores.get_hit_start(mPos);
-                stpos2 = (unsigned) pScores.get_hit_start((*itSet));
-            }
-            startPos.insert(TPosPair(stpos1, (mPos)));
-            startPos.insert(TPosPair(stpos2, (*itSet)));
-            cluster_overlapped_sites(pSeedSites, pScores, startPos, pOverlapDef);
-            startPos.clear();
-        }
-
-        for (itSet = pOlCluster.begin(); itSet != pOlCluster.end(); ++itSet) {
-            if (mPos == (*itSet) || !pScores.mEffectiveSites[(*itSet)]) {
-                continue;
-            }
-            if (pOverlapDef == "seed") {
-                stpos2 = sitePos[(*itSet)];
-            } else {
-                stpos2 = (unsigned) pScores.get_hit_start((*itSet));
-            }
-            startPos.insert(TPosPair(stpos2, (*itSet)));
-        }
-        cluster_overlapped_sites(pSeedSites, pScores, startPos, pOverlapDef);
-        startPos.clear();
+    if (mOverlapMethod == "seed") {
+        pStartSearch = sitePos[pSiteIdx];
+        pEndSearch = pStartSearch + mikan::SEEDLEN;
     } else {
-        for (itSet = pOlCluster.begin(); itSet != pOlCluster.end(); ++itSet) {
-            if (mPos == (*itSet)) {
-                continue;
-            }
-            pScores.mEffectiveSites[*itSet] = false;
-        }
+        pStartSearch = pSiteScores.get_wide_site_start(pSiteIdx);
+        pEndSearch = pStartSearch + pSiteScores.get_wide_site_length(pSiteIdx);
     }
 
-}
-
-unsigned RH2Overlap::get_pos_with_best_mfe(
-        RH2SiteScores &pScores,
-        std::set<unsigned> &pOlCluster) {
-    TItSet itSet;
-    unsigned mPos = 0;
-    float bestMfe = 65000;
-
-    for (itSet = pOlCluster.begin(); itSet != pOlCluster.end(); ++itSet) {
-        if (bestMfe > pScores.get_score(*itSet)) {
-            bestMfe = pScores.get_score(*itSet);
-            mPos = *itSet;
-        }
-    }
-
-    return mPos;
+    pStartAdd = pStartSearch;
+    pEndAdd = pEndSearch;
+    pSearchOverlap = true;
 
 }
 
@@ -251,50 +135,6 @@ void RH2TopNScore::mark_non_topn_sites(
 
         pScores.mEffectiveSites[(*itStart).second] = false;
     }
-
-}
-
-//
-// RH2SortedSitePos methods
-//
-void RH2SortedSitePos::clear_site_pos() {
-    clear(mSortedSitePos);
-    mSiteCluster.clear_cluster();
-}
-
-int RH2SortedSitePos::generate_sorted_mrna_pos(
-        RH2SeedSites &pSeedSites,
-        RH2SiteScores &pScores) {
-    TItMap itMap;
-    TItSet itSet;
-    TItRetPair ret;
-    TITStartPos itStart;
-    std::multimap<unsigned, unsigned> startPos;
-    int curPos = 0;
-
-    mSiteCluster.cluster_site_pos(pSeedSites, pScores);
-    std::set<unsigned> &mRNAPosSet = mSiteCluster.get_mrna_pos_set();
-    std::multimap<unsigned, unsigned> &siteMap = mSiteCluster.get_mrna_pos_map();
-    int siteCount = mSiteCluster.get_site_count();
-
-    resize(mSortedSitePos, siteCount);
-
-    for (itSet = mRNAPosSet.begin(); itSet != mRNAPosSet.end(); ++itSet) {
-
-        ret = siteMap.equal_range((*itSet));
-        for (itMap = ret.first; itMap != ret.second; ++itMap) {
-            startPos.insert(TPosPair((unsigned) pScores.get_hit_start((*itMap).second), (*itMap).second));
-        }
-
-        for (itStart = startPos.begin(); itStart != startPos.end(); ++itStart) {
-            mSortedSitePos[curPos] = (*itStart).second;
-            ++curPos;
-        }
-
-        startPos.clear();
-    }
-
-    return 0;
 
 }
 

@@ -342,7 +342,7 @@ int PITATotalScores::calc_scores(
         mikan::MKRMAWithSites &pRNAWithSites,
         PITASiteScores &pSiteScores) {
 
-    mikan::TMRNAPosSet &mUniqRNAPosSet = pRNAWithSites.get_uniq_mrna_pos_set();
+    mikan::TMRNAPosSet &uniqRNAPosSet = pRNAWithSites.get_uniq_mrna_pos_set();
     seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = pRNAWithSites.get_rna_site_pos_map();
 
     resize(mTotalScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
@@ -392,7 +392,7 @@ int PITATotalScores::calc_scores(
         }
 
         mTotalScores[i] = -1.0 * (max_score + std::log(total_score));
-        mMRNAPos[i] = mUniqRNAPosSet[i];
+        mMRNAPos[i] = uniqRNAPosSet[i];
         mSiteNum[i] = site_count;
 
         clear(sitePos);

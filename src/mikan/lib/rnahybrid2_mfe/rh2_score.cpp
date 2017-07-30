@@ -164,48 +164,49 @@ void RH2TotalScores::clear_scores() {
 int RH2TotalScores::calc_scores(
         RH2SeedSites &pSeedSites,
         RH2SiteScores &pMFEScores,
-        const seqan::String<unsigned> &pSortedSites) {
+        mikan::MKRMAWithSites &pRNAWithSites) {
 
-    const String<unsigned> &siteMRNAPos = pSeedSites.get_mrna_pos();
-    int prevPos = -1;
-    int newIdx = -1;
-    String<int> newIdices;
-    unsigned posIdx;
+    mikan::TMRNAPosSet &uniqRNAPosSet = pRNAWithSites.get_uniq_mrna_pos_set();
+    seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = pRNAWithSites.get_rna_site_pos_map();
 
-    resize(newIdices, length(siteMRNAPos));
-    for (unsigned i = 0; i < length(pSortedSites); ++i) {
-        posIdx = (unsigned) pSortedSites[i];
+    resize(mTotalScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
+    resize(mTotalNormScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
+    resize(mMRNAPos, length(pRNAWithSites.mEffectiveRNAs));
+    resize(mSiteNum, length(pRNAWithSites.mEffectiveRNAs), 0);
 
-        if (!pMFEScores.mEffectiveSites[posIdx]) {
+
+    float totalScore, totalNormScore;
+    unsigned siteCount;
+    for (unsigned i = 0; i < length(pRNAWithSites.mEffectiveRNAs); i++) {
+        if (!pRNAWithSites.mEffectiveRNAs[i]) {
             continue;
         }
 
-        if (prevPos != (int) siteMRNAPos[posIdx]) {
-            ++newIdx;
+        totalScore = 0;
+        totalNormScore = 0;
+        siteCount = 0;
+        for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
+            if (!pSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
+                continue;
+            }
+
+            totalScore += pMFEScores.get_score(rnaSitePosMap[i][j]);
+            totalNormScore += pMFEScores.get_norm_score(rnaSitePosMap[i][j]);
+            ++siteCount;
         }
-        newIdices[i] = newIdx;
-        prevPos = (int) siteMRNAPos[posIdx];
-    }
 
-    resize(mTotalScores, newIdx + 1, 0.0);
-    resize(mTotalNormScores, newIdx + 1, 0.0);
-    resize(mMRNAPos, newIdx + 1);
-    resize(mSiteNum, newIdx + 1, 0);
-
-    for (unsigned i = 0; i < length(pSortedSites); ++i) {
-        posIdx = (unsigned) pSortedSites[i];
-
-        if (!pMFEScores.mEffectiveSites[posIdx]) {
+        if (siteCount == 0) {
             continue;
         }
 
-        mMRNAPos[newIdices[i]] = siteMRNAPos[posIdx];
-        mTotalScores[newIdices[i]] += pMFEScores.get_score(posIdx);
-        mTotalNormScores[newIdices[i]] += pMFEScores.get_norm_score(posIdx);
-        mSiteNum[newIdices[i]] += 1;
+        mTotalScores[i] = totalScore;
+        mTotalNormScores[i] = totalNormScore;
+        mMRNAPos[i] = uniqRNAPosSet[i];
+        mSiteNum[i] = siteCount;
     }
 
     return 0;
+
 }
 
 } // namespace rh2mfe

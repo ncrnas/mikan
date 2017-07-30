@@ -340,7 +340,7 @@ int MR3TotalScores::calc_scores(
         mikan::MKRMAWithSites &pRNAWithSites,
         MR3SiteScores &pSiteScores) {
 
-    mikan::TMRNAPosSet &mUniqRNAPosSet = pRNAWithSites.get_uniq_mrna_pos_set();
+    mikan::TMRNAPosSet &uniqRNAPosSet = pRNAWithSites.get_uniq_mrna_pos_set();
     seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = pRNAWithSites.get_rna_site_pos_map();
 
     resize(mTotalAlignScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
@@ -395,7 +395,7 @@ int MR3TotalScores::calc_scores(
         mTotalEnScores[i] = totalScoreEn;
         mLogMaxAlignScores[i] = maxScore + std::log(totalScore);
         mLogMaxEnScores[i] = maxScoreEn + std::log(totalScoreEn);
-        mMRNAPos[i] = mUniqRNAPosSet[i];
+        mMRNAPos[i] = uniqRNAPosSet[i];
         mSiteNum[i] = siteCount;
     }
 

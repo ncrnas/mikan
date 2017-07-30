@@ -34,8 +34,9 @@ protected:
     virtual float get_precedence(unsigned, mikan::MKSeedSites &, mikan::MKSiteScores &) { return 0; }
 
     // Method prototypes
-    virtual void set_intervals(mikan::MKSeedSites &pSeedSites, unsigned pSiteIdx, unsigned &pStartSearch,
-                               unsigned &pEndSearch, unsigned &pStartAdd, unsigned &pEndAdd, bool &pSearchOverlap);
+    virtual void set_intervals(mikan::MKSeedSites &pSeedSites, mikan::MKSiteScores &pSiteScores,
+                               unsigned pSiteIdx, unsigned &pStartSearch, unsigned &pEndSearch,
+                               unsigned &pStartAdd, unsigned &pEndAdd, bool &pSearchOverlap);
 
     void mark_overlap(mikan::MKSeedSites &pSeedSites, mikan::TMRNAPosSet &pSortedPos,
                       mikan::MKSiteScores &pSiteScores);

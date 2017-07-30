@@ -26,6 +26,10 @@ public:
 
     virtual void init_from_args() {}
 
+    virtual int get_wide_site_start(int) { return 0; }
+
+    virtual int get_wide_site_length(int) { return 0; }
+
     // Method prototypes
     void clear_scores();
 

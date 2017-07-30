@@ -5,11 +5,16 @@
 #include <map>                   // multimap
 #include <utility>               // pair
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_site_filter.hpp"    // MKSiteFilter
+#include "mk_option.hpp"         // MKOptions
 #include "rh2_score.hpp"         // RH2SiteScores
 #include "rh2_seed_site.hpp"     // RH2SeedSites
 
 namespace rh2mfe {
 
+//
+// RH2SiteCluster
+//
 class RH2SiteCluster {
 public:
     // Define methods
@@ -38,38 +43,23 @@ private:
 //
 // Identify overlapped sites
 //
-class RH2Overlap {
+class RH2SiteFilter : public mikan::MKSiteFilter {
 public:
     // Define methods
-    RH2Overlap() {}
+    RH2SiteFilter(mikan::MKOptions const &opts) : MKSiteFilter(opts) {}
 
     // Method prototype
-    int filter_overlapped_sites(RH2SeedSites &pSeedSites, RH2SiteScores &pScores,
-                                seqan::CharString &pOverlapDef);
-
-    void clear_cluster();
+    void init_from_args();
 
 private:
-    typedef std::set<unsigned>::iterator TItSet;
-    typedef std::multimap<unsigned, unsigned>::iterator TItMap;
-    typedef std::pair<TItMap, TItMap> TItRetPair;
-    typedef std::multimap<unsigned, unsigned>::iterator TITStartPos;
-    typedef std::pair<unsigned, unsigned> TPosPair;
+    float get_precedence(unsigned pSitePos, mikan::MKSeedSites &pSeedSites,
+                         mikan::MKSiteScores &pSiteScores);
 
-    RH2SiteCluster mSiteCluster;
+    void set_intervals(mikan::MKSeedSites &pSeedSites, mikan::MKSiteScores &pSiteScores,  unsigned pSiteIdx,
+                       unsigned &pStartSearch, unsigned &pEndSearch, unsigned &pStartAdd, unsigned &pEndAdd,
+                       bool &pSearchOverlap);
 
-private:
-    void find_overlapped_sites(RH2SeedSites &pSeedSites, RH2SiteScores &pScores,
-                               int pPosIdx, seqan::CharString &pOverlapDef);
-
-    void cluster_overlapped_sites(RH2SeedSites &pSeedSites,
-                                  RH2SiteScores &pScores, std::multimap<unsigned, unsigned> &pStartPos,
-                                  seqan::CharString &pOverlapDef);
-
-    void mark_overlapped_sites(RH2SeedSites &pSeedSites, RH2SiteScores &pScores,
-                               std::set<unsigned> &pOlCluster, seqan::CharString &pOverlapDef);
-
-    unsigned get_pos_with_best_mfe(RH2SiteScores &pScores, std::set<unsigned> &pOlCluster);
+    seqan::CharString mOverlapMethod;
 
 };
 
@@ -101,37 +91,6 @@ private:
 
     void mark_non_topn_sites(RH2SiteScores &pScores, std::multimap<float, unsigned> &pSortedSites);
 
-
-};
-
-//
-// Sort sites by position
-//
-class RH2SortedSitePos {
-public:
-    // Define methods
-    RH2SortedSitePos() {}
-
-    const seqan::String<unsigned> &get_sorted_mrna_pos() { return mSortedSitePos; }
-
-    // Method prototype
-    int generate_sorted_mrna_pos(RH2SeedSites &pSeedSites, RH2SiteScores &pScores);
-
-    void clear_site_pos();
-
-private:
-    typedef std::set<unsigned>::iterator TItSet;
-    typedef std::multimap<unsigned, unsigned>::iterator TItMap;
-    typedef std::pair<TItMap, TItMap> TItRetPair;
-    typedef std::multimap<unsigned, unsigned>::iterator TITStartPos;
-    typedef std::pair<unsigned, unsigned> TPosPair;
-
-    seqan::String<unsigned> mSortedSitePos;
-    RH2SiteCluster mSiteCluster;
-
-private:
-    void cluster_site_pos(RH2SeedSites &pSeedSites,
-                          RH2SiteScores &pScores);
 
 };
 

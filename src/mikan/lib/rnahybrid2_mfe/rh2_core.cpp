@@ -69,6 +69,7 @@ void RH2Core::init_from_args(mikan::MKOptions const &opts) {
     mOverlapDef = opts.mOverlapDef;
 
     mSiteScores.init_from_args();
+    mSiteFilter.init_from_args();
 
 }
 
@@ -149,8 +150,9 @@ int RH2Core::calculate_mirna_scores(unsigned pIdx) {
     }
 
     // Filter overlapped sites
+    mRNAWithSites.create_mrna_site_map(mSeedSites, mSiteScores);
     if (mExecFilterOverlap) {
-        retVal = mOverlappedSites.filter_overlapped_sites(mSeedSites, mSiteScores, mOverlapDef);
+        retVal = mSiteFilter.filter_sites(mSeedSites, mRNAWithSites, mSiteScores);
         if (retVal != 0) {
             std::cerr << "ERROR: Check overlapped sites failed." << std::endl;
             return 1;
@@ -166,19 +168,9 @@ int RH2Core::calculate_mirna_scores(unsigned pIdx) {
         }
     }
 
-    // Sort target sites
-    if (mExecSortSites) {
-        retVal = mSortedSites.generate_sorted_mrna_pos(mSeedSites, mSiteScores);
-        if (retVal != 0) {
-            std::cerr << "ERROR: Sort target sites failed." << std::endl;
-            return 1;
-        }
-    }
-
     // Summarize MFE values
     if (mExecSumScores) {
-        const seqan::String<unsigned> &sortedPos = mSortedSites.get_sorted_mrna_pos();
-        retVal = mTotalScores.calc_scores(mSeedSites, mSiteScores, sortedPos);
+        retVal = mTotalScores.calc_scores(mSeedSites, mSiteScores, mRNAWithSites);
         if (retVal != 0) {
             std::cerr << "ERROR: Calculate total MFE values failed." << std::endl;
             return 1;
@@ -213,47 +205,52 @@ int RH2Core::calculate_mirna_scores(unsigned pIdx) {
     }
 
     mSeedSites.clear_pos();
+    mRNAWithSites.clear_maps();
     mSiteScores.clear_scores();
-    mOverlappedSites.clear_cluster();
     mTopScoredSites.clear_cluster();
-    mSortedSites.clear_site_pos();
     mTotalScores.clear_scores();
 
     return 0;
 }
 
 int RH2Core::write_mfe_score(seqan::CharString const &pMiRNAId) {
-    const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const seqan::StringSet<seqan::CharString> &seedTypes = mSeedSites.get_seed_types();
-    const seqan::String<unsigned> &sortedPos = mSortedSites.get_sorted_mrna_pos();
-    seqan::CharString seedType;
-    int seedStart = 0;
-    int posIdx;
-    float score;
 
-    for (unsigned i = 0; i < length(sortedPos); ++i) {
-        posIdx = sortedPos[i];
-        if (!mSiteScores.mEffectiveSites[posIdx]) {
+    seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = mRNAWithSites.get_rna_site_pos_map();
+    mikan::TMRNAPosSet &uniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
+
+    for (unsigned i = 0; i < length(mRNAWithSites.mEffectiveRNAs); i++) {
+        if (!mRNAWithSites.mEffectiveRNAs[i]) {
             continue;
         }
 
-        seedStart = sitePos[posIdx];
-        score = mSiteScores.get_score(posIdx);
-        score = roundf(score * 10.0f) / 10.0f;
+        int seedStart;
+        float score;
+        for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
+            if (!mSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
+                continue;
+            }
 
-        mOFile1 << toCString(pMiRNAId) << "\t";
-        mOFile1 << toCString((seqan::CharString) mMRNAIds[mRNAPos[posIdx]]) << "\t";
-        mOFile1 << seedStart + 1 << "\t";
-        mOFile1 << seedStart + 7 << "\t";
-        //        mOFile1 << mSiteScores.get_hit_start(posIdx) + 1  << "\t";
-        mOFile1 << toCString((seqan::CharString) seedTypes[posIdx]) << "\t";
-        mOFile1 << score << "\t";
-        mOFile1 << mSiteScores.get_norm_score(posIdx);
-        mOFile1 << std::endl;
+            seedStart = sitePos[rnaSitePosMap[i][j]];
+            score = mSiteScores.get_score(rnaSitePosMap[i][j]);
+            score = roundf(score * 10.0f) / 10.0f;
+
+            mOFile1 << toCString(pMiRNAId) << "\t";
+            mOFile1 << toCString((seqan::CharString) mMRNAIds[uniqRNAPosSet[i]]) << "\t";
+            mOFile1 << seedStart + 1 << "\t";
+            mOFile1 << seedStart + 7 << "\t";
+            //        mOFile1 << mSiteScores.get_wide_site_start(posIdx) + 1  << "\t";
+            mOFile1 << toCString((seqan::CharString) seedTypes[rnaSitePosMap[i][j]]) << "\t";
+            mOFile1 << score << "\t";
+            mOFile1 << mSiteScores.get_norm_score(rnaSitePosMap[i][j]);
+            mOFile1 << std::endl;
+        }
+
     }
 
     return 0;
+
 }
 
 int RH2Core::write_total_score(seqan::CharString const &pMiRNAId) {
@@ -275,45 +272,49 @@ int RH2Core::write_total_score(seqan::CharString const &pMiRNAId) {
 }
 
 int RH2Core::write_alignment(seqan::CharString const &pMiRNAId) {
-    const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const seqan::StringSet<seqan::CharString> &seedTypes = mSeedSites.get_seed_types();
-    const seqan::String<unsigned> &sortedPos = mSortedSites.get_sorted_mrna_pos();
-    seqan::CharString seedType;
-    int seedStart = 0;
-    int posIdx;
-    float score;
-    int count = 0;
 
-    for (unsigned i = 0; i < length(sortedPos); ++i) {
-        posIdx = sortedPos[i];
+    seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = mRNAWithSites.get_rna_site_pos_map();
+    mikan::TMRNAPosSet &uniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
 
-        if (!mSiteScores.mEffectiveSites[posIdx]) {
+    for (unsigned i = 0; i < length(mRNAWithSites.mEffectiveRNAs); i++) {
+        if (!mRNAWithSites.mEffectiveRNAs[i]) {
             continue;
         }
 
-        seedStart = sitePos[posIdx];
-        score = mSiteScores.get_score(posIdx);
-        score = roundf(score * 10.0f) / 10.0f;
+        int seedStart;
+        int count = 0;
+        float score;
+        for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
+            if (!mSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
+                continue;
+            }
 
-        std::cout << "### " << count + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
-        mSiteScores.write_alignment(posIdx);
-        std::cout << "  miRNA:               " << toCString(pMiRNAId) << std::endl;
-        std::cout << "  mRNA:                " << toCString((seqan::CharString) mMRNAIds[mRNAPos[posIdx]])
-                  << std::endl;
-        std::cout << "  seed type:           " << toCString((seqan::CharString) seedTypes[posIdx]) << std::endl;
-        std::cout << "  position(target 5'): " << mSiteScores.get_hit_start(posIdx) + 1;
-        std::cout << std::endl;
-        std::cout << "  position(seed):      " << seedStart + 1 << std::endl;
-        std::cout << "  mfe:                 " << score << " kcal/mol" << std::endl;
-        std::cout << "  normalized score:    " << mSiteScores.get_norm_score(posIdx);
-        std::cout << std::endl << std::endl;
+            seedStart = sitePos[rnaSitePosMap[i][j]];
+            score = mSiteScores.get_score(rnaSitePosMap[i][j]);
+            score = roundf(score * 10.0f) / 10.0f;
 
-        ++count;
+            std::cout << "### " << count + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
+            mSiteScores.write_alignment(rnaSitePosMap[i][j]);
+            std::cout << "  miRNA:               " << toCString(pMiRNAId) << std::endl;
+            std::cout << "  mRNA:                " << toCString((seqan::CharString) mMRNAIds[uniqRNAPosSet[i]])
+                      << std::endl;
+            std::cout << "  seed type:           " << toCString((seqan::CharString) seedTypes[rnaSitePosMap[i][j]]) << std::endl;
+            std::cout << "  position(target 5'): " << mSiteScores.get_wide_site_start(rnaSitePosMap[i][j]) + 1;
+            std::cout << std::endl;
+            std::cout << "  position(seed):      " << seedStart + 1 << std::endl;
+            std::cout << "  mfe:                 " << score << " kcal/mol" << std::endl;
+            std::cout << "  normalized score:    " << mSiteScores.get_norm_score(rnaSitePosMap[i][j]);
+            std::cout << std::endl << std::endl;
+
+            ++count;
+        }
 
     }
 
     return 0;
+
 }
 
 } // namespace rh2mfe

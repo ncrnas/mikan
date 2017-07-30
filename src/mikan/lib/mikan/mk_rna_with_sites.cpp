@@ -15,38 +15,54 @@ void MKRMAWithSites::clear_maps() {
     clear(mEffectiveRNAs);
 }
 
-void MKRMAWithSites::create_mrna_site_map(mikan::MKSeedSites &pSeedSites) {
-
+void MKRMAWithSites::create_temp_map(mikan::MKSeedSites &pSeedSites) {
     TMRNAPosSet const &mRNAPos = pSeedSites.get_mrna_pos();
-    TSitePosSet const &sitePos = pSeedSites.get_site_pos();
 
-    TSet uniqSet;
-    TPosMap siteMap;
-
+    mUniqSetTemp.clear();
+    mSiteMapTemp.clear();
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
         if (!pSeedSites.mEffectiveSites[i]) {
             continue;
         }
-        uniqSet.insert((unsigned) mRNAPos[i]);
-        siteMap.insert(TPosPair((unsigned) mRNAPos[i], i));
+        mUniqSetTemp.insert((unsigned) mRNAPos[i]);
+        mSiteMapTemp.insert(TPosPair((unsigned) mRNAPos[i], i));
     }
+}
 
-    resize(mUniqRNAPosSet, uniqSet.size());
-    resize(mRNASitePosMap, uniqSet.size());
-    resize(mEffectiveRNAs, uniqSet.size(), true);
+void MKRMAWithSites::create_mrna_site_map(
+        mikan::MKSeedSites &pSeedSites,
+        MKSiteScores &pSiteScores) {
+
+    TSitePosSet const &sitePos = pSeedSites.get_site_pos();
+
+    create_temp_map(pSeedSites);
+
+    resize(mUniqRNAPosSet, mUniqSetTemp.size());
+    resize(mRNASitePosMap, mUniqSetTemp.size());
+    resize(mEffectiveRNAs, mUniqSetTemp.size(), true);
 
     unsigned idx = 0;
     TPosMap sortedPos;
-    for (TItSet itSet = uniqSet.begin(); itSet != uniqSet.end(); ++itSet) {
+    for (TItSet itSet = mUniqSetTemp.begin(); itSet != mUniqSetTemp.end(); ++itSet) {
 
         mUniqRNAPosSet[idx] = *itSet;
 
-        TItMapPair itPair = siteMap.equal_range(*itSet);
+        TItMapPair itPair = mSiteMapTemp.equal_range(*itSet);
         sortedPos.clear();
         unsigned count = 0;
         for (TItMap itMap = itPair.first; itMap != itPair.second; ++itMap) {
-            sortedPos.insert(TPosPair(static_cast<unsigned>(sitePos[(*itMap).second]),
-                                      (*itMap).second));
+            if (mSortVtype == "score") {
+
+                sortedPos.insert(TPosPair(pSiteScores.get_score((*itMap).second),
+                                          (*itMap).second));
+            } else if (mSortVtype == "wide") {
+                sortedPos.insert(TPosPair(static_cast<float>(pSiteScores.get_wide_site_start((*itMap).second)),
+                                          (*itMap).second));
+            } else {
+                sortedPos.insert(TPosPair(static_cast<float>(sitePos[(*itMap).second]),
+                                          (*itMap).second));
+            }
+
             ++count;
         }
 
