@@ -31,7 +31,7 @@ public:
     void clear_scores();
 
     int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                    mikan::MKSeedSites &pSeedSites);
+                    mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites const &pRNAWithSites);
 
 private:
     TSAlign mAlignSeqs;

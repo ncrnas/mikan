@@ -11,6 +11,8 @@ namespace mikan {
 //
 // Store site level scores
 //
+class MKRMAWithSites;  // To avoid a cross-reference issue between MKSiteScores and MKRMAWithSites
+
 class MKSiteScores {
 public:
     // Constant value
@@ -34,7 +36,7 @@ public:
     void clear_scores();
 
     int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                    mikan::MKSeedSites &pSeedSites);
+                    mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites const &pRNAWithSites);
 
 protected:
     // Define variable

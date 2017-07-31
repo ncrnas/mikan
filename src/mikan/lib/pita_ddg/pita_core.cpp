@@ -168,7 +168,7 @@ int PITACore::calculate_mirna_scores(unsigned pIdx) {
 
     // Calculate ddG values
     if (mExecCalSiteScore) {
-        retVal = mSiteScores.calc_scores(miRNASeq, mMRNASeqs, mSeedSites);
+        retVal = mSiteScores.calc_scores(miRNASeq, mMRNASeqs, mSeedSites, mRNAWithSites);
         if (retVal != 0) {
             std::cerr << "ERROR: Calculate ddG scores failed." << std::endl;
             return 1;

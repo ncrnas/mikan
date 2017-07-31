@@ -286,7 +286,8 @@ void PITASiteScores::clear_scores() {
 int PITASiteScores::calc_scores(
         mikan::TRNAStr const &miRNASeq,
         mikan::TRNASet const &pMRNASeqs,
-        mikan::MKSeedSites &pSeedSites) {
+        mikan::MKSeedSites &pSeedSites,
+        mikan::MKRMAWithSites const &) {
 
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
 

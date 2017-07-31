@@ -158,7 +158,7 @@ int MR3Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Calculate alignment and energy scores
     if (mExecCalSiteScore) {
-        retVal = mSiteScores.calc_scores(miRNASeq, mMRNASeqs, mSeedSites);
+        retVal = mSiteScores.calc_scores(miRNASeq, mMRNASeqs, mSeedSites, mRNAWithSites);
         if (retVal != 0) {
             std::cerr << "ERROR: Calculate site scores failed." << std::endl;
             return 1;

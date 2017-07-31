@@ -146,7 +146,7 @@ int TSSVMCore::calculate_mirna_scores(unsigned pIdx) {
 
     // Calculate site SVM scores
     if (mExecSiteScore) {
-        retVal = mSiteScores.calc_scores(miRNASeq, mMRNASeqs, mSeedSites);
+        retVal = mSiteScores.calc_scores(miRNASeq, mMRNASeqs, mSeedSites, mRNAWithSites);
         if (retVal != 0) {
             std::cerr << "ERROR: Calculate site SVM scores failed." << std::endl;
             return 1;

@@ -143,7 +143,7 @@ int RH2Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Calculate MFE values
     if (mExecCalSiteScore) {
-        retVal = mSiteScores.calc_scores(miRNASeq, mMRNASeqs, mSeedSites);
+        retVal = mSiteScores.calc_scores(miRNASeq, mMRNASeqs, mSeedSites, mRNAWithSites);
         if (retVal != 0) {
             std::cerr << "ERROR: Calculate MFE values failed." << std::endl;
             return 1;

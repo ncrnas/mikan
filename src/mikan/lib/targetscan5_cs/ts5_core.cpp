@@ -135,7 +135,7 @@ int TS5Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Calculate context scores
     if (mExecCalcSiteScore) {
-        retVal = mSiteScores.calc_scores(miRNASeq, mMRNASeqs, mSeedSites);
+        retVal = mSiteScores.calc_scores(miRNASeq, mMRNASeqs, mSeedSites, mRNAWithSites);
         if (retVal != 0) {
             std::cerr << "ERROR: Calculate site context values failed." << std::endl;
             return 1;
