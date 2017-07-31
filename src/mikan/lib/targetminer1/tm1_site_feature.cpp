@@ -29,13 +29,13 @@ int TM1RawFeatures::add_features(
         mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs,
         TM1SeedSites &pSeedSites,
-        TM1SortedSitePos &pSortedSites) {
+        mikan::MKRMAWithSites &pRNAWithSites) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &sitePos = pSeedSites.get_site_pos();
 
     mSeedTypes.add_features(pMiRNASeq, pMRNASeqs, pSeedSites.mEffectiveSites, pSeedSites);
     mSitePos.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, sitePos);
-    mDistance.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, pSortedSites);
+    mDistance.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, pRNAWithSites);
     mAURich.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mDistance);
     mSingleFreqs.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites);
     mSingleFreqFlanks.add_features(pMRNASeqs, pSeedSites.mEffectiveSites, mRNAPos, pSeedSites, mDistance);
@@ -205,27 +205,33 @@ void TM1FeatDistance::resize_features(unsigned pSize) {
 
 int TM1FeatDistance::add_features(
         mikan::TRNASet const &pMRNASeqs,
-        String<bool> &pEffectiveSites,
-        mikan::TSitePosSet const &pMRNAPos,
+        String<bool> &,
+        mikan::TSitePosSet const &,
         TM1SeedSites &pSeedSites,
-        TM1SortedSitePos &pSortedSites) {
-    const StringSet<String<unsigned> > &sortedSites = pSortedSites.get_sorted_mrna_pos();
-    const String<unsigned> &mRNAIDs = pSortedSites.get_mrna_ids();
+        mikan::MKRMAWithSites &pRNAWithSites) {
+
+    StringSet<String<unsigned> > &rnaSitePosMap = pRNAWithSites.get_rna_site_pos_map();
+    mikan::TMRNAPosSet &uniqRNAPosSet = pRNAWithSites.get_uniq_mrna_pos_set();
+
     int seedEnd, seedStart, seqLen, prevSeedEnd, prevSeedStart, idx;
     unsigned siteId;
     int startU, endU, lenU, startD, endD, lenD;
     String<int> nextSeedStarts;
 
-    resize_features((unsigned) length(pMRNAPos));
+    resize_features((unsigned) length(pSeedSites.mEffectiveSites));
 
-    for (unsigned i = 0; i < length(mRNAIDs); ++i) {
-        seqLen = (int) length(pMRNASeqs[mRNAIDs[i]]);
+    for (unsigned i = 0; i < length(pRNAWithSites.mEffectiveRNAs); i++) {
+        if (!pRNAWithSites.mEffectiveRNAs[i]) {
+            continue;
+        }
+
+        seqLen = (int) length(pMRNASeqs[uniqRNAPosSet[i]]);
         prevSeedStart = seqLen;
-        resize(nextSeedStarts, length(sortedSites[i]));
-        for (unsigned j = 0; j < length(sortedSites[i]); ++j) {
-            idx = (int) length(sortedSites[i]) - j - 1;
-            siteId = sortedSites[i][idx];
-            if (!pEffectiveSites[siteId]) {
+        resize(nextSeedStarts, length(rnaSitePosMap[i]));
+        for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
+            idx = (int) length(rnaSitePosMap[i]) - j - 1;
+            siteId = rnaSitePosMap[i][idx];
+            if (!pSeedSites.mEffectiveSites[siteId]) {
                 nextSeedStarts[idx] = seqLen;
                 continue;
             }
@@ -234,9 +240,9 @@ int TM1FeatDistance::add_features(
         }
 
         prevSeedEnd = 0;
-        for (unsigned j = 0; j < length(sortedSites[i]); ++j) {
-            siteId = sortedSites[i][j];
-            if (!pEffectiveSites[siteId]) {
+        for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
+            siteId = rnaSitePosMap[i][j];
+            if (!pSeedSites.mEffectiveSites[siteId]) {
                 continue;
             }
 

@@ -139,37 +139,28 @@ int TM1Core::calculate_mirna_scores(unsigned pIdx) {
         }
     }
 
-    // Sort target sites
-    if (mExecSortSites) {
-        retVal = mSortedSites.generate_sorted_mrna_pos(mSeedSites, true);
+    // Filter overlapped sites
+    mRNAWithSites.create_mrna_site_map(mSeedSites, mSiteScores);
+    if (mExecFilterOverlap) {
+        retVal = mSiteFilter.filter_sites(mSeedSites, mRNAWithSites, mSiteScores);
         if (retVal != 0) {
-            std::cerr << "ERROR: Sort target sites failed." << std::endl;
+            std::cerr << "ERROR: Check overlapped sites failed." << std::endl;
             return 1;
         }
     }
 
     // Get raw features
     if (mExecGetRawFeat) {
-        retVal = mRawFeatures.add_features(mMiRNASeqs[pIdx], mMRNASeqs, mSeedSites, mSortedSites);
+        retVal = mRawFeatures.add_features(mMiRNASeqs[pIdx], mMRNASeqs, mSeedSites, mRNAWithSites);
         if (retVal != 0) {
             std::cerr << "ERROR: Feature calculation failed." << std::endl;
             return 1;
         }
     }
 
-    // Sort target sites again after creating site features
-    if (mExecSortSites) {
-        mSortedSites.clear_site_pos();
-        retVal = mSortedSites.generate_sorted_mrna_pos(mSeedSites, false);
-        if (retVal != 0) {
-            std::cerr << "ERROR: Sort target sites failed." << std::endl;
-            return 1;
-        }
-    }
-
     // Get mRNA features
     if (mExecGetMRNAFeat) {
-        retVal = mMRNAFeatures.add_features(mSeedSites, mRawFeatures, mSortedSites);
+        retVal = mMRNAFeatures.add_features(mSeedSites, mRawFeatures, mRNAWithSites);
         if (retVal != 0) {
             std::cerr << "ERROR: Calculate total ddG scores failed." << std::endl;
             return 1;
@@ -184,7 +175,6 @@ int TM1Core::calculate_mirna_scores(unsigned pIdx) {
             return 1;
         }
     }
-
 
     // Summarize classified results
     if (mExecSumScores) {
@@ -224,7 +214,7 @@ int TM1Core::calculate_mirna_scores(unsigned pIdx) {
 
     mSeedSites.clear_pos();
     mRawFeatures.clear_features();
-    mSortedSites.clear_site_pos();
+    mRNAWithSites.clear_maps();
     mMRNAFeatures.clear_features();
     mMRNAInput.clear_scores();
     mScores.clear_scores();
@@ -267,19 +257,23 @@ int TM1Core::write_scores(seqan::CharString const &pMiRNAId) {
     const seqan::String<float> &scores = mScores.get_scores();
     const seqan::String<int> &predictions = mScores.get_labels();
     const seqan::String<unsigned> &siteNum = mScores.get_site_num();
-    const seqan::String<unsigned> &mRNAIdMap = mSortedSites.get_mrna_ids();
+    mikan::TMRNAPosSet &mUniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
+    mikan::TMRNAPosSet &uniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
     typedef std::multimap<double, unsigned>::iterator TItMap;
     typedef std::pair<float, unsigned> TPosPair;
     TItMap itPos;
     std::multimap<double, unsigned> sortedMRNAByScore;
 
-    for (unsigned i = 0; i < length(mRNAIdMap); ++i) {
+    for (unsigned i = 0; i < length(mRNAWithSites.mEffectiveRNAs); ++i) {
+        if (!mRNAWithSites.mEffectiveRNAs[i]) {
+            continue;
+        }
         sortedMRNAByScore.insert(TPosPair(-1.0f * scores[i], i));
     }
 
     for (itPos = sortedMRNAByScore.begin(); itPos != sortedMRNAByScore.end(); ++itPos) {
         mOFile2 << toCString(pMiRNAId) << "\t";
-        mOFile2 << toCString((seqan::CharString) mMRNAIds[mRNAIdMap[(*itPos).second]]) << "\t";
+        mOFile2 << toCString((seqan::CharString) mMRNAIds[uniqRNAPosSet[(*itPos).second]]) << "\t";
         mOFile2 << scores[(*itPos).second] << "\t";
         mOFile2 << siteNum[(*itPos).second] << "\t";
         mOFile2 << predictions[(*itPos).second];

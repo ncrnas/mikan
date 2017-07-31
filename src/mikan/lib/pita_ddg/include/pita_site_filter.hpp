@@ -13,7 +13,7 @@
 namespace ptddg {
 
 //
-// Identify overlapped sites
+// Filter overlapped sites
 //
 class PITASiteFilter : public mikan::MKSiteFilter {
 public:

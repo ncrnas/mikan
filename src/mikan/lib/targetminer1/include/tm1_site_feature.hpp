@@ -2,10 +2,11 @@
 #define TM1_SITE_FEATURE_HPP_
 
 #include <seqan/sequence.h>
-#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
-#include "tm1_align.hpp"         // TM1Alignment
-#include "tm1_seed_site.hpp"     // TM1SeedSites
-#include "tm1_site_cluster.hpp"  // TM1SortedSitePos
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_rna_with_sites.hpp"  // MKRMAWithSites
+#include "tm1_align.hpp"          // TM1Alignment
+#include "tm1_seed_site.hpp"      // TM1SeedSites
+#include "tm1_site_cluster.hpp"   // TM1SortedSitePos
 
 namespace tm1p {
 
@@ -86,7 +87,7 @@ public:
     // Method prototype
     int add_features(mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
                      mikan::TSitePosSet const &pMRNAPos,
-                     TM1SeedSites &pSeedSites, TM1SortedSitePos &pSortedSites);
+                     TM1SeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
 
     void clear_features();
 
@@ -339,7 +340,7 @@ public:
 
     // Method prototypes
     int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                     TM1SeedSites &pSeedSites, TM1SortedSitePos &pSortedSites);
+                     TM1SeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
 
     void clear_features();
 

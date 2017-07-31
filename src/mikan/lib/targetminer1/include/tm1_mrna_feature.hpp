@@ -259,7 +259,8 @@ public:
     const seqan::StringSet<seqan::String<float> > &get_mrna_features() { return mScaledFeatures; }
 
     // Method prototypes
-    int scale_features(TM1SortedSitePos &pSortedSites, TM1MRNASeedType &pSeedTypes,
+    int scale_features(mikan::MKRMAWithSites &pRNAWithSites,
+                       TM1MRNASeedType &pSeedTypes,
                        TM1MRNAAURich &pAURich, TM1MRNASingleFreq &pSingleFreqs,
                        TM1MRNASingleFreqFlank &pSingleFreqFlanks, TM1MRNADiFreq &pDiFreqs,
                        TM1MRNADiFreqFlank &pDiFreqFlanks,
@@ -316,13 +317,13 @@ public:
 
     // Method prototypes
     int add_features(TM1SeedSites &pSeedSites, TM1RawFeatures &pRawFeatures,
-                     TM1SortedSitePos &pSortedSites);
+                     mikan::MKRMAWithSites &pRNAWithSites);
 
     void clear_features();
 
     void resize_features(unsigned pSize);
 
-    void print_features(TM1SortedSitePos &pSortedSites);
+    void print_features(mikan::MKRMAWithSites &pRNAWithSites);
 
 private:
     TM1MRNASeedType mSeedTypes;

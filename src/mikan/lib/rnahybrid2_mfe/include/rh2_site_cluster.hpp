@@ -41,7 +41,7 @@ private:
 };
 
 //
-// Identify overlapped sites
+// Filter overlapped sites
 //
 class RH2SiteFilter : public mikan::MKSiteFilter {
 public:

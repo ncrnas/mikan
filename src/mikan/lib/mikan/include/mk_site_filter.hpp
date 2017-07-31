@@ -12,7 +12,7 @@
 namespace mikan {
 
 //
-// Cluster target sites
+// Filter overlapped sites
 //
 class MKSiteFilter {
 public:
