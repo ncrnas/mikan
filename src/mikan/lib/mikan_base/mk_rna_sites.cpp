@@ -1,6 +1,6 @@
 #include <seqan/seq_io.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
-#include "mk_rna_with_sites.hpp"  // MKRMAWithSites
+#include "mk_rna_sites.hpp"  // MKRMAWithSites
 
 using namespace seqan;
 

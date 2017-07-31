@@ -17,7 +17,7 @@ class TM1SiteFilter : public mikan::MKSiteFilter {
 public:
     // Define methods
     TM1SiteFilter(mikan::MKOptions const &opts) : MKSiteFilter(opts) {
-        set_gap_len(4);
+        set_overlap_len(4);
     }
 
 private:

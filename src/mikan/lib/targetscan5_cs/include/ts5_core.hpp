@@ -5,7 +5,7 @@
 #include "mk_sequence.hpp"        // MKSequences
 #include "mk_option.hpp"          // MKOptions
 #include "mk_site_score.hpp"      // MKSiteScores
-#include "mk_rna_with_sites.hpp"  // MKRMAWithSites
+#include "mk_rna_sites.hpp"       // MKRMAWithSites
 #include "ts5_feature.hpp"        // TS5RawFeatures
 #include "ts5_option.hpp"         // TS5CSOptions
 #include "ts5_score.hpp"          // TS5SiteScores, TS5TotalScores

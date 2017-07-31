@@ -6,7 +6,7 @@
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_site_score.hpp"      // MKSiteScores
-#include "mk_rna_with_sites.hpp"  // MKRMAWithSites
+#include "mk_rna_sites.hpp"       // MKRMAWithSites
 #include "rh2_option.hpp"         // RH2Options
 #include "rh2_seed_site.hpp"      // RH2SeedSites
 #include "hybrid_core.hpp"        // RH2WorkSpace, RH2RetValues

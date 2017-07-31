@@ -16,7 +16,7 @@ find_package(SeqAn REQUIRED)
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/mikan/lib/pita_ddg pita)
 add_subdirectory(${CMAKE_SOURCE_DIR}/mikan/lib/vienna_rna vrna)
-add_subdirectory(${CMAKE_SOURCE_DIR}/mikan/lib/mikan mk)
+add_subdirectory(${CMAKE_SOURCE_DIR}/mikan/lib/mikan_base mkbase)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../lib/mikan mikantest)
 
 # Add include directories
@@ -51,9 +51,9 @@ endif ()
 
 # Add dependencies found by find_package (SeqAn)
 target_link_libraries(gtest_mk_pita gtest gtest_main)
-target_link_libraries(gtest_mk_pita ${SEQAN_LIBRARIES} pita vrna mk mikantest)
+target_link_libraries(gtest_mk_pita ${SEQAN_LIBRARIES} pita vrna mkbase mikantest)
 target_link_libraries(gtest_mk_pita_long gtest gtest_main)
-target_link_libraries(gtest_mk_pita_long ${SEQAN_LIBRARIES} pita vrna mk mikantest)
+target_link_libraries(gtest_mk_pita_long ${SEQAN_LIBRARIES} pita vrna mkbase mikantest)
 
 # Add CXX flags found by find_package (SeqAn)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SEQAN_CXX_FLAGS}")

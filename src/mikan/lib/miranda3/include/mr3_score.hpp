@@ -9,7 +9,7 @@
 #include <seqan/score.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_site_score.hpp"      // MKSiteScores
-#include "mk_rna_with_sites.hpp"  // MKRMAWithSites
+#include "mk_rna_sites.hpp"       // MKRMAWithSites
 #include "mr3_option.hpp"         // MR3Options
 #include "mr3_align.hpp"          // MR3SeedSites
 #include "mr3_seed_site.hpp"      // MR3Align

@@ -16,7 +16,7 @@ find_package(SeqAn REQUIRED)
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/mikan/lib/miranda3 mr3as)
 add_subdirectory(${CMAKE_SOURCE_DIR}/mikan/lib/vienna_rna vrna)
-add_subdirectory(${CMAKE_SOURCE_DIR}/mikan/lib/mikan mk)
+add_subdirectory(${CMAKE_SOURCE_DIR}/mikan/lib/mikan_base mkbase)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../lib/mikan mikantest)
 
 # Add include directories
@@ -47,7 +47,7 @@ endif ()
 
 # Add dependencies found by find_package (SeqAn)
 target_link_libraries(gtest_mk_common gtest gtest_main)
-target_link_libraries(gtest_mk_common ${SEQAN_LIBRARIES} mr3as vrna mk mikantest)
+target_link_libraries(gtest_mk_common ${SEQAN_LIBRARIES} mr3as vrna mkbase mikantest)
 
 # Add CXX flags found by find_package (SeqAn)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SEQAN_CXX_FLAGS}")

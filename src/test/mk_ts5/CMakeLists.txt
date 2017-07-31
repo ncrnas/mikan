@@ -15,7 +15,7 @@ find_package(SeqAn REQUIRED)
 # ----------------------------------------------------------------------------
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/mikan/lib/targetscan5_cs ts5)
-add_subdirectory(${CMAKE_SOURCE_DIR}/mikan/lib/mikan mk)
+add_subdirectory(${CMAKE_SOURCE_DIR}/mikan/lib/mikan_base mkbase)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../lib/mikan mikantest)
 
 # Add include directories
@@ -49,9 +49,9 @@ endif ()
 
 # Add dependencies found by find_package (SeqAn)
 target_link_libraries(gtest_mk_ts5 gtest gtest_main)
-target_link_libraries(gtest_mk_ts5 ${SEQAN_LIBRARIES} ts5 mk mikantest)
+target_link_libraries(gtest_mk_ts5 ${SEQAN_LIBRARIES} ts5 mkbase mikantest)
 target_link_libraries(gtest_mk_ts5_long gtest gtest_main)
-target_link_libraries(gtest_mk_ts5_long ${SEQAN_LIBRARIES} ts5 mk mikantest)
+target_link_libraries(gtest_mk_ts5_long ${SEQAN_LIBRARIES} ts5 mkbase mikantest)
 
 # Add CXX flags found by find_package (SeqAn)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SEQAN_CXX_FLAGS}")

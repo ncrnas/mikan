@@ -12,7 +12,7 @@
 #include "rh2_option.hpp"        // RH2Options
 #include "rh2_seed_site.hpp"     // RH2Sequences, RH2SeedSites
 #include "rh2_score.hpp"         // RH2SiteScores, RH2TotalScores
-#include "rh2_site_filter.hpp"  // RH2Overlap, RH2TopNScore, RH2SortedSitePos
+#include "rh2_site_filter.hpp"  // RH2Overlap, RH2TopNSites, RH2SortedSitePos
 #include "rh2_core.hpp"          // RH2Core
 
 namespace rh2mfe {
@@ -70,6 +70,7 @@ void RH2Core::init_from_args(mikan::MKOptions const &opts) {
 
     mSiteScores.init_from_args();
     mSiteFilter.init_from_args();
+    mTopNSites.init_from_args();
 
 }
 
@@ -161,7 +162,7 @@ int RH2Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Filter sites by the numbers of sites
     if (mExecFilterSiteNum) {
-        retVal = mTopScoredSites.filter_sites(mSeedSites, mSiteScores, mMaxHits);
+        retVal = mSiteFilter.filter_sites(mSeedSites, mRNAWithSites, mSiteScores);
         if (retVal != 0) {
             std::cerr << "ERROR: Filter top scored sites failed." << std::endl;
             return 1;
@@ -207,7 +208,6 @@ int RH2Core::calculate_mirna_scores(unsigned pIdx) {
     mSeedSites.clear_pos();
     mRNAWithSites.clear_maps();
     mSiteScores.clear_scores();
-    mTopScoredSites.clear_cluster();
     mTotalScores.clear_scores();
 
     return 0;
