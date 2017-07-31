@@ -8,7 +8,7 @@ set(MIKAN_SOURCE
         ${CMAKE_CURRENT_SOURCE_DIR}/mk_seed_seq.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/mk_seed_site.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/mk_site_score.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/mk_rna_with_sites.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/mk_rna_sites.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/mk_site_filter.cpp
         PARENT_SCOPE
         )

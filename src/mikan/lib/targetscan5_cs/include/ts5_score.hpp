@@ -4,7 +4,7 @@
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_site_score.hpp"      // MKSiteScores
-#include "mk_rna_with_sites.hpp"  // MKRMAWithSites
+#include "mk_rna_sites.hpp"       // MKRMAWithSites
 #include "ts5_feature.hpp"        // TS5RawFeatures
 #include "ts5_feature.hpp"        // TS5RawFeatures
 #include "ts5_seed_site.hpp"      // TS5SeedSites

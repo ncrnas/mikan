@@ -1,5 +1,5 @@
-#ifndef MK_RNA_WITH_SITES_HPP_
-#define MK_RNA_WITH_SITES_HPP_
+#ifndef MK_RNA_SITES_HPP_
+#define MK_RNA_SITES_HPP_
 
 #include <seqan/sequence.h>
 #include <seqan/index.h>
@@ -54,4 +54,4 @@ private:
 
 } // namespace mikan
 
-#endif /* MK_RNA_WITH_SITES_HPP_ */
+#endif /* MK_RNA_SITES_HPP_ */

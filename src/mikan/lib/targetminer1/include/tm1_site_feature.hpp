@@ -3,7 +3,7 @@
 
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
-#include "mk_rna_with_sites.hpp"  // MKRMAWithSites
+#include "mk_rna_sites.hpp"       // MKRMAWithSites
 #include "tm1_align.hpp"          // TM1Alignment
 #include "tm1_seed_site.hpp"      // TM1SeedSites
 #include "tm1_site_filter.hpp"    // TM1SortedSitePos

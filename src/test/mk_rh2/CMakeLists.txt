@@ -15,7 +15,7 @@ find_package(SeqAn REQUIRED)
 # ----------------------------------------------------------------------------
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/mikan/lib/rnahybrid2_mfe rh2)
-add_subdirectory(${CMAKE_SOURCE_DIR}/mikan/lib/mikan mk)
+add_subdirectory(${CMAKE_SOURCE_DIR}/mikan/lib/mikan_base mkbase)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../lib/mikan mikantest)
 
 # Add include directories
@@ -51,9 +51,9 @@ endif ()
 
 # Add dependencies found by find_package (SeqAn)
 target_link_libraries(gtest_mk_rh2 gtest gtest_main)
-target_link_libraries(gtest_mk_rh2 ${SEQAN_LIBRARIES} rh2 mk mikantest)
+target_link_libraries(gtest_mk_rh2 ${SEQAN_LIBRARIES} rh2 mkbase mikantest)
 target_link_libraries(gtest_mk_rh2_long gtest gtest_main)
-target_link_libraries(gtest_mk_rh2_long ${SEQAN_LIBRARIES} rh2 mk mikantest)
+target_link_libraries(gtest_mk_rh2_long ${SEQAN_LIBRARIES} rh2 mkbase mikantest)
 
 # Add CXX flags found by find_package (SeqAn)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SEQAN_CXX_FLAGS}")
