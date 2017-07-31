@@ -5,7 +5,7 @@
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_site_score.hpp"      // MKSiteScores
 #include "tm1_mrna_svm.hpp"       // TM1MRNAInputVector
-#include "tm1_site_filter.hpp"   // TM1SortedSitePos
+#include "tm1_site_filter.hpp"    // TM1SortedSitePos
 
 namespace tm1p {
 

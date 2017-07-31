@@ -18,7 +18,7 @@ class MR3SiteFilter : public mikan::MKSiteFilter {
 public:
     // Define methods
     MR3SiteFilter(mikan::MKOptions const &opts) : MKSiteFilter(opts) {
-            set_gap_len(6);
+        set_gap_len(6);
     }
 
 private:

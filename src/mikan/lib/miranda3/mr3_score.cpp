@@ -359,7 +359,7 @@ int MR3TotalScores::calc_scores(
             continue;
         }
 
-        score = scoreEn = totalScore =  totalScoreEn = 0;
+        score = scoreEn = totalScore = totalScoreEn = 0;
         maxScore = maxScoreEn = -FLT_MAX;
         siteCount = 0;
         maxIdx = maxScoreEn = 0;
@@ -386,7 +386,7 @@ int MR3TotalScores::calc_scores(
 
             ++siteCount;
         }
-        
+
         if (siteCount == 0) {
             continue;
         }

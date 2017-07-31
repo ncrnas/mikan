@@ -318,7 +318,8 @@ int PITACore::write_alignment(seqan::CharString const &pMiRNAId) {
             dG5 = roundf(dG5 * 100.0f) / 100.0f;
             dG3 = (float) mSiteScores.get_dg3(rnaSitePosMap[i][j]);
             dG3 = roundf(dG3 * 100.0f) / 100.0f;
-            dGopen = (float) mSiteScores.get_dg0(rnaSitePosMap[i][j]) - (float) mSiteScores.get_dg1(rnaSitePosMap[i][j]);
+            dGopen =
+                    (float) mSiteScores.get_dg0(rnaSitePosMap[i][j]) - (float) mSiteScores.get_dg1(rnaSitePosMap[i][j]);
             dGopen = roundf(dGopen * 100.0f) / 100.0f;
             dG0 = (float) mSiteScores.get_dg0(rnaSitePosMap[i][j]);
             dG0 = roundf(dG0 * 100.0f) / 100.0f;
@@ -328,9 +329,11 @@ int PITACore::write_alignment(seqan::CharString const &pMiRNAId) {
             std::cout << "### " << count + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
             mSiteScores.print_alignment(rnaSitePosMap[i][j]);
             std::cout << "  miRNA:               " << toCString(pMiRNAId) << std::endl;
-            std::cout << "  mRNA:                " << toCString((seqan::CharString) (mMRNAIds[mRNAPos[uniqRNAPosSet[i]]]));
+            std::cout << "  mRNA:                "
+                      << toCString((seqan::CharString) (mMRNAIds[mRNAPos[uniqRNAPosSet[i]]]));
             std::cout << std::endl;
-            std::cout << "  seed type:           " << toCString((seqan::CharString) (seedTypes[rnaSitePosMap[i][j]])) << std::endl;
+            std::cout << "  seed type:           " << toCString((seqan::CharString) (seedTypes[rnaSitePosMap[i][j]]))
+                      << std::endl;
             std::cout << "  position(start):     " << seedStart + 1 << std::endl;
             std::cout << "  position(end):       " << seedStart + 1 + INDEXED_SEQ_LEN << std::endl;
             std::cout << "  ddG:                 " << score << std::endl;

@@ -306,8 +306,10 @@ int MR3Core::write_alignment(seqan::CharString const &pMiRNAId) {
             std::cout << "### " << (i + j) + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
             mSiteScores.print_alignment(rnaSitePosMap[i][j]);
             std::cout << "  miRNA:           " << toCString(pMiRNAId) << std::endl;
-            std::cout << "  mRNA:            " << toCString((seqan::CharString) mMRNAIds[uniqRNAPosSet[i]]) << std::endl;
-            std::cout << "  seed type:       " << toCString((seqan::CharString) seedTypes[rnaSitePosMap[i][j]]) << std::endl;
+            std::cout << "  mRNA:            " << toCString((seqan::CharString) mMRNAIds[uniqRNAPosSet[i]])
+                      << std::endl;
+            std::cout << "  seed type:       " << toCString((seqan::CharString) seedTypes[rnaSitePosMap[i][j]])
+                      << std::endl;
             std::cout << "  position(start): " << seedStart + 1 << std::endl;
             std::cout << "  position(end):   " << seedStart + 1 + INDEXED_SEQ_LEN << std::endl;
             std::cout << "  alignment score: " << align_score << std::endl;

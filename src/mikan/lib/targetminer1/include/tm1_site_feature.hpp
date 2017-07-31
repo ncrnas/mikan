@@ -6,7 +6,7 @@
 #include "mk_rna_with_sites.hpp"  // MKRMAWithSites
 #include "tm1_align.hpp"          // TM1Alignment
 #include "tm1_seed_site.hpp"      // TM1SeedSites
-#include "tm1_site_filter.hpp"   // TM1SortedSitePos
+#include "tm1_site_filter.hpp"    // TM1SortedSitePos
 
 namespace tm1p {
 

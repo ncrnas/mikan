@@ -277,7 +277,7 @@ public:
 
     // Method prototypes
     int add_features(TSSVMSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
-                     mikan::MKRMAWithSites &pRNAWithSites, TSSVMSiteScores & pSiteScores);
+                     mikan::MKRMAWithSites &pRNAWithSites, TSSVMSiteScores &pSiteScores);
 
     void clear_features();
 

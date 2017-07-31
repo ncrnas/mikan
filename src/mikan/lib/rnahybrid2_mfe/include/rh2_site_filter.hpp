@@ -55,7 +55,7 @@ private:
     float get_precedence(unsigned pSitePos, mikan::MKSeedSites &pSeedSites,
                          mikan::MKSiteScores &pSiteScores);
 
-    void set_intervals(mikan::MKSeedSites &pSeedSites, mikan::MKSiteScores &pSiteScores,  unsigned pSiteIdx,
+    void set_intervals(mikan::MKSeedSites &pSeedSites, mikan::MKSiteScores &pSiteScores, unsigned pSiteIdx,
                        unsigned &pStartSearch, unsigned &pEndSearch, unsigned &pStartAdd, unsigned &pEndAdd,
                        bool &pSearchOverlap);
 

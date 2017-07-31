@@ -300,7 +300,8 @@ int RH2Core::write_alignment(seqan::CharString const &pMiRNAId) {
             std::cout << "  miRNA:               " << toCString(pMiRNAId) << std::endl;
             std::cout << "  mRNA:                " << toCString((seqan::CharString) mMRNAIds[uniqRNAPosSet[i]])
                       << std::endl;
-            std::cout << "  seed type:           " << toCString((seqan::CharString) seedTypes[rnaSitePosMap[i][j]]) << std::endl;
+            std::cout << "  seed type:           " << toCString((seqan::CharString) seedTypes[rnaSitePosMap[i][j]])
+                      << std::endl;
             std::cout << "  position(target 5'): " << mSiteScores.get_wide_site_start(rnaSitePosMap[i][j]) + 1;
             std::cout << std::endl;
             std::cout << "  position(seed):      " << seedStart + 1 << std::endl;

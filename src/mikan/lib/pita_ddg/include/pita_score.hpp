@@ -147,7 +147,7 @@ public:
     void set_backtrack(bool pBT) { mVRws.set_duplex_backtrack(pBT); }
 
     // Method prototype
-    void init_from_args() ;
+    void init_from_args();
 
     void clear_scores();
 
@@ -191,7 +191,7 @@ public:
     void clear_scores();
 
     int calc_scores(PITASeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
-                     mikan::MKRMAWithSites &pRNAWithSites, PITASiteScores &pDDGScores);
+                    mikan::MKRMAWithSites &pRNAWithSites, PITASiteScores &pDDGScores);
 
 private:
     seqan::String<float> mTotalScores;

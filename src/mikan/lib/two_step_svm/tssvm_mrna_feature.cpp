@@ -69,7 +69,7 @@ int TSSVMRNARawFeatures::add_features(
         mTotDiscUTRLen.add_features(i, sitePos, pSeedSites, pMRNASeqs[seqIdx], pSiteScores);
         mSeedTypeNum.add_features(i, sitePos, pSeedSites, pMRNASeqs[seqIdx], pSiteScores);
         mDiscBin.add_features(i, sitePos, pSeedSites, pMRNASeqs[seqIdx], pSiteScores);
-        mOptDist.add_features(i,sitePos, pSeedSites, pMRNASeqs[seqIdx], pSiteScores);
+        mOptDist.add_features(i, sitePos, pSeedSites, pMRNASeqs[seqIdx], pSiteScores);
         mSiteNumFlg.add_features(i, sitePos, pSeedSites, pMRNASeqs[seqIdx], pSiteScores);
         mTotDisc.add_features(i, sitePos, pSeedSites, pMRNASeqs[seqIdx], pSiteScores);
 
