@@ -8,7 +8,7 @@
 #include "rh2_option.hpp"        // RH2Options
 #include "rh2_score.hpp"         // RH2SiteScores, RH2TotalScores
 #include "rh2_seed_site.hpp"     // RH2SeedSites
-#include "rh2_site_cluster.hpp"  // RH2Overlap, RH2TopNScore, RH2SortedSitePos
+#include "rh2_site_filter.hpp"   // RH2SiteFilter, RH2TopNScore
 
 namespace rh2mfe {
 
@@ -44,8 +44,11 @@ public:
             mExecFilterSiteNum(true), mExecSortSites(true), mExecSumScores(true), mOutputMFEScore(true),
             mOutputTotalScore(true), mOutputAlign(true), mMaxHits(0), mMiRNAIds(pMiRNAIds),
             mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs),
-            mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mSiteScores(pOpts) {
+            mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mSiteScores(pOpts), mSiteFilter(pOpts) {
+
         init_from_args(pOpts);
+        seqan::CharString vtype = "wide";
+        mRNAWithSites.set_sort_vtype(vtype);
     }
 
     // Method prototypes
@@ -67,10 +70,10 @@ private:
     std::ofstream mOFile2;
 
     RH2SeedSites mSeedSites;
+    mikan::MKRMAWithSites mRNAWithSites;
     RH2SiteScores mSiteScores;
-    RH2Overlap mOverlappedSites;
+    RH2SiteFilter mSiteFilter;
     RH2TopNScore mTopScoredSites;
-    RH2SortedSitePos mSortedSites;
     RH2TotalScores mTotalScores;
 
 private:

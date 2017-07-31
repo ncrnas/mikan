@@ -84,7 +84,7 @@ void TM1ScaledFeatures::print_features() {
 }
 
 int TM1ScaledFeatures::scale_features(
-        TM1SortedSitePos &pSortedSites,
+        mikan::MKRMAWithSites &pRNAWithSites,
         TM1MRNASeedType &pSeedTypes,
         TM1MRNAAURich &pAURich,
         TM1MRNASingleFreq &pSingleFreqs,
@@ -93,14 +93,18 @@ int TM1ScaledFeatures::scale_features(
         TM1MRNADiFreqFlank &pDiFreqFlanks,
         TM1MRNASingleMatch &pSingleMatches,
         TM1MRNATwoConsecMatch &pTwoMatches) {
-    const String<unsigned> &mRNAIDs = pSortedSites.get_mrna_ids();
 
-    resize_features((unsigned) length(mRNAIDs));
-    for (unsigned i = 0; i < length(mRNAIDs); ++i) {
-        mMRNAIDs[i] = mRNAIDs[i];
-    }
+    mikan::TMRNAPosSet &mUniqRNAPosSet = pRNAWithSites.get_uniq_mrna_pos_set();
 
-    for (unsigned i = 0; i < length(mMRNAIDs); ++i) {
+    resize_features((unsigned) length(pRNAWithSites.mEffectiveRNAs));
+
+    for (unsigned i = 0; i < length(pRNAWithSites.mEffectiveRNAs); ++i) {
+        mMRNAIDs[i] = mUniqRNAPosSet[i];
+
+        if (!pRNAWithSites.mEffectiveRNAs[i]) {
+            continue;
+        }
+
         scale_seed_type(i, pSeedTypes);
         scale_au_rich(i, pAURich);
         scale_single_freq(i, pSingleFreqs);
@@ -112,6 +116,7 @@ int TM1ScaledFeatures::scale_features(
     }
 
     return 0;
+
 }
 
 void TM1ScaledFeatures::scale_seed_type(unsigned pIdx, TM1MRNASeedType &pSeedTypes) {
@@ -173,7 +178,7 @@ void TM1ScaledFeatures::scale_two_match(unsigned pIdx, TM1MRNATwoConsecMatch &pT
 }
 
 //
-// TM1RawFeatures methods
+// TM1MRNAFeatures methods
 //
 void TM1MRNAFeatures::clear_features() {
     mSeedTypes.clear_features();
@@ -207,38 +212,48 @@ void TM1MRNAFeatures::resize_features(unsigned pSize) {
 int TM1MRNAFeatures::add_features(
         TM1SeedSites &pSeedSites,
         TM1RawFeatures &pRawFeatures,
-        TM1SortedSitePos &pSortedSites) {
-    const StringSet<String<unsigned> > &sortedSites = pSortedSites.get_sorted_mrna_pos();
-    const String<unsigned> &mRNAIDs = pSortedSites.get_mrna_ids();
-    unsigned idx;
+        mikan::MKRMAWithSites &pRNAWithSites) {
 
-    resize_features((unsigned) length(mRNAIDs));
+    seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = pRNAWithSites.get_rna_site_pos_map();
+    mikan::TSitePosSet sitePos;
 
-    for (unsigned i = 0; i < length(mRNAIDs); ++i) {
-        idx = i;
-        mSeedTypes.add_features(idx, sortedSites[idx], pSeedSites, pRawFeatures);
-        mSiteCounts.add_features(idx, sortedSites[idx], pSeedSites, pRawFeatures);
-        mAURich.add_features(idx, sortedSites[idx], pSeedSites, pRawFeatures);
-        mSingleFreqs.add_features(idx, sortedSites[idx], pSeedSites, pRawFeatures);
-        mSingleFreqFlanks.add_features(idx, sortedSites[idx], pSeedSites, pRawFeatures);
-        mDiFreqs.add_features(idx, sortedSites[idx], pSeedSites, pRawFeatures);
-        mDiFreqFlanks.add_features(idx, sortedSites[idx], pSeedSites, pRawFeatures);
-        mSingleMatches.add_features(idx, sortedSites[idx], pSeedSites, pRawFeatures);
-        mTwoMatches.add_features(idx, sortedSites[idx], pSeedSites, pRawFeatures);
+    resize_features((unsigned) length(pRNAWithSites.mEffectiveRNAs));
+
+    int count;
+    for (unsigned i = 0; i < length(pRNAWithSites.mEffectiveRNAs); ++i) {
+        count = 0;
+        for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
+            if (!pSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
+                continue;
+            }
+            count++;
+        }
+        if (count == 0) {
+            pRNAWithSites.mEffectiveRNAs[i] = false;
+            continue;
+        }
+
+        mSeedTypes.add_features(i, rnaSitePosMap[i], pSeedSites, pRawFeatures);
+        mSiteCounts.add_features(i, rnaSitePosMap[i], pSeedSites, pRawFeatures);
+        mAURich.add_features(i, rnaSitePosMap[i], pSeedSites, pRawFeatures);
+        mSingleFreqs.add_features(i, rnaSitePosMap[i], pSeedSites, pRawFeatures);
+        mSingleFreqFlanks.add_features(i, rnaSitePosMap[i], pSeedSites, pRawFeatures);
+        mDiFreqs.add_features(i, rnaSitePosMap[i], pSeedSites, pRawFeatures);
+        mDiFreqFlanks.add_features(i, rnaSitePosMap[i], pSeedSites, pRawFeatures);
+        mSingleMatches.add_features(i, rnaSitePosMap[i], pSeedSites, pRawFeatures);
+        mTwoMatches.add_features(i, rnaSitePosMap[i], pSeedSites, pRawFeatures);
     }
 
-    mScaledFeats.scale_features(pSortedSites, mSeedTypes, mAURich, mSingleFreqs, mSingleFreqFlanks, mDiFreqs,
-                                mDiFreqFlanks, mSingleMatches, mTwoMatches);
+    mScaledFeats.scale_features(pRNAWithSites, mSeedTypes, mAURich, mSingleFreqs, mSingleFreqFlanks,
+                                mDiFreqs, mDiFreqFlanks, mSingleMatches, mTwoMatches);
 
 //    print_features(pSortedSites);
 
     return 0;
 }
 
-void TM1MRNAFeatures::print_features(TM1SortedSitePos &pSortedSites) {
-    const String<unsigned> &mRNAIDs = pSortedSites.get_mrna_ids();
-
-    for (unsigned i = 0; i < length(mRNAIDs); ++i) {
+void TM1MRNAFeatures::print_features(mikan::MKRMAWithSites &pRNAWithSites) {
+    for (unsigned i = 0; i < length(pRNAWithSites.mEffectiveRNAs); ++i) {
         mSiteCounts.print_feature(i);
         mSeedTypes.print_feature(i);
         mAURich.print_feature(i);

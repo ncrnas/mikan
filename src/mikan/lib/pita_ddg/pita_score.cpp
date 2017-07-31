@@ -301,12 +301,12 @@ int PITASiteScores::calc_scores(
         if (!pSeedSites.mEffectiveSites[i] || !mDGDuplexScores.mEffectiveSites[i] ||
             !mDGOpenScores.mEffectiveSites[i]) {
             mEffectiveSites[i] = false;
+            pSeedSites.mEffectiveSites[i] = false;
             mDDGScores[i] = 0.0;
-            continue;
+        } else {
+            mDDGScores[i] = mVRws.get_dgall(i) + (mVRws.get_dg1(i) - mVRws.get_dg0(i));
+            mEffectiveSites[i] = true;
         }
-
-        mDDGScores[i] = mVRws.get_dgall(i) + (mVRws.get_dg1(i) - mVRws.get_dg0(i));
-        mEffectiveSites[i] = true;
 
     }
 
@@ -338,86 +338,68 @@ void PITATotalScores::clear_scores() {
 
 int PITATotalScores::calc_scores(
         PITASeedSites &pSeedSites,
-        PITASiteScores &pMFEScores,
-        const seqan::String<unsigned> &pSortedSites) {
+        mikan::TRNASet const &,
+        mikan::MKRMAWithSites &pRNAWithSites,
+        PITASiteScores &pSiteScores) {
 
-    const String<unsigned> &siteMRNAPos = pSeedSites.get_mrna_pos();
-    int prevPos = -1;
-    int newIdx = -1;
-    String<int> newIdices;
-    unsigned posIdx;
-    String<double> maxScores;
-    String<int> maxScoreIds;
-    String<bool> maxScoreProcessed;
-    double score;
-    double exp_diff;
+    mikan::TMRNAPosSet &uniqRNAPosSet = pRNAWithSites.get_uniq_mrna_pos_set();
+    seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = pRNAWithSites.get_rna_site_pos_map();
 
-    resize(newIdices, length(siteMRNAPos));
-    for (unsigned i = 0; i < length(pSortedSites); ++i) {
-        posIdx = (unsigned) pSortedSites[i];
+    resize(mTotalScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
+    resize(mSiteNum, length(pRNAWithSites.mEffectiveRNAs), 0);
+    resize(mMRNAPos, length(pRNAWithSites.mEffectiveRNAs));
 
-        if (!pMFEScores.mEffectiveSites[posIdx]) {
+    float score, max_score, exp_diff, total_score;
+    unsigned site_count, max_idx;
+    mikan::TSitePosSet sitePos;
+    for (unsigned i = 0; i < length(pRNAWithSites.mEffectiveRNAs); i++) {
+        if (!pRNAWithSites.mEffectiveRNAs[i]) {
             continue;
         }
 
-        if (prevPos != (int) siteMRNAPos[posIdx]) {
-            ++newIdx;
+        score = 0;
+        max_score = -FLT_MAX;
+        site_count = 0;
+        max_idx = 0;
+
+        for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
+            if (!pSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
+                continue;
+            }
+            appendValue(sitePos, rnaSitePosMap[i][j]);
+            score = -1.0 * pSiteScores.get_score(rnaSitePosMap[i][j]);
+            if (score > max_score) {
+                max_score = score;
+                max_idx = j;
+            }
+            ++site_count;
         }
-        newIdices[i] = newIdx;
-        prevPos = (int) siteMRNAPos[posIdx];
-    }
 
-    resize(mTotalScores, newIdx + 1, 0.0);
-    resize(mMRNAPos, newIdx + 1);
-    resize(mSiteNum, newIdx + 1, 0);
-    resize(maxScores, newIdx + 1);
-    resize(maxScoreIds, newIdx + 1);
-    resize(maxScoreProcessed, newIdx + 1, false);
-
-    for (unsigned i = 0; i < length(pSortedSites); ++i) {
-        posIdx = (unsigned) pSortedSites[i];
-
-        if (!pMFEScores.mEffectiveSites[posIdx]) {
+        if (length(sitePos) == 0) {
             continue;
         }
 
-        score = -1.0 * pMFEScores.get_score(posIdx);
-//        score = roundf(score * 100.0) / 100.0;
-        if (!maxScoreProcessed[newIdices[i]] || score > maxScores[newIdices[i]]) {
-            maxScores[newIdices[i]] = score;
-            maxScoreIds[newIdices[i]] = i;
-            if (!maxScoreProcessed[newIdices[i]]) {
-                maxScoreProcessed[newIdices[i]] = true;
-                mTotalScores[newIdices[i]] = 1.0;
-                mSiteNum[newIdices[i]] = 1;
-                mMRNAPos[newIdices[i]] = siteMRNAPos[posIdx];
+        total_score = 1.0;
+        for (unsigned j = 0; j < length(sitePos); ++j) {
+            if (j == max_idx) {
+                continue;
+            }
+            score = -1.0 * pSiteScores.get_score(sitePos[j]);
+            exp_diff = score - max_score;
+            if (exp_diff > MIN_EXP_DIFF) {
+                total_score += std::exp(exp_diff);
             }
         }
-    }
 
+        mTotalScores[i] = -1.0 * (max_score + std::log(total_score));
+        mMRNAPos[i] = uniqRNAPosSet[i];
+        mSiteNum[i] = site_count;
 
-    for (unsigned i = 0; i < length(pSortedSites); ++i) {
-        posIdx = (unsigned) pSortedSites[i];
-
-        if (!pMFEScores.mEffectiveSites[posIdx] || maxScoreIds[newIdices[i]] == (int) i) {
-            continue;
-        }
-
-        score = -1.0 * pMFEScores.get_score(posIdx);
-//        score = roundf(score * 100.0) / 100.0;
-        exp_diff = score - maxScores[newIdices[i]];
-        if (exp_diff > MIN_EXP_DIFF) {
-            mTotalScores[newIdices[i]] += std::exp(exp_diff);
-        }
-
-        mSiteNum[newIdices[i]] += 1;
-    }
-
-    for (unsigned i = 0; i < length(mTotalScores); ++i) {
-        mTotalScores[i] = -1.0 * (maxScores[i] + std::log(mTotalScores[i]));
+        clear(sitePos);
     }
 
     return 0;
+
 }
 
 } // namespace ptddg

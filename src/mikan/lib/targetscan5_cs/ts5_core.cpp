@@ -143,8 +143,9 @@ int TS5Core::calculate_mirna_scores(unsigned pIdx) {
     }
 
     // Summarize context scores
+    mRNAWithSites.create_mrna_site_map(mSeedSites, mSiteScores);
     if (mExecSumScores) {
-        retVal = mTotalScore.calc_scores(mSeedSites, mSiteScores);
+        retVal = mTotalScore.calc_scores(mSeedSites, mMRNASeqs, mRNAWithSites, mSiteScores);
         if (retVal != 0) {
             std::cerr << "ERROR: Calculate total scores failed." << std::endl;
             return 1;

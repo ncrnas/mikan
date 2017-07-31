@@ -18,7 +18,7 @@ public:
 
         mOutputAlign = 6;
         mMaxSeedLen = 8;
-        mMinAlignScore= 140.0;
+        mMinAlignScore = 140.0;
         mMaxEnergy = 1.0;
     }
 

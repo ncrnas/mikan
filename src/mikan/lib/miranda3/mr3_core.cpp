@@ -11,7 +11,7 @@
 #include "mr3_option.hpp"         // MR3Options
 #include "mr3_seed_site.hpp"      // MR3SeedSites
 #include "mr3_score.hpp"          // MR3SiteScores, MR3TotalScores
-#include "mr3_site_cluster.hpp"   // MR3Overlap, MR3TopNScore, MR3SortedSitePos
+#include "mr3_site_filter.hpp"    // MR3SiteFilter
 #include "mr3_core.hpp"           // MR3Core
 
 namespace mr3as {
@@ -166,27 +166,18 @@ int MR3Core::calculate_mirna_scores(unsigned pIdx) {
     }
 
     // Filter overlapped sites
-    if (OVERLAP_LEN != 0 && mExecFilterOverlap) {
-        retVal = mOverlappedSites.filter_overlapped_sites_by_scores(mSeedSites, mSiteScores, OVERLAP_LEN);
+    mRNAWithSites.create_mrna_site_map(mSeedSites, mSiteScores);
+    if (mExecFilterOverlap) {
+        retVal = mSiteFilter.filter_sites(mSeedSites, mRNAWithSites, mSiteScores);
         if (retVal != 0) {
             std::cerr << "ERROR: Check overlapped sites failed." << std::endl;
             return 1;
         }
     }
 
-    // Sort target sites
-    if (mExecSortSites) {
-        retVal = mSortedSites.generate_sorted_mrna_pos(mSeedSites);
-        if (retVal != 0) {
-            std::cerr << "ERROR: Sort target sites failed." << std::endl;
-            return 1;
-        }
-    }
-
     // Summarize alignment and energy scores
     if (mExecSumScores) {
-        const seqan::String<unsigned> &sortedPos = mSortedSites.get_sorted_mrna_pos();
-        retVal = mTotalScores.calc_scores(mSeedSites, mSiteScores, sortedPos);
+        retVal = mTotalScores.calc_scores(mSeedSites, mMRNASeqs, mRNAWithSites, mSiteScores);
         if (retVal != 0) {
             std::cerr << "ERROR: Calculate total scores failed." << std::endl;
             return 1;
@@ -221,48 +212,52 @@ int MR3Core::calculate_mirna_scores(unsigned pIdx) {
     }
 
     mSeedSites.clear_pos();
-    mOverlappedSites.clear_cluster();
     mSiteScores.clear_scores();
-    mSortedSites.clear_site_pos();
+    mRNAWithSites.clear_maps();
     mTotalScores.clear_scores();
 
     return 0;
 }
 
 int MR3Core::write_site_score(seqan::CharString const &pMiRNAId) {
-    const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
+
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const seqan::StringSet<seqan::CharString> &seedTypes = mSeedSites.get_seed_types();
-    const seqan::String<unsigned> &sortedPos = mSortedSites.get_sorted_mrna_pos();
-    seqan::CharString seedType;
-    int seedStart = 0;
-    int posIdx;
-    float scoreAlign;
-    float scoreEn;
 
-    for (unsigned i = 0; i < length(sortedPos); ++i) {
-        posIdx = sortedPos[i];
-        if (!mSeedSites.mEffectiveSites[posIdx]) {
+    seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = mRNAWithSites.get_rna_site_pos_map();
+    mikan::TMRNAPosSet &uniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
+
+    for (unsigned i = 0; i < length(mRNAWithSites.mEffectiveRNAs); i++) {
+        if (!mRNAWithSites.mEffectiveRNAs[i]) {
             continue;
         }
 
-        seedStart = sitePos[posIdx];
-        scoreAlign = mSiteScores.get_align_score(posIdx);
-        scoreAlign = roundf(scoreAlign * 100.0f) / 100.0f;
-        scoreEn = mSiteScores.get_energy_score(posIdx);
-        scoreEn = roundf(scoreEn * 100.0f) / 100.0f;
+        int seedStart;
+        for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
+            if (!mSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
+                continue;
+            }
 
-        mOFile1 << toCString(pMiRNAId) << "\t";
-        mOFile1 << toCString((seqan::CharString) mMRNAIds[mRNAPos[posIdx]]) << "\t";
-        mOFile1 << seedStart + 1 << "\t";
-        mOFile1 << seedStart + 1 + INDEXED_SEQ_LEN << "\t";
-        mOFile1 << toCString((seqan::CharString) seedTypes[posIdx]) << "\t";
-        mOFile1 << scoreAlign << "\t";
-        mOFile1 << scoreEn << "\t";
-        mOFile1 << std::endl;
+            seedStart = sitePos[rnaSitePosMap[i][j]];
+            float scoreAlign = mSiteScores.get_align_score(rnaSitePosMap[i][j]);
+            scoreAlign = roundf(scoreAlign * 100.0f) / 100.0f;
+            float scoreEn = mSiteScores.get_energy_score(rnaSitePosMap[i][j]);
+            scoreEn = roundf(scoreEn * 100.0f) / 100.0f;
+
+            mOFile1 << toCString(pMiRNAId) << "\t";
+            mOFile1 << toCString((seqan::CharString) mMRNAIds[uniqRNAPosSet[i]]) << "\t";
+            mOFile1 << seedStart + 1 << "\t";
+            mOFile1 << seedStart + 1 + INDEXED_SEQ_LEN << "\t";
+            mOFile1 << toCString((seqan::CharString) seedTypes[rnaSitePosMap[i][j]]) << "\t";
+            mOFile1 << scoreAlign << "\t";
+            mOFile1 << scoreEn << "\t";
+            mOFile1 << std::endl;
+        }
+
     }
 
     return 0;
+
 }
 
 int MR3Core::write_total_score(seqan::CharString const &pMiRNAId) {
@@ -285,47 +280,49 @@ int MR3Core::write_total_score(seqan::CharString const &pMiRNAId) {
 }
 
 int MR3Core::write_alignment(seqan::CharString const &pMiRNAId) {
-    const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const seqan::StringSet<seqan::CharString> &seedTypes = mSeedSites.get_seed_types();
-    const seqan::String<unsigned> &sortedPos = mSortedSites.get_sorted_mrna_pos();
-    seqan::CharString seedType;
-    int seedStart = 0;
-    int posIdx;
-    int count = 0;
-    float align_score;
-    float energy_score;
 
-    for (unsigned i = 0; i < length(sortedPos); ++i) {
-        posIdx = sortedPos[i];
+    seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = mRNAWithSites.get_rna_site_pos_map();
+    mikan::TMRNAPosSet &uniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
 
-        if (!mSeedSites.mEffectiveSites[posIdx]) {
+    for (unsigned i = 0; i < length(mRNAWithSites.mEffectiveRNAs); i++) {
+        if (!mRNAWithSites.mEffectiveRNAs[i]) {
             continue;
         }
 
-        seedStart = sitePos[posIdx];
-        align_score = mSiteScores.get_align_score(posIdx);
-        align_score = roundf(align_score * 100.0f) / 100.0f;
-        energy_score = mSiteScores.get_energy_score(posIdx);
-        energy_score = roundf(energy_score * 100.0f) / 100.0f;
+        for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
+            if (!mSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
+                continue;
+            }
 
-        std::cout << "### " << count + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
-        mSiteScores.print_alignment(posIdx);
-        std::cout << "  miRNA:           " << toCString(pMiRNAId) << std::endl;
-        std::cout << "  mRNA:            " << toCString((seqan::CharString) mMRNAIds[mRNAPos[posIdx]]) << std::endl;
-        std::cout << "  seed type:       " << toCString((seqan::CharString) seedTypes[posIdx]) << std::endl;
-        std::cout << "  position(start): " << seedStart + 1 << std::endl;
-        std::cout << "  position(end):   " << seedStart + 1 + INDEXED_SEQ_LEN << std::endl;
-        std::cout << "  alignment score: " << align_score << std::endl;
-        std::cout << "  energy score:    " << energy_score << std::endl;
+            seqan::CharString seedType = seedTypes[rnaSitePosMap[i][j]];
+            int seedStart = sitePos[rnaSitePosMap[i][j]];
+            float align_score = mSiteScores.get_align_score(rnaSitePosMap[i][j]);
+            align_score = roundf(align_score * 100.0f) / 100.0f;
+            float energy_score = mSiteScores.get_energy_score(rnaSitePosMap[i][j]);
+            energy_score = roundf(energy_score * 100.0f) / 100.0f;
 
-        std::cout << std::endl;
+            std::cout << "### " << (i + j) + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
+            mSiteScores.print_alignment(rnaSitePosMap[i][j]);
+            std::cout << "  miRNA:           " << toCString(pMiRNAId) << std::endl;
+            std::cout << "  mRNA:            " << toCString((seqan::CharString) mMRNAIds[uniqRNAPosSet[i]])
+                      << std::endl;
+            std::cout << "  seed type:       " << toCString((seqan::CharString) seedTypes[rnaSitePosMap[i][j]])
+                      << std::endl;
+            std::cout << "  position(start): " << seedStart + 1 << std::endl;
+            std::cout << "  position(end):   " << seedStart + 1 + INDEXED_SEQ_LEN << std::endl;
+            std::cout << "  alignment score: " << align_score << std::endl;
+            std::cout << "  energy score:    " << energy_score << std::endl;
 
-        ++count;
+            std::cout << std::endl;
 
+
+        }
     }
 
     return 0;
+
 }
 
 } // namespace mr3as

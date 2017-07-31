@@ -1,13 +1,15 @@
 #ifndef TS5_CORE_HPP_
 #define TS5_CORE_HPP_
 
-#include "mk_typedef.hpp"        // TCharSet, TRNASet, TIndexQGram, TFinder
-#include "mk_sequence.hpp"       // MKSequences
-#include "mk_option.hpp"         // MKOptions
-#include "ts5_feature.hpp"       // TS5RawFeatures
-#include "ts5_option.hpp"        // TS5CSOptions
-#include "ts5_score.hpp"         // TS5SiteScores, TS5TotalScores
-#include "ts5_seed_site.hpp"     // TS5SeedSites
+#include "mk_typedef.hpp"         // TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_sequence.hpp"        // MKSequences
+#include "mk_option.hpp"          // MKOptions
+#include "mk_site_score.hpp"      // MKSiteScores
+#include "mk_rna_with_sites.hpp"  // MKRMAWithSites
+#include "ts5_feature.hpp"        // TS5RawFeatures
+#include "ts5_option.hpp"         // TS5CSOptions
+#include "ts5_score.hpp"          // TS5SiteScores, TS5TotalScores
+#include "ts5_seed_site.hpp"      // TS5SeedSites
 
 namespace ts5cs {
 
@@ -62,6 +64,7 @@ private:
 
     TS5SeedSites mSeedSites;
     TS5SiteScores mSiteScores;
+    mikan::MKRMAWithSites mRNAWithSites;
     TS5TotalScores mTotalScore;
 
 private:

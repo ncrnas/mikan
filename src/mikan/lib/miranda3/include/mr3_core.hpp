@@ -8,7 +8,7 @@
 #include "mr3_option.hpp"         // MR3Options
 #include "mr3_score.hpp"          // MR3GGDScores, MR3TotalScores
 #include "mr3_seed_site.hpp"      // MR3SeedSites
-#include "mr3_site_cluster.hpp"   // MR3Overlap, MR3SortedSitePos
+#include "mr3_site_filter.hpp"    // MR3SiteFilter
 
 namespace mr3as {
 
@@ -51,7 +51,7 @@ public:
             mOutputAlign(true), mMinSeedLen(6), mMaxSeedLen(8), mMinAlignScore(120.0), mMaxEnergy(1.0),
             mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
             mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
-            mSiteScores(pOpts) {
+            mSiteScores(pOpts), mSiteFilter(pOpts) {
         init_from_args(pOpts);
     }
 
@@ -75,8 +75,8 @@ private:
 
     MR3SeedSites mSeedSites;
     MR3SiteScores mSiteScores;
-    MR3Overlap mOverlappedSites;
-    MR3SortedSitePos mSortedSites;
+    mikan::MKRMAWithSites mRNAWithSites;
+    MR3SiteFilter mSiteFilter;
     MR3TotalScores mTotalScores;
 
 private:

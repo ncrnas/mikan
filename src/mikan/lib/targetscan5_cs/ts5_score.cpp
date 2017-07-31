@@ -20,12 +20,11 @@ void TS5SiteScores::resize_scores(int pSize) {
 }
 
 void TS5SiteScores::clear_scores() {
-    mRawFeatures.clear_features();
-
     mikan::MKSiteScores::clear_scores();
 
     clear(mContextScores);
 
+    mRawFeatures.clear_features();
     mSeedTypes.clear_scores();
     mSitePos.clear_scores();
     mAURich.clear_scores();
@@ -210,41 +209,49 @@ void TS5TotalScores::clear_scores() {
     clear(mSiteNum);
 }
 
-int TS5TotalScores::calc_scores(TS5SeedSites &pSeedSites,
-                                TS5SiteScores &pContextScores) {
-    const String<unsigned> &siteMRNAPos = pSeedSites.get_mrna_pos();
-    int prevPos = -1;
-    int newIdx = -1;
-    String<int> newIdices;
+int TS5TotalScores::calc_scores(
+        TS5SeedSites &pSeedSites,
+        mikan::TRNASet const &,
+        mikan::MKRMAWithSites &pRNAWithSites,
+        TS5SiteScores &pContextScores) {
 
-    resize(newIdices, length(siteMRNAPos));
-    for (unsigned i = 0; i < length(siteMRNAPos); ++i) {
-        if (!pContextScores.mEffectiveSites[i]) {
+    mikan::TMRNAPosSet &uniqRNAPosSet = pRNAWithSites.get_uniq_mrna_pos_set();
+    seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = pRNAWithSites.get_rna_site_pos_map();
+
+    resize(mTotalScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
+    resize(mMRNAPos, length(pRNAWithSites.mEffectiveRNAs));
+    resize(mSiteNum, length(pRNAWithSites.mEffectiveRNAs));
+
+    float score, totalScore;
+    unsigned siteCount;
+    for (unsigned i = 0; i < length(pRNAWithSites.mEffectiveRNAs); i++) {
+        if (!pRNAWithSites.mEffectiveRNAs[i]) {
             continue;
         }
 
-        if (prevPos != (int) siteMRNAPos[i]) {
-            ++newIdx;
+        score = totalScore = 0;
+        siteCount = 0;
+        for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
+            if (!pSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
+                continue;
+            }
+
+            score = pContextScores.get_score(rnaSitePosMap[i][j]);
+            totalScore += score;
+            ++siteCount;
         }
-        newIdices[i] = newIdx;
-        prevPos = (int) siteMRNAPos[i];
-    }
 
-    resize(mTotalScores, newIdx + 1, 0.0);
-    resize(mMRNAPos, newIdx + 1);
-    resize(mSiteNum, newIdx + 1, 0);
-
-    for (unsigned i = 0; i < length(siteMRNAPos); ++i) {
-        if (!pContextScores.mEffectiveSites[i]) {
+        if (siteCount == 0) {
             continue;
         }
 
-        mMRNAPos[newIdices[i]] = siteMRNAPos[i];
-        mTotalScores[newIdices[i]] += pContextScores.get_score(i);
-        mSiteNum[newIdices[i]] += 1;
+        mTotalScores[i] = totalScore;
+        mMRNAPos[i] = uniqRNAPosSet[i];
+        mSiteNum[i] = siteCount;
     }
 
     return 0;
+
 }
 
 } // namespace ts5cs

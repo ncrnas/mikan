@@ -5,12 +5,12 @@
 #include "mk_sequence.hpp"       // MKSequences
 #include "mk_site_score.hpp"     // MKSiteScores
 #include "mk_option.hpp"         // MKOptions
+#include "tm1_site_filter.hpp"   // TM1SiteFilter
 #include "tm1_mrna_feature.hpp"  // TM1MRNAFeatures
 #include "tm1_mrna_svm.hpp"      // TM1MRNAModel, TM1MRNAInputVector
 #include "tm1_option.hpp"        // TM1CSOptions
 #include "tm1_score.hpp"         // TM1ClassifiedScores
 #include "tm1_seed_site.hpp"     // TM1SeedSites
-#include "tm1_site_cluster.hpp"  // TM1Overlap
 #include "tm1_site_feature.hpp"  // TM1RawFeatures
 
 namespace tm1p {
@@ -26,6 +26,7 @@ public:
     bool mExecSearchSeedSites;
     bool mExecCalSiteScore;
     bool mExecGetRawFeat;
+    bool mExecFilterOverlap;
     bool mExecSortSites;
     bool mExecGetMRNAFeat;
     bool mExecRNAScore;
@@ -43,10 +44,11 @@ public:
     TM1Core(mikan::MKOptions const &pOpts, mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
             mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
             mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
-            mExecSearchSeedSites(true), mExecCalSiteScore(false), mExecGetRawFeat(true), mExecSortSites(true),
+            mExecSearchSeedSites(true), mExecCalSiteScore(false), mExecGetRawFeat(true), mExecFilterOverlap(true),
+            mExecSortSites(true),
             mExecGetMRNAFeat(true), mExecRNAScore(true), mExecSumScores(true), mOutputSitePos(true),
             mOutputScore(true), mOutputAlign(true), mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
-            mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mSiteScores(pOpts) {
+            mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mSiteScores(pOpts), mSiteFilter(pOpts) {
         init_from_args(pOpts);
     }
 
@@ -69,9 +71,10 @@ private:
     std::ofstream mOFile2;
 
     TM1SeedSites mSeedSites;
+    mikan::MKRMAWithSites mRNAWithSites;
     mikan::MKSiteScores mSiteScores;
     TM1RawFeatures mRawFeatures;
-    TM1SortedSitePos mSortedSites;
+    TM1SiteFilter mSiteFilter;
     TM1MRNAFeatures mMRNAFeatures;
     TM1MRNAInputVector mMRNAInput;
     TM1ClassifiedScores mScores;

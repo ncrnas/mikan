@@ -5,7 +5,7 @@ set(TM1_SOURCE
         ${CMAKE_CURRENT_SOURCE_DIR}/tm1_option.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/tm1_seed_site.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/tm1_site_feature.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/tm1_site_cluster.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/tm1_site_filter.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/tm1_mrna_feature.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/tm1_mrna_svm.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/tm1_score.cpp

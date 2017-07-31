@@ -331,115 +331,76 @@ void MR3TotalScores::clear_scores() {
     clear(mLogMaxEnScores);
 }
 
+int calc_scores(MR3SeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
+                mikan::MKRMAWithSites &pRNAWithSites, MR3SiteScores &pSiteScores);
+
 int MR3TotalScores::calc_scores(
         MR3SeedSites &pSeedSites,
-        MR3SiteScores &pSiteScores,
-        const seqan::String<unsigned> &pSortedSites) {
+        mikan::TRNASet const &,
+        mikan::MKRMAWithSites &pRNAWithSites,
+        MR3SiteScores &pSiteScores) {
 
-    const String<unsigned> &siteMRNAPos = pSeedSites.get_mrna_pos();
-    int prevPos = -1;
-    int newIdx = -1;
-    String<int> newIdices;
-    unsigned posIdx;
-    String<double> maxAlignScores;
-    String<double> maxEnScores;
-    String<int> maxAlignScoreIds;
-    String<int> maxEnScoreIds;
-    String<bool> maxScoreProcessed;
-    double scoreAlign;
-    double scoreEn;
-    double exp_diff;
+    mikan::TMRNAPosSet &uniqRNAPosSet = pRNAWithSites.get_uniq_mrna_pos_set();
+    seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = pRNAWithSites.get_rna_site_pos_map();
 
-    resize(newIdices, length(siteMRNAPos));
-    for (unsigned i = 0; i < length(pSortedSites); ++i) {
-        posIdx = pSortedSites[i];
+    resize(mTotalAlignScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
+    resize(mTotalEnScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
+    resize(mLogMaxAlignScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
+    resize(mLogMaxEnScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
+    resize(mMRNAPos, length(pRNAWithSites.mEffectiveRNAs));
+    resize(mSiteNum, length(pRNAWithSites.mEffectiveRNAs), 0);
 
-        if (!pSiteScores.mEffectiveSites[posIdx]) {
+
+    float score, maxScore, totalScore;
+    float scoreEn, maxScoreEn, totalScoreEn;
+    unsigned siteCount, maxIdx, maxIdxEn;
+    for (unsigned i = 0; i < length(pRNAWithSites.mEffectiveRNAs); i++) {
+        if (!pRNAWithSites.mEffectiveRNAs[i]) {
             continue;
         }
 
-        if (prevPos != (int) siteMRNAPos[posIdx]) {
-            ++newIdx;
-        }
-        newIdices[i] = newIdx;
-        prevPos = (int) siteMRNAPos[posIdx];
-    }
+        score = scoreEn = totalScore = totalScoreEn = 0;
+        maxScore = maxScoreEn = -FLT_MAX;
+        siteCount = 0;
+        maxIdx = maxScoreEn = 0;
 
-    resize(mTotalAlignScores, newIdx + 1, 0.0);
-    resize(mTotalEnScores, newIdx + 1, 0.0);
-    resize(mLogMaxAlignScores, newIdx + 1, 0.0);
-    resize(mLogMaxEnScores, newIdx + 1, 0.0);
-    resize(mMRNAPos, newIdx + 1);
-    resize(mSiteNum, newIdx + 1, 0);
-    resize(maxAlignScores, newIdx + 1, 0.0);
-    resize(maxAlignScoreIds, newIdx + 1);
-    resize(maxEnScores, newIdx + 1, 0.0);
-    resize(maxEnScoreIds, newIdx + 1);
-    resize(maxScoreProcessed, newIdx + 1, false);
-
-    for (unsigned i = 0; i < length(pSortedSites); ++i) {
-        posIdx = pSortedSites[i];
-
-        if (!pSiteScores.mEffectiveSites[posIdx]) {
-            continue;
-        }
-
-        if (!maxScoreProcessed[newIdices[i]]) {
-            maxScoreProcessed[newIdices[i]] = true;
-            mLogMaxAlignScores[newIdices[i]] = 1.0;
-            mLogMaxEnScores[newIdices[i]] = 1.0;
-            mSiteNum[newIdices[i]] = 1;
-            mMRNAPos[newIdices[i]] = siteMRNAPos[posIdx];
-        } else {
-            mSiteNum[newIdices[i]] += 1;
-        }
-
-        scoreAlign = pSiteScores.get_align_score(posIdx);
-        mTotalAlignScores[newIdices[i]] += scoreAlign;
-        if (scoreAlign > maxAlignScores[newIdices[i]]) {
-            maxAlignScores[newIdices[i]] = scoreAlign;
-            maxAlignScoreIds[newIdices[i]] = i;
-        }
-
-        scoreEn = -1.0 * pSiteScores.get_energy_score(posIdx);
-        mTotalEnScores[newIdices[i]] += -1.0 * scoreEn;
-        if (scoreEn > maxEnScores[newIdices[i]]) {
-            maxEnScores[newIdices[i]] = scoreEn;
-            maxEnScoreIds[newIdices[i]] = i;
-        }
-    }
-
-    for (unsigned i = 0; i < length(pSortedSites); ++i) {
-        posIdx = pSortedSites[i];
-
-        if (!pSiteScores.mEffectiveSites[posIdx]) {
-            continue;
-        }
-
-        if (maxAlignScores[newIdices[i]] != (int) i) {
-            scoreAlign = pSiteScores.get_align_score(posIdx);
-            exp_diff = scoreAlign - maxAlignScores[newIdices[i]];
-            if (exp_diff > MIN_EXP_DIFF) {
-                mLogMaxAlignScores[newIdices[i]] += std::exp(exp_diff);
+        for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
+            if (!pSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
+                continue;
             }
-        }
 
-        if (maxEnScores[newIdices[i]] != (int) i) {
-            scoreEn = pSiteScores.get_energy_score(posIdx);
-            exp_diff = scoreEn - maxEnScores[newIdices[i]];
-            if (exp_diff > MIN_EXP_DIFF) {
-                mLogMaxEnScores[newIdices[i]] += std::exp(exp_diff);
+            score = pSiteScores.get_align_score(rnaSitePosMap[i][j]);
+            totalScore += score;
+            if (score > maxScore) {
+                maxScore = score;
+                maxIdx = j;
             }
+
+            //TODO: Need to check the equation for this
+            scoreEn = pSiteScores.get_energy_score(rnaSitePosMap[i][j]);
+            totalScoreEn += scoreEn;
+            if ((-1.0 * scoreEn) > maxScoreEn) {
+                maxScoreEn = (-1.0 * scoreEn);
+                maxIdxEn = j;
+            }
+
+            ++siteCount;
         }
 
-    }
+        if (siteCount == 0) {
+            continue;
+        }
 
-    for (unsigned i = 0; i < length(maxAlignScores); ++i) {
-        mLogMaxAlignScores[i] = maxAlignScores[i] + std::log(mTotalAlignScores[i]);
-        mLogMaxEnScores[i] = 1.0 * (maxEnScores[i] + std::log(mTotalEnScores[i]));
+        mTotalAlignScores[i] = totalScore;
+        mTotalEnScores[i] = totalScoreEn;
+        mLogMaxAlignScores[i] = maxScore + std::log(totalScore);
+        mLogMaxEnScores[i] = maxScoreEn + std::log(totalScoreEn);
+        mMRNAPos[i] = uniqRNAPosSet[i];
+        mSiteNum[i] = siteCount;
     }
 
     return 0;
+
 }
 
 } // namespace mr3as

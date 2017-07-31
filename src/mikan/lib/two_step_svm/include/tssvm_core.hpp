@@ -8,7 +8,8 @@
 #include "tssvm_mrna_feature.hpp"   // TSSVMRNARawFeatures
 #include "tssvm_mrna_svm.hpp"       // TSSVMRNAInputVector
 #include "tssvm_option.hpp"         // TSSVMOptions
-#include "tssvm_seed_site.hpp"      // TSSVMSeedSites, TSSVMSeedSiteOverlap
+#include "tssvm_seed_site.hpp"      // TSSVMSeedSites
+#include "tssvm_site_filter.hpp"    // TSSVMSiteFilter
 #include "tssvm_site_score.hpp"     // TSSVMSiteScores
 
 namespace tssvm {
@@ -44,7 +45,7 @@ public:
             mExecSiteScore(true), mExecRNAFeat(true), mExecRNAScore(true), mOutputSiteScore(true),
             mOutputRNAScore(true), mOutputAlign(true), mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs),
             mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
-            mSiteScores(pOpts) {
+            mSiteScores(pOpts), mSiteFilter(pOpts) {
         init_from_args(pOpts);
     }
 
@@ -67,8 +68,9 @@ private:
     std::ofstream mOFile2;
 
     TSSVMSeedSites mSeedSites;
-    TSSVMSeedSiteOverlap mOverlappedSites;
+    mikan::MKRMAWithSites mRNAWithSites;
     TSSVMSiteScores mSiteScores;
+    TSSVMSiteFilter mSiteFilter;
     TSSVMRNARawFeatures mRnaFeatures;
     TSSVMRNAInputVector mRnaInput;
 
