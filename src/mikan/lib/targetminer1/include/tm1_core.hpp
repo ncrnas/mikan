@@ -5,13 +5,13 @@
 #include "mk_sequence.hpp"       // MKSequences
 #include "mk_site_score.hpp"     // MKSiteScores
 #include "mk_option.hpp"         // MKOptions
-#include "tm1_site_cluster.hpp"  // TM1SiteFilter
+#include "tm1_site_filter.hpp"  // TM1SiteFilter
 #include "tm1_mrna_feature.hpp"  // TM1MRNAFeatures
 #include "tm1_mrna_svm.hpp"      // TM1MRNAModel, TM1MRNAInputVector
 #include "tm1_option.hpp"        // TM1CSOptions
 #include "tm1_score.hpp"         // TM1ClassifiedScores
 #include "tm1_seed_site.hpp"     // TM1SeedSites
-#include "tm1_site_cluster.hpp"  // TM1Overlap
+#include "tm1_site_filter.hpp"  // TM1Overlap
 #include "tm1_site_feature.hpp"  // TM1RawFeatures
 
 namespace tm1p {

@@ -8,7 +8,8 @@
 #include "tssvm_mrna_feature.hpp"   // TSSVMRNARawFeatures
 #include "tssvm_mrna_svm.hpp"       // TSSVMRNAInputVector
 #include "tssvm_option.hpp"         // TSSVMOptions
-#include "tssvm_seed_site.hpp"      // TSSVMSeedSites, TSSVMSiteFilter
+#include "tssvm_seed_site.hpp"      // TSSVMSeedSites
+#include "tssvm_site_filter.hpp"    // TSSVMSiteFilter
 #include "tssvm_site_score.hpp"     // TSSVMSiteScores
 
 namespace tssvm {

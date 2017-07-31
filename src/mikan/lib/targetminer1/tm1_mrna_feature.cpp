@@ -214,7 +214,6 @@ int TM1MRNAFeatures::add_features(
         TM1RawFeatures &pRawFeatures,
         mikan::MKRMAWithSites &pRNAWithSites) {
 
-    mikan::TMRNAPosSet &mUniqRNAPosSet = pRNAWithSites.get_uniq_mrna_pos_set();
     seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = pRNAWithSites.get_rna_site_pos_map();
     mikan::TSitePosSet sitePos;
 

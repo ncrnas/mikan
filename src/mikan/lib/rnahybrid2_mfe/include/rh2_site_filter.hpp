@@ -1,5 +1,5 @@
-#ifndef RH2_SITE_CLUSTER_HPP_
-#define RH2_SITE_CLUSTER_HPP_
+#ifndef RH2_SITE_FILTER_HPP_
+#define RH2_SITE_FILTER_HPP_
 
 #include <set>                   // set
 #include <map>                   // multimap
@@ -96,4 +96,4 @@ private:
 
 } // namespace rh2mfe
 
-#endif /* RH2_SITE_CLUSTER_HPP_ */
+#endif /* RH2_SITE_FILTER_HPP_ */

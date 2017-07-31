@@ -1,7 +1,7 @@
 #include <seqan/seq_io.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "tm1_seed_site.hpp"      // TM1SeedSites
-#include "tm1_site_cluster.hpp"   // TM1SiteFilter
+#include "tm1_site_filter.hpp"   // TM1SiteFilter
 
 using namespace seqan;
 

@@ -8,7 +8,7 @@
 #include "rh2_option.hpp"        // RH2Options
 #include "rh2_score.hpp"         // RH2SiteScores, RH2TotalScores
 #include "rh2_seed_site.hpp"     // RH2SeedSites
-#include "rh2_site_cluster.hpp"  // RH2SiteFilter, RH2TopNScore
+#include "rh2_site_filter.hpp"  // RH2SiteFilter, RH2TopNScore
 
 namespace rh2mfe {
 

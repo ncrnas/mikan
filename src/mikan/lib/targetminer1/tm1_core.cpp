@@ -257,7 +257,6 @@ int TM1Core::write_scores(seqan::CharString const &pMiRNAId) {
     const seqan::String<float> &scores = mScores.get_scores();
     const seqan::String<int> &predictions = mScores.get_labels();
     const seqan::String<unsigned> &siteNum = mScores.get_site_num();
-    mikan::TMRNAPosSet &mUniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
     mikan::TMRNAPosSet &uniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
     typedef std::multimap<double, unsigned>::iterator TItMap;
     typedef std::pair<float, unsigned> TPosPair;

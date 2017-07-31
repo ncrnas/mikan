@@ -9,7 +9,7 @@ set(RH2_SOURCE
         ${CMAKE_CURRENT_SOURCE_DIR}/rh2_option.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/rh2_seed_site.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/rh2_score.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/rh2_site_cluster.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/rh2_site_filter.cpp
         PARENT_SCOPE
         )
 set(RH2_HEADERS

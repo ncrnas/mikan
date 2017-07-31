@@ -1,5 +1,5 @@
-#ifndef TM1_SITE_CLUSTER_HPP_
-#define TM1_SITE_CLUSTER_HPP_
+#ifndef TM1_SITE_FILTER_HPP_
+#define TM1_SITE_FILTER_HPP_
 
 #include <set>                    // set
 #include <map>                    // multimap
@@ -28,4 +28,4 @@ private:
 
 } // namespace tm1p
 
-#endif /* TM1_SITE_CLUSTER_HPP_ */
+#endif /* TM1_SITE_FILTER_HPP_ */

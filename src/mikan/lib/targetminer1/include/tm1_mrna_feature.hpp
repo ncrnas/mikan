@@ -4,7 +4,7 @@
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "tm1_seed_site.hpp"     // TM1SeedSites
-#include "tm1_site_cluster.hpp"  // TM1SortedSitePos
+#include "tm1_site_filter.hpp"  // TM1SortedSitePos
 #include "tm1_site_feature.hpp"  // TM1RawFeatures
 
 namespace tm1p {
