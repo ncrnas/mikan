@@ -18,10 +18,13 @@ class MKSiteFilter {
 public:
     // Define methods
     MKSiteFilter(mikan::MKOptions const &opts) : mOpts(opts) {
-        set_gap_len(0);
+        set_overlap_len(0);
+        set_usefilter_flag(true);
     }
 
-    void set_gap_len(unsigned pGapLen) { mGapLen = pGapLen; }
+    void set_overlap_len(unsigned pOverlapLen) { mOverlapLen = pOverlapLen; }
+
+    void set_usefilter_flag(bool pUseFilter) { mUseFilter = pUseFilter; }
 
     virtual void init_from_args() {}
 
@@ -38,11 +41,11 @@ protected:
                                unsigned pSiteIdx, unsigned &pStartSearch, unsigned &pEndSearch,
                                unsigned &pStartAdd, unsigned &pEndAdd, bool &pSearchOverlap);
 
-    void mark_overlap(mikan::MKSeedSites &pSeedSites, mikan::TMRNAPosSet &pSortedPos,
-                      mikan::MKSiteScores &pSiteScores);
+    virtual void mark_sites(mikan::MKSeedSites &pSeedSites, mikan::TMRNAPosSet &pSortedPos,
+                            mikan::MKSiteScores &pSiteScores);
 
     void sort_sites(mikan::TMRNAPosSet &pSortedPos, mikan::MKSeedSites &pSeedSites,
-                    mikan::MKSiteScores &pSiteScores, mikan::TMRNAPosSet &pSortedSeeds);
+                    mikan::MKSiteScores &pSiteScores, mikan::TMRNAPosSet &pSortedSites);
 
     // Define types
     typedef std::multimap<float, unsigned> TPosMap;
@@ -50,8 +53,33 @@ protected:
     typedef std::pair<float, unsigned> TPosPair;
 
     // Define variables
-    unsigned mGapLen;
+    unsigned mOverlapLen;
+    bool mUseFilter;
     mikan::MKOptions const &mOpts;
+
+};
+
+//
+// Filter sites by N top scored sites
+//
+class MKTopNSites : public MKSiteFilter {
+public:
+    // Define methods
+    MKTopNSites(mikan::MKOptions const &opts) : MKSiteFilter(opts), mTopN(0) {}
+
+    virtual void init_from_args();
+
+protected:
+    // Define method
+    virtual float get_precedence(unsigned pSitePos, mikan::MKSeedSites &pSeedSites,
+                                 mikan::MKSiteScores &pSiteScores);
+
+private:
+    int mTopN;
+
+    void mark_sites(mikan::MKSeedSites &pSeedSites, mikan::TMRNAPosSet &pSortedPos,
+                    mikan::MKSiteScores &pSiteScores);
+
 
 };
 

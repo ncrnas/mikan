@@ -14,35 +14,39 @@ int MKSiteFilter::filter_sites(
         mikan::MKRMAWithSites &pRNAWithSites,
         mikan::MKSiteScores &pSiteScores) {
 
+    if (!mUseFilter) {
+        return 0;
+    }
+
     seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = pRNAWithSites.get_rna_site_pos_map();
 
     for (unsigned i = 0; i < length(pRNAWithSites.mEffectiveRNAs); i++) {
-        if (!pRNAWithSites.mEffectiveRNAs[i]) {
+        if (!pRNAWithSites.mEffectiveRNAs[i] || (length(rnaSitePosMap[i]) <= 1)) {
             continue;
         }
 
-        mark_overlap(pSeedSites, rnaSitePosMap[i], pSiteScores);
+        mark_sites(pSeedSites, rnaSitePosMap[i], pSiteScores);
 
     }
 
     return 0;
 }
 
-void MKSiteFilter::mark_overlap(
+void MKSiteFilter::mark_sites(
         mikan::MKSeedSites &pSeedSites,
         mikan::TMRNAPosSet &pSortedPos,
         mikan::MKSiteScores &pSiteScores) {
 
     IntervalTree<unsigned> tree;
     String<unsigned> results;
-    mikan::TMRNAPosSet sortedSeeds;
+    mikan::TMRNAPosSet sortedSites;
     unsigned startAdd, endAdd, startSearch, endSearch;
     bool searchOverlap;
 
-    sort_sites(pSortedPos, pSeedSites, pSiteScores, sortedSeeds);
+    sort_sites(pSortedPos, pSeedSites, pSiteScores, sortedSites);
 
-    for (unsigned i = 0; i < length(sortedSeeds); i++) {
-        set_intervals(pSeedSites, pSiteScores, sortedSeeds[i], startAdd, endAdd,
+    for (unsigned i = 0; i < length(sortedSites); i++) {
+        set_intervals(pSeedSites, pSiteScores, sortedSites[i], startAdd, endAdd,
                       startSearch, endSearch, searchOverlap);
 
         clear(results);
@@ -55,7 +59,7 @@ void MKSiteFilter::mark_overlap(
         }
 
         if (searchOverlap && length(results) > 0) {
-            pSeedSites.mEffectiveSites[sortedSeeds[i]] = false;
+            pSeedSites.mEffectiveSites[sortedSites[i]] = false;
         }
     }
 
@@ -65,7 +69,7 @@ void MKSiteFilter::sort_sites(
         mikan::TMRNAPosSet &pSortedPos,
         mikan::MKSeedSites &pSeedSites,
         mikan::MKSiteScores &pSiteScores,
-        mikan::TMRNAPosSet &pSortedSeeds) {
+        mikan::TMRNAPosSet &pSortedSites) {
 
     float preced;
     TPosMap sortedSeeds;
@@ -75,10 +79,10 @@ void MKSiteFilter::sort_sites(
         sortedSeeds.insert(TPosPair(preced * (length(pSortedPos) + 1) + i, pSortedPos[i]));
     }
 
-    resize(pSortedSeeds, length(pSortedPos));
+    resize(pSortedSites, length(pSortedPos));
     unsigned idx = 0;
     for (TItMap itPos = sortedSeeds.begin(); itPos != sortedSeeds.end(); ++itPos) {
-        pSortedSeeds[idx] = (*itPos).second;
+        pSortedSites[idx] = (*itPos).second;
         ++idx;
     }
 
@@ -97,10 +101,54 @@ void MKSiteFilter::set_intervals(
     String<unsigned> const &sitePos = pSeedSites.get_site_pos();
 
     pStartSearch = sitePos[pSiteIdx];
-    pEndSearch = pStartSearch + mGapLen;
+    pEndSearch = pStartSearch + mOverlapLen;
     pStartAdd = pStartSearch;
     pEndAdd = pEndSearch;
     pSearchOverlap = true;
+}
+
+//
+// MKTopNSites methods
+//
+
+void MKTopNSites::init_from_args() {
+    mTopN = mOpts.mMaxHits;
+    if (mTopN == 0) {
+        mUseFilter = false;
+    }
+
+}
+
+void MKTopNSites::mark_sites(
+        mikan::MKSeedSites &pSeedSites,
+        mikan::TMRNAPosSet &pSortedPos,
+        mikan::MKSiteScores &pSiteScores) {
+
+    int siteCount = 0;
+    mikan::TMRNAPosSet sortedSites;
+
+    sort_sites(pSortedPos, pSeedSites, pSiteScores, sortedSites);
+
+    for (unsigned i = 0; i < length(sortedSites); i++) {
+        if (siteCount < mTopN) {
+            ++siteCount;
+            continue;
+        }
+
+        pSeedSites.mEffectiveSites[sortedSites[i]] = false;
+        pSiteScores.mEffectiveSites[sortedSites[i]] = false;
+    }
+
+}
+
+float MKTopNSites::get_precedence(
+        unsigned pSitePos,
+        mikan::MKSeedSites &,
+        mikan::MKSiteScores &pSiteScores) {
+
+    float preced = pSiteScores.get_score(pSitePos);
+
+    return preced;
 }
 
 } // namespace mikan
