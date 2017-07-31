@@ -2,11 +2,12 @@
 #define TS5_SCORE_HPP_
 
 #include <seqan/sequence.h>
-#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
-#include "mk_site_score.hpp"     // MKSiteScores
-#include "ts5_feature.hpp"       // TS5RawFeatures
-#include "ts5_feature.hpp"       // TS5RawFeatures
-#include "ts5_seed_site.hpp"     // TS5SeedSites
+#include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_site_score.hpp"      // MKSiteScores
+#include "mk_rna_with_sites.hpp"  // MKRMAWithSites
+#include "ts5_feature.hpp"        // TS5RawFeatures
+#include "ts5_feature.hpp"        // TS5RawFeatures
+#include "ts5_seed_site.hpp"      // TS5SeedSites
 
 namespace ts5cs {
 
@@ -186,7 +187,8 @@ public:
     // Method prototypes
     void clear_scores();
 
-    int calc_scores(TS5SeedSites &pSeedSites, TS5SiteScores &pContextScores);
+    int calc_scores(TS5SeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
+                    mikan::MKRMAWithSites &pRNAWithSites, TS5SiteScores &pSiteScores);
 
 private:
     seqan::String<float> mTotalScores;
