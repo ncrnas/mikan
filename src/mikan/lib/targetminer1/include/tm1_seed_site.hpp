@@ -31,25 +31,21 @@ class TM1SeedSites : public mikan::MKSeedSites {
 public:
     // Define methods
     TM1SeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
-            MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {}
+            MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {
+
+        mMinToCDS = 15;
+    }
 
     bool is_m8_match_gu(int i) { return (mM8Match[i] || mM8GU[i]); }
 
     bool is_m8_match(int i) { return (mM8Match[i]); }
 
     // Method prototypes
-
     int get_seed_len(int pIdx);
 
-    int get_seed_start_pos(int pIdx);
+    int get_seed_start(int pIdx);
 
-    int get_seed_start_pos2(int pIdx);
-
-    int get_seed_end_pos(int pIdx);
-
-    int get_seed_end_pos2(int pIdx);
-
-    int get_length_to_cds(int pIdx);
+    int get_seed_end(int pIdx);
 
     void clear_pos();
 
@@ -62,6 +58,10 @@ private:
     seqan::String<unsigned> mMRNASeqLen;
 
 private:
+    bool check_position_1(unsigned, unsigned, seqan::CharString &) { return true; }
+
+    bool check_position_2(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType);
+
     bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
                            mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
                            seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);

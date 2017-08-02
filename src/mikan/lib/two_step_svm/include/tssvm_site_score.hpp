@@ -6,7 +6,7 @@
 #include "mk_site_score.hpp"      // MKSiteScores
 #include "mk_option.hpp"          // MKOptions
 #include "mk_seed_site.hpp"       // MKSeedSites
-#include "tssvm_align.hpp"        // TSAlign
+#include "tssvm_align.hpp"        // TSSVMAlign
 #include "tssvm_option.hpp"       // TSSVMOptions
 #include "tssvm_seed_site.hpp"    // TSSVMSeedSites, TSSVMSiteFilter
 #include "tssvm_site_svm.hpp"     // TSSVMSiteInputVector
@@ -34,7 +34,7 @@ public:
                     mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites const &pRNAWithSites);
 
 private:
-    TSAlign mAlignSeqs;
+    TSSVMAlign mAlignSeqs;
     TSSVMRawFeatures mSiteFeatures;
     TSSVMSiteModel mSiteModel;
     TSSVMSiteInputVector mSiteInput;

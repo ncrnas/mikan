@@ -23,7 +23,7 @@ void TM1Alignment::resize_alignments(unsigned pSize) {
 void TM1Alignment::align_all(
         mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs,
-        TM1SeedSites const &pSeedSites,
+        mikan::MKSeedSites const &pSeedSites,
         String<int> const &pA1Pos) {
     unsigned miLen;
     int a1pos;

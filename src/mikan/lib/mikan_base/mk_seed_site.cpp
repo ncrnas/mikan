@@ -24,13 +24,14 @@ void MKSeedSites::clear_pos() {
 
     clear(mS1Pos);
     clear(mS8Pos);
+
 }
 
 int MKSeedSites::find_seed_sites(mikan::MKSeedSeqs &seedSeqs, mikan::TCharSet &pSeedTypeDef) {
     mikan::TRNAStr seedSeq;
     CharString seedType;
     unsigned mRNAPos, sitePos;
-    bool effectiveSite;
+    bool effectiveSite, effectiveSite2;
     unsigned misMatchPos;
 
     mikan::TRNAStr miRNASeq = seedSeqs.get_mirna_seq();
@@ -50,7 +51,7 @@ int MKSeedSites::find_seed_sites(mikan::MKSeedSeqs &seedSeqs, mikan::TCharSet &p
             mRNAPos = position(mFinder).i1;
             sitePos = position(mFinder).i2;
 
-            effectiveSite = check_position(mRNAPos, sitePos, seedType);
+            effectiveSite = check_position_1(mRNAPos, sitePos, seedType);
             if (effectiveSite) {
                 effectiveSite = set_new_seed_type(mRNAPos, sitePos, miRNASeq, pSeedTypeDef, seedType, misMatchPos,
                                                   effectiveSite);
@@ -58,6 +59,12 @@ int MKSeedSites::find_seed_sites(mikan::MKSeedSeqs &seedSeqs, mikan::TCharSet &p
             if (effectiveSite) {
                 appendValue(mMRNAPos, mRNAPos);
                 appendValue(mSitePos, sitePos);
+                effectiveSite2 = check_position_2(mRNAPos, sitePos, seedType);
+                if (!effectiveSite2) {
+                    unsigned curIdx = length(mEffectiveSites) - 1;
+                    mEffectiveSites[curIdx] = false;
+
+                }
             }
         }
         reset_finder();
@@ -77,19 +84,10 @@ int MKSeedSites::find_seed_sites(mikan::MKSeedSeqs &seedSeqs, mikan::TCharSet &p
     return 0;
 }
 
-bool MKSeedSites::check_position(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType) {
+bool MKSeedSites::check_position_1(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &) {
     bool effectiveSite = true;
-    unsigned mrnalen;
 
-    if (mCheckPosMethod == "tssvm"
-        && (pSeedType == "GUM" || pSeedType == "GUT" || pSeedType == "LP" || pSeedType == "BT")) {
-        pSitePos -= 1;
-        mrnalen = length(mMRNASeqs[pMRNAPos]) - 1;
-    } else {
-        mrnalen = length(mMRNASeqs[pMRNAPos]);
-    }
-
-    if ((pSitePos < mMinToCDS) || (pSitePos + mMinToEnd > mrnalen)) {
+    if ((pSitePos < mMinToCDS) || (pSitePos + mMinToEnd > length(mMRNASeqs[pMRNAPos]))) {
         effectiveSite = false;;
     }
 

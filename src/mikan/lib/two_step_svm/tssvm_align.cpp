@@ -8,14 +8,14 @@ namespace tssvm {
 //
 // TSAlign methods
 //
-void TSAlign::clear_alignments() {
+void TSSVMAlign::clear_alignments() {
     clear(mAlignBars);
     clear(mAlignMRNA);
     clear(mAlignMiRNA);
     clear(mAlignScores);
 }
 
-int TSAlign::align_seq(
+int TSSVMAlign::align_seq(
         mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs,
         mikan::MKSeedSites &pSeedSites) {
@@ -87,7 +87,7 @@ int TSAlign::align_seq(
     return 0;
 }
 
-int TSAlign::set_mirna_seq_for_align(
+int TSSVMAlign::set_mirna_seq_for_align(
         const CharString &pSeedType,
         mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNAStr &pMiRNAAlignSeq) {
@@ -110,7 +110,7 @@ int TSAlign::set_mirna_seq_for_align(
 
 }
 
-int TSAlign::set_mrna_seq_for_align(
+int TSSVMAlign::set_mrna_seq_for_align(
         const CharString &pSeedType,
         unsigned pSitePos,
         unsigned pMiRNALen,
@@ -145,7 +145,7 @@ int TSAlign::set_mrna_seq_for_align(
 
 }
 
-int TSAlign::set_addtional_sequences(mikan::TRNAStr &pMiRNAAlignSeq, mikan::TRNAStr &pMRNAAlignSeq) {
+int TSSVMAlign::set_addtional_sequences(mikan::TRNAStr &pMiRNAAlignSeq, mikan::TRNAStr &pMRNAAlignSeq) {
     Rna miRNAEndChar;
     Rna miAddChar;
     Rna mRNAEndChar;
@@ -192,7 +192,7 @@ int TSAlign::set_addtional_sequences(mikan::TRNAStr &pMiRNAAlignSeq, mikan::TRNA
     return 0;
 }
 
-unsigned TSAlign::get_align_len(TAlign &pAlign) {
+unsigned TSSVMAlign::get_align_len(TAlign &pAlign) {
     unsigned alignLen;
     TGap &miRNAAlign = row(pAlign, 0);
     TGap &mRNAAlign = row(pAlign, 1);
@@ -209,7 +209,7 @@ unsigned TSAlign::get_align_len(TAlign &pAlign) {
 
 }
 
-int TSAlign::set_align_mrna(
+int TSSVMAlign::set_align_mrna(
         TAlign &pAlign,
         unsigned pAlignLen,
         const CharString &pSeedType,
@@ -257,7 +257,7 @@ int TSAlign::set_align_mrna(
     return 0;
 }
 
-int TSAlign::set_align_mirna(
+int TSSVMAlign::set_align_mirna(
         TAlign &pAlign,
         unsigned pAlignLen,
         const CharString &pSeedType,
@@ -288,7 +288,7 @@ int TSAlign::set_align_mirna(
     return 0;
 }
 
-int TSAlign::set_align_bars(int pIdx, unsigned pAlignLen) {
+int TSSVMAlign::set_align_bars(int pIdx, unsigned pAlignLen) {
     char miRNA, mRNA;
 
     resize(mAlignBars[pIdx], pAlignLen + 8);
@@ -333,7 +333,7 @@ int TSAlign::set_align_bars(int pIdx, unsigned pAlignLen) {
     return 0;
 }
 
-void TSAlign::write_alignment(int pIdx) {
+void TSSVMAlign::write_alignment(int pIdx) {
     std::stringstream stream;
 
     stream << "mRNA   5' " << mAlignMRNA[pIdx] << " 3'";

@@ -5,7 +5,7 @@
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "tm1_seed_site.hpp"     // TM1SeedSites
 #include "tm1_site_filter.hpp"   // TM1SortedSitePos
-#include "tm1_site_feature.hpp"  // TM1RawFeatures
+#include "tm1_site_score.hpp"    // TM1SiteScores
 
 namespace tm1p {
 
@@ -24,7 +24,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pIdx, const seqan::String<unsigned> &pSortedSites,
-                     TM1SeedSites &pSeedSites, TM1RawFeatures &pRawFeatures);
+                     TM1SeedSites &pSeedSites, TM1SiteFeatures &pSiteFeatures);
 
     void clear_features();
 
@@ -48,7 +48,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pIdx, const seqan::String<unsigned> &pSortedSites,
-                     TM1SeedSites &pSeedSites, TM1RawFeatures &pRawFeatures);
+                     TM1SeedSites &pSeedSites, TM1SiteFeatures &pSiteFeatures);
 
     void clear_features();
 
@@ -73,7 +73,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pIdx, const seqan::String<unsigned> &pSortedSites,
-                     TM1SeedSites &pSeedSites, TM1RawFeatures &pRawFeatures);
+                     TM1SeedSites &pSeedSites, TM1SiteFeatures &pSiteFeatures);
 
     void clear_features();
 
@@ -97,7 +97,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pIdx, const seqan::String<unsigned> &pSortedSites,
-                     TM1SeedSites &pSeedSites, TM1RawFeatures &pRawFeatures);
+                     TM1SeedSites &pSeedSites, TM1SiteFeatures &pSiteFeatures);
 
     void clear_features();
 
@@ -122,7 +122,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pIdx, const seqan::String<unsigned> &pSortedSites,
-                     TM1SeedSites &pSeedSites, TM1RawFeatures &pRawFeatures);
+                     TM1SeedSites &pSeedSites, TM1SiteFeatures &pSiteFeatures);
 
     void clear_features();
 
@@ -147,7 +147,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pIdx, const seqan::String<unsigned> &pSortedSites,
-                     TM1SeedSites &pSeedSites, TM1RawFeatures &pRawFeatures);
+                     TM1SeedSites &pSeedSites, TM1SiteFeatures &pSiteFeatures);
 
     void clear_features();
 
@@ -180,7 +180,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pIdx, const seqan::String<unsigned> &pSortedSites,
-                     TM1SeedSites &pSeedSites, TM1RawFeatures &pRawFeatures);
+                     TM1SeedSites &pSeedSites, TM1SiteFeatures &pSiteFeaturess);
 
     void clear_features();
 
@@ -205,7 +205,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pIdx, const seqan::String<unsigned> &pSortedSites,
-                     TM1SeedSites &pSeedSites, TM1RawFeatures &pRawFeatures);
+                     TM1SeedSites &pSeedSites, TM1SiteFeatures &pSiteFeatures);
 
     void clear_features();
 
@@ -230,7 +230,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pIdx, const seqan::String<unsigned> &pSortedSites,
-                     TM1SeedSites &pSeedSites, TM1RawFeatures &pRawFeatures);
+                     TM1SeedSites &pSeedSites, TM1SiteFeatures &pRawFeatures);
 
     void clear_features();
 
@@ -316,8 +316,8 @@ public:
     const seqan::String<unsigned> &get_site_counts() { return mSiteCounts.mSiteCount; }
 
     // Method prototypes
-    int add_features(TM1SeedSites &pSeedSites, TM1RawFeatures &pRawFeatures,
-                     mikan::MKRMAWithSites &pRNAWithSites);
+    int add_features(TM1SeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites,
+                     TM1SiteScores &pSiteScores);
 
     void clear_features();
 
