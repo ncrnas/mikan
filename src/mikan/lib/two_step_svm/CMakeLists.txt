@@ -12,6 +12,7 @@ set(TSSVM_SOURCE
         ${CMAKE_CURRENT_SOURCE_DIR}/tssvm_site_svm_sv.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/tssvm_site_svm.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/tssvm_site_score.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/tssvm_rna_score.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/tssvm_mrna_feature.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/tssvm_mrna_svm.cpp
         PARENT_SCOPE

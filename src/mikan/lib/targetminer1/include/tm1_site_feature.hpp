@@ -5,7 +5,6 @@
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_rna_sites.hpp"       // MKRMAWithSites
 #include "tm1_align.hpp"          // TM1Alignment
-#include "tm1_seed_site.hpp"      // TM1SeedSites
 #include "tm1_site_filter.hpp"    // TM1SortedSitePos
 
 namespace tm1p {
@@ -23,7 +22,7 @@ public:
     // Method prototype
     int
     add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
-                 TM1SeedSites &pSeedSites);
+                 mikan::MKSeedSites &pSeedSites);
 
     void clear_features();
 
@@ -61,7 +60,7 @@ public:
     // Method prototype
     int add_features(mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
                      mikan::TSitePosSet const &pMRNAPos,
-                     TM1SeedSites &pSeedSites, mikan::TSitePosSet const &pSeedPos);
+                     mikan::MKSeedSites &pSeedSites, mikan::TSitePosSet const &pSeedPos);
 
     void clear_features();
 
@@ -87,7 +86,7 @@ public:
     // Method prototype
     int add_features(mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
                      mikan::TSitePosSet const &pMRNAPos,
-                     TM1SeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
+                     mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
 
     void clear_features();
 
@@ -117,7 +116,7 @@ public:
     // Method prototype
     int add_features(mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
                      mikan::TSitePosSet const &pMRNAPos,
-                     TM1SeedSites &pSeedSites, TM1FeatDistance &pDistance);
+                     mikan::MKSeedSites &pSeedSites, TM1FeatDistance &pDistance);
 
     void clear_features();
 
@@ -146,7 +145,7 @@ public:
     // Method prototype
     int add_features(mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
                      mikan::TSitePosSet const &pMRNAPos,
-                     TM1SeedSites &pSeedSites);
+                     mikan::MKSeedSites &pSeedSites);
 
     void clear_features();
 
@@ -174,7 +173,7 @@ public:
     // Method prototype
     int add_features(mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
                      mikan::TSitePosSet const &pMRNAPos,
-                     TM1SeedSites &pSeedSites, TM1FeatDistance &pDistance);
+                     mikan::MKSeedSites &pSeedSites, TM1FeatDistance &pDistance);
 
     void clear_features();
 
@@ -204,7 +203,7 @@ public:
     // Method prototype
     int add_features(mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
                      mikan::TSitePosSet const &pMRNAPos,
-                     TM1SeedSites &pSeedSites);
+                     mikan::MKSeedSites &pSeedSites);
 
     void clear_features();
 
@@ -240,7 +239,7 @@ public:
     // Method prototype
     int add_features(mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
                      mikan::TSitePosSet const &pMRNAPos,
-                     TM1SeedSites &pSeedSites, TM1FeatDistance &pDistance);
+                     mikan::MKSeedSites &pSeedSites, TM1FeatDistance &pDistance);
 
     void clear_features();
 
@@ -270,7 +269,7 @@ public:
     // Method prototype
     int
     add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
-                 mikan::TSitePosSet const &pMRNAPos, TM1SeedSites &pSeedSites,
+                 mikan::TSitePosSet const &pMRNAPos, mikan::MKSeedSites &pSeedSites,
                  TM1FeatSitePos &pSeedPos);
 
     void clear_features();
@@ -301,7 +300,7 @@ public:
     // Method prototype
     int
     add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs, seqan::String<bool> &pEffectiveSites,
-                 mikan::TSitePosSet const &pMRNAPos, TM1SeedSites &pSeedSites,
+                 mikan::TSitePosSet const &pMRNAPos, mikan::MKSeedSites &pSeedSites,
                  TM1FeatSitePos &pSeedPos);
 
     void clear_features();
@@ -315,10 +314,10 @@ private:
 //
 // Store all raw feature values
 //
-class TM1RawFeatures {
+class TM1SiteFeatures {
 public:
     // Define methods
-    TM1RawFeatures() {}
+    TM1SiteFeatures() {}
 
     seqan::CharString &get_seed_type(int i) { return mSeedTypes.get_seed_type(i); }
 
@@ -338,13 +337,15 @@ public:
 
     const TM1Alignment &get_alignment() { return mAlign; }
 
+    void write_alignment(int pIdx) { mAlign.write_alignment(pIdx); }
+
     // Method prototypes
     int add_features(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                     TM1SeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
+                     mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
 
     void clear_features();
 
-    void print_features(TM1SeedSites &pSeedSites);
+    void print_features(mikan::MKSeedSites &pSeedSites);
 
 private:
     TM1FeatSeedType mSeedTypes;

@@ -1,9 +1,10 @@
-#ifndef TM1_SCORE_HPP_
-#define TM1_SCORE_HPP_
+#ifndef TM1_RNA_SCORE_HPP_
+#define TM1_RNA_SCORE_HPP_
 
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_site_score.hpp"      // MKSiteScores
+#include "mk_rna_score.hpp"       // MKRNAScores
 #include "tm1_mrna_svm.hpp"       // TM1MRNAInputVector
 #include "tm1_site_filter.hpp"    // TM1SortedSitePos
 
@@ -12,28 +13,27 @@ namespace tm1p {
 //
 // Classified scores
 //
-class TM1ClassifiedScores {
+class TM1ClassifiedScores : public mikan::MKRNAScores {
 public:
     // Define methods
-    TM1ClassifiedScores() {}
-
-    const seqan::String<float> &get_scores() { return mScores; }
+    TM1ClassifiedScores(mikan::MKOptions const &opts) : MKRNAScores(opts) {}
 
     const seqan::String<int> &get_labels() { return mPredictions; }
-
-    const seqan::String<unsigned> &get_site_num() { return mSiteNum; }
 
     // Method prototypes
     void clear_scores();
 
-    int calc_scores(const seqan::String<unsigned> &pSiteCoutns, const seqan::String<float> &pScores);
+    int calc_scores(mikan::MKSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
+                    mikan::MKRMAWithSites &pRNAWithSites, TM1SiteScores &mSiteScores);
 
 private:
-    seqan::String<float> mScores;
     seqan::String<int> mPredictions;
-    seqan::String<unsigned> mSiteNum;
+
+    TM1MRNAFeatures mMRNAFeatures;
+    TM1MRNAInputVector mMRNAInput;
+
 };
 
 } // namespace tm1p
 
-#endif /* TM1_SCORE_HPP_ */
+#endif /* TM1_RNA_SCORE_HPP_ */

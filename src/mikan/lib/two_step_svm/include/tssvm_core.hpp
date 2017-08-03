@@ -5,12 +5,11 @@
 #include "mk_typedef.hpp"           // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_sequence.hpp"          // MKSequences
 #include "mk_option.hpp"            // MKOptions
-#include "tssvm_mrna_feature.hpp"   // TSSVMRNARawFeatures
-#include "tssvm_mrna_svm.hpp"       // TSSVMRNAInputVector
 #include "tssvm_option.hpp"         // TSSVMOptions
 #include "tssvm_seed_site.hpp"      // TSSVMSeedSites
 #include "tssvm_site_filter.hpp"    // TSSVMSiteFilter
 #include "tssvm_site_score.hpp"     // TSSVMSiteScores
+#include "tssvm_rna_score.hpp"      // TSSVMRNAScores
 
 namespace tssvm {
 
@@ -45,7 +44,7 @@ public:
             mExecSiteScore(true), mExecRNAFeat(true), mExecRNAScore(true), mOutputSiteScore(true),
             mOutputRNAScore(true), mOutputAlign(true), mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs),
             mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
-            mSiteScores(pOpts), mSiteFilter(pOpts) {
+            mSiteScores(pOpts), mSiteFilter(pOpts), mRNAScores(pOpts) {
         init_from_args(pOpts);
     }
 
@@ -71,8 +70,7 @@ private:
     mikan::MKRMAWithSites mRNAWithSites;
     TSSVMSiteScores mSiteScores;
     TSSVMSiteFilter mSiteFilter;
-    TSSVMRNARawFeatures mRnaFeatures;
-    TSSVMRNAInputVector mRnaInput;
+    TSSVMRNAScores mRNAScores;
 
 private:
     int write_ts_scores(seqan::CharString const &pMiRNAId);

@@ -1,5 +1,5 @@
-#ifndef RH2_SCORE_HPP_
-#define RH2_SCORE_HPP_
+#ifndef RH2_SITE_SCORE_HPP_
+#define RH2_SITE_SCORE_HPP_
 
 #include <vector>
 #include <sstream>
@@ -41,7 +41,7 @@ public:
     void clear_scores();
 
     int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                    mikan::MKSeedSites &pSeedSites);
+                    mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites const &pRNAWithSites);
 
     void calc_normalized_score(int pIdx, int pTargetLen, int pQueryLen);
 
@@ -63,36 +63,6 @@ private:
                         std::vector<char> &pRhMRNASeq);
 };
 
-//
-// Total MFE scores
-//
-class RH2TotalScores {
-public:
-    // Define methods
-    RH2TotalScores() {}
-
-    const seqan::String<float> &get_scores() { return mTotalScores; }
-
-    const seqan::String<float> &get_norm_scores() { return mTotalNormScores; }
-
-    const seqan::String<int> &get_mrna_pos() { return mMRNAPos; }
-
-    const seqan::String<int> &get_site_num() { return mSiteNum; }
-
-    // Method prototypes
-    void clear_scores();
-
-    int calc_scores(RH2SeedSites &pSeedSites, RH2SiteScores &pMFEScores,
-                    mikan::MKRMAWithSites &pRNAWithSites);
-
-private:
-    seqan::String<float> mTotalScores;
-    seqan::String<float> mTotalNormScores;
-    seqan::String<int> mMRNAPos;
-    seqan::String<int> mSiteNum;
-
-};
-
 } // namespace rh2mfe
 
-#endif /* RH2_SCORE_HPP_ */
+#endif /* RH2_SITE_SCORE_HPP_ */

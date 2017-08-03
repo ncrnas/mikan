@@ -1,5 +1,5 @@
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
-#include "mr3_score.hpp"          // MR3MFEScores
+#include "mr3_site_score.hpp"     // MR3MFEScores
 #include "mr3_site_filter.hpp"    // MR3SiteFilter
 
 using namespace seqan;

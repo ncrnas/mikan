@@ -66,7 +66,7 @@ namespace tssvm {
 //
 // Store miRNA and mRNA sequences and ids
 //
-class TSAlign {
+class TSSVMAlign {
 public:
     // Constant values
     static const unsigned ALIGN_SEQ_LEN = 20;
@@ -75,7 +75,7 @@ public:
 
 public:
     // Define methods
-    TSAlign() : mScoreMatrix(GAP_EXTENT_SCORE, GAP_OPEN_SCORE) {}
+    TSSVMAlign() : mScoreMatrix(GAP_EXTENT_SCORE, GAP_OPEN_SCORE) {}
 
     mikan::TCharSet const &get_align_bars() const { return mAlignBars; }
 

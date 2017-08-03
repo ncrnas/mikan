@@ -8,8 +8,9 @@
 #include "mk_rna_sites.hpp"       // MKRMAWithSites
 #include "ts5_feature.hpp"        // TS5RawFeatures
 #include "ts5_option.hpp"         // TS5CSOptions
-#include "ts5_score.hpp"          // TS5SiteScores, TS5TotalScores
+#include "ts5_site_score.hpp"     // TS5SiteScores
 #include "ts5_seed_site.hpp"      // TS5SeedSites
+#include "ts5_rna_score.hpp"      // TS5RNAScores
 
 namespace ts5cs {
 
@@ -40,7 +41,9 @@ public:
             mExecSearchSeedSites(true), mExecCalcSiteScore(true),
             mExecSumScores(true), mOutputContexScore(true), mOutputTotalScore(true),
             mOutputAlign(true), mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
-            mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mSiteScores(pOpts) {
+            mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mSiteScores(pOpts),
+            mRNAScores(pOpts) {
+
         init_from_args(pOpts);
     }
 
@@ -65,7 +68,7 @@ private:
     TS5SeedSites mSeedSites;
     TS5SiteScores mSiteScores;
     mikan::MKRMAWithSites mRNAWithSites;
-    TS5TotalScores mTotalScore;
+    TS5RNAScores mRNAScores;
 
 private:
     int write_context_score(seqan::CharString const &pMiRNAId);

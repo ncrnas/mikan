@@ -31,7 +31,7 @@ public:
     // Define methods
     TSSVMSeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
             MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {
-        mCheckPosMethod = "tssvm";
+
         mMinToCDS = 15;
         mMinToEnd = 0;
 
@@ -39,6 +39,9 @@ public:
     }
 
 private:
+    // Method prototypes
+    bool check_position_1(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType);
+
     bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
                            mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
                            seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);

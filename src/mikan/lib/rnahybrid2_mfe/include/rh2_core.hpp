@@ -6,9 +6,10 @@
 #include "mk_sequence.hpp"       // MKSequences
 #include "mk_option.hpp"         // MKOptions
 #include "rh2_option.hpp"        // RH2Options
-#include "rh2_score.hpp"         // RH2SiteScores, RH2TotalScores
+#include "rh2_site_score.hpp"    // RH2SiteScores
 #include "rh2_seed_site.hpp"     // RH2SeedSites
 #include "rh2_site_filter.hpp"   // RH2SiteFilter, RH2TopNSites
+#include "rh2_rna_score.hpp"     // RH2RNAScores
 
 namespace rh2mfe {
 
@@ -45,7 +46,7 @@ public:
             mOutputTotalScore(true), mOutputAlign(true), mMaxHits(0), mMiRNAIds(pMiRNAIds),
             mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs),
             mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mSiteScores(pOpts), mSiteFilter(pOpts),
-            mTopNSites(pOpts) {
+            mTopNSites(pOpts), mRNAScores(pOpts) {
 
         init_from_args(pOpts);
         seqan::CharString vtype = "wide";
@@ -75,7 +76,7 @@ private:
     RH2SiteScores mSiteScores;
     RH2SiteFilter mSiteFilter;
     mikan::MKTopNSites mTopNSites;
-    RH2TotalScores mTotalScores;
+    RH2RNAScores mRNAScores;
 
 private:
     int write_mfe_score(seqan::CharString const &pMiRNAId);

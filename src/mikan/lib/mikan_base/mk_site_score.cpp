@@ -1,5 +1,6 @@
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_site_score.hpp"     // MKSiteScores
+#include "mk_rna_sites.hpp"      // MKRMAWithSites
 
 using namespace seqan;
 
@@ -16,7 +17,8 @@ void MKSiteScores::clear_scores() {
 int MKSiteScores::calc_scores(
         mikan::TRNAStr const &,
         mikan::TRNASet const &,
-        mikan::MKSeedSites &pSeedSites) {
+        mikan::MKSeedSites &pSeedSites,
+        mikan::MKRMAWithSites const &) {
 
     resize(mEffectiveSites, length(pSeedSites.mEffectiveSites));
     resize(mSiteScores, length(pSeedSites.mEffectiveSites));

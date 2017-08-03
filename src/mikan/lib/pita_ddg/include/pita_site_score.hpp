@@ -1,5 +1,5 @@
-#ifndef PITA_SCORE_HPP_
-#define PITA_SCORE_HPP_
+#ifndef PITA_SITE_SCORE_HPP_
+#define PITA_SITE_SCORE_HPP_
 
 #include <vector>
 #include <string>
@@ -152,7 +152,7 @@ public:
     void clear_scores();
 
     int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                    mikan::MKSeedSites &pSeedSites);
+                    mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites const &pRNAWithSites);
 
     void print_alignment(int pIdx);
 
@@ -167,39 +167,6 @@ private:
 
 };
 
-//
-// Total ddG scores
-//
-class PITATotalScores {
-public:
-    // Constant values
-    const double MIN_EXP_DIFF;
-
-    typedef std::set<unsigned>::iterator TItSet;
-
-public:
-    // Define methods
-    PITATotalScores() : MIN_EXP_DIFF(-100.0) {}
-
-    const seqan::String<float> &get_scores() { return mTotalScores; }
-
-    const seqan::String<int> &get_mrna_pos() { return mMRNAPos; }
-
-    const seqan::String<int> &get_site_num() { return mSiteNum; }
-
-    // Method prototype
-    void clear_scores();
-
-    int calc_scores(PITASeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
-                    mikan::MKRMAWithSites &pRNAWithSites, PITASiteScores &pDDGScores);
-
-private:
-    seqan::String<float> mTotalScores;
-    seqan::String<int> mMRNAPos;
-    seqan::String<int> mSiteNum;
-
-};
-
 } // namespace ptddg
 
-#endif /* PITA_SCORE_HPP_ */
+#endif /* PITA_SITE_SCORE_HPP_ */

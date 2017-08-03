@@ -6,9 +6,10 @@
 #include "mk_sequence.hpp"        // MKSequences
 #include "mk_option.hpp"          // MKOptions
 #include "mr3_option.hpp"         // MR3Options
-#include "mr3_score.hpp"          // MR3GGDScores, MR3TotalScores
+#include "mr3_site_score.hpp"     // MR3GGDScores
 #include "mr3_seed_site.hpp"      // MR3SeedSites
 #include "mr3_site_filter.hpp"    // MR3SiteFilter
+#include "mr3_rna_score.hpp"      // MR3RNAScores
 
 namespace mr3as {
 
@@ -51,7 +52,7 @@ public:
             mOutputAlign(true), mMinSeedLen(6), mMaxSeedLen(8), mMinAlignScore(120.0), mMaxEnergy(1.0),
             mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
             mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
-            mSiteScores(pOpts), mSiteFilter(pOpts) {
+            mSiteScores(pOpts), mSiteFilter(pOpts), mRNAScores(pOpts) {
         init_from_args(pOpts);
     }
 
@@ -77,7 +78,7 @@ private:
     MR3SiteScores mSiteScores;
     mikan::MKRMAWithSites mRNAWithSites;
     MR3SiteFilter mSiteFilter;
-    MR3TotalScores mTotalScores;
+    MR3RNAScores mRNAScores;
 
 private:
     int write_site_score(seqan::CharString const &pMiRNAId);

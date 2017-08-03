@@ -12,7 +12,7 @@
 #include "ts5_option.hpp"        // TS5CSOptions
 #include "ts5_seed_site.hpp"     // TS5SeedSites
 #include "ts5_feature.hpp"       // TS5RawFeatures
-#include "ts5_score.hpp"         // TS5SiteScores, TS5TotalScores
+#include "ts5_site_score.hpp"    // TS5SiteScores
 #include "ts5_core.hpp"          // TS5Core
 
 namespace ts5cs {
@@ -135,7 +135,7 @@ int TS5Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Calculate context scores
     if (mExecCalcSiteScore) {
-        retVal = mSiteScores.calc_scores(miRNASeq, mMRNASeqs, mSeedSites);
+        retVal = mSiteScores.calc_scores(miRNASeq, mMRNASeqs, mSeedSites, mRNAWithSites);
         if (retVal != 0) {
             std::cerr << "ERROR: Calculate site context values failed." << std::endl;
             return 1;
@@ -145,7 +145,7 @@ int TS5Core::calculate_mirna_scores(unsigned pIdx) {
     // Summarize context scores
     mRNAWithSites.create_mrna_site_map(mSeedSites, mSiteScores);
     if (mExecSumScores) {
-        retVal = mTotalScore.calc_scores(mSeedSites, mMRNASeqs, mRNAWithSites, mSiteScores);
+        retVal = mRNAScores.calc_scores(mSeedSites, mMRNASeqs, mRNAWithSites, mSiteScores);
         if (retVal != 0) {
             std::cerr << "ERROR: Calculate total scores failed." << std::endl;
             return 1;
@@ -181,7 +181,7 @@ int TS5Core::calculate_mirna_scores(unsigned pIdx) {
 
     mSeedSites.clear_pos();
     mSiteScores.clear_scores();
-    mTotalScore.clear_scores();
+    mRNAScores.clear_scores();
 
     return 0;
 }
@@ -224,9 +224,9 @@ int TS5Core::write_context_score(seqan::CharString const &pMiRNAId) {
 
 int TS5Core::write_total_score(seqan::CharString const &pMiRNAId) {
 
-    const seqan::String<float> &totalScores = mTotalScore.get_scores();
-    const seqan::String<int> &mRNAPos = mTotalScore.get_mrna_pos();
-    const seqan::String<int> &siteNum = mTotalScore.get_site_num();
+    const seqan::String<float> &totalScores = mRNAScores.get_scores();
+    const seqan::String<int> &mRNAPos = mRNAScores.get_mrna_pos();
+    const seqan::String<int> &siteNum = mRNAScores.get_site_num();
     typedef std::multimap<double, unsigned>::iterator TItMap;
     typedef std::pair<double, unsigned> TPosPair;
     TItMap itPos;

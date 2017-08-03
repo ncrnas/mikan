@@ -7,7 +7,7 @@
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_site_filter.hpp"    // MKSiteFilter
 #include "mk_option.hpp"         // MKOptions
-#include "rh2_score.hpp"         // RH2SiteScores
+#include "rh2_site_score.hpp"    // RH2SiteScores
 #include "rh2_seed_site.hpp"     // RH2SeedSites
 
 namespace rh2mfe {

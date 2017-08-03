@@ -22,7 +22,7 @@ public:
     // Define methods
     explicit MKSeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
             mMRNASeqs(pMRNASeqs), mRNAIdx(pRNAIdx), mFinder(pFinder) {
-        mCheckPosMethod = "";
+
         mMinToCDS = 0;
         mMinToEnd = 0;
 
@@ -42,6 +42,14 @@ public:
     mikan::TSitePosSet const &get_site_pos_s1() const { return mS1Pos; }
 
     mikan::TSitePosSet const &get_site_pos_s8() const { return mS8Pos; }
+
+    unsigned get_mrna_seq_len(int pIdx) { return length(mMRNASeqs[mMRNAPos[pIdx]]); }
+
+    virtual int get_seed_len(int) { return INDEXED_SEQ_LEN; }
+
+    virtual int get_seed_start(int pIdx) { return mSitePos[pIdx]; }
+
+    virtual int get_seed_end(int pIdx) { return mSitePos[pIdx] + INDEXED_SEQ_LEN + 1; }
 
     // Method prototypes
     void reset_finder();
@@ -63,7 +71,6 @@ protected:
     mikan::TIndexQGram &mRNAIdx;
     mikan::TFinder &mFinder;
 
-    seqan::CharString mCheckPosMethod;
     unsigned mMinToCDS;
     unsigned mMinToEnd;
 
@@ -71,8 +78,11 @@ protected:
     mikan::TSitePosSet mS1Pos;
     mikan::TSitePosSet mS8Pos;
 
+    // Define method
+    virtual bool check_position_2(unsigned, unsigned, seqan::CharString &) { return true; }
+
     // Method prototypes
-    bool check_position(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType);
+    virtual bool check_position_1(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType);
 
     virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
                                    mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,

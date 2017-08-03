@@ -1,5 +1,6 @@
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "tm1_mrna_feature.hpp"  // TM1ScaledFeatures, TM1RawMRNAures, TM1MRNASeedType, TM1MRNASiteCount,
+#include "tm1_site_feature.hpp"  // TM1SiteFeatures
 
 using namespace seqan;
 
@@ -210,12 +211,13 @@ void TM1MRNAFeatures::resize_features(unsigned pSize) {
 }
 
 int TM1MRNAFeatures::add_features(
-        TM1SeedSites &pSeedSites,
-        TM1RawFeatures &pRawFeatures,
-        mikan::MKRMAWithSites &pRNAWithSites) {
+        mikan::MKSeedSites &pSeedSites,
+        mikan::MKRMAWithSites &pRNAWithSites,
+        TM1SiteScores &pSiteScores) {
 
     seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = pRNAWithSites.get_rna_site_pos_map();
     mikan::TSitePosSet sitePos;
+    TM1SiteFeatures &siteFeatures = pSiteScores.get_site_features();
 
     resize_features((unsigned) length(pRNAWithSites.mEffectiveRNAs));
 
@@ -233,15 +235,15 @@ int TM1MRNAFeatures::add_features(
             continue;
         }
 
-        mSeedTypes.add_features(i, rnaSitePosMap[i], pSeedSites, pRawFeatures);
-        mSiteCounts.add_features(i, rnaSitePosMap[i], pSeedSites, pRawFeatures);
-        mAURich.add_features(i, rnaSitePosMap[i], pSeedSites, pRawFeatures);
-        mSingleFreqs.add_features(i, rnaSitePosMap[i], pSeedSites, pRawFeatures);
-        mSingleFreqFlanks.add_features(i, rnaSitePosMap[i], pSeedSites, pRawFeatures);
-        mDiFreqs.add_features(i, rnaSitePosMap[i], pSeedSites, pRawFeatures);
-        mDiFreqFlanks.add_features(i, rnaSitePosMap[i], pSeedSites, pRawFeatures);
-        mSingleMatches.add_features(i, rnaSitePosMap[i], pSeedSites, pRawFeatures);
-        mTwoMatches.add_features(i, rnaSitePosMap[i], pSeedSites, pRawFeatures);
+        mSeedTypes.add_features(i, rnaSitePosMap[i], pSeedSites, siteFeatures);
+        mSiteCounts.add_features(i, rnaSitePosMap[i], pSeedSites, siteFeatures);
+        mAURich.add_features(i, rnaSitePosMap[i], pSeedSites, siteFeatures);
+        mSingleFreqs.add_features(i, rnaSitePosMap[i], pSeedSites, siteFeatures);
+        mSingleFreqFlanks.add_features(i, rnaSitePosMap[i], pSeedSites, siteFeatures);
+        mDiFreqs.add_features(i, rnaSitePosMap[i], pSeedSites, siteFeatures);
+        mDiFreqFlanks.add_features(i, rnaSitePosMap[i], pSeedSites, siteFeatures);
+        mSingleMatches.add_features(i, rnaSitePosMap[i], pSeedSites, siteFeatures);
+        mTwoMatches.add_features(i, rnaSitePosMap[i], pSeedSites, siteFeatures);
     }
 
     mScaledFeats.scale_features(pRNAWithSites, mSeedTypes, mAURich, mSingleFreqs, mSingleFreqFlanks,
@@ -288,15 +290,16 @@ void TM1MRNASeedType::resize_features(unsigned pSize) {
 int TM1MRNASeedType::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites &pSeedSites,
-        TM1RawFeatures &pRawFeatures) {
+        mikan::MKSeedSites &pSeedSites,
+        TM1SiteFeatures &pSiteFeatures) {
+
     CharString seedType;
 
     for (unsigned i = 0; i < length(pSortedSites); ++i) {
         if (!pSeedSites.mEffectiveSites[pSortedSites[i]]) {
             continue;
         }
-        seedType = pRawFeatures.get_seed_type(pSortedSites[i]);
+        seedType = pSiteFeatures.get_seed_type(pSortedSites[i]);
         if (seedType == "6mer") {
             ++mNum6mer[pIdx];
         } else if (seedType == "8mer") {
@@ -330,8 +333,8 @@ void TM1MRNASiteCount::resize_features(unsigned pSize) {
 int TM1MRNASiteCount::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites &pSeedSites,
-        TM1RawFeatures &) {
+        mikan::MKSeedSites &pSeedSites,
+        TM1SiteFeatures &) {
     for (unsigned i = 0; i < length(pSortedSites); ++i) {
         if (!pSeedSites.mEffectiveSites[pSortedSites[i]]) {
             continue;
@@ -371,10 +374,11 @@ void TM1MRNAAURich::resize_features(unsigned pSize) {
 int TM1MRNAAURich::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites &pSeedSites,
-        TM1RawFeatures &pRawFeatures) {
+        mikan::MKSeedSites &pSeedSites,
+        TM1SiteFeatures &pSiteFeatures) {
+
     CharString seedType;
-    const TM1FeatAURich &auRich = pRawFeatures.get_au_rich();
+    const TM1FeatAURich &auRich = pSiteFeatures.get_au_rich();
 
     for (unsigned i = 0; i < length(pSortedSites); ++i) {
         if (!pSeedSites.mEffectiveSites[pSortedSites[i]]) {
@@ -385,7 +389,7 @@ int TM1MRNAAURich::add_features(
             continue;
         }
 
-        seedType = pRawFeatures.get_seed_type(pSortedSites[i]);
+        seedType = pSiteFeatures.get_seed_type(pSortedSites[i]);
         if (seedType == "6mer") {
             ++mAU6mer[pIdx];
         } else if (seedType == "7mer-m8") {
@@ -426,9 +430,10 @@ void TM1MRNASingleFreq::resize_features(unsigned pSize) {
 int TM1MRNASingleFreq::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites &pSeedSites,
-        TM1RawFeatures &pRawFeatures) {
-    const TM1FeatSingleFreq &singleFreq = pRawFeatures.get_single_freq();
+        mikan::MKSeedSites &pSeedSites,
+        TM1SiteFeatures &pSiteFeatures) {
+
+    const TM1FeatSingleFreq &singleFreq = pSiteFeatures.get_single_freq();
     CharString seedType;
     unsigned idx;
     float totalFreqU = 0;
@@ -453,7 +458,7 @@ int TM1MRNASingleFreq::add_features(
         totalFreqU += singleFreq.mSeedCountU[pSortedSites[idx]];
         totalFreqC += singleFreq.mSeedCountC[pSortedSites[idx]];
 
-        seedType = pRawFeatures.get_seed_type(pSortedSites[idx]);
+        seedType = pSiteFeatures.get_seed_type(pSortedSites[idx]);
         if (seedType == "6mer") {
             seedlen = (float) (6 * site_count);
         } else if (seedType == "7mer-A1" || seedType == "7mer-m8") {
@@ -495,9 +500,10 @@ void TM1MRNASingleFreqFlank::resize_features(unsigned pSize) {
 int TM1MRNASingleFreqFlank::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites &pSeedSites,
-        TM1RawFeatures &pRawFeatures) {
-    const TM1FeatSingleFreqFlank &singleFreqFlank = pRawFeatures.get_single_freq_flank();
+        mikan::MKSeedSites &pSeedSites,
+        TM1SiteFeatures &pSiteFeatures) {
+
+    const TM1FeatSingleFreqFlank &singleFreqFlank = pSiteFeatures.get_single_freq_flank();
     unsigned idx;
     float totalFreqA = 0;
     float totalFreqU = 0;
@@ -561,10 +567,11 @@ void TM1MRNADiFreq::resize_features(unsigned pSize) {
 int TM1MRNADiFreq::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites &pSeedSites,
-        TM1RawFeatures &pRawFeatures) {
-    const TM1FeatDiFreq &diFreq = pRawFeatures.get_di_freq();
-    CharString seedType;
+        mikan::MKSeedSites &pSeedSites,
+        TM1SiteFeatures &pSiteFeatures) {
+
+    const seqan::StringSet<seqan::CharString> &seedTypes = pSeedSites.get_seed_types();
+    const TM1FeatDiFreq &diFreq = pSiteFeatures.get_di_freq();
     unsigned idx;
     float totalFreqUC = 0;
     float totalFreqCA = 0;
@@ -591,12 +598,11 @@ int TM1MRNADiFreq::add_features(
         totalFreqCA += diFreq.mSeedCountCA[pSortedSites[idx]];
         totalFreqCG += diFreq.mSeedCountCG[pSortedSites[idx]];
 
-        seedType = pRawFeatures.get_seed_type(pSortedSites[idx]);
-        if (seedType == "6mer") {
+        if (seedTypes[pSortedSites[idx]] == "6mer") {
             seedlen = (float) (6 * site_count);
-        } else if (seedType == "7mer-A1" || seedType == "7mer-m8") {
+        } else if (seedTypes[pSortedSites[idx]] == "7mer-A1" || seedTypes[pSortedSites[idx]] == "7mer-m8") {
             seedlen = (float) (7 * site_count);
-        } else if (seedType == "8mer") {
+        } else if (seedTypes[pSortedSites[idx]] == "8mer") {
             seedlen = (float) (8 * site_count);
         }
         mSeedFreqUC[pIdx] += totalFreqUC / seedlen;
@@ -662,9 +668,10 @@ void TM1MRNADiFreqFlank::resize_features(unsigned pSize) {
 int TM1MRNADiFreqFlank::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites &pSeedSites,
-        TM1RawFeatures &pRawFeatures) {
-    const TM1FeatDiFreqFlank &diFreqFlank = pRawFeatures.get_di_freq_flank();
+        mikan::MKSeedSites &pSeedSites,
+        TM1SiteFeatures &pSiteFeatures) {
+
+    const TM1FeatDiFreqFlank &diFreqFlank = pSiteFeatures.get_di_freq_flank();
     unsigned idx;
     float totalFreqAA = 0;
     float totalFreqAU = 0;
@@ -765,9 +772,10 @@ void TM1MRNASingleMatch::resize_features(unsigned pSize) {
 int TM1MRNASingleMatch::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites &pSeedSites,
-        TM1RawFeatures &pRawFeatures) {
-    const TM1FeatSingleMatch &singleMatch = pRawFeatures.get_single_match();
+        mikan::MKSeedSites &pSeedSites,
+        TM1SiteFeatures &pSiteFeatures) {
+
+    const TM1FeatSingleMatch &singleMatch = pSiteFeatures.get_single_match();
     int totalUG = 0;
     int totalGU = 0;
     int totalCG = 0;
@@ -826,9 +834,10 @@ void TM1MRNATwoConsecMatch::resize_features(unsigned pSize) {
 int TM1MRNATwoConsecMatch::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites &pSeedSites,
-        TM1RawFeatures &pRawFeatures) {
-    const TM1FeatTwoConsecMatch &twoConsecMatch = pRawFeatures.get_two_consec_match();
+        mikan::MKSeedSites &pSeedSites,
+        TM1SiteFeatures &pSiteFeatures) {
+
+    const TM1FeatTwoConsecMatch &twoConsecMatch = pSiteFeatures.get_two_consec_match();
     int totalUACG = 0;
     int totalUAUG = 0;
     int totalCGGC = 0;

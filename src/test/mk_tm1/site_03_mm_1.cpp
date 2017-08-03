@@ -53,4 +53,5 @@ TEST_F(Site03MM1, mir124_mm) {
     test_sites2(sites, 7, "6mer", 39, 24, true);
 
 }
+
 }

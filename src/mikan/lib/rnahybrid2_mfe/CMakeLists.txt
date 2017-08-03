@@ -8,8 +8,9 @@ set(RH2_SOURCE
         ${CMAKE_CURRENT_SOURCE_DIR}/rh2_core.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/rh2_option.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/rh2_seed_site.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/rh2_score.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/rh2_site_score.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/rh2_site_filter.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/rh2_rna_score.cpp
         PARENT_SCOPE
         )
 set(RH2_HEADERS

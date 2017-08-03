@@ -9,9 +9,9 @@
 #include "tm1_mrna_feature.hpp"  // TM1MRNAFeatures
 #include "tm1_mrna_svm.hpp"      // TM1MRNAModel, TM1MRNAInputVector
 #include "tm1_option.hpp"        // TM1CSOptions
-#include "tm1_score.hpp"         // TM1ClassifiedScores
+#include "tm1_rna_score.hpp"     // TM1ClassifiedScores
 #include "tm1_seed_site.hpp"     // TM1SeedSites
-#include "tm1_site_feature.hpp"  // TM1RawFeatures
+#include "tm1_site_score.hpp"    // TM1SiteScores
 
 namespace tm1p {
 
@@ -25,7 +25,7 @@ public:
     // Declare variables
     bool mExecSearchSeedSites;
     bool mExecCalSiteScore;
-    bool mExecGetRawFeat;
+    bool mExecCalcSiteScore;
     bool mExecFilterOverlap;
     bool mExecSortSites;
     bool mExecGetMRNAFeat;
@@ -44,11 +44,12 @@ public:
     TM1Core(mikan::MKOptions const &pOpts, mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
             mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
             mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
-            mExecSearchSeedSites(true), mExecCalSiteScore(false), mExecGetRawFeat(true), mExecFilterOverlap(true),
+            mExecSearchSeedSites(true), mExecCalSiteScore(false), mExecCalcSiteScore(true), mExecFilterOverlap(true),
             mExecSortSites(true),
             mExecGetMRNAFeat(true), mExecRNAScore(true), mExecSumScores(true), mOutputSitePos(true),
             mOutputScore(true), mOutputAlign(true), mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
-            mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mSiteScores(pOpts), mSiteFilter(pOpts) {
+            mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mSiteScores(pOpts), mSiteFilter(pOpts),
+            mRNAScores(pOpts) {
         init_from_args(pOpts);
     }
 
@@ -72,12 +73,9 @@ private:
 
     TM1SeedSites mSeedSites;
     mikan::MKRMAWithSites mRNAWithSites;
-    mikan::MKSiteScores mSiteScores;
-    TM1RawFeatures mRawFeatures;
+    TM1SiteScores mSiteScores;
     TM1SiteFilter mSiteFilter;
-    TM1MRNAFeatures mMRNAFeatures;
-    TM1MRNAInputVector mMRNAInput;
-    TM1ClassifiedScores mScores;
+    TM1ClassifiedScores mRNAScores;
 
 private:
     int write_site_positions(seqan::CharString const &pMiRNAId);

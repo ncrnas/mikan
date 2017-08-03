@@ -98,12 +98,54 @@ void TM1SeedSites::get_match_count(
     }
 }
 
+bool TM1SeedSites::check_position_2(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType) {
+    bool effectiveSite = true;
+    unsigned curIdx = length(mEffectiveSites) - 1;
+    unsigned m1Pos = pSitePos + INDEXED_SEQ_LEN;
+    int m8Pos = pSitePos - 1;
+    unsigned seqLen = length(mMRNASeqs[pMRNAPos]);
+    unsigned offsetS = 1;
+    unsigned offsetE = 7;
+    unsigned lenToCDS, endPos;
+    float relEndPos;
+    int relEndPosInt;
+
+    if (pSeedType == "7mer-m8") {
+        offsetE = 6;
+    } else if (pSeedType == "6mer") {
+        if (is_m8_match_gu(curIdx)) {
+            offsetS = 0;
+        }
+        if (is_m8_match(curIdx)) {
+            offsetE = 5;
+        } else {
+            offsetE = 6;
+        }
+    }
+    lenToCDS = (m8Pos + offsetS > 0) ? m8Pos + offsetS : 0;
+    endPos = m8Pos + offsetE;
+
+
+    if (lenToCDS < mMinToCDS || m1Pos > seqLen) {
+        effectiveSite = false;
+    }
+
+    relEndPos = (float) endPos / seqLen;
+    relEndPos = roundf(relEndPos * 100.0f) / 100.0f;
+    relEndPosInt = (int) (relEndPos * 1000);
+    if (relEndPosInt >= 400 && relEndPosInt <= 600) {
+        effectiveSite = false;
+    }
+
+    return effectiveSite;
+}
+
 bool TM1SeedSites::set_new_seed_type(
         unsigned pMRNAPos,
         unsigned pSitePos,
         mikan::TRNAStr &pMiRNASeq,
         mikan::TCharSet &,
-        seqan::CharString &,
+        seqan::CharString &pSeedType,
         int,
         bool pEffectiveSite) {
 
@@ -136,6 +178,7 @@ bool TM1SeedSites::set_new_seed_type(
 
     if (newSeedType != "") {
         appendValue(mSeedTypes, newSeedType);
+        pSeedType = newSeedType;
 
         appendValue(mM8Match, matchM8);
         appendValue(mM8GU, gutM8 || gumM8);
@@ -144,6 +187,8 @@ bool TM1SeedSites::set_new_seed_type(
         appendValue(mM1GU, gutM1 || gumM1);
 
         appendValue(mMRNASeqLen, length(mMRNASeqs[pMRNAPos]));
+
+        appendValue(mMisMatchPos, 0);
 
         appendValue(mEffectiveSites, true);
 
@@ -170,7 +215,7 @@ int TM1SeedSites::get_seed_len(int pIdx) {
     return 6;
 }
 
-int TM1SeedSites::get_seed_start_pos(int pIdx) {
+int TM1SeedSites::get_seed_start(int pIdx) {
     int offset = 0;
 
     if (mSeedTypes[pIdx] == "8mer") {
@@ -188,50 +233,12 @@ int TM1SeedSites::get_seed_start_pos(int pIdx) {
     }
 
     return std::max((int) mS8Pos[pIdx] + offset, 0);
+
 }
 
-int TM1SeedSites::get_seed_start_pos2(int pIdx) {
-    int offset = 1;
-
-    if (mSeedTypes[pIdx] == "8mer") {
-        offset = 1;
-    } else if (mSeedTypes[pIdx] == "7mer-A1") {
-        offset = 1;
-    } else if (mSeedTypes[pIdx] == "7mer-m8") {
-        offset = 1;
-    } else if (mSeedTypes[pIdx] == "6mer") {
-        if (is_m8_match_gu(pIdx)) {
-            offset = 0;
-        } else {
-            offset = 1;
-        }
-    }
-
-    return std::max((int) mS8Pos[pIdx] + offset, 0);
-}
-
-int TM1SeedSites::get_length_to_cds(int pIdx) {
+int TM1SeedSites::get_seed_end(int pIdx) {
     int offset = 0;
-
-    if (mSeedTypes[pIdx] == "8mer") {
-        offset = 1;
-    } else if (mSeedTypes[pIdx] == "7mer-A1") {
-        offset = 0;
-    } else if (mSeedTypes[pIdx] == "7mer-m8") {
-        offset = 1;
-    } else if (mSeedTypes[pIdx] == "6mer") {
-        if (is_m8_match(pIdx)) {
-            offset = 0;
-        } else {
-            offset = 1;
-        }
-    }
-
-    return std::max((int) mS8Pos[pIdx] + offset, 0);
-}
-
-int TM1SeedSites::get_seed_end_pos(int pIdx) {
-    int offset = 0;
+    int seqLen = get_mrna_seq_len(pIdx);
 
     if (mSeedTypes[pIdx] == "8mer") {
         offset = 8;
@@ -245,30 +252,10 @@ int TM1SeedSites::get_seed_end_pos(int pIdx) {
         } else {
             offset = 7;
         }
+
     }
 
-
-    return std::min((int) mS8Pos[pIdx] + offset, (int) mMRNASeqLen[pIdx]);
-}
-
-int TM1SeedSites::get_seed_end_pos2(int pIdx) {
-    int offset = 0;
-
-    if (mSeedTypes[pIdx] == "8mer") {
-        offset = 8;
-    } else if (mSeedTypes[pIdx] == "7mer-A1") {
-        offset = 8;
-    } else if (mSeedTypes[pIdx] == "7mer-m8") {
-        offset = 7;
-    } else if (mSeedTypes[pIdx] == "6mer") {
-        if (is_m8_match(pIdx)) {
-            offset = 6;
-        } else {
-            offset = 7;
-        }
-    }
-
-    return std::min((int) mS8Pos[pIdx] + offset, (int) mMRNASeqLen[pIdx]);
+    return std::min((int) mS8Pos[pIdx] + offset, seqLen);
 }
 
 } // namespace tm1p

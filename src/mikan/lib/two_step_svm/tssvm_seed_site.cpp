@@ -30,6 +30,24 @@ void TSSVMSeedSeqs::set_flags(mikan::TCharSet &) {
 //
 // TSSVMSeedSites methods
 //
+bool TSSVMSeedSites::check_position_1(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType) {
+    bool effectiveSite = true;
+    unsigned mrnalen;
+
+    if (pSeedType == "GUM" || pSeedType == "GUT" || pSeedType == "LP" || pSeedType == "BT") {
+        pSitePos -= 1;
+        mrnalen = length(mMRNASeqs[pMRNAPos]) - 1;
+    } else {
+        mrnalen = length(mMRNASeqs[pMRNAPos]);
+    }
+
+    if ((pSitePos < mMinToCDS) || (pSitePos + mMinToEnd > mrnalen)) {
+        effectiveSite = false;;
+    }
+
+    return effectiveSite;
+}
+
 bool TSSVMSeedSites::set_new_seed_type(
         unsigned pMRNAPos,
         unsigned pSitePos,

@@ -7,7 +7,7 @@
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_site_filter.hpp"     // MKSiteFilter
 #include "mk_option.hpp"          // MKOptions
-#include "pita_score.hpp"         // PITASiteScores
+#include "pita_site_score.hpp"    // PITASiteScores
 #include "pita_seed_site.hpp"     // PITASeedSites
 
 namespace ptddg {

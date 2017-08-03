@@ -3,6 +3,7 @@
 
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_seed_site.hpp"      // MKSeedSites
 #include "tm1_align.hpp"         // TM1Alignment
 #include "tm1_seed_site.hpp"     // TM1SeedSites
 
@@ -24,8 +25,8 @@ public:
 
     // Method prototypes
     void
-    align_all(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs, TM1SeedSites const &pSeedSites,
-              seqan::String<int> const &pA1Pos);
+    align_all(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+              mikan::MKSeedSites const &pSeedSites, seqan::String<int> const &pA1Pos);
 
     void resize_alignments(unsigned pSize);
 

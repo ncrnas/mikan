@@ -1,6 +1,5 @@
 #include <cmath>                 // min, max, round
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
-#include "tm1_seed_site.hpp"     // TM1SeedSites
 #include "tm1_site_feature.hpp"  // TM1RawFeatures, TM1FeatSeedType, TM1FeatSitePos, TM1FeatDistance, TM1FeatAURich,
 
 using namespace seqan;
@@ -10,7 +9,7 @@ namespace tm1p {
 //
 // TM1RawFeatures methods
 //
-void TM1RawFeatures::clear_features() {
+void TM1SiteFeatures::clear_features() {
     mSeedTypes.clear_features();
     mSitePos.clear_features();
     mDistance.clear_features();
@@ -25,10 +24,10 @@ void TM1RawFeatures::clear_features() {
     mAlign.clear_alignments();
 }
 
-int TM1RawFeatures::add_features(
+int TM1SiteFeatures::add_features(
         mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs,
-        TM1SeedSites &pSeedSites,
+        mikan::MKSeedSites &pSeedSites,
         mikan::MKRMAWithSites &pRNAWithSites) {
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &sitePos = pSeedSites.get_site_pos();
@@ -51,7 +50,7 @@ int TM1RawFeatures::add_features(
     return 0;
 }
 
-void TM1RawFeatures::print_features(TM1SeedSites &pSeedSites) {
+void TM1SiteFeatures::print_features(mikan::MKSeedSites &pSeedSites) {
     for (unsigned i = 0; i < length(pSeedSites.mEffectiveSites); ++i) {
         if (!pSeedSites.mEffectiveSites[i]) {
             continue;
@@ -88,7 +87,7 @@ int TM1FeatSeedType::add_features(
         mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &,
         String<bool> &pEffectiveSites,
-        TM1SeedSites &pSeedSites) {
+        mikan::MKSeedSites &pSeedSites) {
     mikan::TRNAStr revMiRNASeq;
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
 
@@ -140,12 +139,8 @@ int TM1FeatSitePos::add_features(
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         mikan::TSitePosSet const &pMRNAPos,
-        TM1SeedSites &pSeedSites,
+        mikan::MKSeedSites &,
         mikan::TSitePosSet const &pSitePos) {
-    int seqLen;
-    int relEndPosInt;
-    float relEndPos;
-    unsigned lenToCDS, endPos;
 
     resize_features((unsigned) length(pMRNAPos));
 
@@ -156,26 +151,10 @@ int TM1FeatSitePos::add_features(
 
         // Get m1 pos
         mM1Pos[i] = pSitePos[i] + SEARCH_SEQ_LEN;
-        seqLen = (int) length(pMRNASeqs[pMRNAPos[i]]);
-        mSeqLen[i] = seqLen;
+        mSeqLen[i] = (int) length(pMRNASeqs[pMRNAPos[i]]);;
 
-        // Check length to CDS
         mM8Pos[i] = pSitePos[i] - 1;
-        lenToCDS = (unsigned) pSeedSites.get_seed_start_pos2(i);
-        if (lenToCDS < MIN_DIST_TO_CDS || mM1Pos[i] > seqLen) {
-            pEffectiveSites[i] = false;
-            continue;
-        }
 
-        // Get relative pos
-        endPos = (unsigned) pSeedSites.get_seed_end_pos2(i) - 1;
-        relEndPos = (float) endPos / seqLen;
-        relEndPos = roundf(relEndPos * 100.0f) / 100.0f;
-        relEndPosInt = (int) (relEndPos * 1000);
-        if (relEndPosInt >= 400 && relEndPosInt <= 600) {
-            pEffectiveSites[i] = false;
-            continue;
-        }
     }
 
     return 0;
@@ -207,7 +186,7 @@ int TM1FeatDistance::add_features(
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &,
         mikan::TSitePosSet const &,
-        TM1SeedSites &pSeedSites,
+        mikan::MKSeedSites &pSeedSites,
         mikan::MKRMAWithSites &pRNAWithSites) {
 
     StringSet<String<unsigned> > &rnaSitePosMap = pRNAWithSites.get_rna_site_pos_map();
@@ -236,7 +215,7 @@ int TM1FeatDistance::add_features(
                 continue;
             }
             nextSeedStarts[idx] = prevSeedStart;
-            prevSeedStart = pSeedSites.get_seed_start_pos(siteId) + 1;
+            prevSeedStart = pSeedSites.get_seed_start(siteId) + 1;
         }
 
         prevSeedEnd = 0;
@@ -246,16 +225,16 @@ int TM1FeatDistance::add_features(
                 continue;
             }
 
-            seedStart = pSeedSites.get_seed_start_pos(siteId);
-            seedEnd = pSeedSites.get_seed_end_pos(siteId);
+            seedStart = pSeedSites.get_seed_start(siteId);
+            seedEnd = pSeedSites.get_seed_end(siteId);
 
-            endU = pSeedSites.get_seed_start_pos(siteId);
+            endU = pSeedSites.get_seed_start(siteId);
             startU = std::max(0, endU - 30);
             startU = std::max(prevSeedEnd, startU);
             lenU = std::max(endU - startU, 0);
             mUpstream[siteId] = lenU;
 
-            startD = pSeedSites.get_seed_end_pos(siteId);
+            startD = pSeedSites.get_seed_end(siteId);
             prevSeedEnd = startD - 1;
             endD = std::min(startD + 30, seqLen);
             endD = std::min(nextSeedStarts[j], endD);
@@ -292,7 +271,7 @@ int TM1FeatAURich::add_features(
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         mikan::TSitePosSet const &pMRNAPos,
-        TM1SeedSites &pSeedSites,
+        mikan::MKSeedSites &pSeedSites,
         TM1FeatDistance &pDistance) {
     (void) pDistance;
     int seqLen, startU, endU, startD, endD;
@@ -308,11 +287,11 @@ int TM1FeatAURich::add_features(
         }
 
         // Get start and end positions for upstream and downstream
-        endU = pSeedSites.get_seed_start_pos(i);
+        endU = pSeedSites.get_seed_start(i);
         startU = std::max(0, endU - 30);
 
         seqLen = (int) length(pMRNASeqs[pMRNAPos[i]]);
-        startD = pSeedSites.get_seed_end_pos(i);
+        startD = pSeedSites.get_seed_end(i);
         endD = std::min(startD + 30, seqLen);
 
         calc_pos_scores(pMRNASeqs[pMRNAPos[i]], startU, endU, upScore, upMaxScore);
@@ -376,7 +355,7 @@ int TM1FeatSingleFreq::add_features(
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         mikan::TSitePosSet const &pMRNAPos,
-        TM1SeedSites &pSeedSites) {
+        mikan::MKSeedSites &pSeedSites) {
     int seedStart, seedEnd, curpos, seqLen;
 
     resize_features((unsigned) length(pMRNAPos));
@@ -388,8 +367,8 @@ int TM1FeatSingleFreq::add_features(
 
         // Get start position for seed
         seqLen = (int) length(pMRNASeqs[pMRNAPos[i]]);
-        seedEnd = pSeedSites.get_seed_end_pos(i);
-        seedStart = pSeedSites.get_seed_start_pos(i);
+        seedEnd = pSeedSites.get_seed_end(i);
+        seedStart = pSeedSites.get_seed_start(i);
 
         for (int j = 0; j < (seedEnd - seedStart); ++j) {
             curpos = seedStart + j;
@@ -442,7 +421,7 @@ int TM1FeatSingleFreqFlank::add_features(
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         mikan::TSitePosSet const &pMRNAPos,
-        TM1SeedSites &pSeedSites,
+        mikan::MKSeedSites &pSeedSites,
         TM1FeatDistance &pDistance) {
     int seqLen, startU, endU, startD, endD;
 
@@ -455,13 +434,13 @@ int TM1FeatSingleFreqFlank::add_features(
         }
 
         // Get start and end positions for upstream
-        endU = pSeedSites.get_seed_start_pos(i);
+        endU = pSeedSites.get_seed_start(i);
         startU = std::max(0, endU - pDistance.get_upstream_len(i));
         calc_pos_scores(pMRNASeqs[pMRNAPos[i]], startU, endU, i);
 
         // Get start and end positions for downstream
         seqLen = (int) length(pMRNASeqs[pMRNAPos[i]]);
-        startD = pSeedSites.get_seed_end_pos(i);
+        startD = pSeedSites.get_seed_end(i);
         endD = std::min(startD + pDistance.get_downstream_len(i), seqLen);
         calc_pos_scores(pMRNASeqs[pMRNAPos[i]], startD, endD, i);
 
@@ -525,7 +504,7 @@ int TM1FeatDiFreq::add_features(
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         mikan::TSitePosSet const &pMRNAPos,
-        TM1SeedSites &pSeedSites) {
+        mikan::MKSeedSites &pSeedSites) {
     int seedStart, seedEnd, seqLen, curpos1, curpos2;
 
     resize_features((unsigned) length(pMRNAPos));
@@ -537,8 +516,8 @@ int TM1FeatDiFreq::add_features(
 
         // Get start position for seed
         seqLen = (int) length(pMRNASeqs[pMRNAPos[i]]);
-        seedEnd = pSeedSites.get_seed_end_pos(i);
-        seedStart = pSeedSites.get_seed_start_pos(i) - 1;
+        seedEnd = pSeedSites.get_seed_end(i);
+        seedStart = pSeedSites.get_seed_start(i) - 1;
 
         for (int j = 0; j < (seedEnd - seedStart) - 1; ++j) {
             curpos1 = seedStart + j + 1;
@@ -620,7 +599,7 @@ int TM1FeatDiFreqFlank::add_features(
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         mikan::TSitePosSet const &pMRNAPos,
-        TM1SeedSites &pSeedSites,
+        mikan::MKSeedSites &pSeedSites,
         TM1FeatDistance &pDistance) {
     int seqLen, startU, endU, startD, endD, lenUp, lenDown;
 
@@ -632,14 +611,14 @@ int TM1FeatDiFreqFlank::add_features(
         }
 
         // Get start and end positions for upstream
-        endU = pSeedSites.get_seed_start_pos(i);
+        endU = pSeedSites.get_seed_start(i);
         lenUp = pDistance.get_upstream_len(i);
         startU = std::max(0, endU - lenUp);
         calc_pos_scores(pMRNASeqs[pMRNAPos[i]], startU, endU, i);
 
         // Get start and end positions for downstream
         seqLen = (int) length(pMRNASeqs[pMRNAPos[i]]);
-        startD = pSeedSites.get_seed_end_pos(i) - 1;
+        startD = pSeedSites.get_seed_end(i) - 1;
         lenDown = pDistance.get_downstream_len(i) + 1;
         endD = std::min(startD + lenDown, seqLen);
         calc_pos_scores(pMRNASeqs[pMRNAPos[i]], startD, endD, i);
@@ -734,7 +713,7 @@ int TM1FeatSingleMatch::add_features(
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         mikan::TSitePosSet const &pMRNAPos,
-        TM1SeedSites &pSeedSites,
+        mikan::MKSeedSites &pSeedSites,
         TM1FeatSitePos &pSeedPos) {
     int seedStart, m1pos, curpos;
 
@@ -825,7 +804,7 @@ int TM1FeatTwoConsecMatch::add_features(
         mikan::TRNASet const &pMRNASeqs,
         String<bool> &pEffectiveSites,
         mikan::TSitePosSet const &pMRNAPos,
-        TM1SeedSites &pSeedSites,
+        mikan::MKSeedSites &pSeedSites,
         TM1FeatSitePos &pSeedPos) {
     int seedStart, m1pos, curpos1, curpos2;
 

@@ -10,7 +10,7 @@
 #include "mk_input.hpp"           // MKInput
 #include "pita_option.hpp"        // PITAOptions
 #include "pita_seed_site.hpp"     // PITASeedSites
-#include "pita_score.hpp"         // PITAMFEScores, PITATotalScores
+#include "pita_site_score.hpp"    // PITAMFEScores
 #include "pita_site_filter.hpp"   // PITASiteFilter
 #include "pita_core.hpp"          // PITACore
 
@@ -168,7 +168,7 @@ int PITACore::calculate_mirna_scores(unsigned pIdx) {
 
     // Calculate ddG values
     if (mExecCalSiteScore) {
-        retVal = mSiteScores.calc_scores(miRNASeq, mMRNASeqs, mSeedSites);
+        retVal = mSiteScores.calc_scores(miRNASeq, mMRNASeqs, mSeedSites, mRNAWithSites);
         if (retVal != 0) {
             std::cerr << "ERROR: Calculate ddG scores failed." << std::endl;
             return 1;
@@ -177,7 +177,7 @@ int PITACore::calculate_mirna_scores(unsigned pIdx) {
 
     // Summarize ddG values
     if (mExecSumScores) {
-        retVal = mTotalScores.calc_scores(mSeedSites, mMRNASeqs, mRNAWithSites, mSiteScores);
+        retVal = mRNAScores.calc_scores(mSeedSites, mMRNASeqs, mRNAWithSites, mSiteScores);
         if (retVal != 0) {
             std::cerr << "ERROR: Calculate total ddG scores failed." << std::endl;
             return 1;
@@ -214,7 +214,7 @@ int PITACore::calculate_mirna_scores(unsigned pIdx) {
     mSeedSites.clear_pos();
     mRNAWithSites.clear_maps();
     mSiteScores.clear_scores();
-    mTotalScores.clear_scores();
+    mRNAScores.clear_scores();
 
     return 0;
 }
@@ -261,9 +261,9 @@ int PITACore::write_ddg_score(seqan::CharString const &pMiRNAId) {
 }
 
 int PITACore::write_total_score(seqan::CharString const &pMiRNAId) {
-    const seqan::String<float> &totalScores = mTotalScores.get_scores();
-    const seqan::String<int> &mRNAPos = mTotalScores.get_mrna_pos();
-    const seqan::String<int> &siteNum = mTotalScores.get_site_num();
+    const seqan::String<float> &totalScores = mRNAScores.get_scores();
+    const seqan::String<int> &mRNAPos = mRNAScores.get_mrna_pos();
+    const seqan::String<int> &siteNum = mRNAScores.get_site_num();
     float score;
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {

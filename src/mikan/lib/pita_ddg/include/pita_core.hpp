@@ -6,9 +6,10 @@
 #include "mk_sequence.hpp"        // MKSequences
 #include "mk_option.hpp"          // MKOptions
 #include "pita_option.hpp"        // PITAOptions
-#include "pita_score.hpp"         // PITAGGDScores, PITATotalScores
+#include "pita_site_score.hpp"    // PITAGGDScores
 #include "pita_seed_site.hpp"     // PITASeedSites
 #include "pita_site_filter.hpp"   // PITASiteFilter
+#include "pita_rna_score.hpp"     // PITARNAScores
 
 namespace ptddg {
 
@@ -49,7 +50,7 @@ public:
             mOutputAlign(true), mMinSeedLen(6), mMaxSeedLen(8),
             mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
             mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
-            mSiteScores(pOpts), mSiteFilter(pOpts) {
+            mSiteScores(pOpts), mSiteFilter(pOpts), mRNAScores(pOpts) {
         init_from_args(pOpts);
     }
 
@@ -77,7 +78,7 @@ private:
     mikan::MKRMAWithSites mRNAWithSites;
     PITASiteScores mSiteScores;
     PITASiteFilter mSiteFilter;
-    PITATotalScores mTotalScores;
+    PITARNAScores mRNAScores;
 
 private:
     int write_ddg_score(seqan::CharString const &pMiRNAId);

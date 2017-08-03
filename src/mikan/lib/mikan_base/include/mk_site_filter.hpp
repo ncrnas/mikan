@@ -7,7 +7,7 @@
 #include "mk_option.hpp"            // MKOptions
 #include "mk_seed_site.hpp"         // MKSeedSites
 #include "mk_site_score.hpp"        // MKSiteScores
-#include "mk_rna_sites.hpp"    // MKRMAWithSites
+#include "mk_rna_sites.hpp"         // MKRMAWithSites
 
 namespace mikan {
 
