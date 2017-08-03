@@ -10,27 +10,48 @@ namespace tm1p {
 // TM1TotalScores methods
 //
 void TM1ClassifiedScores::clear_scores() {
-    clear(mScores);
+    mikan::MKRNAScores::clear_scores();
+
+    mMRNAFeatures.clear_features();
+    mMRNAInput.clear_scores();
+
     clear(mPredictions);
-    clear(mSiteNum);
 }
 
 int TM1ClassifiedScores::calc_scores(
-        const seqan::String<unsigned> &pSiteCoutns,
-        const seqan::String<float> &pScores) {
-    resize(mScores, length(pSiteCoutns));
-    resize(mPredictions, length(pSiteCoutns));
-    resize(mSiteNum, length(pSiteCoutns));
+        mikan::MKSeedSites &pSeedSites,
+        mikan::TRNASet const &pMRNASeqs,
+        mikan::MKRMAWithSites &pRNAWithSites,
+        TM1SiteScores &mSiteScores) {
 
-    for (unsigned i = 0; i < length(pSiteCoutns); ++i) {
+    int retVal;
 
-        mScores[i] = roundf(pScores[i] * 1000.0) / 1000.0;
-        if (pScores[i] > 0) {
+    retVal = mMRNAFeatures.add_features(pSeedSites, pRNAWithSites, mSiteScores);
+    if (retVal != 0) {
+        return 1;
+    }
+
+    retVal = mMRNAInput.classify(mMRNAFeatures.get_scaled_feature());
+    if (retVal != 0) {
+        return 1;
+    }
+
+    const seqan::String<unsigned> &siteCounts = mMRNAFeatures.get_site_counts();
+    const seqan::String<float> &scores = mMRNAInput.get_scores();
+
+    resize(mRNAScores, length(siteCounts));
+    resize(mPredictions, length(siteCounts));
+    resize(mSiteNum, length(siteCounts));
+
+    for (unsigned i = 0; i < length(siteCounts); ++i) {
+
+        mRNAScores[i] = roundf(scores[i] * 1000.0) / 1000.0;
+        if (mRNAScores[i] > 0) {
             mPredictions[i] = 1;
         } else {
             mPredictions[i] = -1;
         }
-        mSiteNum[i] = pSiteCoutns[i];
+        mSiteNum[i] = siteCounts[i];
     }
 
     return 0;

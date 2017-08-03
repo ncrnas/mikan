@@ -3,35 +3,24 @@
 
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_rna_score.hpp"       // MKRNAScores
 #include "mk_rna_sites.hpp"       // MKRMAWithSites
-#include "ts5_site_score.hpp"          // TS5SiteScores
+#include "mk_rna_score.hpp"       // MKRNAScores
+#include "ts5_site_score.hpp"     // TS5SiteScores
 
 namespace ts5cs {
 
 //
 // Total context scores
 //
-class TS5TotalScores {
+class TS5RNAScores : public mikan::MKRNAScores {
 public:
     // Define methods
-    TS5TotalScores() {}
-
-    const seqan::String<float> &get_scores() { return mTotalScores; }
-
-    const seqan::String<int> &get_mrna_pos() { return mMRNAPos; }
-
-    const seqan::String<int> &get_site_num() { return mSiteNum; }
+    TS5RNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts) {}
 
     // Method prototypes
-    void clear_scores();
-
-    int calc_scores(TS5SeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
-                    mikan::MKRMAWithSites &pRNAWithSites, TS5SiteScores &pSiteScores);
-
-private:
-    seqan::String<float> mTotalScores;
-    seqan::String<int> mMRNAPos;
-    seqan::String<int> mSiteNum;
+    int calc_scores(mikan::MKSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
+                    mikan::MKRMAWithSites &pRNAWithSites, TS5SiteScores &pDDGScores);
 
 };
 

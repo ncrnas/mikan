@@ -35,7 +35,7 @@ void TSSVMRNARawFeatures::resize_feat(unsigned pLen) {
 }
 
 int TSSVMRNARawFeatures::add_features(
-        TSSVMSeedSites &pSeedSites,
+        mikan::MKSeedSites &pSeedSites,
         mikan::TRNASet const &pMRNASeqs,
         mikan::MKRMAWithSites &pRNAWithSites,
         TSSVMSiteScores &pSiteScores) {
@@ -89,7 +89,7 @@ void TSSVMFeatUTRLen::clear_features() {
 int TSSVMFeatUTRLen::add_features(
         unsigned pIdx,
         mikan::TSitePosSet &,
-        TSSVMSeedSites &,
+        mikan::MKSeedSites &,
         mikan::TRNAStr const &pMRNASeq,
         TSSVMSiteScores &) {
 
@@ -114,7 +114,7 @@ void TSSVMFeatSiteNum::clear_features() {
 int TSSVMFeatSiteNum::add_features(
         unsigned pIdx,
         mikan::TSitePosSet &pSitePosSet,
-        TSSVMSeedSites &,
+        mikan::MKSeedSites &,
         mikan::TRNAStr const &,
         TSSVMSiteScores &) {
 
@@ -140,7 +140,7 @@ void TSSVMFeatTotDiscUTRLen::clear_features() {
 int TSSVMFeatTotDiscUTRLen::add_features(
         unsigned pIdx,
         mikan::TSitePosSet &pSitePosSet,
-        TSSVMSeedSites &,
+        mikan::MKSeedSites &,
         mikan::TRNAStr const &pMRNASeq,
         TSSVMSiteScores &pSiteScores) {
 
@@ -182,7 +182,7 @@ void TSSVMFeatSeedTypeNum::clear_features() {
 int TSSVMFeatSeedTypeNum::add_features(
         unsigned pIdx,
         mikan::TSitePosSet &pSitePosSet,
-        TSSVMSeedSites &pSeedSites,
+        mikan::MKSeedSites &pSeedSites,
         mikan::TRNAStr const &,
         TSSVMSiteScores &) {
 
@@ -234,7 +234,7 @@ void TSSVMFeatDiscBin::clear_features() {
 int TSSVMFeatDiscBin::add_features(
         unsigned pIdx,
         mikan::TSitePosSet &pSitePosSet,
-        TSSVMSeedSites &,
+        mikan::MKSeedSites &,
         mikan::TRNAStr const &,
         TSSVMSiteScores &pSiteScores) {
 
@@ -303,7 +303,7 @@ void TSSVMFeatOptDist::clear_features() {
 int TSSVMFeatOptDist::add_features(
         unsigned pIdx,
         mikan::TSitePosSet &pSitePosSet,
-        TSSVMSeedSites &pSeedSites,
+        mikan::MKSeedSites &pSeedSites,
         mikan::TRNAStr const &,
         TSSVMSiteScores &) {
 
@@ -360,7 +360,7 @@ void TSSVMFeatSiteNumFlg::clear_features() {
 int TSSVMFeatSiteNumFlg::add_features(
         unsigned pIdx,
         mikan::TSitePosSet &pSitePosSet,
-        TSSVMSeedSites &,
+        mikan::MKSeedSites &,
         mikan::TRNAStr const &,
         TSSVMSiteScores &) {
 
@@ -390,7 +390,7 @@ void TSSVMFeatTotDisc::clear_features() {
 int TSSVMFeatTotDisc::add_features(
         unsigned pIdx,
         mikan::TSitePosSet &pSitePosSet,
-        TSSVMSeedSites &,
+        mikan::MKSeedSites &,
         mikan::TRNAStr const &,
         TSSVMSiteScores &pSiteScores) {
 

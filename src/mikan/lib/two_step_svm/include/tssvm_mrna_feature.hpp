@@ -3,6 +3,7 @@
 
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"           // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_seed_site.hpp"         // MKSeedSites
 #include "tssvm_seed_site.hpp"      // TSSVMSeedSites
 #include "tssvm_site_svm.hpp"       // TSSVMSiteInputVector
 #include "tssvm_site_score.hpp"     // TSSVMSiteScores
@@ -25,7 +26,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pIdx, mikan::TSitePosSet &pSitePosSet,
-                     TSSVMSeedSites &pSeedSites, mikan::TRNAStr const &pMRNASeq,
+                     mikan::MKSeedSites &pSeedSites, mikan::TRNAStr const &pMRNASeq,
                      TSSVMSiteScores &pSiteScores);
 
     void clear_features();
@@ -55,7 +56,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pIdx, mikan::TSitePosSet &pSitePosSet,
-                     TSSVMSeedSites &pSeedSites, mikan::TRNAStr const &pMRNASeq,
+                     mikan::MKSeedSites &pSeedSites, mikan::TRNAStr const &pMRNASeq,
                      TSSVMSiteScores &pSiteScores);
 
     void clear_features();
@@ -81,7 +82,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pIdx, mikan::TSitePosSet &pSitePosSet,
-                     TSSVMSeedSites &pSeedSites, mikan::TRNAStr const &pMRNASeq,
+                     mikan::MKSeedSites &pSeedSites, mikan::TRNAStr const &pMRNASeq,
                      TSSVMSiteScores &pSiteScores);
 
     void clear_features();
@@ -107,7 +108,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pIdx, mikan::TSitePosSet &pSitePosSet,
-                     TSSVMSeedSites &pSeedSites, mikan::TRNAStr const &pMRNASeq,
+                     mikan::MKSeedSites &pSeedSites, mikan::TRNAStr const &pMRNASeq,
                      TSSVMSiteScores &pSiteScores);
 
     void clear_features();
@@ -133,7 +134,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pIdx, mikan::TSitePosSet &pSitePosSet,
-                     TSSVMSeedSites &pSeedSites, mikan::TRNAStr const &pMRNASeq,
+                     mikan::MKSeedSites &pSeedSites, mikan::TRNAStr const &pMRNASeq,
                      TSSVMSiteScores &pSiteScores);
 
     void clear_features();
@@ -160,7 +161,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pIdx, mikan::TSitePosSet &pSitePosSet,
-                     TSSVMSeedSites &pSeedSites, mikan::TRNAStr const &pMRNASeq,
+                     mikan::MKSeedSites &pSeedSites, mikan::TRNAStr const &pMRNASeq,
                      TSSVMSiteScores &pSiteScores);
 
     void clear_features();
@@ -187,7 +188,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pIdx, mikan::TSitePosSet &pSitePosSet,
-                     TSSVMSeedSites &pSeedSites, mikan::TRNAStr const &pMRNASeq,
+                     mikan::MKSeedSites &pSeedSites, mikan::TRNAStr const &pMRNASeq,
                      TSSVMSiteScores &pSiteScores);
 
     void clear_features();
@@ -214,7 +215,7 @@ public:
 
     // Method prototype
     int add_features(unsigned pIdx, mikan::TSitePosSet &pSitePosSet,
-                     TSSVMSeedSites &pSeedSites, mikan::TRNAStr const &pMRNASeq,
+                     mikan::MKSeedSites &pSeedSites, mikan::TRNAStr const &pMRNASeq,
                      TSSVMSiteScores &pSiteScores);
 
     void clear_features();
@@ -276,7 +277,7 @@ public:
     seqan::String<unsigned> &get_site_count() { return mSiteNum.get_site_count(); }
 
     // Method prototypes
-    int add_features(TSSVMSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
+    int add_features(mikan::MKSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
                      mikan::MKRMAWithSites &pRNAWithSites, TSSVMSiteScores &pSiteScores);
 
     void clear_features();

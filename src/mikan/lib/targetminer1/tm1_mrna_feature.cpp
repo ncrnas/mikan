@@ -211,7 +211,7 @@ void TM1MRNAFeatures::resize_features(unsigned pSize) {
 }
 
 int TM1MRNAFeatures::add_features(
-        TM1SeedSites &pSeedSites,
+        mikan::MKSeedSites &pSeedSites,
         mikan::MKRMAWithSites &pRNAWithSites,
         TM1SiteScores &pSiteScores) {
 
@@ -290,7 +290,7 @@ void TM1MRNASeedType::resize_features(unsigned pSize) {
 int TM1MRNASeedType::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites &pSeedSites,
+        mikan::MKSeedSites &pSeedSites,
         TM1SiteFeatures &pSiteFeatures) {
 
     CharString seedType;
@@ -333,7 +333,7 @@ void TM1MRNASiteCount::resize_features(unsigned pSize) {
 int TM1MRNASiteCount::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites &pSeedSites,
+        mikan::MKSeedSites &pSeedSites,
         TM1SiteFeatures &) {
     for (unsigned i = 0; i < length(pSortedSites); ++i) {
         if (!pSeedSites.mEffectiveSites[pSortedSites[i]]) {
@@ -374,7 +374,7 @@ void TM1MRNAAURich::resize_features(unsigned pSize) {
 int TM1MRNAAURich::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites &pSeedSites,
+        mikan::MKSeedSites &pSeedSites,
         TM1SiteFeatures &pSiteFeatures) {
 
     CharString seedType;
@@ -430,7 +430,7 @@ void TM1MRNASingleFreq::resize_features(unsigned pSize) {
 int TM1MRNASingleFreq::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites &pSeedSites,
+        mikan::MKSeedSites &pSeedSites,
         TM1SiteFeatures &pSiteFeatures) {
 
     const TM1FeatSingleFreq &singleFreq = pSiteFeatures.get_single_freq();
@@ -500,7 +500,7 @@ void TM1MRNASingleFreqFlank::resize_features(unsigned pSize) {
 int TM1MRNASingleFreqFlank::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites &pSeedSites,
+        mikan::MKSeedSites &pSeedSites,
         TM1SiteFeatures &pSiteFeatures) {
 
     const TM1FeatSingleFreqFlank &singleFreqFlank = pSiteFeatures.get_single_freq_flank();
@@ -567,7 +567,7 @@ void TM1MRNADiFreq::resize_features(unsigned pSize) {
 int TM1MRNADiFreq::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites &pSeedSites,
+        mikan::MKSeedSites &pSeedSites,
         TM1SiteFeatures &pSiteFeatures) {
 
     const seqan::StringSet<seqan::CharString> &seedTypes = pSeedSites.get_seed_types();
@@ -668,7 +668,7 @@ void TM1MRNADiFreqFlank::resize_features(unsigned pSize) {
 int TM1MRNADiFreqFlank::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites &pSeedSites,
+        mikan::MKSeedSites &pSeedSites,
         TM1SiteFeatures &pSiteFeatures) {
 
     const TM1FeatDiFreqFlank &diFreqFlank = pSiteFeatures.get_di_freq_flank();
@@ -772,7 +772,7 @@ void TM1MRNASingleMatch::resize_features(unsigned pSize) {
 int TM1MRNASingleMatch::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites &pSeedSites,
+        mikan::MKSeedSites &pSeedSites,
         TM1SiteFeatures &pSiteFeatures) {
 
     const TM1FeatSingleMatch &singleMatch = pSiteFeatures.get_single_match();
@@ -834,7 +834,7 @@ void TM1MRNATwoConsecMatch::resize_features(unsigned pSize) {
 int TM1MRNATwoConsecMatch::add_features(
         unsigned pIdx,
         const String<unsigned> &pSortedSites,
-        TM1SeedSites &pSeedSites,
+        mikan::MKSeedSites &pSeedSites,
         TM1SiteFeatures &pSiteFeatures) {
 
     const TM1FeatTwoConsecMatch &twoConsecMatch = pSiteFeatures.get_two_consec_match();

@@ -48,7 +48,8 @@ public:
             mExecSortSites(true),
             mExecGetMRNAFeat(true), mExecRNAScore(true), mExecSumScores(true), mOutputSitePos(true),
             mOutputScore(true), mOutputAlign(true), mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
-            mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mSiteScores(pOpts), mSiteFilter(pOpts) {
+            mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mSiteScores(pOpts), mSiteFilter(pOpts),
+            mRNAScores(pOpts) {
         init_from_args(pOpts);
     }
 
@@ -74,9 +75,7 @@ private:
     mikan::MKRMAWithSites mRNAWithSites;
     TM1SiteScores mSiteScores;
     TM1SiteFilter mSiteFilter;
-    TM1MRNAFeatures mMRNAFeatures;
-    TM1MRNAInputVector mMRNAInput;
-    TM1ClassifiedScores mScores;
+    TM1ClassifiedScores mRNAScores;
 
 private:
     int write_site_positions(seqan::CharString const &pMiRNAId);

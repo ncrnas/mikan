@@ -39,9 +39,8 @@ public:
                     mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites const &pRNAWithSites);
 
 protected:
-    // Define variable
+    // Define variables
     mikan::MKOptions const &mOpts;
-
     mikan::TScoreSet mSiteScores;
 
 };

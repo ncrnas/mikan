@@ -1,22 +1,17 @@
 #include "mk_typedef.hpp"       // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "pita_site_score.hpp"  // PITASiteScores
-#include "pita_rna_score.hpp"   // PITATotalScores
+#include "pita_rna_score.hpp"   // PITARNAScores
 
 using namespace seqan;
 
 namespace ptddg {
 
 //
-// PITATotalScores methods
+// PITARNAScores methods
 //
-void PITATotalScores::clear_scores() {
-    clear(mMRNAPos);
-    clear(mSiteNum);
-    clear(mTotalScores);
-}
 
-int PITATotalScores::calc_scores(
-        PITASeedSites &pSeedSites,
+int PITARNAScores::calc_scores(
+        mikan::MKSeedSites &pSeedSites,
         mikan::TRNASet const &,
         mikan::MKRMAWithSites &pRNAWithSites,
         PITASiteScores &pSiteScores) {
@@ -24,7 +19,7 @@ int PITATotalScores::calc_scores(
     mikan::TMRNAPosSet &uniqRNAPosSet = pRNAWithSites.get_uniq_mrna_pos_set();
     seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = pRNAWithSites.get_rna_site_pos_map();
 
-    resize(mTotalScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
+    resize(mRNAScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
     resize(mSiteNum, length(pRNAWithSites.mEffectiveRNAs), 0);
     resize(mMRNAPos, length(pRNAWithSites.mEffectiveRNAs));
 
@@ -70,7 +65,7 @@ int PITATotalScores::calc_scores(
             }
         }
 
-        mTotalScores[i] = -1.0 * (max_score + std::log(total_score));
+        mRNAScores[i] = -1.0 * (max_score + std::log(total_score));
         mMRNAPos[i] = uniqRNAPosSet[i];
         mSiteNum[i] = site_count;
 

@@ -1,5 +1,5 @@
 #include "mk_typedef.hpp"       // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
-#include "mr3_rna_score.hpp"    // MR3TotalScores
+#include "mr3_rna_score.hpp"    // MR3RNAScores
 
 using namespace seqan;
 
@@ -8,9 +8,9 @@ namespace mr3as {
 //
 // MR3TotalScores methods
 //
-void MR3TotalScores::clear_scores() {
-    clear(mMRNAPos);
-    clear(mSiteNum);
+void MR3RNAScores::clear_scores() {
+    mikan::MKRNAScores::clear_scores();
+
     clear(mTotalEnScores);
     clear(mTotalAlignScores);
     clear(mLogMaxAlignScores);
@@ -20,8 +20,8 @@ void MR3TotalScores::clear_scores() {
 int calc_scores(MR3SeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
                 mikan::MKRMAWithSites &pRNAWithSites, MR3SiteScores &pSiteScores);
 
-int MR3TotalScores::calc_scores(
-        MR3SeedSites &pSeedSites,
+int MR3RNAScores::calc_scores(
+        mikan::MKSeedSites &pSeedSites,
         mikan::TRNASet const &,
         mikan::MKRMAWithSites &pRNAWithSites,
         MR3SiteScores &pSiteScores) {
@@ -33,6 +33,7 @@ int MR3TotalScores::calc_scores(
     resize(mTotalEnScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
     resize(mLogMaxAlignScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
     resize(mLogMaxEnScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
+    resize(mEffectiveRNAs, length(pRNAWithSites.mEffectiveRNAs));
     resize(mMRNAPos, length(pRNAWithSites.mEffectiveRNAs));
     resize(mSiteNum, length(pRNAWithSites.mEffectiveRNAs), 0);
 
@@ -81,6 +82,7 @@ int MR3TotalScores::calc_scores(
         mTotalEnScores[i] = totalScoreEn;
         mLogMaxAlignScores[i] = maxScore + std::log(totalScore);
         mLogMaxEnScores[i] = maxScoreEn + std::log(totalScoreEn);
+        mEffectiveRNAs[i] = true;
         mMRNAPos[i] = uniqRNAPosSet[i];
         mSiteNum[i] = siteCount;
     }

@@ -153,18 +153,9 @@ int TSSVMCore::calculate_mirna_scores(unsigned pIdx) {
         }
     }
 
-    // Generate RNA features
-    if (mExecRNAFeat) {
-        retVal = mRnaFeatures.add_features(mSeedSites, mMRNASeqs, mRNAWithSites, mSiteScores);
-        if (retVal != 0) {
-            std::cerr << "ERROR: RNA feature calculation failed." << std::endl;
-            return 1;
-        }
-    }
-
     // Calculate RNA SVM scores
     if (mExecRNAScore) {
-        retVal = mRnaInput.classify(mRnaFeatures);
+        retVal = mRNAScores.calc_scores(mSeedSites, mMRNASeqs, mRNAWithSites, mSiteScores);
         if (retVal != 0) {
             std::cerr << "ERROR: RNA SVM classification failed." << std::endl;
             return 1;
@@ -201,8 +192,7 @@ int TSSVMCore::calculate_mirna_scores(unsigned pIdx) {
     mSeedSites.clear_pos();
     mRNAWithSites.clear_maps();
     mSiteScores.clear_scores();
-    mRnaFeatures.clear_features();
-    mRnaInput.clear_scores();
+    mRNAScores.clear_scores();
 
     return 0;
 }
@@ -250,8 +240,8 @@ int TSSVMCore::write_mrna_scores(seqan::CharString const &pMiRNAId) {
     typedef std::multimap<float, unsigned>::reverse_iterator TItMap;
     typedef std::pair<float, unsigned> TPosPair;
 
-    const seqan::String<float> &scores = mRnaInput.get_scores();
-    seqan::String<unsigned> &siteCount = mRnaFeatures.get_site_count();
+    const seqan::String<float> &scores = mRNAScores.get_scores();
+    const seqan::String<int> &siteCount = mRNAScores.get_site_num();
     mikan::TMRNAPosSet &uniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
 
     std::multimap<float, unsigned> sortedMRNAByScore;

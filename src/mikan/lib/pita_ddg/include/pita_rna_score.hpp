@@ -6,8 +6,10 @@
 #include <sstream>
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_seed_site.hpp"       // MKSeedSites
 #include "mk_site_score.hpp"      // MKSiteScores
 #include "mk_rna_sites.hpp"       // MKRMAWithSites
+#include "mk_rna_score.hpp"       // MKRNAScores
 #include "pita_option.hpp"        // PITAOptions
 #include "pita_seed_site.hpp"     // PITASeedSites
 #include "pita_site_score.hpp"    // PITAGGDScores
@@ -18,33 +20,20 @@ namespace ptddg {
 //
 // Total ddG scores
 //
-class PITATotalScores {
+class PITARNAScores : public mikan::MKRNAScores {
 public:
     // Constant values
     const double MIN_EXP_DIFF;
 
+    // Define type
     typedef std::set<unsigned>::iterator TItSet;
 
-public:
     // Define methods
-    PITATotalScores() : MIN_EXP_DIFF(-100.0) {}
-
-    const seqan::String<float> &get_scores() { return mTotalScores; }
-
-    const seqan::String<int> &get_mrna_pos() { return mMRNAPos; }
-
-    const seqan::String<int> &get_site_num() { return mSiteNum; }
+    PITARNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts), MIN_EXP_DIFF(-100.0) {}
 
     // Method prototype
-    void clear_scores();
-
-    int calc_scores(PITASeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
+    int calc_scores(mikan::MKSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
                     mikan::MKRMAWithSites &pRNAWithSites, PITASiteScores &pDDGScores);
-
-private:
-    seqan::String<float> mTotalScores;
-    seqan::String<int> mMRNAPos;
-    seqan::String<int> mSiteNum;
 
 };
 

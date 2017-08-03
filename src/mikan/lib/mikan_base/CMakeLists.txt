@@ -10,6 +10,7 @@ set(MIKAN_SOURCE
         ${CMAKE_CURRENT_SOURCE_DIR}/mk_site_score.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/mk_rna_sites.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/mk_site_filter.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/mk_rna_score.cpp
         PARENT_SCOPE
         )
 set(MIKAN_HEADERS

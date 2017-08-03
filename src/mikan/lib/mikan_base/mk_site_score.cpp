@@ -14,9 +14,6 @@ void MKSiteScores::clear_scores() {
     clear(mSiteScores);
 }
 
-int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
-
 int MKSiteScores::calc_scores(
         mikan::TRNAStr const &,
         mikan::TRNASet const &,

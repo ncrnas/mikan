@@ -177,7 +177,7 @@ int MR3Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Summarize alignment and energy scores
     if (mExecSumScores) {
-        retVal = mTotalScores.calc_scores(mSeedSites, mMRNASeqs, mRNAWithSites, mSiteScores);
+        retVal = mRNAScores.calc_scores(mSeedSites, mMRNASeqs, mRNAWithSites, mSiteScores);
         if (retVal != 0) {
             std::cerr << "ERROR: Calculate total scores failed." << std::endl;
             return 1;
@@ -214,7 +214,7 @@ int MR3Core::calculate_mirna_scores(unsigned pIdx) {
     mSeedSites.clear_pos();
     mSiteScores.clear_scores();
     mRNAWithSites.clear_maps();
-    mTotalScores.clear_scores();
+    mRNAScores.clear_scores();
 
     return 0;
 }
@@ -261,10 +261,10 @@ int MR3Core::write_site_score(seqan::CharString const &pMiRNAId) {
 }
 
 int MR3Core::write_total_score(seqan::CharString const &pMiRNAId) {
-    const seqan::String<float> &totalAlignScores = mTotalScores.get_align_scores();
-    const seqan::String<float> &totalEnScores = mTotalScores.get_energy_scores();
-    const seqan::String<int> &mRNAPos = mTotalScores.get_mrna_pos();
-    const seqan::String<int> &siteNum = mTotalScores.get_site_num();
+    const seqan::String<float> &totalAlignScores = mRNAScores.get_align_scores();
+    const seqan::String<float> &totalEnScores = mRNAScores.get_energy_scores();
+    const seqan::String<int> &mRNAPos = mRNAScores.get_mrna_pos();
+    const seqan::String<int> &siteNum = mRNAScores.get_site_num();
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
 

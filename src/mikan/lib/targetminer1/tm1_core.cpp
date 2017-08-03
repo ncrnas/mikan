@@ -149,27 +149,10 @@ int TM1Core::calculate_mirna_scores(unsigned pIdx) {
         }
     }
 
-    // Get mRNA features
-    if (mExecGetMRNAFeat) {
-        retVal = mMRNAFeatures.add_features(mSeedSites, mRNAWithSites, mSiteScores);
-        if (retVal != 0) {
-            std::cerr << "ERROR: Calculate total ddG scores failed." << std::endl;
-            return 1;
-        }
-    }
-
-    // Calculate mRNA SVM scores
-    if (mExecRNAScore) {
-        retVal = mMRNAInput.classify(mMRNAFeatures.get_scaled_feature());
-        if (retVal != 0) {
-            std::cerr << "ERROR: mRNA SVM classification failed." << std::endl;
-            return 1;
-        }
-    }
 
     // Summarize classified results
     if (mExecSumScores) {
-        retVal = mScores.calc_scores(mMRNAFeatures.get_site_counts(), mMRNAInput.get_scores());
+        retVal = mRNAScores.calc_scores(mSeedSites, mMRNASeqs, mRNAWithSites, mSiteScores);
         if (retVal != 0) {
             std::cerr << "ERROR: Summarizing classified results failed." << std::endl;
             return 1;
@@ -206,9 +189,7 @@ int TM1Core::calculate_mirna_scores(unsigned pIdx) {
     mSeedSites.clear_pos();
     mSiteScores.clear_scores();
     mRNAWithSites.clear_maps();
-    mMRNAFeatures.clear_features();
-    mMRNAInput.clear_scores();
-    mScores.clear_scores();
+    mRNAScores.clear_scores();
 
     return 0;
 }
@@ -245,9 +226,9 @@ int TM1Core::write_site_positions(seqan::CharString const &pMiRNAId) {
 }
 
 int TM1Core::write_scores(seqan::CharString const &pMiRNAId) {
-    const seqan::String<float> &scores = mScores.get_scores();
-    const seqan::String<int> &predictions = mScores.get_labels();
-    const seqan::String<unsigned> &siteNum = mScores.get_site_num();
+    const seqan::String<float> &scores = mRNAScores.get_scores();
+    const seqan::String<int> &predictions = mRNAScores.get_labels();
+    const seqan::String<unsigned> &siteNum = mRNAScores.get_site_num();
     mikan::TMRNAPosSet const &uniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
     typedef std::multimap<double, unsigned>::iterator TItMap;
     typedef std::pair<float, unsigned> TPosPair;

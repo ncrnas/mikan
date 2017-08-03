@@ -171,7 +171,7 @@ int RH2Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Summarize MFE values
     if (mExecSumScores) {
-        retVal = mTotalScores.calc_scores(mSeedSites, mSiteScores, mRNAWithSites);
+        retVal = mRNAScores.calc_scores(mSeedSites, mMRNASeqs, mRNAWithSites, mSiteScores);
         if (retVal != 0) {
             std::cerr << "ERROR: Calculate total MFE values failed." << std::endl;
             return 1;
@@ -208,7 +208,7 @@ int RH2Core::calculate_mirna_scores(unsigned pIdx) {
     mSeedSites.clear_pos();
     mRNAWithSites.clear_maps();
     mSiteScores.clear_scores();
-    mTotalScores.clear_scores();
+    mRNAScores.clear_scores();
 
     return 0;
 }
@@ -254,10 +254,10 @@ int RH2Core::write_mfe_score(seqan::CharString const &pMiRNAId) {
 }
 
 int RH2Core::write_total_score(seqan::CharString const &pMiRNAId) {
-    const seqan::String<float> &totalScores = mTotalScores.get_scores();
-    const seqan::String<float> &totalNormScores = mTotalScores.get_norm_scores();
-    const seqan::String<int> &mRNAPos = mTotalScores.get_mrna_pos();
-    const seqan::String<int> &siteNum = mTotalScores.get_site_num();
+    const seqan::String<float> &totalScores = mRNAScores.get_scores();
+    const seqan::String<float> &totalNormScores = mRNAScores.get_norm_scores();
+    const seqan::String<int> &mRNAPos = mRNAScores.get_mrna_pos();
+    const seqan::String<int> &siteNum = mRNAScores.get_site_num();
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
         mOFile2 << toCString(pMiRNAId) << "\t";

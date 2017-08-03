@@ -2,6 +2,9 @@
 #define RH2_RNA_SCORE_HPP_
 
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_site_score.hpp"      // MKSiteScores
+#include "mk_rna_sites.hpp"       // MKRMAWithSites
+#include "mk_rna_score.hpp"       // MKRNAScores
 #include "rh2_site_score.hpp"     // RH2SiteScores
 
 namespace rh2mfe {
@@ -9,30 +12,21 @@ namespace rh2mfe {
 //
 // Total MFE scores
 //
-class RH2TotalScores {
+class RH2RNAScores : public mikan::MKRNAScores {
 public:
     // Define methods
-    RH2TotalScores() {}
+    RH2RNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts) {}
 
-    const seqan::String<float> &get_scores() { return mTotalScores; }
-
-    const seqan::String<float> &get_norm_scores() { return mTotalNormScores; }
-
-    const seqan::String<int> &get_mrna_pos() { return mMRNAPos; }
-
-    const seqan::String<int> &get_site_num() { return mSiteNum; }
+    const seqan::String<float> &get_norm_scores() { return mNormScores; }
 
     // Method prototypes
     void clear_scores();
 
-    int calc_scores(RH2SeedSites &pSeedSites, RH2SiteScores &pMFEScores,
-                    mikan::MKRMAWithSites &pRNAWithSites);
+    int calc_scores(mikan::MKSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
+                    mikan::MKRMAWithSites &pRNAWithSites, RH2SiteScores &pMFEScores);
 
 private:
-    seqan::String<float> mTotalScores;
-    seqan::String<float> mTotalNormScores;
-    seqan::String<int> mMRNAPos;
-    seqan::String<int> mSiteNum;
+    seqan::String<float> mNormScores;
 
 };
 

@@ -255,7 +255,7 @@ int TM1SeedSites::get_seed_end(int pIdx) {
 
     }
 
-    return std::min((int) mS8Pos[pIdx] + offset,seqLen);
+    return std::min((int) mS8Pos[pIdx] + offset, seqLen);
 }
 
 } // namespace tm1p
