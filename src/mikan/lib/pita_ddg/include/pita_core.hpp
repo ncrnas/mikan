@@ -6,9 +6,10 @@
 #include "mk_sequence.hpp"        // MKSequences
 #include "mk_option.hpp"          // MKOptions
 #include "pita_option.hpp"        // PITAOptions
-#include "pita_score.hpp"         // PITAGGDScores, PITATotalScores
+#include "pita_site_score.hpp"    // PITAGGDScores
 #include "pita_seed_site.hpp"     // PITASeedSites
 #include "pita_site_filter.hpp"   // PITASiteFilter
+#include "pita_rna_score.hpp"     // PITATotalScores
 
 namespace ptddg {
 

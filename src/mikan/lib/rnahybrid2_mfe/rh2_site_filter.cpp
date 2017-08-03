@@ -1,6 +1,6 @@
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
-#include "rh2_score.hpp"         // RH2SiteScores
-#include "rh2_site_filter.hpp"  // RH2Overlap, RH2SortedSitePos
+#include "rh2_site_score.hpp"    // RH2SiteScores
+#include "rh2_site_filter.hpp"   // RH2Overlap, RH2SortedSitePos
 
 using namespace seqan;
 

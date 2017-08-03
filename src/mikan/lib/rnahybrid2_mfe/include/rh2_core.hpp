@@ -6,9 +6,10 @@
 #include "mk_sequence.hpp"       // MKSequences
 #include "mk_option.hpp"         // MKOptions
 #include "rh2_option.hpp"        // RH2Options
-#include "rh2_score.hpp"         // RH2SiteScores, RH2TotalScores
+#include "rh2_site_score.hpp"    // RH2SiteScores
 #include "rh2_seed_site.hpp"     // RH2SeedSites
 #include "rh2_site_filter.hpp"   // RH2SiteFilter, RH2TopNSites
+#include "rh2_rna_score.hpp"     // RH2TotalScores
 
 namespace rh2mfe {
 

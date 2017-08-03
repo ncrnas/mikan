@@ -7,7 +7,7 @@
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_site_filter.hpp"     // MKSiteFilter
 #include "mk_option.hpp"          // MKOptions
-#include "mr3_score.hpp"          // MR3DDGScores
+#include "mr3_site_score.hpp"     // MR3DDGScores
 #include "mr3_seed_site.hpp"      // MR3SeedSites
 
 namespace mr3as {

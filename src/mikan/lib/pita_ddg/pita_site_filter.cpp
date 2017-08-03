@@ -1,5 +1,5 @@
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
-#include "pita_score.hpp"         // PITAMFEScores
+#include "pita_site_score.hpp"    // PITAMFEScores
 #include "pita_site_filter.hpp"   // PITASiteFilter, PITASortedSitePos
 
 using namespace seqan;

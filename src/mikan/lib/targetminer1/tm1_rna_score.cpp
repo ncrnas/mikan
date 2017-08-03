@@ -1,6 +1,6 @@
 #include <math.h>                // roundf
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
-#include "tm1_score.hpp"         // TM1ClassifiedScores
+#include "tm1_rna_score.hpp"     // TM1ClassifiedScores
 
 using namespace seqan;
 

@@ -1,5 +1,5 @@
-#ifndef TM1_SCORE_HPP_
-#define TM1_SCORE_HPP_
+#ifndef TM1_RNA_SCORE_HPP_
+#define TM1_RNA_SCORE_HPP_
 
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
@@ -36,4 +36,4 @@ private:
 
 } // namespace tm1p
 
-#endif /* TM1_SCORE_HPP_ */
+#endif /* TM1_RNA_SCORE_HPP_ */

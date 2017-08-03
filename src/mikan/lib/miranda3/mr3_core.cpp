@@ -10,7 +10,7 @@
 #include "mk_input.hpp"           // MKInput
 #include "mr3_option.hpp"         // MR3Options
 #include "mr3_seed_site.hpp"      // MR3SeedSites
-#include "mr3_score.hpp"          // MR3SiteScores, MR3TotalScores
+#include "mr3_site_score.hpp"     // MR3SiteScores
 #include "mr3_site_filter.hpp"    // MR3SiteFilter
 #include "mr3_core.hpp"           // MR3Core
 

@@ -12,7 +12,7 @@
 #include "ts5_option.hpp"        // TS5CSOptions
 #include "ts5_seed_site.hpp"     // TS5SeedSites
 #include "ts5_feature.hpp"       // TS5RawFeatures
-#include "ts5_score.hpp"         // TS5SiteScores, TS5TotalScores
+#include "ts5_site_score.hpp"    // TS5SiteScores
 #include "ts5_core.hpp"          // TS5Core
 
 namespace ts5cs {
