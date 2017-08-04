@@ -46,7 +46,7 @@ public:
     // Method prototypes
     int create_seed_seqs();
 
-    void set_flags(mikan::TCharSet &pSeedTypeDef);
+    virtual void set_flags(mikan::TCharSet &pSeedTypeDef);
 
     void set_mirna_seq(mikan::TRNAStr const &pSeq);
 

@@ -33,10 +33,10 @@ public:
     virtual int get_wide_site_length(int) { return 0; }
 
     // Method prototypes
-    void clear_scores();
+    virtual void clear_scores();
 
-    int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                    mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites const &pRNAWithSites);
+    virtual int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                    mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
 
 protected:
     // Define variables

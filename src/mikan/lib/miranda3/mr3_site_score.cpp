@@ -238,8 +238,7 @@ int MR3EnergyScores::calc_scores(
     return 0;
 }
 
-void
-MR3EnergyScores::create_input_seq(int pIdx, mikan::TRNAStr const &pMiRNASeq, std::string &pInputMRNASeq) {
+void MR3EnergyScores::create_input_seq(int pIdx, mikan::TRNAStr const &pMiRNASeq, std::string &pInputMRNASeq) {
     seqan::CharString inputMRNA;
 
     mAlign.get_mrna_seq(pIdx, inputMRNA);
@@ -286,7 +285,7 @@ int MR3SiteScores::calc_scores(
         mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs,
         mikan::MKSeedSites &pSeedSites,
-        mikan::MKRMAWithSites const &) {
+        mikan::MKRMAWithSites &) {
 
     resize(mEffectiveSites, length(pSeedSites.mEffectiveSites));
 

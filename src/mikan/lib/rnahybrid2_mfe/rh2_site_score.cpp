@@ -24,7 +24,7 @@ int RH2SiteScores::calc_scores(
         mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs,
         mikan::MKSeedSites &pSeedSites,
-        mikan::MKRMAWithSites const &) {
+        mikan::MKRMAWithSites &) {
 
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &sitePos = pSeedSites.get_site_pos();

@@ -140,7 +140,7 @@ public:
 
     void set_score(int i, float val) { mContextScores[i] = val; };
 
-    float const &get_score(int i) const { return mContextScores[i]; }
+    float get_score(int i) { return mContextScores[i]; }
 
     float &get_seed_type_score(int i) { return mSeedTypes.get_score(i); }
 
@@ -153,10 +153,10 @@ public:
     const TS5Alignment &get_alignment() { return mRawFeatures.get_alignment(); }
 
     // Method prototypes
-    void clear_scores();
+    virtual void clear_scores();
 
-    int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                    mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites const &pRNAWithSites);
+    virtual int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                    mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
 
 private:
     seqan::String<float> mContextScores;

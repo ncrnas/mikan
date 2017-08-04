@@ -130,7 +130,7 @@ public:
             mDGOpenScores(mVRws),
             mAlign(mVRws) {}
 
-    float const &get_score(int i) const { return mDDGScores[i]; }
+    virtual float get_score(int i) { return mDDGScores[i]; }
 
     double get_dgall(int pRetIdx) { return mVRws.get_dgall(pRetIdx); }
 
@@ -147,12 +147,12 @@ public:
     void set_backtrack(bool pBT) { mVRws.set_duplex_backtrack(pBT); }
 
     // Method prototype
-    void init_from_args();
+    virtual void init_from_args();
 
-    void clear_scores();
+    virtual void clear_scores();
 
-    int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                    mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites const &pRNAWithSites);
+    virtual int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                    mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
 
     void print_alignment(int pIdx);
 
