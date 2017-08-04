@@ -153,9 +153,9 @@ public:
     const TS5Alignment &get_alignment() { return mRawFeatures.get_alignment(); }
 
     // Method prototypes
-    void clear_scores();
+    virtual void clear_scores();
 
-    int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+    virtual int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
                     mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites const &pRNAWithSites);
 
 private:

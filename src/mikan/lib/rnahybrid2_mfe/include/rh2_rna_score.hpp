@@ -20,9 +20,10 @@ public:
     const seqan::String<float> &get_norm_scores() { return mNormScores; }
 
     // Method prototypes
-    void clear_scores();
+    virtual void clear_scores();
 
-    int calc_scores(mikan::MKSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
+    using mikan::MKRNAScores::calc_scores;
+    virtual int calc_scores(mikan::MKSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
                     mikan::MKRMAWithSites &pRNAWithSites, RH2SiteScores &pMFEScores);
 
 private:

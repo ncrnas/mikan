@@ -24,7 +24,6 @@ int TSSVMRNAScores::calc_scores(
 
     int retVal;
     mikan::TMRNAPosSet &uniqRNAPosSet = pRNAWithSites.get_uniq_mrna_pos_set();
-    seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = pRNAWithSites.get_rna_site_pos_map();
 
     resize(mEffectiveRNAs, length(pRNAWithSites.mEffectiveRNAs), true);
     resize(mRNAScores, length(pRNAWithSites.mEffectiveRNAs));

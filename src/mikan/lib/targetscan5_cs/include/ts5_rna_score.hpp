@@ -19,7 +19,8 @@ public:
     TS5RNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts) {}
 
     // Method prototypes
-    int calc_scores(mikan::MKSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
+    using mikan::MKRNAScores::calc_scores;
+    virtual int calc_scores(mikan::MKSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
                     mikan::MKRMAWithSites &pRNAWithSites, TS5SiteScores &pDDGScores);
 
 };

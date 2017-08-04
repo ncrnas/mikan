@@ -32,7 +32,8 @@ public:
     PITARNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts), MIN_EXP_DIFF(-100.0) {}
 
     // Method prototype
-    int calc_scores(mikan::MKSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
+    using mikan::MKRNAScores::calc_scores;
+    virtual int calc_scores(mikan::MKSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
                     mikan::MKRMAWithSites &pRNAWithSites, PITASiteScores &pDDGScores);
 
 };

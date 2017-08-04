@@ -26,7 +26,7 @@ public:
     seqan::ArgumentParser::ParseResult parseCommandLine(int argc, char const **argv);
 
 private:
-    void setProgramDescription(seqan::ArgumentParser &pParser);
+    virtual void setProgramDescription(seqan::ArgumentParser &pParser);
 };
 
 } // namespace ptddg

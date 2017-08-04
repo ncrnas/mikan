@@ -147,11 +147,11 @@ public:
     void set_backtrack(bool pBT) { mVRws.set_duplex_backtrack(pBT); }
 
     // Method prototype
-    void init_from_args();
+    virtual void init_from_args();
 
-    void clear_scores();
+    virtual void clear_scores();
 
-    int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+    virtual int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
                     mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites const &pRNAWithSites);
 
     void print_alignment(int pIdx);

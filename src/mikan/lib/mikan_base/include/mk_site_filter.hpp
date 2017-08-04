@@ -77,7 +77,7 @@ protected:
 private:
     int mTopN;
 
-    void mark_sites(mikan::MKSeedSites &pSeedSites, mikan::TMRNAPosSet &pSortedPos,
+    virtual void mark_sites(mikan::MKSeedSites &pSeedSites, mikan::TMRNAPosSet &pSortedPos,
                     mikan::MKSiteScores &pSiteScores);
 
 
