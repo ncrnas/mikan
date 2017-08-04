@@ -20,7 +20,7 @@ void TM1ClassifiedScores::clear_scores() {
 
 int TM1ClassifiedScores::calc_scores(
         mikan::MKSeedSites &pSeedSites,
-        mikan::TRNASet const &pMRNASeqs,
+        mikan::TRNASet const &,
         mikan::MKRMAWithSites &pRNAWithSites,
         TM1SiteScores &mSiteScores) {
 
