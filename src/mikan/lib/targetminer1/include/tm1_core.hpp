@@ -9,7 +9,7 @@
 #include "tm1_mrna_feature.hpp"  // TM1MRNAFeatures
 #include "tm1_mrna_svm.hpp"      // TM1MRNAModel, TM1MRNAInputVector
 #include "tm1_option.hpp"        // TM1CSOptions
-#include "tm1_rna_score.hpp"     // TM1ClassifiedScores
+#include "tm1_rna_score.hpp"     // TM1RNAScores
 #include "tm1_seed_site.hpp"     // TM1SeedSites
 #include "tm1_site_score.hpp"    // TM1SiteScores
 
@@ -75,7 +75,7 @@ private:
     mikan::MKRMAWithSites mRNAWithSites;
     TM1SiteScores mSiteScores;
     TM1SiteFilter mSiteFilter;
-    TM1ClassifiedScores mRNAScores;
+    TM1RNAScores mRNAScores;
 
 private:
     int write_site_score(seqan::CharString const &pMiRNAId);
