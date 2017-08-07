@@ -84,8 +84,6 @@ void PITACore::init_from_args(mikan::MKOptions const &opts) {
     mSeedTypeDef[3] = opts.mAllowGUWobble;
     mSeedTypeDef[4] = opts.mAllowMismatch;
 
-    set_backtrack(mOutputAlign);
-
     mSiteScores.init_from_args();
 }
 

@@ -22,7 +22,6 @@ class PITACore {
 public:
     // Constant values
     static const unsigned INDEXED_SEQ_LEN = mikan::SEEDLEN;
-    static const unsigned OVERLAP_LEN = 0;
 
     // Declare variables
     bool mExecSearchSeedSites;
@@ -53,8 +52,6 @@ public:
             mSiteScores(pOpts), mSiteFilter(pOpts), mRNAScores(pOpts) {
         init_from_args(pOpts);
     }
-
-    void set_backtrack(bool pBT) { mSiteScores.set_backtrack(pBT); }
 
     // Method prototypes
     void init_from_args(mikan::MKOptions const &opts);

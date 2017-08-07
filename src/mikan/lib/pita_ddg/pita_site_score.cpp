@@ -270,6 +270,8 @@ void PITADGOpenScores::print_input(std::string &pInputMRNASeq) {
 // PITASiteScores methods
 //
 void PITASiteScores::init_from_args() {
+    set_backtrack(mOpts.mOutputAlign);
+
     mDGOpenScores.mFlankUp = mOpts.mFlankUp;
     mDGOpenScores.mFlankDown = mOpts.mFlankDown;
 }
