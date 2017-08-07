@@ -20,9 +20,6 @@ int PITACoreMain(int argc, char const **argv);
 //
 class PITACore {
 public:
-    // Constant values
-    static const unsigned INDEXED_SEQ_LEN = mikan::SEEDLEN;
-
     // Declare variables
     bool mExecSearchSeedSites;
     bool mExecCalSiteScore;

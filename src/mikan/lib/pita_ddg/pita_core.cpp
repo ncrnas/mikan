@@ -244,7 +244,7 @@ int PITACore::write_site_score(seqan::CharString const &pMiRNAId) {
             mOFile1 << toCString(pMiRNAId) << "\t";
             mOFile1 << toCString((seqan::CharString) (mMRNAIds[uniqRNAPosSet[i]])) << "\t";
             mOFile1 << seedStart + 1 << "\t";
-            mOFile1 << seedStart + 1 + INDEXED_SEQ_LEN << "\t";
+            mOFile1 << seedStart + 1 + mikan::SEEDLEN << "\t";
             mOFile1 << toCString((seqan::CharString) (seedTypes[rnaSitePosMap[i][j]])) << "\t";
             mOFile1 << score << "\t";
             mOFile1 << std::endl;
@@ -333,7 +333,7 @@ int PITACore::write_alignment(seqan::CharString const &pMiRNAId) {
             std::cout << "  seed type:           " << toCString((seqan::CharString) (seedTypes[rnaSitePosMap[i][j]]))
                       << std::endl;
             std::cout << "  position(start):     " << seedStart + 1 << std::endl;
-            std::cout << "  position(end):       " << seedStart + 1 + INDEXED_SEQ_LEN << std::endl;
+            std::cout << "  position(end):       " << seedStart + 1 + mikan::SEEDLEN << std::endl;
             std::cout << "  ddG:                 " << score << std::endl;
             std::cout << "  dGduplex(dG5 + dG3): " << dGduplex << std::endl;
             std::cout << "  dG5:                 " << dG5 << std::endl;

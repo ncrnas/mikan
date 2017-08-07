@@ -24,7 +24,6 @@ class MR3AlignScores {
 public:
     // Constant values
     static const unsigned TARGET_SEQ_LEN = 40;
-    static const unsigned INDEXED_SEQ_LEN = 6;
     static const unsigned SEED_REGION_LEN = 8;
     static const int MATCH_SCORE = 5;
     static const int EXTENT_SCORE = -4;
@@ -75,7 +74,6 @@ class MR3EnergyScores {
 public:
     // Constant values
     static const unsigned TARGET_SEQ_LEN = 40;
-    static const unsigned INDEXED_SEQ_LEN = 6;
     static const unsigned LINKER_LEN = 7;
 
     // Define variables

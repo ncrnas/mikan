@@ -247,7 +247,7 @@ int MR3Core::write_site_score(seqan::CharString const &pMiRNAId) {
             mOFile1 << toCString(pMiRNAId) << "\t";
             mOFile1 << toCString((seqan::CharString) mMRNAIds[uniqRNAPosSet[i]]) << "\t";
             mOFile1 << seedStart + 1 << "\t";
-            mOFile1 << seedStart + 1 + INDEXED_SEQ_LEN << "\t";
+            mOFile1 << seedStart + 1 + mikan::SEEDLEN << "\t";
             mOFile1 << toCString((seqan::CharString) seedTypes[rnaSitePosMap[i][j]]) << "\t";
             mOFile1 << scoreAlign << "\t";
             mOFile1 << scoreEn << "\t";
@@ -311,7 +311,7 @@ int MR3Core::write_alignment(seqan::CharString const &pMiRNAId) {
             std::cout << "  seed type:       " << toCString((seqan::CharString) seedTypes[rnaSitePosMap[i][j]])
                       << std::endl;
             std::cout << "  position(start): " << seedStart + 1 << std::endl;
-            std::cout << "  position(end):   " << seedStart + 1 + INDEXED_SEQ_LEN << std::endl;
+            std::cout << "  position(end):   " << seedStart + 1 + mikan::SEEDLEN << std::endl;
             std::cout << "  alignment score: " << align_score << std::endl;
             std::cout << "  energy score:    " << energy_score << std::endl;
 

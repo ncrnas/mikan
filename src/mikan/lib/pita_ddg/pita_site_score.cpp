@@ -41,7 +41,7 @@ void PITAAlign::create_align(
     }
 
     resize(mAlignMRNA[pId], length(pMiRNASeq), ' ');
-    startPos = pSitePos + (INDEXED_SEQ_LEN + 1) - (int) length(pMiRNASeq);
+    startPos = pSitePos + (mikan::SEEDLEN + 1) - (int) length(pMiRNASeq);
     for (unsigned i = 0; i < length(pMiRNASeq); ++i) {
         if (startPos + (int) i > 0) {
             mAlignMRNA[pId][i] = pMRNASeq[startPos + i];
@@ -103,7 +103,7 @@ int PITADGDuplexScores::calc_scores(
             continue;
         }
 
-        seqEnd = sitePos[i] + (INDEXED_SEQ_LEN + 1);
+        seqEnd = sitePos[i] + (mikan::SEEDLEN + 1);
         seqStart = seqEnd - TARGET_SEQ_LEN;
         if (seqStart < 0) {
             seqStart = 0;
@@ -166,7 +166,7 @@ void PITADGDuplexScores::create_input_matched_seq(
     }
 
     if (pSeedType == "8mer_MM" || pSeedType == "7mer_MM" || pSeedType == "8mer_MMGU" || pSeedType == "7mer_MMGU") {
-        pInputMatchSeq[INDEXED_SEQ_LEN - pMismatchPos] = 0;
+        pInputMatchSeq[mikan::SEEDLEN - pMismatchPos] = 0;
     }
 
 }
@@ -228,7 +228,7 @@ int PITADGOpenScores::calc_scores(
             continue;
         }
 
-        seqEnd = sitePos[i] + (INDEXED_SEQ_LEN + 1);
+        seqEnd = sitePos[i] + (mikan::SEEDLEN + 1);
         seqStart = seqEnd - DDG_OPEN;
         seqStart2 = seqStart - (DDG_AREA + mFlankDown);
         seqEnd2 = seqEnd + (DDG_AREA + mFlankUp);

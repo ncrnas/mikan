@@ -20,10 +20,6 @@ int MR3CoreMain(int argc, char const **argv);
 //
 class MR3Core {
 public:
-    // Constant values
-    static const unsigned INDEXED_SEQ_LEN = mikan::SEEDLEN;
-    static const unsigned OVERLAP_LEN = 6;
-
     // Declare variables
     bool mExecSearchSeedSites;
     bool mExecCalSiteScore;

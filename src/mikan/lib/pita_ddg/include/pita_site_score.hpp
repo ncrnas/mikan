@@ -19,9 +19,6 @@ namespace ptddg {
 //
 class PITAAlign {
 public:
-    // Constant values
-    static const unsigned INDEXED_SEQ_LEN = 6;
-
     // Define variables
     seqan::String<bool> mEffectiveSites;
     seqan::StringSet<seqan::CharString> mAlignMRNA;
@@ -50,11 +47,10 @@ private:
 class PITADGDuplexScores {
 public:
 
-    // Constant values
+    // Constant value
     static const unsigned TARGET_SEQ_LEN = 50;
-    static const unsigned INDEXED_SEQ_LEN = 6;
 
-    // Define variables
+    // Define variable
     seqan::String<bool> mEffectiveSites;
 
 public:
@@ -90,7 +86,6 @@ class PITADGOpenScores {
 public:
     // Constant values
     static const unsigned TARGET_SEQ_LEN = 50;
-    static const unsigned INDEXED_SEQ_LEN = 6;
     static const unsigned DDG_AREA = 70;
     static const unsigned DDG_OPEN = 25;
 

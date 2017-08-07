@@ -48,11 +48,11 @@ int MR3AlignScores::calc_scores(
         }
 
         if (seedTypes[i] == "7mer_BT" || seedTypes[i] == "8mer_BT") {
-            seqEnd = sitePos[i] + (INDEXED_SEQ_LEN + 2);
+            seqEnd = sitePos[i] + (mikan::SEEDLEN + 2);
             seqStart = seqEnd - (TARGET_SEQ_LEN + 1);
             mm = mmPos[i];
         } else {
-            seqEnd = sitePos[i] + (INDEXED_SEQ_LEN + 1);
+            seqEnd = sitePos[i] + (mikan::SEEDLEN + 1);
             seqStart = seqEnd - TARGET_SEQ_LEN;
             mm = -1;
         }
