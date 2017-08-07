@@ -180,7 +180,7 @@ int RH2Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Write MFE values
     if (mOutputMFEScore) {
-        retVal = write_mfe_score(mMiRNAIds[pIdx]);
+        retVal = write_site_score(mMiRNAIds[pIdx]);
         if (retVal != 0) {
             std::cerr << "ERROR: Could not write MFE scores." << std::endl;
             return 1;
@@ -189,7 +189,7 @@ int RH2Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Write total MEF values
     if (mOutputTotalScore) {
-        retVal = write_total_score(mMiRNAIds[pIdx]);
+        retVal = write_rna_score(mMiRNAIds[pIdx]);
         if (retVal != 0) {
             std::cerr << "ERROR: Could not write total MFE scores." << std::endl;
             return 1;
@@ -213,7 +213,7 @@ int RH2Core::calculate_mirna_scores(unsigned pIdx) {
     return 0;
 }
 
-int RH2Core::write_mfe_score(seqan::CharString const &pMiRNAId) {
+int RH2Core::write_site_score(seqan::CharString const &pMiRNAId) {
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const seqan::StringSet<seqan::CharString> &seedTypes = mSeedSites.get_seed_types();
 
@@ -253,7 +253,7 @@ int RH2Core::write_mfe_score(seqan::CharString const &pMiRNAId) {
 
 }
 
-int RH2Core::write_total_score(seqan::CharString const &pMiRNAId) {
+int RH2Core::write_rna_score(seqan::CharString const &pMiRNAId) {
     const seqan::String<float> &totalScores = mRNAScores.get_scores();
     const seqan::String<float> &totalNormScores = mRNAScores.get_norm_scores();
     const seqan::String<int> &mRNAPos = mRNAScores.get_mrna_pos();

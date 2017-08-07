@@ -186,7 +186,7 @@ int PITACore::calculate_mirna_scores(unsigned pIdx) {
 
     // Write ddG values
     if (mOutputDDGScore) {
-        retVal = write_ddg_score(mMiRNAIds[pIdx]);
+        retVal = write_site_score(mMiRNAIds[pIdx]);
         if (retVal != 0) {
             std::cerr << "ERROR: Could not write ddG scores." << std::endl;
             return 1;
@@ -195,7 +195,7 @@ int PITACore::calculate_mirna_scores(unsigned pIdx) {
 
     // Write total ddG values
     if (mOutputTotalScore) {
-        retVal = write_total_score(mMiRNAIds[pIdx]);
+        retVal = write_rna_score(mMiRNAIds[pIdx]);
         if (retVal != 0) {
             std::cerr << "ERROR: Could not write total ddG scores." << std::endl;
             return 1;
@@ -219,7 +219,7 @@ int PITACore::calculate_mirna_scores(unsigned pIdx) {
     return 0;
 }
 
-int PITACore::write_ddg_score(seqan::CharString const &pMiRNAId) {
+int PITACore::write_site_score(seqan::CharString const &pMiRNAId) {
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const seqan::StringSet<seqan::CharString> &seedTypes = mSeedSites.get_seed_types();
 
@@ -260,7 +260,7 @@ int PITACore::write_ddg_score(seqan::CharString const &pMiRNAId) {
 
 }
 
-int PITACore::write_total_score(seqan::CharString const &pMiRNAId) {
+int PITACore::write_rna_score(seqan::CharString const &pMiRNAId) {
     const seqan::String<float> &totalScores = mRNAScores.get_scores();
     const seqan::String<int> &mRNAPos = mRNAScores.get_mrna_pos();
     const seqan::String<int> &siteNum = mRNAScores.get_site_num();

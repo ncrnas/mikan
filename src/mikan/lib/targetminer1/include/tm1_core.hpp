@@ -78,9 +78,9 @@ private:
     TM1ClassifiedScores mRNAScores;
 
 private:
-    int write_site_positions(seqan::CharString const &pMiRNAId);
+    int write_site_score(seqan::CharString const &pMiRNAId);
 
-    int write_scores(seqan::CharString const &pMiRNAId);
+    int write_rna_score(seqan::CharString const &pMiRNAId);
 
     int write_alignment(seqan::CharString const &pMiRNAId);
 

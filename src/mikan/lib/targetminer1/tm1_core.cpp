@@ -161,7 +161,7 @@ int TM1Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Write site positions
     if (mOutputSitePos) {
-        retVal = write_site_positions(mMiRNAIds[pIdx]);
+        retVal = write_site_score(mMiRNAIds[pIdx]);
         if (retVal != 0) {
             std::cerr << "ERROR: Could not write site positions." << std::endl;
             return 1;
@@ -170,7 +170,7 @@ int TM1Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Write total scores
     if (mOutputScore) {
-        retVal = write_scores(mMiRNAIds[pIdx]);
+        retVal = write_rna_score(mMiRNAIds[pIdx]);
         if (retVal != 0) {
             std::cerr << "ERROR: Could not write scores." << std::endl;
             return 1;
@@ -194,7 +194,7 @@ int TM1Core::calculate_mirna_scores(unsigned pIdx) {
     return 0;
 }
 
-int TM1Core::write_site_positions(seqan::CharString const &pMiRNAId) {
+int TM1Core::write_site_score(seqan::CharString const &pMiRNAId) {
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const seqan::StringSet<seqan::CharString> &mSeedTypes = mSeedSites.get_seed_types();
@@ -225,7 +225,7 @@ int TM1Core::write_site_positions(seqan::CharString const &pMiRNAId) {
 
 }
 
-int TM1Core::write_scores(seqan::CharString const &pMiRNAId) {
+int TM1Core::write_rna_score(seqan::CharString const &pMiRNAId) {
     const seqan::String<float> &scores = mRNAScores.get_scores();
     const seqan::String<int> &predictions = mRNAScores.get_labels();
     const seqan::String<unsigned> &siteNum = mRNAScores.get_site_num();

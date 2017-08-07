@@ -73,9 +73,9 @@ private:
     TSSVMRNAScores mRNAScores;
 
 private:
-    int write_ts_scores(seqan::CharString const &pMiRNAId);
+    int write_site_score(seqan::CharString const &pMiRNAId);
 
-    int write_mrna_scores(seqan::CharString const &pMiRNAId);
+    int write_rna_score(seqan::CharString const &pMiRNAId);
 
     int write_alignment(seqan::CharString const &pMiRNAId);
 

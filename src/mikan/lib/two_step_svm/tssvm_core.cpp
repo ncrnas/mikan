@@ -164,7 +164,7 @@ int TSSVMCore::calculate_mirna_scores(unsigned pIdx) {
 
     // Write TargetSite scores
     if (mOutputSiteScore) {
-        retVal = write_ts_scores(mMiRNAIds[pIdx]);
+        retVal = write_site_score(mMiRNAIds[pIdx]);
         if (retVal != 0) {
             std::cerr << "ERROR: Could not write target-site scores." << std::endl;
             return 1;
@@ -173,7 +173,7 @@ int TSSVMCore::calculate_mirna_scores(unsigned pIdx) {
 
     // Write mRNA scores
     if (mOutputRNAScore) {
-        retVal = write_mrna_scores(mMiRNAIds[pIdx]);
+        retVal = write_rna_score(mMiRNAIds[pIdx]);
         if (retVal != 0) {
             std::cerr << "ERROR: Could not write mRNA scores." << std::endl;
             return 1;
@@ -197,7 +197,7 @@ int TSSVMCore::calculate_mirna_scores(unsigned pIdx) {
     return 0;
 }
 
-int TSSVMCore::write_ts_scores(seqan::CharString const &pMiRNAId) {
+int TSSVMCore::write_site_score(seqan::CharString const &pMiRNAId) {
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const seqan::StringSet<seqan::CharString> &seedTypes = mSeedSites.get_seed_types();
@@ -238,7 +238,7 @@ int TSSVMCore::write_ts_scores(seqan::CharString const &pMiRNAId) {
 
 }
 
-int TSSVMCore::write_mrna_scores(seqan::CharString const &pMiRNAId) {
+int TSSVMCore::write_rna_score(seqan::CharString const &pMiRNAId) {
     typedef std::multimap<float, unsigned>::reverse_iterator TItMap;
     typedef std::pair<float, unsigned> TPosPair;
 

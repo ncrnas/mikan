@@ -154,7 +154,7 @@ int TS5Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Write context scores
     if (mOutputContexScore) {
-        retVal = write_context_score(mMiRNAIds[pIdx]);
+        retVal = write_site_score(mMiRNAIds[pIdx]);
         if (retVal != 0) {
             std::cerr << "ERROR: Could not write context scores." << std::endl;
             return 1;
@@ -163,7 +163,7 @@ int TS5Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Write total scores
     if (mOutputTotalScore) {
-        retVal = write_total_score(mMiRNAIds[pIdx]);
+        retVal = write_rna_score(mMiRNAIds[pIdx]);
         if (retVal != 0) {
             std::cerr << "ERROR: Could not write total scores." << std::endl;
             return 1;
@@ -186,7 +186,7 @@ int TS5Core::calculate_mirna_scores(unsigned pIdx) {
     return 0;
 }
 
-int TS5Core::write_context_score(seqan::CharString const &pMiRNAId) {
+int TS5Core::write_site_score(seqan::CharString const &pMiRNAId) {
 
     const mikan::TCharSet &seedTypes = mSeedSites.get_seed_types();
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
@@ -222,7 +222,7 @@ int TS5Core::write_context_score(seqan::CharString const &pMiRNAId) {
     return 0;
 }
 
-int TS5Core::write_total_score(seqan::CharString const &pMiRNAId) {
+int TS5Core::write_rna_score(seqan::CharString const &pMiRNAId) {
 
     const seqan::String<float> &totalScores = mRNAScores.get_scores();
     const seqan::String<int> &mRNAPos = mRNAScores.get_mrna_pos();

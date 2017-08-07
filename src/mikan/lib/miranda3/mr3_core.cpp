@@ -195,7 +195,7 @@ int MR3Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Write total scores
     if (mOutputTotalScore) {
-        retVal = write_total_score(mMiRNAIds[pIdx]);
+        retVal = write_rna_score(mMiRNAIds[pIdx]);
         if (retVal != 0) {
             std::cerr << "ERROR: Could not write total ddG scores." << std::endl;
             return 1;
@@ -260,7 +260,7 @@ int MR3Core::write_site_score(seqan::CharString const &pMiRNAId) {
 
 }
 
-int MR3Core::write_total_score(seqan::CharString const &pMiRNAId) {
+int MR3Core::write_rna_score(seqan::CharString const &pMiRNAId) {
     const seqan::String<float> &totalAlignScores = mRNAScores.get_align_scores();
     const seqan::String<float> &totalEnScores = mRNAScores.get_energy_scores();
     const seqan::String<int> &mRNAPos = mRNAScores.get_mrna_pos();
