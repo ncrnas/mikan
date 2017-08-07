@@ -18,7 +18,7 @@ int MKSiteScores::calc_scores(
         mikan::TRNAStr const &,
         mikan::TRNASet const &,
         mikan::MKSeedSites &pSeedSites,
-        mikan::MKRMAWithSites const &) {
+        mikan::MKRMAWithSites &) {
 
     resize(mEffectiveSites, length(pSeedSites.mEffectiveSites));
     resize(mSiteScores, length(pSeedSites.mEffectiveSites));

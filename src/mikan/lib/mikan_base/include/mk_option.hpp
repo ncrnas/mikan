@@ -46,7 +46,7 @@ public:
     int mMaxHits;
 
     // Define method
-    explicit MKOptions() {
+    MKOptions() {
         mProgName = "mikan";
         mProgVer = "1.0";
         mProgDate = "July 2017";

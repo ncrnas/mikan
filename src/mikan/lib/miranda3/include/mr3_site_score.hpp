@@ -117,7 +117,7 @@ public:
     static const unsigned RNAFOLD_MAX_INPUTLEN = 60;
 
     // Define methods
-    MR3SiteScores(mikan::MKOptions const &opts) :
+    explicit MR3SiteScores(mikan::MKOptions const &opts) :
             MKSiteScores(opts),
             mVRws(30.0),
             mAlign(),
@@ -126,7 +126,7 @@ public:
         init_rnafold();
     }
 
-    float get_score(int pIdx) { return get_align_score(pIdx); }
+    virtual float get_score(int pIdx) { return get_align_score(pIdx); }
 
     float get_align_score(int posIdx) { return mAlignScores.get_score(posIdx); }
 
@@ -139,10 +139,11 @@ public:
     void set_max_energy(float pScore) { mEnergyScores.set_max_score(pScore); }
 
     // Method prototype
-    void clear_scores();
+    virtual void clear_scores();
 
-    int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                    mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites const &pRNAWithSites);
+    virtual int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                    mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
+
 
     void print_alignment(int pIdx);
 

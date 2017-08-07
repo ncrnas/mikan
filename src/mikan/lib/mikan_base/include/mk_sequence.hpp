@@ -13,7 +13,7 @@ namespace mikan {
 class MKSequences {
 public:
     // Define methods
-    explicit MKSequences() : mMaxLen(0) {}
+    MKSequences() : mMaxLen(0) {}
 
     unsigned get_length() const { return length(mSeqIds); }
 

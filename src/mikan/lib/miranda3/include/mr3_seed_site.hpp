@@ -18,7 +18,7 @@ public:
     MR3SeedSeqs() : MKSeedSeqs() {}
 
     // Method prototypes
-    void set_flags(mikan::TCharSet &pSeedTypeDef);
+    virtual void set_flags(mikan::TCharSet &pSeedTypeDef);
 };
 
 //
@@ -38,7 +38,7 @@ public:
     }
 
 private:
-    bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
+    virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
                            mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
                            seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 

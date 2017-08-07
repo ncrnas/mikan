@@ -16,14 +16,14 @@ namespace tm1p {
 class TM1SiteScores : public mikan::MKSiteScores {
 public:
     // Define methods
-    TM1SiteScores(mikan::MKOptions const &opts) : MKSiteScores(opts) {}
+    explicit TM1SiteScores(mikan::MKOptions const &opts) : MKSiteScores(opts) {}
 
     void write_alignment(int pIdx) { mSiteFeatures.write_alignment(pIdx); }
 
     // Method prototypes
-    void clear_scores();
+    virtual void clear_scores();
 
-    int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+    virtual int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
                     mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
 
     TM1SiteFeatures &get_site_features() { return mSiteFeatures; }

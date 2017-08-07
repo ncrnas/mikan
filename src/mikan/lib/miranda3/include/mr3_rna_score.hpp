@@ -27,7 +27,7 @@ public:
 
 public:
     // Define methods
-    MR3RNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts), MIN_EXP_DIFF(-100.0) {}
+    explicit MR3RNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts), MIN_EXP_DIFF(-100.0) {}
 
     const seqan::String<float> &get_align_scores() { return mTotalAlignScores; }
 
@@ -35,9 +35,10 @@ public:
 
 
     // Method prototype
-    void clear_scores();
+    virtual void clear_scores();
 
-    int calc_scores(mikan::MKSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
+    using mikan::MKRNAScores::calc_scores;
+    virtual int calc_scores(mikan::MKSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
                     mikan::MKRMAWithSites &pRNAWithSites, MR3SiteScores &pSiteScores);
 
 private:

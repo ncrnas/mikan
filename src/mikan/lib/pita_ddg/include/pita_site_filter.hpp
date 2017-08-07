@@ -18,11 +18,11 @@ namespace ptddg {
 class PITASiteFilter : public mikan::MKSiteFilter {
 public:
     // Define methods
-    PITASiteFilter(mikan::MKOptions const &opts) : MKSiteFilter(opts) {}
+    explicit PITASiteFilter(mikan::MKOptions const &opts) : MKSiteFilter(opts) {}
 
 private:
 
-    float get_precedence(unsigned pSitePos, mikan::MKSeedSites &pSeedSites,
+    virtual float get_precedence(unsigned pSitePos, mikan::MKSeedSites &pSeedSites,
                          mikan::MKSiteScores &pSiteScores);
 
 };

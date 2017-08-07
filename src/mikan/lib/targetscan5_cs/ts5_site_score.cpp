@@ -35,7 +35,7 @@ int TS5SiteScores::calc_scores(
         mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNASet const &pMRNASeqs,
         mikan::MKSeedSites &pSeedSites,
-        mikan::MKRMAWithSites const &) {
+        mikan::MKRMAWithSites &) {
 
     int retVal;
     CharString seedType;

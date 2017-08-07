@@ -20,7 +20,6 @@ protected:
 TEST_F(SiteOut03MM2, comp_orig_mk) {
     (void) tm1p::TM1CoreMain(argc, (const char **) argv);
     gtest_compare_two_files(o1file1, o2file1);
-    // TODO Need to add sort, index, and round functions
-//        gtest_compare_two_files(o1file2, o2file2);
+    gtest_compare_two_files3(o1file2, o2file2, true, true);
 }
 }

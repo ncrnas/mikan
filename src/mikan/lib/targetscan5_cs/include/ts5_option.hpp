@@ -18,7 +18,7 @@ public:
     }
 
 private:
-    void setProgramDescription(seqan::ArgumentParser &pParser);
+    virtual void setProgramDescription(seqan::ArgumentParser &pParser);
 };
 
 } // namespace ts5cs

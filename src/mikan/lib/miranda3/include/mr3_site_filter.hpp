@@ -17,13 +17,13 @@ namespace mr3as {
 class MR3SiteFilter : public mikan::MKSiteFilter {
 public:
     // Define methods
-    MR3SiteFilter(mikan::MKOptions const &opts) : MKSiteFilter(opts) {
+    explicit MR3SiteFilter(mikan::MKOptions const &opts) : MKSiteFilter(opts) {
         set_overlap_len(6);
     }
 
 private:
 
-    float get_precedence(unsigned pSitePos, mikan::MKSeedSites &pSeedSites,
+    virtual float get_precedence(unsigned pSitePos, mikan::MKSeedSites &pSeedSites,
                          mikan::MKSiteScores &pSiteScores);
 
 };

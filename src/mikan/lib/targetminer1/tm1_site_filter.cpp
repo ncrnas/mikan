@@ -26,6 +26,8 @@ float TM1SiteFilter::get_precedence(
         preced = 2;
     } else if (seedType == "6mer") {
         preced = 3;
+    } else {
+        preced = 4;
     }
 
     return preced;

@@ -287,7 +287,7 @@ int PITASiteScores::calc_scores(
         mikan::TRNAStr const &miRNASeq,
         mikan::TRNASet const &pMRNASeqs,
         mikan::MKSeedSites &pSeedSites,
-        mikan::MKRMAWithSites const &) {
+        mikan::MKRMAWithSites &) {
 
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
 

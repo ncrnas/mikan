@@ -18,7 +18,7 @@ public:
     RH2SeedSeqs() : MKSeedSeqs() {}
 
     // Method prototypes
-    void set_flags(mikan::TCharSet &pSeedTypeDef);
+    virtual void set_flags(mikan::TCharSet &pSeedTypeDef);
 };
 
 //
@@ -27,13 +27,14 @@ public:
 class RH2SeedSites : public mikan::MKSeedSites {
 public:
     // Define methods
-    RH2SeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
+    explicit RH2SeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
             MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {
+        
         mMinToCDS = 1;
     }
 
 private:
-    bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
+    virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
                            mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
                            seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 

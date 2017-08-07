@@ -19,7 +19,7 @@ namespace tssvm {
 class TSSVMSiteScores : public mikan::MKSiteScores {
 public:
     // Define methods
-    TSSVMSiteScores(mikan::MKOptions const &opts) :
+    explicit TSSVMSiteScores(mikan::MKOptions const &opts) :
             MKSiteScores(opts),
             mSiteInput(mSiteModel) {}
 
@@ -28,10 +28,10 @@ public:
     void write_alignment(int pIdx) { mAlignSeqs.write_alignment(pIdx); }
 
     // Method prototypes
-    void clear_scores();
+    virtual void clear_scores();
 
-    int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                    mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites const &pRNAWithSites);
+    virtual int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                    mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
 
 private:
     TSSVMAlign mAlignSeqs;

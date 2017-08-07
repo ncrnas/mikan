@@ -19,7 +19,7 @@ namespace rh2mfe {
 class RH2SiteScores : public mikan::MKSiteScores {
 public:
     // Define methods
-    RH2SiteScores(mikan::MKOptions const &opts) :
+    explicit RH2SiteScores(mikan::MKOptions const &opts) :
             MKSiteScores(opts),
             mMaxMRNALen(opts.mTargetLen),
             mMaxMiRNALen(opts.mQueryLen),
@@ -27,21 +27,21 @@ public:
 
     void set_score(int i, float val) { mMFEScores[i] = val; };
 
-    float get_score(int i) { return mMFEScores[i]; }
+    virtual float get_score(int i) { return mMFEScores[i]; }
 
     float get_norm_score(int i) { return mNormScores[i]; }
 
-    int get_wide_site_start(int pIdx) { return mRHRetVals[pIdx].mTargetPos0; }
+    virtual int get_wide_site_start(int pIdx) { return mRHRetVals[pIdx].mTargetPos0; }
 
-    int get_wide_site_length(int pIdx) { return mRHRetVals[pIdx].mHitLen; }
+    virtual int get_wide_site_length(int pIdx) { return mRHRetVals[pIdx].mHitLen; }
 
     // Method prototype
-    void init_from_args();
+    virtual void init_from_args();
 
-    void clear_scores();
+    virtual void clear_scores();
 
-    int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                    mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites const &pRNAWithSites);
+    virtual int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                    mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
 
     void calc_normalized_score(int pIdx, int pTargetLen, int pQueryLen);
 

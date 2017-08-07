@@ -18,7 +18,7 @@ public:
     seqan::CharString mMRNAFasta;
 
     // Define methods
-    explicit MKInput() {}
+    MKInput() {}
 
     mikan::TCharSet const &get_mirna_ids() { return mMiRNASeqs.get_ids(); }
 

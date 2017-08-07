@@ -221,12 +221,14 @@ int TSSVMCore::write_ts_scores(seqan::CharString const &pMiRNAId) {
                 seedStart += 1;
             }
 
+            float score = scores[rnaSitePosMap[i][j]];
+            score = roundf(score * 10000.0f) / 10000.0f;
             mOFile1 << toCString(pMiRNAId) << "\t";
             mOFile1 << toCString((seqan::CharString) mMRNAIds[mRNAPos[rnaSitePosMap[i][j]]]) << "\t";
             mOFile1 << seedStart + 1 << "\t";
             mOFile1 << seedStart + 7 << "\t";
             mOFile1 << toCString((seqan::CharString) seedTypes[rnaSitePosMap[i][j]]) << "\t";
-            mOFile1 << scores[rnaSitePosMap[i][j]] << "\t";
+            mOFile1 << score << "\t";
             mOFile1 << std::endl;
         }
 
@@ -254,9 +256,12 @@ int TSSVMCore::write_mrna_scores(seqan::CharString const &pMiRNAId) {
     }
 
     for (TItMap itPos = sortedMRNAByScore.rbegin(); itPos != sortedMRNAByScore.rend(); ++itPos) {
+        float score = scores[(*itPos).second];
+        score = roundf(score * 10000.0f) / 10000.0f;
+
         mOFile2 << toCString(pMiRNAId) << "\t";
         mOFile2 << toCString((seqan::CharString) mMRNAIds[uniqRNAPosSet[(*itPos).second]]) << "\t";
-        mOFile2 << scores[(*itPos).second] << "\t";
+        mOFile2 << score << "\t";
         mOFile2 << siteCount[(*itPos).second] << "\t";
         mOFile2 << std::endl;
     }

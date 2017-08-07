@@ -17,12 +17,13 @@ namespace tssvm {
 class TSSVMRNAScores : public mikan::MKRNAScores {
 public:
     // Define methods
-    TSSVMRNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts) {}
+    explicit TSSVMRNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts) {}
 
     // Method prototypes
-    void clear_scores();
+    virtual void clear_scores();
 
-    int calc_scores(mikan::MKSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
+    using mikan::MKRNAScores::calc_scores;
+    virtual int calc_scores(mikan::MKSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
                     mikan::MKRMAWithSites &pRNAWithSites, TSSVMSiteScores &pSitecores);
 
 private:
