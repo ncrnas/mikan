@@ -19,7 +19,7 @@ namespace tssvm {
 class TSSVMSiteScores : public mikan::MKSiteScores {
 public:
     // Define methods
-    TSSVMSiteScores(mikan::MKOptions const &opts) :
+    explicit TSSVMSiteScores(mikan::MKOptions const &opts) :
             MKSiteScores(opts),
             mSiteInput(mSiteModel) {}
 

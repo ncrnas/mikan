@@ -117,7 +117,7 @@ public:
     static const unsigned RNAFOLD_MAX_INPUTLEN = 60;
 
     // Define methods
-    MR3SiteScores(mikan::MKOptions const &opts) :
+    explicit MR3SiteScores(mikan::MKOptions const &opts) :
             MKSiteScores(opts),
             mVRws(30.0),
             mAlign(),

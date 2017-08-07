@@ -30,7 +30,7 @@ protected:
 class TM1SeedSites : public mikan::MKSeedSites {
 public:
     // Define methods
-    TM1SeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
+    explicit TM1SeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
             MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {
 
         mMinToCDS = 15;

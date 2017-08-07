@@ -16,7 +16,7 @@ namespace tm1p {
 class TM1SiteFilter : public mikan::MKSiteFilter {
 public:
     // Define methods
-    TM1SiteFilter(mikan::MKOptions const &opts) : MKSiteFilter(opts) {
+    explicit TM1SiteFilter(mikan::MKOptions const &opts) : MKSiteFilter(opts) {
         set_overlap_len(4);
     }
 

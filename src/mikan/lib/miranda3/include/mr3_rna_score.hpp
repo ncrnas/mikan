@@ -27,7 +27,7 @@ public:
 
 public:
     // Define methods
-    MR3RNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts), MIN_EXP_DIFF(-100.0) {}
+    explicit MR3RNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts), MIN_EXP_DIFF(-100.0) {}
 
     const seqan::String<float> &get_align_scores() { return mTotalAlignScores; }
 

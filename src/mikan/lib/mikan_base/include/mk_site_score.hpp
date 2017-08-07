@@ -22,7 +22,7 @@ public:
     seqan::String<bool> mEffectiveSites;
 
     // Define methods
-    explicit MKSiteScores(mikan::MKOptions const &opts) : mOpts(opts) {}
+    MKSiteScores(mikan::MKOptions const &opts) : mOpts(opts) {}
 
     virtual float get_score(int pIdx) { return mSiteScores[pIdx]; }
 

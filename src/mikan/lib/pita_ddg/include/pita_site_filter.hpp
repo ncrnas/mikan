@@ -18,7 +18,7 @@ namespace ptddg {
 class PITASiteFilter : public mikan::MKSiteFilter {
 public:
     // Define methods
-    PITASiteFilter(mikan::MKOptions const &opts) : MKSiteFilter(opts) {}
+    explicit PITASiteFilter(mikan::MKOptions const &opts) : MKSiteFilter(opts) {}
 
 private:
 

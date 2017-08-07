@@ -17,7 +17,7 @@ public:
     seqan::String<bool> mEffectiveSeeds;
 
     // Define methods
-    explicit MKSeedSeqs() {
+    MKSeedSeqs() {
         resize(mRNAChar, 4);
         mRNAChar[0] = 'A';
         mRNAChar[1] = 'C';

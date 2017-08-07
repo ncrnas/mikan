@@ -30,7 +30,7 @@ public:
 
 public:
     // Define methods
-    PITAAlign(vr16::VR16DDGWorkSpace &pVRws) : mVRws(pVRws) {}
+    explicit PITAAlign(vr16::VR16DDGWorkSpace &pVRws) : mVRws(pVRws) {}
 
     // Method prototype
     void clear_align();
@@ -100,7 +100,7 @@ public:
     int mFlankDown;
 
     // Define methods
-    PITADGOpenScores(vr16::VR16DDGWorkSpace &pVRws) : mFlankUp(0), mFlankDown(0), mVRws(pVRws) {}
+    explicit PITADGOpenScores(vr16::VR16DDGWorkSpace &pVRws) : mFlankUp(0), mFlankDown(0), mVRws(pVRws) {}
 
     // Method prototypes
     void clear_scores();
@@ -124,7 +124,7 @@ private:
 class PITASiteScores : public mikan::MKSiteScores {
 public:
     // Define methods
-    PITASiteScores(mikan::MKOptions const &opts) :
+    explicit PITASiteScores(mikan::MKOptions const &opts) :
             MKSiteScores(opts),
             mDGDuplexScores(mVRws, mAlign),
             mDGOpenScores(mVRws),

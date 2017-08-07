@@ -27,7 +27,7 @@ public:
 class RH2SeedSites : public mikan::MKSeedSites {
 public:
     // Define methods
-    RH2SeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
+    explicit RH2SeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
             MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {
         
         mMinToCDS = 1;

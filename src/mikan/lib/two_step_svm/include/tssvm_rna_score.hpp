@@ -17,7 +17,7 @@ namespace tssvm {
 class TSSVMRNAScores : public mikan::MKRNAScores {
 public:
     // Define methods
-    TSSVMRNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts) {}
+    explicit TSSVMRNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts) {}
 
     // Method prototypes
     virtual void clear_scores();

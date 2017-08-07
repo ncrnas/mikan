@@ -17,7 +17,7 @@ namespace mikan {
 class MKSiteFilter {
 public:
     // Define methods
-    MKSiteFilter(mikan::MKOptions const &opts) : mOpts(opts) {
+    explicit MKSiteFilter(mikan::MKOptions const &opts) : mOpts(opts) {
         set_overlap_len(0);
         set_usefilter_flag(true);
     }
@@ -65,7 +65,7 @@ protected:
 class MKTopNSites : public MKSiteFilter {
 public:
     // Define methods
-    MKTopNSites(mikan::MKOptions const &opts) : MKSiteFilter(opts), mTopN(0) {}
+    explicit MKTopNSites(mikan::MKOptions const &opts) : MKSiteFilter(opts), mTopN(0) {}
 
     virtual void init_from_args();
 

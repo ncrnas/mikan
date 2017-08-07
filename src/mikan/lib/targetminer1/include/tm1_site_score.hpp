@@ -16,7 +16,7 @@ namespace tm1p {
 class TM1SiteScores : public mikan::MKSiteScores {
 public:
     // Define methods
-    TM1SiteScores(mikan::MKOptions const &opts) : MKSiteScores(opts) {}
+    explicit TM1SiteScores(mikan::MKOptions const &opts) : MKSiteScores(opts) {}
 
     void write_alignment(int pIdx) { mSiteFeatures.write_alignment(pIdx); }
 

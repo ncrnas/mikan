@@ -18,7 +18,7 @@ namespace rh2mfe {
 class RH2SiteFilter : public mikan::MKSiteFilter {
 public:
     // Define methods
-    RH2SiteFilter(mikan::MKOptions const &opts) : MKSiteFilter(opts) {}
+    explicit RH2SiteFilter(mikan::MKOptions const &opts) : MKSiteFilter(opts) {}
 
     // Method prototype
     virtual void init_from_args();

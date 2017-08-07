@@ -15,7 +15,7 @@ namespace rh2mfe {
 class RH2RNAScores : public mikan::MKRNAScores {
 public:
     // Define methods
-    RH2RNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts) {}
+    explicit RH2RNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts) {}
 
     const seqan::String<float> &get_norm_scores() { return mNormScores; }
 

@@ -19,7 +19,7 @@ namespace rh2mfe {
 class RH2SiteScores : public mikan::MKSiteScores {
 public:
     // Define methods
-    RH2SiteScores(mikan::MKOptions const &opts) :
+    explicit RH2SiteScores(mikan::MKOptions const &opts) :
             MKSiteScores(opts),
             mMaxMRNALen(opts.mTargetLen),
             mMaxMiRNALen(opts.mQueryLen),

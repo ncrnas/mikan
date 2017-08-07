@@ -22,7 +22,7 @@ public:
     typedef std::pair<unsigned, unsigned> TPosPair;
 
     // Define methods
-    TSSVMSiteFilter(mikan::MKOptions const &opts) : MKSiteFilter(opts) {}
+    explicit TSSVMSiteFilter(mikan::MKOptions const &opts) : MKSiteFilter(opts) {}
 
 private:
     virtual float get_precedence(unsigned pSitePos, mikan::MKSeedSites &pSeedSites,
