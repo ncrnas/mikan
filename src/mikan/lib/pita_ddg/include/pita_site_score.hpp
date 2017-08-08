@@ -146,7 +146,7 @@ public:
     void set_backtrack(bool pBT) { mVRws.set_duplex_backtrack(pBT); }
 
     // Method prototype
-    virtual void init_from_args();
+    void init_from_args();
 
     virtual void clear_scores();
 

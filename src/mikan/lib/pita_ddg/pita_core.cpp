@@ -62,26 +62,6 @@ void PITACore::init_from_args(mikan::MKOptions const &opts) {
     mOFileSite = opts.mOFileSite;
     mOFileRNA = opts.mOFileTotal;
 
-    resize(mSeedTypeDef, 5);
-    mSeedTypeDef[0] = 'Y';
-    mSeedTypeDef[1] = 'Y';
-    mSeedTypeDef[2] = 'Y';
-    if (opts.mMinSeedLen == 7) {
-        mSeedTypeDef[0] = 'N';
-    } else if (opts.mMinSeedLen == 8) {
-        mSeedTypeDef[0] = 'N';
-        mSeedTypeDef[1] = 'N';
-    }
-
-    if (opts.mMaxSeedLen == 7) {
-        mSeedTypeDef[2] = 'N';
-    } else if (opts.mMaxSeedLen == 6) {
-        mSeedTypeDef[2] = 'N';
-        mSeedTypeDef[1] = 'N';
-    }
-    mSeedTypeDef[3] = opts.mAllowGUWobble;
-    mSeedTypeDef[4] = opts.mAllowMismatch;
-
 }
 
 int PITACore::open_output_file() {
@@ -133,7 +113,6 @@ int PITACore::calculate_mirna_scores(unsigned pIdx) {
     mikan::TRNAStr miRNASeq = mMiRNASeqs[pIdx];
 
     // Generate seed sequences
-    mSeedSeqs.set_flags(mSeedTypeDef);
     retVal = mSeedSeqs.create_seed_seqs(miRNASeq);
     if (retVal != 0) {
         std::cerr << "ERROR: Generate seed sequences failed." << std::endl;
@@ -142,7 +121,7 @@ int PITACore::calculate_mirna_scores(unsigned pIdx) {
 
     // Search seed sites
     if (mExecSearchSeedSites) {
-        retVal = mSeedSites.find_seed_sites(mSeedSeqs, mSeedTypeDef);
+        retVal = mSeedSites.find_seed_sites(mSeedSeqs);
         if (retVal != 0) {
             std::cerr << "ERROR: Seed site search failed." << std::endl;
             return 1;

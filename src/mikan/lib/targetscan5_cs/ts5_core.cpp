@@ -62,8 +62,6 @@ void TS5Core::init_from_args(mikan::MKOptions const &opts) {
     mOFileSite = opts.mOFileSite;
     mOFileRNA = opts.mOFileTotal;
 
-    resize(mSeedTypeDef, 1);
-    mSeedTypeDef[0] = "";
 }
 
 int TS5Core::open_output_file() {
@@ -115,7 +113,6 @@ int TS5Core::calculate_mirna_scores(unsigned pIdx) {
     mikan::TRNAStr miRNASeq = mMiRNASeqs[pIdx];
 
     // Generate seed sequences
-    mSeedSeqs.set_flags(mSeedTypeDef);
     retVal = mSeedSeqs.create_seed_seqs(miRNASeq);
     if (retVal != 0) {
         std::cerr << "ERROR: Generate seed sequences failed." << std::endl;
@@ -124,7 +121,7 @@ int TS5Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Search seed sites
     if (mExecSearchSeedSites) {
-        retVal = mSeedSites.find_seed_sites(mSeedSeqs, mSeedTypeDef);
+        retVal = mSeedSites.find_seed_sites(mSeedSeqs);
         if (retVal != 0) {
             std::cerr << "ERROR: Seed site search failed." << std::endl;
             return 1;

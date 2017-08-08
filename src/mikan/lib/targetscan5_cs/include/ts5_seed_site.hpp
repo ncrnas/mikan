@@ -6,6 +6,7 @@
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_seed_seq.hpp"       // MKSeedSeqs
 #include "mk_seed_site.hpp"      // MKSeedSites
+#include "mk_option.hpp"         // MKOptions
 
 namespace ts5cs {
 
@@ -15,10 +16,12 @@ namespace ts5cs {
 class TS5SeedSeqs : public mikan::MKSeedSeqs {
 public:
     // Define methods
-    TS5SeedSeqs() : MKSeedSeqs() {}
+    TS5SeedSeqs(mikan::MKOptions const &opts) : MKSeedSeqs(opts) {
+        set_flags();
+    }
 
-    // Method prototypes
-    virtual void set_flags(mikan::TCharSet &pSeedTypeDef);
+    // Method prototype
+    void set_flags();
 };
 
 //

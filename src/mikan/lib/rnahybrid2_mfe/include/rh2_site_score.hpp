@@ -40,7 +40,7 @@ public:
     virtual int get_wide_site_length(int pIdx) { return mRHRetVals[pIdx].mHitLen; }
 
     // Method prototype
-    virtual void init_from_args();
+    void init_from_args();
 
     virtual void clear_scores();
 

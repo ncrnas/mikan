@@ -21,11 +21,6 @@ protected:
         mOverlapDef = "orig";
     }
 
-    typedef mikan::TIndexQGram TIdx;
-    typedef mikan::TFinder TFin;
-    typedef rh2mfe::RH2SeedSites TSit;
-    typedef rh2mfe::RH2SeedSeqs TSeed;
-
 };
 
 TEST_F(Site02GU2, mir1_6mer_gu) {
@@ -35,11 +30,13 @@ TEST_F(Site02GU2, mir1_6mer_gu) {
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
 
-    TSeed seedSeqs;
-    seedSeqs.set_flags(mSeedDef);
+    TOp ops;
+    TSeed seedSeqs(ops);
+    seedSeqs.set_seed_type_def(mSeedDef);
+    seedSeqs.set_flags();;
     seedSeqs.create_seed_seqs(mirna_seqs[1]);
 
-    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
+    int ret_val = sites.find_seed_sites(seedSeqs);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(40u, sites.get_length());
 
@@ -100,12 +97,14 @@ TEST_F(Site02GU2, mir1_6mer_gu_plus) {
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
 
-    TSeed seedSeqs;
+    TOp ops;
+    TSeed seedSeqs(ops);
     mSeedDef[0] = "6mGU+";
-    seedSeqs.set_flags(mSeedDef);
+    seedSeqs.set_seed_type_def(mSeedDef);
+    seedSeqs.set_flags();;
     seedSeqs.create_seed_seqs(mirna_seqs[1]);
 
-    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
+    int ret_val = sites.find_seed_sites(seedSeqs);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(40u, sites.get_length());
 
@@ -166,12 +165,14 @@ TEST_F(Site02GU2, mir1_7mer_gu) {
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
 
-    TSeed seedSeqs;
+    TOp ops;
+    TSeed seedSeqs(ops);
     mSeedDef[0] = "7mGU1";
-    seedSeqs.set_flags(mSeedDef);
+    seedSeqs.set_seed_type_def(mSeedDef);
+    seedSeqs.set_flags();;
     seedSeqs.create_seed_seqs(mirna_seqs[1]);
 
-    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
+    int ret_val = sites.find_seed_sites(seedSeqs);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(20u, sites.get_length());
 
@@ -223,13 +224,15 @@ TEST_F(Site02GU2, mir1_def) {
     TIdx index(mrna_seqs);
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
-    TSeed seedSeqs;
+    TOp ops;
+    TSeed seedSeqs(ops);
 
     mSeedDef[0] = "7mGU+";
-    seedSeqs.set_flags(mSeedDef);
+    seedSeqs.set_seed_type_def(mSeedDef);
+    seedSeqs.set_flags();;
     seedSeqs.create_seed_seqs(mirna_seqs[1]);
 
-    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
+    int ret_val = sites.find_seed_sites(seedSeqs);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(36u, sites.get_length());
 

@@ -9,8 +9,12 @@ namespace mikan {
 //
 // MKSeedSeqs methods
 //
+void MKSeedSeqs::init_from_args() {
+    resize(mSeedTypeDef, 1);
+    mSeedTypeDef[0] = "";
+}
 
-void MKSeedSeqs::set_flags(mikan::TCharSet &) {
+void MKSeedSeqs::set_flags() {
     mSingleGU = true;
     mMultiGU = true;
     mMisMatch = true;

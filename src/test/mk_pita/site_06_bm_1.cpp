@@ -25,11 +25,6 @@ protected:
         mSeedDef[5] = "1";
     }
 
-    typedef mikan::TIndexQGram TIdx;
-    typedef mikan::TFinder TFin;
-    typedef ptddg::PITASeedSites TSit;
-    typedef ptddg::PITASeedSeqs TSeed;
-
 };
 
 TEST_F(Site06BM1, mir124_bm) {
@@ -38,13 +33,15 @@ TEST_F(Site06BM1, mir124_bm) {
     TIdx index(mrna_seqs);
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
-    TSeed seedSeqs;
+    TOp ops;
+    TSeed seedSeqs(ops);
 
 
-    seedSeqs.set_flags(mSeedDef);
+    seedSeqs.set_seed_type_def(mSeedDef);
+    seedSeqs.set_flags();;
     seedSeqs.create_seed_seqs(mirna_seqs[0]);
 
-    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
+    int ret_val = sites.find_seed_sites(seedSeqs);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(4u, sites.get_length());
 
@@ -62,16 +59,18 @@ TEST_F(Site06BM1, mir124_def) {
     TIdx index(mrna_seqs);
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
-    TSeed seedSeqs;
+    TOp ops;
+    TSeed seedSeqs(ops);
 
     mSeedDef[3] = "1";
     mSeedDef[4] = "0:1";
     mSeedDef[5] = "1";
 
-    seedSeqs.set_flags(mSeedDef);
+    seedSeqs.set_seed_type_def(mSeedDef);
+    seedSeqs.set_flags();;
     seedSeqs.create_seed_seqs(mirna_seqs[0]);
 
-    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
+    int ret_val = sites.find_seed_sites(seedSeqs);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(4u, sites.get_length());
 

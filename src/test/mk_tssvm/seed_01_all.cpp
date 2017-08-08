@@ -24,7 +24,7 @@ TEST_F(SeedAll, mir124_def) {
     mirna_seqs = coreInput.get_mirna_seqs();
 
     mikan::TCharSet mNullSet;
-    mSeedSeqs.set_flags(mNullSet);
+    mSeedSeqs.set_seed_type_def(mNullSet);
     int n = mSeedSeqs.create_seed_seqs(mirna_seqs[0]);
     EXPECT_EQ(0, n);
     EXPECT_EQ(49u, length(mSeedSeqs.mEffectiveSeeds));
@@ -100,7 +100,7 @@ TEST_F(SeedAll, mir1_def) {
     mirna_seqs = coreInput.get_mirna_seqs();
 
     mikan::TCharSet mNullSet;
-    mSeedSeqs.set_flags(mNullSet);
+    mSeedSeqs.set_seed_type_def(mNullSet);
     int n = mSeedSeqs.create_seed_seqs(mirna_seqs[1]);
     EXPECT_EQ(0, n);
     EXPECT_EQ(49u, length(mSeedSeqs.mEffectiveSeeds));

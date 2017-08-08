@@ -17,11 +17,6 @@ protected:
         OMPATH = (char *) "mk_tm1/";
     }
 
-    typedef mikan::TIndexQGram TIdx;
-    typedef mikan::TFinder TFin;
-    typedef tm1p::TM1SeedSites TSit;
-    typedef tm1p::TM1SeedSeqs TSeed;
-
 };
 
 TEST_F(Site03MM2, mir1_mm) {
@@ -31,11 +26,13 @@ TEST_F(Site03MM2, mir1_mm) {
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
 
-    TSeed seedSeqs;
-    seedSeqs.set_flags(mSeedDef);
+    TOp ops;
+    TSeed seedSeqs(ops);
+    seedSeqs.set_seed_type_def(mSeedDef);
+    seedSeqs.set_flags();;
     seedSeqs.create_seed_seqs(mirna_seqs[1]);
 
-    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
+    int ret_val = sites.find_seed_sites(seedSeqs);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(8u, sites.get_length());
 

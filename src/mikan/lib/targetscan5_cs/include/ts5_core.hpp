@@ -32,8 +32,6 @@ public:
     seqan::CharString mOFileSite;
     seqan::CharString mOFileRNA;
 
-    mikan::TCharSet mSeedTypeDef;
-
 public:
     // Define methods
     TS5Core(mikan::MKOptions const &pOpts, mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
@@ -42,7 +40,7 @@ public:
             mExecSearchSeedSites(true), mExecCalcSiteScore(true),
             mExecSumScores(true), mOutputContexScore(true), mOutputTotalScore(true),
             mOutputAlign(true), mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
-            mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mSiteScores(pOpts),
+            mMRNASeqs(pMRNASeqs), mSeedSeqs(pOpts), mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mSiteScores(pOpts),
             mRNAWithSites(pOpts), mRNAScores(pOpts) {
 
         init_from_args(pOpts);

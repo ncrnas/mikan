@@ -26,7 +26,7 @@ public:
 
     virtual float get_score(int pIdx) { return mSiteScores[pIdx]; }
 
-    virtual void init_from_args() {}
+    void init_from_args() {}
 
     virtual int get_wide_site_start(int) { return 0; }
 

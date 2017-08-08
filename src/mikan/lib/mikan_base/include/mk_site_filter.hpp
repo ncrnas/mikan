@@ -26,7 +26,7 @@ public:
 
     void set_usefilter_flag(bool pUseFilter) { mUseFilter = pUseFilter; }
 
-    virtual void init_from_args() {}
+    void init_from_args() {}
 
     // Method prototype
     int filter_sites(mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites,
@@ -72,7 +72,7 @@ public:
     }
 
     // Method prototype
-    virtual void init_from_args();
+    void init_from_args();
 
 protected:
     // Define method

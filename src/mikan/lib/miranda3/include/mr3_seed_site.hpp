@@ -6,6 +6,7 @@
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_seed_seq.hpp"        // MKSeedSeqs
 #include "mk_seed_site.hpp"       // MKSeedSites
+#include "mk_option.hpp"          // MKOptions
 
 namespace mr3as {
 
@@ -15,10 +16,14 @@ namespace mr3as {
 class MR3SeedSeqs : public mikan::MKSeedSeqs {
 public:
     // Define methods
-    MR3SeedSeqs() : MKSeedSeqs() {}
+    MR3SeedSeqs(mikan::MKOptions const &opts) : MKSeedSeqs(opts) {
+        init_from_args();
+        set_flags();
+    }
 
     // Method prototypes
-    virtual void set_flags(mikan::TCharSet &pSeedTypeDef);
+    void init_from_args();
+    void set_flags();
 };
 
 //

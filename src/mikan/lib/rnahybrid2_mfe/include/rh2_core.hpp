@@ -35,7 +35,6 @@ public:
     seqan::CharString mOFileRNA;
 
     seqan::CharString mOverlapDef;
-    mikan::TCharSet mSeedTypeDef;
     int mMaxHits;
 
 public:
@@ -47,7 +46,7 @@ public:
             mExecFilterSiteNum(true), mExecSortSites(true), mExecSumScores(true), mOutputMFEScore(true),
             mOutputTotalScore(true), mOutputAlign(true), mMaxHits(0), mMiRNAIds(pMiRNAIds),
             mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs),
-            mSeedSites(pRNAIdx, pFinder, pMRNASeqs),  mRNAWithSites(pOpts), mSiteScores(pOpts),
+            mSeedSeqs(pOpts), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),  mRNAWithSites(pOpts), mSiteScores(pOpts),
             mSiteFilter(pOpts), mTopNSites(pOpts), mRNAScores(pOpts) {
 
         init_from_args(pOpts);

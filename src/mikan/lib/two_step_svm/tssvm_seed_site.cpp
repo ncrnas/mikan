@@ -9,7 +9,7 @@ namespace tssvm {
 //
 // TSSVMSeedSeqs methods
 //
-void TSSVMSeedSeqs::set_flags(mikan::TCharSet &) {
+void TSSVMSeedSeqs::set_flags() {
     mSingleGU = true;
     mMultiGU = false;
     mMisMatch = false;

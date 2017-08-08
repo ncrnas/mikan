@@ -62,10 +62,7 @@ void RH2Core::init_from_args(mikan::MKOptions const &opts) {
     mOFileSite = opts.mOFileSite;
     mOFileRNA = opts.mOFileTotal;
 
-    resize(mSeedTypeDef, 1);
-    mSeedTypeDef[0] = opts.mSeedDef;
     mMaxHits = opts.mMaxHits;
-
     mOverlapDef = opts.mOverlapDef;
 
 }
@@ -119,7 +116,6 @@ int RH2Core::calculate_mirna_scores(unsigned pIdx) {
     mikan::TRNAStr miRNASeq = mMiRNASeqs[pIdx];
 
     // Generate seed sequences
-    mSeedSeqs.set_flags(mSeedTypeDef);
     retVal = mSeedSeqs.create_seed_seqs(miRNASeq);
     if (retVal != 0) {
         std::cerr << "ERROR: Generate seed sequences failed." << std::endl;
@@ -128,7 +124,7 @@ int RH2Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Search seed sites
     if (mExecSearchSeedSites) {
-        retVal = mSeedSites.find_seed_sites(mSeedSeqs, mSeedTypeDef);
+        retVal = mSeedSites.find_seed_sites(mSeedSeqs);
         if (retVal != 0) {
             std::cerr << "ERROR: Seed site search failed." << std::endl;
             return 1;

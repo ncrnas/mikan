@@ -9,7 +9,7 @@ namespace tm1p {
 //
 // TM1SeedSeqs methods
 //
-void TM1SeedSeqs::set_flags(mikan::TCharSet &) {
+void TM1SeedSeqs::set_flags() {
     mSingleGU = true;
     mMultiGU = false;
     mMisMatch = false;

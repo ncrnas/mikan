@@ -6,6 +6,7 @@
 #include "mk_typedef.hpp"         // TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_seed_seq.hpp"        // MKSeedSeqs
 #include "mk_seed_site.hpp"       // MKSeedSites
+#include "mk_option.hpp"          // MKOptions
 
 namespace rh2mfe {
 
@@ -15,10 +16,14 @@ namespace rh2mfe {
 class RH2SeedSeqs : public mikan::MKSeedSeqs {
 public:
     // Define methods
-    RH2SeedSeqs() : MKSeedSeqs() {}
+    RH2SeedSeqs(mikan::MKOptions const &opts) : MKSeedSeqs(opts) {
+        init_from_args();
+        set_flags();
+    }
 
     // Method prototypes
-    virtual void set_flags(mikan::TCharSet &pSeedTypeDef);
+    void init_from_args();
+    void set_flags();
 };
 
 //

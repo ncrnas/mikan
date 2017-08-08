@@ -20,6 +20,6 @@ protected:
 TEST_F(SiteOut06BM2, comp_orig_mk) {
     (void) tssvm::TSSVMCoreMain(argc, (const char **) argv);
     gtest_compare_two_files2(o1file1, o2file1, 5, 100, 1);
-    gtest_compare_two_files2(o1file2, o2file2, 2 ,100, 1);
+    gtest_compare_two_files2(o1file2, o2file2, 2, 100, 1);
 }
 }

@@ -17,10 +17,12 @@ namespace tssvm {
 class TSSVMSeedSeqs : public mikan::MKSeedSeqs {
 public:
     // Define methods
-    TSSVMSeedSeqs() : MKSeedSeqs() {}
+    TSSVMSeedSeqs(mikan::MKOptions const &opts) : MKSeedSeqs(opts) {
+        set_flags();
+    }
 
-    // Method prototypes
-    virtual void set_flags(mikan::TCharSet &pSeedTypeDef);
+    // Method prototype
+    void set_flags();
 };
 
 //

@@ -9,7 +9,31 @@ namespace mr3as {
 //
 // MR3SeedSeqs methods
 //
-void MR3SeedSeqs::set_flags(mikan::TCharSet &pSeedTypeDef) {
+void MR3SeedSeqs::init_from_args() {
+    resize(mSeedTypeDef, 6);
+    mSeedTypeDef[0] = 'Y';
+    mSeedTypeDef[1] = 'Y';
+    mSeedTypeDef[2] = 'Y';
+    if (mOpts.mMinSeedLen == 7) {
+        mSeedTypeDef[0] = 'N';
+    } else if (mOpts.mMinSeedLen == 8) {
+        mSeedTypeDef[0] = 'N';
+        mSeedTypeDef[1] = 'N';
+    }
+
+    if (mOpts.mMaxSeedLen == 7) {
+        mSeedTypeDef[2] = 'N';
+    } else if (mOpts.mMaxSeedLen == 6) {
+        mSeedTypeDef[2] = 'N';
+        mSeedTypeDef[1] = 'N';
+    }
+    mSeedTypeDef[3] = mOpts.mAllowGUWobble;
+    mSeedTypeDef[4] = mOpts.mAllowMismatch;
+    mSeedTypeDef[5] = mOpts.mAllowBT;
+
+}
+
+void MR3SeedSeqs::set_flags() {
     mSingleGU = false;
     mMultiGU = false;
     mMisMatch = false;
@@ -21,21 +45,21 @@ void MR3SeedSeqs::set_flags(mikan::TCharSet &pSeedTypeDef) {
     mOther = false;
     mAddInReverse = false;
 
-    if (pSeedTypeDef[2] == 'Y' || pSeedTypeDef[1] == 'Y') {
-        if (pSeedTypeDef[3] == '1' || pSeedTypeDef[3] == '+') {
+    if (mSeedTypeDef[2] == 'Y' || mSeedTypeDef[1] == 'Y') {
+        if (mSeedTypeDef[3] == '1' || mSeedTypeDef[3] == '+') {
             mSingleGU = true;
         }
-        if (pSeedTypeDef[3] == '+') {
+        if (mSeedTypeDef[3] == '+') {
             mMultiGU = true;
         }
-        if (pSeedTypeDef[4] != "0:0") {
+        if (mSeedTypeDef[4] != "0:0") {
             mMisMatch = true;
         }
-        if (pSeedTypeDef[4] != "0:0" && (pSeedTypeDef[3] == '1' || pSeedTypeDef[3] == '+')) {
+        if (mSeedTypeDef[4] != "0:0" && (mSeedTypeDef[3] == '1' || mSeedTypeDef[3] == '+')) {
             mGUMisMatch = true;
         }
 
-        if (pSeedTypeDef[5] == "1") {
+        if (mSeedTypeDef[5] == "1") {
             mBT = true;
         }
 

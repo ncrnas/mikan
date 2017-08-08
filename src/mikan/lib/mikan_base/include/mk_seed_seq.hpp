@@ -5,6 +5,7 @@
 #include <seqan/index.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_const.hpp"
+#include "mk_option.hpp"          // MKOptions
 
 namespace mikan {
 
@@ -15,9 +16,10 @@ class MKSeedSeqs {
 public:
     // Define variable
     seqan::String<bool> mEffectiveSeeds;
+    mikan::TCharSet mSeedTypeDef;
 
     // Define methods
-    MKSeedSeqs() {
+    MKSeedSeqs(mikan::MKOptions const &opts) : mOpts(opts) {
         resize(mRNAChar, 4);
         mRNAChar[0] = 'A';
         mRNAChar[1] = 'C';
@@ -35,6 +37,9 @@ public:
 
         mFilterRedundant = true;
         mTSSVMMismatch = false;
+
+        init_from_args();
+        set_flags();
     }
 
     mikan::TRNAStr const &get_seed_seq(int pIdx) const { return mSeedSeqs[pIdx]; }
@@ -44,11 +49,15 @@ public:
     unsigned get_mismatched_pos(int pIdx) { return mMisMatchPos[pIdx]; }
 
     // Method prototypes
+    void init_from_args();
+
+    void set_seed_type_def(mikan::TCharSet &pSeedTypeDef) { mSeedTypeDef = pSeedTypeDef; }
+
+    void set_flags();
+
     void clear_seeds();
 
     int create_seed_seqs(mikan::TRNAStr const &pSeq);
-
-    virtual void set_flags(mikan::TCharSet &pSeedTypeDef);
 
     mikan::TRNAStr const get_mirna_seq() const { return mMiRNASeq; };
 
@@ -56,6 +65,7 @@ public:
 
 protected:
     // Define variables
+    mikan::MKOptions const &mOpts;
     mikan::TRNASet mSeedSeqs;
     mikan::TCharSet mSeedTypes;
     mikan::TSitePosSet mMisMatchPos;
@@ -109,6 +119,7 @@ protected:
     int add_seed_seqs();
 
     void init_temp(unsigned pVecSize);
+
 };
 
 } // namespace mikan

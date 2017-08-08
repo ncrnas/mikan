@@ -24,6 +24,6 @@ TEST_F(OM001U007, comp_site) {
 
 TEST_F(OM001U007, comp_mrna) {
     (void) tssvm::TSSVMCoreMain(argc, (const char **) argv);
-    gtest_compare_two_files2(o1file2, o2file2, 2 ,100, 1);
+    gtest_compare_two_files2(o1file2, o2file2, 2, 100, 1);
 }
 }

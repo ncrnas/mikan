@@ -25,11 +25,6 @@ protected:
         mSeedDef[5] = "0";
     }
 
-    typedef mikan::TIndexQGram TIdx;
-    typedef mikan::TFinder TFin;
-    typedef mr3as::MR3SeedSites TSit;
-    typedef mr3as::MR3SeedSeqs TSeed;
-
 };
 
 TEST_F(Site01Nmer2, mir1_8mer) {
@@ -39,11 +34,13 @@ TEST_F(Site01Nmer2, mir1_8mer) {
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
 
-    TSeed seedSeqs;
-    seedSeqs.set_flags(mSeedDef);
+    TOp ops;
+    TSeed seedSeqs(ops);
+    seedSeqs.set_seed_type_def(mSeedDef);
+    seedSeqs.set_flags();;
     seedSeqs.create_seed_seqs(mirna_seqs[1]);
 
-    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
+    int ret_val = sites.find_seed_sites(seedSeqs);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(5u, sites.get_length());
 
@@ -62,11 +59,13 @@ TEST_F(Site01Nmer2, mir1_7mer) {
     TSit sites(index, finder, mrna_seqs);
 
     mSeedDef[2] = 'N';
-    TSeed seedSeqs;
-    seedSeqs.set_flags(mSeedDef);
+    TOp ops;
+    TSeed seedSeqs(ops);
+    seedSeqs.set_seed_type_def(mSeedDef);
+    seedSeqs.set_flags();;
     seedSeqs.create_seed_seqs(mirna_seqs[1]);
 
-    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
+    int ret_val = sites.find_seed_sites(seedSeqs);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(5u, sites.get_length());
 
@@ -86,11 +85,13 @@ TEST_F(Site01Nmer2, mir1_6mer) {
 
     mSeedDef[1] = 'N';
     mSeedDef[2] = 'N';
-    TSeed seedSeqs;
-    seedSeqs.set_flags(mSeedDef);
+    TOp ops;
+    TSeed seedSeqs(ops);
+    seedSeqs.set_seed_type_def(mSeedDef);
+    seedSeqs.set_flags();;
     seedSeqs.create_seed_seqs(mirna_seqs[1]);
 
-    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
+    int ret_val = sites.find_seed_sites(seedSeqs);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(5u, sites.get_length());
 
@@ -111,11 +112,13 @@ TEST_F(Site01Nmer2, mir1_def) {
     mSeedDef[3] = "+";
     mSeedDef[4] = "1:1";
     mSeedDef[5] = "1";
-    TSeed seedSeqs;
-    seedSeqs.set_flags(mSeedDef);
+    TOp ops;
+    TSeed seedSeqs(ops);
+    seedSeqs.set_seed_type_def(mSeedDef);
+    seedSeqs.set_flags();;
     seedSeqs.create_seed_seqs(mirna_seqs[1]);
 
-    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
+    int ret_val = sites.find_seed_sites(seedSeqs);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(14u, sites.get_length());
 
