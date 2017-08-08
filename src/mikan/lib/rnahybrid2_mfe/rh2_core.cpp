@@ -68,9 +68,6 @@ void RH2Core::init_from_args(mikan::MKOptions const &opts) {
 
     mOverlapDef = opts.mOverlapDef;
 
-    seqan::CharString vtype = "wide";
-    mRNAWithSites.set_sort_vtype(vtype);
-
 }
 
 int RH2Core::open_output_file() {

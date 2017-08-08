@@ -43,7 +43,7 @@ public:
             mExecSumScores(true), mOutputContexScore(true), mOutputTotalScore(true),
             mOutputAlign(true), mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
             mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mSiteScores(pOpts),
-            mRNAScores(pOpts) {
+            mRNAWithSites(pOpts), mRNAScores(pOpts) {
 
         init_from_args(pOpts);
 

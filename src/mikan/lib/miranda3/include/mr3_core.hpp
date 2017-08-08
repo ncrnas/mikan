@@ -45,7 +45,7 @@ public:
             mOutputAlign(true),
             mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
             mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
-            mSiteScores(pOpts), mSiteFilter(pOpts), mRNAScores(pOpts) {
+            mSiteScores(pOpts), mRNAWithSites(pOpts), mSiteFilter(pOpts), mRNAScores(pOpts) {
 
         init_from_args(pOpts);
 

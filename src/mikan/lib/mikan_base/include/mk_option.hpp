@@ -45,6 +45,9 @@ public:
     int mQueryLen;
     int mMaxHits;
 
+    // MKRMAWithSites
+    seqan::CharString mSortValType;
+
     // Define method
     MKOptions() {
         mProgName = "mikan";
@@ -52,6 +55,8 @@ public:
         mProgDate = "July 2017";
 
         mOutputAlign = false;
+
+        mSortValType = "position";
     }
 
     // Method prototype
