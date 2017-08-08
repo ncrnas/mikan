@@ -40,9 +40,9 @@ TEST_F(Site02GU1, mir124_gu) {
     TSit sites(index, finder, mrna_seqs);
 
     TSeed seedSeqs;
-    seedSeqs.set_mirna_seq(mirna_seqs[0]);
+
     seedSeqs.set_flags(mSeedDef);
-    seedSeqs.create_seed_seqs();
+    seedSeqs.create_seed_seqs(mirna_seqs[0]);
 
     int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
@@ -72,9 +72,9 @@ TEST_F(Site02GU1, mir124_gu_plus) {
 
     mSeedDef[3] = "+";
     TSeed seedSeqs;
-    seedSeqs.set_mirna_seq(mirna_seqs[0]);
+
     seedSeqs.set_flags(mSeedDef);
-    seedSeqs.create_seed_seqs();
+    seedSeqs.create_seed_seqs(mirna_seqs[0]);
 
     int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
@@ -112,9 +112,9 @@ TEST_F(Site02GU1, mir124_def) {
     mSeedDef[4] = "1:1";
     mSeedDef[5] = "1";
     TSeed seedSeqs;
-    seedSeqs.set_mirna_seq(mirna_seqs[0]);
+
     seedSeqs.set_flags(mSeedDef);
-    seedSeqs.create_seed_seqs();
+    seedSeqs.create_seed_seqs(mirna_seqs[0]);
 
     int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);

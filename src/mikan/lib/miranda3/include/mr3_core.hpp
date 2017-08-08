@@ -69,6 +69,7 @@ private:
     std::ofstream mOFile1;
     std::ofstream mOFile2;
 
+    MR3SeedSeqs mSeedSeqs;
     MR3SeedSites mSeedSites;
     MR3SiteScores mSiteScores;
     mikan::MKRMAWithSites mRNAWithSites;

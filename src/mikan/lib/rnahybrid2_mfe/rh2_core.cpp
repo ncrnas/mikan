@@ -119,10 +119,8 @@ int RH2Core::calculate_mirna_scores(unsigned pIdx) {
     mikan::TRNAStr miRNASeq = mMiRNASeqs[pIdx];
 
     // Generate seed sequences
-    RH2SeedSeqs seedSeqs;
-    seedSeqs.set_mirna_seq(miRNASeq);
-    seedSeqs.set_flags(mSeedTypeDef);
-    retVal = seedSeqs.create_seed_seqs();
+    mSeedSeqs.set_flags(mSeedTypeDef);
+    retVal = mSeedSeqs.create_seed_seqs(miRNASeq);
     if (retVal != 0) {
         std::cerr << "ERROR: Generate seed sequences failed." << std::endl;
         return 1;
@@ -130,7 +128,7 @@ int RH2Core::calculate_mirna_scores(unsigned pIdx) {
 
     // Search seed sites
     if (mExecSearchSeedSites) {
-        retVal = mSeedSites.find_seed_sites(seedSeqs, mSeedTypeDef);
+        retVal = mSeedSites.find_seed_sites(mSeedSeqs, mSeedTypeDef);
         if (retVal != 0) {
             std::cerr << "ERROR: Seed site search failed." << std::endl;
             return 1;
@@ -201,6 +199,7 @@ int RH2Core::calculate_mirna_scores(unsigned pIdx) {
         }
     }
 
+    mSeedSeqs.clear_seeds();
     mSeedSites.clear_pos();
     mRNAWithSites.clear_maps();
     mSiteScores.clear_scores();

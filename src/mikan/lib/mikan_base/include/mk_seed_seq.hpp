@@ -44,11 +44,11 @@ public:
     unsigned get_mismatched_pos(int pIdx) { return mMisMatchPos[pIdx]; }
 
     // Method prototypes
-    int create_seed_seqs();
+    void clear_seeds();
+
+    int create_seed_seqs(mikan::TRNAStr const &pSeq);
 
     virtual void set_flags(mikan::TCharSet &pSeedTypeDef);
-
-    void set_mirna_seq(mikan::TRNAStr const &pSeq);
 
     mikan::TRNAStr const get_mirna_seq() const { return mMiRNASeq; };
 

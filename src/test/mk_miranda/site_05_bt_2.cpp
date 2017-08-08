@@ -40,9 +40,8 @@ TEST_F(Site05BT2, mir1_bt) {
     TSit sites(index, finder, mrna_seqs);
 
     TSeed seedSeqs;
-    seedSeqs.set_mirna_seq(mirna_seqs[1]);
     seedSeqs.set_flags(mSeedDef);
-    seedSeqs.create_seed_seqs();
+    seedSeqs.create_seed_seqs(mirna_seqs[1]);
 
     int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
@@ -97,9 +96,8 @@ TEST_F(Site05BT2, mir1_def) {
     mSeedDef[4] = "1:1";
     mSeedDef[5] = "1";
     TSeed seedSeqs;
-    seedSeqs.set_mirna_seq(mirna_seqs[1]);
     seedSeqs.set_flags(mSeedDef);
-    seedSeqs.create_seed_seqs();
+    seedSeqs.create_seed_seqs(mirna_seqs[1]);
 
     int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
     EXPECT_EQ(0, ret_val);
