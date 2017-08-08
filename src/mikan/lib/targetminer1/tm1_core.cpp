@@ -57,7 +57,7 @@ int TM1CoreMain(int argc, char const **argv) {
 void TM1Core::init_from_args(mikan::MKOptions const &opts) {
     mOutputAlign = opts.mOutputAlign;
     mOFileSite = opts.mOFileSite;
-    mOFileScore = opts.mOFileTotal;
+    mOFileRNA = opts.mOFileTotal;
 
     resize(mSeedTypeDef, 1);
     mSeedTypeDef[0] = "";
@@ -72,9 +72,9 @@ int TM1Core::open_output_file() {
     }
 
     // Open output file 2
-    mOFile2.open(toCString(mOFileScore), std::ofstream::out);
+    mOFile2.open(toCString(mOFileRNA), std::ofstream::out);
     if (!mOFile2.good()) {
-        std::cerr << "ERROR: Could not open output file " << toCString(mOFileScore) << std::endl;
+        std::cerr << "ERROR: Could not open output file " << toCString(mOFileRNA) << std::endl;
         return seqan::ArgumentParser::PARSE_ERROR;
     }
 

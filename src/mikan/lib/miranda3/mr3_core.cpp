@@ -57,11 +57,7 @@ int MR3CoreMain(int argc, char const **argv) {
 void MR3Core::init_from_args(mikan::MKOptions const &opts) {
     mOutputAlign = opts.mOutputAlign;
     mOFileSite = opts.mOFileSite;
-    mOFileTotal = opts.mOFileTotal;
-    mMinSeedLen = opts.mMinSeedLen;
-    mMaxSeedLen = opts.mMaxSeedLen;
-    mMinAlignScore = opts.mMinAlignScore;
-    mMaxEnergy = opts.mMaxEnergy;
+    mOFileRNA = opts.mOFileTotal;
 
     resize(mSeedTypeDef, 6);
     mSeedTypeDef[0] = 'Y';
@@ -84,9 +80,6 @@ void MR3Core::init_from_args(mikan::MKOptions const &opts) {
     mSeedTypeDef[4] = opts.mAllowMismatch;
     mSeedTypeDef[5] = opts.mAllowBT;
 
-    mSiteScores.set_min_align_score(mMinAlignScore);
-    mSiteScores.set_max_energy(mMaxEnergy);
-
 }
 
 int MR3Core::open_output_file() {
@@ -98,9 +91,9 @@ int MR3Core::open_output_file() {
     }
 
     // Open output file 2
-    mOFile2.open(toCString(mOFileTotal), std::ofstream::out);
+    mOFile2.open(toCString(mOFileRNA), std::ofstream::out);
     if (!mOFile2.good()) {
-        std::cerr << "ERROR: Could not open output file " << toCString(mOFileTotal) << std::endl;
+        std::cerr << "ERROR: Could not open output file " << toCString(mOFileRNA) << std::endl;
         return seqan::ArgumentParser::PARSE_ERROR;
     }
 

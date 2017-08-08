@@ -123,7 +123,11 @@ public:
             MKSiteScores(opts),
             mDGDuplexScores(mVRws, mAlign),
             mDGOpenScores(mVRws),
-            mAlign(mVRws) {}
+            mAlign(mVRws) {
+
+        init_from_args();
+
+    }
 
     virtual float get_score(int i) { return mDDGScores[i]; }
 

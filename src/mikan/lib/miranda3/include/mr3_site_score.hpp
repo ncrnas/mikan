@@ -32,7 +32,6 @@ public:
     // Define variables
     seqan::String<bool> mEffectiveSites;
 
-public:
     // Define methods
     MR3AlignScores(vr16::VR16FoldWorkSpace &pVRws, MR3Align &pAlign) :
             mVRws(pVRws), mAlign(pAlign), mMinAlignScore(140.0) {}
@@ -55,7 +54,6 @@ private:
     seqan::String<float> mAlignScores;
     float mMinAlignScore;
 
-private:
     void create_input_mirna_seq(mikan::TRNAStr const &pMiRNASeq, mikan::TRNAStr &pInputMiRNASeq,
                                 mikan::TRNAStr &pIMiRNASeedSeq,
                                 seqan::Rna5String &pIMiRNA3pSeq);
@@ -121,7 +119,9 @@ public:
             mAlign(),
             mAlignScores(mVRws, mAlign),
             mEnergyScores(mVRws, mAlign) {
-        init_rnafold();
+
+        init_from_args();
+
     }
 
     virtual float get_score(int pIdx) { return get_align_score(pIdx); }
@@ -137,6 +137,8 @@ public:
     void set_max_energy(float pScore) { mEnergyScores.set_max_score(pScore); }
 
     // Method prototype
+    virtual void init_from_args();
+
     virtual void clear_scores();
 
     virtual int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
@@ -144,8 +146,6 @@ public:
 
 
     void print_alignment(int pIdx);
-
-    void init_rnafold();
 
 private:
     vr16::VR16FoldWorkSpace mVRws;

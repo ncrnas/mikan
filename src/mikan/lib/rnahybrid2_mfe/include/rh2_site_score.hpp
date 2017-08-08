@@ -23,7 +23,11 @@ public:
             MKSiteScores(opts),
             mMaxMRNALen(opts.mTargetLen),
             mMaxMiRNALen(opts.mQueryLen),
-            mRHCore(opts.mTargetLen, opts.mQueryLen, opts.mSeedDef) {}
+            mRHCore(opts.mTargetLen, opts.mQueryLen, opts.mSeedDef) {
+
+        init_from_args();
+
+    }
 
     void set_score(int i, float val) { mMFEScores[i] = val; };
 

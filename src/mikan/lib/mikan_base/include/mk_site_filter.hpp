@@ -65,8 +65,13 @@ protected:
 class MKTopNSites : public MKSiteFilter {
 public:
     // Define methods
-    explicit MKTopNSites(mikan::MKOptions const &opts) : MKSiteFilter(opts), mTopN(0) {}
+    explicit MKTopNSites(mikan::MKOptions const &opts) : MKSiteFilter(opts), mTopN(0) {
 
+        init_from_args();
+
+    }
+
+    // Method prototype
     virtual void init_from_args();
 
 protected:

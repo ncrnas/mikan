@@ -59,10 +59,8 @@ int PITACoreMain(int argc, char const **argv) {
 //
 void PITACore::init_from_args(mikan::MKOptions const &opts) {
     mOutputAlign = opts.mOutputAlign;
-    mOFileDDG = opts.mOFileSite;
-    mOFileTotal = opts.mOFileTotal;
-    mMinSeedLen = opts.mMinSeedLen;
-    mMaxSeedLen = opts.mMaxSeedLen;
+    mOFileSite = opts.mOFileSite;
+    mOFileRNA = opts.mOFileTotal;
 
     resize(mSeedTypeDef, 5);
     mSeedTypeDef[0] = 'Y';
@@ -84,21 +82,20 @@ void PITACore::init_from_args(mikan::MKOptions const &opts) {
     mSeedTypeDef[3] = opts.mAllowGUWobble;
     mSeedTypeDef[4] = opts.mAllowMismatch;
 
-    mSiteScores.init_from_args();
 }
 
 int PITACore::open_output_file() {
     // Open output file 1
-    mOFile1.open(toCString(mOFileDDG), std::ofstream::out);
+    mOFile1.open(toCString(mOFileSite), std::ofstream::out);
     if (!mOFile1.good()) {
-        std::cerr << "ERROR: Could not open output file " << toCString(mOFileDDG) << std::endl;
+        std::cerr << "ERROR: Could not open output file " << toCString(mOFileSite) << std::endl;
         return seqan::ArgumentParser::PARSE_ERROR;
     }
 
     // Open output file 2
-    mOFile2.open(toCString(mOFileTotal), std::ofstream::out);
+    mOFile2.open(toCString(mOFileRNA), std::ofstream::out);
     if (!mOFile2.good()) {
-        std::cerr << "ERROR: Could not open output file " << toCString(mOFileTotal) << std::endl;
+        std::cerr << "ERROR: Could not open output file " << toCString(mOFileRNA) << std::endl;
         return seqan::ArgumentParser::PARSE_ERROR;
     }
 

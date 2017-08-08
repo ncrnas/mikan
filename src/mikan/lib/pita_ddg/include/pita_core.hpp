@@ -29,10 +29,9 @@ public:
     bool mOutputDDGScore;
     bool mOutputTotalScore;
     bool mOutputAlign;
-    seqan::CharString mOFileDDG;
-    seqan::CharString mOFileTotal;
-    int mMinSeedLen;
-    int mMaxSeedLen;
+
+    seqan::CharString mOFileSite;
+    seqan::CharString mOFileRNA;
 
     mikan::TCharSet mSeedTypeDef;
 
@@ -43,11 +42,13 @@ public:
              mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
             mExecSearchSeedSites(true), mExecCalSiteScore(true), mExecFilterOverlap(true),
             mExecSortSites(true), mExecSumScores(true), mOutputDDGScore(true), mOutputTotalScore(true),
-            mOutputAlign(true), mMinSeedLen(6), mMaxSeedLen(8),
+            mOutputAlign(true),
             mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
             mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
             mSiteScores(pOpts), mSiteFilter(pOpts), mRNAScores(pOpts) {
+
         init_from_args(pOpts);
+
     }
 
     // Method prototypes

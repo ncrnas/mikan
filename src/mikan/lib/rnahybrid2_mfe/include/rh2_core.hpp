@@ -30,8 +30,10 @@ public:
     bool mOutputMFEScore;
     bool mOutputTotalScore;
     bool mOutputAlign;
-    seqan::CharString mOFileMFE;
-    seqan::CharString mOFileTotal;
+
+    seqan::CharString mOFileSite;
+    seqan::CharString mOFileRNA;
+
     seqan::CharString mOverlapDef;
     mikan::TCharSet mSeedTypeDef;
     int mMaxHits;
@@ -49,8 +51,7 @@ public:
             mTopNSites(pOpts), mRNAScores(pOpts) {
 
         init_from_args(pOpts);
-        seqan::CharString vtype = "wide";
-        mRNAWithSites.set_sort_vtype(vtype);
+
     }
 
     // Method prototypes

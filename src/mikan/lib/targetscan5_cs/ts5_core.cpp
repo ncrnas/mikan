@@ -59,8 +59,8 @@ int TS5CoreMain(int argc, char const **argv) {
 //
 void TS5Core::init_from_args(mikan::MKOptions const &opts) {
     mOutputAlign = opts.mOutputAlign;
-    mOFileContext = opts.mOFileSite;
-    mOFileTotal = opts.mOFileTotal;
+    mOFileSite = opts.mOFileSite;
+    mOFileRNA = opts.mOFileTotal;
 
     resize(mSeedTypeDef, 1);
     mSeedTypeDef[0] = "";
@@ -68,16 +68,16 @@ void TS5Core::init_from_args(mikan::MKOptions const &opts) {
 
 int TS5Core::open_output_file() {
     // Open output file 1
-    mOFile1.open(toCString(mOFileContext), std::ofstream::out);
+    mOFile1.open(toCString(mOFileSite), std::ofstream::out);
     if (!mOFile1.good()) {
-        std::cerr << "ERROR: Could not open output file " << toCString(mOFileContext) << std::endl;
+        std::cerr << "ERROR: Could not open output file " << toCString(mOFileSite) << std::endl;
         return seqan::ArgumentParser::PARSE_ERROR;
     }
 
     // Open output file 2
-    mOFile2.open(toCString(mOFileTotal), std::ofstream::out);
+    mOFile2.open(toCString(mOFileRNA), std::ofstream::out);
     if (!mOFile2.good()) {
-        std::cerr << "ERROR: Could not open output file " << toCString(mOFileTotal) << std::endl;
+        std::cerr << "ERROR: Could not open output file " << toCString(mOFileRNA) << std::endl;
         return seqan::ArgumentParser::PARSE_ERROR;
     }
 

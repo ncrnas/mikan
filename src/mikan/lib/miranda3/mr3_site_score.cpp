@@ -267,18 +267,21 @@ void MR3EnergyScores::print_input(std::string &pInputSeq) {
 //
 // MR3SiteScores methods
 //
+void MR3SiteScores::init_from_args() {
+    set_min_align_score(mOpts.mMinAlignScore);
+    set_max_energy(mOpts.mMaxEnergy);
+
+    mVRws.set_backtrack(false);
+    mVRws.set_fold_constraint(false);
+    mVRws.init_arrays(RNAFOLD_MAX_INPUTLEN);
+}
+
 void MR3SiteScores::clear_scores() {
     mikan::MKSiteScores::clear_scores();
 
     mAlignScores.clear_scores();
     mEnergyScores.clear_scores();
     mAlign.clear_align();
-}
-
-void MR3SiteScores::init_rnafold() {
-    mVRws.set_backtrack(false);
-    mVRws.set_fold_constraint(false);
-    mVRws.init_arrays(RNAFOLD_MAX_INPUTLEN);
 }
 
 int MR3SiteScores::calc_scores(

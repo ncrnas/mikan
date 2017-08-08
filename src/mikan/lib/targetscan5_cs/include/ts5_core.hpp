@@ -28,8 +28,9 @@ public:
     bool mOutputContexScore;
     bool mOutputTotalScore;
     bool mOutputAlign;
-    seqan::CharString mOFileContext;
-    seqan::CharString mOFileTotal;
+
+    seqan::CharString mOFileSite;
+    seqan::CharString mOFileRNA;
 
     mikan::TCharSet mSeedTypeDef;
 
@@ -45,6 +46,7 @@ public:
             mRNAScores(pOpts) {
 
         init_from_args(pOpts);
+
     }
 
     // Method prototypes

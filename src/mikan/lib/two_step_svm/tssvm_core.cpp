@@ -59,8 +59,8 @@ int TSSVMCoreMain(int argc, char const **argv) {
 // TSSVMCore methods
 //
 void TSSVMCore::init_from_args(mikan::MKOptions const &opts) {
-    mOFileTargetSite = opts.mOFileSite;
-    mOFileMRNA = opts.mOFileTotal;
+    mOFileSite = opts.mOFileSite;
+    mOFileRNA = opts.mOFileTotal;
     mOutputAlign = opts.mOutputAlign;
 
     resize(mSeedTypeDef, 1);
@@ -69,16 +69,16 @@ void TSSVMCore::init_from_args(mikan::MKOptions const &opts) {
 
 int TSSVMCore::open_output_file() {
     // Open output file 1
-    mOFile1.open(toCString(mOFileTargetSite), std::ofstream::out);
+    mOFile1.open(toCString(mOFileSite), std::ofstream::out);
     if (!mOFile1.good()) {
-        std::cerr << "ERROR: Could not open output file " << toCString(mOFileTargetSite) << std::endl;
+        std::cerr << "ERROR: Could not open output file " << toCString(mOFileSite) << std::endl;
         return seqan::ArgumentParser::PARSE_ERROR;
     }
 
     // Open output file 2
-    mOFile2.open(toCString(mOFileMRNA), std::ofstream::out);
+    mOFile2.open(toCString(mOFileRNA), std::ofstream::out);
     if (!mOFile2.good()) {
-        std::cerr << "ERROR: Could not open output file " << toCString(mOFileMRNA) << std::endl;
+        std::cerr << "ERROR: Could not open output file " << toCString(mOFileRNA) << std::endl;
         return seqan::ArgumentParser::PARSE_ERROR;
     }
 

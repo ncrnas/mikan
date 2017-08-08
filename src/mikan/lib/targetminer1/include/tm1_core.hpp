@@ -34,8 +34,9 @@ public:
     bool mOutputSitePos;
     bool mOutputScore;
     bool mOutputAlign;
+
     seqan::CharString mOFileSite;
-    seqan::CharString mOFileScore;
+    seqan::CharString mOFileRNA;
 
     mikan::TCharSet mSeedTypeDef;
 
@@ -50,7 +51,9 @@ public:
             mOutputScore(true), mOutputAlign(true), mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
             mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mSiteScores(pOpts), mSiteFilter(pOpts),
             mRNAScores(pOpts) {
+
         init_from_args(pOpts);
+
     }
 
     // Method prototypes
