@@ -34,9 +34,6 @@ public:
     seqan::CharString mOFileSite;
     seqan::CharString mOFileRNA;
 
-    seqan::CharString mOverlapDef;
-    int mMaxHits;
-
 public:
     // Define methods
     RH2Core(mikan::MKOptions const &pOpts, mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
@@ -44,7 +41,7 @@ public:
             mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
             mExecSearchSeedSites(true), mExecCalSiteScore(true), mExecFilterOverlap(true),
             mExecFilterSiteNum(true), mExecSortSites(true), mExecSumScores(true), mOutputMFEScore(true),
-            mOutputTotalScore(true), mOutputAlign(true), mMaxHits(0), mMiRNAIds(pMiRNAIds),
+            mOutputTotalScore(true), mOutputAlign(true), mMiRNAIds(pMiRNAIds),
             mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs),
             mSeedSeqs(pOpts), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),  mRNAWithSites(pOpts), mSiteScores(pOpts),
             mSiteFilter(pOpts), mTopNSites(pOpts), mRNAScores(pOpts) {

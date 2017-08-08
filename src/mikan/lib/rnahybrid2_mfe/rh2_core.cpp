@@ -62,9 +62,6 @@ void RH2Core::init_from_args(mikan::MKOptions const &opts) {
     mOFileSite = opts.mOFileSite;
     mOFileRNA = opts.mOFileTotal;
 
-    mMaxHits = opts.mMaxHits;
-    mOverlapDef = opts.mOverlapDef;
-
 }
 
 int RH2Core::open_output_file() {
