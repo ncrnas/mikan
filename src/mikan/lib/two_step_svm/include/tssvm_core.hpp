@@ -5,7 +5,7 @@
 #include "mk_typedef.hpp"           // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_sequence.hpp"          // MKSequences
 #include "mk_option.hpp"            // MKOptions
-#include "mk_core.hpp"              // MKCoreBase
+#include "mk_core_base.hpp"         // MKCoreBase
 #include "tssvm_option.hpp"         // TSSVMOptions
 #include "tssvm_seed_site.hpp"      // TSSVMSeedSites
 #include "tssvm_site_filter.hpp"    // TSSVMSiteFilter

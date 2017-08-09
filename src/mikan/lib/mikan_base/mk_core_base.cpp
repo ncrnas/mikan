@@ -5,7 +5,7 @@
 #include <ctime>                  // clock_t, clock, CLOCKS_PER_SEC
 #endif
 
-#include "mk_core.hpp"            // MKCoreBase
+#include "mk_core_base.hpp"      // MKCoreBase
 
 namespace mikan {
 

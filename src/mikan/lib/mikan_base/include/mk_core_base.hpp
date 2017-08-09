@@ -1,5 +1,5 @@
-#ifndef MK_CORE_HPP_
-#define MK_CORE_HPP_
+#ifndef MK_CORE_BASE_HPP_
+#define MK_CORE_BASE_HPP_
 
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
@@ -84,4 +84,4 @@ protected:
 
 } // namespace mikan
 
-#endif /* MK_CORE_HPP_ */
+#endif /* MK_CORE_BASE_HPP_ */

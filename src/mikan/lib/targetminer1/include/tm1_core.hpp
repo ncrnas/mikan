@@ -5,7 +5,7 @@
 #include "mk_sequence.hpp"       // MKSequences
 #include "mk_site_score.hpp"     // MKSiteScores
 #include "mk_option.hpp"         // MKOptions
-#include "mk_core.hpp"           // MKCoreBase
+#include "mk_core_base.hpp"      // MKCoreBase
 #include "tm1_site_filter.hpp"   // TM1SiteFilter
 #include "tm1_mrna_feature.hpp"  // TM1MRNAFeatures
 #include "tm1_mrna_svm.hpp"      // TM1MRNAModel, TM1MRNAInputVector

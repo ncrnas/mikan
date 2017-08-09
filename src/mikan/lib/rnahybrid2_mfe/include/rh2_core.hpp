@@ -5,7 +5,7 @@
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_sequence.hpp"       // MKSequences
 #include "mk_option.hpp"         // MKOptions
-#include "mk_core.hpp"           // MKCoreBase
+#include "mk_core_base.hpp"      // MKCoreBase
 #include "rh2_option.hpp"        // RH2Options
 #include "rh2_site_score.hpp"    // RH2SiteScores
 #include "rh2_seed_site.hpp"     // RH2SeedSites
