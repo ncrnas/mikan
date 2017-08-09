@@ -57,110 +57,84 @@ int TS5CoreMain(int argc, char const **argv) {
 //
 // TS5Core methods
 //
-void TS5Core::init_from_args(mikan::MKOptions const &opts) {
-    mOutputAlign = opts.mOutputAlign;
-    mOFileSite = opts.mOFileSite;
-    mOFileRNA = opts.mOFileTotal;
-
-}
-
-int TS5Core::open_output_file() {
-    // Open output file 1
-    mOFile1.open(toCString(mOFileSite), std::ofstream::out);
-    if (!mOFile1.good()) {
-        std::cerr << "ERROR: Could not open output file " << toCString(mOFileSite) << std::endl;
-        return seqan::ArgumentParser::PARSE_ERROR;
-    }
-
-    // Open output file 2
-    mOFile2.open(toCString(mOFileRNA), std::ofstream::out);
-    if (!mOFile2.good()) {
-        std::cerr << "ERROR: Could not open output file " << toCString(mOFileRNA) << std::endl;
-        return seqan::ArgumentParser::PARSE_ERROR;
-    }
-
-    return 0;
-}
-
-int TS5Core::calculate_all_scores() {
-    int retVal;
-
-    for (unsigned i = 0; i < length(mMiRNASeqs); ++i) {
-
-#if SEQAN_ENABLE_DEBUG
-        clock_t startTime = clock();
-#endif
-
-        retVal = calculate_mirna_scores(i);
-        if (retVal != 0) {
-            std::cerr << "ERROR: Score calculation failed for " << toCString((seqan::CharString) mMiRNAIds[i]);
-            std::cerr << "." << std::endl;
-            return 1;
-        }
-
-#if SEQAN_ENABLE_DEBUG
-        std::cout << toCString((seqan::CharString) mMiRNAIds[i]) << ": ";
-        std::cout << double(clock() - startTime) / (double) CLOCKS_PER_SEC << " seconds." << std::endl;
-#endif
-
-    }
-
-    return 0;
-}
-
-int TS5Core::calculate_mirna_scores(unsigned pIdx) {
+int TS5Core::find_seed_sites(unsigned pIdx) {
     int retVal;
     mikan::TRNAStr miRNASeq = mMiRNASeqs[pIdx];
 
-    // Generate seed sequences
-    retVal = mSeedSeqs.create_seed_seqs(miRNASeq);
-    if (retVal != 0) {
-        std::cerr << "ERROR: Generate seed sequences failed." << std::endl;
-        return 1;
-    }
+    if (mFindSeedSites) {
+        retVal = mSeedSeqs.create_seed_seqs(miRNASeq);
+        if (retVal != 0) {
+            return 1;
+        }
 
-    // Search seed sites
-    if (mExecSearchSeedSites) {
         retVal = mSeedSites.find_seed_sites(mSeedSeqs);
         if (retVal != 0) {
-            std::cerr << "ERROR: Seed site search failed." << std::endl;
             return 1;
         }
+
     }
 
-    // Calculate context scores
-    if (mExecCalcSiteScore) {
+    return 0;
+}
+
+int TS5Core::calc_site_scores(unsigned pIdx) {
+    int retVal;
+    mikan::TRNAStr miRNASeq = mMiRNASeqs[pIdx];
+
+    if (mCalcSiteScore) {
         retVal = mSiteScores.calc_scores(miRNASeq, mMRNASeqs, mSeedSites, mRNAWithSites);
         if (retVal != 0) {
-            std::cerr << "ERROR: Calculate site context values failed." << std::endl;
             return 1;
         }
     }
 
-    // Summarize context scores
-    mRNAWithSites.create_mrna_site_map(mSeedSites, mSiteScores);
-    if (mExecSumScores) {
+    return 0;
+
+}
+
+int TS5Core::ensemble_site_scores(unsigned) {
+
+    return 0;
+
+}
+
+int TS5Core::calc_rna_scores(unsigned) {
+    int retVal;
+
+    if (mCalcRNAScore) {
+        mRNAWithSites.create_mrna_site_map(mSeedSites, mSiteScores);
         retVal = mRNAScores.calc_scores(mSeedSites, mMRNASeqs, mRNAWithSites, mSiteScores);
         if (retVal != 0) {
-            std::cerr << "ERROR: Calculate total scores failed." << std::endl;
             return 1;
         }
     }
 
-    // Write context scores
-    if (mOutputContexScore) {
+    return 0;
+
+}
+
+int TS5Core::ensemble_rna_scores(unsigned) {
+
+    return 0;
+
+}
+
+int TS5Core::output_results(unsigned pIdx) {
+    int retVal;
+    mikan::TRNAStr miRNASeq = mMiRNASeqs[pIdx];
+
+    // Write site scores
+    if (mOutputSite) {
         retVal = write_site_score(mMiRNAIds[pIdx]);
-        if (retVal != 0) {
-            std::cerr << "ERROR: Could not write context scores." << std::endl;
+        if (retVal != 0) { ;
             return 1;
         }
     }
 
     // Write total scores
-    if (mOutputTotalScore) {
+    if (mOutputRNA) {
         retVal = write_rna_score(mMiRNAIds[pIdx]);
         if (retVal != 0) {
-            std::cerr << "ERROR: Could not write total scores." << std::endl;
             return 1;
         }
     }
@@ -169,17 +143,19 @@ int TS5Core::calculate_mirna_scores(unsigned pIdx) {
     if (mOutputAlign) {
         retVal = write_alignment(mMiRNAIds[pIdx]);
         if (retVal != 0) {
-            std::cerr << "ERROR: Could not write alignments." << std::endl;
             return 1;
         }
     }
 
+    return 0;
+
+}
+
+void TS5Core::clear_all() {
     mSeedSeqs.clear_seeds();
     mSeedSites.clear_pos();
     mSiteScores.clear_scores();
     mRNAScores.clear_scores();
-
-    return 0;
 }
 
 int TS5Core::write_site_score(seqan::CharString const &pMiRNAId) {
