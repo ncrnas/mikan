@@ -9,50 +9,13 @@
 #include <seqan/arg_parse.h>
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_input.hpp"          // MKInput
-#include "ts5_option.hpp"        // TS5CSOptions
+#include "ts5_option.hpp"        // TS5Options
 #include "ts5_seed_site.hpp"     // TS5SeedSites
 #include "ts5_feature.hpp"       // TS5RawFeatures
 #include "ts5_site_score.hpp"    // TS5SiteScores
 #include "ts5_core.hpp"          // TS5Core
 
 namespace ts5cs {
-
-int TS5CoreMain(int argc, char const **argv) {
-    int retVal;
-
-    // Parse the command line
-    ts5cs::TS5CSOptions options;
-    seqan::ArgumentParser::ParseResult parseRes = options.parseCommandLine(argc, argv);
-    if (parseRes != seqan::ArgumentParser::PARSE_OK) {
-        return parseRes == seqan::ArgumentParser::PARSE_ERROR;
-    }
-
-    // Read input files
-    mikan::MKInput coreInput;
-    coreInput.set_options(options);
-    retVal = coreInput.load_seq_from_file();
-    if (retVal != 0) {
-        return 1;
-    }
-
-    // Create index
-    mikan::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
-    mikan::TIndexQGram index(mMRNASeqs);
-    mikan::TFinder finder(index);
-
-    // Calculate scores for all miRNAs
-    mikan::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
-    mikan::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
-    mikan::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
-    ts5cs::TS5Core ts5Core(options, mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
-    ts5Core.open_output_file();
-    retVal = ts5Core.calculate_all_scores();
-    if (retVal != 0) {
-        return 1;
-    }
-
-    return 0;
-}
 
 //
 // TS5Core methods

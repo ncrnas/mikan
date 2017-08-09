@@ -14,8 +14,6 @@
 
 namespace rh2mfe {
 
-int RH2CoreMain(int argc, char const **argv);
-
 //
 // RNAhybrid MFE score process core
 //

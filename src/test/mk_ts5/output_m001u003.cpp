@@ -18,12 +18,12 @@ protected:
 };
 
 TEST_F(OM001U003, comp_site) {
-    (void) ts5cs::TS5CoreMain(argc, (const char **) argv);
+    (void) mikan::MKCoreMain<ts5cs::TS5Options, ts5cs::TS5Core >(argc, (const char **) argv);
     gtest_compare_two_files(o1file1, o2file1);
 }
 
 TEST_F(OM001U003, comp_mrna) {
-    (void) ts5cs::TS5CoreMain(argc, (const char **) argv);
+    (void) mikan::MKCoreMain<ts5cs::TS5Options, ts5cs::TS5Core >(argc, (const char **) argv);
     gtest_compare_two_files(o1file2, o2file2);
 }
 }

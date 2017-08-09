@@ -9,14 +9,12 @@
 #include "mk_rna_sites.hpp"       // MKRMAWithSites
 #include "mk_core_tmpl.hpp"       // MKCoreTmpl
 #include "ts5_feature.hpp"        // TS5RawFeatures
-#include "ts5_option.hpp"         // TS5CSOptions
+#include "ts5_option.hpp"         // TS5Options
 #include "ts5_site_score.hpp"     // TS5SiteScores
 #include "ts5_seed_site.hpp"      // TS5SeedSites
 #include "ts5_rna_score.hpp"      // TS5RNAScores
 
 namespace ts5cs {
-
-int TS5CoreMain(int argc, char const **argv);
 
 //
 // TargetScan context score process core

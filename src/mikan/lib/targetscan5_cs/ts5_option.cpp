@@ -1,13 +1,13 @@
-#include "ts5_option.hpp"        // TS5CSOptions
+#include "ts5_option.hpp"        // TS5Options
 
 using namespace seqan;
 
 namespace ts5cs {
 
 //
-// TS5CSOptions methods
+// TS5Options methods
 //
-void TS5CSOptions::setProgramDescription(seqan::ArgumentParser &parser) {
+void TS5Options::setProgramDescription(seqan::ArgumentParser &parser) {
     // Set short description, version, and date
     setShortDescription(parser, "Calculate TargetScan 5 context scores.");
     setVersion(parser, toCString(mProgVer));

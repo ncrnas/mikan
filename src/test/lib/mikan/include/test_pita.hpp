@@ -4,6 +4,7 @@
 #include "test_main_io.hpp"
 #include "test_seed.hpp"
 #include "test_site.hpp"
+#include "mk_core_main.hpp"
 #include "pita_core.hpp"
 #include "mk_input.hpp"
 

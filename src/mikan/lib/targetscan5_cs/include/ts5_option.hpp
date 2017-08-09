@@ -10,10 +10,10 @@ namespace ts5cs {
 //
 // Tool options
 //
-class TS5CSOptions : public mikan::MKOptions {
+class TS5Options : public mikan::MKOptions {
 public:
     // Define method
-    TS5CSOptions() {
+    TS5Options() {
         mProgName = "mk-targetscan";
     }
 

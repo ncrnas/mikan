@@ -14,8 +14,6 @@
 
 namespace ptddg {
 
-int PITACoreMain(int argc, char const **argv);
-
 //
 // PITA score process core
 //

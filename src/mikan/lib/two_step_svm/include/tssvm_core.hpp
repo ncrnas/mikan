@@ -14,8 +14,6 @@
 
 namespace tssvm {
 
-int TSSVMCoreMain(int argc, char const **argv);
-
 //
 //Two-step SVM score process core
 //

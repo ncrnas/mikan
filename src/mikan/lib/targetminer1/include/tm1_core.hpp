@@ -6,17 +6,16 @@
 #include "mk_site_score.hpp"     // MKSiteScores
 #include "mk_option.hpp"         // MKOptions
 #include "mk_core_tmpl.hpp"      // MKCoreTmpl
+#include "tm1_option.hpp"        // TM1Options
 #include "tm1_site_filter.hpp"   // TM1SiteFilter
 #include "tm1_mrna_feature.hpp"  // TM1MRNAFeatures
 #include "tm1_mrna_svm.hpp"      // TM1MRNAModel, TM1MRNAInputVector
-#include "tm1_option.hpp"        // TM1CSOptions
+#include "tm1_option.hpp"        // TM1Options
 #include "tm1_rna_score.hpp"     // TM1RNAScores
 #include "tm1_seed_site.hpp"     // TM1SeedSites
 #include "tm1_site_score.hpp"    // TM1SiteScores
 
 namespace tm1p {
-
-int TM1CoreMain(int argc, char const **argv);
 
 //
 // TargetScan context score process core
