@@ -77,21 +77,9 @@ int MKCoreBase::calculate_mirna_scores(unsigned pIdx) {
         return 1;
     }
 
-    retVal = ensemble_site_scores(pIdx);
-    if (retVal != 0) {
-        std::cerr << "ERROR: Ensemble site scores failed." << std::endl;
-        return 1;
-    }
-
     retVal = calc_rna_scores(pIdx);
     if (retVal != 0) {
         std::cerr << "ERROR: Calculating RNA scores failed." << std::endl;
-        return 1;
-    }
-
-    retVal = ensemble_rna_scores(pIdx);
-    if (retVal != 0) {
-        std::cerr << "ERROR: Ensemble RNA scores failed." << std::endl;
         return 1;
     }
 

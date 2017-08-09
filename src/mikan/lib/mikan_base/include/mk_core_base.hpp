@@ -8,21 +8,20 @@
 namespace mikan {
 
 //
-// Base class of MK process core
+// Base class of MK process core base
 //
 class MKCoreBase {
 public:
     // Declare variables
     bool mFindSeedSites;
-    bool mClsuterSites1;
     bool mFilterSites;
     bool mCalcSiteScore;
-    bool mClsuterSites2;
+    bool mClusterSites1;
     bool mFilterSiteScores;
+    bool mClusterSites2;
     bool mSelectTopSites;
+    bool mClusterSites3;
     bool mCalcRNAScore;
-    bool mFilterRNAScores;
-    bool mSelectTopRNAs;
     bool mOutputSite;
     bool mOutputRNA;
     bool mOutputAlign;
@@ -32,19 +31,21 @@ public:
 
     // Define methods
     MKCoreBase(mikan::MKOptions const &pOpts,
-               mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
-               mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
-               mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
+               mikan::TCharSet const &pMiRNAIds,
+               mikan::TRNASet const &pMiRNASeqs,
+               mikan::TCharSet const &pMRNAIds,
+               mikan::TRNASet const &pMRNASeqs,
+               mikan::TIndexQGram &pRNAIdx,
+               mikan::TFinder &pFinder) :
             mFindSeedSites(true),
-            mClsuterSites1(true),
             mFilterSites(true),
             mCalcSiteScore(true),
-            mClsuterSites2(true),
+            mClusterSites1(true),
             mFilterSiteScores(true),
+            mClusterSites2(true),
             mSelectTopSites(true),
+            mClusterSites3(true),
             mCalcRNAScore(true),
-            mFilterRNAScores(true),
-            mSelectTopRNAs(true),
             mOutputSite(true),
             mOutputRNA(true),
             mOutputAlign(true),
@@ -63,9 +64,7 @@ public:
 
     virtual int find_seed_sites(unsigned pIdx) = 0;
     virtual int calc_site_scores(unsigned pIdx) = 0;
-    virtual int ensemble_site_scores(unsigned pIdx) = 0;
     virtual int calc_rna_scores(unsigned pIdx) = 0;
-    virtual int ensemble_rna_scores(unsigned pIdx) = 0;
     virtual int output_results(unsigned pIdx) = 0;
     virtual void clear_all() = 0;
 

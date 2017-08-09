@@ -5,7 +5,7 @@
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_sequence.hpp"       // MKSequences
 #include "mk_option.hpp"         // MKOptions
-#include "mk_core_base.hpp"      // MKCoreBase
+#include "mk_core_tmpl.hpp"      // MKCoreTmpl
 #include "rh2_option.hpp"        // RH2Options
 #include "rh2_site_score.hpp"    // RH2SiteScores
 #include "rh2_seed_site.hpp"     // RH2SeedSites
@@ -19,41 +19,30 @@ int RH2CoreMain(int argc, char const **argv);
 //
 // RNAhybrid MFE score process core
 //
-class RH2Core : public mikan::MKCoreBase  {
+typedef mikan::MKCoreTmpl<RH2SeedSeqs, RH2SeedSites, RH2SiteScores, RH2SiteFilter, RH2RNAScores > RH2CoreBase;
+
+class RH2Core : public RH2CoreBase  {
 public:
     // Define methods
-    RH2Core(mikan::MKOptions const &pOpts, mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
-    mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
-    mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
-    MKCoreBase(pOpts, pMiRNAIds, pMiRNASeqs, pMRNAIds, pMRNASeqs, pRNAIdx, pFinder),
-    mSeedSeqs(pOpts), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),  mRNAWithSites(pOpts), mSiteScores(pOpts),
-    mSiteFilter(pOpts), mTopNSites(pOpts), mRNAScores(pOpts) {
+    RH2Core(mikan::MKOptions const &pOpts,
+            mikan::TCharSet const &pMiRNAIds,
+            mikan::TRNASet const &pMiRNASeqs,
+            mikan::TCharSet const &pMRNAIds,
+            mikan::TRNASet const &pMRNASeqs,
+            mikan::TIndexQGram &pRNAIdx,
+            mikan::TFinder &pFinder) :
+            RH2CoreBase(pOpts, pMiRNAIds, pMiRNASeqs, pMRNAIds, pMRNASeqs, pRNAIdx, pFinder) {
 
+        mClusterSites1 = false;
         mFilterSites = false;
-        mSelectTopRNAs = false;
+        mClusterSites3 = false;
 
     }
 
-    virtual int find_seed_sites(unsigned pIdx);
-    virtual int calc_site_scores(unsigned pIdx);
-    virtual int ensemble_site_scores(unsigned pIdx);
-    virtual int calc_rna_scores(unsigned pIdx);
-    virtual int ensemble_rna_scores(unsigned pIdx);
-    virtual int output_results(unsigned pIdx);
-    virtual void clear_all();
-
 private:
-    RH2SeedSeqs mSeedSeqs;
-    RH2SeedSites mSeedSites;
-    mikan::MKRMAWithSites mRNAWithSites;
-    RH2SiteScores mSiteScores;
-    RH2SiteFilter mSiteFilter;
-    mikan::MKTopNSites mTopNSites;
-    RH2RNAScores mRNAScores;
-
-    int write_site_score(seqan::CharString const &pMiRNAId);
-    int write_rna_score(seqan::CharString const &pMiRNAId);
-    int write_alignment(seqan::CharString const &pMiRNAId);
+    virtual int write_site_score(seqan::CharString const &pMiRNAId);
+    virtual int write_rna_score(seqan::CharString const &pMiRNAId);
+    virtual int write_alignment(seqan::CharString const &pMiRNAId);
 
 };
 
