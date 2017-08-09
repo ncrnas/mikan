@@ -101,6 +101,13 @@ int MR3Core::calc_site_scores(unsigned pIdx) {
         }
     }
 
+    if (mSelectTopSites) {
+        retVal = mTopNSites.filter_sites(mSeedSites, mRNAWithSites, mSiteScores);
+        if (retVal != 0) {
+            return 1;
+        }
+    }
+
     return 0;
 
 }

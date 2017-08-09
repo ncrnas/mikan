@@ -97,6 +97,22 @@ int TSSVMCore::calc_site_scores(unsigned pIdx) {
         }
     }
 
+    if (mFilterSiteScores) {
+        mRNAWithSites.create_mrna_site_map(mSeedSites, mSiteScores);
+        retVal = mSiteFilter.filter_sites(mSeedSites, mRNAWithSites, mSiteScores);
+        if (retVal != 0) {
+            return 1;
+        }
+    }
+
+    if (mSelectTopSites) {
+        retVal = mTopNSites.filter_sites(mSeedSites, mRNAWithSites, mSiteScores);
+        if (retVal != 0) {
+            return 1;
+        }
+    }
+
+
     return 0;
 
 }

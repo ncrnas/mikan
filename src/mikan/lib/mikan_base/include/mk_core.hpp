@@ -14,8 +14,10 @@ class MKCoreBase {
 public:
     // Declare variables
     bool mFindSeedSites;
+    bool mClsuterSites1;
     bool mFilterSites;
     bool mCalcSiteScore;
+    bool mClsuterSites2;
     bool mFilterSiteScores;
     bool mSelectTopSites;
     bool mCalcRNAScore;
@@ -34,8 +36,10 @@ public:
                mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
                mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
             mFindSeedSites(true),
+            mClsuterSites1(true),
             mFilterSites(true),
             mCalcSiteScore(true),
+            mClsuterSites2(true),
             mFilterSiteScores(true),
             mSelectTopSites(true),
             mCalcRNAScore(true),

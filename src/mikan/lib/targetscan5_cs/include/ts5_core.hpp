@@ -4,6 +4,7 @@
 #include "mk_typedef.hpp"         // TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_sequence.hpp"        // MKSequences
 #include "mk_option.hpp"          // MKOptions
+#include "mk_site_filter.hpp"     // MKSiteFilter
 #include "mk_site_score.hpp"      // MKSiteScores
 #include "mk_rna_sites.hpp"       // MKRMAWithSites
 #include "mk_core.hpp"            // MKCoreBase
@@ -27,8 +28,8 @@ public:
     mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
     mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
     MKCoreBase(pOpts, pMiRNAIds, pMiRNASeqs, pMRNAIds, pMRNASeqs, pRNAIdx, pFinder),
-    mSeedSeqs(pOpts), mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mSiteScores(pOpts),
-    mRNAWithSites(pOpts), mRNAScores(pOpts) {
+    mSeedSeqs(pOpts), mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mSiteFilter(pOpts), mSiteScores(pOpts),
+    mRNAWithSites(pOpts), mTopNSites(pOpts), mRNAScores(pOpts) {
 
         mFilterSites = false;
         mFilterSiteScores = false;
@@ -48,8 +49,10 @@ public:
 private:
     TS5SeedSeqs mSeedSeqs;
     TS5SeedSites mSeedSites;
+    mikan::MKSiteFilter mSiteFilter;
     TS5SiteScores mSiteScores;
     mikan::MKRMAWithSites mRNAWithSites;
+    mikan::MKTopNSites mTopNSites;
     TS5RNAScores mRNAScores;
 
 private:

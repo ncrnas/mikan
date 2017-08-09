@@ -27,7 +27,7 @@ public:
             mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
             MKCoreBase(pOpts, pMiRNAIds, pMiRNASeqs, pMRNAIds, pMRNASeqs, pRNAIdx, pFinder),
             mSeedSeqs(pOpts), mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
-            mSiteScores(pOpts), mRNAWithSites(pOpts), mSiteFilter(pOpts), mRNAScores(pOpts) {
+            mSiteScores(pOpts), mRNAWithSites(pOpts), mSiteFilter(pOpts), mTopNSites(pOpts), mRNAScores(pOpts) {
 
 
         mFilterSites = false;
@@ -50,6 +50,7 @@ private:
     MR3SiteScores mSiteScores;
     mikan::MKRMAWithSites mRNAWithSites;
     MR3SiteFilter mSiteFilter;
+    mikan::MKTopNSites mTopNSites;
     MR3RNAScores mRNAScores;
 
     int write_site_score(seqan::CharString const &pMiRNAId);
