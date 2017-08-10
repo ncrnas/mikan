@@ -23,6 +23,7 @@ public:
 
     // Method prototypes
     void init_from_args();
+
     void set_flags();
 };
 
@@ -37,15 +38,15 @@ public:
     // Define methods
     PITASeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
             MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {
-        
+
         mMinToCDS = 16;
         mMinToEnd = 7;
     }
 
 private:
     virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
-                           mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
-                           seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
+                                   mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
+                                   seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 
     void set_stringent_seed_type(seqan::CharString &pCurSeedType, seqan::StringSet<seqan::CharString> &pSeedDef,
                                  bool pMatchM8, bool pMatchM9, unsigned pMisMatchPos,

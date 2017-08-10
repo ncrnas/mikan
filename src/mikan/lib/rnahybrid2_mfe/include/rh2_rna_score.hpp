@@ -23,8 +23,9 @@ public:
     virtual void clear_scores();
 
     using mikan::MKRNAScores::calc_scores;
+
     virtual int calc_scores(mikan::MKSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
-                    mikan::MKRMAWithSites &pRNAWithSites, RH2SiteScores &pMFEScores);
+                            mikan::MKRMAWithSites &pRNAWithSites, RH2SiteScores &pMFEScores);
 
 private:
     seqan::String<float> mNormScores;

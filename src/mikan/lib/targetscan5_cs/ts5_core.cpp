@@ -9,7 +9,6 @@
 #include <seqan/arg_parse.h>
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_input.hpp"          // MKInput
-#include "ts5_option.hpp"        // TS5Options
 #include "ts5_seed_site.hpp"     // TS5SeedSites
 #include "ts5_feature.hpp"       // TS5RawFeatures
 #include "ts5_site_score.hpp"    // TS5SiteScores

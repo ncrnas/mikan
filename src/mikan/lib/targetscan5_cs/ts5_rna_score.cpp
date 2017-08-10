@@ -1,4 +1,4 @@
-#include <math.h>                // roundf
+
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "ts5_rna_score.hpp"     // TS5RNAScores
 

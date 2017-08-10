@@ -22,7 +22,7 @@ public:
 
 private:
     virtual float get_precedence(unsigned pSitePos, mikan::MKSeedSites &pSeedSites,
-                         mikan::MKSiteScores &pSiteScores);
+                                 mikan::MKSiteScores &pSiteScores);
 
 };
 

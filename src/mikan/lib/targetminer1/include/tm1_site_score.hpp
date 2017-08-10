@@ -24,7 +24,7 @@ public:
     virtual void clear_scores();
 
     virtual int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                    mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
+                            mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
 
     TM1SiteFeatures &get_site_features() { return mSiteFeatures; }
 

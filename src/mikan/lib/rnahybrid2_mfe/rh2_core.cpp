@@ -1,6 +1,5 @@
 #include <math.h>                // roundf
 #include <iostream>
-#include <string>                // string
 //#define SEQAN_ENABLE_DEBUG 1
 #if SEQAN_ENABLE_DEBUG
 #include <ctime>                 // clock_t, clock, CLOCKS_PER_SEC
@@ -9,7 +8,6 @@
 #include <seqan/arg_parse.h>
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_input.hpp"          // MKInput
-#include "rh2_option.hpp"        // RH2Options
 #include "rh2_seed_site.hpp"     // RH2Sequences, RH2SeedSites
 #include "rh2_site_score.hpp"    // RH2SiteScores, RH2TotalScores
 #include "rh2_site_filter.hpp"   // RH2Overlap, RH2TopNSites, RH2SortedSitePos

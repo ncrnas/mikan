@@ -4,7 +4,7 @@
 int main(int argc, char const **argv) {
     int retVal;
 
-    retVal = mikan::MKCoreMain<tssvm::TSSVMOptions, tssvm::TSSVMCore >(argc, argv);
+    retVal = mikan::MKCoreMain<tssvm::TSSVMOptions, tssvm::TSSVMCore>(argc, argv);
     if (retVal != 0) {
         return 1;
     }

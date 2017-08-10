@@ -19,7 +19,7 @@ namespace ts5cs {
 //
 // TargetScan context score process core
 //
-typedef mikan::MKCoreTmpl<TS5SeedSeqs, TS5SeedSites, TS5SiteScores, mikan::MKSiteFilter, TS5RNAScores > TS5CoreBase;
+typedef mikan::MKCoreTmpl<TS5SeedSeqs, TS5SeedSites, TS5SiteScores, mikan::MKSiteFilter, TS5RNAScores> TS5CoreBase;
 
 class TS5Core : public TS5CoreBase {
 public:
@@ -43,7 +43,9 @@ public:
 
 private:
     virtual int write_site_score(seqan::CharString const &pMiRNAId);
+
     virtual int write_rna_score(seqan::CharString const &pMiRNAId);
+
     virtual int write_alignment(seqan::CharString const &pMiRNAId);
 
 };

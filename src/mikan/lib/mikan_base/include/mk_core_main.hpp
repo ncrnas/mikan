@@ -9,7 +9,7 @@
 
 namespace mikan {
 
-template <class TOptions, class TCore >
+template<class TOptions, class TCore>
 int MKCoreMain(int argc, char const **argv) {
     int retVal;
 

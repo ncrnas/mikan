@@ -3,8 +3,8 @@
 
 int main(int argc, char const **argv) {
     int retVal;
-    
-    retVal = mikan::MKCoreMain<rh2mfe::RH2Options, rh2mfe::RH2Core >(argc, argv);
+
+    retVal = mikan::MKCoreMain<rh2mfe::RH2Options, rh2mfe::RH2Core>(argc, argv);
     if (retVal != 0) {
         return 1;
     }

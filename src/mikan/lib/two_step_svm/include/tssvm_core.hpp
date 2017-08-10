@@ -17,9 +17,9 @@ namespace tssvm {
 //
 //Two-step SVM score process core
 //
-typedef mikan::MKCoreTmpl<TSSVMSeedSeqs, TSSVMSeedSites, TSSVMSiteScores, TSSVMSiteFilter, TSSVMRNAScores > TSSVMCoreBase;
+typedef mikan::MKCoreTmpl<TSSVMSeedSeqs, TSSVMSeedSites, TSSVMSiteScores, TSSVMSiteFilter, TSSVMRNAScores> TSSVMCoreBase;
 
-class TSSVMCore : public TSSVMCoreBase  {
+class TSSVMCore : public TSSVMCoreBase {
 public:
     // Define methods
     TSSVMCore(mikan::MKOptions const &pOpts,
@@ -40,7 +40,9 @@ public:
 
 private:
     virtual int write_site_score(seqan::CharString const &pMiRNAId);
+
     virtual int write_rna_score(seqan::CharString const &pMiRNAId);
+
     virtual int write_alignment(seqan::CharString const &pMiRNAId);
 
 };

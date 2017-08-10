@@ -7,13 +7,10 @@
 #include <seqan/arg_parse.h>
 #include "mk_typedef.hpp"           // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_input.hpp"             // MKInput
-#include "tssvm_option.hpp"         // TSSVMOptions
 #include "tssvm_seed_site.hpp"      // TSSVMSeedSites, TSSVMSiteFilter
 #include "tssvm_align.hpp"          // TSAlign
-#include "tssvm_site_feature.hpp"   // TSSVMRawFeatures
 #include "tssvm_site_svm.hpp"       // TSSVMSiteModel, TSSVMSiteInputVector
 #include "tssvm_mrna_feature.hpp"   // TSSVMRNARawFeatures
-#include "tssvm_mrna_svm.hpp"       // TSSVMRNAInputVector
 #include "tssvm_core.hpp"           // TSSVMCore
 
 namespace tssvm {

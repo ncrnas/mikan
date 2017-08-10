@@ -23,6 +23,7 @@ public:
 
     // Method prototypes
     void init_from_args();
+
     void set_flags();
 };
 
@@ -44,8 +45,8 @@ public:
 
 private:
     virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
-                           mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
-                           seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
+                                   mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
+                                   seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 
     void set_stringent_seed_type(seqan::CharString &pCurSeedType, seqan::StringSet<seqan::CharString> &pSeedDef,
                                  bool pMatchMx8, bool pMatchMx9, unsigned pMisMatchPos,

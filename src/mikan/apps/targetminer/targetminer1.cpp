@@ -4,7 +4,7 @@
 int main(int argc, char const **argv) {
     int retVal;
 
-    retVal = mikan::MKCoreMain<tm1p::TM1Options, tm1p::TM1Core >(argc, argv);
+    retVal = mikan::MKCoreMain<tm1p::TM1Options, tm1p::TM1Core>(argc, argv);
     if (retVal != 0) {
         return 1;
     }

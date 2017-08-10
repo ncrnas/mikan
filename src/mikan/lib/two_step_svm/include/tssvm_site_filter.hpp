@@ -26,11 +26,11 @@ public:
 
 private:
     virtual float get_precedence(unsigned pSitePos, mikan::MKSeedSites &pSeedSites,
-                         mikan::MKSiteScores &pSiteScores);
+                                 mikan::MKSiteScores &pSiteScores);
 
     virtual void set_intervals(mikan::MKSeedSites &pSeedSites, mikan::MKSiteScores &pSiteScores, unsigned pSiteIdx,
-                       unsigned &pStartSearch, unsigned &pEndSearch, unsigned &pStartAdd, unsigned &pEndAdd,
-                       bool &pSearchOverlap);
+                               unsigned &pStartSearch, unsigned &pEndSearch, unsigned &pStartAdd, unsigned &pEndAdd,
+                               bool &pSearchOverlap);
 
 };
 

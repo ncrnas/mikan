@@ -9,7 +9,6 @@
 #include <seqan/arg_parse.h>
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_input.hpp"          // MKInput
-#include "tm1_option.hpp"        // TM1Options
 #include "tm1_core.hpp"          // TM1Core
 
 namespace tm1p {

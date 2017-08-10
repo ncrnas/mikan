@@ -67,8 +67,8 @@ private:
     virtual bool check_position_2(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType);
 
     virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
-                           mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
-                           seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
+                                   mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
+                                   seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 
     void get_match_count(unsigned pSitePos, unsigned pMRNAPos, mikan::TRNAStr const &pMiRNASeq,
                          int pMx1, int pMx2, int &pMatchCount, int &pGUCount);

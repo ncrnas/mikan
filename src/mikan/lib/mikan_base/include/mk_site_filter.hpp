@@ -83,7 +83,7 @@ private:
     int mTopN;
 
     virtual void mark_sites(mikan::MKSeedSites &pSeedSites, mikan::TMRNAPosSet &pSortedPos,
-                    mikan::MKSiteScores &pSiteScores);
+                            mikan::MKSiteScores &pSiteScores);
 
 
 };

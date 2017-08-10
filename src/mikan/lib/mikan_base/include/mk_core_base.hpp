@@ -58,14 +58,21 @@ public:
 
     // Method prototypes
     void init_from_args(mikan::MKOptions const &opts);
+
     int open_output_file();
+
     int calculate_all_scores();
+
     int calculate_mirna_scores(unsigned pIdx);
 
     virtual int find_seed_sites(unsigned pIdx) = 0;
+
     virtual int calc_site_scores(unsigned pIdx) = 0;
+
     virtual int calc_rna_scores(unsigned pIdx) = 0;
+
     virtual int output_results(unsigned pIdx) = 0;
+
     virtual void clear_all() = 0;
 
 protected:

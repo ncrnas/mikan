@@ -17,9 +17,9 @@ namespace rh2mfe {
 //
 // RNAhybrid MFE score process core
 //
-typedef mikan::MKCoreTmpl<RH2SeedSeqs, RH2SeedSites, RH2SiteScores, RH2SiteFilter, RH2RNAScores > RH2CoreBase;
+typedef mikan::MKCoreTmpl<RH2SeedSeqs, RH2SeedSites, RH2SiteScores, RH2SiteFilter, RH2RNAScores> RH2CoreBase;
 
-class RH2Core : public RH2CoreBase  {
+class RH2Core : public RH2CoreBase {
 public:
     // Define methods
     RH2Core(mikan::MKOptions const &pOpts,
@@ -39,7 +39,9 @@ public:
 
 private:
     virtual int write_site_score(seqan::CharString const &pMiRNAId);
+
     virtual int write_rna_score(seqan::CharString const &pMiRNAId);
+
     virtual int write_alignment(seqan::CharString const &pMiRNAId);
 
 };

@@ -20,7 +20,7 @@ namespace tm1p {
 //
 // TargetScan context score process core
 //
-typedef mikan::MKCoreTmpl<TM1SeedSeqs, TM1SeedSites, TM1SiteScores, TM1SiteFilter, TM1RNAScores > TM1CoreBase;
+typedef mikan::MKCoreTmpl<TM1SeedSeqs, TM1SeedSites, TM1SiteScores, TM1SiteFilter, TM1RNAScores> TM1CoreBase;
 
 class TM1Core : public TM1CoreBase {
 public:
@@ -43,7 +43,9 @@ public:
 
 private:
     virtual int write_site_score(seqan::CharString const &pMiRNAId);
+
     virtual int write_rna_score(seqan::CharString const &pMiRNAId);
+
     virtual int write_alignment(seqan::CharString const &pMiRNAId);
 
 };

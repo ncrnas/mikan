@@ -17,7 +17,7 @@ namespace ptddg {
 //
 // PITA score process core
 //
-typedef mikan::MKCoreTmpl<PITASeedSeqs, PITASeedSites, PITASiteScores, PITASiteFilter, PITARNAScores > PITACoreBase;
+typedef mikan::MKCoreTmpl<PITASeedSeqs, PITASeedSites, PITASiteScores, PITASiteFilter, PITARNAScores> PITACoreBase;
 
 class PITACore : public PITACoreBase {
 public:
@@ -40,7 +40,9 @@ public:
 
 private:
     virtual int write_site_score(seqan::CharString const &pMiRNAId);
+
     virtual int write_rna_score(seqan::CharString const &pMiRNAId);
+
     virtual int write_alignment(seqan::CharString const &pMiRNAId);
 
 };

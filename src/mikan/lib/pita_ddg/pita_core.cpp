@@ -8,7 +8,6 @@
 #include <seqan/arg_parse.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_input.hpp"           // MKInput
-#include "pita_option.hpp"        // PITAOptions
 #include "pita_seed_site.hpp"     // PITASeedSites
 #include "pita_site_score.hpp"    // PITAMFEScores
 #include "pita_site_filter.hpp"   // PITASiteFilter

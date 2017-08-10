@@ -1,6 +1,5 @@
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "tm1_mrna_feature.hpp"  // TM1ScaledFeatures, TM1RawMRNAures, TM1MRNASeedType, TM1MRNASiteCount,
-#include "tm1_site_feature.hpp"  // TM1SiteFeatures
 
 using namespace seqan;
 

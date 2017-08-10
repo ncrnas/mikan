@@ -15,7 +15,7 @@ namespace mikan {
 //
 // MK score process core template
 //
-template <class TSeedSeqs, class TSeedSites, class TSiteScores, class TSiteFilter, class TRNAScores >
+template<class TSeedSeqs, class TSeedSites, class TSiteScores, class TSiteFilter, class TRNAScores>
 class MKCoreTmpl : public mikan::MKCoreBase {
 public:
     // Define methods
@@ -35,7 +35,7 @@ public:
             mTopNSites(pOpts),
             mRNAScores(pOpts) {}
 
-    virtual int find_seed_sites(unsigned pIdx){
+    virtual int find_seed_sites(unsigned pIdx) {
         int retVal;
         mikan::TRNAStr miRNASeq = mMiRNASeqs[pIdx];
 
@@ -164,7 +164,9 @@ protected:
     TRNAScores mRNAScores;
 
     virtual int write_site_score(seqan::CharString const &pMiRNAId) = 0;
+
     virtual int write_rna_score(seqan::CharString const &pMiRNAId) = 0;
+
     virtual int write_alignment(seqan::CharString const &pMiRNAId) = 0;
 
 };

@@ -18,7 +18,7 @@ namespace mr3as {
 //
 // MR3 score process core
 //
-typedef mikan::MKCoreTmpl<MR3SeedSeqs, MR3SeedSites, MR3SiteScores, MR3SiteFilter, MR3RNAScores > MR3CoreBase;
+typedef mikan::MKCoreTmpl<MR3SeedSeqs, MR3SeedSites, MR3SiteScores, MR3SiteFilter, MR3RNAScores> MR3CoreBase;
 
 class MR3Core : public MR3CoreBase {
 public:
@@ -41,7 +41,9 @@ public:
 
 private:
     virtual int write_site_score(seqan::CharString const &pMiRNAId);
+
     virtual int write_rna_score(seqan::CharString const &pMiRNAId);
+
     virtual int write_alignment(seqan::CharString const &pMiRNAId);
 
 };
