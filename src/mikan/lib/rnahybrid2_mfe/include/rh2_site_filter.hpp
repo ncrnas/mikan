@@ -18,18 +18,22 @@ namespace rh2mfe {
 class RH2SiteFilter : public mikan::MKSiteFilter {
 public:
     // Define methods
-    explicit RH2SiteFilter(mikan::MKOptions const &opts) : MKSiteFilter(opts) {}
+    explicit RH2SiteFilter(mikan::MKOptions const &opts) : MKSiteFilter(opts) {
+
+        init_from_args();
+
+    }
 
     // Method prototype
     virtual void init_from_args();
 
 private:
     virtual float get_precedence(unsigned pSitePos, mikan::MKSeedSites &pSeedSites,
-                         mikan::MKSiteScores &pSiteScores);
+                                 mikan::MKSiteScores &pSiteScores);
 
     virtual void set_intervals(mikan::MKSeedSites &pSeedSites, mikan::MKSiteScores &pSiteScores, unsigned pSiteIdx,
-                       unsigned &pStartSearch, unsigned &pEndSearch, unsigned &pStartAdd, unsigned &pEndAdd,
-                       bool &pSearchOverlap);
+                               unsigned &pStartSearch, unsigned &pEndSearch, unsigned &pStartAdd, unsigned &pEndAdd,
+                               bool &pSearchOverlap);
 
     seqan::CharString mOverlapMethod;
 

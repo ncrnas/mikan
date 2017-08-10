@@ -21,6 +21,8 @@ public:
         mTargetLen = 50;
         mQueryLen = 30;
         mMaxHits = 0;
+
+        mSortValType = "wide";
     }
 
     // Method prototypes

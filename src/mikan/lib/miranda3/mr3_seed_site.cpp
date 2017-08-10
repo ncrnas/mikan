@@ -9,7 +9,31 @@ namespace mr3as {
 //
 // MR3SeedSeqs methods
 //
-void MR3SeedSeqs::set_flags(mikan::TCharSet &pSeedTypeDef) {
+void MR3SeedSeqs::init_from_args() {
+    resize(mSeedTypeDef, 6);
+    mSeedTypeDef[0] = 'Y';
+    mSeedTypeDef[1] = 'Y';
+    mSeedTypeDef[2] = 'Y';
+    if (mOpts.mMinSeedLen == 7) {
+        mSeedTypeDef[0] = 'N';
+    } else if (mOpts.mMinSeedLen == 8) {
+        mSeedTypeDef[0] = 'N';
+        mSeedTypeDef[1] = 'N';
+    }
+
+    if (mOpts.mMaxSeedLen == 7) {
+        mSeedTypeDef[2] = 'N';
+    } else if (mOpts.mMaxSeedLen == 6) {
+        mSeedTypeDef[2] = 'N';
+        mSeedTypeDef[1] = 'N';
+    }
+    mSeedTypeDef[3] = mOpts.mAllowGUWobble;
+    mSeedTypeDef[4] = mOpts.mAllowMismatch;
+    mSeedTypeDef[5] = mOpts.mAllowBT;
+
+}
+
+void MR3SeedSeqs::set_flags() {
     mSingleGU = false;
     mMultiGU = false;
     mMisMatch = false;
@@ -21,21 +45,21 @@ void MR3SeedSeqs::set_flags(mikan::TCharSet &pSeedTypeDef) {
     mOther = false;
     mAddInReverse = false;
 
-    if (pSeedTypeDef[2] == 'Y' || pSeedTypeDef[1] == 'Y') {
-        if (pSeedTypeDef[3] == '1' || pSeedTypeDef[3] == '+') {
+    if (mSeedTypeDef[2] == 'Y' || mSeedTypeDef[1] == 'Y') {
+        if (mSeedTypeDef[3] == '1' || mSeedTypeDef[3] == '+') {
             mSingleGU = true;
         }
-        if (pSeedTypeDef[3] == '+') {
+        if (mSeedTypeDef[3] == '+') {
             mMultiGU = true;
         }
-        if (pSeedTypeDef[4] != "0:0") {
+        if (mSeedTypeDef[4] != "0:0") {
             mMisMatch = true;
         }
-        if (pSeedTypeDef[4] != "0:0" && (pSeedTypeDef[3] == '1' || pSeedTypeDef[3] == '+')) {
+        if (mSeedTypeDef[4] != "0:0" && (mSeedTypeDef[3] == '1' || mSeedTypeDef[3] == '+')) {
             mGUMisMatch = true;
         }
 
-        if (pSeedTypeDef[5] == "1") {
+        if (mSeedTypeDef[5] == "1") {
             mBT = true;
         }
 
@@ -418,22 +442,22 @@ void MR3SeedSites::set_bt_seed_type(
     miRNAM8C = cMiRNASeq[7];
     miRNAM9C = cMiRNASeq[8];
 
-    if ((pSitePos + INDEXED_SEQ_LEN) >= length(mMRNASeqs[pMRNAPos])) {
+    if ((pSitePos + mikan::SEEDLEN) >= length(mMRNASeqs[pMRNAPos])) {
         return;
     }
-    mRNAM2 = mMRNASeqs[pMRNAPos][pSitePos + INDEXED_SEQ_LEN];
+    mRNAM2 = mMRNASeqs[pMRNAPos][pSitePos + mikan::SEEDLEN];
 
-    if (((int) pSitePos - (7 - (int) INDEXED_SEQ_LEN)) < 0) {
+    if (((int) pSitePos - (7 - (int) mikan::SEEDLEN)) < 0) {
         return;
     }
-    mRNAM7 = mMRNASeqs[pMRNAPos][pSitePos - (7 - INDEXED_SEQ_LEN)];
+    mRNAM7 = mMRNASeqs[pMRNAPos][pSitePos - (7 - mikan::SEEDLEN)];
 
     if (miRNAM2C == mRNAM2 && miRNAM8C == mRNAM7) {
         pNewSeedType = "7mer_BT";
     }
 
-    if (pNewSeedType == "7mer_BT" && ((int) pSitePos - 8 + (int) INDEXED_SEQ_LEN >= 0)) {
-        mRNAM8 = mMRNASeqs[pMRNAPos][pSitePos - (8 - INDEXED_SEQ_LEN)];
+    if (pNewSeedType == "7mer_BT" && ((int) pSitePos - 8 + (int) mikan::SEEDLEN >= 0)) {
+        mRNAM8 = mMRNASeqs[pMRNAPos][pSitePos - (8 - mikan::SEEDLEN)];
         if (miRNAM9C == mRNAM8) {
             pNewSeedType = "8mer_BT";
         }

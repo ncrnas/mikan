@@ -6,6 +6,7 @@
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_seed_seq.hpp"        // MKSeedSeqs
 #include "mk_seed_site.hpp"       // MKSeedSites
+#include "mk_option.hpp"          // MKOptions
 
 namespace mr3as {
 
@@ -15,10 +16,15 @@ namespace mr3as {
 class MR3SeedSeqs : public mikan::MKSeedSeqs {
 public:
     // Define methods
-    MR3SeedSeqs() : MKSeedSeqs() {}
+    MR3SeedSeqs(mikan::MKOptions const &opts) : MKSeedSeqs(opts) {
+        init_from_args();
+        set_flags();
+    }
 
     // Method prototypes
-    virtual void set_flags(mikan::TCharSet &pSeedTypeDef);
+    void init_from_args();
+
+    void set_flags();
 };
 
 //
@@ -39,8 +45,8 @@ public:
 
 private:
     virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
-                           mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
-                           seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
+                                   mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
+                                   seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 
     void set_stringent_seed_type(seqan::CharString &pCurSeedType, seqan::StringSet<seqan::CharString> &pSeedDef,
                                  bool pMatchMx8, bool pMatchMx9, unsigned pMisMatchPos,

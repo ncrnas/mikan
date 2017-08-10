@@ -26,7 +26,7 @@ public:
 
     virtual float get_score(int pIdx) { return mSiteScores[pIdx]; }
 
-    virtual void init_from_args() {}
+    void init_from_args() {}
 
     virtual int get_wide_site_start(int) { return 0; }
 
@@ -36,7 +36,7 @@ public:
     virtual void clear_scores();
 
     virtual int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                    mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
+                            mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
 
 protected:
     // Define variables

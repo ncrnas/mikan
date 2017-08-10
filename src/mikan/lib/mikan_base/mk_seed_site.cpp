@@ -27,7 +27,7 @@ void MKSeedSites::clear_pos() {
 
 }
 
-int MKSeedSites::find_seed_sites(mikan::MKSeedSeqs &seedSeqs, mikan::TCharSet &pSeedTypeDef) {
+int MKSeedSites::find_seed_sites(mikan::MKSeedSeqs &seedSeqs) {
     mikan::TRNAStr seedSeq;
     CharString seedType;
     unsigned mRNAPos, sitePos;
@@ -53,8 +53,8 @@ int MKSeedSites::find_seed_sites(mikan::MKSeedSeqs &seedSeqs, mikan::TCharSet &p
 
             effectiveSite = check_position_1(mRNAPos, sitePos, seedType);
             if (effectiveSite) {
-                effectiveSite = set_new_seed_type(mRNAPos, sitePos, miRNASeq, pSeedTypeDef, seedType, misMatchPos,
-                                                  effectiveSite);
+                effectiveSite = set_new_seed_type(mRNAPos, sitePos, miRNASeq, seedSeqs.mSeedTypeDef,
+                                                  seedType, misMatchPos, effectiveSite);
             }
             if (effectiveSite) {
                 appendValue(mMRNAPos, mRNAPos);

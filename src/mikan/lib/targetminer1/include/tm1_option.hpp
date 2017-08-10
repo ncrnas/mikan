@@ -10,10 +10,10 @@ namespace tm1p {
 //
 // Tool options
 //
-class TM1CSOptions : public mikan::MKOptions {
+class TM1Options : public mikan::MKOptions {
 public:
     // Define methods
-    TM1CSOptions() {
+    TM1Options() {
         mProgName = "mk-targetminer";
     }
 

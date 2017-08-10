@@ -33,8 +33,9 @@ public:
 
     // Method prototype
     using mikan::MKRNAScores::calc_scores;
+
     virtual int calc_scores(mikan::MKSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
-                    mikan::MKRMAWithSites &pRNAWithSites, PITASiteScores &pDDGScores);
+                            mikan::MKRMAWithSites &pRNAWithSites, PITASiteScores &pDDGScores);
 
 };
 

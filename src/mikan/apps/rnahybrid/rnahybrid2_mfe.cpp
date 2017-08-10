@@ -1,9 +1,10 @@
-#include "rh2_core.hpp"          // RH2CoreMain
+#include "mk_core_main.hpp"      // MKCoreMain
+#include "rh2_core.hpp"          // RH2Core
 
 int main(int argc, char const **argv) {
     int retVal;
 
-    retVal = rh2mfe::RH2CoreMain(argc, argv);
+    retVal = mikan::MKCoreMain<rh2mfe::RH2Options, rh2mfe::RH2Core>(argc, argv);
     if (retVal != 0) {
         return 1;
     }

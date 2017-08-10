@@ -1,6 +1,6 @@
 #include <math.h>                // roundf
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
-#include "tm1_rna_score.hpp"     // TM1ClassifiedScores
+#include "tm1_rna_score.hpp"     // TM1RNAScores
 
 using namespace seqan;
 
@@ -9,7 +9,7 @@ namespace tm1p {
 //
 // TM1TotalScores methods
 //
-void TM1ClassifiedScores::clear_scores() {
+void TM1RNAScores::clear_scores() {
     mikan::MKRNAScores::clear_scores();
 
     mMRNAFeatures.clear_features();
@@ -18,7 +18,7 @@ void TM1ClassifiedScores::clear_scores() {
     clear(mPredictions);
 }
 
-int TM1ClassifiedScores::calc_scores(
+int TM1RNAScores::calc_scores(
         mikan::MKSeedSites &pSeedSites,
         mikan::TRNASet const &,
         mikan::MKRMAWithSites &pRNAWithSites,

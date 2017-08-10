@@ -18,13 +18,13 @@ protected:
 };
 
 TEST_F(OM001U001, comp_site) {
-    (void) tm1p::TM1CoreMain(argc, (const char **) argv);
+    (void) mikan::MKCoreMain<tm1p::TM1Options, tm1p::TM1Core >(argc, (const char **) argv);
     //TODO: Need to recheck hsa-miR-1 NM_000165 687 693 6mer - only mikan finds this site
     gtest_compare_two_files(o1file1, o2file1);
 }
 
 TEST_F(OM001U001, comp_mrna) {
-    (void) tm1p::TM1CoreMain(argc, (const char **) argv);
+    (void) mikan::MKCoreMain<tm1p::TM1Options, tm1p::TM1Core >(argc, (const char **) argv);
     //TODO: Need to recheck hsa-miR-1 NM_000165 687 693 6mer - only mikan finds this site
     gtest_compare_two_files(o1file2, o2file2);
 }

@@ -25,11 +25,6 @@ protected:
         mSeedDef[5] = "0";
     }
 
-    typedef mikan::TIndexQGram TIdx;
-    typedef mikan::TFinder TFin;
-    typedef mr3as::MR3SeedSites TSit;
-    typedef mr3as::MR3SeedSeqs TSeed;
-
 };
 
 TEST_F(Site03MM1, mir124_mm7) {
@@ -39,12 +34,14 @@ TEST_F(Site03MM1, mir124_mm7) {
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
 
-    TSeed seedSeqs;
-    seedSeqs.set_mirna_seq(mirna_seqs[0]);
-    seedSeqs.set_flags(mSeedDef);
-    seedSeqs.create_seed_seqs();
+    TOp ops;
+    TSeed seedSeqs(ops);
 
-    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
+    seedSeqs.set_seed_type_def(mSeedDef);
+    seedSeqs.set_flags();;
+    seedSeqs.create_seed_seqs(mirna_seqs[0]);
+
+    int ret_val = sites.find_seed_sites(seedSeqs);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(28u, sites.get_length());
 
@@ -104,12 +101,14 @@ TEST_F(Site03MM1, mir124_mm8) {
     TSit sites(index, finder, mrna_seqs);
 
     mSeedDef[4] = "0:1";
-    TSeed seedSeqs;
-    seedSeqs.set_mirna_seq(mirna_seqs[0]);
-    seedSeqs.set_flags(mSeedDef);
-    seedSeqs.create_seed_seqs();
+    TOp ops;
+    TSeed seedSeqs(ops);
 
-    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
+    seedSeqs.set_seed_type_def(mSeedDef);
+    seedSeqs.set_flags();;
+    seedSeqs.create_seed_seqs(mirna_seqs[0]);
+
+    int ret_val = sites.find_seed_sites(seedSeqs);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(16u, sites.get_length());
 
@@ -171,12 +170,14 @@ TEST_F(Site03MM1, mir124_def) {
     mSeedDef[3] = "+";
     mSeedDef[4] = "1:1";
     mSeedDef[5] = "1";
-    TSeed seedSeqs;
-    seedSeqs.set_mirna_seq(mirna_seqs[0]);
-    seedSeqs.set_flags(mSeedDef);
-    seedSeqs.create_seed_seqs();
+    TOp ops;
+    TSeed seedSeqs(ops);
 
-    int ret_val = sites.find_seed_sites(seedSeqs, mSeedDef);
+    seedSeqs.set_seed_type_def(mSeedDef);
+    seedSeqs.set_flags();;
+    seedSeqs.create_seed_seqs(mirna_seqs[0]);
+
+    int ret_val = sites.find_seed_sites(seedSeqs);
     EXPECT_EQ(0, ret_val);
     EXPECT_EQ(28u, sites.get_length());
 

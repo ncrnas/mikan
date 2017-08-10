@@ -10,39 +10,10 @@
 #include "mk_rna_sites.hpp"       // MKRMAWithSites
 #include "pita_option.hpp"        // PITAOptions
 #include "pita_seed_site.hpp"     // PITASeedSites
+#include "pita_align.hpp"         // PITAAlign
 #include "vr16_ddg_core.hpp"      // VR16DDGWorkSpace
 
 namespace ptddg {
-
-//
-// Store alignments
-//
-class PITAAlign {
-public:
-    // Constant values
-    static const unsigned INDEXED_SEQ_LEN = 6;
-
-    // Define variables
-    seqan::String<bool> mEffectiveSites;
-    seqan::StringSet<seqan::CharString> mAlignMRNA;
-    seqan::StringSet<seqan::CharString> mAlignBars;
-    seqan::StringSet<seqan::CharString> mAlignMiRNA;
-
-public:
-    // Define methods
-    explicit PITAAlign(vr16::VR16DDGWorkSpace &pVRws) : mVRws(pVRws) {}
-
-    // Method prototype
-    void clear_align();
-
-    void resize_align(unsigned pSize);
-
-    void create_align(int pId, mikan::TRNAStr const &pMiRNASeq, mikan::TRNAStr const &pMRNASeq,
-                      seqan::CharString const &pSeedType, unsigned pSitePos, int pMismatchPos);
-
-private:
-    vr16::VR16DDGWorkSpace &mVRws;
-};
 
 //
 // Store dGduplex scores
@@ -50,11 +21,10 @@ private:
 class PITADGDuplexScores {
 public:
 
-    // Constant values
+    // Constant value
     static const unsigned TARGET_SEQ_LEN = 50;
-    static const unsigned INDEXED_SEQ_LEN = 6;
 
-    // Define variables
+    // Define variable
     seqan::String<bool> mEffectiveSites;
 
 public:
@@ -90,7 +60,6 @@ class PITADGOpenScores {
 public:
     // Constant values
     static const unsigned TARGET_SEQ_LEN = 50;
-    static const unsigned INDEXED_SEQ_LEN = 6;
     static const unsigned DDG_AREA = 70;
     static const unsigned DDG_OPEN = 25;
 
@@ -128,7 +97,11 @@ public:
             MKSiteScores(opts),
             mDGDuplexScores(mVRws, mAlign),
             mDGOpenScores(mVRws),
-            mAlign(mVRws) {}
+            mAlign(mVRws) {
+
+        init_from_args();
+
+    }
 
     virtual float get_score(int i) { return mDDGScores[i]; }
 
@@ -147,12 +120,12 @@ public:
     void set_backtrack(bool pBT) { mVRws.set_duplex_backtrack(pBT); }
 
     // Method prototype
-    virtual void init_from_args();
+    void init_from_args();
 
     virtual void clear_scores();
 
     virtual int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                    mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
+                            mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
 
 
     void print_alignment(int pIdx);

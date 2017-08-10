@@ -19,18 +19,22 @@ public:
     seqan::String<bool> mEffectiveRNAs;
 
     // Define methods
-    MKRMAWithSites() : mSortVtype("position") {}
+    MKRMAWithSites(mikan::MKOptions const &opts) : mOpts(opts) {
+
+        init_from_args();
+
+    }
 
     mikan::TMRNAPosSet &get_uniq_mrna_pos_set() { return mUniqRNAPosSet; }
 
     seqan::StringSet<seqan::String<unsigned> > &get_rna_site_pos_map() { return mRNASitePosMap; }
 
     // Method prototypes
+    void init_from_args();
+
     void clear_maps();
 
     void create_mrna_site_map(MKSeedSites &pSeedSites, MKSiteScores &pSiteScores);
-
-    void set_sort_vtype(seqan::CharString &pSortVtype) { mSortVtype = pSortVtype; }
 
 private:
     void create_temp_map(mikan::MKSeedSites &pSeedSites);
@@ -44,6 +48,7 @@ private:
     typedef std::pair<TItMap, TItMap> TItMapPair;
 
     // Define variables
+    mikan::MKOptions const &mOpts;
     mikan::TMRNAPosSet mUniqRNAPosSet;
     seqan::StringSet<seqan::String<unsigned> > mRNASitePosMap;
     TSet mUniqSetTemp;

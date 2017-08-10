@@ -6,7 +6,7 @@
 #include "get_data_path.hpp"
 #include "mikan_utils.hpp"
 
-template<class TSites, class TTestIO>
+template<class TSites, class TSeeds, class TOpts, class TTestIO>
 class TestSite : public TTestIO {
 protected:
 
@@ -55,6 +55,13 @@ protected:
     seqan::StringSet<seqan::CharString> mSeedDef;
     seqan::CharString mSeedDef1;
     seqan::CharString mOverlapDef;
+
+    typedef mikan::TIndexQGram TIdx;
+    typedef mikan::TFinder TFin;
+    typedef TSites TSit;
+    typedef TSeeds TSeed;
+    typedef TOpts TOp;
+
 };
 
 #endif //MIKAN_TEST_SITE_HPP_

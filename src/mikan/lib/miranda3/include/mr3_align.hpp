@@ -49,7 +49,6 @@ namespace mr3as {
 class MR3Align {
 public:
     // Constant values
-    static const unsigned INDEXED_SEQ_LEN = 6;
     static const int GAP_OPEN_SCORE = -9;
     static const int GAP_EXTENT_SCORE = -4;
     static const int SEED_MISMATCH = -12;

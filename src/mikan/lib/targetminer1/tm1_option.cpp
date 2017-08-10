@@ -1,13 +1,13 @@
-#include "tm1_option.hpp"        // TM1CSOptions
+#include "tm1_option.hpp"        // TM1Options
 
 using namespace seqan;
 
 namespace tm1p {
 
 //
-// TM1CSOptions methods
+// TM1Options methods
 //
-void TM1CSOptions::setProgramDescription(seqan::ArgumentParser &parser) {
+void TM1Options::setProgramDescription(seqan::ArgumentParser &parser) {
     // Set short description, version, and date
     setShortDescription(parser, "Calculate TargetMiner scores.");
     setVersion(parser, toCString(mProgVer));

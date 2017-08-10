@@ -3,7 +3,6 @@
 #include "rh2_core.hpp"          // RH2CoreMain
 #include "tm1_core.hpp"          // TM1CoreMain
 #include "ts5_core.hpp"          // TS5CoreMain
-#include "tssvm_core.hpp"        // TSSVMCoreMain
 
 int main(int argc, char const **argv) {
     int retVal;

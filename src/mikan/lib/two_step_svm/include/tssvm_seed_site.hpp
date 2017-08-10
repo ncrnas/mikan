@@ -17,10 +17,12 @@ namespace tssvm {
 class TSSVMSeedSeqs : public mikan::MKSeedSeqs {
 public:
     // Define methods
-    TSSVMSeedSeqs() : MKSeedSeqs() {}
+    TSSVMSeedSeqs(mikan::MKOptions const &opts) : MKSeedSeqs(opts) {
+        set_flags();
+    }
 
-    // Method prototypes
-    virtual void set_flags(mikan::TCharSet &pSeedTypeDef);
+    // Method prototype
+    void set_flags();
 };
 
 //
@@ -43,8 +45,8 @@ private:
     virtual bool check_position_1(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType);
 
     virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
-                           mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
-                           seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
+                                   mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
+                                   seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 
 };
 

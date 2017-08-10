@@ -6,6 +6,7 @@
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_seed_seq.hpp"       // MKSeedSeqs
 #include "mk_seed_site.hpp"      // MKSeedSites
+#include "mk_option.hpp"         // MKOptions
 
 namespace tm1p {
 
@@ -15,13 +16,16 @@ namespace tm1p {
 class TM1SeedSeqs : public mikan::MKSeedSeqs {
 public:
     // Define methods
-    TM1SeedSeqs() : MKSeedSeqs() {}
+    TM1SeedSeqs(mikan::MKOptions const &opts) : MKSeedSeqs(opts) {
+        set_flags();
+    }
 
-    // Method prototypes
-    virtual void set_flags(mikan::TCharSet &pSeedTypeDef);
+    // Method prototype
+    void set_flags();
 
 protected:
     virtual int create_other_seed_seqs(mikan::TRNAStr &pSeedSeq);
+
 };
 
 //
@@ -63,8 +67,8 @@ private:
     virtual bool check_position_2(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType);
 
     virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
-                           mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
-                           seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
+                                   mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
+                                   seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 
     void get_match_count(unsigned pSitePos, unsigned pMRNAPos, mikan::TRNAStr const &pMiRNASeq,
                          int pMx1, int pMx2, int &pMatchCount, int &pGUCount);

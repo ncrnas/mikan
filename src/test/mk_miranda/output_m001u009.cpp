@@ -18,12 +18,12 @@ protected:
 };
 
 TEST_F(OM001U009, comp_site) {
-    (void) mr3as::MR3CoreMain(argc, (const char **) argv);
+    (void) mikan::MKCoreMain<mr3as::MR3Options, mr3as::MR3Core >(argc, (const char **) argv);
     gtest_compare_two_files(o1file1, o2file1);
 }
 
 TEST_F(OM001U009, comp_mrna) {
-    (void) mr3as::MR3CoreMain(argc, (const char **) argv);
+    (void) mikan::MKCoreMain<mr3as::MR3Options, mr3as::MR3Core >(argc, (const char **) argv);
     gtest_compare_two_files(o1file2, o2file2);
 }
 }

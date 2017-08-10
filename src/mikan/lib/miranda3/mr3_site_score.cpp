@@ -48,11 +48,11 @@ int MR3AlignScores::calc_scores(
         }
 
         if (seedTypes[i] == "7mer_BT" || seedTypes[i] == "8mer_BT") {
-            seqEnd = sitePos[i] + (INDEXED_SEQ_LEN + 2);
+            seqEnd = sitePos[i] + (mikan::SEEDLEN + 2);
             seqStart = seqEnd - (TARGET_SEQ_LEN + 1);
             mm = mmPos[i];
         } else {
-            seqEnd = sitePos[i] + (INDEXED_SEQ_LEN + 1);
+            seqEnd = sitePos[i] + (mikan::SEEDLEN + 1);
             seqStart = seqEnd - TARGET_SEQ_LEN;
             mm = -1;
         }
@@ -267,18 +267,21 @@ void MR3EnergyScores::print_input(std::string &pInputSeq) {
 //
 // MR3SiteScores methods
 //
+void MR3SiteScores::init_from_args() {
+    set_min_align_score(mOpts.mMinAlignScore);
+    set_max_energy(mOpts.mMaxEnergy);
+
+    mVRws.set_backtrack(false);
+    mVRws.set_fold_constraint(false);
+    mVRws.init_arrays(RNAFOLD_MAX_INPUTLEN);
+}
+
 void MR3SiteScores::clear_scores() {
     mikan::MKSiteScores::clear_scores();
 
     mAlignScores.clear_scores();
     mEnergyScores.clear_scores();
     mAlign.clear_align();
-}
-
-void MR3SiteScores::init_rnafold() {
-    mVRws.set_backtrack(false);
-    mVRws.set_fold_constraint(false);
-    mVRws.init_arrays(RNAFOLD_MAX_INPUTLEN);
 }
 
 int MR3SiteScores::calc_scores(

@@ -54,7 +54,7 @@ public:
     // Method prototypes
     void reset_finder();
 
-    int find_seed_sites(mikan::MKSeedSeqs &seedSeqs, mikan::TCharSet &pSeedTypeDef);
+    int find_seed_sites(mikan::MKSeedSeqs &seedSeqs);
 
     virtual void clear_pos();
 

@@ -8,7 +8,6 @@
 #include <seqan/arg_parse.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_input.hpp"           // MKInput
-#include "mr3_option.hpp"         // MR3Options
 #include "mr3_seed_site.hpp"      // MR3SeedSites
 #include "mr3_site_score.hpp"     // MR3SiteScores
 #include "mr3_site_filter.hpp"    // MR3SiteFilter
@@ -16,209 +15,9 @@
 
 namespace mr3as {
 
-int MR3CoreMain(int argc, char const **argv) {
-    int retVal;
-
-    // Parse the command line.
-    mr3as::MR3Options options;
-    seqan::ArgumentParser::ParseResult parseRes = options.parseCommandLine(argc, argv);
-    if (parseRes != seqan::ArgumentParser::PARSE_OK) {
-        return parseRes == seqan::ArgumentParser::PARSE_ERROR;
-    }
-
-    // Read input files
-    mikan::MKInput coreInput;
-    coreInput.set_options(options);
-    retVal = coreInput.load_seq_from_file();
-    if (retVal != 0) {
-        return retVal;
-    }
-
-    // Create index
-    mikan::TRNASet const &mMRNASeqs = coreInput.get_mrna_seqs();
-    mikan::TIndexQGram index(mMRNASeqs);
-    mikan::TFinder finder(index);
-
-    // Calculate scores for all miRNAs
-    mikan::TCharSet const &mMiRNAIds = coreInput.get_mirna_ids();
-    mikan::TRNASet const &mMiRNASeqs = coreInput.get_mirna_seqs();
-    mikan::TCharSet const &mMRNAIds = coreInput.get_mrna_ids();
-
-    mr3as::MR3Core mr3Core(options, mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
-    mr3Core.open_output_file();
-    retVal = mr3Core.calculate_all_scores();
-
-    return retVal;
-}
-
 //
 // MR3Core methods
 //
-void MR3Core::init_from_args(mikan::MKOptions const &opts) {
-    mOutputAlign = opts.mOutputAlign;
-    mOFileSite = opts.mOFileSite;
-    mOFileTotal = opts.mOFileTotal;
-    mMinSeedLen = opts.mMinSeedLen;
-    mMaxSeedLen = opts.mMaxSeedLen;
-    mMinAlignScore = opts.mMinAlignScore;
-    mMaxEnergy = opts.mMaxEnergy;
-
-    resize(mSeedTypeDef, 6);
-    mSeedTypeDef[0] = 'Y';
-    mSeedTypeDef[1] = 'Y';
-    mSeedTypeDef[2] = 'Y';
-    if (opts.mMinSeedLen == 7) {
-        mSeedTypeDef[0] = 'N';
-    } else if (opts.mMinSeedLen == 8) {
-        mSeedTypeDef[0] = 'N';
-        mSeedTypeDef[1] = 'N';
-    }
-
-    if (opts.mMaxSeedLen == 7) {
-        mSeedTypeDef[2] = 'N';
-    } else if (opts.mMaxSeedLen == 6) {
-        mSeedTypeDef[2] = 'N';
-        mSeedTypeDef[1] = 'N';
-    }
-    mSeedTypeDef[3] = opts.mAllowGUWobble;
-    mSeedTypeDef[4] = opts.mAllowMismatch;
-    mSeedTypeDef[5] = opts.mAllowBT;
-
-    mSiteScores.set_min_align_score(mMinAlignScore);
-    mSiteScores.set_max_energy(mMaxEnergy);
-
-}
-
-int MR3Core::open_output_file() {
-    // Open output file 1
-    mOFile1.open(toCString(mOFileSite), std::ofstream::out);
-    if (!mOFile1.good()) {
-        std::cerr << "ERROR: Could not open output file " << toCString(mOFileSite) << std::endl;
-        return seqan::ArgumentParser::PARSE_ERROR;
-    }
-
-    // Open output file 2
-    mOFile2.open(toCString(mOFileTotal), std::ofstream::out);
-    if (!mOFile2.good()) {
-        std::cerr << "ERROR: Could not open output file " << toCString(mOFileTotal) << std::endl;
-        return seqan::ArgumentParser::PARSE_ERROR;
-    }
-
-    return 0;
-}
-
-int MR3Core::calculate_all_scores() {
-    int retVal;
-
-    for (unsigned i = 0; i < length(mMiRNASeqs); ++i) {
-
-#if SEQAN_ENABLE_DEBUG
-        clock_t startTime = clock();
-#endif
-
-        retVal = calculate_mirna_scores(i);
-        if (retVal != 0) {
-            std::cerr << "ERROR: Score calculation failed for ";
-            std::cerr << toCString((seqan::CharString) mMiRNAIds[i]) << "." << std::endl;
-            return 1;
-        }
-
-#if SEQAN_ENABLE_DEBUG
-        std::cout << toCString((seqan::CharString) mMiRNAIds[i]) << ": ";
-        std::cout << double(clock() - startTime) / (double) CLOCKS_PER_SEC << " seconds." << std::endl;
-#endif
-
-    }
-
-    return 0;
-}
-
-int MR3Core::calculate_mirna_scores(unsigned pIdx) {
-    int retVal;
-    mikan::TRNAStr miRNASeq = mMiRNASeqs[pIdx];
-
-    // Generate seed sequences
-    MR3SeedSeqs seedSeqs;
-    seedSeqs.set_mirna_seq(miRNASeq);
-    seedSeqs.set_flags(mSeedTypeDef);
-    retVal = seedSeqs.create_seed_seqs();
-    if (retVal != 0) {
-        std::cerr << "ERROR: Generate seed sequences failed." << std::endl;
-        return 1;
-    }
-
-    // Search seed sites
-    if (mExecSearchSeedSites) {
-        retVal = mSeedSites.find_seed_sites(seedSeqs, mSeedTypeDef);
-        if (retVal != 0) {
-            std::cerr << "ERROR: Seed site search failed." << std::endl;
-            return 1;
-        }
-    }
-
-    // Calculate alignment and energy scores
-    if (mExecCalSiteScore) {
-        retVal = mSiteScores.calc_scores(miRNASeq, mMRNASeqs, mSeedSites, mRNAWithSites);
-        if (retVal != 0) {
-            std::cerr << "ERROR: Calculate site scores failed." << std::endl;
-            return 1;
-        }
-    }
-
-    // Filter overlapped sites
-    mRNAWithSites.create_mrna_site_map(mSeedSites, mSiteScores);
-    if (mExecFilterOverlap) {
-        retVal = mSiteFilter.filter_sites(mSeedSites, mRNAWithSites, mSiteScores);
-        if (retVal != 0) {
-            std::cerr << "ERROR: Check overlapped sites failed." << std::endl;
-            return 1;
-        }
-    }
-
-    // Summarize alignment and energy scores
-    if (mExecSumScores) {
-        retVal = mRNAScores.calc_scores(mSeedSites, mMRNASeqs, mRNAWithSites, mSiteScores);
-        if (retVal != 0) {
-            std::cerr << "ERROR: Calculate total scores failed." << std::endl;
-            return 1;
-        }
-    }
-
-    // Write site scores
-    if (mOutputSiteScore) {
-        retVal = write_site_score(mMiRNAIds[pIdx]);
-        if (retVal != 0) {
-            std::cerr << "ERROR: Could not write site scores." << std::endl;
-            return 1;
-        }
-    }
-
-    // Write total scores
-    if (mOutputTotalScore) {
-        retVal = write_total_score(mMiRNAIds[pIdx]);
-        if (retVal != 0) {
-            std::cerr << "ERROR: Could not write total ddG scores." << std::endl;
-            return 1;
-        }
-    }
-
-    // Write alignments
-    if (mOutputAlign) {
-        retVal = write_alignment(mMiRNAIds[pIdx]);
-        if (retVal != 0) {
-            std::cerr << "ERROR: Could not write alignments." << std::endl;
-            return 1;
-        }
-    }
-
-    mSeedSites.clear_pos();
-    mSiteScores.clear_scores();
-    mRNAWithSites.clear_maps();
-    mRNAScores.clear_scores();
-
-    return 0;
-}
-
 int MR3Core::write_site_score(seqan::CharString const &pMiRNAId) {
 
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
@@ -247,7 +46,7 @@ int MR3Core::write_site_score(seqan::CharString const &pMiRNAId) {
             mOFile1 << toCString(pMiRNAId) << "\t";
             mOFile1 << toCString((seqan::CharString) mMRNAIds[uniqRNAPosSet[i]]) << "\t";
             mOFile1 << seedStart + 1 << "\t";
-            mOFile1 << seedStart + 1 + INDEXED_SEQ_LEN << "\t";
+            mOFile1 << seedStart + 1 + mikan::SEEDLEN << "\t";
             mOFile1 << toCString((seqan::CharString) seedTypes[rnaSitePosMap[i][j]]) << "\t";
             mOFile1 << scoreAlign << "\t";
             mOFile1 << scoreEn << "\t";
@@ -260,7 +59,7 @@ int MR3Core::write_site_score(seqan::CharString const &pMiRNAId) {
 
 }
 
-int MR3Core::write_total_score(seqan::CharString const &pMiRNAId) {
+int MR3Core::write_rna_score(seqan::CharString const &pMiRNAId) {
     const seqan::String<float> &totalAlignScores = mRNAScores.get_align_scores();
     const seqan::String<float> &totalEnScores = mRNAScores.get_energy_scores();
     const seqan::String<int> &mRNAPos = mRNAScores.get_mrna_pos();
@@ -311,7 +110,7 @@ int MR3Core::write_alignment(seqan::CharString const &pMiRNAId) {
             std::cout << "  seed type:       " << toCString((seqan::CharString) seedTypes[rnaSitePosMap[i][j]])
                       << std::endl;
             std::cout << "  position(start): " << seedStart + 1 << std::endl;
-            std::cout << "  position(end):   " << seedStart + 1 + INDEXED_SEQ_LEN << std::endl;
+            std::cout << "  position(end):   " << seedStart + 1 + mikan::SEEDLEN << std::endl;
             std::cout << "  alignment score: " << align_score << std::endl;
             std::cout << "  energy score:    " << energy_score << std::endl;
 

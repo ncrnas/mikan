@@ -4,78 +4,49 @@
 #include "mk_typedef.hpp"         // TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_sequence.hpp"        // MKSequences
 #include "mk_option.hpp"          // MKOptions
+#include "mk_site_filter.hpp"     // MKSiteFilter
 #include "mk_site_score.hpp"      // MKSiteScores
 #include "mk_rna_sites.hpp"       // MKRMAWithSites
+#include "mk_core_tmpl.hpp"       // MKCoreTmpl
 #include "ts5_feature.hpp"        // TS5RawFeatures
-#include "ts5_option.hpp"         // TS5CSOptions
+#include "ts5_option.hpp"         // TS5Options
 #include "ts5_site_score.hpp"     // TS5SiteScores
 #include "ts5_seed_site.hpp"      // TS5SeedSites
 #include "ts5_rna_score.hpp"      // TS5RNAScores
 
 namespace ts5cs {
 
-int TS5CoreMain(int argc, char const **argv);
-
 //
 // TargetScan context score process core
 //
-class TS5Core {
-public:
-    // Declare variables
-    bool mExecSearchSeedSites;
-    bool mExecCalcSiteScore;
-    bool mExecSumScores;
-    bool mOutputContexScore;
-    bool mOutputTotalScore;
-    bool mOutputAlign;
-    seqan::CharString mOFileContext;
-    seqan::CharString mOFileTotal;
+typedef mikan::MKCoreTmpl<TS5SeedSeqs, TS5SeedSites, TS5SiteScores, mikan::MKSiteFilter, TS5RNAScores> TS5CoreBase;
 
-    mikan::TCharSet mSeedTypeDef;
-
+class TS5Core : public TS5CoreBase {
 public:
     // Define methods
-    TS5Core(mikan::MKOptions const &pOpts, mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
-            mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
-            mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
-            mExecSearchSeedSites(true), mExecCalcSiteScore(true),
-            mExecSumScores(true), mOutputContexScore(true), mOutputTotalScore(true),
-            mOutputAlign(true), mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds),
-            mMRNASeqs(pMRNASeqs), mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mSiteScores(pOpts),
-            mRNAScores(pOpts) {
+    TS5Core(mikan::MKOptions const &pOpts,
+            mikan::TCharSet const &pMiRNAIds,
+            mikan::TRNASet const &pMiRNASeqs,
+            mikan::TCharSet const &pMRNAIds,
+            mikan::TRNASet const &pMRNASeqs,
+            mikan::TIndexQGram &pRNAIdx,
+            mikan::TFinder &pFinder) :
+            TS5CoreBase(pOpts, pMiRNAIds, pMiRNASeqs, pMRNAIds, pMRNASeqs, pRNAIdx, pFinder) {
 
-        init_from_args(pOpts);
+        mClusterSites1 = false;
+        mFilterSites = false;
+        mClusterSites2 = false;
+        mFilterSiteScores = false;
+        mSelectTopSites = false;
+
     }
 
-    // Method prototypes
-    void init_from_args(mikan::MKOptions const &opts);
-
-    int open_output_file();
-
-    int calculate_all_scores();
-
-    int calculate_mirna_scores(unsigned pIdx);
-
 private:
-    mikan::TCharSet const &mMiRNAIds;
-    mikan::TRNASet const &mMiRNASeqs;
-    mikan::TCharSet const &mMRNAIds;
-    mikan::TRNASet const &mMRNASeqs;
+    virtual int write_site_score(seqan::CharString const &pMiRNAId);
 
-    std::ofstream mOFile1;
-    std::ofstream mOFile2;
+    virtual int write_rna_score(seqan::CharString const &pMiRNAId);
 
-    TS5SeedSites mSeedSites;
-    TS5SiteScores mSiteScores;
-    mikan::MKRMAWithSites mRNAWithSites;
-    TS5RNAScores mRNAScores;
-
-private:
-    int write_context_score(seqan::CharString const &pMiRNAId);
-
-    int write_total_score(seqan::CharString const &pMiRNAId);
-
-    int write_alignment(seqan::CharString const &pMiRNAId);
+    virtual int write_alignment(seqan::CharString const &pMiRNAId);
 
 };
 

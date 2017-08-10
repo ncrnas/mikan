@@ -7,8 +7,12 @@ using namespace seqan;
 namespace mikan {
 
 //
-// MKSiteCluster methods
+// MKRMAWithSites methods
 //
+void MKRMAWithSites::init_from_args() {
+    mSortVtype = mOpts.mSortValType;
+}
+
 void MKRMAWithSites::clear_maps() {
     clear(mUniqRNAPosSet);
     clear(mRNASitePosMap);

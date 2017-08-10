@@ -5,9 +5,14 @@
 #include "gtest/gtest.h"
 #include "get_data_path.hpp"
 #include "mikan_utils.hpp"
+#include "mk_option.hpp"
 
-template<class TSeedSeqs, class TTestIO>
+template<class TSeedSeqs, class TOptions, class TTestIO>
 class TestSeed : public TTestIO {
+public:
+
+    TestSeed(): mSeedSeqs(mOpts) {}
+
 protected:
 
     void test_seed(const char *rnastr, int idx, const char *seq_type, bool effective, unsigned mmpos) {
@@ -45,6 +50,7 @@ protected:
         comp_two_rnas(mSeedSeqs.get_seed_seq(0), seedseq);
     }
 
+    TOptions mOpts;
     TSeedSeqs mSeedSeqs;
     seqan::StringSet<seqan::CharString> mSeedDef;
     seqan::CharString mSeedDef1;

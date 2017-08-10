@@ -26,7 +26,7 @@ public:
 
     void set_usefilter_flag(bool pUseFilter) { mUseFilter = pUseFilter; }
 
-    virtual void init_from_args() {}
+    void init_from_args() {}
 
     // Method prototype
     int filter_sites(mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites,
@@ -65,9 +65,14 @@ protected:
 class MKTopNSites : public MKSiteFilter {
 public:
     // Define methods
-    explicit MKTopNSites(mikan::MKOptions const &opts) : MKSiteFilter(opts), mTopN(0) {}
+    explicit MKTopNSites(mikan::MKOptions const &opts) : MKSiteFilter(opts), mTopN(0) {
 
-    virtual void init_from_args();
+        init_from_args();
+
+    }
+
+    // Method prototype
+    void init_from_args();
 
 protected:
     // Define method
@@ -78,7 +83,7 @@ private:
     int mTopN;
 
     virtual void mark_sites(mikan::MKSeedSites &pSeedSites, mikan::TMRNAPosSet &pSortedPos,
-                    mikan::MKSiteScores &pSiteScores);
+                            mikan::MKSiteScores &pSiteScores);
 
 
 };

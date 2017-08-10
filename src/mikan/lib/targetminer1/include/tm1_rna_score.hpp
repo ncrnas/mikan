@@ -13,10 +13,10 @@ namespace tm1p {
 //
 // Classified scores
 //
-class TM1ClassifiedScores : public mikan::MKRNAScores {
+class TM1RNAScores : public mikan::MKRNAScores {
 public:
     // Define methods
-    explicit TM1ClassifiedScores(mikan::MKOptions const &opts) : MKRNAScores(opts) {}
+    explicit TM1RNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts) {}
 
     const seqan::String<int> &get_labels() { return mPredictions; }
 
@@ -24,8 +24,9 @@ public:
     virtual void clear_scores();
 
     using mikan::MKRNAScores::calc_scores;
+
     virtual int calc_scores(mikan::MKSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
-                    mikan::MKRMAWithSites &pRNAWithSites, TM1SiteScores &mSiteScores);
+                            mikan::MKRMAWithSites &pRNAWithSites, TM1SiteScores &mSiteScores);
 
 private:
     seqan::String<int> mPredictions;

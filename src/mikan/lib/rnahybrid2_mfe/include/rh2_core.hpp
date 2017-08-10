@@ -5,6 +5,7 @@
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_sequence.hpp"       // MKSequences
 #include "mk_option.hpp"         // MKOptions
+#include "mk_core_tmpl.hpp"      // MKCoreTmpl
 #include "rh2_option.hpp"        // RH2Options
 #include "rh2_site_score.hpp"    // RH2SiteScores
 #include "rh2_seed_site.hpp"     // RH2SeedSites
@@ -13,77 +14,35 @@
 
 namespace rh2mfe {
 
-int RH2CoreMain(int argc, char const **argv);
-
 //
 // RNAhybrid MFE score process core
 //
-class RH2Core {
-public:
-    // Declare variables
-    bool mExecSearchSeedSites;
-    bool mExecCalSiteScore;
-    bool mExecFilterOverlap;
-    bool mExecFilterSiteNum;
-    bool mExecSortSites;
-    bool mExecSumScores;
-    bool mOutputMFEScore;
-    bool mOutputTotalScore;
-    bool mOutputAlign;
-    seqan::CharString mOFileMFE;
-    seqan::CharString mOFileTotal;
-    seqan::CharString mOverlapDef;
-    mikan::TCharSet mSeedTypeDef;
-    int mMaxHits;
+typedef mikan::MKCoreTmpl<RH2SeedSeqs, RH2SeedSites, RH2SiteScores, RH2SiteFilter, RH2RNAScores> RH2CoreBase;
 
+class RH2Core : public RH2CoreBase {
 public:
     // Define methods
-    RH2Core(mikan::MKOptions const &pOpts, mikan::TCharSet const &pMiRNAIds, mikan::TRNASet const &pMiRNASeqs,
-            mikan::TCharSet const &pMRNAIds, mikan::TRNASet const &pMRNASeqs,
-            mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder) :
-            mExecSearchSeedSites(true), mExecCalSiteScore(true), mExecFilterOverlap(true),
-            mExecFilterSiteNum(true), mExecSortSites(true), mExecSumScores(true), mOutputMFEScore(true),
-            mOutputTotalScore(true), mOutputAlign(true), mMaxHits(0), mMiRNAIds(pMiRNAIds),
-            mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs),
-            mSeedSites(pRNAIdx, pFinder, pMRNASeqs), mSiteScores(pOpts), mSiteFilter(pOpts),
-            mTopNSites(pOpts), mRNAScores(pOpts) {
+    RH2Core(mikan::MKOptions const &pOpts,
+            mikan::TCharSet const &pMiRNAIds,
+            mikan::TRNASet const &pMiRNASeqs,
+            mikan::TCharSet const &pMRNAIds,
+            mikan::TRNASet const &pMRNASeqs,
+            mikan::TIndexQGram &pRNAIdx,
+            mikan::TFinder &pFinder) :
+            RH2CoreBase(pOpts, pMiRNAIds, pMiRNASeqs, pMRNAIds, pMRNASeqs, pRNAIdx, pFinder) {
 
-        init_from_args(pOpts);
-        seqan::CharString vtype = "wide";
-        mRNAWithSites.set_sort_vtype(vtype);
+        mClusterSites1 = false;
+        mFilterSites = false;
+        mClusterSites3 = false;
+
     }
 
-    // Method prototypes
-    void init_from_args(mikan::MKOptions const &opts);
-
-    int open_output_file();
-
-    int calculate_all_scores();
-
-    int calculate_mirna_scores(unsigned pIdx);
-
 private:
-    mikan::TCharSet const &mMiRNAIds;
-    mikan::TRNASet const &mMiRNASeqs;
-    mikan::TCharSet const &mMRNAIds;
-    mikan::TRNASet const &mMRNASeqs;
+    virtual int write_site_score(seqan::CharString const &pMiRNAId);
 
-    std::ofstream mOFile1;
-    std::ofstream mOFile2;
+    virtual int write_rna_score(seqan::CharString const &pMiRNAId);
 
-    RH2SeedSites mSeedSites;
-    mikan::MKRMAWithSites mRNAWithSites;
-    RH2SiteScores mSiteScores;
-    RH2SiteFilter mSiteFilter;
-    mikan::MKTopNSites mTopNSites;
-    RH2RNAScores mRNAScores;
-
-private:
-    int write_mfe_score(seqan::CharString const &pMiRNAId);
-
-    int write_total_score(seqan::CharString const &pMiRNAId);
-
-    int write_alignment(seqan::CharString const &pMiRNAId);
+    virtual int write_alignment(seqan::CharString const &pMiRNAId);
 
 };
 

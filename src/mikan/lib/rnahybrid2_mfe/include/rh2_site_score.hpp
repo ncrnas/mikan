@@ -23,7 +23,11 @@ public:
             MKSiteScores(opts),
             mMaxMRNALen(opts.mTargetLen),
             mMaxMiRNALen(opts.mQueryLen),
-            mRHCore(opts.mTargetLen, opts.mQueryLen, opts.mSeedDef) {}
+            mRHCore(opts.mTargetLen, opts.mQueryLen, opts.mSeedDef) {
+
+        init_from_args();
+
+    }
 
     void set_score(int i, float val) { mMFEScores[i] = val; };
 
@@ -36,12 +40,12 @@ public:
     virtual int get_wide_site_length(int pIdx) { return mRHRetVals[pIdx].mHitLen; }
 
     // Method prototype
-    virtual void init_from_args();
+    void init_from_args();
 
     virtual void clear_scores();
 
     virtual int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
-                    mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
+                            mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
 
     void calc_normalized_score(int pIdx, int pTargetLen, int pQueryLen);
 

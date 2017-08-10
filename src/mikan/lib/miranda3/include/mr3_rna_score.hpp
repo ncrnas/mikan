@@ -38,8 +38,9 @@ public:
     virtual void clear_scores();
 
     using mikan::MKRNAScores::calc_scores;
+
     virtual int calc_scores(mikan::MKSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
-                    mikan::MKRMAWithSites &pRNAWithSites, MR3SiteScores &pSiteScores);
+                            mikan::MKRMAWithSites &pRNAWithSites, MR3SiteScores &pSiteScores);
 
 private:
     seqan::String<float> mTotalAlignScores;

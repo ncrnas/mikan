@@ -23,8 +23,9 @@ public:
     virtual void clear_scores();
 
     using mikan::MKRNAScores::calc_scores;
+
     virtual int calc_scores(mikan::MKSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
-                    mikan::MKRMAWithSites &pRNAWithSites, TSSVMSiteScores &pSitecores);
+                            mikan::MKRMAWithSites &pRNAWithSites, TSSVMSiteScores &pSitecores);
 
 private:
     TSSVMRNARawFeatures mRnaFeatures;

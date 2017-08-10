@@ -9,7 +9,13 @@ namespace rh2mfe {
 //
 // RH2SeedSeqs methods
 //
-void RH2SeedSeqs::set_flags(mikan::TCharSet &pSeedTypeDef) {
+//
+void RH2SeedSeqs::init_from_args() {
+    resize(mSeedTypeDef, 1);
+    mSeedTypeDef[0] = mOpts.mSeedDef;
+}
+
+void RH2SeedSeqs::set_flags() {
     mSingleGU = false;
     mMultiGU = false;
     mMisMatch = false;
@@ -21,20 +27,20 @@ void RH2SeedSeqs::set_flags(mikan::TCharSet &pSeedTypeDef) {
     mOther = false;
     mAddInReverse = false;
 
-    if (pSeedTypeDef[0][0] == '6') {
+    if (mSeedTypeDef[0][0] == '6') {
         mNMerLab = "6mer";
-    } else if (pSeedTypeDef[0][0] == '7') {
+    } else if (mSeedTypeDef[0][0] == '7') {
         mNMerLab = "7mer";
     }
 
-    if (pSeedTypeDef[0][2] == 'G' && pSeedTypeDef[0][3] == 'U') {
+    if (mSeedTypeDef[0][2] == 'G' && mSeedTypeDef[0][3] == 'U') {
         CharString GUT;
         CharString GUM;
 
-        if (pSeedTypeDef[0][0] == '7') {
+        if (mSeedTypeDef[0][0] == '7') {
             mGUTLab = "7mer_GUT";
             mGUMLab = "7mer_GUM";
-        } else if (pSeedTypeDef[0][0] == '6') {
+        } else if (mSeedTypeDef[0][0] == '6') {
             mGUTLab = "6mer_GUT";
             mGUMLab = "6mer_GUM";
         } else {
@@ -42,12 +48,12 @@ void RH2SeedSeqs::set_flags(mikan::TCharSet &pSeedTypeDef) {
             mGUMLab = "GUM";
         }
 
-        if (pSeedTypeDef[0] == "6mGU+" || pSeedTypeDef[0] == "7mGU+") {
+        if (mSeedTypeDef[0] == "6mGU+" || mSeedTypeDef[0] == "7mGU+") {
             mSingleGU = true;
             mMultiGU = true;
             mMultiGUTLab = mGUTLab;
             mMultiGUMLab = mGUMLab;
-        } else if (pSeedTypeDef[0] == "6mGU1" || pSeedTypeDef[0] == "7mGU1") {
+        } else if (mSeedTypeDef[0] == "6mGU1" || mSeedTypeDef[0] == "7mGU1") {
             mSingleGU = true;
         }
     }

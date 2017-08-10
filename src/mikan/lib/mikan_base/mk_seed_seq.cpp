@@ -9,8 +9,12 @@ namespace mikan {
 //
 // MKSeedSeqs methods
 //
+void MKSeedSeqs::init_from_args() {
+    resize(mSeedTypeDef, 1);
+    mSeedTypeDef[0] = "";
+}
 
-void MKSeedSeqs::set_flags(mikan::TCharSet &) {
+void MKSeedSeqs::set_flags() {
     mSingleGU = true;
     mMultiGU = true;
     mMisMatch = true;
@@ -23,10 +27,22 @@ void MKSeedSeqs::set_flags(mikan::TCharSet &) {
     mAddInReverse = false;
 }
 
-int MKSeedSeqs::create_seed_seqs() {
-    if (length(mMiRNASeq) == 0) {
+void MKSeedSeqs::clear_seeds() {
+    nNumNewSeq = 0;
+
+    clear(mMiRNASeq);
+
+    clear(mEffectiveSeeds);
+    clear(mSeedSeqs);
+    clear(mSeedTypes);
+    clear(mMisMatchPos);
+}
+
+int MKSeedSeqs::create_seed_seqs(mikan::TRNAStr const &pSeq) {
+    if (length(pSeq) == 0) {
         return 1;
     }
+    mMiRNASeq = pSeq;
 
     mikan::TRNAStr seedSeq;
     CharString seedType;
@@ -410,13 +426,6 @@ int MKSeedSeqs::check_redundant_seeds() {
     }
 
     return 0;
-}
-
-void MKSeedSeqs::set_mirna_seq(mikan::TRNAStr const &pSeq) {
-    clear(mSeedSeqs);
-    clear(mSeedTypes);
-    clear(mEffectiveSeeds);
-    mMiRNASeq = pSeq;
 }
 
 void MKSeedSeqs::init_temp(unsigned pVecSize) {

@@ -9,7 +9,7 @@ namespace ts5cs {
 //
 // TS5SeedSeqs methods
 //
-void TS5SeedSeqs::set_flags(mikan::TCharSet &) {
+void TS5SeedSeqs::set_flags() {
     mSingleGU = false;
     mMultiGU = false;
     mMisMatch = false;

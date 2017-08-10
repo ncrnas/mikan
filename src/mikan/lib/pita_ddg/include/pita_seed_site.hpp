@@ -6,6 +6,7 @@
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_seed_seq.hpp"        // MKSeedSeqs
 #include "mk_seed_site.hpp"       // MKSeedSites
+#include "mk_option.hpp"          // MKOptions
 
 namespace ptddg {
 
@@ -15,11 +16,15 @@ namespace ptddg {
 class PITASeedSeqs : public mikan::MKSeedSeqs {
 public:
     // Define methods
-    PITASeedSeqs() : MKSeedSeqs() {}
+    PITASeedSeqs(mikan::MKOptions const &opts) : MKSeedSeqs(opts) {
+        init_from_args();
+        set_flags();
+    }
 
     // Method prototypes
-    virtual void set_flags(mikan::TCharSet &pSeedTypeDef);
+    void init_from_args();
 
+    void set_flags();
 };
 
 //
@@ -33,15 +38,15 @@ public:
     // Define methods
     PITASeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
             MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {
-        
+
         mMinToCDS = 16;
         mMinToEnd = 7;
     }
 
 private:
     virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
-                           mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
-                           seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
+                                   mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
+                                   seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 
     void set_stringent_seed_type(seqan::CharString &pCurSeedType, seqan::StringSet<seqan::CharString> &pSeedDef,
                                  bool pMatchM8, bool pMatchM9, unsigned pMisMatchPos,
