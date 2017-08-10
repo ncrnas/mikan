@@ -3,7 +3,7 @@ project(mk_apps)
 cmake_minimum_required(VERSION 2.8.2)
 
 # Add subdirectories
-add_subdirectory(main)
+add_subdirectory(mikanens)
 add_subdirectory(miranda)
 add_subdirectory(pita)
 add_subdirectory(rnahybrid)

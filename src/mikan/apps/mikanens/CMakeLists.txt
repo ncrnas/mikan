@@ -1,4 +1,4 @@
-project(mk_main)
+project(mk_mikanens)
 
 cmake_minimum_required(VERSION 2.8.2)
 
@@ -15,6 +15,7 @@ find_package(SeqAn REQUIRED)
 # ----------------------------------------------------------------------------
 
 # Add lib directories
+add_subdirectory(../../lib/mikan_ens mkens)
 add_subdirectory(../../lib/miranda3 mr3as)
 add_subdirectory(../../lib/pita_ddg pita)
 add_subdirectory(../../lib/rnahybrid2_mfe rh2)
@@ -26,6 +27,7 @@ add_subdirectory(../../lib/mikan_base mkbase)
 
 # Add include directories
 include_directories(${SEQAN_INCLUDE_DIRS}
+        ${MKE_HEADERS}
         ${MR3_HEADERS}
         ${PITA_HEADERS}
         ${RH2_HEADERS}
@@ -42,6 +44,7 @@ add_definitions(${SEQAN_DEFINITIONS})
 add_executable(mikan mikan.cpp)
 
 # Add libraries
+add_library(mkens ${MKE_SOURCE})
 if (NOT TARGET mr3as)
     add_library(mr3as ${MR3_SOURCE})
 endif ()
@@ -74,7 +77,7 @@ else ()
     set(LIBM_NAME "m")
 endif ()
 
-target_link_libraries(mikan mr3as pita rh2 tm1 ts5 tssvm vrna mkbase ${SEQAN_LIBRARIES} ${LIBM_NAME})
+target_link_libraries(mikan mkens mr3as pita rh2 tm1 ts5 tssvm vrna mkbase ${SEQAN_LIBRARIES} ${LIBM_NAME})
 
 # Add CXX flags found by find_package (SeqAn)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SEQAN_CXX_FLAGS}")

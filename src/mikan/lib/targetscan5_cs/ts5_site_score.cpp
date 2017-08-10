@@ -1,7 +1,7 @@
 #include <math.h>                // roundf
 #include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "ts5_feature.hpp"       // TS5RawFeatures
-#include "ts5_site_score.hpp"         // TS5SiteScores, TS5ScoreSeedType, TS5FeatSitePos, TS5FeatAURich,
+#include "ts5_site_score.hpp"    // TS5SiteScores, TS5ScoreSeedType, TS5FeatSitePos, TS5FeatAURich,
 
 using namespace seqan;
 
