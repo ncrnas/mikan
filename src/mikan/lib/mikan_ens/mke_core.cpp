@@ -18,6 +18,89 @@ namespace mkens {
 //
 // MKECore methods
 //
+int MKECore::find_seed_sites(unsigned pIdx) {
+    int retVal;
+    mikan::TRNAStr miRNASeq = mMiRNASeqs[pIdx];
+
+    if (mFindSeedSites) {
+        for (unsigned i = 0; i < TOOL_NUM; i++) {
+            mikan::MKCoreBase &core = get_tool_core(i);
+            retVal = core.find_seed_sites(pIdx);
+            if (retVal != 0) {
+                return 1;
+            }
+        }
+    }
+
+    return 0;
+}
+
+int MKECore::calc_site_scores(unsigned pIdx) {
+    int retVal;
+    mikan::TRNAStr miRNASeq = mMiRNASeqs[pIdx];
+
+    if (mCalcSiteScore) {
+        for (unsigned i = 0; i < TOOL_NUM; i++) {
+            mikan::MKCoreBase &core = get_tool_core(i);
+            retVal = core.calc_site_scores(pIdx);
+            if (retVal != 0) {
+                return 1;
+            }
+        }
+    }
+
+    return 0;
+}
+
+int MKECore::calc_rna_scores(unsigned pIdx) {
+    int retVal;
+
+    if (mCalcRNAScore) {
+        for (unsigned i = 0; i < TOOL_NUM; i++) {
+            mikan::MKCoreBase &core = get_tool_core(i);
+            retVal = core.calc_rna_scores(pIdx);
+            if (retVal != 0) {
+                return 1;
+            }
+        }
+    }
+
+    return 0;
+}
+
+int MKECore::output_results(unsigned pIdx) {
+    int retVal;
+    mikan::TRNAStr miRNASeq = mMiRNASeqs[pIdx];
+
+    // Write site scores
+    if (mOutputSite) {
+        retVal = write_site_score(mMiRNAIds[pIdx]);
+        if (retVal != 0) { ;
+            return 1;
+        }
+    }
+
+    // Write total scores
+    if (mOutputRNA) {
+        retVal = write_rna_score(mMiRNAIds[pIdx]);
+        if (retVal != 0) {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+void MKECore::clear_all() {
+    for (unsigned i = 0; i < TOOL_NUM; i++) {
+        mikan::MKCoreBase &core = get_tool_core(i);
+        core.clear_all();
+    }
+    mSeedSites.clear_pos();
+    mSiteScores.clear_scores();
+    mRNAScores.clear_scores();
+}
+
 int MKECore::write_site_score(seqan::CharString const &pMiRNAId) {
 
     const mikan::TCharSet &seedTypes = mSeedSites.get_seed_types();
@@ -72,10 +155,6 @@ int MKECore::write_rna_score(seqan::CharString const &pMiRNAId) {
     return 0;
 }
 
-int MKECore::write_alignment(seqan::CharString const &) {
-
-    return 0;
-}
 
 } // namespace mkens
 
