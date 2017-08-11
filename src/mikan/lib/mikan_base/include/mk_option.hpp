@@ -56,6 +56,8 @@ public:
 
         mOutputAlign = false;
 
+        mMaxHits = 0;
+
         mSortValType = "position";
     }
 

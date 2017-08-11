@@ -296,6 +296,7 @@ int MKSeedSeqs::create_gu_mismatch_seed_seqs(mikan::TRNAStr &pSeedSeq) {
     int retVal;
 
     for (unsigned i = 0; i < length(pSeedSeq); ++i) {
+        retVal = 0;
         if (pSeedSeq[i] == 'C') {
             seedGUSeq = pSeedSeq;
             seedGUSeq[i] = 'U';
