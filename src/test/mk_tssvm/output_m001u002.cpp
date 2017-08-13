@@ -4,7 +4,7 @@
 
 namespace {
 
-class OM001U002 : public TestIOTSSVM {
+class OM001U002 : public TestIOBase {
 protected:
     OM001U002() {
         IFNAME1 = (char *) "mir_001.fasta";

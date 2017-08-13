@@ -10,11 +10,6 @@ protected:
     Site02GU2() {
         IFNAME1 = (char *) "mir_001.fasta";
         IFNAME2 = (char *) "ts_02_gu_2.fasta";
-        O1FNAME1 = (char *) "test_output1_site_1.txt";
-        O1FNAME2 = (char *) "test_output1_mrna_1.txt";
-        O2FNAME1 = (char *) "test_output2_site_1.txt";
-        O2FNAME2 = (char *) "test_output2_mrna_1.txt";
-        OMPATH = (char *) "mk_miranda/";
 
         resize(mSeedDef, 6);
         mSeedDef[0] = 'Y';
@@ -28,20 +23,12 @@ protected:
 };
 
 TEST_F(Site02GU2, mir1_gu) {
-    read_files();
-    set_seqs();
+    create_seed_seqs(1);
     TIdx index(mrna_seqs);
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
+    find_seed_sites(sites);
 
-    TOp ops;
-    TSeed seedSeqs(ops);
-    seedSeqs.set_seed_type_def(mSeedDef);
-    seedSeqs.set_flags();;
-    seedSeqs.create_seed_seqs(mirna_seqs[1]);
-
-    int ret_val = sites.find_seed_sites(seedSeqs);
-    EXPECT_EQ(0, ret_val);
     EXPECT_EQ(20u, sites.get_length());
 
     test_sites(sites, 0, "7mer_GUM", 0, 24, true, -1);
@@ -95,21 +82,13 @@ TEST_F(Site02GU2, mir1_gu) {
 }
 
 TEST_F(Site02GU2, mir1_gu_plus) {
-    read_files();
-    set_seqs();
+    mSeedDef[3] = "+";
+    create_seed_seqs(1);
     TIdx index(mrna_seqs);
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
+    find_seed_sites(sites);
 
-    mSeedDef[3] = "+";
-    TOp ops;
-    TSeed seedSeqs(ops);
-    seedSeqs.set_seed_type_def(mSeedDef);
-    seedSeqs.set_flags();;
-    seedSeqs.create_seed_seqs(mirna_seqs[1]);
-
-    int ret_val = sites.find_seed_sites(seedSeqs);
-    EXPECT_EQ(0, ret_val);
     EXPECT_EQ(36u, sites.get_length());
 
     test_sites(sites, 0, "7mer_GUM", 0, 24, true, -1);
@@ -163,23 +142,15 @@ TEST_F(Site02GU2, mir1_gu_plus) {
 }
 
 TEST_F(Site02GU2, mir1_def) {
-    read_files();
-    set_seqs();
-    TIdx index(mrna_seqs);
-    TFin finder(index);
-    TSit sites(index, finder, mrna_seqs);
-
     mSeedDef[3] = "+";
     mSeedDef[4] = "1:1";
     mSeedDef[5] = "1";
-    TOp ops;
-    TSeed seedSeqs(ops);
-    seedSeqs.set_seed_type_def(mSeedDef);
-    seedSeqs.set_flags();;
-    seedSeqs.create_seed_seqs(mirna_seqs[1]);
+    create_seed_seqs(1);
+    TIdx index(mrna_seqs);
+    TFin finder(index);
+    TSit sites(index, finder, mrna_seqs);
+    find_seed_sites(sites);
 
-    int ret_val = sites.find_seed_sites(seedSeqs);
-    EXPECT_EQ(0, ret_val);
     EXPECT_EQ(83u, sites.get_length());
 
     test_sites(sites, 0, "7mer_GUM", 0, 24, true, -1);

@@ -10,38 +10,24 @@ protected:
     Site05BT1() {
         IFNAME1 = (char *) "mir_001.fasta";
         IFNAME2 = (char *) "ts_05_bt_1.fasta";
-        O1FNAME1 = (char *) "test_output1_site_1.txt";
-        O1FNAME2 = (char *) "test_output1_mrna_1.txt";
-        O2FNAME1 = (char *) "test_output2_site_1.txt";
-        O2FNAME2 = (char *) "test_output2_mrna_1.txt";
-        OMPATH = (char *) "mk_tm1/";
     }
 
 };
 
 TEST_F(Site05BT1, mir124_bt) {
-    read_files();
-    set_seqs();
+    create_seed_seqs(0);
     TIdx index(mrna_seqs);
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
-    TOp ops;
-    TSeed seedSeqs(ops);
-
-
-    seedSeqs.set_seed_type_def(mSeedDef);
-    seedSeqs.set_flags();;
-    seedSeqs.create_seed_seqs(mirna_seqs[0]);
-
-    int ret_val = sites.find_seed_sites(seedSeqs);
-    EXPECT_EQ(0, ret_val);
+    find_seed_sites(sites);
+    
     EXPECT_EQ(5u, sites.get_length());
 
-    test_sites2(sites, 0, "6mer", 20, 24, true);
-    test_sites2(sites, 1, "6mer", 21, 24, true);
-    test_sites2(sites, 2, "6mer", 22, 24, true);
-    test_sites2(sites, 3, "6mer", 23, 24, true);
-    test_sites2(sites, 4, "6mer", 24, 24, true);
+    test_sites(sites, 0, "6mer", 20, 24, true, 0);
+    test_sites(sites, 1, "6mer", 21, 24, true, 0);
+    test_sites(sites, 2, "6mer", 22, 24, true, 0);
+    test_sites(sites, 3, "6mer", 23, 24, true, 0);
+    test_sites(sites, 4, "6mer", 24, 24, true, 0);
 }
 
 }
