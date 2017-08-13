@@ -10,23 +10,12 @@ protected:
     SeedAll() {
         IFNAME1 = (char *) "mir_001.fasta";
         IFNAME2 = (char *) "utr3_001.fasta";
-        O1FNAME1 = (char *) "test_output1_site_1.txt";
-        O1FNAME2 = (char *) "test_output1_mrna_1.txt";
-        O2FNAME1 = (char *) "test_output2_site_1.txt";
-        O2FNAME2 = (char *) "test_output2_mrna_1.txt";
-        OMPATH = (char *) "mk_tssvm/";
     }
 };
 
 TEST_F(SeedAll, mir124_def) {
-    read_files();
+    create_seed_seqs(0);
 
-    mirna_seqs = coreInput.get_mirna_seqs();
-
-    mikan::TCharSet mNullSet;
-    mSeedSeqs.set_seed_type_def(mNullSet);
-    int n = mSeedSeqs.create_seed_seqs(mirna_seqs[0]);
-    EXPECT_EQ(0, n);
     EXPECT_EQ(49u, length(mSeedSeqs.mEffectiveSeeds));
 
     test_seed("AAGGCA", 0, "6mer", true, 0);
@@ -95,14 +84,8 @@ TEST_F(SeedAll, mir124_def) {
 }
 
 TEST_F(SeedAll, mir1_def) {
-    read_files();
+    create_seed_seqs(1);
 
-    mirna_seqs = coreInput.get_mirna_seqs();
-
-    mikan::TCharSet mNullSet;
-    mSeedSeqs.set_seed_type_def(mNullSet);
-    int n = mSeedSeqs.create_seed_seqs(mirna_seqs[1]);
-    EXPECT_EQ(0, n);
     EXPECT_EQ(49u, length(mSeedSeqs.mEffectiveSeeds));
 
     test_seed("GGAAUG", 0, "6mer", true, 0);

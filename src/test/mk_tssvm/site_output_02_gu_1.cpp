@@ -4,7 +4,7 @@
 
 namespace {
 
-class SiteOut02GU1 : public TestIOTSSVM {
+class SiteOut02GU1 : public TestIOBase {
 protected:
     SiteOut02GU1() {
         IFNAME1 = (char *) "mir_003.fasta";

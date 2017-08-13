@@ -5,9 +5,10 @@
 #include "gtest/gtest.h"
 #include "get_data_path.hpp"
 #include "mikan_utils.hpp"
+#include "test_main_io.hpp"
 
-template<class TSites, class TSeeds, class TOpts, class TTestIO>
-class TestSite : public TTestIO {
+template<class TOpts, class TSeeds, class TSites>
+class TestSite : public TestIOBase {
 protected:
 
     void test_sites(const TSites &sites, int idx, const char *seq_type, unsigned mpos, unsigned spos,

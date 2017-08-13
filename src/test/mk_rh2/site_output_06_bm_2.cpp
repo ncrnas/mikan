@@ -4,7 +4,7 @@
 
 namespace {
 
-class SiteOut06BM2 : public TestIORH2 {
+class SiteOut06BM2 : public TestIOBase {
 protected:
     SiteOut06BM2() {
         IFNAME1 = (char *) "mir_004.fasta";

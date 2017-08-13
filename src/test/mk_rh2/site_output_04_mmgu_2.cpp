@@ -4,7 +4,7 @@
 
 namespace {
 
-class SiteOut04MMGU2A : public TestIORH2 {
+class SiteOut04MMGU2A : public TestIOBase {
 protected:
     SiteOut04MMGU2A() {
         IFNAME1 = (char *) "mir_004.fasta";
@@ -23,7 +23,7 @@ TEST_F(SiteOut04MMGU2A, comp_orig_mk) {
     gtest_compare_two_files(o1file2, o2file2);
 }
 
-class SiteOut04MMGU2B : public TestIORH2 {
+class SiteOut04MMGU2B : public TestIOBase {
 protected:
     SiteOut04MMGU2B() {
         IFNAME1 = (char *) "mir_004.fasta";

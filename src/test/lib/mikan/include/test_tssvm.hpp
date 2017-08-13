@@ -8,8 +8,7 @@
 #include "tssvm_core.hpp"
 #include "mk_input.hpp"
 
-typedef TestIOBase<mikan::MKInput> TestIOTSSVM;
-typedef TestSeed<tssvm::TSSVMSeedSeqs, tssvm::TSSVMOptions, TestIOTSSVM> TestSeedTSSVM;
-typedef TestSite<tssvm::TSSVMSeedSites, tssvm::TSSVMSeedSeqs, tssvm::TSSVMOptions, TestIOTSSVM> TestSiteTSSVM;
+typedef TestSeed<tssvm::TSSVMOptions, tssvm::TSSVMSeedSeqs> TestSeedTSSVM;
+typedef TestSite<tssvm::TSSVMOptions, tssvm::TSSVMSeedSeqs, tssvm::TSSVMSeedSites> TestSiteTSSVM;
 
 #endif //MIKAN_TEST_TSSVM_HPP_

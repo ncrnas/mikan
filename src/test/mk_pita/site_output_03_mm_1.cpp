@@ -4,7 +4,7 @@
 
 namespace {
 
-class SiteOut03MM1 : public TestIOPITA {
+class SiteOut03MM1 : public TestIOBase {
 protected:
     SiteOut03MM1() {
         IFNAME1 = (char *) "mir_003.fasta";

@@ -4,7 +4,7 @@
 
 namespace {
 
-class SiteOut04MMGU2 : public TestIOMR3AS {
+class SiteOut04MMGU2 : public TestIOBase {
 protected:
     SiteOut04MMGU2() {
         IFNAME1 = (char *) "mir_004.fasta";

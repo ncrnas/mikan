@@ -8,7 +8,6 @@
 #include "mk_typedef.hpp"
 #include "mk_input.hpp"
 
-template<class TCoreInput>
 class TestIOBase : public ::testing::Test {
 protected:
     char *IFNAME1;
@@ -18,6 +17,16 @@ protected:
     char *O2FNAME1;
     char *O2FNAME2;
     char *OMPATH;
+
+    TestIOBase() {
+        IFNAME1 = (char *) "";
+        IFNAME2 = (char *) "";
+        O1FNAME1 = (char *) "";
+        O1FNAME2 = (char *) "";
+        O2FNAME1 = (char *) "";
+        O2FNAME2 = (char *) "";
+        OMPATH = (char *) "";
+    }
 
     virtual void SetUp() {
         seqan::CharString dfile = STRINGIZE(TEST_DATA_PATH);
@@ -53,21 +62,21 @@ protected:
     }
 
     void read_files() {
-        coreInput.set_file_names(ifile1, ifile2);
-        (void) coreInput.load_seq_from_file();
+        seqInput.set_file_names(ifile1, ifile2);
+        (void) seqInput.load_seq_from_file();
     }
 
     void set_seqs() {
-        mirna_ids = coreInput.get_mirna_ids();
-        mirna_seqs = coreInput.get_mirna_seqs();
-        mrna_ids = coreInput.get_mrna_ids();
-        mrna_seqs = coreInput.get_mrna_seqs();
+        mirna_ids = seqInput.get_mirna_ids();
+        mirna_seqs = seqInput.get_mirna_seqs();
+        mrna_ids = seqInput.get_mrna_ids();
+        mrna_seqs = seqInput.get_mrna_seqs();
     }
 
     int argc;
     char *argv[6];
 
-    TCoreInput coreInput;
+    mikan::MKInput seqInput;
 
     seqan::CharString ifile1;
     seqan::CharString ifile2;
