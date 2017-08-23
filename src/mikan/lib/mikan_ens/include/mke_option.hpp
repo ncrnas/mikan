@@ -4,6 +4,7 @@
 #include <seqan/sequence.h>
 #include <seqan/arg_parse.h>
 #include "mk_option.hpp"        // MKOptions
+#include "mke_const.hpp"        // TOOL_NUM
 #include "mr3_option.hpp"       // MR3Options
 #include "pita_option.hpp"      // PITAOptions
 #include "rh2_option.hpp"       // RH2Options
@@ -21,6 +22,15 @@ public:
     // Define method
     MKEOptions() {
         mProgName = "mikan";
+
+        resize(mToolPrefix, mkens::TOOL_NUM);
+        mToolPrefix[0] = "mr";
+        mToolPrefix[1] = "pt";
+        mToolPrefix[2] = "rh";
+        mToolPrefix[3] = "tm";
+        mToolPrefix[4] = "ts";
+        mToolPrefix[5] = "sv";
+
     }
 
     mr3as::MR3Options mMR3Opts;

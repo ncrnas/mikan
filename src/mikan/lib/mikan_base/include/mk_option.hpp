@@ -48,6 +48,9 @@ public:
     // MKRMAWithSites
     seqan::CharString mSortValType;
 
+    // Mikan ensemble
+    seqan::StringSet<seqan::CharString > mToolPrefix;
+
     // Define method
     MKOptions() {
         mProgName = "mikan";

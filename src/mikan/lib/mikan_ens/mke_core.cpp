@@ -18,29 +18,63 @@ namespace mkens {
 //
 // MKECore methods
 //
-int MKECore::find_seed_sites(unsigned pIdx) {
-    int retVal;
-    mikan::TRNAStr miRNASeq = mMiRNASeqs[pIdx];
+void MKECore::clear_all() {
+    for (unsigned i = 0; i < mkens::TOOL_NUM; i++) {
+        mikan::MKCoreBase &core = get_tool_core(i);
+        core.clear_all();
+    }
+    mSeedSites.clear_pos();
+    mSiteScores.clear_scores();
+    mRNAScores.clear_scores();
+}
 
+int MKECore::find_seed_sites(unsigned pIdx) {
     if (mFindSeedSites) {
-        for (unsigned i = 0; i < TOOL_NUM; i++) {
-            mikan::MKCoreBase &core = get_tool_core(i);
-            retVal = core.find_seed_sites(pIdx);
-            if (retVal != 0) {
-                return 1;
-            }
-        }
+        combine_site_pos(pIdx);
+        combine_seed_types();
     }
 
     return 0;
 }
+
+int MKECore::combine_site_pos(unsigned pIdx) {
+    for (unsigned i = 0; i < mkens::TOOL_NUM; i++) {
+        mikan::MKCoreBase &core = get_tool_core(i);
+        int retVal = core.find_seed_sites(pIdx);
+        if (retVal != 0) {
+            return 1;
+        }
+
+        seqan::CharString prefix = mOpts.mToolPrefix[i];
+        mikan::MKSeedSites &seedSites = core.get_seed_sites();
+        mSeedSites.add_to_set(seedSites, i, prefix);
+    }
+
+    mSeedSites.create_pos_map();
+
+    return 0;
+}
+
+int MKECore::combine_seed_types() {
+    for (unsigned i = 0; i < mkens::TOOL_NUM; i++) {
+        mikan::MKCoreBase &core = get_tool_core(i);
+        mikan::MKSeedSites &seedSites = core.get_seed_sites();
+        seqan::CharString prefix = mOpts.mToolPrefix[i];
+        mSeedSites.add_seed_types(seedSites, i, prefix);
+    }
+
+    mSeedSites.combine_seed_types();
+
+    return 0;
+}
+
 
 int MKECore::calc_site_scores(unsigned pIdx) {
     int retVal;
     mikan::TRNAStr miRNASeq = mMiRNASeqs[pIdx];
 
     if (mCalcSiteScore) {
-        for (unsigned i = 0; i < TOOL_NUM; i++) {
+        for (unsigned i = 0; i < mkens::TOOL_NUM; i++) {
             mikan::MKCoreBase &core = get_tool_core(i);
             retVal = core.calc_site_scores(pIdx);
             if (retVal != 0) {
@@ -56,7 +90,7 @@ int MKECore::calc_rna_scores(unsigned pIdx) {
     int retVal;
 
     if (mCalcRNAScore) {
-        for (unsigned i = 0; i < TOOL_NUM; i++) {
+        for (unsigned i = 0; i < mkens::TOOL_NUM; i++) {
             mikan::MKCoreBase &core = get_tool_core(i);
             retVal = core.calc_rna_scores(pIdx);
             if (retVal != 0) {
@@ -91,39 +125,30 @@ int MKECore::output_results(unsigned pIdx) {
     return 0;
 }
 
-void MKECore::clear_all() {
-    for (unsigned i = 0; i < TOOL_NUM; i++) {
-        mikan::MKCoreBase &core = get_tool_core(i);
-        core.clear_all();
-    }
-    mSeedSites.clear_pos();
-    mSiteScores.clear_scores();
-    mRNAScores.clear_scores();
-}
-
 int MKECore::write_site_score(seqan::CharString const &pMiRNAId) {
 
-    const mikan::TCharSet &seedTypes = mSeedSites.get_seed_types();
+    const seqan::StringSet<seqan::CharString> &seedTypes = mSeedSites.get_seed_types();
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     seqan::CharString seedType;
-    int seedStart, seedEnd;
-
+    unsigned posA1;
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
-        if (!mSiteScores.mEffectiveSites[i]) {
+//        if (!mSiteScores.mEffectiveSites[i]) {
+//            continue;
+//        }
+
+        if (!mSeedSites.mEffectiveSites[i]) {
             continue;
         }
 
-        seedStart = sitePos[i];
-        seedEnd = seedStart + 6;
+        posA1 = sitePos[i];
 
         mOFile1 << toCString(pMiRNAId) << "\t";
         mOFile1 << toCString((seqan::CharString) mMRNAIds[mRNAPos[i]]) << "\t";
-        mOFile1 << seedStart << "\t";
-        mOFile1 << seedEnd << "\t";
+        mOFile1 << posA1 << "\t";
         mOFile1 << seedTypes[i] << "\t";
-        mOFile1 << mSiteScores.get_score(i);
+//        mOFile1 << mSiteScores.get_score(i);
         mOFile1 << std::endl;
     }
 

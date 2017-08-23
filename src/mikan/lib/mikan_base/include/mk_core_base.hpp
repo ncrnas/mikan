@@ -4,6 +4,9 @@
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
 #include "mk_option.hpp"          // MKOptions
+#include "mk_seed_site.hpp"       // MKSeedSites
+#include "mk_site_score.hpp"      // MKSiteScores
+#include "mk_rna_score.hpp"       // MKRNAScores
 
 namespace mikan {
 
@@ -49,7 +52,9 @@ public:
             mOutputSite(true),
             mOutputRNA(true),
             mOutputAlign(true),
-            mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs), mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs),
+            mOpts(pOpts),
+            mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs),
+            mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs),
             mRNAIdx(pRNAIdx), mFinder(pFinder) {
 
         init_from_args(pOpts);
@@ -75,7 +80,12 @@ public:
 
     virtual void clear_all() = 0;
 
+    virtual mikan::MKSeedSites & get_seed_sites() = 0;
+    virtual mikan::MKSiteScores & get_site_scores() = 0;
+    virtual mikan::MKRNAScores & get_rna_scores() = 0;
+
 protected:
+    mikan::MKOptions const &mOpts;
     mikan::TCharSet const &mMiRNAIds;
     mikan::TRNASet const &mMiRNASeqs;
     mikan::TCharSet const &mMRNAIds;

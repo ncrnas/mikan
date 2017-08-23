@@ -52,12 +52,15 @@ public:
     virtual int output_results(unsigned pIdx);
     virtual void clear_all();
 
+    virtual mikan::MKSeedSites & get_seed_sites() { return mSeedSites; }
+    virtual mikan::MKSiteScores & get_site_scores() { return mSiteScores; };
+    virtual mikan::MKRNAScores & get_rna_scores() { return mRNAScores; };
+
 private:
     MKESeedSites mSeedSites;
     MKESiteScores mSiteScores;
     MKERNAScores mRNAScores;
 
-    static const unsigned TOOL_NUM = 6;
     mr3as::MR3Core mMR3Core;
     ptddg::PITACore mPITACore;
     rh2mfe::RH2Core mRH2Core;
@@ -86,6 +89,9 @@ private:
 
     int write_site_score(seqan::CharString const &pMiRNAId);
     int write_rna_score(seqan::CharString const &pMiRNAId);
+
+    int combine_site_pos(unsigned pIdx);
+    int combine_seed_types();
 
 };
 

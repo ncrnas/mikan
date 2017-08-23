@@ -154,6 +154,10 @@ public:
         mRNAScores.clear_scores();
     }
 
+    virtual mikan::MKSeedSites & get_seed_sites() { return mSeedSites; }
+    virtual mikan::MKSiteScores & get_site_scores() { return mSiteScores; }
+    virtual mikan::MKRNAScores & get_rna_scores() { return mRNAScores; }
+
 protected:
     TSeedSeqs mSeedSeqs;
     TSeedSites mSeedSites;
