@@ -222,20 +222,28 @@ int TSSVMFeatAURichDown::add_features(
         mikan::MKSeedSites &pSeedSites,
         TSSVMAlign const &,
         String<bool> &pEffectiveSites) {
+    const StringSet<CharString> &seedTypes = pSeedSites.get_seed_types();
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &siteS1Pos = pSeedSites.get_site_pos_s1();
     unsigned startPos, endPos;
 
     resize(mAURichDown, length(pEffectiveSites));
     startPos = 0;
+    unsigned s1Pos;
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
         resize(mAURichDown[i], 30, 0);
         if (!pEffectiveSites[i]) {
             continue;
         }
 
+        if (seedTypes[i] == "BT") {
+            s1Pos = siteS1Pos[i] + 1;
+        } else {
+            s1Pos = siteS1Pos[i];
+        }
+
         // Get start and end positions for upstream and downstream
-        getDownStreamPos(siteS1Pos[i], length(pMRNASeqs[mRNAPos[i]]), startPos, endPos);
+        getDownStreamPos(s1Pos, length(pMRNASeqs[mRNAPos[i]]), startPos, endPos);
 
         int k = 0;
         for (unsigned j = startPos; j < endPos; ++j) {

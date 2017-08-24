@@ -99,7 +99,7 @@ bool TSSVMSeedSites::set_new_seed_type(
         appendValue(mSeedTypes, newSeedType);
         appendValue(mMisMatchPos, pMisMatchPos);
 
-        appendValue(mS1Pos, s1pos + 6);
+        appendValue(mS1Pos, pSitePos + 6);
         appendValue(mS8Pos, s8pos - 1);
 
         appendValue(mEffectiveSites, true);
