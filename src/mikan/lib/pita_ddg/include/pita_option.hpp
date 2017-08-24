@@ -20,6 +20,9 @@ public:
         mMaxSeedLen = 8;
         mFlankUp = 0;
         mFlankDown = 0;
+
+        mAllowGUWobble = "1";
+        mAllowMismatch = "0:1";
     }
 
     // Method prototypes

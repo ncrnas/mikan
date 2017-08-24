@@ -20,6 +20,13 @@ public:
         mMaxSeedLen = 8;
         mMinAlignScore = 140.0;
         mMaxEnergy = 1.0;
+
+        mMinSeedLen = 6;
+        mMaxSeedLen = 8;
+
+        mAllowGUWobble = "+";
+        mAllowMismatch = "1:1";
+        mAllowBT = "1";
     }
 
     // Method prototypes

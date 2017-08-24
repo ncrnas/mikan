@@ -33,9 +33,13 @@ public:
     virtual void clear_pos();
 
     void add_to_set(mikan::MKSeedSites &pSeedSites, unsigned pToolIdx, seqan::CharString &pPrefix);
+
     void add_seed_types(mikan::MKSeedSites &pSeedSites, unsigned pToolIdx, seqan::CharString &pPrefix);
+
     void set_default_seed_type(unsigned pIdx, seqan::CharString &pPrefix);
+
     void create_pos_map();
+
     void combine_seed_types();
 
 private:

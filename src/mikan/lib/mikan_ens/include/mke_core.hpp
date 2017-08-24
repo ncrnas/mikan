@@ -25,7 +25,7 @@ namespace mkens {
 // mikan ensemble score process core
 //
 
-class MKECore : public mikan::MKCoreBase  {
+class MKECore : public mikan::MKCoreBase {
 public:
     // Define methods
     MKECore(mkens::MKEOptions const &pOpts,
@@ -47,14 +47,20 @@ public:
             mTSSVMCore(pOpts.mTSSVMOpts, pMiRNAIds, pMiRNASeqs, pMRNAIds, pMRNASeqs, pRNAIdx, pFinder) {}
 
     virtual int find_seed_sites(unsigned pIdx);
+
     virtual int calc_site_scores(unsigned pIdx);
+
     virtual int calc_rna_scores(unsigned);
+
     virtual int output_results(unsigned pIdx);
+
     virtual void clear_all();
 
-    virtual mikan::MKSeedSites & get_seed_sites() { return mSeedSites; }
-    virtual mikan::MKSiteScores & get_site_scores() { return mSiteScores; };
-    virtual mikan::MKRNAScores & get_rna_scores() { return mRNAScores; };
+    virtual mikan::MKSeedSites &get_seed_sites() { return mSeedSites; }
+
+    virtual mikan::MKSiteScores &get_site_scores() { return mSiteScores; };
+
+    virtual mikan::MKRNAScores &get_rna_scores() { return mRNAScores; };
 
 private:
     MKESeedSites mSeedSites;
@@ -68,7 +74,7 @@ private:
     ts5cs::TS5Core mTS5Core;
     tssvm::TSSVMCore mTSSVMCore;
 
-    mikan::MKCoreBase& get_tool_core(unsigned pIdx) {
+    mikan::MKCoreBase &get_tool_core(unsigned pIdx) {
         switch (pIdx) {
             case 0:
                 return mMR3Core;
@@ -88,9 +94,11 @@ private:
     }
 
     int write_site_score(seqan::CharString const &pMiRNAId);
+
     int write_rna_score(seqan::CharString const &pMiRNAId);
 
     int combine_site_pos(unsigned pIdx);
+
     int combine_seed_types();
 
 };

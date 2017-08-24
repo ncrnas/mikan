@@ -80,9 +80,11 @@ public:
 
     virtual void clear_all() = 0;
 
-    virtual mikan::MKSeedSites & get_seed_sites() = 0;
-    virtual mikan::MKSiteScores & get_site_scores() = 0;
-    virtual mikan::MKRNAScores & get_rna_scores() = 0;
+    virtual mikan::MKSeedSites &get_seed_sites() = 0;
+
+    virtual mikan::MKSiteScores &get_site_scores() = 0;
+
+    virtual mikan::MKRNAScores &get_rna_scores() = 0;
 
 protected:
     mikan::MKOptions const &mOpts;

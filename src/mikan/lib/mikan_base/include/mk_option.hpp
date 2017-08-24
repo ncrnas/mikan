@@ -49,7 +49,7 @@ public:
     seqan::CharString mSortValType;
 
     // Mikan ensemble
-    seqan::StringSet<seqan::CharString > mToolPrefix;
+    seqan::StringSet<seqan::CharString> mToolPrefix;
 
     // Define method
     MKOptions() {
