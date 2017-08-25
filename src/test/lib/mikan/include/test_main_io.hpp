@@ -61,6 +61,11 @@ protected:
         seqan::clear(mrna_seqs);
     }
 
+    void read_and_set_seqs() {
+        read_files();
+        set_seqs();
+    }
+
     void read_files() {
         seqInput.set_file_names(ifile1, ifile2);
         (void) seqInput.load_seq_from_file();

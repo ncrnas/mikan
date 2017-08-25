@@ -9,6 +9,7 @@ set (CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} ${CMAKE_SOURCE_DIR}/seqan/extras/i
 
 add_subdirectory (lib/googletest)
 add_subdirectory (mk_common)
+add_subdirectory (mk_mkens)
 add_subdirectory (mk_miranda)
 add_subdirectory (mk_pita)
 add_subdirectory (mk_rh2)

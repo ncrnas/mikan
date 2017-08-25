@@ -27,8 +27,7 @@ protected:
     }
 
     void create_seed_seqs(unsigned pIdx) {
-        read_files();
-        set_seqs();
+        read_and_set_seqs();
 
         mSeedSeqs.set_seed_type_def(mSeedDef);
         mSeedSeqs.set_flags();
