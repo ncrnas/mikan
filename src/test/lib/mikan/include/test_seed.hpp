@@ -16,7 +16,7 @@ public:
 
 protected:
 
-    void test_seed(const char *rnastr, int idx, const char *seq_type, bool effective, unsigned mmpos) {
+    void test_seed(const char *rnastr, unsigned idx, const char *seq_type, bool effective, unsigned mmpos) {
         seqan::RnaString seedseq = rnastr;
 
         reverseComplement(seedseq);

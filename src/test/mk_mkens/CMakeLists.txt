@@ -49,25 +49,16 @@ else ()
 endif ()
 
 # Add executable applications
-#add_executable(gtest_mk_mkens
-#        seed_01_all.cpp seed_02_nmer.cpp seed_03_gu.cpp seed_04_mm.cpp seed_05_mmgu.cpp seed_06_bt.cpp
-#        site_01_nmer_1.cpp site_01_nmer_2.cpp site_02_gu_1.cpp site_02_gu_2.cpp site_03_mm_1.cpp site_03_mm_2.cpp
-#        site_04_mmgu_1.cpp site_04_mmgu_2.cpp site_05_bt_1.cpp site_05_bt_2.cpp site_06_bm_1.cpp site_06_bm_2.cpp
-#        site_output_01_nmer_1.cpp site_output_01_nmer_2.cpp site_output_02_gu_1.cpp site_output_02_gu_2.cpp
-#        site_output_03_mm_1.cpp site_output_03_mm_2.cpp site_output_04_mmgu_1.cpp site_output_04_mmgu_2.cpp
-#        site_output_05_bt_1.cpp site_output_05_bt_2.cpp site_output_06_bm_1.cpp site_output_06_bm_2.cpp)
-
 add_executable(gtest_mk_mkens
         site_01_nmer_1.cpp site_01_nmer_2.cpp site_02_gu_1.cpp site_02_gu_2.cpp site_03_mm_1.cpp site_03_mm_2.cpp
-        site_04_mmgu_1.cpp site_04_mmgu_2.cpp site_05_bt_1.cpp site_05_bt_2.cpp site_06_bm_1.cpp site_06_bm_2.cpp)
+        site_04_mmgu_1.cpp site_04_mmgu_2.cpp site_05_bt_1.cpp site_05_bt_2.cpp site_06_bm_1.cpp site_06_bm_2.cpp
+        site_output_01_nmer_1.cpp site_output_01_nmer_2.cpp site_output_02_gu_1.cpp site_output_02_gu_2.cpp
+        site_output_03_mm_1.cpp site_output_03_mm_2.cpp site_output_04_mmgu_1.cpp site_output_04_mmgu_2.cpp
+        site_output_05_bt_1.cpp site_output_05_bt_2.cpp site_output_06_bm_1.cpp site_output_06_bm_2.cpp)
 
-#add_executable(gtest_mk_mkens site_06_bm_1.cpp site_06_bm_2.cpp)
-
-#add_executable(gtest_mk_mkens_long output_m001u001.cpp output_m001u002.cpp output_m001u003.cpp output_m001u004.cpp
-#        output_m001u005.cpp output_m001u006.cpp output_m001u007.cpp output_m001u008.cpp output_m001u009.cpp
-#        output_m001u010.cpp output_m001u011.cpp)
-
-add_executable(gtest_mk_mkens_long site_01_nmer_1.cpp)
+add_executable(gtest_mk_mkens_long output_m001u001.cpp output_m001u002.cpp output_m001u003.cpp output_m001u004.cpp
+        output_m001u005.cpp output_m001u006.cpp output_m001u007.cpp output_m001u008.cpp output_m001u009.cpp
+        output_m001u010.cpp output_m001u011.cpp)
 
 # Add libraries
 if (NOT TARGET mikantest)
