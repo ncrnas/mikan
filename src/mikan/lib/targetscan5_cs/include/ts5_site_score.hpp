@@ -135,11 +135,17 @@ class TS5SiteScores : public mikan::MKSiteScores {
 public:
     // Define methods
     explicit TS5SiteScores(mikan::MKOptions const &opts) :
-            MKSiteScores(opts) {}
+            MKSiteScores(opts) {
+
+        resize(mScoreTypes, 1);
+        mScoreTypes[0] = "ctx";
+    }
 
     void set_score(int i, float val) { mContextScores[i] = val; };
 
-    float get_score(int i) { return mContextScores[i]; }
+    virtual float get_score(int i) { return mContextScores[i]; }
+
+    virtual float get_score(int, int pIdx) { return mContextScores[pIdx]; }
 
     float &get_seed_type_score(int i) { return mSeedTypes.get_score(i); }
 

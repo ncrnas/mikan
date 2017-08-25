@@ -25,6 +25,9 @@ public:
             mMaxMiRNALen(opts.mQueryLen),
             mRHCore(opts.mTargetLen, opts.mQueryLen, opts.mSeedDef) {
 
+        resize(mScoreTypes, 1);
+        mScoreTypes[0] = "mfe";
+
         init_from_args();
 
     }
@@ -32,6 +35,8 @@ public:
     void set_score(int i, float val) { mMFEScores[i] = val; };
 
     virtual float get_score(int i) { return mMFEScores[i]; }
+
+    virtual float get_score(int, int pIdx) { return mMFEScores[pIdx]; }
 
     float get_norm_score(int i) { return mNormScores[i]; }
 

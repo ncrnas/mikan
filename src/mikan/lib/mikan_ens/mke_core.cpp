@@ -86,6 +86,19 @@ int MKECore::calc_site_scores(unsigned pIdx) {
     return 0;
 }
 
+int MKECore::combine_site_scores() {
+    for (unsigned i = 0; i < mkens::TOOL_NUM; i++) {
+        mikan::MKCoreBase &core = get_tool_core(i);
+        mikan::MKSeedSites &seedSites = core.get_seed_sites();
+        seqan::CharString prefix = mOpts.mToolPrefix[i];
+        mSeedSites.add_seed_types(seedSites, i, prefix);
+    }
+
+    mSeedSites.combine_seed_types();
+
+    return 0;
+}
+
 int MKECore::calc_rna_scores(unsigned pIdx) {
     int retVal;
 

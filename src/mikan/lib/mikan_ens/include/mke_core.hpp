@@ -101,6 +101,8 @@ private:
 
     int combine_seed_types();
 
+    int combine_site_scores();
+
 };
 
 } // namespace mkens

@@ -21,7 +21,15 @@ public:
     // Define methods
     explicit TSSVMSiteScores(mikan::MKOptions const &opts) :
             MKSiteScores(opts),
-            mSiteInput(mSiteModel) {}
+            mSiteInput(mSiteModel) {
+
+        resize(mScoreTypes, 1);
+        mScoreTypes[0] = "slv";
+    }
+
+    virtual float get_score(int i) { return mSiteInput.get_score(i); }
+
+    virtual float get_score(int, int pIdx) { return mSiteInput.get_score(pIdx); }
 
     const seqan::String<float> &get_scores() { return mSiteInput.get_scores(); }
 

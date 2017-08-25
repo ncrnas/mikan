@@ -120,11 +120,23 @@ public:
             mAlignScores(mVRws, mAlign),
             mEnergyScores(mVRws, mAlign) {
 
+        resize(mScoreTypes, 2);
+        mScoreTypes[0] = "alg";
+        mScoreTypes[1] = "eng";
+
         init_from_args();
 
     }
 
-    virtual float get_score(int pIdx) { return get_align_score(pIdx); }
+    virtual float get_score(int pIdx) { return mAlignScores.get_score(pIdx); }
+
+    virtual float get_score(int pToolIdx, int pIdx) {
+        if (pToolIdx == 1) {
+            return mEnergyScores.get_score(pIdx);
+        } else {
+            return mAlignScores.get_score(pIdx);
+        }
+    }
 
     float get_align_score(int posIdx) { return mAlignScores.get_score(posIdx); }
 
