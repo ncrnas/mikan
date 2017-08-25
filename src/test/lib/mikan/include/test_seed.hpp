@@ -20,10 +20,13 @@ protected:
         seqan::RnaString seedseq = rnastr;
 
         reverseComplement(seedseq);
-        comp_two_rnas(mSeedSeqs.get_seed_seq(idx), seedseq);
-        EXPECT_STREQ(seq_type, seqan::toCString((seqan::CharString) mSeedSeqs.get_seed_type(idx)));
-        EXPECT_EQ(effective, mSeedSeqs.mEffectiveSeeds[idx]);
-        EXPECT_EQ(mmpos, mSeedSeqs.get_mismatched_pos(idx));
+
+        if (idx < length(mSeedSeqs.mEffectiveSeeds)) {
+            comp_two_rnas(mSeedSeqs.get_seed_seq(idx), seedseq);
+            EXPECT_STREQ(seq_type, seqan::toCString((seqan::CharString) mSeedSeqs.get_seed_type(idx)));
+            EXPECT_EQ(effective, mSeedSeqs.mEffectiveSeeds[idx]);
+            EXPECT_EQ(mmpos, mSeedSeqs.get_mismatched_pos(idx));
+        }
     }
 
     void create_seed_seqs(unsigned pIdx) {
