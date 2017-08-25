@@ -9,6 +9,9 @@
 #include "mk_input.hpp"
 
 class TestIOBase : public ::testing::Test {
+public:
+    bool SWAPOUTPUT;
+
 protected:
     char *IFNAME1;
     char *IFNAME2;
@@ -19,6 +22,8 @@ protected:
     char *OMPATH;
 
     TestIOBase() {
+        SWAPOUTPUT = false;
+
         IFNAME1 = (char *) "";
         IFNAME2 = (char *) "";
         O1FNAME1 = (char *) "";
@@ -40,13 +45,21 @@ protected:
         ompath += OMPATH;
         o1file1 = ompath;
         o1file2 = ompath;
-        o1file1 += O1FNAME1;
-        o1file2 += O1FNAME2;
-
         o2file1 = ompath;
         o2file2 = ompath;
-        o2file1 += O2FNAME1;
-        o2file2 += O2FNAME2;
+
+
+        if (SWAPOUTPUT) {
+            o2file1 += O1FNAME1;
+            o2file2 += O1FNAME2;
+            o1file1 += O2FNAME1;
+            o1file2 += O2FNAME2;
+        } else {
+            o1file1 += O1FNAME1;
+            o1file2 += O1FNAME2;
+            o2file1 += O2FNAME1;
+            o2file2 += O2FNAME2;
+        }
 
         argc = 5;
         argv[0] = (char *) "program";
