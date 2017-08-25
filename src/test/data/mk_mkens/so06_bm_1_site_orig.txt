@@ -1,0 +1,8 @@
+hsa-miR-124 MIMAT0000422	TS_002_BM6A1_25_25_30_31	31	mr:NA,pt:NA,rh:NA,tm:NA,ts:NA,sv:BM,	
+hsa-miR-124 MIMAT0000422	TS_004_BM5A1_25_25_30_31	31	mr:NA,pt:NA,rh:NA,tm:NA,ts:NA,sv:BM,	
+hsa-miR-124 MIMAT0000422	TS_005_BM4_25_25_30_31	32	mr:8mer_MMGU,pt:8mer_MMGU,rh:NA,tm:6mer,ts:NA,sv:NA,	
+hsa-miR-124 MIMAT0000422	TS_006_BM4A1_25_25_30_31	31	mr:NA,pt:NA,rh:NA,tm:NA,ts:NA,sv:BM,	
+hsa-miR-124 MIMAT0000422	TS_006_BM4A1_25_25_30_31	32	mr:8mer_MMGU,pt:8mer_MMGU,rh:NA,tm:6mer,ts:NA,sv:NA,	
+hsa-miR-124 MIMAT0000422	TS_005_BM2_25_25_30_31	32	mr:8mer_MM,pt:8mer_MM,rh:NA,tm:6mer,ts:NA,sv:LP,	
+hsa-miR-124 MIMAT0000422	TS_006_BM2A1_25_25_30_31	31	mr:NA,pt:NA,rh:NA,tm:NA,ts:NA,sv:BM,	
+hsa-miR-124 MIMAT0000422	TS_006_BM2A1_25_25_30_31	32	mr:8mer_MM,pt:8mer_MM,rh:NA,tm:6mer,ts:NA,sv:NA,	

@@ -48,6 +48,9 @@ public:
     // MKRMAWithSites
     seqan::CharString mSortValType;
 
+    // Mikan ensemble
+    seqan::StringSet<seqan::CharString> mToolPrefix;
+
     // Define method
     MKOptions() {
         mProgName = "mikan";
@@ -55,6 +58,8 @@ public:
         mProgDate = "July 2017";
 
         mOutputAlign = false;
+
+        mMaxHits = 0;
 
         mSortValType = "position";
     }

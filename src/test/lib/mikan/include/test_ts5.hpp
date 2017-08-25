@@ -8,8 +8,7 @@
 #include "ts5_core.hpp"
 #include "mk_input.hpp"
 
-typedef TestIOBase<mikan::MKInput> TestIOTS5;
-typedef TestSeed<ts5cs::TS5SeedSeqs, ts5cs::TS5Options, TestIOTS5> TestSeedTS5;
-typedef TestSite<ts5cs::TS5SeedSites, ts5cs::TS5SeedSeqs, ts5cs::TS5Options, TestIOTS5> TestSiteTS5;
+typedef TestSeed<ts5cs::TS5Options, ts5cs::TS5SeedSeqs> TestSeedTS5;
+typedef TestSite<ts5cs::TS5Options, ts5cs::TS5SeedSeqs, ts5cs::TS5SeedSites> TestSiteTS5;
 
 #endif //MIKAN_TEST_TS5_HPP_

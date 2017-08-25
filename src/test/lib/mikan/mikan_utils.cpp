@@ -24,6 +24,9 @@ int gtest_compare_two_files(seqan::CharString const &f1, seqan::CharString const
     }
 
     for (unsigned i = 0; i < lines1.size(); ++i) {
+        if (i >= lines2.size()) {
+            break;
+        }
         EXPECT_STREQ(lines1[i].c_str(), lines2[i].c_str());
     }
 
@@ -46,6 +49,10 @@ int gtest_compare_two_files2(
     }
 
     for (unsigned i = 0; i < lines1.size(); ++i) {
+        if (i >= lines2.size()) {
+            break;
+        }
+
         std::vector<std::string> flds1;
         std::vector<std::string> flds2;
         split_line(lines1[i], flds1);
@@ -84,6 +91,10 @@ int gtest_compare_two_files3(
     }
 
     for (unsigned i = 0; i < lines1.size(); ++i) {
+        if (i >= lines2.size()) {
+            break;
+        }
+        
         std::vector<std::string> flds1;
         std::vector<std::string> flds2;
         split_line(lines1[i], flds1);

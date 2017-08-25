@@ -8,8 +8,7 @@
 #include "pita_core.hpp"
 #include "mk_input.hpp"
 
-typedef TestIOBase<mikan::MKInput> TestIOPITA;
-typedef TestSeed<ptddg::PITASeedSeqs, ptddg::PITAOptions, TestIOPITA> TestSeedPITA;
-typedef TestSite<ptddg::PITASeedSites, ptddg::PITASeedSeqs, ptddg::PITAOptions, TestIOPITA> TestSitePITA;
+typedef TestSeed<ptddg::PITAOptions, ptddg::PITASeedSeqs> TestSeedPITA;
+typedef TestSite<ptddg::PITAOptions, ptddg::PITASeedSeqs, ptddg::PITASeedSites> TestSitePITA;
 
 #endif //MIKAN_TEST_PITA_HPP_

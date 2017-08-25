@@ -8,8 +8,10 @@
 #include "mk_typedef.hpp"
 #include "mk_input.hpp"
 
-template<class TCoreInput>
 class TestIOBase : public ::testing::Test {
+public:
+    bool SWAPOUTPUT;
+
 protected:
     char *IFNAME1;
     char *IFNAME2;
@@ -18,6 +20,18 @@ protected:
     char *O2FNAME1;
     char *O2FNAME2;
     char *OMPATH;
+
+    TestIOBase() {
+        SWAPOUTPUT = false;
+
+        IFNAME1 = (char *) "";
+        IFNAME2 = (char *) "";
+        O1FNAME1 = (char *) "";
+        O1FNAME2 = (char *) "";
+        O2FNAME1 = (char *) "";
+        O2FNAME2 = (char *) "";
+        OMPATH = (char *) "";
+    }
 
     virtual void SetUp() {
         seqan::CharString dfile = STRINGIZE(TEST_DATA_PATH);
@@ -31,13 +45,21 @@ protected:
         ompath += OMPATH;
         o1file1 = ompath;
         o1file2 = ompath;
-        o1file1 += O1FNAME1;
-        o1file2 += O1FNAME2;
-
         o2file1 = ompath;
         o2file2 = ompath;
-        o2file1 += O2FNAME1;
-        o2file2 += O2FNAME2;
+
+
+        if (SWAPOUTPUT) {
+            o2file1 += O1FNAME1;
+            o2file2 += O1FNAME2;
+            o1file1 += O2FNAME1;
+            o1file2 += O2FNAME2;
+        } else {
+            o1file1 += O1FNAME1;
+            o1file2 += O1FNAME2;
+            o2file1 += O2FNAME1;
+            o2file2 += O2FNAME2;
+        }
 
         argc = 5;
         argv[0] = (char *) "program";
@@ -52,22 +74,27 @@ protected:
         seqan::clear(mrna_seqs);
     }
 
+    void read_and_set_seqs() {
+        read_files();
+        set_seqs();
+    }
+
     void read_files() {
-        coreInput.set_file_names(ifile1, ifile2);
-        (void) coreInput.load_seq_from_file();
+        seqInput.set_file_names(ifile1, ifile2);
+        (void) seqInput.load_seq_from_file();
     }
 
     void set_seqs() {
-        mirna_ids = coreInput.get_mirna_ids();
-        mirna_seqs = coreInput.get_mirna_seqs();
-        mrna_ids = coreInput.get_mrna_ids();
-        mrna_seqs = coreInput.get_mrna_seqs();
+        mirna_ids = seqInput.get_mirna_ids();
+        mirna_seqs = seqInput.get_mirna_seqs();
+        mrna_ids = seqInput.get_mrna_ids();
+        mrna_seqs = seqInput.get_mrna_seqs();
     }
 
     int argc;
     char *argv[6];
 
-    TCoreInput coreInput;
+    mikan::MKInput seqInput;
 
     seqan::CharString ifile1;
     seqan::CharString ifile2;
