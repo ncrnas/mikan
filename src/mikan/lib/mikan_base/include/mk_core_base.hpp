@@ -62,7 +62,7 @@ public:
     }
 
     // Method prototypes
-    void init_from_args(mikan::MKOptions const &opts);
+    virtual void init_from_args(mikan::MKOptions const &opts);
 
     int open_output_file();
 

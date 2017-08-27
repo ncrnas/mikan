@@ -27,6 +27,9 @@ namespace mkens {
 
 class MKECore : public mikan::MKCoreBase {
 public:
+    // Define variable
+    seqan::String<bool> mEffectiveTools;
+
     // Define methods
     MKECore(mkens::MKEOptions const &pOpts,
             mikan::TCharSet const &pMiRNAIds,
@@ -36,6 +39,7 @@ public:
             mikan::TIndexQGram &pRNAIdx,
             mikan::TFinder &pFinder) :
             MKCoreBase(pOpts, pMiRNAIds, pMiRNASeqs, pMRNAIds, pMRNASeqs, pRNAIdx, pFinder),
+            mMKEOpts(pOpts),
             mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
             mSiteScores(pOpts),
             mRNAScores(pOpts),
@@ -44,7 +48,12 @@ public:
             mRH2Core(pOpts.mRH2Opts, pMiRNAIds, pMiRNASeqs, pMRNAIds, pMRNASeqs, pRNAIdx, pFinder),
             mTM1Core(pOpts.mTM1Opts, pMiRNAIds, pMiRNASeqs, pMRNAIds, pMRNASeqs, pRNAIdx, pFinder),
             mTS5Core(pOpts.mTS5Opts, pMiRNAIds, pMiRNASeqs, pMRNAIds, pMRNASeqs, pRNAIdx, pFinder),
-            mTSSVMCore(pOpts.mTSSVMOpts, pMiRNAIds, pMiRNASeqs, pMRNAIds, pMRNASeqs, pRNAIdx, pFinder) {}
+            mTSSVMCore(pOpts.mTSSVMOpts, pMiRNAIds, pMiRNASeqs, pMRNAIds, pMRNASeqs, pRNAIdx, pFinder) {
+
+        set_effective_tools();
+        init_score_lists();
+
+    }
 
     virtual int find_seed_sites(unsigned pIdx);
 
@@ -63,6 +72,8 @@ public:
     virtual mikan::MKRNAScores &get_rna_scores() { return mRNAScores; };
 
 private:
+    mkens::MKEOptions const &mMKEOpts;
+
     MKESeedSites mSeedSites;
     MKESiteScores mSiteScores;
     MKERNAScores mRNAScores;
@@ -73,6 +84,9 @@ private:
     tm1p::TM1Core mTM1Core;
     ts5cs::TS5Core mTS5Core;
     tssvm::TSSVMCore mTSSVMCore;
+
+    unsigned mEffectiveToolN;
+    std::map<unsigned, unsigned> mIdxMap;
 
     mikan::MKCoreBase &get_tool_core(unsigned pIdx) {
         switch (pIdx) {
@@ -101,7 +115,9 @@ private:
 
     int combine_seed_types();
 
-    int combine_site_scores();
+    void set_effective_tools();
+
+    void init_score_lists();
 
 };
 

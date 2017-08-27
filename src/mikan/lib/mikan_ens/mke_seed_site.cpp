@@ -75,9 +75,8 @@ void MKESeedSites::add_seed_types(
         if (!pSeedSites.mEffectiveSites[i]) {
             continue;
         }
-        TPosPair pair = std::make_pair(RNAPos[i], S1Pos[i]);
 
-        unsigned idx = mPosPairMap[pair];
+        unsigned idx = get_idx_from_pos(RNAPos[i], S1Pos[i]);
         seqan::CharString seedType;
         append(seedType, pPrefix);
         append(seedType, ":");
