@@ -32,8 +32,6 @@ public:
 
     }
 
-    void set_score(int i, float val) { mMFEScores[i] = val; };
-
     virtual float get_score(int i) { return mMFEScores[i]; }
 
     virtual float get_score(int, int pIdx) { return mMFEScores[pIdx]; }

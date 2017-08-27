@@ -130,8 +130,8 @@ public:
 
     virtual float get_score(int pIdx) { return mAlignScores.get_score(pIdx); }
 
-    virtual float get_score(int pToolIdx, int pIdx) {
-        if (pToolIdx == 1) {
+    virtual float get_score(int pTypeIdx, int pIdx) {
+        if (pTypeIdx == 1) {
             return mEnergyScores.get_score(pIdx);
         } else {
             return mAlignScores.get_score(pIdx);
