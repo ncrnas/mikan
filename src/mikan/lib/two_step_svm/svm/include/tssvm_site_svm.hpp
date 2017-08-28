@@ -50,9 +50,10 @@ public:
     // Define types
     typedef seqan::StringSet<seqan::String<float> > TFeatSet;
 
-public:
     // Define methods
     TSSVMSiteInputVector(TSSVMSiteModel &pModel) : mModel(pModel), mInputVec(95) {}
+
+    float get_score(int i) { return mScores[i]; }
 
     const seqan::String<float> &get_scores() { return mScores; }
 
@@ -66,7 +67,6 @@ private:
     Eigen::VectorXf mInputVec;
     seqan::String<float> mScores;
 
-private:
     int calc_score(TSSVMRawFeatures &pSiteFeatures);
 
     void print_input_vector();

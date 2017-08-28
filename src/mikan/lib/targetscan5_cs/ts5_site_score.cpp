@@ -11,7 +11,7 @@ namespace ts5cs {
 // TS5SiteScores methods
 //
 void TS5SiteScores::resize_scores(int pSize) {
-    resize(mContextScores, pSize);
+    resize(mSiteScores, pSize);
 
     mSeedTypes.resize_scores(pSize);
     mSitePos.resize_scores(pSize);
@@ -21,8 +21,6 @@ void TS5SiteScores::resize_scores(int pSize) {
 
 void TS5SiteScores::clear_scores() {
     mikan::MKSiteScores::clear_scores();
-
-    clear(mContextScores);
 
     mRawFeatures.clear_features();
     mSeedTypes.clear_scores();
@@ -57,7 +55,7 @@ int TS5SiteScores::calc_scores(
 
     for (int i = 0; i < lenScores; ++i) {
         if (!pSeedSites.mEffectiveSites[i]) {
-            set_score(i, 0.0);
+            mSiteScores[i] =  0.0;
             mSeedTypes.set_score(i, 0.0);
             mSitePos.set_score(i, 0.0);
             mAURich.set_score(i, 0.0);
@@ -80,7 +78,7 @@ int TS5SiteScores::calc_scores(
 
         totalScore = seedTypeScore + sitePosScore + auRichScore + threePrimePairScore;
 
-        mContextScores[i] = totalScore;
+        mSiteScores[i] = totalScore;
 
     }
 

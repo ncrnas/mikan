@@ -135,19 +135,11 @@ class TS5SiteScores : public mikan::MKSiteScores {
 public:
     // Define methods
     explicit TS5SiteScores(mikan::MKOptions const &opts) :
-            MKSiteScores(opts) {}
+            MKSiteScores(opts) {
 
-    void set_score(int i, float val) { mContextScores[i] = val; };
-
-    float get_score(int i) { return mContextScores[i]; }
-
-    float &get_seed_type_score(int i) { return mSeedTypes.get_score(i); }
-
-    float &get_site_pos_score(int i) { return mSitePos.get_score(i); }
-
-    float &get_au_rich_score(int i) { return mAURich.get_score(i); }
-
-    float &get_three_prime_pair_score(int i) { return mThreePrimePair.get_score(i); }
+        resize(mScoreTypes, 1);
+        mScoreTypes[0] = "ctx";
+    }
 
     const TS5Alignment &get_alignment() { return mRawFeatures.get_alignment(); }
 
@@ -158,7 +150,6 @@ public:
                             mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
 
 private:
-    seqan::String<float> mContextScores;
     TS5RawFeatures mRawFeatures;
     TS5ScoreSeedType mSeedTypes;
     TS5ScoreSitePos mSitePos;

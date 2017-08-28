@@ -18,19 +18,17 @@ class MKESeedSites : public mikan::MKSeedSites {
 public:
     // Define methods
     MKESeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
-            MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {
-
-        resize(mSeedTypeList, mkens::TOOL_NUM);
-
-    }
+            MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {}
 
     unsigned get_idx_from_pos(unsigned pMRNAPos, unsigned pSitePos) {
         TPosPair pair = std::make_pair(pMRNAPos, pSitePos);
         return mPosPairMap[pair];
-    };
+    }
 
     // Method prototypes
     virtual void clear_pos();
+
+    void init_site_list(unsigned pSize) { resize(mSeedTypeList, pSize); }
 
     void add_to_set(mikan::MKSeedSites &pSeedSites, unsigned pToolIdx, seqan::CharString &pPrefix);
 

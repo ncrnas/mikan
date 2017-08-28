@@ -99,11 +99,26 @@ public:
             mDGOpenScores(mVRws),
             mAlign(mVRws) {
 
+        resize(mScoreTypes, 3);
+        mScoreTypes[0] = "ddg";
+        mScoreTypes[1] = "dpx";
+        mScoreTypes[2] = "opn";
+
         init_from_args();
 
     }
 
     virtual float get_score(int i) { return mDDGScores[i]; }
+
+    virtual float get_score(int pTypeIdx, int pIdx) {
+        if (pTypeIdx == 2) {
+            return (float) mVRws.get_dg0(pIdx) - (float) mVRws.get_dg1(pIdx);
+        } else if (pTypeIdx == 1)  {
+            return (float) mVRws.get_dgall(pIdx);
+        } else {
+            return mDDGScores[pIdx];
+        }
+    }
 
     double get_dgall(int pRetIdx) { return mVRws.get_dgall(pRetIdx); }
 
