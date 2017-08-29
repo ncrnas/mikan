@@ -1,1 +1,0 @@
-hsa-miR-1 MIMAT0000416	NM_000001*chr1*-*0000001*9000001	79	mr:7mer_MMGU,pt:NA,rh:NA,tm:NA,ts:NA,sv:NA,	

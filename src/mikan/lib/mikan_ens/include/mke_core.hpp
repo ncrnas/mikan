@@ -11,6 +11,7 @@
 #include "mke_option.hpp"         // MKEOptions
 #include "mke_site_score.hpp"     // MKESiteScores
 #include "mke_seed_site.hpp"      // MKESeedSites
+#include "mke_rna_sites.hpp"      // MKERMAWithSites
 #include "mke_rna_score.hpp"      // MKERNAScores
 #include "mr3_core.hpp"           // MR3Core
 #include "pita_core.hpp"          // PITACore
@@ -42,6 +43,7 @@ public:
             mMKEOpts(pOpts),
             mSeedSites(pRNAIdx, pFinder, pMRNASeqs),
             mSiteScores(pOpts),
+            mRNAWithSites(pOpts),
             mRNAScores(pOpts),
             mMR3Core(pOpts.mMR3Opts, pMiRNAIds, pMiRNASeqs, pMRNAIds, pMRNASeqs, pRNAIdx, pFinder),
             mPITACore(pOpts.mPITAOpts, pMiRNAIds, pMiRNASeqs, pMRNAIds, pMRNASeqs, pRNAIdx, pFinder),
@@ -76,6 +78,7 @@ private:
 
     MKESeedSites mSeedSites;
     MKESiteScores mSiteScores;
+    MKERMAWithSites mRNAWithSites;
     MKERNAScores mRNAScores;
 
     mr3as::MR3Core mMR3Core;

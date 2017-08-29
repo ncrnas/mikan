@@ -5,6 +5,7 @@ set(MKE_SOURCE
         ${CMAKE_CURRENT_SOURCE_DIR}/mke_option.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/mke_seed_site.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/mke_site_score.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/mke_rna_sites.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/mke_rna_score.cpp
         PARENT_SCOPE
         )
