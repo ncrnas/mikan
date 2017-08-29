@@ -24,7 +24,7 @@ public:
             mSiteInput(mSiteModel) {
 
         resize(mScoreTypes, 1);
-        mScoreTypes[0] = "slv";
+        mScoreTypes[0] = "svm";
     }
 
     virtual float get_score(int i) { return mSiteInput.get_score(i); }

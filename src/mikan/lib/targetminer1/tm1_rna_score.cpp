@@ -38,12 +38,18 @@ int TM1RNAScores::calc_scores(
 
     const seqan::String<unsigned> &siteCounts = mMRNAFeatures.get_site_counts();
     const seqan::String<float> &scores = mMRNAInput.get_scores();
+    mikan::TMRNAPosSet &uniqRNAPosSet = pRNAWithSites.get_uniq_mrna_pos_set();
 
-    resize(mRNAScores, length(siteCounts));
-    resize(mPredictions, length(siteCounts));
-    resize(mSiteNum, length(siteCounts));
+    resize(mRNAScores, length(siteCounts), 0.0);
+    resize(mPredictions, length(siteCounts), 0);
+    resize(mSiteNum, length(siteCounts), 0);
+    resize(mMRNAPos, length(siteCounts), 0);
+    resize(mEffectiveRNAs, length(siteCounts), false);
 
     for (unsigned i = 0; i < length(siteCounts); ++i) {
+        if (!pRNAWithSites.mEffectiveRNAs[i]) {
+            continue;
+        }
 
         mRNAScores[i] = roundf(scores[i] * 1000.0) / 1000.0;
         if (mRNAScores[i] > 0) {
@@ -52,6 +58,8 @@ int TM1RNAScores::calc_scores(
             mPredictions[i] = -1;
         }
         mSiteNum[i] = siteCounts[i];
+        mMRNAPos[i] = uniqRNAPosSet[i];
+        mEffectiveRNAs[i] = true;
     }
 
     return 0;

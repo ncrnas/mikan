@@ -32,11 +32,11 @@ public:
     // Method prototypes
     void init_from_args();
 
-    void clear_maps();
+    virtual void clear_maps();
 
     void create_mrna_site_map(MKSeedSites &pSeedSites, MKSiteScores &pSiteScores);
 
-private:
+protected:
     void create_temp_map(mikan::MKSeedSites &pSeedSites);
 
     // Define types

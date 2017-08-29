@@ -25,9 +25,9 @@ int RH2RNAScores::calc_scores(
 
     resize(mRNAScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
     resize(mNormScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
-    resize(mMRNAPos, length(pRNAWithSites.mEffectiveRNAs));
+    resize(mMRNAPos, length(pRNAWithSites.mEffectiveRNAs), 0);
     resize(mSiteNum, length(pRNAWithSites.mEffectiveRNAs), 0);
-
+    resize(mEffectiveRNAs, length(pRNAWithSites.mEffectiveRNAs), false);
 
     float rnaScore, normScore;
     unsigned siteCount;
@@ -57,6 +57,7 @@ int RH2RNAScores::calc_scores(
         mNormScores[i] = normScore;
         mMRNAPos[i] = uniqRNAPosSet[i];
         mSiteNum[i] = siteCount;
+        mEffectiveRNAs[i] = true;
     }
 
     return 0;

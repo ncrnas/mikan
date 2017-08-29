@@ -22,6 +22,7 @@ int PITARNAScores::calc_scores(
     resize(mRNAScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
     resize(mSiteNum, length(pRNAWithSites.mEffectiveRNAs), 0);
     resize(mMRNAPos, length(pRNAWithSites.mEffectiveRNAs));
+    resize(mEffectiveRNAs, length(pRNAWithSites.mEffectiveRNAs), false);
 
     float score, max_score, exp_diff, total_score;
     unsigned site_count, max_idx;
@@ -68,6 +69,7 @@ int PITARNAScores::calc_scores(
         mRNAScores[i] = -1.0 * (max_score + std::log(total_score));
         mMRNAPos[i] = uniqRNAPosSet[i];
         mSiteNum[i] = site_count;
+        mEffectiveRNAs[i] = true;
 
         clear(sitePos);
     }
