@@ -16,7 +16,10 @@ namespace tm1p {
 class TM1RNAScores : public mikan::MKRNAScores {
 public:
     // Define methods
-    explicit TM1RNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts) {}
+    explicit TM1RNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts) {
+        resize(mScoreTypes, 1);
+        mScoreTypes[0] = "svm";
+    }
 
     const seqan::String<int> &get_labels() { return mPredictions; }
 

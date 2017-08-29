@@ -16,7 +16,10 @@ namespace ts5cs {
 class TS5RNAScores : public mikan::MKRNAScores {
 public:
     // Define methods
-    explicit TS5RNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts) {}
+    explicit TS5RNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts) {
+        resize(mScoreTypes, 1);
+        mScoreTypes[0] = "ctx";
+    }
 
     // Method prototypes
     using mikan::MKRNAScores::calc_scores;

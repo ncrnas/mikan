@@ -61,6 +61,9 @@ void MKECore::init_score_lists() {
         mikan::MKSiteScores &siteScores = core.get_site_scores();
         seqan::CharString prefix = mMKEOpts.mToolPrefix[i];
         mSiteScores.add_score_types(mMKEOpts, siteScores, prefix);
+
+        mikan::MKRNAScores &RNAScores = core.get_rna_scores();
+        mRNAScores.add_score_types(mMKEOpts, RNAScores, prefix);
     }
 
 }
@@ -72,6 +75,7 @@ void MKECore::clear_all() {
     }
     mSeedSites.clear_pos();
     mSiteScores.clear_scores();
+    mRNAWithSites.clear_maps();
     mRNAScores.clear_scores();
 }
 
@@ -124,7 +128,6 @@ int MKECore::combine_seed_types() {
     return 0;
 }
 
-
 int MKECore::calc_site_scores(unsigned pIdx) {
     if (mCalcSiteScore) {
         mSiteScores.init_score_list(mSeedSites);
@@ -156,20 +159,31 @@ int MKECore::calc_site_scores(unsigned pIdx) {
 }
 
 int MKECore::calc_rna_scores(unsigned pIdx) {
-    int retVal;
-
     if (mCalcRNAScore) {
+        mRNAWithSites.add_to_set(mSeedSites, mSiteScores);
+        mRNAWithSites.create_pos_map();
+
+        mRNAScores.init_score_list(mRNAWithSites);
+
         for (unsigned i = 0; i < mkens::TOOL_NUM; i++) {
             if (!mEffectiveTools[i]) {
                 continue;
             }
 
             mikan::MKCoreBase &core = get_tool_core(i);
-            retVal = core.calc_rna_scores(pIdx);
+            int retVal = core.calc_rna_scores(pIdx);
             if (retVal != 0) {
                 return 1;
             }
+
+            mikan::MKRNAScores &RNAScores = core.get_rna_scores();
+            seqan::CharString prefix = mMKEOpts.mToolPrefix[i];
+            mRNAScores.add_scores(mMKEOpts, mRNAWithSites, RNAScores, prefix);
         }
+
+        mRNAScores.combine_scores(mMKEOpts);
+        mRNAScores.set_site_count(mSeedSites, mSiteScores, mRNAWithSites);
+
     }
 
     return 0;
@@ -236,14 +250,18 @@ int MKECore::write_rna_score(seqan::CharString const &pMiRNAId) {
     std::multimap<double, unsigned> sortedMRNAByScore;
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
-        sortedMRNAByScore.insert(TPosPair((float) totalScores[i], i));
+        if (!mRNAScores.mEffectiveRNAs[i]) {
+            continue;
+        }
+        sortedMRNAByScore.insert(TPosPair((float) -1 * totalScores[i], i));
     }
 
     for (itPos = sortedMRNAByScore.begin(); itPos != sortedMRNAByScore.end(); ++itPos) {
         mOFile2 << toCString(pMiRNAId) << "\t";
         mOFile2 << toCString((seqan::CharString) mMRNAIds[mRNAPos[(*itPos).second]]) << "\t";
         mOFile2 << totalScores[(*itPos).second] << "\t";
-        mOFile2 << siteNum[(*itPos).second];
+        mOFile2 << siteNum[(*itPos).second] << "\t";
+        mOFile2 << toCString(mRNAScores.get_tool_score((*itPos).second));
         mOFile2 << std::endl;
     }
 

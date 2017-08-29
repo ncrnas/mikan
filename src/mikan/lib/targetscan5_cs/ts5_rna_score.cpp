@@ -20,8 +20,9 @@ int TS5RNAScores::calc_scores(
     seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = pRNAWithSites.get_rna_site_pos_map();
 
     resize(mRNAScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
-    resize(mMRNAPos, length(pRNAWithSites.mEffectiveRNAs));
-    resize(mSiteNum, length(pRNAWithSites.mEffectiveRNAs));
+    resize(mMRNAPos, length(pRNAWithSites.mEffectiveRNAs), 0);
+    resize(mSiteNum, length(pRNAWithSites.mEffectiveRNAs), 0);
+    resize(mEffectiveRNAs, length(pRNAWithSites.mEffectiveRNAs), false);
 
     float score, rnaScore;
     unsigned siteCount;
@@ -49,6 +50,8 @@ int TS5RNAScores::calc_scores(
         mRNAScores[i] = rnaScore;
         mMRNAPos[i] = uniqRNAPosSet[i];
         mSiteNum[i] = siteCount;
+        mEffectiveRNAs[i] = true;
+
     }
 
     return 0;

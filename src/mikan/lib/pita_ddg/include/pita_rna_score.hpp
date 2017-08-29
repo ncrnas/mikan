@@ -25,11 +25,11 @@ public:
     // Constant values
     const double MIN_EXP_DIFF;
 
-    // Define type
-    typedef std::set<unsigned>::iterator TItSet;
-
     // Define methods
-    explicit PITARNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts), MIN_EXP_DIFF(-100.0) {}
+    explicit PITARNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts), MIN_EXP_DIFF(-100.0) {
+        resize(mScoreTypes, 1);
+        mScoreTypes[0] = "ddg";
+    }
 
     // Method prototype
     using mikan::MKRNAScores::calc_scores;

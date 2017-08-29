@@ -17,9 +17,6 @@ void MR3RNAScores::clear_scores() {
     clear(mLogMaxEnScores);
 }
 
-int calc_scores(MR3SeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
-                mikan::MKRMAWithSites &pRNAWithSites, MR3SiteScores &pSiteScores);
-
 int MR3RNAScores::calc_scores(
         mikan::MKSeedSites &pSeedSites,
         mikan::TRNASet const &,
@@ -33,8 +30,8 @@ int MR3RNAScores::calc_scores(
     resize(mTotalEnScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
     resize(mLogMaxAlignScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
     resize(mLogMaxEnScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
-    resize(mEffectiveRNAs, length(pRNAWithSites.mEffectiveRNAs));
-    resize(mMRNAPos, length(pRNAWithSites.mEffectiveRNAs));
+    resize(mEffectiveRNAs, length(pRNAWithSites.mEffectiveRNAs), false);
+    resize(mMRNAPos, length(pRNAWithSites.mEffectiveRNAs), 0);
     resize(mSiteNum, length(pRNAWithSites.mEffectiveRNAs), 0);
 
 

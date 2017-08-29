@@ -21,13 +21,17 @@ public:
     seqan::String<bool> mEffectiveRNAs;
 
     // Define methods
-    explicit MKRNAScores(mikan::MKOptions const &opts) : mOpts(opts) {}
+    explicit MKRNAScores(mikan::MKOptions const &opts) : mOpts(opts) {
+        resize(mScoreTypes, 0);
+    }
 
     virtual const seqan::String<float> &get_scores() { return mRNAScores; }
 
-    const seqan::String<int> &get_mrna_pos() { return mMRNAPos; }
+    virtual float get_score(int, int pIdx) { return mRNAScores[pIdx]; }
 
-    const seqan::String<int> &get_site_num() { return mSiteNum; }
+    const mikan::TMRNAPosSet &get_mrna_pos() { return mMRNAPos; }
+
+    const seqan::String<unsigned> &get_site_num() { return mSiteNum; }
 
     // Method prototypes
     virtual void clear_scores();
@@ -35,12 +39,15 @@ public:
     virtual int calc_scores(mikan::MKSeedSites &pSeedSites, mikan::TRNASet const &pMRNASeqs,
                             mikan::MKRMAWithSites &pRNAWithSites, mikan::MKSiteScores &pSiteScores);
 
+    const TCharSet &get_score_types() { return mScoreTypes; }
+
 protected:
     // Define variables
     mikan::MKOptions const &mOpts;
     seqan::String<float> mRNAScores;
-    seqan::String<int> mMRNAPos;
-    seqan::String<int> mSiteNum;
+    mikan::TMRNAPosSet mMRNAPos;
+    seqan::String<unsigned> mSiteNum;
+    mikan::TCharSet mScoreTypes;
 
 };
 

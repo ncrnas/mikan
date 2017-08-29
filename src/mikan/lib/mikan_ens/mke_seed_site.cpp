@@ -12,8 +12,8 @@ namespace mkens {
 void MKESeedSites::clear_pos() {
     mikan::MKSeedSites::clear_pos();
 
-    clear(mUniqSet);
-    clear(mPosPairMap);
+    mUniqSet.clear();
+    mPosPairMap.clear();
 
     for (unsigned i = 0; i < length(mSeedTypeList); i++) {
         clear(mSeedTypeList[i]);
