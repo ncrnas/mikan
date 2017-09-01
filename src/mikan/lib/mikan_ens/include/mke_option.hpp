@@ -5,6 +5,7 @@
 #include <seqan/arg_parse.h>
 #include "mk_option.hpp"        // MKOptions
 #include "mke_const.hpp"        // TOOL_NUM
+#include "mke_config.hpp"       // MKEConfig
 #include "mr3_option.hpp"       // MR3Options
 #include "pita_option.hpp"      // PITAOptions
 #include "rh2_option.hpp"       // RH2Options
@@ -39,6 +40,8 @@ public:
     tm1p::TM1Options mTM1Opts;
     ts5cs::TS5Options mTS5Opts;
     tssvm::TSSVMOptions mTSSVMOpts;
+
+    MKEConfig mConf;
 
 private:
     virtual void setProgramDescription(seqan::ArgumentParser &pParser);
