@@ -25,9 +25,19 @@ void MKERNAScores::add_score_types(
         seqan::CharString &pPrefix) {
 
     const mikan::TCharSet &scoreTypes = pRNAScores.get_score_types();
+    const MKEConfig &conf = pMKEOpts.get_conf();
 
     for (unsigned i = 0; i < length(scoreTypes); ++i) {
-        seqan::CharString sType;
+        seqan::CharString sType, sTypeC;
+        append(sTypeC, pPrefix);
+        append(sTypeC, ":rna:");
+        append(sTypeC, scoreTypes[i]);
+
+        std::string ckey = toCString(sTypeC);
+        if (!conf.get_rna_flag(ckey)) {
+            continue;
+        }
+
         append(sType, pPrefix);
         append(sType, ":");
         append(sType, scoreTypes[i]);
@@ -69,9 +79,21 @@ void MKERNAScores::add_scores(
     mikan::TMRNAPosSet &uniqRNAPosSet = pRNAWithSites.get_uniq_mrna_pos_set();
     const mikan::TMRNAPosSet &RNAPos = pRNAScores.get_mrna_pos();
     const mikan::TCharSet &scoreTypes = pRNAScores.get_score_types();
+    const MKEConfig &conf = pMKEOpts.get_conf();
 
     for (unsigned i = 0; i < length(scoreTypes); ++i) {
-        seqan::CharString sType;
+        seqan::CharString sType, sTypeC;
+        append(sTypeC, pPrefix);
+        append(sTypeC, ":rna:");
+        append(sTypeC, scoreTypes[i]);
+
+        std::string ckey = toCString(sTypeC);
+        if (!conf.get_rna_flag(ckey)) {
+            continue;
+        }
+        float lBound = conf.get_rna_lower(ckey);
+        float uBound = conf.get_rna_upper(ckey);
+
         append(sType, pPrefix);
         append(sType, ":");
         append(sType, scoreTypes[i]);
@@ -115,10 +137,10 @@ void MKERNAScores::combine_scores(MKEOptions const &pMKEOpts) {
         std::stringstream stream;
         float score = 0;
         for (unsigned j = 0; j < mScoreTypeN; ++j) {
-            stream << mScoreTypes[j] << ":" ;
+            stream << mScoreTypes[j] << ":";
             float tscore = mRNARawScoreList[j][i];
             tscore = roundf(tscore * 100.0f) / 100.0f;
-            stream << tscore << "," ;
+            stream << tscore << ",";
 
             float weight = 1;
             score += weight * mRNANormScoreList[j][i];

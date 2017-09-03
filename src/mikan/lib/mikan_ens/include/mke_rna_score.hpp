@@ -32,7 +32,7 @@ public:
     void init_score_list(mkens::MKERMAWithSites &pRNAWithSites);
 
     void add_scores(MKEOptions const &pMKEOpts, mkens::MKERMAWithSites &pRNAWithSites,
-                    mikan::MKRNAScores &pRNAScores,  seqan::CharString &pPrefix);
+                    mikan::MKRNAScores &pRNAScores, seqan::CharString &pPrefix);
 
     void combine_scores(MKEOptions const &pMKEOpts);
 

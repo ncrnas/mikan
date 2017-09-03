@@ -29,7 +29,7 @@ public:
     void init_score_list(MKESeedSites &pMKESeedSites);
 
     void add_scores(MKEOptions const &pMKEOpts, mikan::MKSeedSites &pSeedSites, MKESeedSites &pMKESeedSites,
-                    mikan::MKSiteScores &pSeedScores,  seqan::CharString &pPrefix);
+                    mikan::MKSiteScores &pSeedScores, seqan::CharString &pPrefix);
 
     void combine_scores(MKEOptions const &pMKEOpts);
 

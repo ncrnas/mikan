@@ -26,9 +26,19 @@ void MKESiteScores::add_score_types(
         seqan::CharString &pPrefix) {
 
     const mikan::TCharSet &scoreTypes = pSiteScores.get_score_types();
+    const MKEConfig &conf = pMKEOpts.get_conf();
 
     for (unsigned i = 0; i < length(scoreTypes); ++i) {
-        seqan::CharString sType;
+        seqan::CharString sType, sTypeC;
+        append(sTypeC, pPrefix);
+        append(sTypeC, ":site:");
+        append(sTypeC, scoreTypes[i]);
+
+        std::string ckey = toCString(sTypeC);
+        if (!conf.get_site_flag(ckey)) {
+            continue;
+        }
+
         append(sType, pPrefix);
         append(sType, ":");
         append(sType, scoreTypes[i]);
@@ -67,13 +77,24 @@ void MKESiteScores::add_scores(
     const mikan::TMRNAPosSet &RNAPos = pSeedSites.get_mrna_pos();
     const mikan::TMRNAPosSet &S1Pos = pSeedSites.get_site_pos_s1();
     const mikan::TCharSet &scoreTypes = pSiteScores.get_score_types();
+    const MKEConfig &conf = pMKEOpts.get_conf();
 
     for (unsigned i = 0; i < length(scoreTypes); ++i) {
-        seqan::CharString sType;
+        seqan::CharString sType, sTypeC;
+        append(sTypeC, pPrefix);
+        append(sTypeC, ":site:");
+        append(sTypeC, scoreTypes[i]);
+
+        std::string ckey = toCString(sTypeC);
+        if (!conf.get_site_flag(ckey)) {
+            continue;
+        }
+        float lBound = conf.get_site_lower(ckey);
+        float uBound = conf.get_site_upper(ckey);
+
         append(sType, pPrefix);
         append(sType, ":");
         append(sType, scoreTypes[i]);
-
         unsigned idxTool = mIdxMap[std::string(toCString(sType))];
 
         for (unsigned j = 0; j < length(pSeedSites.mEffectiveSites); j++) {
@@ -84,7 +105,7 @@ void MKESiteScores::add_scores(
             unsigned idxSite = pMKESeedSites.get_idx_from_pos(RNAPos[j], S1Pos[j]);
             float score = pSiteScores.get_score(i, j);
             mSiteRawScoreList[idxTool][idxSite] = score;
-            mSiteNormScoreList[idxTool][idxSite] = normalize_score(score, pMKEOpts, sType);
+            mSiteNormScoreList[idxTool][idxSite] = normalize_score(score, pMKEOpts, sTypeC);
             mEffectiveSites[idxSite] = true;
         }
     }
@@ -97,6 +118,7 @@ float MKESiteScores::normalize_score(
         seqan::CharString &pScoreType) {
 
     float nScore = pScore;
+    const MKEConfig &conf = pMKEOpts.get_conf();
 
     return nScore;
 }
@@ -112,11 +134,11 @@ void MKESiteScores::combine_scores(MKEOptions const &pMKEOpts) {
         std::stringstream stream;
         float score = 0;
         for (unsigned j = 0; j < mScoreTypeN; ++j) {
-            stream << mScoreTypes[j] << ":" ;
+            stream << mScoreTypes[j] << ":";
             float tscore = mSiteRawScoreList[j][i];
 //            std::cout << i << ", " << j <<  ", " << tscore << std::endl;
             tscore = roundf(tscore * 100.0f) / 100.0f;
-            stream << tscore << "," ;
+            stream << tscore << ",";
 
             float weight = 1;
             score += weight * mSiteNormScoreList[j][i];
@@ -128,7 +150,6 @@ void MKESiteScores::combine_scores(MKEOptions const &pMKEOpts) {
 
     }
 }
-
 
 
 } // namespace mkens

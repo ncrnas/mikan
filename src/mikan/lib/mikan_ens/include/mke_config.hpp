@@ -6,19 +6,15 @@
 
 namespace mkens {
 
-struct ToolIdx
-{
-    enum idx
-    {
+struct ToolIdx {
+    enum idx {
         MR, PT, RH, TM, TS, SV
     };
     static const unsigned Count = 6;
 };
 
-struct SiteIdx
-{
-    enum idx
-    {
+struct SiteIdx {
+    enum idx {
         MRAlg, MREng,
         PTDdg, PTDpx, PTOpn,
         RHMfe,
@@ -28,10 +24,8 @@ struct SiteIdx
     static const unsigned Count = 8;
 };
 
-struct RNAIdx
-{
-    enum idx
-    {
+struct RNAIdx {
+    enum idx {
         MRAlg, MREng,
         PTDdg, PTDpx, PTOpn,
         RHMfe,
@@ -290,25 +284,62 @@ public:
         init_config();
     }
 
+    bool get_tool_flag(unsigned pIdx) const {
+        return get_bool_from_map(mToolFlg, mToolKeys[pIdx]);
+    }
+
+    bool get_site_flag(std::string &pKey) const {
+        return get_bool_from_map(mSiteFlg, pKey);
+    }
+
+    bool get_rna_flag(std::string &pKey) const {
+        return get_bool_from_map(mRNAFlg, pKey);
+    }
+
+    float get_site_lower(std::string &pKey) const {
+        return get_float_from_map(mSiteLower, pKey);
+    }
+
+    float get_site_upper(std::string &pKey) const {
+        return get_float_from_map(mSiteUpper, pKey);
+    }
+
+    float get_rna_lower(std::string &pKey) const {
+        return get_float_from_map(mRNALower, pKey);
+    }
+
+    float get_rna_upper(std::string &pKey) const {
+        return get_float_from_map(mRNAUpper, pKey);
+    }
+
     // Method prototypes
     void init_config();
+
     void print_config();
+
     int parse_config(std::string &pConfFile);
 
 private:
     typedef std::vector<std::string>::iterator TKeyIt;
 
     void init_flags();
+
     void init_weights();
+
     void init_tool_config();
 
     std::string &get_bool_str(bool pFlag);
+
     void print_flags();
+
     void print_weights();
+
     void print_tool_config();
 
     int parse_flags(INIReader &pReader);
+
     int parse_weights(INIReader &pReader);
+
     int parse_tool_config(INIReader &pReader);
 
     // Flags
@@ -379,6 +410,26 @@ private:
         key.replace(6, 1, "_");
 
         return key;  // copy
+    }
+
+    float get_float_from_map(const std::map<std::string, float> &pMap, std::string pKey) const {
+        typedef std::map<std::string, float>::const_iterator TMFIt;
+        TMFIt it = pMap.find(pKey);
+        if (it != pMap.end()) {
+            return (*it).second;
+        } else {
+            return false;
+        }
+    }
+
+    bool get_bool_from_map(const std::map<std::string, bool> &pMap, std::string pKey) const {
+        typedef std::map<std::string, bool>::const_iterator TMBIt;
+        TMBIt it = pMap.find(pKey);
+        if (it != pMap.end()) {
+            return (*it).second;
+        } else {
+            return false;
+        }
     }
 
 };

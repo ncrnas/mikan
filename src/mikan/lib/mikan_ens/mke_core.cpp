@@ -22,30 +22,15 @@ void MKECore::set_effective_tools() {
     resize(mEffectiveTools, mkens::TOOL_NUM, false);
 
     unsigned n = 0;
+    const MKEConfig &conf = mMKEOpts.get_conf();
 
-    mEffectiveTools[0] = true;
-    mIdxMap[0] = n;
-    ++n;
-
-    mEffectiveTools[1] = true;
-    mIdxMap[1] = n;
-    ++n;
-
-    mEffectiveTools[2] = true;
-    mIdxMap[2] = n;
-    ++n;
-
-    mEffectiveTools[3] = true;
-    mIdxMap[3] = n;
-    ++n;
-
-    mEffectiveTools[4] = true;
-    mIdxMap[4] = n;
-    ++n;
-
-    mEffectiveTools[5] = true;
-    mIdxMap[5] = n;
-    ++n;
+    for (unsigned i = 0; i < mkens::TOOL_NUM; i++) {
+        if (conf.get_tool_flag(i)) {
+            mEffectiveTools[i] = true;
+            mIdxMap[i] = n;
+            ++n;
+        }
+    }
 
     mEffectiveToolN = n;
     mSeedSites.init_site_list(mEffectiveToolN);

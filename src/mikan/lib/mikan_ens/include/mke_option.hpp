@@ -43,6 +43,8 @@ public:
 
     MKEConfig mConf;
 
+    const MKEConfig &get_conf() const { return mConf; }
+
     // Method prototype
     seqan::ArgumentParser::ParseResult parseCommandLine(int argc, char const **argv);
 
