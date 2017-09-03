@@ -45,8 +45,6 @@ public:
 
     // Define method
     MKEConfig() :
-            mDESC("desc"),
-            mASC("asc"),
             mTrue("true"),
             mFalse("false") {
 
@@ -186,101 +184,101 @@ public:
         //
         mSiteDefLower.resize(SiteIdx::Count);
         mSiteDefUpper.resize(SiteIdx::Count);
-        mSiteDefOrder.resize(SiteIdx::Count);
+        mSiteDefReverse.resize(SiteIdx::Count);
 
         // miRanda alignment score
         mSiteDefLower[SiteIdx::MRAlg] = 0;
         mSiteDefUpper[SiteIdx::MRAlg] = 1;
-        mSiteDefOrder[SiteIdx::MRAlg] = mDESC;
-
+        mSiteDefReverse[SiteIdx::MRAlg] = false;
+        
         // miRanda energy score
         mSiteDefLower[SiteIdx::MREng] = 0;
         mSiteDefUpper[SiteIdx::MREng] = 1;
-        mSiteDefOrder[SiteIdx::MREng] = mDESC;
-
+        mSiteDefReverse[SiteIdx::MREng] = false;
+        
         // PITA ddG
         mSiteDefLower[SiteIdx::PTDdg] = 0;
         mSiteDefUpper[SiteIdx::PTDdg] = 1;
-        mSiteDefOrder[SiteIdx::PTDdg] = mDESC;
-
+        mSiteDefReverse[SiteIdx::PTDdg] = false;
+        
         // PITA dDuplex
         mSiteDefLower[SiteIdx::PTDpx] = 0;
         mSiteDefUpper[SiteIdx::PTDpx] = 1;
-        mSiteDefOrder[SiteIdx::PTDpx] = mDESC;
-
+        mSiteDefReverse[SiteIdx::PTDpx] = false;
+        
         // PITA dOpen
         mSiteDefLower[SiteIdx::PTOpn] = 0;
         mSiteDefUpper[SiteIdx::PTOpn] = 1;
-        mSiteDefOrder[SiteIdx::PTOpn] = mDESC;
-
+        mSiteDefReverse[SiteIdx::PTOpn] = false;
+        
         // RNAhybrid MFE
         mSiteDefLower[SiteIdx::RHMfe] = 0;
         mSiteDefUpper[SiteIdx::RHMfe] = 1;
-        mSiteDefOrder[SiteIdx::RHMfe] = mDESC;
-
+        mSiteDefReverse[SiteIdx::RHMfe] = false;
+        
         // TargetScan context score
         mSiteDefLower[SiteIdx::TSCtx] = 0;
         mSiteDefUpper[SiteIdx::TSCtx] = 1;
-        mSiteDefOrder[SiteIdx::TSCtx] = mDESC;
-
+        mSiteDefReverse[SiteIdx::TSCtx] = false;
+        
         // Two-step SVM score"
         mSiteDefLower[SiteIdx::SVSvm] = 0;
         mSiteDefUpper[SiteIdx::SVSvm] = 1;
-        mSiteDefOrder[SiteIdx::SVSvm] = mDESC;
-
+        mSiteDefReverse[SiteIdx::SVSvm] = false;
+                
         //
         // Default normalization parameters - RNA level
         //
         // RNA score default parameters for normalization
         mRNADefLower.resize(RNAIdx::Count);
         mRNADefUpper.resize(RNAIdx::Count);
-        mRNADefOrder.resize(RNAIdx::Count);
+        mRNADefReverse.resize(RNAIdx::Count);
 
         // miRanda alignment score
         mRNADefLower[RNAIdx::MRAlg] = 0;
         mRNADefUpper[RNAIdx::MRAlg] = 1;
-        mRNADefOrder[RNAIdx::MRAlg] = mDESC;
-
+        mRNADefReverse[RNAIdx::MRAlg] = false;
+        
         // miRanda energy score
         mRNADefLower[RNAIdx::MREng] = 0;
         mRNADefUpper[RNAIdx::MREng] = 1;
-        mRNADefOrder[RNAIdx::MREng] = mDESC;
-
+        mRNADefReverse[RNAIdx::MREng] = false;
+        
         // PITA ddG
         mRNADefLower[RNAIdx::PTDdg] = 0;
         mRNADefUpper[RNAIdx::PTDdg] = 1;
-        mRNADefOrder[RNAIdx::PTDdg] = mDESC;
-
+        mRNADefReverse[RNAIdx::PTDdg] = false;
+        
         // PITA dDuplex
         mRNADefLower[RNAIdx::PTDpx] = 0;
         mRNADefUpper[RNAIdx::PTDpx] = 1;
-        mRNADefOrder[RNAIdx::PTDpx] = mDESC;
-
+        mRNADefReverse[RNAIdx::PTDpx] = false;
+        
         // PITA dOpen
         mRNADefLower[RNAIdx::PTOpn] = 0;
         mRNADefUpper[RNAIdx::PTOpn] = 1;
-        mRNADefOrder[RNAIdx::PTOpn] = mDESC;
-
+        mRNADefReverse[RNAIdx::PTOpn] = false;
+        
         // RNAhybrid MFE
         mRNADefLower[RNAIdx::RHMfe] = 0;
         mRNADefUpper[RNAIdx::RHMfe] = 1;
-        mRNADefOrder[RNAIdx::RHMfe] = mDESC;
-
+        mRNADefReverse[RNAIdx::RHMfe] = false;
+        
         // TargetMiner SVM
         mRNADefLower[RNAIdx::TMSvm] = 0;
         mRNADefUpper[RNAIdx::TMSvm] = 1;
-        mRNADefOrder[RNAIdx::TMSvm] = mDESC;
-
+        mRNADefReverse[RNAIdx::TMSvm] = false;
+        
         // TargetScan context score
         mRNADefLower[RNAIdx::TSCtx] = 0;
         mRNADefUpper[RNAIdx::TSCtx] = 1;
-        mRNADefOrder[RNAIdx::TSCtx] = mDESC;
-
+        mRNADefReverse[RNAIdx::TSCtx] = false;
+        
         // Two-step SVM score
         mRNADefLower[RNAIdx::SVSvm] = 0;
         mRNADefUpper[RNAIdx::SVSvm] = 1;
-        mRNADefOrder[RNAIdx::SVSvm] = mDESC;
-
+        mRNADefReverse[RNAIdx::SVSvm] = false;
+        
         init_config();
     }
 
@@ -304,12 +302,20 @@ public:
         return get_float_from_map(mSiteUpper, pKey);
     }
 
+    bool get_site_reverse(std::string &pKey) const {
+        return get_bool_from_map(mSiteReverse, pKey);
+    }
+
     float get_rna_lower(std::string &pKey) const {
         return get_float_from_map(mRNALower, pKey);
     }
 
     float get_rna_upper(std::string &pKey) const {
         return get_float_from_map(mRNAUpper, pKey);
+    }
+
+    float get_rna_reverse(std::string &pKey) const {
+        return get_bool_from_map(mRNAReverse, pKey);
     }
 
     // Method prototypes
@@ -354,12 +360,12 @@ private:
     // Normalization parameters - site level
     std::map<std::string, float> mSiteLower;
     std::map<std::string, float> mSiteUpper;
-    std::map<std::string, std::string> mSiteOrder;
+    std::map<std::string, bool> mSiteReverse;
 
     // Normalization parameters - RNA level
     std::map<std::string, float> mRNALower;
     std::map<std::string, float> mRNAUpper;
-    std::map<std::string, std::string> mRNAOrder;
+    std::map<std::string, bool> mRNAReverse;
 
     // Basic parameters - tool level
     std::vector<std::string> mToolKeys;
@@ -383,15 +389,12 @@ private:
     // Default normalization parameters - Site level
     std::vector<float> mSiteDefLower;
     std::vector<float> mSiteDefUpper;
-    std::vector<std::string> mSiteDefOrder;
-
+    std::vector<bool> mSiteDefReverse;
+    
     // Default normalization parameters - RNA level
     std::vector<float> mRNADefLower;
     std::vector<float> mRNADefUpper;
-    std::vector<std::string> mRNADefOrder;
-
-    std::string mDESC;
-    std::string mASC;
+    std::vector<bool> mRNADefReverse;
 
     std::string mTrue;
     std::string mFalse;

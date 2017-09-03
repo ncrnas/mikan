@@ -49,14 +49,14 @@ void MKEConfig::init_tool_config() {
     for (unsigned i = 0; i < mSiteKeys.size(); ++i) {
         mSiteLower[mSiteKeys[i]] = mSiteDefLower[i];
         mSiteUpper[mSiteKeys[i]] = mSiteDefUpper[i];
-        mSiteOrder[mSiteKeys[i]] = mSiteDefOrder[i];
+        mSiteReverse[mSiteKeys[i]] = mSiteDefReverse[i];
     }
 
     // RNA level config
     for (unsigned i = 0; i < mRNAKeys.size(); ++i) {
         mRNALower[mRNAKeys[i]] = mRNADefLower[i];
         mRNAUpper[mRNAKeys[i]] = mRNADefUpper[i];
-        mRNAOrder[mRNAKeys[i]] = mRNADefOrder[i];
+        mRNAReverse[mRNAKeys[i]] = mRNADefReverse[i];
     }
 }
 
@@ -161,10 +161,10 @@ void MKEConfig::print_tool_config() {
         std::cout << mSiteUpper[mSiteKeys[i]];
         std::cout << "; Upper bound" << std::endl;
 
-        std::cout << "order = ";
-        std::cout << std::left << std::setw(CommentPos - 9) << std::setfill(' ');
-        std::cout << mSiteOrder[mSiteKeys[i]];
-        std::cout << "; Score order (desc or asc)" << std::endl;
+        std::cout << "reverse = ";
+        std::cout << std::left << std::setw(CommentPos - 11) << std::setfill(' ');
+        std::cout << get_bool_str(mSiteReverse[mSiteKeys[i]]);
+        std::cout << "; Reverse score order or not" << std::endl;
 
         std::cout << std::endl;
     }
@@ -189,10 +189,10 @@ void MKEConfig::print_tool_config() {
         std::cout << mRNAUpper[mRNAKeys[i]];
         std::cout << "; Upper bound" << std::endl;
 
-        std::cout << "order = ";
-        std::cout << std::left << std::setw(CommentPos - 9) << std::setfill(' ');
-        std::cout << mRNAOrder[mRNAKeys[i]];
-        std::cout << "; Score order (desc or asc)" << std::endl;
+        std::cout << "reverse = ";
+        std::cout << std::left << std::setw(CommentPos - 11) << std::setfill(' ');
+        std::cout << get_bool_str(mRNAReverse[mRNAKeys[i]]);
+        std::cout << "; Reverse score order or not" << std::endl;
 
         std::cout << std::endl;
     }
@@ -269,7 +269,7 @@ int MKEConfig::parse_tool_config(INIReader &pReader) {
 
         mSiteUpper[*it] = static_cast<float>(pReader.GetReal(*it, "upper", mSiteUpper[*it]));
 
-        mSiteOrder[*it] = pReader.Get(*it, "order", mSiteOrder[*it]);
+        mSiteReverse[*it] = pReader.GetBoolean(*it, "reverse", mSiteReverse[*it]);
     }
 
     // RNA level config
@@ -278,7 +278,7 @@ int MKEConfig::parse_tool_config(INIReader &pReader) {
 
         mRNAUpper[*it] = static_cast<float>(pReader.GetReal(*it, "upper", mRNAUpper[*it]));
 
-        mRNAOrder[*it] = pReader.Get(*it, "order", mRNAOrder[*it]);
+        mRNAReverse[*it] = pReader.GetBoolean(*it, "reverse", mRNAReverse[*it]);
     }
 
     return 0;

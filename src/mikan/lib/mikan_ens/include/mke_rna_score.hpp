@@ -48,8 +48,7 @@ public:
     mikan::TCharSet mToolScores;
 
 private:
-    float normalize_score(float pScore, MKEOptions const &pMKEOpts, seqan::CharString &pScoreType);
-
+    float normalize_score(float pScore, float pLower, float pUpper, bool pReverse);
 };
 
 } // namespace mkens

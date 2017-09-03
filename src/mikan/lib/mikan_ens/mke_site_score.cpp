@@ -91,6 +91,7 @@ void MKESiteScores::add_scores(
         }
         float lBound = conf.get_site_lower(ckey);
         float uBound = conf.get_site_upper(ckey);
+        bool isRev = conf.get_site_reverse(ckey);
 
         append(sType, pPrefix);
         append(sType, ":");
@@ -105,7 +106,7 @@ void MKESiteScores::add_scores(
             unsigned idxSite = pMKESeedSites.get_idx_from_pos(RNAPos[j], S1Pos[j]);
             float score = pSiteScores.get_score(i, j);
             mSiteRawScoreList[idxTool][idxSite] = score;
-            mSiteNormScoreList[idxTool][idxSite] = normalize_score(score, pMKEOpts, sTypeC);
+            mSiteNormScoreList[idxTool][idxSite] = normalize_score(score, lBound, uBound, isRev);
             mEffectiveSites[idxSite] = true;
         }
     }
@@ -114,11 +115,24 @@ void MKESiteScores::add_scores(
 
 float MKESiteScores::normalize_score(
         float pScore,
-        MKEOptions const &pMKEOpts,
-        seqan::CharString &pScoreType) {
+        float pLower,
+        float pUpper,
+        bool pReverse) {
 
-    float nScore = pScore;
-    const MKEConfig &conf = pMKEOpts.get_conf();
+    float nScore;
+
+    if (pReverse) {
+        nScore = (pScore - pUpper) / (pLower - pUpper);
+
+    } else {
+        nScore = (pScore - pLower) / (pUpper - pLower);
+    }
+
+    if (nScore < 0) {
+        nScore = 0;
+    } else if (nScore > 1) {
+        nScore = 1;
+    }
 
     return nScore;
 }

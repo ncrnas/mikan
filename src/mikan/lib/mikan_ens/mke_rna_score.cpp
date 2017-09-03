@@ -93,6 +93,7 @@ void MKERNAScores::add_scores(
         }
         float lBound = conf.get_rna_lower(ckey);
         float uBound = conf.get_rna_upper(ckey);
+        bool isRev = conf.get_rna_reverse(ckey);
 
         append(sType, pPrefix);
         append(sType, ":");
@@ -108,7 +109,7 @@ void MKERNAScores::add_scores(
             unsigned idxSite = pRNAWithSites.get_idx_from_pos(RNAPos[j]);
             float score = pRNAScores.get_score(i, j);
             mRNARawScoreList[idxTool][idxSite] = score;
-            mRNANormScoreList[idxTool][idxSite] = normalize_score(score, pMKEOpts, sType);
+            mRNANormScoreList[idxTool][idxSite] = normalize_score(score, lBound, uBound, isRev);
             mMRNAPos[idxSite] = RNAPos[j];
             mEffectiveRNAs[idxSite] = true;
         }
@@ -118,10 +119,24 @@ void MKERNAScores::add_scores(
 
 float MKERNAScores::normalize_score(
         float pScore,
-        MKEOptions const &pMKEOpts,
-        seqan::CharString &pScoreType) {
+        float pLower,
+        float pUpper,
+        bool pReverse) {
 
-    float nScore = pScore;
+    float nScore;
+
+    if (pReverse) {
+        nScore = (pScore - pUpper) / (pLower - pUpper);
+
+    } else {
+        nScore = (pScore - pLower) / (pUpper - pLower);
+    }
+
+    if (nScore < 0) {
+        nScore = 0;
+    } else if (nScore > 1) {
+        nScore = 1;
+    }
 
     return nScore;
 }
