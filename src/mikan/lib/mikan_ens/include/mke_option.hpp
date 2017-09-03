@@ -43,6 +43,9 @@ public:
 
     MKEConfig mConf;
 
+    // Method prototype
+    seqan::ArgumentParser::ParseResult parseCommandLine(int argc, char const **argv);
+
 private:
     virtual void setProgramDescription(seqan::ArgumentParser &pParser);
 };

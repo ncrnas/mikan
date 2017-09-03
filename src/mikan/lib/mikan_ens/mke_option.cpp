@@ -7,6 +7,39 @@ namespace mkens {
 //
 // MKEOptions methods
 //
+ArgumentParser::ParseResult MKEOptions::parseCommandLine(
+        int argc,
+        char const **argv) {
+
+    // Setup ArgumentParser
+    ArgumentParser parser(toCString(mProgName));
+    setProgramDescription(parser);
+
+    // Parse command line
+    ArgumentParser::ParseResult res = parse(parser, argc, argv);
+    if (res != ArgumentParser::PARSE_OK) {
+        return res;
+    }
+
+    // Validate files
+    res = validateFiles(parser);
+    if (res != ArgumentParser::PARSE_OK) {
+        return res;
+    }
+
+    // Extract options
+    getOptionValue(mConfigFile, parser, "config");
+
+    char const *conf = toCString(mConfigFile);
+    std::fstream conf_file(conf, std::ios::in);
+    if (!conf_file.good()) {
+        std::cerr << "ERROR: Could not open conf file: " << conf << std::endl;
+        return ArgumentParser::PARSE_ERROR;
+    }
+
+    return ArgumentParser::PARSE_OK;
+}
+
 void MKEOptions::setProgramDescription(seqan::ArgumentParser &parser) {
     // Set short description, version, and date
     setShortDescription(parser, "Calculate mikan ensemble scores.");
@@ -24,8 +57,10 @@ void MKEOptions::setProgramDescription(seqan::ArgumentParser &parser) {
     addIOArgs(parser);
 
     // Define Options
-    addSection(parser, "mikan ensemble Score Options");
-    addOption(parser, ArgParseOption("a", "output_align", "Output alignments to standard output."));
+    addSection(parser, "Mikan Ensemble Score Options");
+    addOption(parser, ArgParseOption("c", "config", "Specify a configuration file.",
+                                     ArgParseArgument::INPUTFILE));
+    setDefaultValue(parser, "config", "");
 
     // Add Examples Section
     addTextSection(parser, "Examples");

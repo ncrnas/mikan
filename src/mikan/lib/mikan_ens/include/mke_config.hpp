@@ -291,8 +291,6 @@ public:
 
 //        std::string f = "mk_t6.ini";
 //        parse_config(f);
-
-        print_config();
     }
 
     // Method prototypes

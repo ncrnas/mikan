@@ -50,6 +50,7 @@ public:
 
     // Mikan ensemble
     seqan::StringSet<seqan::CharString> mToolPrefix;
+    seqan::CharString mConfigFile;
 
     // Define method
     MKOptions() {
@@ -62,6 +63,8 @@ public:
         mMaxHits = 0;
 
         mSortValType = "position";
+
+        mConfigFile = "";
     }
 
     // Method prototype
