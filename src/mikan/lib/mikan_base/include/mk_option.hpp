@@ -51,6 +51,7 @@ public:
     // Mikan ensemble
     seqan::StringSet<seqan::CharString> mToolPrefix;
     seqan::CharString mConfigFile;
+    bool mShowConfig;
 
     // Define method
     MKOptions() {
@@ -65,6 +66,7 @@ public:
         mSortValType = "position";
 
         mConfigFile = "";
+        mShowConfig = false;
     }
 
     // Method prototype

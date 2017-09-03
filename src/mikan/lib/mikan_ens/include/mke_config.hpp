@@ -288,9 +288,6 @@ public:
         mRNADefOrder[RNAIdx::SVSvm] = mDESC;
 
         init_config();
-
-//        std::string f = "mk_t6.ini";
-//        parse_config(f);
     }
 
     // Method prototypes

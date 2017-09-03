@@ -28,13 +28,22 @@ ArgumentParser::ParseResult MKEOptions::parseCommandLine(
     }
 
     // Extract options
-    getOptionValue(mConfigFile, parser, "config");
+    mShowConfig = isSet(parser, "show-config");
 
-    char const *conf = toCString(mConfigFile);
-    std::fstream conf_file(conf, std::ios::in);
-    if (!conf_file.good()) {
-        std::cerr << "ERROR: Could not open conf file: " << conf << std::endl;
-        return ArgumentParser::PARSE_ERROR;
+    getOptionValue(mConfigFile, parser, "config");
+    if (mConfigFile != "") {
+        char const *conf = toCString(mConfigFile);
+        std::fstream conf_file(conf, std::ios::in);
+        if (!conf_file.good()) {
+            std::cerr << "ERROR: Could not open the specified configuration file: " << conf << std::endl;
+            return ArgumentParser::PARSE_ERROR;
+        }
+
+        std::string conf_f = conf;
+        mConf.parse_config(conf_f);
+        if (mShowConfig) {
+            mConf.print_config();
+        }
     }
 
     return ArgumentParser::PARSE_OK;
@@ -61,6 +70,9 @@ void MKEOptions::setProgramDescription(seqan::ArgumentParser &parser) {
     addOption(parser, ArgParseOption("c", "config", "Specify a configuration file.",
                                      ArgParseArgument::INPUTFILE));
     setDefaultValue(parser, "config", "");
+
+    addOption(parser, ArgParseOption("", "show-config", "Show the content of the specified configuration file."));
+    hideOption(parser, "show-config");
 
     // Add Examples Section
     addTextSection(parser, "Examples");
