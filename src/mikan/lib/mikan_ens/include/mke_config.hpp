@@ -190,42 +190,42 @@ public:
         mSiteDefLower[SiteIdx::MRAlg] = 0;
         mSiteDefUpper[SiteIdx::MRAlg] = 1;
         mSiteDefReverse[SiteIdx::MRAlg] = false;
-        
+
         // miRanda energy score
         mSiteDefLower[SiteIdx::MREng] = 0;
         mSiteDefUpper[SiteIdx::MREng] = 1;
         mSiteDefReverse[SiteIdx::MREng] = false;
-        
+
         // PITA ddG
         mSiteDefLower[SiteIdx::PTDdg] = 0;
         mSiteDefUpper[SiteIdx::PTDdg] = 1;
         mSiteDefReverse[SiteIdx::PTDdg] = false;
-        
+
         // PITA dDuplex
         mSiteDefLower[SiteIdx::PTDpx] = 0;
         mSiteDefUpper[SiteIdx::PTDpx] = 1;
         mSiteDefReverse[SiteIdx::PTDpx] = false;
-        
+
         // PITA dOpen
         mSiteDefLower[SiteIdx::PTOpn] = 0;
         mSiteDefUpper[SiteIdx::PTOpn] = 1;
         mSiteDefReverse[SiteIdx::PTOpn] = false;
-        
+
         // RNAhybrid MFE
         mSiteDefLower[SiteIdx::RHMfe] = 0;
         mSiteDefUpper[SiteIdx::RHMfe] = 1;
         mSiteDefReverse[SiteIdx::RHMfe] = false;
-        
+
         // TargetScan context score
         mSiteDefLower[SiteIdx::TSCtx] = 0;
         mSiteDefUpper[SiteIdx::TSCtx] = 1;
         mSiteDefReverse[SiteIdx::TSCtx] = false;
-        
+
         // Two-step SVM score"
         mSiteDefLower[SiteIdx::SVSvm] = 0;
         mSiteDefUpper[SiteIdx::SVSvm] = 1;
         mSiteDefReverse[SiteIdx::SVSvm] = false;
-                
+
         //
         // Default normalization parameters - RNA level
         //
@@ -238,47 +238,47 @@ public:
         mRNADefLower[RNAIdx::MRAlg] = 0;
         mRNADefUpper[RNAIdx::MRAlg] = 1;
         mRNADefReverse[RNAIdx::MRAlg] = false;
-        
+
         // miRanda energy score
         mRNADefLower[RNAIdx::MREng] = 0;
         mRNADefUpper[RNAIdx::MREng] = 1;
         mRNADefReverse[RNAIdx::MREng] = false;
-        
+
         // PITA ddG
         mRNADefLower[RNAIdx::PTDdg] = 0;
         mRNADefUpper[RNAIdx::PTDdg] = 1;
         mRNADefReverse[RNAIdx::PTDdg] = false;
-        
+
         // PITA dDuplex
         mRNADefLower[RNAIdx::PTDpx] = 0;
         mRNADefUpper[RNAIdx::PTDpx] = 1;
         mRNADefReverse[RNAIdx::PTDpx] = false;
-        
+
         // PITA dOpen
         mRNADefLower[RNAIdx::PTOpn] = 0;
         mRNADefUpper[RNAIdx::PTOpn] = 1;
         mRNADefReverse[RNAIdx::PTOpn] = false;
-        
+
         // RNAhybrid MFE
         mRNADefLower[RNAIdx::RHMfe] = 0;
         mRNADefUpper[RNAIdx::RHMfe] = 1;
         mRNADefReverse[RNAIdx::RHMfe] = false;
-        
+
         // TargetMiner SVM
         mRNADefLower[RNAIdx::TMSvm] = 0;
         mRNADefUpper[RNAIdx::TMSvm] = 1;
         mRNADefReverse[RNAIdx::TMSvm] = false;
-        
+
         // TargetScan context score
         mRNADefLower[RNAIdx::TSCtx] = 0;
         mRNADefUpper[RNAIdx::TSCtx] = 1;
         mRNADefReverse[RNAIdx::TSCtx] = false;
-        
+
         // Two-step SVM score
         mRNADefLower[RNAIdx::SVSvm] = 0;
         mRNADefUpper[RNAIdx::SVSvm] = 1;
         mRNADefReverse[RNAIdx::SVSvm] = false;
-        
+
         init_config();
     }
 
@@ -306,6 +306,10 @@ public:
         return get_bool_from_map(mSiteReverse, pKey);
     }
 
+    bool get_site_weight(std::string &pKey) const {
+        return get_float_from_map(mSiteWeight, pKey);
+    }
+
     float get_rna_lower(std::string &pKey) const {
         return get_float_from_map(mRNALower, pKey);
     }
@@ -316,6 +320,10 @@ public:
 
     float get_rna_reverse(std::string &pKey) const {
         return get_bool_from_map(mRNAReverse, pKey);
+    }
+
+    bool get_rna_weight(std::string &pKey) const {
+        return get_float_from_map(mRNAWeight, pKey);
     }
 
     // Method prototypes
@@ -390,7 +398,7 @@ private:
     std::vector<float> mSiteDefLower;
     std::vector<float> mSiteDefUpper;
     std::vector<bool> mSiteDefReverse;
-    
+
     // Default normalization parameters - RNA level
     std::vector<float> mRNADefLower;
     std::vector<float> mRNADefUpper;

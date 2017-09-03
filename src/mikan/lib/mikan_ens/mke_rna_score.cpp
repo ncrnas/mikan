@@ -29,22 +29,19 @@ void MKERNAScores::add_score_types(
 
     for (unsigned i = 0; i < length(scoreTypes); ++i) {
         seqan::CharString sType, sTypeC;
-        append(sTypeC, pPrefix);
-        append(sTypeC, ":rna:");
-        append(sTypeC, scoreTypes[i]);
+        append(sType, pPrefix);
+        append(sType, ":");
+        append(sType, scoreTypes[i]);
 
+        sTypeC = sType;
+        replace(sType, 2, 3, ":rna:");
         std::string ckey = toCString(sTypeC);
         if (!conf.get_rna_flag(ckey)) {
             continue;
         }
 
-        append(sType, pPrefix);
-        append(sType, ":");
-        append(sType, scoreTypes[i]);
         appendValue(mScoreTypes, sType);
-
         mIdxMap[std::string(toCString(mScoreTypes[mScoreTypeN]))] = mScoreTypeN;
-
         ++mScoreTypeN;
     }
 }
@@ -76,17 +73,18 @@ void MKERNAScores::add_scores(
         mikan::MKRNAScores &pRNAScores,
         seqan::CharString &pPrefix) {
 
-    mikan::TMRNAPosSet &uniqRNAPosSet = pRNAWithSites.get_uniq_mrna_pos_set();
     const mikan::TMRNAPosSet &RNAPos = pRNAScores.get_mrna_pos();
     const mikan::TCharSet &scoreTypes = pRNAScores.get_score_types();
     const MKEConfig &conf = pMKEOpts.get_conf();
 
     for (unsigned i = 0; i < length(scoreTypes); ++i) {
         seqan::CharString sType, sTypeC;
-        append(sTypeC, pPrefix);
-        append(sTypeC, ":rna:");
-        append(sTypeC, scoreTypes[i]);
+        append(sType, pPrefix);
+        append(sType, ":");
+        append(sType, scoreTypes[i]);
 
+        sTypeC = sType;
+        replace(sType, 2, 3, ":rna:");
         std::string ckey = toCString(sTypeC);
         if (!conf.get_rna_flag(ckey)) {
             continue;
@@ -94,10 +92,6 @@ void MKERNAScores::add_scores(
         float lBound = conf.get_rna_lower(ckey);
         float uBound = conf.get_rna_upper(ckey);
         bool isRev = conf.get_rna_reverse(ckey);
-
-        append(sType, pPrefix);
-        append(sType, ":");
-        append(sType, scoreTypes[i]);
 
         unsigned idxTool = mIdxMap[std::string(toCString(sType))];
 
@@ -142,6 +136,19 @@ float MKERNAScores::normalize_score(
 }
 
 void MKERNAScores::combine_scores(MKEOptions const &pMKEOpts) {
+    const MKEConfig &conf = pMKEOpts.get_conf();
+    seqan::StringSet<float> weights;
+    float total_weight = 0;
+
+    resize(weights, mScoreTypeN);
+    for (unsigned i = 0; i < mScoreTypeN; ++i) {
+        seqan::CharString sType = mScoreTypes[i];
+        replace(sType, 2, 3, ":rna:");
+        std::string ckey = toCString(sType);
+        weights[i] = conf.get_site_weight(ckey);
+        total_weight += weights[i];
+    }
+
     for (unsigned i = 0; i < length(mEffectiveRNAs); i++) {
         if (!mEffectiveRNAs[i]) {
             mToolScores[i] = "";
@@ -157,12 +164,11 @@ void MKERNAScores::combine_scores(MKEOptions const &pMKEOpts) {
             tscore = roundf(tscore * 100.0f) / 100.0f;
             stream << tscore << ",";
 
-            float weight = 1;
-            score += weight * mRNANormScoreList[j][i];
+            score += weights[j] * mRNANormScoreList[j][i];
         }
 
         mToolScores[i] = stream.str();
-        mRNAScores[i] = score;
+        mRNAScores[i] = score / total_weight;
 
     }
 }
