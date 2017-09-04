@@ -14,7 +14,9 @@ void MR3RNAScores::clear_scores() {
     clear(mTotalEnScores);
     clear(mTotalAlignScores);
     clear(mLogMaxAlignScores);
-    clear(mLogMaxEnScores);
+    clear(mLogMinEnScores);
+    clear(mMaxAlignScores);
+    clear(mMinEnScores);
 }
 
 int MR3RNAScores::calc_scores(
@@ -29,11 +31,12 @@ int MR3RNAScores::calc_scores(
     resize(mTotalAlignScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
     resize(mTotalEnScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
     resize(mLogMaxAlignScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
-    resize(mLogMaxEnScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
+    resize(mLogMinEnScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
+    resize(mMaxAlignScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
+    resize(mMinEnScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
     resize(mEffectiveRNAs, length(pRNAWithSites.mEffectiveRNAs), false);
     resize(mMRNAPos, length(pRNAWithSites.mEffectiveRNAs), 0);
     resize(mSiteNum, length(pRNAWithSites.mEffectiveRNAs), 0);
-
 
     float score, maxScore, totalScore;
     float scoreEn, maxScoreEn, totalScoreEn;
@@ -77,7 +80,9 @@ int MR3RNAScores::calc_scores(
         mTotalAlignScores[i] = totalScore;
         mTotalEnScores[i] = totalScoreEn;
         mLogMaxAlignScores[i] = maxScore + std::log(totalScore);
-        mLogMaxEnScores[i] = -1.0 * (maxScoreEn + std::log(-1.0 * totalScoreEn));
+        mLogMinEnScores[i] = -1.0 * (maxScoreEn + std::log(-1.0 * totalScoreEn));
+        mMaxAlignScores[i] = maxScore;
+        mMinEnScores[i] = -1.0 * maxScoreEn;
         mEffectiveRNAs[i] = true;
         mMRNAPos[i] = uniqRNAPosSet[i];
         mSiteNum[i] = siteCount;
