@@ -16,14 +16,26 @@ class RH2RNAScores : public mikan::MKRNAScores {
 public:
     // Define methods
     explicit RH2RNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts) {
-        resize(mScoreTypes, 1);
+        resize(mScoreTypes, 3);
         mScoreTypes[0] = "mfe";
+        mScoreTypes[1] = "tfe";
+        mScoreTypes[2] = "tnr";
     }
 
     const seqan::String<float> &get_norm_scores() { return mNormScores; }
 
     // Method prototypes
     virtual void clear_scores();
+
+    virtual float get_score(int pTypeIdx, int pIdx) {
+        if (pTypeIdx == 1) {
+            return mRNAScores[pIdx];
+        } else if (pTypeIdx == 2) {
+            return mNormScores[pIdx];
+        }
+
+        return mMinScores[pIdx];
+    }
 
     using mikan::MKRNAScores::calc_scores;
 
@@ -32,6 +44,8 @@ public:
 
 private:
     seqan::String<float> mNormScores;
+    seqan::String<float> mMinScores;
+    seqan::String<float> mMaxNormScores;
 
 };
 

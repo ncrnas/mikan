@@ -25,8 +25,9 @@ public:
             mMaxMiRNALen(opts.mQueryLen),
             mRHCore(opts.mTargetLen, opts.mQueryLen, opts.mSeedDef) {
 
-        resize(mScoreTypes, 1);
+        resize(mScoreTypes, 2);
         mScoreTypes[0] = "mfe";
+        mScoreTypes[1] = "nrm";
 
         init_from_args();
 
@@ -34,7 +35,13 @@ public:
 
     virtual float get_score(int i) { return mMFEScores[i]; }
 
-    virtual float get_score(int, int pIdx) { return mMFEScores[pIdx]; }
+    virtual float get_score(int pTypeIdx, int pIdx) {
+        if (pTypeIdx == 1) {
+            return mNormScores[pIdx];
+        }
+
+        return mMFEScores[pIdx];
+    }
 
     float get_norm_score(int i) { return mNormScores[i]; }
 
