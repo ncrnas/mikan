@@ -158,26 +158,26 @@ public:
         //
         // Site level
         mSiteDefWeight.resize(SiteIdx::Count);
-        mSiteDefWeight[SiteIdx::MRAlg] = 1;
-        mSiteDefWeight[SiteIdx::MREng] = 1;
-        mSiteDefWeight[SiteIdx::PTDdg] = 1;
-        mSiteDefWeight[SiteIdx::PTDpx] = 1;
-        mSiteDefWeight[SiteIdx::PTOpn] = 1;
-        mSiteDefWeight[SiteIdx::RHMfe] = 1;
-        mSiteDefWeight[SiteIdx::TSCtx] = 1;
-        mSiteDefWeight[SiteIdx::SVSvm] = 1;
+        mSiteDefWeight[SiteIdx::MRAlg] = 3;
+        mSiteDefWeight[SiteIdx::MREng] = 3;
+        mSiteDefWeight[SiteIdx::PTDdg] = 2;
+        mSiteDefWeight[SiteIdx::PTDpx] = 2;
+        mSiteDefWeight[SiteIdx::PTOpn] = 2;
+        mSiteDefWeight[SiteIdx::RHMfe] = 6;
+        mSiteDefWeight[SiteIdx::TSCtx] = 6;
+        mSiteDefWeight[SiteIdx::SVSvm] = 6;
 
         // RNA level
         mRNADefWeight.resize(RNAIdx::Count);
-        mRNADefWeight[RNAIdx::MRAlg] = 1;
-        mRNADefWeight[RNAIdx::MREng] = 1;
-        mRNADefWeight[RNAIdx::PTDdg] = 1;
-        mRNADefWeight[RNAIdx::PTDpx] = 1;
-        mRNADefWeight[RNAIdx::PTOpn] = 1;
-        mRNADefWeight[RNAIdx::RHMfe] = 1;
-        mRNADefWeight[RNAIdx::TMSvm] = 1;
-        mRNADefWeight[RNAIdx::TSCtx] = 1;
-        mRNADefWeight[RNAIdx::SVSvm] = 1;
+        mRNADefWeight[RNAIdx::MRAlg] = 3;
+        mRNADefWeight[RNAIdx::MREng] = 3;
+        mRNADefWeight[RNAIdx::PTDdg] = 2;
+        mRNADefWeight[RNAIdx::PTDpx] = 2;
+        mRNADefWeight[RNAIdx::PTOpn] = 2;
+        mRNADefWeight[RNAIdx::RHMfe] = 6;
+        mRNADefWeight[RNAIdx::TMSvm] = 6;
+        mRNADefWeight[RNAIdx::TSCtx] = 6;
+        mRNADefWeight[RNAIdx::SVSvm] = 6;
 
         //
         // Default normalization parameters - site level
@@ -187,43 +187,43 @@ public:
         mSiteDefReverse.resize(SiteIdx::Count);
 
         // miRanda alignment score
-        mSiteDefLower[SiteIdx::MRAlg] = 0;
-        mSiteDefUpper[SiteIdx::MRAlg] = 1;
+        mSiteDefLower[SiteIdx::MRAlg] = 140;
+        mSiteDefUpper[SiteIdx::MRAlg] = 200;
         mSiteDefReverse[SiteIdx::MRAlg] = false;
 
         // miRanda energy score
-        mSiteDefLower[SiteIdx::MREng] = 0;
-        mSiteDefUpper[SiteIdx::MREng] = 1;
-        mSiteDefReverse[SiteIdx::MREng] = false;
+        mSiteDefLower[SiteIdx::MREng] = -55;
+        mSiteDefUpper[SiteIdx::MREng] = 0;
+        mSiteDefReverse[SiteIdx::MREng] = true;
 
         // PITA ddG
-        mSiteDefLower[SiteIdx::PTDdg] = 0;
-        mSiteDefUpper[SiteIdx::PTDdg] = 1;
-        mSiteDefReverse[SiteIdx::PTDdg] = false;
+        mSiteDefLower[SiteIdx::PTDdg] = -48;
+        mSiteDefUpper[SiteIdx::PTDdg] = 0;
+        mSiteDefReverse[SiteIdx::PTDdg] = true;
 
         // PITA dDuplex
-        mSiteDefLower[SiteIdx::PTDpx] = 0;
-        mSiteDefUpper[SiteIdx::PTDpx] = 1;
-        mSiteDefReverse[SiteIdx::PTDpx] = false;
+        mSiteDefLower[SiteIdx::PTDpx] = -47;
+        mSiteDefUpper[SiteIdx::PTDpx] = 0;
+        mSiteDefReverse[SiteIdx::PTDpx] = true;
 
         // PITA dOpen
-        mSiteDefLower[SiteIdx::PTOpn] = 0;
-        mSiteDefUpper[SiteIdx::PTOpn] = 1;
-        mSiteDefReverse[SiteIdx::PTOpn] = false;
+        mSiteDefLower[SiteIdx::PTOpn] = -42;
+        mSiteDefUpper[SiteIdx::PTOpn] = 36;
+        mSiteDefReverse[SiteIdx::PTOpn] = true;
 
         // RNAhybrid MFE
-        mSiteDefLower[SiteIdx::RHMfe] = 0;
-        mSiteDefUpper[SiteIdx::RHMfe] = 1;
-        mSiteDefReverse[SiteIdx::RHMfe] = false;
+        mSiteDefLower[SiteIdx::RHMfe] = -42;
+        mSiteDefUpper[SiteIdx::RHMfe] = 0;
+        mSiteDefReverse[SiteIdx::RHMfe] = true;
 
         // TargetScan context score
-        mSiteDefLower[SiteIdx::TSCtx] = 0;
-        mSiteDefUpper[SiteIdx::TSCtx] = 1;
+        mSiteDefLower[SiteIdx::TSCtx] = -0.64f;
+        mSiteDefUpper[SiteIdx::TSCtx] = 0.2;
         mSiteDefReverse[SiteIdx::TSCtx] = false;
 
         // Two-step SVM score"
-        mSiteDefLower[SiteIdx::SVSvm] = 0;
-        mSiteDefUpper[SiteIdx::SVSvm] = 1;
+        mSiteDefLower[SiteIdx::SVSvm] = -2.54f;
+        mSiteDefUpper[SiteIdx::SVSvm] = 3.06f;
         mSiteDefReverse[SiteIdx::SVSvm] = false;
 
         //
