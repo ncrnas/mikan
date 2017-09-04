@@ -60,7 +60,6 @@ int MR3RNAScores::calc_scores(
                 maxIdx = j;
             }
 
-            //TODO: Need to check the equation for this
             scoreEn = pSiteScores.get_energy_score(rnaSitePosMap[i][j]);
             totalScoreEn += scoreEn;
             if ((-1.0 * scoreEn) > maxScoreEn) {
@@ -78,7 +77,7 @@ int MR3RNAScores::calc_scores(
         mTotalAlignScores[i] = totalScore;
         mTotalEnScores[i] = totalScoreEn;
         mLogMaxAlignScores[i] = maxScore + std::log(totalScore);
-        mLogMaxEnScores[i] = maxScoreEn + std::log(totalScoreEn);
+        mLogMaxEnScores[i] = -1.0 * (maxScoreEn + std::log(-1.0 * totalScoreEn));
         mEffectiveRNAs[i] = true;
         mMRNAPos[i] = uniqRNAPosSet[i];
         mSiteNum[i] = siteCount;
