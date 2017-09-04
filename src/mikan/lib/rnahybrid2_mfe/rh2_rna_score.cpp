@@ -12,6 +12,8 @@ void RH2RNAScores::clear_scores() {
     mikan::MKRNAScores::clear_scores();
 
     clear(mNormScores);
+    clear(mMinScores);
+    clear(mMaxNormScores);
 }
 
 int RH2RNAScores::calc_scores(
@@ -25,27 +27,41 @@ int RH2RNAScores::calc_scores(
 
     resize(mRNAScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
     resize(mNormScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
+    resize(mMinScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
+    resize(mMaxNormScores, length(pRNAWithSites.mEffectiveRNAs), 0.0);
     resize(mMRNAPos, length(pRNAWithSites.mEffectiveRNAs), 0);
     resize(mSiteNum, length(pRNAWithSites.mEffectiveRNAs), 0);
     resize(mEffectiveRNAs, length(pRNAWithSites.mEffectiveRNAs), false);
 
-    float rnaScore, normScore;
+    float totRnaScore, totNormScore;
     unsigned siteCount;
     for (unsigned i = 0; i < length(pRNAWithSites.mEffectiveRNAs); i++) {
         if (!pRNAWithSites.mEffectiveRNAs[i]) {
             continue;
         }
 
-        rnaScore = 0;
-        normScore = 0;
+        totRnaScore = 0;
+        totNormScore = 0;
         siteCount = 0;
+        float maxScore, maxNormScore;
+        maxScore = maxNormScore = -FLT_MAX;
         for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
             if (!pSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
                 continue;
             }
 
-            rnaScore += pMFEScores.get_score(rnaSitePosMap[i][j]);
-            normScore += pMFEScores.get_norm_score(rnaSitePosMap[i][j]);
+            float score = pMFEScores.get_score(rnaSitePosMap[i][j]);
+            if ((-1.0 * score) > maxScore) {
+                maxScore = -1.0 * score;
+            }
+
+            float normScore = pMFEScores.get_norm_score(rnaSitePosMap[i][j]);
+            if (normScore > maxNormScore) {
+                maxNormScore = normScore;
+            }
+
+            totRnaScore += score;
+            totNormScore += normScore;
             ++siteCount;
         }
 
@@ -53,8 +69,10 @@ int RH2RNAScores::calc_scores(
             continue;
         }
 
-        mRNAScores[i] = rnaScore;
-        mNormScores[i] = normScore;
+        mRNAScores[i] = totRnaScore;
+        mNormScores[i] = totNormScore;
+        mMinScores[i] = -1.0 * maxScore;
+        mMaxNormScores[i] = maxNormScore;
         mMRNAPos[i] = uniqRNAPosSet[i];
         mSiteNum[i] = siteCount;
         mEffectiveRNAs[i] = true;
