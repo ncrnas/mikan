@@ -60,8 +60,8 @@ int MR3Core::write_site_score(seqan::CharString const &pMiRNAId) {
 }
 
 int MR3Core::write_rna_score(seqan::CharString const &pMiRNAId) {
-    const seqan::String<float> &totalAlignScores = mRNAScores.get_align_scores();
-    const seqan::String<float> &totalEnScores = mRNAScores.get_energy_scores();
+    const seqan::String<float> &alignScores = mRNAScores.get_align_maxlogtotal();
+    const seqan::String<float> &enScores = mRNAScores.get_energy_minlogtotal();
     const seqan::String<int> &mRNAPos = mRNAScores.get_mrna_pos();
     const seqan::String<int> &siteNum = mRNAScores.get_site_num();
 
@@ -69,9 +69,9 @@ int MR3Core::write_rna_score(seqan::CharString const &pMiRNAId) {
 
         mOFile2 << toCString(pMiRNAId) << "\t";
         mOFile2 << toCString((seqan::CharString) mMRNAIds[mRNAPos[i]]) << "\t";
-        mOFile2 << totalAlignScores[i] << "\t";
+        mOFile2 << alignScores[i] << "\t";
         mOFile2 << siteNum[i] << "\t";
-        mOFile2 << totalEnScores[i] << "\t";
+        mOFile2 << enScores[i] << "\t";
         mOFile2 << std::endl;
     }
 

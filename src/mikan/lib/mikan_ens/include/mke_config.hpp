@@ -17,23 +17,23 @@ struct SiteIdx {
     enum idx {
         MRAlg, MREng,
         PTDdg, PTDpx, PTOpn,
-        RHMfe,
+        RHMfe, RHNrm,
         TSCtx,
         SVSvm
     };
-    static const unsigned Count = 8;
+    static const unsigned Count = 9;
 };
 
 struct RNAIdx {
     enum idx {
         MRAlg, MREng,
-        PTDdg, PTDpx, PTOpn,
-        RHMfe,
+        PTDdg,
+        RHMfe, RHNrm,
         TMSvm,
         TSCtx,
         SVSvm
     };
-    static const unsigned Count = 9;
+    static const unsigned Count = 8;
 };
 
 //
@@ -89,6 +89,7 @@ public:
         mSiteKeys[SiteIdx::PTDpx] = "pt:site:dpx";
         mSiteKeys[SiteIdx::PTOpn] = "pt:site:opn";
         mSiteKeys[SiteIdx::RHMfe] = "rh:site:mfe";
+        mSiteKeys[SiteIdx::RHNrm] = "rh:site:nrm";
         mSiteKeys[SiteIdx::TSCtx] = "ts:site:ctx";
         mSiteKeys[SiteIdx::SVSvm] = "sv:site:svm";
 
@@ -100,6 +101,7 @@ public:
         mSiteDesc[SiteIdx::PTDpx] = "PITA dDuplex";
         mSiteDesc[SiteIdx::PTOpn] = "PITA dOpen";
         mSiteDesc[SiteIdx::RHMfe] = "RNAhybrid MFE";
+        mSiteDesc[SiteIdx::RHNrm] = "RNAhybrid MFE normalized by length";
         mSiteDesc[SiteIdx::TSCtx] = "TargetScan context score";
         mSiteDesc[SiteIdx::SVSvm] = "Two-step SVM score";
 
@@ -111,6 +113,7 @@ public:
         mSiteDefFlg[SiteIdx::PTDpx] = true;
         mSiteDefFlg[SiteIdx::PTOpn] = true;
         mSiteDefFlg[SiteIdx::RHMfe] = true;
+        mSiteDefFlg[SiteIdx::RHNrm] = true;
         mSiteDefFlg[SiteIdx::TSCtx] = true;
         mSiteDefFlg[SiteIdx::SVSvm] = true;
 
@@ -122,21 +125,19 @@ public:
         mRNAKeys[RNAIdx::MRAlg] = "mr:rna:alg";
         mRNAKeys[RNAIdx::MREng] = "mr:rna:eng";
         mRNAKeys[RNAIdx::PTDdg] = "pt:rna:ddg";
-        mRNAKeys[RNAIdx::PTDpx] = "pt:rna:dpx";
-        mRNAKeys[RNAIdx::PTOpn] = "pt:rna:opn";
         mRNAKeys[RNAIdx::RHMfe] = "rh:rna:mfe";
+        mRNAKeys[RNAIdx::RHNrm] = "rh:rna:nrm";
         mRNAKeys[RNAIdx::TMSvm] = "tm:rna:svm";
         mRNAKeys[RNAIdx::TSCtx] = "ts:rna:ctx";
         mRNAKeys[RNAIdx::SVSvm] = "sv:rna:svm";
 
         // Score descriptions
         mRNADesc.resize(RNAIdx::Count);
-        mRNADesc[RNAIdx::MRAlg] = "miRanda alignment score";
-        mRNADesc[RNAIdx::MREng] = "miRanda energy score";
+        mRNADesc[RNAIdx::MRAlg] = "max + log(total) miRanda alignment score";
+        mRNADesc[RNAIdx::MREng] = "min + log(total) miRanda energy score";
         mRNADesc[RNAIdx::PTDdg] = "PITA ddG";
-        mRNADesc[RNAIdx::PTDpx] = "PITA dDuplex";
-        mRNADesc[RNAIdx::PTOpn] = "PITA dOpen";
-        mRNADesc[RNAIdx::RHMfe] = "RNAhybrid MFE";
+        mRNADesc[RNAIdx::RHMfe] = "min + log(total) RNAhybrid MFE";
+        mRNADesc[RNAIdx::RHNrm] = "max + log(total) RNAhybrid MFE normalized by length";
         mRNADesc[RNAIdx::TMSvm] = "TargetMiner SVM";
         mRNADesc[RNAIdx::TSCtx] = "TargetScan context score";
         mRNADesc[RNAIdx::SVSvm] = "Two-step SVM score";
@@ -146,9 +147,8 @@ public:
         mRNADefFlg[RNAIdx::MRAlg] = true;
         mRNADefFlg[RNAIdx::MREng] = true;
         mRNADefFlg[RNAIdx::PTDdg] = true;
-        mRNADefFlg[RNAIdx::PTDpx] = true;
-        mRNADefFlg[RNAIdx::PTOpn] = true;
         mRNADefFlg[RNAIdx::RHMfe] = true;
+        mRNADefFlg[RNAIdx::RHNrm] = true;
         mRNADefFlg[RNAIdx::TMSvm] = true;
         mRNADefFlg[RNAIdx::TSCtx] = true;
         mRNADefFlg[RNAIdx::SVSvm] = true;
@@ -158,26 +158,26 @@ public:
         //
         // Site level
         mSiteDefWeight.resize(SiteIdx::Count);
-        mSiteDefWeight[SiteIdx::MRAlg] = 3;
-        mSiteDefWeight[SiteIdx::MREng] = 3;
-        mSiteDefWeight[SiteIdx::PTDdg] = 2;
+        mSiteDefWeight[SiteIdx::MRAlg] = 6;
+        mSiteDefWeight[SiteIdx::MREng] = 6;
+        mSiteDefWeight[SiteIdx::PTDdg] = 8;
         mSiteDefWeight[SiteIdx::PTDpx] = 2;
         mSiteDefWeight[SiteIdx::PTOpn] = 2;
-        mSiteDefWeight[SiteIdx::RHMfe] = 6;
-        mSiteDefWeight[SiteIdx::TSCtx] = 6;
-        mSiteDefWeight[SiteIdx::SVSvm] = 6;
+        mSiteDefWeight[SiteIdx::RHMfe] = 9;
+        mSiteDefWeight[SiteIdx::RHNrm] = 3;
+        mSiteDefWeight[SiteIdx::TSCtx] = 12;
+        mSiteDefWeight[SiteIdx::SVSvm] = 12;
 
         // RNA level
         mRNADefWeight.resize(RNAIdx::Count);
-        mRNADefWeight[RNAIdx::MRAlg] = 3;
-        mRNADefWeight[RNAIdx::MREng] = 3;
-        mRNADefWeight[RNAIdx::PTDdg] = 2;
-        mRNADefWeight[RNAIdx::PTDpx] = 2;
-        mRNADefWeight[RNAIdx::PTOpn] = 2;
-        mRNADefWeight[RNAIdx::RHMfe] = 6;
-        mRNADefWeight[RNAIdx::TMSvm] = 6;
-        mRNADefWeight[RNAIdx::TSCtx] = 6;
-        mRNADefWeight[RNAIdx::SVSvm] = 6;
+        mRNADefWeight[RNAIdx::MRAlg] = 6;
+        mRNADefWeight[RNAIdx::MREng] = 6;
+        mRNADefWeight[RNAIdx::PTDdg] = 12;
+        mRNADefWeight[RNAIdx::RHMfe] = 9;
+        mRNADefWeight[RNAIdx::RHNrm] = 3;
+        mRNADefWeight[RNAIdx::TMSvm] = 12;
+        mRNADefWeight[RNAIdx::TSCtx] = 12;
+        mRNADefWeight[RNAIdx::SVSvm] = 12;
 
         //
         // Default normalization parameters - site level
@@ -216,6 +216,11 @@ public:
         mSiteDefUpper[SiteIdx::RHMfe] = 0;
         mSiteDefReverse[SiteIdx::RHMfe] = true;
 
+        // RNAhybrid MFE normalized by length
+        mSiteDefLower[SiteIdx::RHNrm] = 0;
+        mSiteDefUpper[SiteIdx::RHNrm] = 8;
+        mSiteDefReverse[SiteIdx::RHNrm] = false;
+
         // TargetScan context score
         mSiteDefLower[SiteIdx::TSCtx] = -0.64f;
         mSiteDefUpper[SiteIdx::TSCtx] = 0.2;
@@ -234,49 +239,44 @@ public:
         mRNADefUpper.resize(RNAIdx::Count);
         mRNADefReverse.resize(RNAIdx::Count);
 
-        // miRanda alignment score
-        mRNADefLower[RNAIdx::MRAlg] = 0;
-        mRNADefUpper[RNAIdx::MRAlg] = 1;
+        // max + log(total) miRanda alignment score
+        mRNADefLower[RNAIdx::MRAlg] = 140;
+        mRNADefUpper[RNAIdx::MRAlg] = 210;
         mRNADefReverse[RNAIdx::MRAlg] = false;
 
-        // miRanda energy score
-        mRNADefLower[RNAIdx::MREng] = 0;
+        // tmin + log(total) miRanda energy score
+        mRNADefLower[RNAIdx::MREng] = -62;
         mRNADefUpper[RNAIdx::MREng] = 1;
-        mRNADefReverse[RNAIdx::MREng] = false;
+        mRNADefReverse[RNAIdx::MREng] = true;
 
         // PITA ddG
-        mRNADefLower[RNAIdx::PTDdg] = 0;
-        mRNADefUpper[RNAIdx::PTDdg] = 1;
-        mRNADefReverse[RNAIdx::PTDdg] = false;
+        mRNADefLower[RNAIdx::PTDdg] = -48;
+        mRNADefUpper[RNAIdx::PTDdg] = 30;
+        mRNADefReverse[RNAIdx::PTDdg] = true;
 
-        // PITA dDuplex
-        mRNADefLower[RNAIdx::PTDpx] = 0;
-        mRNADefUpper[RNAIdx::PTDpx] = 1;
-        mRNADefReverse[RNAIdx::PTDpx] = false;
+        // min + log(total) RNAhybrid MFE
+        mRNADefLower[RNAIdx::RHMfe] = -50;
+        mRNADefUpper[RNAIdx::RHMfe] = 0;
+        mRNADefReverse[RNAIdx::RHMfe] = true;
 
-        // PITA dOpen
-        mRNADefLower[RNAIdx::PTOpn] = 0;
-        mRNADefUpper[RNAIdx::PTOpn] = 1;
-        mRNADefReverse[RNAIdx::PTOpn] = false;
-
-        // RNAhybrid MFE
-        mRNADefLower[RNAIdx::RHMfe] = 0;
-        mRNADefUpper[RNAIdx::RHMfe] = 1;
-        mRNADefReverse[RNAIdx::RHMfe] = false;
+        // max + log(total) RNAhybrid MFE normalized by length
+        mRNADefLower[RNAIdx::RHNrm] = 0;
+        mRNADefUpper[RNAIdx::RHNrm] = 13;
+        mRNADefReverse[RNAIdx::RHNrm] = false;
 
         // TargetMiner SVM
-        mRNADefLower[RNAIdx::TMSvm] = 0;
+        mRNADefLower[RNAIdx::TMSvm] = -1.4f;
         mRNADefUpper[RNAIdx::TMSvm] = 1;
         mRNADefReverse[RNAIdx::TMSvm] = false;
 
         // TargetScan context score
-        mRNADefLower[RNAIdx::TSCtx] = 0;
-        mRNADefUpper[RNAIdx::TSCtx] = 1;
+        mRNADefLower[RNAIdx::TSCtx] = -13;
+        mRNADefUpper[RNAIdx::TSCtx] = 1.8f;
         mRNADefReverse[RNAIdx::TSCtx] = false;
 
         // Two-step SVM score
-        mRNADefLower[RNAIdx::SVSvm] = 0;
-        mRNADefUpper[RNAIdx::SVSvm] = 1;
+        mRNADefLower[RNAIdx::SVSvm] = -8;
+        mRNADefUpper[RNAIdx::SVSvm] = 20;
         mRNADefReverse[RNAIdx::SVSvm] = false;
 
         init_config();
@@ -306,7 +306,7 @@ public:
         return get_bool_from_map(mSiteReverse, pKey);
     }
 
-    bool get_site_weight(std::string &pKey) const {
+    float get_site_weight(std::string &pKey) const {
         return get_float_from_map(mSiteWeight, pKey);
     }
 
@@ -322,7 +322,7 @@ public:
         return get_bool_from_map(mRNAReverse, pKey);
     }
 
-    bool get_rna_weight(std::string &pKey) const {
+    float get_rna_weight(std::string &pKey) const {
         return get_float_from_map(mRNAWeight, pKey);
     }
 

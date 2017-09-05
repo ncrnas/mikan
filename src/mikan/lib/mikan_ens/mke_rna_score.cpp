@@ -34,7 +34,7 @@ void MKERNAScores::add_score_types(
         append(sType, scoreTypes[i]);
 
         sTypeC = sType;
-        replace(sType, 2, 3, ":rna:");
+        replace(sTypeC, 2, 3, ":rna:");
         std::string ckey = toCString(sTypeC);
         if (!conf.get_rna_flag(ckey)) {
             continue;
@@ -84,7 +84,7 @@ void MKERNAScores::add_scores(
         append(sType, scoreTypes[i]);
 
         sTypeC = sType;
-        replace(sType, 2, 3, ":rna:");
+        replace(sTypeC, 2, 3, ":rna:");
         std::string ckey = toCString(sTypeC);
         if (!conf.get_rna_flag(ckey)) {
             continue;
@@ -145,7 +145,7 @@ void MKERNAScores::combine_scores(MKEOptions const &pMKEOpts) {
         seqan::CharString sType = mScoreTypes[i];
         replace(sType, 2, 3, ":rna:");
         std::string ckey = toCString(sType);
-        weights[i] = conf.get_site_weight(ckey);
+        weights[i] = conf.get_rna_weight(ckey);
         total_weight += weights[i];
     }
 

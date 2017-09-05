@@ -28,27 +28,25 @@ public:
 public:
     // Define methods
     explicit MR3RNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts), MIN_EXP_DIFF(-100.0) {
-        resize(mScoreTypes, 4);
+        resize(mScoreTypes, 2);
         mScoreTypes[0] = "alg";
         mScoreTypes[1] = "eng";
-        mScoreTypes[2] = "lma";
-        mScoreTypes[3] = "lme";
     }
 
     const seqan::String<float> &get_align_scores() { return mTotalAlignScores; }
 
     const seqan::String<float> &get_energy_scores() { return mTotalEnScores; }
 
+    const seqan::String<float> &get_align_maxlogtotal() { return mLogMaxAlignScores; }
+
+    const seqan::String<float> &get_energy_minlogtotal() { return mLogMinEnScores; }
+
     virtual float get_score(int pTypeIdx, int pIdx) {
         if (pTypeIdx == 1) {
-            return mTotalEnScores[pIdx];
-        } else if (pTypeIdx == 2) {
             return mLogMaxAlignScores[pIdx];
-        } else if (pTypeIdx == 3) {
-            return mLogMinEnScores[pIdx];
         }
 
-        return mTotalAlignScores[pIdx];
+        return mLogMinEnScores[pIdx];
     }
 
     // Method prototype

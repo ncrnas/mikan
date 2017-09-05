@@ -35,7 +35,7 @@ void MKESiteScores::add_score_types(
         append(sType, scoreTypes[i]);
 
         sTypeC = sType;
-        replace(sType, 2, 3, ":site:");
+        replace(sTypeC, 2, 3, ":site:");
         std::string ckey = toCString(sTypeC);
         if (!conf.get_site_flag(ckey)) {
             continue;
@@ -83,7 +83,7 @@ void MKESiteScores::add_scores(
         append(sType, ":");
         append(sType, scoreTypes[i]);
         sTypeC = sType;
-        replace(sType, 2, 3, ":site:");
+        replace(sTypeC, 2, 3, ":site:");
 
         std::string ckey = toCString(sTypeC);
         if (!conf.get_site_flag(ckey)) {
@@ -107,7 +107,6 @@ void MKESiteScores::add_scores(
             mEffectiveSites[idxSite] = true;
         }
     }
-
 }
 
 float MKESiteScores::normalize_score(
@@ -160,7 +159,6 @@ void MKESiteScores::combine_scores(MKEOptions const &pMKEOpts) {
         for (unsigned j = 0; j < mScoreTypeN; ++j) {
             stream << mScoreTypes[j] << ":";
             float tscore = mSiteRawScoreList[j][i];
-//            std::cout << i << ", " << j <<  ", " << tscore << std::endl;
             tscore = roundf(tscore * 100.0f) / 100.0f;
             stream << tscore << ",";
 
