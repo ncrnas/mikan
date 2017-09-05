@@ -7,6 +7,48 @@ namespace mkens {
 //
 // MKEOptions methods
 //
+ArgumentParser::ParseResult MKEOptions::parseCommandLine(
+        int argc,
+        char const **argv) {
+
+    // Setup ArgumentParser
+    ArgumentParser parser(toCString(mProgName));
+    setProgramDescription(parser);
+
+    // Parse command line
+    ArgumentParser::ParseResult res = parse(parser, argc, argv);
+    if (res != ArgumentParser::PARSE_OK) {
+        return res;
+    }
+
+    // Validate files
+    res = validateFiles(parser);
+    if (res != ArgumentParser::PARSE_OK) {
+        return res;
+    }
+
+    // Extract options
+    mShowConfig = isSet(parser, "show-config");
+
+    getOptionValue(mConfigFile, parser, "config");
+    if (mConfigFile != "") {
+        char const *conf = toCString(mConfigFile);
+        std::fstream conf_file(conf, std::ios::in);
+        if (!conf_file.good()) {
+            std::cerr << "ERROR: Could not open the specified configuration file: " << conf << std::endl;
+            return ArgumentParser::PARSE_ERROR;
+        }
+
+        std::string conf_f = conf;
+        mConf.parse_config(conf_f);
+        if (mShowConfig) {
+            mConf.print_config();
+        }
+    }
+
+    return ArgumentParser::PARSE_OK;
+}
+
 void MKEOptions::setProgramDescription(seqan::ArgumentParser &parser) {
     // Set short description, version, and date
     setShortDescription(parser, "Calculate mikan ensemble scores.");
@@ -24,8 +66,13 @@ void MKEOptions::setProgramDescription(seqan::ArgumentParser &parser) {
     addIOArgs(parser);
 
     // Define Options
-    addSection(parser, "mikan ensemble Score Options");
-    addOption(parser, ArgParseOption("a", "output_align", "Output alignments to standard output."));
+    addSection(parser, "Mikan Ensemble Score Options");
+    addOption(parser, ArgParseOption("c", "config", "Specify a configuration file.",
+                                     ArgParseArgument::INPUTFILE));
+    setDefaultValue(parser, "config", "");
+
+    addOption(parser, ArgParseOption("", "show-config", "Show the content of the specified configuration file."));
+    hideOption(parser, "show-config");
 
     // Add Examples Section
     addTextSection(parser, "Examples");

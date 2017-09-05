@@ -19,33 +19,18 @@ namespace mkens {
 // MKECore methods
 //
 void MKECore::set_effective_tools() {
-    resize(mEffectiveTools, mkens::TOOL_NUM, false);
+    resize(mEffectiveTools, ToolIdx::Count, false);
 
     unsigned n = 0;
+    const MKEConfig &conf = mMKEOpts.get_conf();
 
-    mEffectiveTools[0] = true;
-    mIdxMap[0] = n;
-    ++n;
-
-    mEffectiveTools[1] = true;
-    mIdxMap[1] = n;
-    ++n;
-
-    mEffectiveTools[2] = true;
-    mIdxMap[2] = n;
-    ++n;
-
-    mEffectiveTools[3] = true;
-    mIdxMap[3] = n;
-    ++n;
-
-    mEffectiveTools[4] = true;
-    mIdxMap[4] = n;
-    ++n;
-
-    mEffectiveTools[5] = true;
-    mIdxMap[5] = n;
-    ++n;
+    for (unsigned i = 0; i < ToolIdx::Count; i++) {
+        if (conf.get_tool_flag(i)) {
+            mEffectiveTools[i] = true;
+            mIdxMap[i] = n;
+            ++n;
+        }
+    }
 
     mEffectiveToolN = n;
     mSeedSites.init_site_list(mEffectiveToolN);
@@ -53,7 +38,7 @@ void MKECore::set_effective_tools() {
 }
 
 void MKECore::init_score_lists() {
-    for (unsigned i = 0; i < mkens::TOOL_NUM; i++) {
+    for (unsigned i = 0; i < ToolIdx::Count; i++) {
         if (!mEffectiveTools[i]) {
             continue;
         }
@@ -69,7 +54,7 @@ void MKECore::init_score_lists() {
 }
 
 void MKECore::clear_all() {
-    for (unsigned i = 0; i < mkens::TOOL_NUM; i++) {
+    for (unsigned i = 0; i < ToolIdx::Count; i++) {
         mikan::MKCoreBase &core = get_tool_core(i);
         core.clear_all();
     }
@@ -90,7 +75,7 @@ int MKECore::find_seed_sites(unsigned pIdx) {
 }
 
 int MKECore::combine_site_pos(unsigned pIdx) {
-    for (unsigned i = 0; i < mkens::TOOL_NUM; i++) {
+    for (unsigned i = 0; i < ToolIdx::Count; i++) {
         if (!mEffectiveTools[i]) {
             continue;
         }
@@ -112,7 +97,7 @@ int MKECore::combine_site_pos(unsigned pIdx) {
 }
 
 int MKECore::combine_seed_types() {
-    for (unsigned i = 0; i < mkens::TOOL_NUM; i++) {
+    for (unsigned i = 0; i < ToolIdx::Count; i++) {
         if (!mEffectiveTools[i]) {
             continue;
         }
@@ -132,7 +117,7 @@ int MKECore::calc_site_scores(unsigned pIdx) {
     if (mCalcSiteScore) {
         mSiteScores.init_score_list(mSeedSites);
 
-        for (unsigned i = 0; i < mkens::TOOL_NUM; i++) {
+        for (unsigned i = 0; i < ToolIdx::Count; i++) {
             if (!mEffectiveTools[i]) {
                 continue;
             }
@@ -165,7 +150,7 @@ int MKECore::calc_rna_scores(unsigned pIdx) {
 
         mRNAScores.init_score_list(mRNAWithSites);
 
-        for (unsigned i = 0; i < mkens::TOOL_NUM; i++) {
+        for (unsigned i = 0; i < ToolIdx::Count; i++) {
             if (!mEffectiveTools[i]) {
                 continue;
             }

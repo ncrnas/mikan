@@ -59,17 +59,17 @@ int RH2Core::write_site_score(seqan::CharString const &pMiRNAId) {
 }
 
 int RH2Core::write_rna_score(seqan::CharString const &pMiRNAId) {
-    const seqan::String<float> &totalScores = mRNAScores.get_scores();
-    const seqan::String<float> &totalNormScores = mRNAScores.get_norm_scores();
+    const seqan::String<float> &mfeScores = mRNAScores.get_mfe_minlogtotal();
+    const seqan::String<float> &normScores = mRNAScores.get_norm_maxlogtotal();
     const seqan::String<int> &mRNAPos = mRNAScores.get_mrna_pos();
     const seqan::String<int> &siteNum = mRNAScores.get_site_num();
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
         mOFile2 << toCString(pMiRNAId) << "\t";
         mOFile2 << toCString((seqan::CharString) mMRNAIds[mRNAPos[i]]) << "\t";
-        mOFile2 << totalScores[i] << "\t";
+        mOFile2 << mfeScores[i] << "\t";
         mOFile2 << siteNum[i] << "\t";
-        mOFile2 << totalNormScores[i] << "\t";
+        mOFile2 << normScores[i] << "\t";
         mOFile2 << std::endl;
     }
 

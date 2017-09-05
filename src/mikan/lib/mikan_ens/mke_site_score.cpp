@@ -26,14 +26,22 @@ void MKESiteScores::add_score_types(
         seqan::CharString &pPrefix) {
 
     const mikan::TCharSet &scoreTypes = pSiteScores.get_score_types();
+    const MKEConfig &conf = pMKEOpts.get_conf();
 
     for (unsigned i = 0; i < length(scoreTypes); ++i) {
-        seqan::CharString sType;
+        seqan::CharString sType, sTypeC;
         append(sType, pPrefix);
         append(sType, ":");
         append(sType, scoreTypes[i]);
-        appendValue(mScoreTypes, sType);
 
+        sTypeC = sType;
+        replace(sTypeC, 2, 3, ":site:");
+        std::string ckey = toCString(sTypeC);
+        if (!conf.get_site_flag(ckey)) {
+            continue;
+        }
+
+        appendValue(mScoreTypes, sType);
         mIdxMap[std::string(toCString(mScoreTypes[mScoreTypeN]))] = mScoreTypeN;
         ++mScoreTypeN;
     }
@@ -67,12 +75,23 @@ void MKESiteScores::add_scores(
     const mikan::TMRNAPosSet &RNAPos = pSeedSites.get_mrna_pos();
     const mikan::TMRNAPosSet &S1Pos = pSeedSites.get_site_pos_s1();
     const mikan::TCharSet &scoreTypes = pSiteScores.get_score_types();
+    const MKEConfig &conf = pMKEOpts.get_conf();
 
     for (unsigned i = 0; i < length(scoreTypes); ++i) {
-        seqan::CharString sType;
+        seqan::CharString sType, sTypeC;
         append(sType, pPrefix);
         append(sType, ":");
         append(sType, scoreTypes[i]);
+        sTypeC = sType;
+        replace(sTypeC, 2, 3, ":site:");
+
+        std::string ckey = toCString(sTypeC);
+        if (!conf.get_site_flag(ckey)) {
+            continue;
+        }
+        float lBound = conf.get_site_lower(ckey);
+        float uBound = conf.get_site_upper(ckey);
+        bool isRev = conf.get_site_reverse(ckey);
 
         unsigned idxTool = mIdxMap[std::string(toCString(sType))];
 
@@ -84,24 +103,50 @@ void MKESiteScores::add_scores(
             unsigned idxSite = pMKESeedSites.get_idx_from_pos(RNAPos[j], S1Pos[j]);
             float score = pSiteScores.get_score(i, j);
             mSiteRawScoreList[idxTool][idxSite] = score;
-            mSiteNormScoreList[idxTool][idxSite] = normalize_score(score, pMKEOpts, sType);
+            mSiteNormScoreList[idxTool][idxSite] = normalize_score(score, lBound, uBound, isRev);
             mEffectiveSites[idxSite] = true;
         }
     }
-
 }
 
 float MKESiteScores::normalize_score(
         float pScore,
-        MKEOptions const &pMKEOpts,
-        seqan::CharString &pScoreType) {
+        float pLower,
+        float pUpper,
+        bool pReverse) {
 
-    float nScore = pScore;
+    float nScore;
+
+    if (pReverse) {
+        nScore = (pScore - pUpper) / (pLower - pUpper);
+
+    } else {
+        nScore = (pScore - pLower) / (pUpper - pLower);
+    }
+
+    if (nScore < 0) {
+        nScore = 0;
+    } else if (nScore > 1) {
+        nScore = 1;
+    }
 
     return nScore;
 }
 
 void MKESiteScores::combine_scores(MKEOptions const &pMKEOpts) {
+    const MKEConfig &conf = pMKEOpts.get_conf();
+    seqan::StringSet<float> weights;
+    float total_weight = 0;
+
+    resize(weights, mScoreTypeN);
+    for (unsigned i = 0; i < mScoreTypeN; ++i) {
+        seqan::CharString sType = mScoreTypes[i];
+        replace(sType, 2, 3, ":site:");
+        std::string ckey = toCString(sType);
+        weights[i] = conf.get_site_weight(ckey);
+        total_weight += weights[i];
+    }
+
     for (unsigned i = 0; i < length(mEffectiveSites); i++) {
         if (!mEffectiveSites[i]) {
             mToolScores[i] = "";
@@ -112,23 +157,19 @@ void MKESiteScores::combine_scores(MKEOptions const &pMKEOpts) {
         std::stringstream stream;
         float score = 0;
         for (unsigned j = 0; j < mScoreTypeN; ++j) {
-            stream << mScoreTypes[j] << ":" ;
+            stream << mScoreTypes[j] << ":";
             float tscore = mSiteRawScoreList[j][i];
-//            std::cout << i << ", " << j <<  ", " << tscore << std::endl;
             tscore = roundf(tscore * 100.0f) / 100.0f;
-            stream << tscore << "," ;
+            stream << tscore << ",";
 
-            float weight = 1;
-            score += weight * mSiteNormScoreList[j][i];
-
+            score += weights[j] * mSiteNormScoreList[j][i];
         }
 
         mToolScores[i] = stream.str();
-        mSiteScores[i] = score;
+        mSiteScores[i] = score / total_weight;
 
     }
 }
-
 
 
 } // namespace mkens

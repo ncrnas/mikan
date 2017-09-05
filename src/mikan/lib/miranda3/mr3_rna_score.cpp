@@ -38,36 +38,31 @@ int MR3RNAScores::calc_scores(
     resize(mMRNAPos, length(pRNAWithSites.mEffectiveRNAs), 0);
     resize(mSiteNum, length(pRNAWithSites.mEffectiveRNAs), 0);
 
-    float score, maxScore, totalScore;
-    float scoreEn, maxScoreEn, totalScoreEn;
-    unsigned siteCount, maxIdx, maxIdxEn;
     for (unsigned i = 0; i < length(pRNAWithSites.mEffectiveRNAs); i++) {
         if (!pRNAWithSites.mEffectiveRNAs[i]) {
             continue;
         }
 
-        score = scoreEn = totalScore = totalScoreEn = 0;
-        maxScore = maxScoreEn = -FLT_MAX;
-        siteCount = 0;
-        maxIdx = maxScoreEn = 0;
-
+        unsigned siteCount = 0;
+        float totalScore = 0;
+        float totalScoreEn = 0;
+        float maxScore = -FLT_MAX;
+        float minScoreEn = FLT_MAX;
         for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
             if (!pSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
                 continue;
             }
 
-            score = pSiteScores.get_align_score(rnaSitePosMap[i][j]);
+            float score = pSiteScores.get_align_score(rnaSitePosMap[i][j]);
             totalScore += score;
             if (score > maxScore) {
                 maxScore = score;
-                maxIdx = j;
             }
 
-            scoreEn = pSiteScores.get_energy_score(rnaSitePosMap[i][j]);
+            float scoreEn = pSiteScores.get_energy_score(rnaSitePosMap[i][j]);
             totalScoreEn += scoreEn;
-            if ((-1.0 * scoreEn) > maxScoreEn) {
-                maxScoreEn = (-1.0 * scoreEn);
-                maxIdxEn = j;
+            if (scoreEn < minScoreEn) {
+                minScoreEn = scoreEn;
             }
 
             ++siteCount;
@@ -79,10 +74,18 @@ int MR3RNAScores::calc_scores(
 
         mTotalAlignScores[i] = totalScore;
         mTotalEnScores[i] = totalScoreEn;
-        mLogMaxAlignScores[i] = maxScore + std::log(totalScore);
-        mLogMinEnScores[i] = -1.0 * (maxScoreEn + std::log(-1.0 * totalScoreEn));
+        if (totalScore - maxScore > 0) {
+            mLogMaxAlignScores[i] = maxScore + std::log(totalScore - maxScore);
+        } else {
+            mLogMaxAlignScores[i] = maxScore;
+        }
+        if (totalScoreEn - minScoreEn < 0) {
+            mLogMinEnScores[i] = minScoreEn + (-1.0 * std::log(-1.0 * (totalScoreEn - minScoreEn)));
+        } else {
+            mLogMinEnScores[i] = minScoreEn;
+        }
         mMaxAlignScores[i] = maxScore;
-        mMinEnScores[i] = -1.0 * maxScoreEn;
+        mMinEnScores[i] = minScoreEn;
         mEffectiveRNAs[i] = true;
         mMRNAPos[i] = uniqRNAPosSet[i];
         mSiteNum[i] = siteCount;
