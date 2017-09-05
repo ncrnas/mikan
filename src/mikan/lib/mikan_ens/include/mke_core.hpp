@@ -13,6 +13,7 @@
 #include "mke_seed_site.hpp"      // MKESeedSites
 #include "mke_rna_sites.hpp"      // MKERMAWithSites
 #include "mke_rna_score.hpp"      // MKERNAScores
+#include "mke_enum.hpp"           // ToolIdx, SiteIdx, RNAIdx
 #include "mr3_core.hpp"           // MR3Core
 #include "pita_core.hpp"          // PITACore
 #include "rh2_core.hpp"           // RH2Core
@@ -93,17 +94,17 @@ private:
 
     mikan::MKCoreBase &get_tool_core(unsigned pIdx) {
         switch (pIdx) {
-            case 0:
+            case ToolIdx::MR:
                 return mMR3Core;
-            case 1:
+            case ToolIdx::PT:
                 return mPITACore;
-            case 2:
+            case ToolIdx::RH:
                 return mRH2Core;
-            case 3:
+            case ToolIdx::TM:
                 return mTM1Core;
-            case 4:
+            case ToolIdx::TS:
                 return mTS5Core;
-            case 5:
+            case ToolIdx::SV:
                 return mTSSVMCore;
             default:
                 return *this;

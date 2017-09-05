@@ -3,38 +3,9 @@
 
 #include <seqan/sequence.h>
 #include "inih/INIReader.h"
+#include "mke_enum.hpp"           // ToolIdx, SiteIdx, RNAIdx
 
 namespace mkens {
-
-struct ToolIdx {
-    enum idx {
-        MR, PT, RH, TM, TS, SV
-    };
-    static const unsigned Count = 6;
-};
-
-struct SiteIdx {
-    enum idx {
-        MRAlg, MREng,
-        PTDdg, PTDpx, PTOpn,
-        RHMfe, RHNrm,
-        TSCtx,
-        SVSvm
-    };
-    static const unsigned Count = 9;
-};
-
-struct RNAIdx {
-    enum idx {
-        MRAlg, MREng,
-        PTDdg,
-        RHMfe, RHNrm,
-        TMSvm,
-        TSCtx,
-        SVSvm
-    };
-    static const unsigned Count = 8;
-};
 
 //
 // Tool config interface
@@ -280,6 +251,10 @@ public:
         mRNADefReverse[RNAIdx::SVSvm] = false;
 
         init_config();
+    }
+
+    std::string& get_tool_key(unsigned pIdx) {
+        return mToolKeys[pIdx];
     }
 
     bool get_tool_flag(unsigned pIdx) const {
