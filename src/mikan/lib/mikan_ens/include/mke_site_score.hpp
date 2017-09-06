@@ -14,7 +14,8 @@ namespace mkens {
 class MKESiteScores : public mikan::MKSiteScores {
 public:
     // Define method
-    explicit MKESiteScores(mikan::MKOptions const &pOpts) : MKSiteScores(pOpts) {
+    explicit MKESiteScores(mikan::MKOptions const &pOpts) :
+            MKSiteScores(pOpts), mKeySep(":site:") {
         mScoreTypeN = 0;
     }
 
@@ -33,7 +34,11 @@ public:
 
     void combine_scores(MKEOptions const &pMKEOpts);
 
+    void print_all_scores(MKEOptions const &pMKEOpts);
+
 private:
+    const std::string mKeySep;
+
     // Variables
     unsigned mScoreTypeN;
     std::map<std::string, unsigned> mIdxMap;

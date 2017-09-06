@@ -17,7 +17,8 @@ namespace mkens {
 class MKERNAScores : public mikan::MKRNAScores {
 public:
     // Define methods
-    explicit MKERNAScores(mikan::MKOptions const &opts) : MKRNAScores(opts) {
+    explicit MKERNAScores(mikan::MKOptions const &opts) :
+            MKRNAScores(opts), mKeySep(":rna:") {
         mScoreTypeN = 0;
     }
 
@@ -39,6 +40,11 @@ public:
     void set_site_count(mikan::MKSeedSites &pSeedSites, mikan::MKSiteScores &pSiteScores,
                         mkens::MKERMAWithSites &pRNAWithSites);
 
+    void print_all_scores(MKEOptions const &pMKEOpts);
+
+private:
+    const std::string mKeySep;
+
     // Variables
     unsigned mScoreTypeN;
     std::map<std::string, unsigned> mIdxMap;
@@ -47,7 +53,6 @@ public:
     seqan::StringSet<seqan::StringSet<float> > mRNANormScoreList;
     mikan::TCharSet mToolScores;
 
-private:
     float normalize_score(float pScore, float pLower, float pUpper, bool pReverse);
 };
 

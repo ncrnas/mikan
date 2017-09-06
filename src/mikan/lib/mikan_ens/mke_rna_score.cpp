@@ -34,7 +34,7 @@ void MKERNAScores::add_score_types(
         append(sType, scoreTypes[i]);
 
         sTypeC = sType;
-        replace(sTypeC, 2, 3, ":rna:");
+        replace(sTypeC, 2, 3, mKeySep.c_str());
         std::string ckey = toCString(sTypeC);
         if (!conf.get_rna_flag(ckey)) {
             continue;
@@ -84,7 +84,7 @@ void MKERNAScores::add_scores(
         append(sType, scoreTypes[i]);
 
         sTypeC = sType;
-        replace(sTypeC, 2, 3, ":rna:");
+        replace(sTypeC, 2, 3, mKeySep.c_str());
         std::string ckey = toCString(sTypeC);
         if (!conf.get_rna_flag(ckey)) {
             continue;
@@ -143,7 +143,7 @@ void MKERNAScores::combine_scores(MKEOptions const &pMKEOpts) {
     resize(weights, mScoreTypeN);
     for (unsigned i = 0; i < mScoreTypeN; ++i) {
         seqan::CharString sType = mScoreTypes[i];
-        replace(sType, 2, 3, ":rna:");
+        replace(sType, 2, 3, mKeySep.c_str());
         std::string ckey = toCString(sType);
         weights[i] = conf.get_rna_weight(ckey);
         total_weight += weights[i];
@@ -188,6 +188,80 @@ void MKERNAScores::set_site_count(
         ++mSiteNum[idxSite];
     }
 
+}
+
+void MKERNAScores::print_all_scores(MKEOptions const &pMKEOpts) {
+    const MKEConfig &conf = pMKEOpts.get_conf();
+    seqan::StringSet<float> weights;
+    seqan::StringSet<float> lbounds;
+    seqan::StringSet<float> ubounds;
+    seqan::StringSet<bool> is_rev;
+    float total_weight = 0;
+
+    resize(weights, mScoreTypeN);
+    resize(lbounds, mScoreTypeN);
+    resize(ubounds, mScoreTypeN);
+    resize(is_rev, mScoreTypeN);
+    for (unsigned i = 0; i < mScoreTypeN; ++i) {
+        seqan::CharString sType = mScoreTypes[i];
+        replace(sType, 2, 3, mKeySep.c_str());
+        std::string ckey = toCString(sType);
+        weights[i] = conf.get_rna_weight(ckey);
+        lbounds[i] = conf.get_rna_lower(ckey);
+        ubounds[i] = conf.get_rna_upper(ckey);
+        is_rev[i] = conf.get_rna_reverse(ckey);
+        total_weight += weights[i];
+    }
+
+    std::cout << "### RNA scores ###" << std::endl;
+    std::cout << "total weight: " << total_weight << std::endl;
+
+    for (unsigned i = 0; i < length(mEffectiveRNAs); i++) {
+        if (!mEffectiveRNAs[i]) {
+            continue;
+        }
+        std::cout << i << ". mk score: " << mRNAScores[i] << std::endl;
+
+        std::cout << "\tnormalized score: " << std::endl;
+        std::stringstream stream_n;
+        bool first_n = true;
+        for (unsigned j = 0; j < mScoreTypeN; ++j) {
+            if (mRNANormScoreList[j][i] == 0 && mRNARawScoreList[j][i] == 0) {
+                continue;
+            }
+            std::cout << "\t\t" << mScoreTypes[j] << ": ";
+            std::cout << mRNANormScoreList[j][i];
+            std::cout << ", weight: " << weights[j] << std::endl;
+
+            if (!first_n) {
+                stream_n << " + ";
+            }
+            stream_n << "(" << mRNANormScoreList[j][i] << " * " <<  weights[j] << ")";
+            first_n = false;
+        }
+        std::cout << "\t\t(" << stream_n.str() << ") / " << total_weight << std::endl;
+
+        std::cout << "\traw score: " << std::endl;
+        for (unsigned j = 0; j < mScoreTypeN; ++j) {
+            if (mRNANormScoreList[j][i] == 0 && mRNARawScoreList[j][i] == 0) {
+                continue;
+            }
+            std::cout << "\t\t" << mScoreTypes[j] << ": ";
+            std::cout << mRNARawScoreList[j][i];
+            std::cout << ", lower: " << lbounds[j];
+            std::cout << ", uppper: " << ubounds[j] << std::endl;
+            if (is_rev[j]) {
+                std::cout << "\t\t(" << mRNARawScoreList[j][i] << " - " << ubounds[j] << ") / ";
+                std::cout << "(" << lbounds[j] << " - " << ubounds[j] << ")" << std::endl;
+            } else {
+                std::cout << "\t\t(" << mRNARawScoreList[j][i] << " - " << lbounds[j] << ") / ";
+                std::cout << "(" << ubounds[j] << " - " << lbounds[j] << ")" << std::endl;
+
+            }
+        }
+    }
+
+    std::cout << std::endl;
 }
 
 } // namespace mkens

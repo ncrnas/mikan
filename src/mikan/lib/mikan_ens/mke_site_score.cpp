@@ -35,7 +35,7 @@ void MKESiteScores::add_score_types(
         append(sType, scoreTypes[i]);
 
         sTypeC = sType;
-        replace(sTypeC, 2, 3, ":site:");
+        replace(sTypeC, 2, 3, mKeySep.c_str());
         std::string ckey = toCString(sTypeC);
         if (!conf.get_site_flag(ckey)) {
             continue;
@@ -83,7 +83,7 @@ void MKESiteScores::add_scores(
         append(sType, ":");
         append(sType, scoreTypes[i]);
         sTypeC = sType;
-        replace(sTypeC, 2, 3, ":site:");
+        replace(sTypeC, 2, 3, mKeySep.c_str());
 
         std::string ckey = toCString(sTypeC);
         if (!conf.get_site_flag(ckey)) {
@@ -141,7 +141,7 @@ void MKESiteScores::combine_scores(MKEOptions const &pMKEOpts) {
     resize(weights, mScoreTypeN);
     for (unsigned i = 0; i < mScoreTypeN; ++i) {
         seqan::CharString sType = mScoreTypes[i];
-        replace(sType, 2, 3, ":site:");
+        replace(sType, 2, 3, mKeySep.c_str());
         std::string ckey = toCString(sType);
         weights[i] = conf.get_site_weight(ckey);
         total_weight += weights[i];
@@ -171,6 +171,80 @@ void MKESiteScores::combine_scores(MKEOptions const &pMKEOpts) {
     }
 }
 
+void MKESiteScores::print_all_scores(MKEOptions const &pMKEOpts) {
+    const MKEConfig &conf = pMKEOpts.get_conf();
+    seqan::StringSet<float> weights;
+    seqan::StringSet<float> lbounds;
+    seqan::StringSet<float> ubounds;
+    seqan::StringSet<bool> is_rev;
+    float total_weight = 0;
+
+    resize(weights, mScoreTypeN);
+    resize(lbounds, mScoreTypeN);
+    resize(ubounds, mScoreTypeN);
+    resize(is_rev, mScoreTypeN);
+    for (unsigned i = 0; i < mScoreTypeN; ++i) {
+        seqan::CharString sType = mScoreTypes[i];
+        replace(sType, 2, 3, mKeySep.c_str());
+        std::string ckey = toCString(sType);
+        weights[i] = conf.get_site_weight(ckey);
+        lbounds[i] = conf.get_site_lower(ckey);
+        ubounds[i] = conf.get_site_upper(ckey);
+        is_rev[i] = conf.get_site_reverse(ckey);
+        total_weight += weights[i];
+    }
+
+    std::cout << "### Site scores ###" << std::endl;
+    std::cout << "total weight: " << total_weight << std::endl;
+
+    for (unsigned i = 0; i < length(mEffectiveSites); i++) {
+        if (!mEffectiveSites[i]) {
+            continue;
+        }
+        std::cout << i << ". mk score: " << mSiteScores[i] << std::endl;
+
+        std::cout << "\tnormalized score: " << std::endl;
+        std::stringstream stream_n;
+        bool first_n = true;
+        for (unsigned j = 0; j < mScoreTypeN; ++j) {
+            if (mSiteNormScoreList[j][i] == 0 && mSiteRawScoreList[j][i] == 0) {
+                continue;
+            }
+            std::cout << "\t\t" << mScoreTypes[j] << ": ";
+            std::cout << mSiteNormScoreList[j][i];
+            std::cout << ", weight: " << weights[j] << std::endl;
+
+            if (!first_n) {
+                stream_n << " + ";
+            }
+            stream_n << "(" << mSiteNormScoreList[j][i] << " * " <<  weights[j] << ")";
+            first_n = false;
+        }
+        std::cout << "\t\t(" << stream_n.str() << ") / " << total_weight << std::endl;
+
+        std::cout << "\traw score: " << std::endl;
+        for (unsigned j = 0; j < mScoreTypeN; ++j) {
+            if (mSiteNormScoreList[j][i] == 0 && mSiteRawScoreList[j][i] == 0) {
+                continue;
+            }
+            std::cout << "\t\t" << mScoreTypes[j] << ": ";
+            std::cout << mSiteRawScoreList[j][i];
+            std::cout << ", lower: " << lbounds[j];
+            std::cout << ", uppper: " << ubounds[j] << std::endl;
+            if (is_rev[j]) {
+                std::cout << "\t\t(" << mSiteRawScoreList[j][i] << " - " << ubounds[j] << ") / ";
+                std::cout << "(" << lbounds[j] << " - " << ubounds[j] << ")" << std::endl;
+            } else {
+                std::cout << "\t\t(" << mSiteRawScoreList[j][i] << " - " << lbounds[j] << ") / ";
+                std::cout << "(" << ubounds[j] << " - " << lbounds[j] << ")" << std::endl;
+
+            }
+        }
+    }
+
+    std::cout << std::endl;
+
+}
 
 } // namespace mkens
 
