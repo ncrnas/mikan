@@ -43,10 +43,10 @@ public:
 
     virtual float get_score(int pTypeIdx, int pIdx) {
         if (pTypeIdx == 1) {
-            return mLogMaxAlignScores[pIdx];
+            return mLogMinEnScores[pIdx];
         }
 
-        return mLogMinEnScores[pIdx];
+        return mLogMaxAlignScores[pIdx];
     }
 
     // Method prototype
