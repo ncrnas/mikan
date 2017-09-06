@@ -1,5 +1,5 @@
-hsa-miR-1 MIMAT0000416	TS_008_BM2A1_25_25_30_31	0.227731	3	mr:alg:-15.81,mr:eng:147,pt:ddg:-14.95,rh:mfe:-9,rh:nrm:1.45,tm:svm:-0.52,ts:ctx:0,sv:svm:-0.69,
-hsa-miR-1 MIMAT0000416	TS_007_BM2_25_25_30_31	0.226988	2	mr:alg:-15.85,mr:eng:147,pt:ddg:-14.87,rh:mfe:-9,rh:nrm:1.45,tm:svm:-0.53,ts:ctx:0,sv:svm:-0.72,
+hsa-miR-1 MIMAT0000416	TS_008_BM2A1_25_25_30_31	0.2583	3	mr:alg:147,mr:eng:-15.81,pt:ddg:-14.95,rh:mfe:-9,rh:nrm:1.45,tm:svm:-0.52,ts:ctx:0,sv:svm:-0.69,
+hsa-miR-1 MIMAT0000416	TS_007_BM2_25_25_30_31	0.25761	2	mr:alg:147,mr:eng:-15.85,pt:ddg:-14.87,rh:mfe:-9,rh:nrm:1.45,tm:svm:-0.53,ts:ctx:0,sv:svm:-0.72,
 hsa-miR-1 MIMAT0000416	TS_006_BM4A1_25_25_30_31	0.0704479	2	mr:alg:0,mr:eng:0,pt:ddg:0,rh:mfe:-9,rh:nrm:1.45,tm:svm:0,ts:ctx:0,sv:svm:-0.72,
 hsa-miR-1 MIMAT0000416	TS_002_BM6A1_25_25_30_31	0.0700387	2	mr:alg:0,mr:eng:0,pt:ddg:0,rh:mfe:-9,rh:nrm:1.45,tm:svm:0,ts:ctx:0,sv:svm:-0.79,
 hsa-miR-1 MIMAT0000416	TS_004_BM5A1_25_25_30_31	0.0699688	2	mr:alg:0,mr:eng:0,pt:ddg:0,rh:mfe:-9,rh:nrm:1.45,tm:svm:0,ts:ctx:0,sv:svm:-0.8,

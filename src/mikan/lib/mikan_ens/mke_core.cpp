@@ -140,6 +140,8 @@ int MKECore::calc_site_scores(unsigned pIdx) {
 
     }
 
+//    mSiteScores.print_all_scores(mMKEOpts);
+
     return 0;
 }
 
@@ -170,6 +172,8 @@ int MKECore::calc_rna_scores(unsigned pIdx) {
         mRNAScores.set_site_count(mSeedSites, mSiteScores, mRNAWithSites);
 
     }
+
+//    mRNAScores.print_all_scores(mMKEOpts);
 
     return 0;
 }

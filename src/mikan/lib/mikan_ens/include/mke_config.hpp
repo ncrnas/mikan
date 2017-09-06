@@ -168,18 +168,18 @@ public:
         mSiteDefReverse[SiteIdx::MREng] = true;
 
         // PITA ddG
-        mSiteDefLower[SiteIdx::PTDdg] = -48;
-        mSiteDefUpper[SiteIdx::PTDdg] = 0;
+        mSiteDefLower[SiteIdx::PTDdg] = -42;
+        mSiteDefUpper[SiteIdx::PTDdg] = 36;
         mSiteDefReverse[SiteIdx::PTDdg] = true;
 
         // PITA dDuplex
-        mSiteDefLower[SiteIdx::PTDpx] = -47;
+        mSiteDefLower[SiteIdx::PTDpx] = -48;
         mSiteDefUpper[SiteIdx::PTDpx] = 0;
         mSiteDefReverse[SiteIdx::PTDpx] = true;
 
         // PITA dOpen
-        mSiteDefLower[SiteIdx::PTOpn] = -42;
-        mSiteDefUpper[SiteIdx::PTOpn] = 36;
+        mSiteDefLower[SiteIdx::PTOpn] = -47;
+        mSiteDefUpper[SiteIdx::PTOpn] = 0;
         mSiteDefReverse[SiteIdx::PTOpn] = true;
 
         // RNAhybrid MFE
