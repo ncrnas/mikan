@@ -12,11 +12,11 @@ static int gtest_read_file(seqan::CharString const &fname, std::vector<std::stri
 
 static void comp_scores(std::string &score1, std::string &score2, unsigned round_dec, int ubound);
 
-static void comp_toolscores(std::string &score1, std::string &score2, unsigned round_dec, int ubound);
+static void comp_toolscores(const std::string &score1, const std::string &score2, unsigned round_dec, int ubound);
 
-static void split_line(std::string &line, std::vector<std::string> &flds);
+static void split_line(const std::string &line, std::vector<std::string> &flds);
 
-static void split_line2(std::string &line, std::vector<std::string> &flds, const char* delim);
+static void split_line2(const std::string &line, std::vector<std::string> &flds, const char* delim);
 
 int gtest_compare_two_files(seqan::CharString const &f1, seqan::CharString const &f2) {
     std::vector<std::string> lines1;
@@ -217,7 +217,7 @@ static int gtest_read_file(seqan::CharString const &fname,
     return 0;
 }
 
-static void split_line(std::string &line, std::vector<std::string> &flds) {
+static void split_line(const std::string &line, std::vector<std::string> &flds) {
     char *pline = const_cast<char *>(line.c_str());
     char *pch;
 
@@ -235,7 +235,7 @@ static void split_line(std::string &line, std::vector<std::string> &flds) {
 
 }
 
-static void split_line2(std::string &line, std::vector<std::string> &flds, const char* delim) {
+static void split_line2(const std::string &line, std::vector<std::string> &flds, const char* delim) {
     char *pline = const_cast<char *>(line.c_str());
     char *pch;
 
@@ -271,7 +271,7 @@ static void comp_scores(std::string &score1, std::string &score2, unsigned round
 
 }
 
-static void comp_toolscores(std::string &score1, std::string &score2, unsigned round_dec, int ubound) {
+static void comp_toolscores(const std::string &score1, const std::string &score2, unsigned round_dec, int ubound) {
     std::vector<std::string> sflds1;
     std::vector<std::string> sflds2;
     split_line2(score1, sflds1, ",");
@@ -295,8 +295,16 @@ static void comp_toolscores(std::string &score1, std::string &score2, unsigned r
 //        std::cout << s1 << " == " << s2  << std::endl;
 //        std::cout << lbound << " <= " << diff << " <= " << ubound << std::endl;
 
-        EXPECT_TRUE(lbound <= diff && diff <= ubound);
-
+        EXPECT_TRUE(lbound <= diff && diff <= ubound)
+                            << "score1: "
+                            <<  ssflds1[0].c_str()
+                            << ":" << ssflds1[1].c_str()
+                            << ":" << ssflds1[2].c_str()
+                            << std::endl
+                            << "score2: "
+                            <<  ssflds2[0].c_str()
+                            << ":" << ssflds2[1].c_str()
+                            << ":" << ssflds2[2].c_str();
     }
 
 
