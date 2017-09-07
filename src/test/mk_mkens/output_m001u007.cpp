@@ -19,7 +19,7 @@ protected:
 
 TEST_F(OM001U007, comp_site) {
     (void) mikan::MKCoreMain<mkens::MKEOptions, mkens::MKECore >(argc, (const char **) argv);
-    gtest_compare_two_files2(o1file1, o2file1, 4, 100, 1);
+    gtest_compare_two_files4(o1file1, o2file1, 4, 100, 1, 5, 100, 1);
 }
 
 TEST_F(OM001U007, comp_mrna) {
