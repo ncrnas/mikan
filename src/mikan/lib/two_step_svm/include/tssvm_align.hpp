@@ -1,26 +1,28 @@
 #ifndef TSSVM_ALIGN_HPP_
 #define TSSVM_ALIGN_HPP_
 
-#include <mikan/lib/two_step_svm/include/tssvm_seed_site.hpp>      // TSSVMSeedSites
 #include <seqan/sequence.h>
 #include <seqan/align.h>
 #include <seqan/score.h>
+#include "mk_typedef.hpp"           // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_seed_site.hpp"         // MKSeedSites
 
 // Extend SeqAn by a user-define scoring matrix.
 namespace seqan {
 
 // We have to create a new specialization of the ScoringMatrix_ class
 // for amino acids.  For this, we first create a new tag.
-struct ERNAGUWOB {};
+struct ERNAGUWOB {
+};
 
-template <>
+template<>
 struct ScoringMatrixData_<int, Rna, ERNAGUWOB> {
     enum {
         VALUE_SIZE = ValueSize<Rna>::VALUE,
         TAB_SIZE = VALUE_SIZE * VALUE_SIZE
     };
 
-    static inline int const * getData() {
+    static inline int const *getData() {
         // The user defined data table.
         //      A   C   G   U
         // 	A  -3  -3  -3   5
@@ -28,29 +30,29 @@ struct ScoringMatrixData_<int, Rna, ERNAGUWOB> {
         // 	G  -3   5  -3   2
         // 	U   5  -3   2  -3
         static int const _data[TAB_SIZE] = {
-                -3, -3, -3,  5,
-                -3, -3,  5, -3,
-                -3,  5, -3,  2,
-                 5, -3,  2, -3,
+                -3, -3, -3, 5,
+                -3, -3, 5, -3,
+                -3, 5, -3, 2,
+                5, -3, 2, -3,
         };
         return _data;
     }
 };
 
-template <>
+template<>
 struct ScoringMatrixData_<int, Rna5, ERNAGUWOB> {
     enum {
         VALUE_SIZE = ValueSize<Rna5>::VALUE,
         TAB_SIZE = VALUE_SIZE * VALUE_SIZE
     };
 
-    static inline int const * getData() {
+    static inline int const *getData() {
         // The user defined data table.
         static int const _data[TAB_SIZE] = {
-                -3, -3, -3,  5, -3,
-                -3, -3,  5, -3, -3,
-                -3,  5, -3,  2, -3,
-                 5, -3,  2, -3, -3,
+                -3, -3, -3, 5, -3,
+                -3, -3, 5, -3, -3,
+                -3, 5, -3, 2, -3,
+                5, -3, 2, -3, -3,
                 -3, -3, -3, -3, -3
         };
         return _data;
@@ -59,19 +61,13 @@ struct ScoringMatrixData_<int, Rna5, ERNAGUWOB> {
 
 }  // namespace seqan
 
-namespace tssvm{
+namespace tssvm {
 
 //
 // Store miRNA and mRNA sequences and ids
 //
-template <class TRNAString>
-class TSAlign
-{
+class TSSVMAlign {
 public:
-    // Define types
-    typedef seqan::StringSet<seqan::CharString> TCharSet;
-    typedef seqan::StringSet<TRNAString> TRNASet;
-
     // Constant values
     static const unsigned ALIGN_SEQ_LEN = 20;
     static const int GAP_OPEN_SCORE = -10;
@@ -79,41 +75,51 @@ public:
 
 public:
     // Define methods
-    TSAlign(): mScoreMatrix(GAP_EXTENT_SCORE, GAP_OPEN_SCORE) {}
-    TCharSet const & get_align_bars() const {return mAlignBars;}
-    TCharSet const & get_align_mrna() const {return mAlignMRNA;}
-    TCharSet const & get_align_mirna() const {return mAlignMiRNA;}
+    TSSVMAlign() : mScoreMatrix(GAP_EXTENT_SCORE, GAP_OPEN_SCORE) {}
+
+    mikan::TCharSet const &get_align_bars() const { return mAlignBars; }
+
+    mikan::TCharSet const &get_align_mrna() const { return mAlignMRNA; }
+
+    mikan::TCharSet const &get_align_mirna() const { return mAlignMiRNA; }
 
     // Method prototypes
-    int align_seq(TSSVMSeedSites<TRNAString> &pSeedSites, TRNAString const &pMiRNASeq,
-            TRNASet const &pMRNASeqs);
+    int align_seq(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+                  mikan::MKSeedSites &pSeedSites);
+
     void clear_alignments();
+
     void write_alignment(int pIdx);
 
 private:
-    TCharSet mAlignBars;
-    TCharSet mAlignMRNA;
-    TCharSet mAlignMiRNA;
+    mikan::TCharSet mAlignBars;
+    mikan::TCharSet mAlignMRNA;
+    mikan::TCharSet mAlignMiRNA;
     seqan::String<int> mAlignScores;
 
-    typedef seqan::ScoreMatrix<typename seqan::Value<TRNAString>::Type, seqan::ERNAGUWOB> TScoreMat;
+    typedef seqan::ScoreMatrix<seqan::Rna, seqan::ERNAGUWOB> TScoreMat;
     seqan::Score<int, TScoreMat> mScoreMatrix;
 
-    typedef seqan::Align<TRNAString, seqan::ArrayGaps> TAlign;
-    typedef seqan::Gaps<TRNAString, seqan::ArrayGaps> TGap;
+    typedef seqan::Align<mikan::TRNAStr, seqan::ArrayGaps> TAlign;
+    typedef seqan::Gaps<mikan::TRNAStr, seqan::ArrayGaps> TGap;
 
 private:
-    int set_mirna_seq_for_align(const seqan::CharString &pSeedType, TRNAString const &pMiRNASeq,
-            TRNAString &pMiRNAAlignSeq);
+    int set_mirna_seq_for_align(const seqan::CharString &pSeedType, mikan::TRNAStr const &pMiRNASeq,
+                                mikan::TRNAStr &pMiRNAAlignSeq);
+
     int set_mrna_seq_for_align(const seqan::CharString &pSeedType, unsigned pSitePos, unsigned pMiRNALen,
-            const TRNAString &pMRNASeq, TRNAString &pMRNAAlignSeq);
-    int set_addtional_sequences(TRNAString &pMiRNAAlignSeq, TRNAString &pMRNAAlignSeq);
+                               const mikan::TRNAStr &pMRNASeq, mikan::TRNAStr &pMRNAAlignSeq);
+
+    int set_addtional_sequences(mikan::TRNAStr &pMiRNAAlignSeq, mikan::TRNAStr &pMRNAAlignSeq);
 
     unsigned get_align_len(TAlign &pAlign);
+
     int set_align_mrna(TAlign &pAlign, unsigned pAlignLen, const seqan::CharString &pSeedType,
-            unsigned pMisMatchPos, unsigned pSitePos, const TRNAString &pMRNASeq, int pIdx);
+                       unsigned pMisMatchPos, unsigned pSitePos, const mikan::TRNAStr &pMRNASeq, int pIdx);
+
     int set_align_mirna(TAlign &pAlign, unsigned pAlignLen, const seqan::CharString &pSeedType,
-            unsigned pMisMatchPos, const TRNAString &pMiRNASeq, int pIdx);
+                        unsigned pMisMatchPos, const mikan::TRNAStr &pMiRNASeq, int pIdx);
+
     int set_align_bars(int pIdx, unsigned pAlignLen);
 };
 

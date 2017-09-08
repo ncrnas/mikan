@@ -1,0 +1,7 @@
+hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer	-0.0026	1	
+hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer3	-0.834	2	
+hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer2	-0.834	2	
+hsa-miR-1 MIMAT0000416	hg18_refgene test4_6mer1	-0.834	2	
+hsa-miR-1 MIMAT0000416	hg18_refgene test3_7mer-a1	-0.834	2	
+hsa-miR-1 MIMAT0000416	hg18_refgene test2_7mer-m8	-0.834	2	
+hsa-miR-1 MIMAT0000416	hg18_refgene test1_8mer	-0.834	2	

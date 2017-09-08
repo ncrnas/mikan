@@ -53,7 +53,11 @@
 #include <climits>
 #include <pthread.h>
 #include <errno.h>
+#ifdef __APPLE__
+#include <dispatch/dispatch.h>
+#else
 #include <semaphore.h>
+#endif
 #include <aio.h>
 #include <sys/mman.h>
 

@@ -135,7 +135,7 @@ SEQAN_CHECKPOINT
 			all_nodes[seq_j_pos].insert(node_j);
 			_refine(node_j,seq_j_id,seqs,seq_map,alis,gs,pms,all_nodes,min_len,tag);
 		}
-		// TODO: else //verschmelzen, abschneiden und ergehen, erst sp�ter... 	
+		// TODO: else //verschmelzen, abschneiden und ergehen, erst spter... 	
 		// do nothing or resolve problems  
 	
 		++segment_it;

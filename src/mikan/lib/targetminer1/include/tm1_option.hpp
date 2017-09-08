@@ -3,35 +3,22 @@
 
 #include <seqan/sequence.h>
 #include <seqan/arg_parse.h>
+#include "mk_option.hpp"        // MKOptions
 
-namespace tm1p{
+namespace tm1p {
 
 //
 // Tool options
 //
-class TM1CSOptions
-{
-public:
-    // Define types
-    typedef seqan::ArgumentParser::ParseResult TParseResult;
-
-    // Declare variables
-    bool mOutputAlign;
-    seqan::CharString mMiRNAFasta;
-    seqan::CharString mMRNAFasta;
-    seqan::CharString mOFileSite;
-    seqan::CharString mOFileScore;
-
+class TM1Options : public mikan::MKOptions {
 public:
     // Define methods
-    TM1CSOptions() : mOutputAlign(false) {}
-
-    // Method prototypes
-    seqan::ArgumentParser::ParseResult parseCommandLine(int argc, char const **argv);
+    TM1Options() {
+        mProgName = "mk-targetminer";
+    }
 
 private:
-    static void setProgramDescription(seqan::ArgumentParser &pParser);
-    seqan::ArgumentParser::ParseResult validateFiles();
+    virtual void setProgramDescription(seqan::ArgumentParser &pParser);
 };
 
 } // namespace tm1p

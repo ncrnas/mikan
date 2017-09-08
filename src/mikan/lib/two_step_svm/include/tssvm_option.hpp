@@ -3,36 +3,22 @@
 
 #include <seqan/sequence.h>
 #include <seqan/arg_parse.h>
+#include "mk_option.hpp"        // MKOptions
 
-namespace tssvm{
+namespace tssvm {
 
 //
 // Tool options
 //
-class TSSVMOptions
-{
-public:
-    // Define types
-    typedef seqan::ArgumentParser::ParseResult TParseResult;
-
-    // Declare variables
-    bool mOutputAlign;
-    seqan::CharString mModelPath;
-    seqan::CharString mMiRNAFasta;
-    seqan::CharString mMRNAFasta;
-    seqan::CharString mOFileTargetSite;
-    seqan::CharString mOFileMRNA;
-
+class TSSVMOptions : public mikan::MKOptions {
 public:
     // Define methods
-    TSSVMOptions() : mOutputAlign(false) {}
-
-    // Method prototypes
-    seqan::ArgumentParser::ParseResult parseCommandLine(int argc, char const **argv);
+    TSSVMOptions() {
+        mProgName = "mk-twostep-svm";
+    }
 
 private:
-    static void setProgramDescription(seqan::ArgumentParser &pParser);
-    seqan::ArgumentParser::ParseResult validateFiles();
+    virtual void setProgramDescription(seqan::ArgumentParser &pParser);
 };
 
 } // namespace tssvm

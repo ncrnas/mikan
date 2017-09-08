@@ -136,9 +136,9 @@ struct PackedTraits_
 ..include:seqan/sequence.h
 */
 
-/*???TODO Optimierungsm�glichkeiten:
+/*???TODO Optimierungsmglichkeiten:
 - _clearSpace kopiert Zeichenweise im Packed-String, und nicht im Host-String
-- _clearSpace verwendet resize, um den Host zu vergr��ern, d.h. der Inhalt wird eventuell doppelt kopiert.
+- _clearSpace verwendet resize, um den Host zu vergrern, d.h. der Inhalt wird eventuell doppelt kopiert.
 */
 
 template <typename TValue, typename THostspec>

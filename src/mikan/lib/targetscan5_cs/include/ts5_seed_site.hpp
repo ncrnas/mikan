@@ -3,91 +3,43 @@
 
 #include <seqan/sequence.h>
 #include <seqan/index.h>
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_seed_seq.hpp"       // MKSeedSeqs
+#include "mk_seed_site.hpp"      // MKSeedSites
+#include "mk_option.hpp"         // MKOptions
 
-namespace ts5cs{
-
-//
-// Store miRNA and mRNA sequences and ids
-//
-template <class TRNAString>
-class TS5Sequences
-{
-public:
-    // Define types
-    typedef seqan::StringSet<seqan::CharString> TCharSet;
-    typedef seqan::StringSet<TRNAString> TRNASet;
-
-public:
-    // Define methods
-    TS5Sequences(){}
-    unsigned get_length() const {return length(mSeqIds);}
-    seqan::CharString const& get_seq_id(unsigned const pIdx) const {return mSeqIds[pIdx];}
-    TRNAString const& get_seq(unsigned const pIdx) const {return mSeqs[pIdx];}
-    TCharSet const& get_ids() const {return mSeqIds;}
-    TRNASet const& get_seqs() const {return mSeqs;}
-
-    // Method prototypes
-    int read_fasta(seqan::CharString const &pFasta);
-
-private:
-    TCharSet mSeqIds;
-    TRNASet mSeqs;
-};
-
+namespace ts5cs {
 
 //
 // Generate miRNA seeds
 //
-template <class TRNAString>
-class TS5SeedSeqs
-{
-public:
-    // Define types
-    typedef seqan::StringSet<TRNAString> TRNASet;
-
+class TS5SeedSeqs : public mikan::MKSeedSeqs {
 public:
     // Define methods
-    TS5SeedSeqs() {}
-    TRNAString const& get_seed_seq() const {return mSeedSeqs[0];}
+    TS5SeedSeqs(mikan::MKOptions const &opts) : MKSeedSeqs(opts) {
+        set_flags();
+    }
 
-    // Method prototypes
-    int create_seed_seqs();
-    void set_mirna_seq(TRNAString pSeq);
-
-private:
-    TRNASet mSeedSeqs;
-    TRNAString mMiRNASeq;
+    // Method prototype
+    void set_flags();
 };
 
 //
 // miRNA seed sites
 //
-template <class TRNAString, int SEEDLEN=6>
-class TS5SeedSites
-{
-public:
-    // Define types
-    typedef seqan::StringSet<TRNAString> TRNASet;
-    typedef seqan::StringSet<seqan::CharString> TCharSet;
-    typedef seqan::Index<TRNASet, seqan::IndexQGram<seqan::UngappedShape<SEEDLEN> > > TIndexQGram;
-    typedef seqan::Finder<TIndexQGram> TFinder;
-
+class TS5SeedSites : public mikan::MKSeedSites {
 public:
     // Define methods
-    TS5SeedSites(TIndexQGram& pRNAIdx, TFinder& pFinder): mRNAIdx(pRNAIdx), mFinder(pFinder) {}
-    seqan::String<unsigned> const& get_mrna_pos() const {return mMRNAPos;}
-    seqan::String<unsigned> const& get_site_pos() const {return mSitePos;}
-
-    // Method prototypes
-    void reset_finder();
-    int find_seed_sites(TRNAString const &pMiRNA);
-    void clear_pos();
+    TS5SeedSites(mikan::TIndexQGram &pRNAIdx, mikan::TFinder &pFinder, mikan::TRNASet const &pMRNASeqs) :
+            MKSeedSites(pRNAIdx, pFinder, pMRNASeqs) {
+        mMinToCDS = 14;
+    }
 
 private:
-    seqan::String<unsigned> mMRNAPos;
-    seqan::String<unsigned> mSitePos;
-    TIndexQGram& mRNAIdx;
-    TFinder& mFinder;
+    virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
+                                   mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
+                                   seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
+
 };
 
 } // namespace ts5cs

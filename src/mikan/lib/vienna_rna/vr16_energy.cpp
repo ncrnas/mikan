@@ -1,5 +1,6 @@
-#include <mikan/lib/vienna_rna/include/vr16_energy.hpp>
 #include <cstring>
+#include "mk_nd_array.hpp"
+#include "vr16_energy.hpp"
 
 namespace vr16
 {
@@ -995,8 +996,6 @@ void VR16EnergyParams::init_mismatch_m37()
 {
 /*  mismatch energies in multiloops
     int mMismatchM37[NBPAIRS+1][5][5]; */
-
-    std::memset(mMismatchM37, 0, sizeof(mMismatchM37));
 }
 
 void VR16EnergyParams::init_mism_h()
@@ -1567,41 +1566,41 @@ void VR16EnergyParams::init_tetraloops()
                   "GGGAAC UGAAAA AGCAAU AGUAAU CGGGAG "
                   "AGUGAU GGCGAC GGGAGC GUGAAC UGGAAA ";*/
 
-    mTetraloops["GGGGAC"] = 0;
-    mTetraloops["GGUGAC"] = 1;
-    mTetraloops["CGAAAG"] = 2;
-    mTetraloops["GGAGAC"] = 3;
-    mTetraloops["CGCAAG"] = 4;
+    mTetraloops[std::string("GGGGAC")] = 0;
+    mTetraloops[std::string("GGUGAC")] = 1;
+    mTetraloops[std::string("CGAAAG")] = 2;
+    mTetraloops[std::string("GGAGAC")] = 3;
+    mTetraloops[std::string("CGCAAG")] = 4;
 
-    mTetraloops["GGAAAC"] = 5;
-    mTetraloops["CGGAAG"] = 6;
-    mTetraloops["CUUCGG"] = 7;
-    mTetraloops["CGUGAG"] = 8;
-    mTetraloops["CGAAGG"] = 9;
+    mTetraloops[std::string("GGAAAC")] = 5;
+    mTetraloops[std::string("CGGAAG")] = 6;
+    mTetraloops[std::string("CUUCGG")] = 7;
+    mTetraloops[std::string("CGUGAG")] = 8;
+    mTetraloops[std::string("CGAAGG")] = 9;
 
-    mTetraloops["CUACGG"] = 10;
-    mTetraloops["GGCAAC"] = 11;
-    mTetraloops["CGCGAG"] = 12;
-    mTetraloops["UGAGAG"] = 13;
-    mTetraloops["CGAGAG"] = 14;
+    mTetraloops[std::string("CUACGG")] = 10;
+    mTetraloops[std::string("GGCAAC")] = 11;
+    mTetraloops[std::string("CGCGAG")] = 12;
+    mTetraloops[std::string("UGAGAG")] = 13;
+    mTetraloops[std::string("CGAGAG")] = 14;
 
-    mTetraloops["AGAAAU"] = 15;
-    mTetraloops["CGUAAG"] = 16;
-    mTetraloops["CUAACG"] = 17;
-    mTetraloops["UGAAAG"] = 18;
-    mTetraloops["GGAAGC"] = 19;
+    mTetraloops[std::string("AGAAAU")] = 15;
+    mTetraloops[std::string("CGUAAG")] = 16;
+    mTetraloops[std::string("CUAACG")] = 17;
+    mTetraloops[std::string("UGAAAG")] = 18;
+    mTetraloops[std::string("GGAAGC")] = 19;
 
-    mTetraloops["GGGAAC"] = 20;
-    mTetraloops["UGAAAA"] = 21;
-    mTetraloops["AGCAAU"] = 22;
-    mTetraloops["AGUAAU"] = 23;
-    mTetraloops["CGGGAG"] = 24;
+    mTetraloops[std::string("GGGAAC")] = 20;
+    mTetraloops[std::string("UGAAAA")] = 21;
+    mTetraloops[std::string("AGCAAU")] = 22;
+    mTetraloops[std::string("AGUAAU")] = 23;
+    mTetraloops[std::string("CGGGAG")] = 24;
 
-    mTetraloops["AGUGAU"] = 25;
-    mTetraloops["GGCGAC"] = 26;
-    mTetraloops["GGGAGC"] = 27;
-    mTetraloops["GUGAAC"] = 28;
-    mTetraloops["UGGAAA"] = 29;
+    mTetraloops[std::string("AGUGAU")] = 25;
+    mTetraloops[std::string("GGCGAC")] = 26;
+    mTetraloops[std::string("GGGAGC")] = 27;
+    mTetraloops[std::string("GUGAAC")] = 28;
+    mTetraloops[std::string("UGGAAA")] = 29;
 
 }
 
@@ -1611,8 +1610,6 @@ void VR16EnergyParams::init_tetra_energy37()
      -300, -300, -300, -300, -300, -300, -300, -300, -300, -250, -250, -250,
      -250, -250, -200, -200, -200, -200, -200, -150, -150, -150, -150, -150,
      -150, -150, -150, -150, -150, -150}; */
-
-    std::memset(mTetraEnergy37, 0, sizeof(mTetraEnergy37));
 
     mTetraEnergy37[0] = -300;
     mTetraEnergy37[1] = -300;
@@ -1651,8 +1648,6 @@ void VR16EnergyParams::init_tetra_energy37()
 void VR16EnergyParams::init_triloop_e37()
 {
 /*  int mTriloopE37[40]; */
-
-    std::memset(mTriloopE37, 0, sizeof(mTriloopE37));
 }
 
 void VR16EnergyParams::init_int11_37()
@@ -106414,6 +106409,72 @@ void VR16EnergyParams::init_int22_h()
     mInt22_H[7][7][4][4][4][2] = -100;
     mInt22_H[7][7][4][4][4][3] = -100;
     mInt22_H[7][7][4][4][4][4] = -100;
+}
+
+void VR16EnergyParams::init_heap()
+{
+    mStack37 = mikan::create_2d_array<int>(NBPAIRS+1, NBPAIRS+1);
+    mEnthalpies = mikan::create_2d_array<int>(NBPAIRS+1, NBPAIRS+1);
+
+    mHairpin37 = mikan::create_1d_array<int>(31);
+    mBulge37 = mikan::create_1d_array<int>(31);
+    mInternalLoop37 = mikan::create_1d_array<int>(31);
+
+    mMismatchI37 = mikan::create_3d_array<int>(NBPAIRS+1, 5, 5);
+    mMismatchH37 = mikan::create_3d_array<int>(NBPAIRS+1, 5, 5);
+    mMismatchM37 = mikan::create_3d_array<int>(NBPAIRS+1, 5, 5);
+    mMismH = mikan::create_3d_array<int>(NBPAIRS+1, 5, 5);
+
+    mDangle5_37 = mikan::create_2d_array<int>(NBPAIRS+1, 5);
+    mDangle3_37 = mikan::create_2d_array<int>(NBPAIRS+1, 5);
+    mDangle3_H = mikan::create_2d_array<int>(NBPAIRS+1, 5);
+    mDangle5_H = mikan::create_2d_array<int>(NBPAIRS+1, 5);
+
+    mTetraEnergy37 = mikan::create_1d_array<int>(200);
+
+    mTriloopE37 = mikan::create_1d_array<int>(40);
+
+    mInt11_37 = mikan::create_4d_array<int>(NBPAIRS+1, NBPAIRS+1, 5, 5);
+    mInt11_H = mikan::create_4d_array<int>(NBPAIRS+1, NBPAIRS+1, 5, 5);
+
+    mInt21_37 = mikan::create_5d_array<int>(NBPAIRS+1, NBPAIRS+1, 5, 5, 5);
+    mInt21_H = mikan::create_5d_array<int>(NBPAIRS+1, NBPAIRS+1, 5, 5, 5);
+
+    mInt22_37 = mikan::create_6d_array<int>(NBPAIRS+1, NBPAIRS+1, 5, 5, 5, 5);
+    mInt22_H = mikan::create_6d_array<int>(NBPAIRS+1, NBPAIRS+1, 5, 5, 5, 5);
+}
+
+void VR16EnergyParams::free_heap()
+{
+    mikan::delete_2d_array<int>(mStack37, NBPAIRS+1);
+    mikan::delete_2d_array<int>(mEnthalpies, NBPAIRS+1);
+
+    mikan::delete_1d_array<int>(mHairpin37);
+    mikan::delete_1d_array<int>(mBulge37);
+    mikan::delete_1d_array<int>(mInternalLoop37);
+
+    mikan::delete_3d_array<int>(mMismatchI37, NBPAIRS+1, 5);
+    mikan::delete_3d_array<int>(mMismatchH37, NBPAIRS+1, 5);
+    mikan::delete_3d_array<int>(mMismatchM37, NBPAIRS+1, 5);
+    mikan::delete_3d_array<int>(mMismH, NBPAIRS+1, 5);
+
+    mikan::delete_2d_array<int>(mDangle5_37, NBPAIRS+1);
+    mikan::delete_2d_array<int>(mDangle3_37, NBPAIRS+1);
+    mikan::delete_2d_array<int>(mDangle3_H, NBPAIRS+1);
+    mikan::delete_2d_array<int>(mDangle5_H, NBPAIRS+1);
+
+    mikan::delete_1d_array<int>(mTetraEnergy37);
+
+    mikan::delete_1d_array<int>(mTriloopE37);
+
+    mikan::delete_4d_array<int>(mInt11_37, NBPAIRS+1, NBPAIRS+1, 5);
+    mikan::delete_4d_array<int>(mInt11_H, NBPAIRS+1, NBPAIRS+1, 5);
+
+    mikan::delete_5d_array<int>(mInt21_37, NBPAIRS+1, NBPAIRS+1, 5, 5);
+    mikan::delete_5d_array<int>(mInt21_H, NBPAIRS+1, NBPAIRS+1, 5, 5);
+
+    mikan::delete_6d_array<int>(mInt22_37, NBPAIRS+1, NBPAIRS+1, 5, 5, 5);
+    mikan::delete_6d_array<int>(mInt22_H, NBPAIRS+1, NBPAIRS+1, 5, 5, 5);
 }
 
 } // namespace vr16

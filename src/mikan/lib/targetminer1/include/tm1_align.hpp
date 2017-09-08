@@ -1,42 +1,43 @@
 #ifndef TM1_ALIGN_HPP_
 #define TM1_ALIGN_HPP_
 
-#include <mikan/lib/targetminer1/include/tm1_align.hpp>         // TM1Alignment
-#include <mikan/lib/targetminer1/include/tm1_seed_site.hpp>     // TM1SeedSites
 #include <seqan/sequence.h>
+#include "mk_typedef.hpp"        // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "mk_seed_site.hpp"      // MKSeedSites
+#include "tm1_align.hpp"         // TM1Alignment
+#include "tm1_seed_site.hpp"     // TM1SeedSites
 
-namespace tm1p{
+namespace tm1p {
 
 //
 //  miRNA:mRNA alignment
 //
-template <class TRNAString>
-class TM1Alignment
-{
-public:
-    // Define types
-    typedef seqan::StringSet<seqan::CharString> TCharSet;
-    typedef seqan::StringSet<TRNAString> TRNASet;
-    typedef seqan::String<unsigned> TSitePos;
-
+class TM1Alignment {
 public:
     // Define methods
     TM1Alignment() {}
-    TCharSet const & get_align_bars() const {return mAlignBars;}
-    TCharSet const & get_align_mrna() const {return mAlignMRNA;}
-    TCharSet const & get_align_mirna() const {return mAlignMiRNA;}
+
+    mikan::TCharSet const &get_align_bars() const { return mAlignBars; }
+
+    mikan::TCharSet const &get_align_mrna() const { return mAlignMRNA; }
+
+    mikan::TCharSet const &get_align_mirna() const { return mAlignMiRNA; }
 
     // Method prototypes
-    void align_all(TRNAString const &pMiRNASeq, TRNASet const &pMRNASeqs, TM1SeedSites<TRNAString> const &pSeedSites,
-            seqan::String<int> const &pA1Pos);
+    void
+    align_all(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
+              mikan::MKSeedSites const &pSeedSites, seqan::String<int> const &pA1Pos);
+
     void resize_alignments(unsigned pSize);
+
     void clear_alignments();
+
     void write_alignment(int pIdx) const;
 
 private:
-    TCharSet mAlignBars;
-    TCharSet mAlignMRNA;
-    TCharSet mAlignMiRNA;
+    mikan::TCharSet mAlignBars;
+    mikan::TCharSet mAlignMRNA;
+    mikan::TCharSet mAlignMiRNA;
 
 };
 

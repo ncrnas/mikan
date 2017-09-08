@@ -1,19 +1,18 @@
 #ifndef VR16_DUPLEX_HPP_
 #define VR16_DUPLEX_HPP_
 
-#include <mikan/lib/vienna_rna/include/vr16_energy.hpp>                // VR16EnergyParams
-#include <mikan/lib/vienna_rna/include/vr16_fold_options.hpp>          // VR16FoldOptions
-#include <mikan/lib/vienna_rna/include/vr16_pair_mat.hpp>              // VR16PairMat
-#include <mikan/lib/vienna_rna/include/vr16_params.hpp>                // VR16Params, VR16ParamIL
 #include <string>
+#include "vr16_energy.hpp"                // VR16EnergyParams
+#include "vr16_fold_options.hpp"          // VR16FoldOptions
+#include "vr16_pair_mat.hpp"              // VR16PairMat
+#include "vr16_params.hpp"                // VR16Params, VR16ParamIL
 
 namespace vr16 {
 
 //
 // ViennaRNA duplexfold
 //
-class VR16Duplex
-{
+class VR16Duplex {
 public:
     // Constant values
     static const int FORBIDDEN = 9999;
@@ -31,13 +30,12 @@ public:
 
 public:
     // Define methods
-    VR16Duplex(VR16EnergyParams& pEn, VR16Params& pParams, VR16ParamIL& pPpIL, VR16PairMat& pPairMat,
-            VR16FoldOptions& pOpts) :
-        mI(0), mJ(0), mL1(0), mEnergy(0), mE5p(0), mE3p(0),
-        mN1(0), mN2(0), mBonusGiven(0),
-        mFivePrimeLength(0), mAutoFivePrimeLength(1), mDebugMode(0), mDelayFree(0),
-        mEn(pEn), mParams(pParams), mPpIL(pPpIL), mPairMat(pPairMat), mOpts(pOpts)
-    {}
+    VR16Duplex(VR16EnergyParams &pEn, VR16Params &pParams, VR16ParamIL &pPpIL, VR16PairMat &pPairMat,
+               VR16FoldOptions &pOpts) :
+            mI(0), mJ(0), mL1(0), mEnergy(0), mE5p(0), mE3p(0),
+            mN1(0), mN2(0), mBonusGiven(0),
+            mFivePrimeLength(0), mAutoFivePrimeLength(1), mDebugMode(0), mDelayFree(0),
+            mEn(pEn), mParams(pParams), mPpIL(pPpIL), mPairMat(pPairMat), mOpts(pOpts) {}
 
     // Method prototypes
     int duplexfold(std::string &pS1, std::string &pS2, std::vector<int> &pArrayI, std::vector<int> &pArrayJ);
@@ -66,14 +64,15 @@ private:
     int mDebugMode;
     int mDelayFree;
 
-    VR16EnergyParams& mEn;
-    VR16Params& mParams;
-    VR16ParamIL& mPpIL;
-    VR16PairMat& mPairMat;
-    VR16FoldOptions& mOpts;
+    VR16EnergyParams &mEn;
+    VR16Params &mParams;
+    VR16ParamIL &mPpIL;
+    VR16PairMat &mPairMat;
+    VR16FoldOptions &mOpts;
 
 private:
-    void encode_seq(std::string &pS1, std::string& pS2);
+    void encode_seq(std::string &pS1, std::string &pS2);
+
     int backtrack(int pI, int pJ, std::vector<int> &pArrayI, std::vector<int> &pArrayJ);
 
 };

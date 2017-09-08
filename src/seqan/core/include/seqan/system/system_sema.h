@@ -89,6 +89,34 @@ namespace SEQAN_NAMESPACE_MAIN
 
     };
 
+#elif defined __APPLE__
+    struct Semaphore
+    {
+        typedef unsigned int Type;
+        dispatch_semaphore_t sema;
+
+        Semaphore(Type init = 0)
+        {
+            sema = dispatch_semaphore_create(init);
+        }
+
+        void lock() {
+            dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+        }
+
+        void unlock() {
+            dispatch_semaphore_signal(sema);
+        }
+
+    private:
+
+        Semaphore(Semaphore const &) {
+            // resource copying is not yet supported (performance reason)
+            // it needs a reference counting technique
+        }
+
+    };
+
 #else
 
     struct Semaphore

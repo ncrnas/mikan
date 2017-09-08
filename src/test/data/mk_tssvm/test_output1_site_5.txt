@@ -1,0 +1,13 @@
+hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer	62	68	8mer	-0.0231	
+hsa-miR-1 MIMAT0000416	hg18_refgene test1_8mer	470	476	BM	-0.9061	
+hsa-miR-1 MIMAT0000416	hg18_refgene test1_8mer	811	817	BM	-0.532	
+hsa-miR-1 MIMAT0000416	hg18_refgene test2_7mer-m8	470	476	BM	-0.9061	
+hsa-miR-1 MIMAT0000416	hg18_refgene test2_7mer-m8	811	817	BM	-0.532	
+hsa-miR-1 MIMAT0000416	hg18_refgene test3_7mer-a1	470	476	BM	-0.9061	
+hsa-miR-1 MIMAT0000416	hg18_refgene test3_7mer-a1	811	817	BM	-0.532	
+hsa-miR-1 MIMAT0000416	hg18_refgene test4_6mer1	470	476	BM	-0.9061	
+hsa-miR-1 MIMAT0000416	hg18_refgene test4_6mer1	811	817	BM	-0.532	
+hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer2	470	476	BM	-0.9061	
+hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer2	811	817	BM	-0.532	
+hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer3	470	476	BM	-0.9061	
+hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer3	811	817	BM	-0.532	

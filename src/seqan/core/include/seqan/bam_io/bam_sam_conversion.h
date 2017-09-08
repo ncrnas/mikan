@@ -35,7 +35,7 @@
 // ==========================================================================
 
 #ifndef CORE_INCLUDE_SEQAN_BAM_IO_BAM_SAM_CONVERSION_H_
-#define CORE_INCLUDE_SEQAN_BAM_IO_SAM_TAGS_TO_BAM_TAGS_H_
+#define CORE_INCLUDE_SEQAN_BAM_IO_BAM_SAM_CONVERSION_H_
 
 namespace seqan {
 
@@ -447,7 +447,11 @@ void _assignTagsBamToSamOneTag(TTarget & target, TSourceIter & it)
                 *ptr++ = *it++;
             }
             char buffer[32];
+#ifdef __MINGW32__
+            snprintf(buffer, 32, "%d", (int)x);
+#else
             snprintf(buffer, 32, "%d", x);
+#endif
             append(target, buffer);
         }
         break;
@@ -461,7 +465,11 @@ void _assignTagsBamToSamOneTag(TTarget & target, TSourceIter & it)
                 *ptr++ = *it++;
             }
             char buffer[32];
+#ifdef __MINGW32__
+            snprintf(buffer, 32, "%u", (unsigned)x);
+#else
             snprintf(buffer, 32, "%u", x);
+#endif
             append(target, buffer);
         }
         break;
@@ -582,7 +590,11 @@ void _assignTagsBamToSamOneTag(TTarget & target, TSourceIter & it)
                         *ptr++ = *it++;
                     }
                     char buffer[32];
+#ifdef __MINGW32__
+                    snprintf(buffer, 32, "%d", (int)y);
+#else
                     snprintf(buffer, 32, "%d", y);
+#endif
                     append(target, buffer);
                 }
                 break;
@@ -598,7 +610,11 @@ void _assignTagsBamToSamOneTag(TTarget & target, TSourceIter & it)
                         *ptr++ = *it++;
                     }
                     char buffer[32];
+#ifdef __MINGW32__
+                    snprintf(buffer, 32, "%u", (int)y);
+#else
                     snprintf(buffer, 32, "%u", y);
+#endif
                     append(target, buffer);
                 }
                 break;
@@ -679,4 +695,4 @@ void assignTagsBamToSam(TTarget & target, TSource const & source)
 
 }  // namespace seqan
 
-#endif  // #ifndef CORE_INCLUDE_SEQAN_BAM_IO_SAM_TAGS_TO_BAM_TAGS_H_
+#endif  // #ifndef CORE_INCLUDE_SEQAN_BAM_IO_BAM_SAM_CONVERSION_H_

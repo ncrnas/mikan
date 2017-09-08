@@ -3,41 +3,33 @@
 
 #include <seqan/sequence.h>
 #include <seqan/arg_parse.h>
+#include "mk_option.hpp"        // MKOptions
 
-namespace ptddg{
+namespace ptddg {
 
 //
 // Tool options
 //
-class PITAOptions
-{
+class PITAOptions : public mikan::MKOptions {
 public:
-    // Define types
-    typedef seqan::ArgumentParser::ParseResult TParseResult;
+    // Define method
+    PITAOptions() {
+        mProgName = "mk-pita";
 
-    // Declare variables
-    bool mOutputAlign;
-    int mMinSeedLen;
-    int mMaxSeedLen;
-    int mFlankUp;
-    int mFlankDown;
-    seqan::CharString mAllowGUWobble;
-    seqan::CharString mAllowMismatch;
-    seqan::CharString mMiRNAFasta;
-    seqan::CharString mMRNAFasta;
-    seqan::CharString mOFileDDG;
-    seqan::CharString mOFileTotal;
+        mMinSeedLen = 6;
+        mMaxSeedLen = 8;
+        mFlankUp = 0;
+        mFlankDown = 0;
 
-public:
-    // Define methods
-    PITAOptions() : mOutputAlign (false), mMinSeedLen(6), mMaxSeedLen(8), mFlankUp(0), mFlankDown(0) {}
+        mAllowGUWobble = "1";
+        mAllowMismatch = "0:1";
+    }
 
     // Method prototypes
     seqan::ArgumentParser::ParseResult parseCommandLine(int argc, char const **argv);
 
 private:
-    static void setProgramDescription(seqan::ArgumentParser &pParser);
-    seqan::ArgumentParser::ParseResult validateFiles();
+    virtual void setProgramDescription(seqan::ArgumentParser &pParser);
 };
 
 } // namespace ptddg
