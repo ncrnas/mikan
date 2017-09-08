@@ -1,9 +1,12 @@
-# mkseed 0.1
+# mikan 0.1
 
-* The first release version of `mkseed`
+* The first release version of `mikan`
 
-* The package offers different algorithms to find miRNA seed sites
-    * Suffix array
-    * N-mer
-    * Horspool's algorithm
-    * Brute-force
+* The package offers an ensemble approach to combine six different miRNA target prediction algorithms 
+    * TargetScan
+    * PITA
+    * RNAhybrid
+    * miRanda
+    * TargetMiner
+    * Two-step SVM
+

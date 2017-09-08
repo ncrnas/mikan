@@ -1,25 +1,25 @@
-mkseed
+mikan
 ======
 
-[![Travis](https://img.shields.io/travis/takayasaito/mkseed.svg?maxAge=2592000)](https://travis-ci.org/takayasaito/mkseed)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/takayasaito/mkseed?branch=master&svg=true)](https://ci.appveyor.com/project/takayasaito/mkseed)
+[![Travis](https://img.shields.io/travis/takayasaito/mikan.svg?maxAge=2592000)](https://travis-ci.org/takayasaito/mikan)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/takayasaito/mikan?branch=master&svg=true)](https://ci.appveyor.com/project/takayasaito/mikan)
 
-`mkseed` is a simple tool that aims to find microRNA seed sites.
+`mikan` provides an ensemble approach to combine six different miRNA target prediction algorithms.
 
 Algorithms
 ----------
 
-`mkseed` has been developed with C++ and [SeqAn](https://www.seqan.de). `mkseed` uses several algorithms provided by [SeqAn](https://www.seqan.de) to find microRNA target sites.
-
--   Suffix array
--   N-mer
--   Horspool's algorithm
--   Brute-force
+-   TargetScan
+-   PITA
+-   RNAhybrid
+-   miRanda
+-   TargetMiner
+-   Two-step SVM
 
 Installation
 ------------
 
-`mkseed` bundles all dependent header libraries and uses [CMake](https://cmake.org/) to compile the source code.
+`mikan` bundles all dependent header libraries and uses [CMake](https://cmake.org/) to compile the source code.
 
 Example on Linux/Unix/OS X
 ```
@@ -32,24 +32,31 @@ make && make install
 Programs
 --------
 
-The current version of `mkseed` only provides a single executable.
+The current version of `mikan` provides an ensemble program as well as individual programs for each algorithm. .
 
 | Program              | Description                                                |
 |:---------------------|:-----------------------------------------------------------|
-| find_seed            | Find microRNA seed sites in mRNA sequences                 |
+| mikan                | mikan ensemble algorithm                                   |
+| mkconf               | Show default configuration values to stdout                |
+| mk-targetscan        | mikan version of TargetScan implementation                 |
+| mk-pita              | mikan version of PITA implementation                       |
+| mk-rhahybrid         | mikan version of RNAhybrid implementation                  |
+| mk-miranda           | mikan version of miRanda implementation                    |
+| mk-targetminer       | mikan version of TargetMiner implementation                |
+| mk-twostep-svm       | mikan version of Two-step SVM implementation               |
 
+`mikan` and all `mk-*` programs require four command line arguments. 
 
-`find_seed` requires three command line arguments to process seed finding. 
-
-| Input                 | Description                                                |
-|:--------------------- |:-----------------------------------------------------------|
-| miRNA fasta file name | micorRNA sequences in Fasta format                         |
-| mRNA fasta file name  | messengerRNA sequences in Fasta foramt                     |
-| Output file name      | Output results will be written in this file                |
+| Input                   | Description                                             |
+|:------------------------|:--------------------------------------------------------|
+| miRNA fasta file name   | micorRNA sequences in Fasta format                      |
+| mRNA fasta file name    | mRNA sequences in Fasta foramt                          |
+| Output file name 1      | Site level scores are written in this file              |
+| Output file name 2      | RNA level scores are written in this file               |
 
 Usage
 -----
 
 ```
-find_seed /path/to/mirna.fasta /path/to/mrna.fasta /path/to/output.txt
+mikan /path/to/mirna.fasta /path/to/mrna.fasta /path/to/output1.txt /path/to/output2.txt
 ```
