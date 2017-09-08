@@ -1,8 +1,8 @@
 version: '{build}'
 
-branches:
-  only:
-    - master
+#branches:
+#  only:
+#    - master
 #    - develop
 #    - /^v.*$/
 
