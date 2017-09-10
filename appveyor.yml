@@ -43,7 +43,7 @@ environment:
 #    - Toolset: v100
 
 platform:
-  - Win32
+#  - Win32
   - x64
 
 configuration:
