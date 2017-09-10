@@ -10,30 +10,30 @@ os: Visual Studio 2015
 
 environment:
   matrix:
-    - Toolset: v140
-      TARGET: mk-miranda
-      TTARGET1: gtest_mk_miranda
-      TTARGET2: gtest_mk_miranda_long
-    - Toolset: v140
-      TARGET: mk-pita
-      TTARGET1: gtest_mk_pita
-      TTARGET2: gtest_mk_pita_long
-    - Toolset: v140
-      TARGET: mk-rnahybrid
-      TTARGET1: gtest_mk_rh2
-      TTARGET2: gtest_mk_rh2_long
-    - Toolset: v140
-      TARGET: mk-targetminer
-      TTARGET1: gtest_mk_tm1
-      TTARGET2: gtest_mk_tm1_long
-    - Toolset: v140
-      TARGET: mk-targetscan
-      TTARGET1: gtest_mk_ts5
-      TTARGET2: gtest_mk_ts5_long
-    - Toolset: v140
-      TARGET: mk-twostep-svm
-      TTARGET1: gtest_mk_tssvm
-      TTARGET2: gtest_mk_tssvm_long
+#    - Toolset: v140
+#      TARGET: mk-miranda
+#      TTARGET1: gtest_mk_miranda
+#      TTARGET2: gtest_mk_miranda_long
+#    - Toolset: v140
+#      TARGET: mk-pita
+#      TTARGET1: gtest_mk_pita
+#      TTARGET2: gtest_mk_pita_long
+#    - Toolset: v140
+#      TARGET: mk-rnahybrid
+#      TTARGET1: gtest_mk_rh2
+#      TTARGET2: gtest_mk_rh2_long
+#    - Toolset: v140
+#      TARGET: mk-targetminer
+#      TTARGET1: gtest_mk_tm1
+#      TTARGET2: gtest_mk_tm1_long
+#    - Toolset: v140
+#      TARGET: mk-targetscan
+#      TTARGET1: gtest_mk_ts5
+#      TTARGET2: gtest_mk_ts5_long
+#    - Toolset: v140
+#      TARGET: mk-twostep-svm
+#      TTARGET1: gtest_mk_tssvm
+#      TTARGET2: gtest_mk_tssvm_long
     - Toolset: v140
       TARGET: mikan
       TTARGET1: gtest_mk_mkens
@@ -43,7 +43,7 @@ environment:
 #    - Toolset: v100
 
 platform:
-#  - Win32
+  - Win32
   - x64
 
 configuration:
@@ -86,7 +86,7 @@ build_script:
         throw "Exec: $ErrorMessage"
       }
 
-      & cmake --build . --target ${$env:TARGET}
+      & cmake --build . --target ${$env:TARGET} --config $env:CONFIGURATION
       if ($LastExitCode -ne 0) {
         throw "Exec: $ErrorMessage"
       }
@@ -115,17 +115,17 @@ test_script:
         return
       }
 
-      & cmake --build . --target ${$env:TTARGET1}
+      & cmake --build . --target ${$env:TTARGET1} --config $env:CONFIGURATION
       if ($LastExitCode -ne 0) {
         throw "Exec: $ErrorMessage"
       }
 
-      & cmake --build . --target ${$env:TTARGET2}
+      & cmake --build . --target ${$env:TTARGET2} --config $env:CONFIGURATION
       if ($LastExitCode -ne 0) {
         throw "Exec: $ErrorMessage"
       }
 
-      & ctest -VV -R ${$env:TTARGET1}
+      & ctest -VV -R ${$env:TTARGET1} -C $env:CONFIGURATION
       if ($LastExitCode -ne 0) {
         throw "Exec: $ErrorMessage"
       }

@@ -29,7 +29,7 @@ sudo: false
 
 env:
   global:
-    - CONFIG=Release
+    - CONFIG=Debug
   matrix:
     - TARGET=mk-miranda TTARGET1=gtest_mk_miranda TTARGET2=gtest_mk_miranda_long
     - TARGET=mk-pita TTARGET1=gtest_mk_pita TTARGET2=gtest_mk_pita_long
