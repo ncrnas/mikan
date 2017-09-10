@@ -86,11 +86,21 @@ build_script:
         throw "Exec: $ErrorMessage"
       }
 
-      & cmake --build . --target ${$env:TARGET} --config $env:CONFIGURATION
+      & cmake --build . --target $env:TARGET --config $env:CONFIGURATION
       if ($LastExitCode -ne 0) {
         throw "Exec: $ErrorMessage"
       }
 
+      & cmake --build . --target $env:TTARGET1 --config $env:CONFIGURATION
+      if ($LastExitCode -ne 0) {
+        throw "Exec: $ErrorMessage"
+      }
+
+      & cmake --build . --target $env:TTARGET2 --config $env:CONFIGURATION
+      if ($LastExitCode -ne 0) {
+        throw "Exec: $ErrorMessage"
+      }
+      
 #after_build:
 #  - ps: |
 #      if (($env:TOOLSET -eq "v100") -and ($env:PLATFORM -eq "x64"))
@@ -113,16 +123,6 @@ test_script:
       if (($env:Toolset -eq "v100") -and ($env:PLATFORM -eq "x64"))
       {
         return
-      }
-
-      & cmake --build . --target ${$env:TTARGET1} --config $env:CONFIGURATION
-      if ($LastExitCode -ne 0) {
-        throw "Exec: $ErrorMessage"
-      }
-
-      & cmake --build . --target ${$env:TTARGET2} --config $env:CONFIGURATION
-      if ($LastExitCode -ne 0) {
-        throw "Exec: $ErrorMessage"
       }
 
       & ctest -VV -R ${$env:TTARGET1} -C $env:CONFIGURATION
