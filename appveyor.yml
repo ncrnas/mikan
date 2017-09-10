@@ -11,6 +11,33 @@ os: Visual Studio 2015
 environment:
   matrix:
     - Toolset: v140
+      TARGET: mk-miranda
+      TTARGET1: gtest_mk_miranda
+      TTARGET2: gtest_mk_miranda_long
+    - Toolset: v140
+      TARGET: mk-pita
+      TTARGET1: gtest_mk_pita
+      TTARGET2: gtest_mk_pita_long
+    - Toolset: v140
+      TARGET: mk-rnahybrid
+      TTARGET1: gtest_mk_rh2
+      TTARGET2: gtest_mk_rh2_long
+    - Toolset: v140
+      TARGET: mk-targetminer
+      TTARGET1: gtest_mk_tm1
+      TTARGET2: gtest_mk_tm1_long
+    - Toolset: v140
+      TARGET: mk-targetscan
+      TTARGET1: gtest_mk_ts5
+      TTARGET2: gtest_mk_ts5_long
+    - Toolset: v140
+      TARGET: mk-twostep-svm
+      TTARGET1: gtest_mk_tssvm
+      TTARGET2: gtest_mk_tssvm_long
+    - Toolset: v140
+      TARGET: mikan
+      TTARGET1: gtest_mk_mkens
+      TTARGET2: gtest_mk_mkens_long
 #    - Toolset: v120
 #    - Toolset: v110
 #    - Toolset: v100
@@ -59,26 +86,26 @@ build_script:
         throw "Exec: $ErrorMessage"
       }
 
-      & cmake --build . --config $env:CONFIGURATION
+      & cmake --build . --target ${$env:TARGET}
       if ($LastExitCode -ne 0) {
         throw "Exec: $ErrorMessage"
       }
 
-after_build:
-  - ps: |
-      if (($env:TOOLSET -eq "v100") -and ($env:PLATFORM -eq "x64"))
-      {
-        return
-      }
-
-      & cpack -G ZIP -C $env:CONFIGURATION
-      if ($LastExitCode -ne 0) {
-        throw "Exec: $ErrorMessage"
-      }
-
-      & Get-ChildItem .\*.zip | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
-      if ($LastExitCode -ne 0) {
-        throw "Exec: $ErrorMessage"
+#after_build:
+#  - ps: |
+#      if (($env:TOOLSET -eq "v100") -and ($env:PLATFORM -eq "x64"))
+#      {
+#        return
+#      }
+#
+#      & cpack -G ZIP -C $env:CONFIGURATION
+#      if ($LastExitCode -ne 0) {
+#        throw "Exec: $ErrorMessage"
+#      }
+#
+#      & Get-ChildItem .\*.zip | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+#      if ($LastExitCode -ne 0) {
+#        throw "Exec: $ErrorMessage"
       }
 
 test_script:
@@ -88,7 +115,17 @@ test_script:
         return
       }
 
-      & ctest -VV -C $env:CONFIGURATION
+      & cmake --build . --target ${$env:TTARGET1}
+      if ($LastExitCode -ne 0) {
+        throw "Exec: $ErrorMessage"
+      }
+
+      & cmake --build . --target ${$env:TTARGET2}
+      if ($LastExitCode -ne 0) {
+        throw "Exec: $ErrorMessage"
+      }
+
+      & ctest -VV -R ${$env:TTARGET1}
       if ($LastExitCode -ne 0) {
         throw "Exec: $ErrorMessage"
       }
