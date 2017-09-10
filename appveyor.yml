@@ -106,7 +106,7 @@ build_script:
 #      & Get-ChildItem .\*.zip | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
 #      if ($LastExitCode -ne 0) {
 #        throw "Exec: $ErrorMessage"
-      }
+#      }
 
 test_script:
   - ps: |

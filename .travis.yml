@@ -8,18 +8,18 @@ language: cpp
 
 sudo: false
 
-matrix:
-  fast_finish: true
-  include:
-  - os: linux
+#matrix:
+#  fast_finish: true
+#  include:
+#  - os: linux
 #    env: CONFIG=Debug
-    compiler: gcc
-  - os: linux
+#    compiler: gcc
+#  - os: linux
 #    env: CONFIG=Debug
-    compiler: clang
-  - os: osx
+#    compiler: clang
+#  - os: osx
 #    env: CONFIG=Debug
-    compiler: clang
+#    compiler: clang
 #  - os: linux
 #    env: CONFIG=Release CP_GENERATOR=TGZ;RPM;DEB
 #    compiler: gcc
