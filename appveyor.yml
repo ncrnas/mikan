@@ -1,8 +1,8 @@
 version: '{build}'
 
-#branches:
-#  only:
-#    - master
+branches:
+  only:
+    - master
 #    - develop
 #    - /^v.*$/
 
@@ -125,7 +125,7 @@ test_script:
         return
       }
 
-      & ctest -VV -R ${$env:TTARGET1} -C $env:CONFIGURATION
+      & ctest -VV -R $env:TTARGET1 -C $env:CONFIGURATION
       if ($LastExitCode -ne 0) {
         throw "Exec: $ErrorMessage"
       }

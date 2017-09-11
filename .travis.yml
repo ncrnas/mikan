@@ -1,8 +1,8 @@
 language: cpp
 
-#branches:
-#  only:
-#  - master
+branches:
+  only:
+  - master
 #  - develop
 #  - "/^v.*$/"
 
@@ -14,12 +14,12 @@ sudo: false
 #  - os: linux
 #    env: CONFIG=Debug
 #    compiler: gcc
-#  - os: linux
+  - os: linux
 #    env: CONFIG=Debug
-#    compiler: clang
-#  - os: osx
+    compiler: clang
+  - os: osx
 #    env: CONFIG=Debug
-#    compiler: clang
+    compiler: clang
 #  - os: linux
 #    env: CONFIG=Release CP_GENERATOR=TGZ;RPM;DEB
 #    compiler: gcc
@@ -31,12 +31,12 @@ env:
   global:
     - CONFIG=Debug
   matrix:
-    - TARGET=mk-miranda TTARGET1=gtest_mk_miranda TTARGET2=gtest_mk_miranda_long
-    - TARGET=mk-pita TTARGET1=gtest_mk_pita TTARGET2=gtest_mk_pita_long
-    - TARGET=mk-rnahybrid TTARGET1=gtest_mk_rh2 TTARGET2=gtest_mk_rh2_long
-    - TARGET=mk-targetminer TTARGET1=gtest_mk_tm1 TTARGET2=gtest_mk_tm1_long
-    - TARGET=mk-targetscan TTARGET1=gtest_mk_ts5 TTARGET2=gtest_mk_ts5_long
-    - TARGET=mk-twostep-svm TTARGET1=gtest_mk_tssvm TTARGET2=gtest_mk_tssvm_long
+#    - TARGET=mk-miranda TTARGET1=gtest_mk_miranda TTARGET2=gtest_mk_miranda_long
+#    - TARGET=mk-pita TTARGET1=gtest_mk_pita TTARGET2=gtest_mk_pita_long
+#    - TARGET=mk-rnahybrid TTARGET1=gtest_mk_rh2 TTARGET2=gtest_mk_rh2_long
+#    - TARGET=mk-targetminer TTARGET1=gtest_mk_tm1 TTARGET2=gtest_mk_tm1_long
+#    - TARGET=mk-targetscan TTARGET1=gtest_mk_ts5 TTARGET2=gtest_mk_ts5_long
+#    - TARGET=mk-twostep-svm TTARGET1=gtest_mk_tssvm TTARGET2=gtest_mk_tssvm_long
     - TARGET=mikan TTARGET1=gtest_mk_mkens TTARGET2=gtest_mk_mkens_long
 
 before_script:
