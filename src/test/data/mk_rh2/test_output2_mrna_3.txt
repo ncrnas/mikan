@@ -1,2 +1,0 @@
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_018214 range=chr6:53895551-53896878 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	-27.1148	4	5.44516	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_018214 range=chr6:53895551-53896878 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	-22.6513	10	5.18958	
