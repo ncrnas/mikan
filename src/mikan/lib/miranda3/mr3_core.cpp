@@ -85,6 +85,7 @@ int MR3Core::write_alignment(seqan::CharString const &pMiRNAId) {
     seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = mRNAWithSites.get_rna_site_pos_map();
     mikan::TMRNAPosSet &uniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
 
+    unsigned count = 0;
     for (unsigned i = 0; i < length(mRNAWithSites.mEffectiveRNAs); i++) {
         if (!mRNAWithSites.mEffectiveRNAs[i]) {
             continue;
@@ -102,7 +103,7 @@ int MR3Core::write_alignment(seqan::CharString const &pMiRNAId) {
             float energy_score = mSiteScores.get_energy_score(rnaSitePosMap[i][j]);
             energy_score = roundf(energy_score * 100.0f) / 100.0f;
 
-            std::cout << "### " << (i + j) + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
+            std::cout << "### " << count + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
             mSiteScores.print_alignment(rnaSitePosMap[i][j]);
             std::cout << "  miRNA:           " << toCString(pMiRNAId) << std::endl;
             std::cout << "  mRNA:            " << toCString((seqan::CharString) mMRNAIds[uniqRNAPosSet[i]])
@@ -116,7 +117,7 @@ int MR3Core::write_alignment(seqan::CharString const &pMiRNAId) {
 
             std::cout << std::endl;
 
-
+            ++count;
         }
     }
 

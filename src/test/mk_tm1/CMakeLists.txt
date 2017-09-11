@@ -62,5 +62,5 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/../lib/googletest/cmake/internal_utils.cmake
 config_compiler_and_linker()  # Defined in internal_utils.cmake.
 
 # Add test
-add_test(NAME test_mk_tm1 COMMAND gtest_mk_tm1)
-add_test(NAME test_mk_tm1_long COMMAND gtest_mk_tm1_long)
+add_test(NAME gtest_mk_tm1 COMMAND gtest_mk_tm1)
+add_test(NAME gtest_mk_tm1_long COMMAND gtest_mk_tm1_long)

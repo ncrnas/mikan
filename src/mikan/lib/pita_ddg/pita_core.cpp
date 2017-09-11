@@ -143,6 +143,8 @@ int PITACore::write_alignment(seqan::CharString const &pMiRNAId) {
             std::cout << "  dG0:                 " << dG0 << std::endl;
             std::cout << "  dG1:                 " << dG1 << std::endl;
             std::cout << std::endl;
+
+            ++count;
         }
 
     }

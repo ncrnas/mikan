@@ -11,11 +11,14 @@ sudo: false
 matrix:
   fast_finish: true
   include:
+#  - os: linux
+#    env: CONFIG=Debug
+#    compiler: gcc
   - os: linux
-    env: CONFIG=Debug
-    compiler: gcc
-  - os: linux
-    env: CONFIG=Debug
+#    env: CONFIG=Debug
+    compiler: clang
+  - os: osx
+#    env: CONFIG=Debug
     compiler: clang
 #  - os: linux
 #    env: CONFIG=Release CP_GENERATOR=TGZ;RPM;DEB
@@ -24,6 +27,18 @@ matrix:
 #    env: CONFIG=Release CP_GENERATOR=TGZ
 #    compiler: clang
 
+env:
+  global:
+    - CONFIG=Debug
+  matrix:
+#    - TARGET=mk-miranda TTARGET1=gtest_mk_miranda TTARGET2=gtest_mk_miranda_long
+#    - TARGET=mk-pita TTARGET1=gtest_mk_pita TTARGET2=gtest_mk_pita_long
+#    - TARGET=mk-rnahybrid TTARGET1=gtest_mk_rh2 TTARGET2=gtest_mk_rh2_long
+#    - TARGET=mk-targetminer TTARGET1=gtest_mk_tm1 TTARGET2=gtest_mk_tm1_long
+#    - TARGET=mk-targetscan TTARGET1=gtest_mk_ts5 TTARGET2=gtest_mk_ts5_long
+#    - TARGET=mk-twostep-svm TTARGET1=gtest_mk_tssvm TTARGET2=gtest_mk_tssvm_long
+    - TARGET=mikan TTARGET1=gtest_mk_mkens TTARGET2=gtest_mk_mkens_long
+
 before_script:
 - mkdir build
 - cd build
@@ -31,11 +46,13 @@ before_script:
 - cmake -D CMAKE_VERBOSE_MAKEFILE=ON -D CMAKE_BUILD_TYPE=${CONFIG} ../src
 
 script:
-- cmake --build .
-- ctest -VV
+- cmake --build . --target ${TARGET}
+- cmake --build . --target ${TTARGET1}
+- cmake --build . --target ${TTARGET2}
+- ctest -VV -R ${TTARGET1}
 
-after_success:
-- cpack -G "${CP_GENERATOR}"
+#after_success:
+#- cpack -G "${CP_GENERATOR}"
 
 #deploy:
 #  provider: releases
