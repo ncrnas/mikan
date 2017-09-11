@@ -8,9 +8,9 @@ branches:
 
 sudo: false
 
-#matrix:
-#  fast_finish: true
-#  include:
+matrix:
+  fast_finish: true
+  include:
 #  - os: linux
 #    env: CONFIG=Debug
 #    compiler: gcc
