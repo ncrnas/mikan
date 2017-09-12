@@ -2,3 +2,6 @@ build/
 src/.idea
 src/cmake-build-debug
 src/cmake-build-release
+src/test/data/**/*_mk.txt
+src/test/data/**/*_mk_b.txt
+src/test/data/**/test_output2*
