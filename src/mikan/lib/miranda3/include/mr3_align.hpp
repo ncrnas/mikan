@@ -5,6 +5,8 @@
 #include <seqan/align.h>
 #include <seqan/score.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
+#include "dp_core.hpp"            // MR3DPCore
+#include "dp_score.hpp"           // MR3DPScore
 
 // Extend SeqAn by a user-define scoring matrix.
 namespace seqan {
@@ -101,6 +103,10 @@ private:
 
 private:
     void set_align_bars(int pIdx);
+
+    mr3dp::MR3DPCore mDPCore;
+    mr3dp::MR3DPScore mDPScore;
+
 };
 
 } // namespace mr3as

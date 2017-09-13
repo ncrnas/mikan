@@ -63,12 +63,12 @@ int MR3AlignScores::calc_scores(
         noA1 = false;
         create_input_mrna_seq(pMiRNASeq, pMRNASeqs[mRNAPos[i]], seqStart, seqEnd, seedTypes[i],
                               iMRNASeq, iMRNASeedSeq, iMRNA3pSeq, noA1);
-//        print_input(iMiRNASeq, iMRNASeq);
-//        print_input(iMiRNASeedSeq, iMRNASeedSeq);
-//        std::cout << "miRNA seq:   " << length(iMiRNA3pSeq) << "," << iMiRNA3pSeq;
-//        std::cout << std::endl;
-//        std::cout << "mRNA seq2:    " << length(iMRNA3pSeq) << "," << iMRNA3pSeq;
-//        std::cout << std::endl;
+        print_input(iMiRNASeq, iMRNASeq);
+        print_input(iMiRNASeedSeq, iMRNASeedSeq);
+        std::cout << "miRNA seq:   " << length(iMiRNA3pSeq) << "," << iMiRNA3pSeq;
+        std::cout << std::endl;
+        std::cout << "mRNA seq2:    " << length(iMRNA3pSeq) << "," << iMRNA3pSeq;
+        std::cout << std::endl;
 
         mAlign.align_seed(i, iMiRNASeedSeq, iMRNASeedSeq, mm);
 
@@ -78,7 +78,7 @@ int MR3AlignScores::calc_scores(
         }
 
         score = mAlign.get_align_score(i);
-//        std::cout << seedTypes[i] << "," <<  sitePos[i] << ","<< score << std::endl;
+        std::cout << seedTypes[i] << "," <<  sitePos[i] << ","<< score << std::endl;
 
         if (mMinAlignScore > score) {
             mEffectiveSites[i] = false;
@@ -99,13 +99,12 @@ void MR3AlignScores::create_input_mirna_seq(
         mikan::TRNAStr &pIMiRNASeedSeq,
         Rna5String &pIMiRNA3pSeq) {
     int idxseed = 0;
-    int idx3p = 1;
+    int idx3p = 0;
 
     resize(pIMiRNASeq, length(pMiRNASeq));
     resize(pIMiRNASeedSeq, SEED_REGION_LEN - 1);
-    resize(pIMiRNA3pSeq, length(pMiRNASeq) - SEED_REGION_LEN - OFFSET3P + 1);
+    resize(pIMiRNA3pSeq, length(pMiRNASeq) - SEED_REGION_LEN - OFFSET3P);
 
-    pIMiRNA3pSeq[0] = 'N';
     for (unsigned i = 0; i < length(pMiRNASeq); ++i) {
         pIMiRNASeq[i] = pMiRNASeq[i];
         if (i != 0 && i < SEED_REGION_LEN) {
@@ -159,9 +158,8 @@ void MR3AlignScores::create_input_mrna_seq(
     } else {
         maxpPos3p = seqLen - OFFSET3P;
     }
-    resize(pIMRNA3pSeq, len3p + 1);
+    resize(pIMRNA3pSeq, len3p);
 
-    pIMRNA3pSeq[0] = 'N';
     for (unsigned i = 0; i < seqLen; ++i) {
         idx = seqLen - i - 1;
         if (pStart + i < length(pMRNASeq)) {
