@@ -54,7 +54,6 @@ void MR3Align::align_seed(
     mGapCountMiRNA[pIdx] = 0;
     mGapCountMRNA[pIdx] = 0;
 
-//    std::cout << "seed score: ";
     for (unsigned i = 0; i < length(pIMRNASeedSeq); ++i) {
         if (pMMpos == -1) {
             idx2 = i;
@@ -63,7 +62,6 @@ void MR3Align::align_seed(
             mAlignSeedMRNA[pIdx][i] = pIMRNASeedSeq[i];
             score -= (4.0f * mDPScore.gap_open());
             ++mGapCountMiRNA[pIdx];
-//            std::cout << score << " (g), ";
             continue;
         }
 
@@ -82,15 +80,10 @@ void MR3Align::align_seed(
         if (pMMpos != -1) {
             ++idx2;
         }
-//        std::cout << score;
-//        std::cout << " (" << mielm[0] << ", " << melm[0] << "), ";
     }
-//    std::cout << std::endl;
 
     mAlignSeedScores[pIdx] = score;
     mAlignScores[pIdx] = score;
-
-
 }
 
 void MR3Align::init_3p_align(int pIdx) {
@@ -102,22 +95,6 @@ void MR3Align::init_3p_align(int pIdx) {
 }
 
 void MR3Align::align_3p(int pIdx, seqan::Rna5String &pIMiRNA3pSeq, seqan::Rna5String &pIMRNA3pSeq) {
-//    int score;
-
-//    clearClipping(mAign3P);
-//    clearGaps(mAign3P);
-//    resize(rows(mAign3P), 2);
-//    assignSource(row(mAign3P, 0), pIMiRNA3pSeq);
-//    assignSource(row(mAign3P, 1), pIMRNA3pSeq);
-
-//    score = localAlignment(mAign3P, mScoreMatrix3P);
-//    score -= 140;
-
-//    std::cout << "miRNA: " << pIMiRNA3pSeq << std::endl;
-//    std::cout << "mRNA : " << pIMRNA3pSeq << std::endl;
-//    std::cout << score << std::endl;
-//    std::cout << mAign3P << std::endl;
-
     std::string miSeq = toCString(seqan::CharString(pIMiRNA3pSeq));
     std::string mSeq = toCString(seqan::CharString(pIMRNA3pSeq));
 
@@ -125,29 +102,6 @@ void MR3Align::align_3p(int pIdx, seqan::Rna5String &pIMiRNA3pSeq, seqan::Rna5St
     mAlignScores[pIdx] = mDPCore.get_max_score();
     mGapCountMiRNA[pIdx] += mDPCore.get_gap_q_count();
     mGapCountMRNA[pIdx] += mDPCore.get_gap_d_count();
-
-//    std::cout << mDPCore.get_max_score() << std::endl;
-
-//    if (score > 0) {
-//        mAlign3PScores[pIdx] = score;
-//
-//        TGap &alignMiRNA = (TGap &) row(mAign3P, 0);
-//        TGap &alignMRNA = (TGap &) row(mAign3P, 1);
-//
-//        resize(mAlign3pMiRNA[pIdx], length(alignMiRNA) - 1);
-//        resize(mAlign3pMRNA[pIdx], length(alignMRNA) - 1);
-//
-//        for (unsigned i = 0; i < length(alignMiRNA) - 1; ++i) {
-//            mAlign3pMiRNA[pIdx][i] = alignMiRNA[i + 1];
-//            mAlign3pMRNA[pIdx][i] = alignMRNA[i + 1];
-//            if (alignMiRNA[i + 1] == '-') {
-//                ++mGapCountMiRNA[pIdx];
-//            }
-//            if (alignMRNA[i + 1] == '-') {
-//                ++mGapCountMRNA[pIdx];
-//            }
-//        }
-//    }
 }
 
 void MR3Align::combine_alignments(
@@ -155,9 +109,8 @@ void MR3Align::combine_alignments(
         mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNAStr const &pMRNASeq,
         bool noA1) {
-//    int maxlen = (int) length(pMiRNASeq) + mGapCountMiRNA[pIdx];
+
     int idx2;
-//    int idx2_orig;
 
     std::string& mi3pSeq = mDPCore.get_q_align();
     std::string& m3pSeq = mDPCore.get_d_align();
@@ -203,54 +156,11 @@ void MR3Align::combine_alignments(
         }
     }
 
-
-//    for (unsigned i = 0; i < length(mAlign3pMiRNA[pIdx]); ++i) {
-//        idx2 = i + (int) length(mAlignSeedMiRNA[pIdx]) + 1;
-//        mAlignMiRNA[pIdx][idx2] = mAlign3pMiRNA[pIdx][i];
-//
-//        if (i < length(mAlignMRNA[pIdx]) - 1) {
-//            mAlignMRNA[pIdx][idx2] = mAlign3pMRNA[pIdx][i];
-//        } else {
-//            mAlignMRNA[pIdx][idx2] = '-';
-//            ++mGapCountMRNA[pIdx];
-//        }
-//    }
-//
-//    idx2 = (int) length(mAlignSeedMiRNA[pIdx]) + (int) length(mAlign3pMiRNA[pIdx]) + 1;
-//    idx2_orig = idx2 - mGapCountMiRNA[pIdx];
-//    while (idx2 < maxlen) {
-//        if (idx2_orig < (int) length(pMiRNASeq)) {
-//            mAlignMiRNA[pIdx][idx2] = pMiRNASeq[idx2_orig];
-//        } else {
-//            mAlignMiRNA[pIdx][idx2] = '-';
-//            ++mGapCountMiRNA[pIdx];
-//        }
-//        ++idx2;
-//        ++idx2_orig;
-//    }
-//
-//    idx2 = (int) length(mAlignSeedMiRNA[pIdx]) + (int) length(mAlign3pMiRNA[pIdx]) + 1;
-//    idx2_orig = idx2 - mGapCountMRNA[pIdx];
-//    while (idx2 < maxlen) {
-//        if (idx2_orig < (int) length(pMRNASeq)) {
-//            mAlignMRNA[pIdx][idx2] = pMRNASeq[idx2_orig];
-//        } else {
-//            mAlignMRNA[pIdx][idx2] = '-';
-//            ++mGapCountMRNA[pIdx];
-//        }
-//        ++idx2;
-//        ++idx2_orig;
-//    }
-
     set_align_bars(pIdx);
 
     reverse(mAlignMiRNA[pIdx]);
     reverse(mAlignMRNA[pIdx]);
     reverse(mAlignBars[pIdx]);
-
-//    std::cout <<  mAlignMiRNA[pIdx] << std::endl;
-//    std::cout <<  mAlignBars[pIdx] << std::endl;
-//    std::cout << mAlignMRNA[pIdx] << std::endl;
 }
 
 void MR3Align::set_align_bars(int pIdx) {
