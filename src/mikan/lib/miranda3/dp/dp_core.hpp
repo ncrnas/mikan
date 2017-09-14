@@ -20,11 +20,10 @@ public:
         init_table(pV00);
         update_cells(pQSeq, pDSeq);
 
-        mTab.print_tables(pQSeq, pDSeq);
-
         mBT.run(mTab, mScore, pQSeq, pDSeq);
-//        mBT.print_align();
 
+//        mTab.print_tables(pQSeq, pDSeq);
+//        mBT.print_align();
     }
 
     // Get max score
@@ -40,6 +39,14 @@ public:
     // Get database sequence of alignment
     std::string &get_d_align() {
         return mBT.get_d_align();
+    }
+
+    int get_gap_q_count() {
+        return mBT.get_gap_q_count();
+    }
+
+    int get_gap_d_count() {
+        return mBT.get_gap_d_count();
     }
 
 private:

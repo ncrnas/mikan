@@ -63,22 +63,21 @@ int MR3AlignScores::calc_scores(
         noA1 = false;
         create_input_mrna_seq(pMiRNASeq, pMRNASeqs[mRNAPos[i]], seqStart, seqEnd, seedTypes[i],
                               iMRNASeq, iMRNASeedSeq, iMRNA3pSeq, noA1);
-        print_input(iMiRNASeq, iMRNASeq);
-        print_input(iMiRNASeedSeq, iMRNASeedSeq);
-        std::cout << "miRNA seq:   " << length(iMiRNA3pSeq) << "," << iMiRNA3pSeq;
-        std::cout << std::endl;
-        std::cout << "mRNA seq2:    " << length(iMRNA3pSeq) << "," << iMRNA3pSeq;
-        std::cout << std::endl;
+
+//        print_input(iMiRNASeq, iMRNASeq);
+//        print_input(iMiRNASeedSeq, iMRNASeedSeq);
+//        std::cout << "miRNA seq:   " << length(iMiRNA3pSeq) << "," << iMiRNA3pSeq;
+//        std::cout << std::endl;
+//        std::cout << "mRNA seq2:    " << length(iMRNA3pSeq) << "," << iMRNA3pSeq;
+//        std::cout << std::endl;
 
         mAlign.align_seed(i, iMiRNASeedSeq, iMRNASeedSeq, mm);
 
         mAlign.init_3p_align(i);
-        if (length(iMRNA3pSeq) > 1) {
-            mAlign.align_3p(i, iMiRNA3pSeq, iMRNA3pSeq);
-        }
+        mAlign.align_3p(i, iMiRNA3pSeq, iMRNA3pSeq);
 
         score = mAlign.get_align_score(i);
-        std::cout << seedTypes[i] << "," <<  sitePos[i] << ","<< score << std::endl;
+//        std::cout << seedTypes[i] << "," <<  sitePos[i] << ","<< score << std::endl;
 
         if (mMinAlignScore > score) {
             mEffectiveSites[i] = false;

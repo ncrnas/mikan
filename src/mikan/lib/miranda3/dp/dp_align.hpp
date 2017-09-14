@@ -19,19 +19,27 @@ public:
         mQAlignSeq = "";
         mAlignBar = "";
         mDAlignSeq = "";
+        mQGapCount = 0;
+        mDGapCount = 0;
 
         int prevI = pPathI[0];
         int prevJ = pPathJ[0];
 
+        int curQPos = 0;
+        int curDPos = 0;
         for (unsigned k = 1; k < pPathI.size(); k++) {
             if (prevI == pPathI[k]) {
                 mQAlignSeq += "-";
                 mDAlignSeq += pDSeq[pPathJ[k] - 1];
                 mAlignBar += " ";
+                ++mQGapCount;
+                ++curDPos;
             } else if (prevJ == pPathJ[k]) {
                 mQAlignSeq += pQSeq[pPathI[k] - 1];
                 mDAlignSeq += "-";
                 mAlignBar += " ";
+                ++mDGapCount;
+                ++curQPos;
             } else {
                 mQAlignSeq += pQSeq[pPathI[k] - 1];
                 mDAlignSeq += pDSeq[pPathJ[k] - 1];
@@ -41,22 +49,22 @@ public:
                 } else {
                     mAlignBar += "|";
                 }
-
+                ++curQPos;
+                ++curDPos;
             }
             prevI = pPathI[k];
             prevJ = pPathJ[k];
         }
 
-        for (unsigned i = prevI; i < pQSeq.size(); ++i) {
-
-            mQAlignSeq += pQSeq[i];
-            if (i < pDSeq.size()) {
-                mDAlignSeq += pDSeq[i];
+        unsigned diffLen = pQSeq.size() - curQPos > 0 ? pQSeq.size() - curQPos : 0;
+        for (unsigned i = 0; i < diffLen; ++i) {
+            mQAlignSeq += pQSeq[curQPos + i];
+            if (curDPos + i < pDSeq.size()) {
+                mDAlignSeq += pDSeq[curDPos + i];
             } else {
-                mDAlignSeq += " ";
+                mDAlignSeq += "-";
             }
             mAlignBar += " ";
-
         }
 
     }
@@ -78,12 +86,21 @@ public:
         std::cout << mDAlignSeq << std::endl;
     }
 
+    int get_gap_q_count() {
+        return mQGapCount;
+    }
+
+    int get_gap_d_count() {
+        return mDGapCount;
+    }
 
 private:
     // Alignment
     std::string mQAlignSeq;
     std::string mAlignBar;
     std::string mDAlignSeq;
+    int mQGapCount;
+    int mDGapCount;
 };
 
 } // namespace mr3dp

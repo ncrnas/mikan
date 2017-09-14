@@ -25,6 +25,7 @@ public:
         int maxJ = pTab.get_max_j();
         char maxTab = pTab.get_max_tab();
 
+        mTerminate = false;
         if (maxTab == 'E') {
             back_track_e(pTab, pScore, pQSeq, pDSeq, maxI, maxJ);
         } else if (maxTab =='F') {
@@ -48,7 +49,31 @@ public:
         return mAlign.get_d_align();
     }
 
+    int get_gap_q_count() {
+        return mAlign.get_gap_q_count();
+    }
+
+    int get_gap_d_count() {
+        return mAlign.get_gap_d_count();
+    }
+
+    void pirnt_path() {
+        std::cout << "PathI: ";
+        for (unsigned k = 0; k < mPathI.size(); k++) {
+            std::cout << mPathI[k] << ", ";
+        }
+        std::cout << std::endl;
+
+        std::cout << "PathJ: ";
+        for (unsigned k = 0; k < mPathJ.size(); k++) {
+            std::cout << mPathJ[k] << ", ";
+        }
+        std::cout << std::endl;
+    }
+
 private:
+    bool mTerminate;
+
     // Path
     std::deque<int> mPathI;
     std::deque<int> mPathJ;
@@ -104,16 +129,25 @@ private:
         // Backtrack - E
         if (gapE ==  pTab.get_e_val(pI - 1, pJ)) {
             back_track_e(pTab, pScore, pQSeq, pDSeq, pI - 1, pJ);
+            if (mTerminate) {
+                return;
+            }
         }
 
         // Backtrack - F
         if (gapOpen ==  pTab.get_f_val(pI - 1, pJ)) {
             back_track_f(pTab, pScore, pQSeq, pDSeq, pI - 1, pJ);
+            if (mTerminate) {
+                return;
+            }
         }
 
         // Backtrack - G
         if (gapOpen ==  pTab.get_g_val(pI - 1, pJ)) {
             back_track_g(pTab, pScore, pQSeq, pDSeq, pI - 1, pJ);
+            if (mTerminate) {
+                return;
+            }
         }
 
         // Remove the current cell from path
@@ -146,16 +180,25 @@ private:
         // Backtrack - E
         if (gapOpen ==  pTab.get_e_val(pI, pJ - 1)) {
             back_track_e(pTab, pScore, pQSeq, pDSeq, pI, pJ - 1);
+            if (mTerminate) {
+                return;
+            }
         }
 
         // Backtrack - F
         if (gapF ==  pTab.get_f_val(pI, pJ - 1)) {
             back_track_f(pTab, pScore, pQSeq, pDSeq, pI, pJ - 1);
+            if (mTerminate) {
+                return;
+            }
         }
 
         // Backtrack - G
         if (gapOpen ==  pTab.get_g_val(pI, pJ - 1)) {
             back_track_g(pTab, pScore, pQSeq, pDSeq, pI, pJ - 1);
+            if (mTerminate) {
+                return;
+            }
         }
 
         // Remove the current cell from path
@@ -173,6 +216,7 @@ private:
         // Extend path to cell(0, 0) and add alignment
         if (pI == 0 || pJ == 0) {
             stop_bt(pQSeq, pDSeq, pI, pJ);
+            mTerminate = true;
             return;
         }
 
@@ -182,16 +226,25 @@ private:
         // Backtrack - E
         if (scoreDiag ==  pTab.get_e_val(pI - 1, pJ - 1)) {
             back_track_e(pTab, pScore, pQSeq, pDSeq, pI - 1, pJ - 1);
+            if (mTerminate) {
+                return;
+            }
         }
 
         // Backtrack - F
         if (scoreDiag ==  pTab.get_f_val(pI - 1, pJ - 1)) {
             back_track_f(pTab, pScore, pQSeq, pDSeq, pI - 1, pJ - 1);
+            if (mTerminate) {
+                return;
+            }
         }
 
         // Backtrack - G
         if (scoreDiag ==  pTab.get_g_val(pI - 1, pJ - 1)) {
             back_track_g(pTab, pScore, pQSeq, pDSeq, pI - 1, pJ - 1);
+            if (mTerminate) {
+                return;
+            }
         }
 
         // Remove the current cell from path

@@ -65,7 +65,7 @@ public:
     // Define methods
     MR3Align() : mScoreMatrix3P(GAP_EXTENT_SCORE, GAP_OPEN_SCORE) {}
 
-    int get_align_score(int pIdx) { return mAlignSeedScores[pIdx] + mAlign3PScores[pIdx]; }
+    int get_align_score(int pIdx) { return mAlignScores[pIdx]; }
 
     // Method prototype
     void clear_align();
@@ -98,8 +98,8 @@ private:
     seqan::StringSet<seqan::CharString> mAlignSeedMRNA;
     seqan::StringSet<seqan::CharString> mAlign3pMiRNA;
     seqan::StringSet<seqan::CharString> mAlign3pMRNA;
-    seqan::String<int> mGapCount3pMiRNA;
-    seqan::String<int> mGapCount3pMRNA;
+    seqan::String<int> mGapCountMiRNA;
+    seqan::String<int> mGapCountMRNA;
 
 private:
     void set_align_bars(int pIdx);
