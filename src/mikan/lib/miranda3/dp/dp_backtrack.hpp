@@ -28,7 +28,7 @@ public:
         mTerminate = false;
         if (maxTab == 'E') {
             back_track_e(pTab, pScore, pQSeq, pDSeq, maxI, maxJ);
-        } else if (maxTab =='F') {
+        } else if (maxTab == 'F') {
             back_track_f(pTab, pScore, pQSeq, pDSeq, maxI, maxJ);
         } else if (maxTab == 'G') {
             back_track_g(pTab, pScore, pQSeq, pDSeq, maxI, maxJ);
@@ -124,10 +124,10 @@ private:
         } else {
             gapE = pTab.get_e_val(pI, pJ) + pScore.gap_extend();
         }
-        gapOpen =  pTab.get_e_val(pI, pJ) + pScore.gap_open();
+        gapOpen = pTab.get_e_val(pI, pJ) + pScore.gap_open();
 
         // Backtrack - E
-        if (gapE ==  pTab.get_e_val(pI - 1, pJ)) {
+        if (gapE == pTab.get_e_val(pI - 1, pJ)) {
             back_track_e(pTab, pScore, pQSeq, pDSeq, pI - 1, pJ);
             if (mTerminate) {
                 return;
@@ -135,7 +135,7 @@ private:
         }
 
         // Backtrack - F
-        if (gapOpen ==  pTab.get_f_val(pI - 1, pJ)) {
+        if (gapOpen == pTab.get_f_val(pI - 1, pJ)) {
             back_track_f(pTab, pScore, pQSeq, pDSeq, pI - 1, pJ);
             if (mTerminate) {
                 return;
@@ -143,7 +143,7 @@ private:
         }
 
         // Backtrack - G
-        if (gapOpen ==  pTab.get_g_val(pI - 1, pJ)) {
+        if (gapOpen == pTab.get_g_val(pI - 1, pJ)) {
             back_track_g(pTab, pScore, pQSeq, pDSeq, pI - 1, pJ);
             if (mTerminate) {
                 return;
@@ -171,14 +171,14 @@ private:
 
         // Gap penalties
         if (pJ == 1) {
-            gapF =  pTab.get_f_val(pI, pJ) + pScore.gap_open();
+            gapF = pTab.get_f_val(pI, pJ) + pScore.gap_open();
         } else {
-            gapF =  pTab.get_f_val(pI, pJ) + pScore.gap_extend();
+            gapF = pTab.get_f_val(pI, pJ) + pScore.gap_extend();
         }
-        gapOpen =  pTab.get_f_val(pI, pJ) + pScore.gap_open();
+        gapOpen = pTab.get_f_val(pI, pJ) + pScore.gap_open();
 
         // Backtrack - E
-        if (gapOpen ==  pTab.get_e_val(pI, pJ - 1)) {
+        if (gapOpen == pTab.get_e_val(pI, pJ - 1)) {
             back_track_e(pTab, pScore, pQSeq, pDSeq, pI, pJ - 1);
             if (mTerminate) {
                 return;
@@ -186,7 +186,7 @@ private:
         }
 
         // Backtrack - F
-        if (gapF ==  pTab.get_f_val(pI, pJ - 1)) {
+        if (gapF == pTab.get_f_val(pI, pJ - 1)) {
             back_track_f(pTab, pScore, pQSeq, pDSeq, pI, pJ - 1);
             if (mTerminate) {
                 return;
@@ -194,7 +194,7 @@ private:
         }
 
         // Backtrack - G
-        if (gapOpen ==  pTab.get_g_val(pI, pJ - 1)) {
+        if (gapOpen == pTab.get_g_val(pI, pJ - 1)) {
             back_track_g(pTab, pScore, pQSeq, pDSeq, pI, pJ - 1);
             if (mTerminate) {
                 return;
@@ -224,7 +224,7 @@ private:
         scoreDiag = pTab.get_g_val(pI, pJ) - pScore.score_ab(pQSeq[pI - 1], pDSeq[pJ - 1]);
 
         // Backtrack - E
-        if (scoreDiag ==  pTab.get_e_val(pI - 1, pJ - 1)) {
+        if (scoreDiag == pTab.get_e_val(pI - 1, pJ - 1)) {
             back_track_e(pTab, pScore, pQSeq, pDSeq, pI - 1, pJ - 1);
             if (mTerminate) {
                 return;
@@ -232,7 +232,7 @@ private:
         }
 
         // Backtrack - F
-        if (scoreDiag ==  pTab.get_f_val(pI - 1, pJ - 1)) {
+        if (scoreDiag == pTab.get_f_val(pI - 1, pJ - 1)) {
             back_track_f(pTab, pScore, pQSeq, pDSeq, pI - 1, pJ - 1);
             if (mTerminate) {
                 return;
@@ -240,7 +240,7 @@ private:
         }
 
         // Backtrack - G
-        if (scoreDiag ==  pTab.get_g_val(pI - 1, pJ - 1)) {
+        if (scoreDiag == pTab.get_g_val(pI - 1, pJ - 1)) {
             back_track_g(pTab, pScore, pQSeq, pDSeq, pI - 1, pJ - 1);
             if (mTerminate) {
                 return;

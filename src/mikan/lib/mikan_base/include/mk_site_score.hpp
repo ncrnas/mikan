@@ -42,7 +42,7 @@ public:
     virtual int calc_scores(mikan::TRNAStr const &pMiRNASeq, mikan::TRNASet const &pMRNASeqs,
                             mikan::MKSeedSites &pSeedSites, mikan::MKRMAWithSites &pRNAWithSites);
 
-    const TCharSet &get_score_types() { return mScoreTypes; }
+    const mikan::TCharSet &get_score_types() { return mScoreTypes; }
 
 protected:
     // Define variables

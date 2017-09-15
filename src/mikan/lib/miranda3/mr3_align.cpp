@@ -112,8 +112,8 @@ void MR3Align::combine_alignments(
 
     int idx2;
 
-    std::string& mi3pSeq = mDPCore.get_q_align();
-    std::string& m3pSeq = mDPCore.get_d_align();
+    std::string &mi3pSeq = mDPCore.get_q_align();
+    std::string &m3pSeq = mDPCore.get_d_align();
 
     unsigned maxlen = length(pMiRNASeq) + mGapCountMiRNA[pIdx];
 

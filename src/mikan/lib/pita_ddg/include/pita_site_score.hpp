@@ -113,7 +113,7 @@ public:
     virtual float get_score(int pTypeIdx, int pIdx) {
         if (pTypeIdx == 2) {
             return (float) mVRws.get_dg0(pIdx) - (float) mVRws.get_dg1(pIdx);
-        } else if (pTypeIdx == 1)  {
+        } else if (pTypeIdx == 1) {
             return (float) mVRws.get_dgall(pIdx);
         } else {
             return mDDGScores[pIdx];

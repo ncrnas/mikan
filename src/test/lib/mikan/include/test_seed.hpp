@@ -12,7 +12,7 @@ template<class TOptions, class TSeedSeqs>
 class TestSeed : public TestIOBase {
 public:
 
-    TestSeed(): mSeedSeqs(mOpts) {}
+    TestSeed() : mSeedSeqs(mOpts) {}
 
 protected:
 

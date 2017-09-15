@@ -21,9 +21,9 @@ class PITAAlign {
 public:
     // Define variables
     seqan::String<bool> mEffectiveSites;
-    seqan::StringSet<seqan::CharString> mAlignMRNA;
-    seqan::StringSet<seqan::CharString> mAlignBars;
-    seqan::StringSet<seqan::CharString> mAlignMiRNA;
+    mikan::TCharSet mAlignMRNA;
+    mikan::TCharSet mAlignBars;
+    mikan::TCharSet mAlignMiRNA;
 
 public:
     // Define methods

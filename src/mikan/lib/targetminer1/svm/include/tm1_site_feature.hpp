@@ -29,7 +29,7 @@ public:
     void print_feature(unsigned pIdx);
 
 private:
-    seqan::StringSet<seqan::CharString> mSeedTypes;
+    mikan::TCharSet mSeedTypes;
 
 private:
     void resize_features(unsigned pSize);

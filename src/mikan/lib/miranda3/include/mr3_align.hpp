@@ -17,9 +17,9 @@ class MR3Align {
 public:
     // Define variables
     seqan::String<bool> mEffectiveSites;
-    seqan::StringSet<seqan::CharString> mAlignMRNA;
-    seqan::StringSet<seqan::CharString> mAlignBars;
-    seqan::StringSet<seqan::CharString> mAlignMiRNA;
+    mikan::TCharSet mAlignMRNA;
+    mikan::TCharSet mAlignBars;
+    mikan::TCharSet mAlignMiRNA;
 
 public:
     // Define methods
@@ -47,10 +47,10 @@ private:
     seqan::String<int> mAlign3PScores;
     seqan::String<int> mAlignScores;
 
-    seqan::StringSet<seqan::CharString> mAlignSeedMiRNA;
-    seqan::StringSet<seqan::CharString> mAlignSeedMRNA;
-    seqan::StringSet<seqan::CharString> mAlign3pMiRNA;
-    seqan::StringSet<seqan::CharString> mAlign3pMRNA;
+    mikan::TCharSet mAlignSeedMiRNA;
+    mikan::TCharSet mAlignSeedMRNA;
+    mikan::TCharSet mAlign3pMiRNA;
+    mikan::TCharSet mAlign3pMRNA;
     seqan::String<int> mGapCountMiRNA;
     seqan::String<int> mGapCountMRNA;
 

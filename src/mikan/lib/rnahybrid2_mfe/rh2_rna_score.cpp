@@ -45,7 +45,7 @@ int RH2RNAScores::calc_scores(
         unsigned siteCount = 0;
         float totRnaScore = 0;
         float totNormScore = 0;
-        float minRnaScore= FLT_MAX;
+        float minRnaScore = FLT_MAX;
         float maxNormScore = -FLT_MAX;
 
         for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {

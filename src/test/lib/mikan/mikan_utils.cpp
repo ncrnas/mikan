@@ -16,7 +16,7 @@ static void comp_toolscores(const std::string &score1, const std::string &score2
 
 static void split_line(const std::string &line, std::vector<std::string> &flds);
 
-static void split_line2(const std::string &line, std::vector<std::string> &flds, const char* delim);
+static void split_line2(const std::string &line, std::vector<std::string> &flds, const char *delim);
 
 int gtest_compare_two_files(seqan::CharString const &f1, seqan::CharString const &f2) {
     std::vector<std::string> lines1;
@@ -98,7 +98,7 @@ int gtest_compare_two_files3(
         if (i >= lines2.size()) {
             break;
         }
-        
+
         std::vector<std::string> flds1;
         std::vector<std::string> flds2;
         split_line(lines1[i], flds1);
@@ -177,9 +177,9 @@ void comp_two_rnas(seqan::RnaString const &rnaseq1, seqan::RnaString const &rnas
 }
 
 static int gtest_read_files(seqan::CharString const &fname1,
-                     seqan::CharString const &fname2,
-                     std::vector<std::string> &lines1,
-                     std::vector<std::string> &lines2) {
+                            seqan::CharString const &fname2,
+                            std::vector<std::string> &lines1,
+                            std::vector<std::string> &lines2) {
 
     int fres1, fres2;
 
@@ -205,7 +205,7 @@ static int gtest_read_files(seqan::CharString const &fname1,
 
 
 static int gtest_read_file(seqan::CharString const &fname,
-                    std::vector<std::string> &lines) {
+                           std::vector<std::string> &lines) {
 
     std::ifstream file(seqan::toCString(fname));
     std::string str;
@@ -235,7 +235,7 @@ static void split_line(const std::string &line, std::vector<std::string> &flds) 
 
 }
 
-static void split_line2(const std::string &line, std::vector<std::string> &flds, const char* delim) {
+static void split_line2(const std::string &line, std::vector<std::string> &flds, const char *delim) {
     char *pline = const_cast<char *>(line.c_str());
     char *pch;
 
@@ -260,7 +260,7 @@ static void comp_scores(std::string &score1, std::string &score2, unsigned round
     int s1 = static_cast<int>(ds1 * round_dec);
     int s2 = static_cast<int>(ds2 * round_dec);
 
-    int diff  = s1 - s2;
+    int diff = s1 - s2;
     int lbound = -1 * ubound;
 
 //    std::cout << s1 << " == " << s2  << std::endl;
@@ -289,7 +289,7 @@ static void comp_toolscores(const std::string &score1, const std::string &score2
         int s1 = static_cast<int>(ds1 * round_dec);
         int s2 = static_cast<int>(ds2 * round_dec);
 
-        int diff  = s1 - s2;
+        int diff = s1 - s2;
         int lbound = -1 * ubound;
 
 //        std::cout << s1 << " == " << s2  << std::endl;
@@ -297,21 +297,15 @@ static void comp_toolscores(const std::string &score1, const std::string &score2
 
         EXPECT_TRUE(lbound <= diff && diff <= ubound)
                             << "score1: "
-                            <<  ssflds1[0].c_str()
+                            << ssflds1[0].c_str()
                             << ":" << ssflds1[1].c_str()
                             << ":" << ssflds1[2].c_str()
                             << std::endl
                             << "score2: "
-                            <<  ssflds2[0].c_str()
+                            << ssflds2[0].c_str()
                             << ":" << ssflds2[1].c_str()
                             << ":" << ssflds2[2].c_str();
     }
-
-
-
-
-
-
 
 
 }

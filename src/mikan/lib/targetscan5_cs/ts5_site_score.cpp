@@ -55,7 +55,7 @@ int TS5SiteScores::calc_scores(
 
     for (int i = 0; i < lenScores; ++i) {
         if (!pSeedSites.mEffectiveSites[i]) {
-            mSiteScores[i] =  0.0;
+            mSiteScores[i] = 0.0;
             mSeedTypes.set_score(i, 0.0);
             mSitePos.set_score(i, 0.0);
             mAURich.set_score(i, 0.0);

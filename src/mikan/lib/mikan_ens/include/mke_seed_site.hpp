@@ -50,7 +50,7 @@ private:
     // Define variables
     TSet mUniqSet;
     TPosMap mPosPairMap;
-    seqan::StringSet<seqan::StringSet<seqan::CharString> > mSeedTypeList;
+    seqan::StringSet<TCharSet > mSeedTypeList;
 
 };
 

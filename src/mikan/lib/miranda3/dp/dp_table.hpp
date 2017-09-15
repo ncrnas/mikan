@@ -51,8 +51,8 @@ public:
     }
 
     // Create DP table
-    void create_tables(std::string &qQSeq, std::string& qDSeq) {
-        mSeqQN =  qQSeq.size() + 1;
+    void create_tables(std::string &qQSeq, std::string &qDSeq) {
+        mSeqQN = qQSeq.size() + 1;
         mSeqDN = qDSeq.size() + 1;
 
         reset_tables();
@@ -60,7 +60,7 @@ public:
     }
 
     // Print tables
-    void print_tables(std::string &qQSeq, std::string& qDSeq) {
+    void print_tables(std::string &qQSeq, std::string &qDSeq) {
         std::cout << std::endl << "### Table E ###" << std::endl;
         print_tab(qQSeq, qDSeq, 'E');
 
@@ -150,7 +150,7 @@ private:
 
 
     // Print table
-    void print_tab(std::string &qQSeq, std::string& qDSeq, char pTab) {
+    void print_tab(std::string &qQSeq, std::string &qDSeq, char pTab) {
 
         // Print database sequence
         std::cout << "         ";
@@ -174,11 +174,11 @@ private:
 
                 // Print cell value
                 if (pTab == 'E') {
-                    std::cout  << std::setw(7) << mTabE[i][j];
+                    std::cout << std::setw(7) << mTabE[i][j];
                 } else if (pTab == 'F') {
-                    std::cout  << std::setw(7) << mTabF[i][j];
+                    std::cout << std::setw(7) << mTabF[i][j];
                 } else if (pTab == 'G') {
-                    std::cout  << std::setw(7) << mTabG[i][j];
+                    std::cout << std::setw(7) << mTabG[i][j];
                 }
 
             }

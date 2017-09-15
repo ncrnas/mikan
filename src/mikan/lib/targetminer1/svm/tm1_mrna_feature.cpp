@@ -569,7 +569,7 @@ int TM1MRNADiFreq::add_features(
         mikan::MKSeedSites &pSeedSites,
         TM1SiteFeatures &pSiteFeatures) {
 
-    const seqan::StringSet<seqan::CharString> &seedTypes = pSeedSites.get_seed_types();
+    const mikan::TCharSet &seedTypes = pSeedSites.get_seed_types();
     const TM1FeatDiFreq &diFreq = pSiteFeatures.get_di_freq();
     unsigned idx;
     float totalFreqUC = 0;

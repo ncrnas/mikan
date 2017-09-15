@@ -4,6 +4,7 @@
 #include <seqan/sequence.h>
 #include <seqan/arg_parse.h>
 #include "mk_const.hpp"
+#include "mk_typedef.hpp"
 
 namespace mikan {
 
@@ -49,7 +50,7 @@ public:
     seqan::CharString mSortValType;
 
     // Mikan ensemble
-    seqan::StringSet<seqan::CharString> mToolPrefix;
+    mikan::TCharSet mToolPrefix;
     seqan::CharString mConfigFile;
     bool mShowConfig;
 

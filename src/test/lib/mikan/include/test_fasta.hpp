@@ -32,7 +32,7 @@ protected:
     }
 
     mikan::MKInput coreInput;
-    
+
     seqan::CharString dfile;
     seqan::CharString ifile1;
     seqan::CharString ifile2;

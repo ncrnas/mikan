@@ -19,7 +19,7 @@ namespace tm1p {
 int TM1Core::write_site_score(seqan::CharString const &pMiRNAId) {
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
-    const seqan::StringSet<seqan::CharString> &mSeedTypes = mSeedSites.get_seed_types();
+    const mikan::TCharSet &mSeedTypes = mSeedSites.get_seed_types();
 
     seqan::CharString seedType;
     int seedStart, seedEnd;
@@ -79,7 +79,7 @@ int TM1Core::write_rna_score(seqan::CharString const &pMiRNAId) {
 int TM1Core::write_alignment(seqan::CharString const &pMiRNAId) {
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
-    const seqan::StringSet<seqan::CharString> &mSeedTypes = mSeedSites.get_seed_types();
+    const mikan::TCharSet &mSeedTypes = mSeedSites.get_seed_types();
 
     seqan::CharString seedType;
     int seedStart, seedEnd;

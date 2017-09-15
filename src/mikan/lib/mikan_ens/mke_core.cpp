@@ -203,7 +203,7 @@ int MKECore::output_results(unsigned pIdx) {
 
 int MKECore::write_site_score(seqan::CharString const &pMiRNAId) {
 
-    const seqan::StringSet<seqan::CharString> &seedTypes = mSeedSites.get_seed_types();
+    const mikan::TCharSet &seedTypes = mSeedSites.get_seed_types();
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     seqan::CharString seedType;

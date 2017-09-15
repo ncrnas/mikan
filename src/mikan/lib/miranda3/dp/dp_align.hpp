@@ -12,7 +12,7 @@ class MR3DPAlign {
 public:
 
     // Constructor
-    MR3DPAlign () {}
+    MR3DPAlign() {}
 
     // Create alignment from path
     void create_align(std::string &pQSeq, std::string &pDSeq, std::deque<int> &pPathI, std::deque<int> &pPathJ) {
@@ -44,7 +44,7 @@ public:
                 mQAlignSeq += pQSeq[pPathI[k] - 1];
                 mDAlignSeq += pDSeq[pPathJ[k] - 1];
                 if ((pQSeq[pPathI[k] - 1] == 'G' && pDSeq[pPathJ[k] - 1] == 'U')
-                        || (pQSeq[pPathI[k] - 1] == 'U' && pDSeq[pPathJ[k] - 1] == 'G') ) {
+                    || (pQSeq[pPathI[k] - 1] == 'U' && pDSeq[pPathJ[k] - 1] == 'G')) {
                     mAlignBar += ":";
                 } else {
                     mAlignBar += "|";

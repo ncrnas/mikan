@@ -62,7 +62,7 @@ void MKESeedSites::add_seed_types(
 
     const mikan::TMRNAPosSet &RNAPos = pSeedSites.get_mrna_pos();
     const mikan::TMRNAPosSet &S1Pos = pSeedSites.get_site_pos_s1();
-    const seqan::StringSet<seqan::CharString> &seedTypes = pSeedSites.get_seed_types();
+    const mikan::TCharSet &seedTypes = pSeedSites.get_seed_types();
 
     resize(mSeedTypeList[pToolIdx], length(mEffectiveSites));
     set_default_seed_type(pToolIdx, pPrefix);
