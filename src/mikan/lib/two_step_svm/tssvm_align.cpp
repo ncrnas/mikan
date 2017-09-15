@@ -22,7 +22,7 @@ int TSSVMAlign::align_seq(
 
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &sitePos = pSeedSites.get_site_pos();
-    const StringSet<CharString> &seedTypes = pSeedSites.get_seed_types();
+    const mikan::TCharSet &seedTypes = pSeedSites.get_seed_types();
     const String<unsigned> &misMatchPos = pSeedSites.get_mismatched_pos();
     mikan::TRNAStr miRNAAlignSeq;
     mikan::TRNAStr mRNAAlignSeq;
@@ -88,7 +88,7 @@ int TSSVMAlign::align_seq(
 }
 
 int TSSVMAlign::set_mirna_seq_for_align(
-        const CharString &pSeedType,
+        const mikan::TCharStr &pSeedType,
         mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNAStr &pMiRNAAlignSeq) {
     int seqStart, seqEnd;
@@ -111,7 +111,7 @@ int TSSVMAlign::set_mirna_seq_for_align(
 }
 
 int TSSVMAlign::set_mrna_seq_for_align(
-        const CharString &pSeedType,
+        const mikan::TCharStr &pSeedType,
         unsigned pSitePos,
         unsigned pMiRNALen,
         const mikan::TRNAStr &pMRNASeq,
@@ -212,13 +212,13 @@ unsigned TSSVMAlign::get_align_len(TAlign &pAlign) {
 int TSSVMAlign::set_align_mrna(
         TAlign &pAlign,
         unsigned pAlignLen,
-        const CharString &pSeedType,
+        const mikan::TCharStr &pSeedType,
         unsigned pMisMatchPos,
         unsigned pSitePos,
         const mikan::TRNAStr &pMRNASeq,
         int pIdx) {
     TGap &mRNAAlign = row(pAlign, 1);
-    CharString seedSiteSeq;
+    mikan::TCharStr seedSiteSeq;
     int seqStart;
     unsigned seedSiteSeqLen;
 
@@ -260,12 +260,12 @@ int TSSVMAlign::set_align_mrna(
 int TSSVMAlign::set_align_mirna(
         TAlign &pAlign,
         unsigned pAlignLen,
-        const CharString &pSeedType,
+        const mikan::TCharStr &pSeedType,
         unsigned pMisMatchPos,
         const mikan::TRNAStr &pMiRNASeq,
         int pIdx) {
     TGap &miRNAAlign = row(pAlign, 0);
-    CharString seedSeq;
+    mikan::TCharStr seedSeq;
 
     resize(mAlignMiRNA[pIdx], pAlignLen + 8);
     for (unsigned i = 0; i < pAlignLen; ++i) {

@@ -35,7 +35,7 @@ public:
     void resize_align(unsigned pSize);
 
     void create_align(int pId, mikan::TRNAStr const &pMiRNASeq, mikan::TRNAStr const &pMRNASeq,
-                      seqan::CharString const &pSeedType, unsigned pSitePos, int pMismatchPos);
+                      mikan::TCharStr const &pSeedType, unsigned pSitePos, int pMismatchPos);
 
 private:
     vr16::VR16DDGWorkSpace &mVRws;

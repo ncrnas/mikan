@@ -56,7 +56,7 @@ int TSSVMFeatSeedType::add_features(
         mikan::MKSeedSites &pSeedSites,
         TSSVMAlign const &,
         String<bool> &pEffectiveSites) {
-    const StringSet<CharString> &seedTypes = pSeedSites.get_seed_types();
+    const mikan::TCharSet &seedTypes = pSeedSites.get_seed_types();
 
     resize(mSeedTypes, length(pEffectiveSites));
     for (unsigned i = 0; i < length(pEffectiveSites); ++i) {
@@ -104,7 +104,7 @@ int TSSVMFeatSimilarity::add_features(
         mikan::MKSeedSites &,
         TSSVMAlign const &pAlignSeqs,
         String<bool> &pEffectiveSites) {
-    StringSet<CharString> const &alignBars = pAlignSeqs.get_align_bars();
+    mikan::TCharSet const &alignBars = pAlignSeqs.get_align_bars();
     float simAll, simSeed, sim3p, simAddtional, tmpScore;
     unsigned simAllCount;
     char barChar;
@@ -222,7 +222,7 @@ int TSSVMFeatAURichDown::add_features(
         mikan::MKSeedSites &pSeedSites,
         TSSVMAlign const &,
         String<bool> &pEffectiveSites) {
-    const StringSet<CharString> &seedTypes = pSeedSites.get_seed_types();
+    const mikan::TCharSet &seedTypes = pSeedSites.get_seed_types();
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &siteS1Pos = pSeedSites.get_site_pos_s1();
     unsigned startPos, endPos;
@@ -324,7 +324,7 @@ int TSSVMFeatSeqMatch::add_features(
         mikan::MKSeedSites &,
         TSSVMAlign const &pAlignSeqs,
         String<bool> &pEffectiveSites) {
-    StringSet<CharString> const &alignBars = pAlignSeqs.get_align_bars();
+    mikan::TCharSet const &alignBars = pAlignSeqs.get_align_bars();
     char barChar;
     unsigned maxSeqLen;
 
@@ -370,7 +370,7 @@ int TSSVMFeatA1Match::add_features(
         mikan::MKSeedSites &pSeedSites,
         TSSVMAlign const &,
         String<bool> &pEffectiveSites) {
-    const StringSet<CharString> &seedTypes = pSeedSites.get_seed_types();
+    const mikan::TCharSet &seedTypes = pSeedSites.get_seed_types();
 
     resize(mA1Match, length(pEffectiveSites));
     for (unsigned i = 0; i < length(pEffectiveSites); ++i) {

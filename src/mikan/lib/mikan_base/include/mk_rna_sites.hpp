@@ -53,7 +53,7 @@ protected:
     seqan::StringSet<seqan::String<unsigned> > mRNASitePosMap;
     TSet mUniqSetTemp;
     TPosMap mSiteMapTemp;
-    seqan::CharString mSortVtype;
+    mikan::TCharStr mSortVtype;
 
 };
 

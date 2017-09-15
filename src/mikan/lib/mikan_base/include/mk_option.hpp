@@ -17,23 +17,23 @@ public:
     typedef seqan::ArgumentParser::ParseResult TParseResult;
 
     // Define variables
-    seqan::CharString mMiRNAFasta;
-    seqan::CharString mMRNAFasta;
-    seqan::CharString mOFileSite;
-    seqan::CharString mOFileTotal;
+    mikan::TCharStr mMiRNAFasta;
+    mikan::TCharStr mMRNAFasta;
+    mikan::TCharStr mOFileSite;
+    mikan::TCharStr mOFileTotal;
 
     bool mOutputAlign;
 
     // MR3 & PITA
     int mMinSeedLen;
     int mMaxSeedLen;
-    seqan::CharString mAllowGUWobble;
-    seqan::CharString mAllowMismatch;
+    mikan::TCharStr mAllowGUWobble;
+    mikan::TCharStr mAllowMismatch;
 
     // MR3
     float mMinAlignScore;
     float mMaxEnergy;
-    seqan::CharString mAllowBT;
+    mikan::TCharStr mAllowBT;
 
     // PITA
     int mFlankUp;
@@ -41,17 +41,17 @@ public:
 
     // RH2
     std::string mSeedDef;
-    seqan::CharString mOverlapDef;
+    mikan::TCharStr mOverlapDef;
     int mTargetLen;
     int mQueryLen;
     int mMaxHits;
 
     // MKRMAWithSites
-    seqan::CharString mSortValType;
+    mikan::TCharStr mSortValType;
 
     // Mikan ensemble
     mikan::TCharSet mToolPrefix;
-    seqan::CharString mConfigFile;
+    mikan::TCharStr mConfigFile;
     bool mShowConfig;
 
     // Define method
@@ -75,9 +75,9 @@ public:
 
 protected:
     // Define variables
-    seqan::CharString mProgName;
-    seqan::CharString mProgVer;
-    seqan::CharString mProgDate;
+    mikan::TCharStr mProgName;
+    mikan::TCharStr mProgVer;
+    mikan::TCharStr mProgDate;
 
     // Method prototypes
     seqan::ArgumentParser::ParseResult validateFiles(seqan::ArgumentParser &parser);

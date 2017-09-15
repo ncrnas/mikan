@@ -29,7 +29,7 @@ void MKSeedSites::clear_pos() {
 
 int MKSeedSites::find_seed_sites(mikan::MKSeedSeqs &seedSeqs) {
     mikan::TRNAStr seedSeq;
-    CharString seedType;
+    mikan::TCharStr seedType;
     unsigned mRNAPos, sitePos;
     bool effectiveSite, effectiveSite2;
     unsigned misMatchPos;
@@ -84,7 +84,7 @@ int MKSeedSites::find_seed_sites(mikan::MKSeedSeqs &seedSeqs) {
     return 0;
 }
 
-bool MKSeedSites::check_position_1(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &) {
+bool MKSeedSites::check_position_1(unsigned pMRNAPos, unsigned pSitePos, mikan::TCharStr &) {
     bool effectiveSite = true;
 
     if ((pSitePos < mMinToCDS) || (pSitePos + mMinToEnd > length(mMRNASeqs[pMRNAPos]))) {
@@ -99,7 +99,7 @@ bool MKSeedSites::set_new_seed_type(
         unsigned,
         mikan::TRNAStr &,
         mikan::TCharSet &,
-        seqan::CharString &pSeedType,
+        mikan::TCharStr &pSeedType,
         int,
         bool pEffectiveSite) {
 

@@ -17,7 +17,7 @@ public:
     // Define methods
     TM1FeatSeedType() {}
 
-    seqan::CharString &get_seed_type(unsigned idx) { return mSeedTypes[idx]; }
+    mikan::TCharStr &get_seed_type(unsigned idx) { return mSeedTypes[idx]; }
 
     // Method prototype
     int
@@ -319,7 +319,7 @@ public:
     // Define methods
     TM1SiteFeatures() {}
 
-    seqan::CharString &get_seed_type(int i) { return mSeedTypes.get_seed_type(i); }
+    mikan::TCharStr &get_seed_type(int i) { return mSeedTypes.get_seed_type(i); }
 
     const TM1FeatAURich &get_au_rich() { return mAURich; }
 

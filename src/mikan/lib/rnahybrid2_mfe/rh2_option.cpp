@@ -29,7 +29,7 @@ ArgumentParser::ParseResult RH2Options::parseCommandLine(
     // Extract options
     mOutputAlign = isSet(parser, "output_align");
 
-    seqan::CharString seeddef;
+    mikan::TCharStr seeddef;
     getOptionValue(seeddef, parser, "seed_def");
     if (seeddef != "6mer" && seeddef != "7mer" && seeddef != "6mGU+" && seeddef != "7mGU+"
         && seeddef != "6mGU1" && seeddef != "7mGU1") {

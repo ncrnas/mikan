@@ -30,11 +30,11 @@ public:
 
     void init_site_list(unsigned pSize) { resize(mSeedTypeList, pSize); }
 
-    void add_to_set(mikan::MKSeedSites &pSeedSites, unsigned pToolIdx, seqan::CharString &pPrefix);
+    void add_to_set(mikan::MKSeedSites &pSeedSites, unsigned pToolIdx, mikan::TCharStr &pPrefix);
 
-    void add_seed_types(mikan::MKSeedSites &pSeedSites, unsigned pToolIdx, seqan::CharString &pPrefix);
+    void add_seed_types(mikan::MKSeedSites &pSeedSites, unsigned pToolIdx, mikan::TCharStr &pPrefix);
 
-    void set_default_seed_type(unsigned pIdx, seqan::CharString &pPrefix);
+    void set_default_seed_type(unsigned pIdx, mikan::TCharStr &pPrefix);
 
     void create_pos_map();
 
@@ -50,7 +50,7 @@ private:
     // Define variables
     TSet mUniqSet;
     TPosMap mPosPairMap;
-    seqan::StringSet<TCharSet > mSeedTypeList;
+    seqan::StringSet<mikan::TCharSet > mSeedTypeList;
 
 };
 

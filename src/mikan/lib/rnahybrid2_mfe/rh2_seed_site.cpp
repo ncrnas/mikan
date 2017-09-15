@@ -34,8 +34,8 @@ void RH2SeedSeqs::set_flags() {
     }
 
     if (mSeedTypeDef[0][2] == 'G' && mSeedTypeDef[0][3] == 'U') {
-        CharString GUT;
-        CharString GUM;
+        mikan::TCharStr GUT;
+        mikan::TCharStr GUM;
 
         if (mSeedTypeDef[0][0] == '7') {
             mGUTLab = "7mer_GUT";
@@ -67,12 +67,12 @@ bool RH2SeedSites::set_new_seed_type(
         unsigned pSitePos,
         mikan::TRNAStr &pMiRNASeq,
         mikan::TCharSet &pSeedTypeDef,
-        seqan::CharString &pSeedType,
+        mikan::TCharStr &pSeedType,
         int,
         bool pEffectiveSite) {
 
     bool matchM8, matchM1, gutM8, gutM1, gumM8, gumM1, isA8, isA1, noM8, noM1;
-    CharString newSeedType = "";
+    mikan::TCharStr newSeedType = "";
 
     set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 8, noM8, matchM8, gutM8, gumM8, isA8);
     set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 1, noM1, matchM1, gutM1, gumM1, isA1);

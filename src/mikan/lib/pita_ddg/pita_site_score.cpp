@@ -19,7 +19,7 @@ int PITADGDuplexScores::calc_scores(
 
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
     const String<unsigned> &sitePos = pSeedSites.get_site_pos();
-    StringSet<CharString> const &seedTypes = pSeedSites.get_seed_types();
+    mikan::TCharSet const &seedTypes = pSeedSites.get_seed_types();
     String<int> const &mismatchPos = pSeedSites.get_mismatched_pos();
     std::string inputMiRNASeq;
     std::string inputMRNASeq;
@@ -89,7 +89,7 @@ void PITADGDuplexScores::create_input_mrna_seq(
 }
 
 void PITADGDuplexScores::create_input_matched_seq(
-        CharString const &pSeedType,
+        mikan::TCharStr const &pSeedType,
         int pMismatchPos,
         std::vector<int> &pInputMatchSeq) {
     unsigned seedLen = lexicalCast<unsigned>(pSeedType[0]);
@@ -110,7 +110,7 @@ void PITADGDuplexScores::create_input_matched_seq(
 }
 
 void PITADGDuplexScores::print_input(
-        CharString const &pSeedType,
+        mikan::TCharStr const &pSeedType,
         std::string &pInputMiRNASeq,
         std::string &pInputMRNASeq,
         std::vector<int> &pInputMatchSeq) {

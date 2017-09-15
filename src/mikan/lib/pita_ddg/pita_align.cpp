@@ -26,7 +26,7 @@ void PITAAlign::create_align(
         int pId,
         mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNAStr const &pMRNASeq,
-        CharString const &pSeedType,
+        mikan::TCharStr const &pSeedType,
         unsigned pSitePos,
         int) {
     int seedLen = lexicalCast<int>(pSeedType[0]);

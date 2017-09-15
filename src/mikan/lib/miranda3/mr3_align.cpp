@@ -68,8 +68,8 @@ void MR3Align::align_seed(
         mAlignSeedMiRNA[pIdx][i] = pIMiRNASeedSeq[idx2];
         mAlignSeedMRNA[pIdx][i] = pIMRNASeedSeq[i];
 
-        std::string mielm = toCString(CharString(pIMiRNASeedSeq[idx2]));
-        std::string melm = toCString(CharString(pIMRNASeedSeq[i]));
+        std::string mielm = toCString(mikan::TCharStr(pIMiRNASeedSeq[idx2]));
+        std::string melm = toCString(mikan::TCharStr(pIMRNASeedSeq[i]));
 
         int tscore = mDPScore.score_ab(mielm[0], melm[0]);
         if (i == 0 && tscore < 0) {
@@ -95,8 +95,8 @@ void MR3Align::init_3p_align(int pIdx) {
 }
 
 void MR3Align::align_3p(int pIdx, mikan::TRNAStr &pIMiRNA3pSeq, mikan::TRNAStr &pIMRNA3pSeq) {
-    std::string miSeq = toCString(seqan::CharString(pIMiRNA3pSeq));
-    std::string mSeq = toCString(seqan::CharString(pIMRNA3pSeq));
+    std::string miSeq = toCString(mikan::TCharStr(pIMiRNA3pSeq));
+    std::string mSeq = toCString(mikan::TCharStr(pIMRNA3pSeq));
 
     mDPCore.run(miSeq, mSeq, mAlignSeedScores[pIdx]);
     mAlignScores[pIdx] = mDPCore.get_max_score();
@@ -205,7 +205,7 @@ void MR3Align::set_align_bars(int pIdx) {
 
 }
 
-void MR3Align::get_mrna_seq(int pIdx, seqan::CharString &pStrMRNA) {
+void MR3Align::get_mrna_seq(int pIdx, mikan::TCharStr &pStrMRNA) {
     int idx = 0;
 
     resize(pStrMRNA, length(mAlignMRNA[pIdx]) - mGapCountMRNA[pIdx]);

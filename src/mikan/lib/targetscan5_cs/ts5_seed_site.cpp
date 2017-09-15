@@ -30,13 +30,13 @@ bool TS5SeedSites::set_new_seed_type(
         unsigned pSitePos,
         mikan::TRNAStr &pMiRNASeq,
         mikan::TCharSet &,
-        seqan::CharString &,
+        mikan::TCharStr &,
         int pMisMatchPos,
         bool pEffectiveSite) {
 
     bool matchM8, matchM1, gutMx, gumMx, isAx, isA1, noMx, noM1;
     int lenToCds;
-    CharString newSeedType = "";
+    mikan::TCharStr newSeedType = "";
 
     set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 8, noMx, matchM8, gutMx, gumMx, isAx);
     set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 1, noM1, matchM1, gutMx, gumMx, isA1);

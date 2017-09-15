@@ -91,7 +91,7 @@ int TM1FeatSeedType::add_features(
     mikan::TRNAStr revMiRNASeq;
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
 
-    const StringSet<seqan::CharString> &seedTypes = pSeedSites.get_seed_types();
+    const StringSet<mikan::TCharStr> &seedTypes = pSeedSites.get_seed_types();
 
     resize_features((unsigned) length(mRNAPos));
 
@@ -276,8 +276,8 @@ int TM1FeatAURich::add_features(
     (void) pDistance;
     int seqLen, startU, endU, startD, endD;
     float totalScore, upScore, upMaxScore, downScore, downMaxScore;
-    //CharString chrUp = "up";
-    //CharString chrDown = "down";
+    //mikan::TCharStr chrUp = "up";
+    //mikan::TCharStr chrDown = "down";
 
     resize_features((unsigned) length(pMRNAPos));
 

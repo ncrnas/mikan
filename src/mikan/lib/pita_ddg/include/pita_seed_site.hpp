@@ -46,35 +46,35 @@ public:
 private:
     virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
                                    mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
-                                   seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
+                                   mikan::TCharStr &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 
-    void set_stringent_seed_type(seqan::CharString &pCurSeedType, mikan::TCharSet &pSeedDef,
+    void set_stringent_seed_type(mikan::TCharStr &pCurSeedType, mikan::TCharSet &pSeedDef,
                                  bool pMatchM8, bool pMatchM9, unsigned pMisMatchPos,
-                                 seqan::CharString &pNewSeedType);
+                                 mikan::TCharStr &pNewSeedType);
 
-    void set_single_gu_seed_type(seqan::CharString &pCurSeedType, mikan::TCharSet &pSeedDef,
+    void set_single_gu_seed_type(mikan::TCharStr &pCurSeedType, mikan::TCharSet &pSeedDef,
                                  int pM1, int pM2, bool pMatchM8, bool pMatchM9, bool pGutM8, bool pGutM9,
                                  bool pGumM8, bool pGumM9, unsigned pMisMatchPos,
-                                 seqan::CharString &pNewSeedType);
+                                 mikan::TCharStr &pNewSeedType);
 
-    void set_multiple_gu_seed_type(seqan::CharString &pCurSeedType, mikan::TCharSet &pSeedDef,
+    void set_multiple_gu_seed_type(mikan::TCharStr &pCurSeedType, mikan::TCharSet &pSeedDef,
                                    int pM1, int pM2, bool pMatchM8, bool pMatchM9, bool pGutM8, bool pGutM9,
                                    bool pGumM8, bool pGumM9, unsigned pMisMatchPos,
-                                   seqan::CharString &pNewSeedType);
+                                   mikan::TCharStr &pNewSeedType);
 
-    void set_mismatch_seed_type(seqan::CharString &pCurSeedType, mikan::TCharSet &pSeedDef,
+    void set_mismatch_seed_type(mikan::TCharStr &pCurSeedType, mikan::TCharSet &pSeedDef,
                                 int pM1, int pM2, bool pMatchM8, bool pMatchM9, bool pGutM8, bool pGutM9,
-                                bool pGumM8, bool pGumM9, unsigned pMisMatchPos, seqan::CharString &pNewSeedType);
+                                bool pGumM8, bool pGumM9, unsigned pMisMatchPos, mikan::TCharStr &pNewSeedType);
 
-    void set_gu_mismatch_seed_type(seqan::CharString &pCurSeedType, mikan::TCharSet &pSeedDef,
+    void set_gu_mismatch_seed_type(mikan::TCharStr &pCurSeedType, mikan::TCharSet &pSeedDef,
                                    int pM1, int pM2, bool pMatchM8, bool pMatchM9, bool pGutM8, bool pGutM9,
                                    bool pGumM8, bool pGumM9, unsigned pMisMatchPos,
-                                   seqan::CharString &pNewSeedType);
+                                   mikan::TCharStr &pNewSeedType);
 
-    void set_6mer_seed_type(seqan::CharString &pCurSeedType, mikan::TCharSet &pSeedDef,
-                            bool pMatchM8, bool pMatchM9, unsigned pMisMatchPos, seqan::CharString &pNewSeedType);
+    void set_6mer_seed_type(mikan::TCharStr &pCurSeedType, mikan::TCharSet &pSeedDef,
+                            bool pMatchM8, bool pMatchM9, unsigned pMisMatchPos, mikan::TCharStr &pNewSeedType);
 
-    void check_last_match(bool pMatchM8, bool pMatchM9, seqan::CharString &pNewSeedType);
+    void check_last_match(bool pMatchM8, bool pMatchM9, mikan::TCharStr &pNewSeedType);
 
 };
 

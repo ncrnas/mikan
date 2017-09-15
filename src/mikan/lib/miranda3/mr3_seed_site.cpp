@@ -74,12 +74,12 @@ bool MR3SeedSites::set_new_seed_type(
         unsigned pSitePos,
         mikan::TRNAStr &pMiRNASeq,
         mikan::TCharSet &pSeedTypeDef,
-        seqan::CharString &pSeedType,
+        mikan::TCharStr &pSeedType,
         int pMisMatchPos,
         bool pEffectiveSite) {
 
     bool matchM8, matchM9, gutM8, gutM9, gumM8, gumM9, isAx, noMx;
-    CharString newSeedType = "";
+    mikan::TCharStr newSeedType = "";
 
     set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 8, noMx, matchM8, gutM8, gumM8, isAx);
     set_mx_matches(pMRNAPos, pSitePos, pMiRNASeq, 9, noMx, matchM9, gutM9, gumM9, isAx);
@@ -127,12 +127,12 @@ bool MR3SeedSites::set_new_seed_type(
 }
 
 void MR3SeedSites::set_stringent_seed_type(
-        CharString &pCurSeedType,
-        StringSet<CharString> &pSeedDef,
+        mikan::TCharStr &pCurSeedType,
+        mikan::TCharSet &pSeedDef,
         bool pMatchMx8,
         bool pMatchMx9,
         unsigned,
-        CharString &pNewSeedType) {
+        mikan::TCharStr &pNewSeedType) {
     if (pNewSeedType != "") {
         return;
     }
@@ -154,12 +154,12 @@ void MR3SeedSites::set_stringent_seed_type(
 }
 
 void MR3SeedSites::set_6mer_seed_type(
-        CharString &pCurSeedType,
-        StringSet<CharString> &pSeedDef,
+        mikan::TCharStr &pCurSeedType,
+        mikan::TCharSet &pSeedDef,
         bool,
         bool,
         unsigned,
-        CharString &pNewSeedType) {
+        mikan::TCharStr &pNewSeedType) {
     if (pNewSeedType != "") {
         return;
     }
@@ -179,8 +179,8 @@ void MR3SeedSites::set_6mer_seed_type(
 }
 
 void MR3SeedSites::set_single_gu_seed_type(
-        CharString &pCurSeedType,
-        StringSet<CharString> &pSeedDef,
+        mikan::TCharStr &pCurSeedType,
+        mikan::TCharSet &pSeedDef,
         int pM1,
         int pM2,
         bool pMatchMx8,
@@ -190,7 +190,7 @@ void MR3SeedSites::set_single_gu_seed_type(
         bool pGumMx8,
         bool pGumMx9,
         unsigned pMisMatchPos,
-        CharString &pNewSeedType) {
+        mikan::TCharStr &pNewSeedType) {
     int mm;
 
     if (pNewSeedType != "") {
@@ -250,8 +250,8 @@ void MR3SeedSites::set_single_gu_seed_type(
 }
 
 void MR3SeedSites::set_multiple_gu_seed_type(
-        CharString &pCurSeedType,
-        StringSet<CharString> &pSeedDef,
+        mikan::TCharStr &pCurSeedType,
+        mikan::TCharSet &pSeedDef,
         int,
         int,
         bool pMatchMx8,
@@ -261,7 +261,7 @@ void MR3SeedSites::set_multiple_gu_seed_type(
         bool pGumMx8,
         bool pGumMx9,
         unsigned,
-        CharString &pNewSeedType) {
+        mikan::TCharStr &pNewSeedType) {
     if (pNewSeedType != "") {
         return;
     }
@@ -295,8 +295,8 @@ void MR3SeedSites::set_multiple_gu_seed_type(
 }
 
 void MR3SeedSites::set_mismatch_seed_type(
-        CharString &pCurSeedType,
-        StringSet<CharString> &pSeedDef,
+        mikan::TCharStr &pCurSeedType,
+        mikan::TCharSet &pSeedDef,
         int pM1,
         int pM2,
         bool pMatchMx8,
@@ -306,7 +306,7 @@ void MR3SeedSites::set_mismatch_seed_type(
         bool pGumMx8,
         bool pGumMx9,
         unsigned pMisMatchPos,
-        CharString &pNewSeedType) {
+        mikan::TCharStr &pNewSeedType) {
 
     int mm = 0;
 
@@ -352,8 +352,8 @@ void MR3SeedSites::set_mismatch_seed_type(
 }
 
 void MR3SeedSites::set_gu_mismatch_seed_type(
-        CharString &pCurSeedType,
-        StringSet<CharString> &pSeedDef,
+        mikan::TCharStr &pCurSeedType,
+        mikan::TCharSet &pSeedDef,
         int pM1,
         int pM2,
         bool pMatchMx8,
@@ -363,7 +363,7 @@ void MR3SeedSites::set_gu_mismatch_seed_type(
         bool pGumMx8,
         bool pGumMx9,
         unsigned pMisMatchPos,
-        CharString &pNewSeedType) {
+        mikan::TCharStr &pNewSeedType) {
     int mm;
 
     if (pNewSeedType != "") {
@@ -429,7 +429,7 @@ void MR3SeedSites::set_bt_seed_type(
         unsigned pSitePos,
         mikan::TRNAStr const &pMiRNA,
         unsigned pMisMatchPos,
-        CharString &pNewSeedType) {
+        mikan::TCharStr &pNewSeedType) {
     mikan::TRNAStr cMiRNASeq, miRNAM2C, miRNAM8C, miRNAM9C, mRNAM2, mRNAM7, mRNAM8;
 
     if (pNewSeedType != "") {
@@ -481,7 +481,7 @@ void MR3SeedSites::set_bt_seed_type(
     return;
 }
 
-void MR3SeedSites::check_last_match(bool pMatchM8, bool pMatchM9, seqan::CharString &pNewSeedType) {
+void MR3SeedSites::check_last_match(bool pMatchM8, bool pMatchM9, mikan::TCharStr &pNewSeedType) {
     if (pNewSeedType == "6mer" || pNewSeedType == "7mer" || pNewSeedType == "8mer") {
         return;
     }

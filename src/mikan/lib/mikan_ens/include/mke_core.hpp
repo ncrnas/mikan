@@ -111,9 +111,9 @@ private:
         }
     }
 
-    int write_site_score(seqan::CharString const &pMiRNAId);
+    int write_site_score(mikan::TCharStr const &pMiRNAId);
 
-    int write_rna_score(seqan::CharString const &pMiRNAId);
+    int write_rna_score(mikan::TCharStr const &pMiRNAId);
 
     int combine_site_pos(unsigned pIdx);
 

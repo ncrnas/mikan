@@ -25,7 +25,7 @@ public:
     // Method prototypes
     void clear_scores();
 
-    float calc_score(int pIdx, seqan::CharString &pSeedType);
+    float calc_score(int pIdx, mikan::TCharStr &pSeedType);
 
     void resize_scores(int pSize);
 
@@ -53,7 +53,7 @@ public:
     // Method prototypes
     void clear_scores();
 
-    float calc_score(int pIdx, seqan::CharString &pSeedType, int &pSitePos);
+    float calc_score(int pIdx, mikan::TCharStr &pSeedType, int &pSitePos);
 
     void resize_scores(int pSize);
 
@@ -83,7 +83,7 @@ public:
     // Method prototypes
     void clear_scores();
 
-    float calc_score(int pIdx, seqan::CharString &pSeedType, float &pAuRich);
+    float calc_score(int pIdx, mikan::TCharStr &pSeedType, float &pAuRich);
 
     void resize_scores(int pSize);
 
@@ -113,7 +113,7 @@ public:
     // Method prototypes
     void clear_scores();
 
-    float calc_score(int pIdx, seqan::CharString &pSeedType, float &pThreePrimePair);
+    float calc_score(int pIdx, mikan::TCharStr &pSeedType, float &pThreePrimePair);
 
     void resize_scores(int pSize);
 

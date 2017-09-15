@@ -38,7 +38,7 @@ public:
 
     void combine_alignments(int pIdx, mikan::TRNAStr const &pMiRNASeq, mikan::TRNAStr const &pMRNASeq, bool noA1);
 
-    void get_mrna_seq(int pIdx, seqan::CharString &pStrMRNA);
+    void get_mrna_seq(int pIdx, mikan::TCharStr &pStrMRNA);
 
     void init_3p_align(int pIdx);
 

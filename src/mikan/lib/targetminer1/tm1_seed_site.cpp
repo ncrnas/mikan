@@ -24,7 +24,7 @@ void TM1SeedSeqs::set_flags() {
 
 int TM1SeedSeqs::create_other_seed_seqs(mikan::TRNAStr &pSeedSeq) {
     mikan::TRNAStr seedLPSeq;
-    CharString seedType;
+    mikan::TCharStr seedType;
     unsigned m2pos = length(pSeedSeq) - 1;
 
     for (unsigned i = 0; i < length(mSeedSeqs); i++) {
@@ -98,7 +98,7 @@ void TM1SeedSites::get_match_count(
     }
 }
 
-bool TM1SeedSites::check_position_2(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType) {
+bool TM1SeedSites::check_position_2(unsigned pMRNAPos, unsigned pSitePos, mikan::TCharStr &pSeedType) {
     bool effectiveSite = true;
     unsigned curIdx = length(mEffectiveSites) - 1;
     unsigned m1Pos = pSitePos + INDEXED_SEQ_LEN;
@@ -145,11 +145,11 @@ bool TM1SeedSites::set_new_seed_type(
         unsigned pSitePos,
         mikan::TRNAStr &pMiRNASeq,
         mikan::TCharSet &,
-        seqan::CharString &pSeedType,
+        mikan::TCharStr &pSeedType,
         int,
         bool pEffectiveSite) {
 
-    CharString newSeedType = "";
+    mikan::TCharStr newSeedType = "";
     bool isA1, isAx;
     bool matchM1, matchM2, matchM8, matchM9;
     bool gumM1, gutM2, gutM8, gutM9;

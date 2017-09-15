@@ -36,7 +36,7 @@ int TS5SiteScores::calc_scores(
         mikan::MKRMAWithSites &) {
 
     int retVal;
-    CharString seedType;
+    mikan::TCharStr seedType;
     int sitePos;
     float auRich, threePrimePair;
     float seedTypeScore, sitePosScore, auRichScore, threePrimePairScore, totalScore;
@@ -97,7 +97,7 @@ void TS5ScoreSeedType::clear_scores() {
     clear(mSeedTypes);
 }
 
-float TS5ScoreSeedType::calc_score(int pIdx, CharString &pSeedType) {
+float TS5ScoreSeedType::calc_score(int pIdx, mikan::TCharStr &pSeedType) {
     float score = 0.0;
 
     if (pSeedType == "8mer") {
@@ -125,7 +125,7 @@ void TS5ScoreSitePos::clear_scores() {
     clear(mSitePos);
 }
 
-float TS5ScoreSitePos::calc_score(int pIdx, CharString &pSeedType, int &pSitePos) {
+float TS5ScoreSitePos::calc_score(int pIdx, mikan::TCharStr &pSeedType, int &pSitePos) {
     float score = 0.0;
 
     if (pSeedType == "8mer") {
@@ -154,7 +154,7 @@ void TS5ScoreAURich::clear_scores() {
     clear(mAURich);
 }
 
-float TS5ScoreAURich::calc_score(int pIdx, CharString &pSeedType, float &pAuRich) {
+float TS5ScoreAURich::calc_score(int pIdx, mikan::TCharStr &pSeedType, float &pAuRich) {
     float score = 0.0;
 
     if (pSeedType == "8mer") {
@@ -183,7 +183,7 @@ void TS5ScoreThreePrimePair::clear_scores() {
     clear(mThreePrimePair);
 }
 
-float TS5ScoreThreePrimePair::calc_score(int pIdx, CharString &pSeedType, float &pThreePrimePair) {
+float TS5ScoreThreePrimePair::calc_score(int pIdx, mikan::TCharStr &pSeedType, float &pThreePrimePair) {
     float score = 0.0;
 
     if (pSeedType == "8mer") {

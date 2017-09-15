@@ -16,12 +16,12 @@ namespace tm1p {
 //
 // TM1Core methods
 //
-int TM1Core::write_site_score(seqan::CharString const &pMiRNAId) {
+int TM1Core::write_site_score(mikan::TCharStr const &pMiRNAId) {
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const mikan::TCharSet &mSeedTypes = mSeedSites.get_seed_types();
 
-    seqan::CharString seedType;
+    mikan::TCharStr seedType;
     int seedStart, seedEnd;
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
@@ -34,7 +34,7 @@ int TM1Core::write_site_score(seqan::CharString const &pMiRNAId) {
         seedEnd = seedStart + 6;
 
         mOFile1 << toCString(pMiRNAId) << "\t";
-        mOFile1 << toCString((seqan::CharString) mMRNAIds[mRNAPos[i]]) << "\t";
+        mOFile1 << toCString((mikan::TCharStr) mMRNAIds[mRNAPos[i]]) << "\t";
         mOFile1 << seedStart << "\t";
         mOFile1 << seedEnd << "\t";
         mOFile1 << mSeedTypes[i] << "\t";
@@ -47,7 +47,7 @@ int TM1Core::write_site_score(seqan::CharString const &pMiRNAId) {
 
 }
 
-int TM1Core::write_rna_score(seqan::CharString const &pMiRNAId) {
+int TM1Core::write_rna_score(mikan::TCharStr const &pMiRNAId) {
     const seqan::String<float> &scores = mRNAScores.get_scores();
     const seqan::String<int> &predictions = mRNAScores.get_labels();
     const seqan::String<unsigned> &siteNum = mRNAScores.get_site_num();
@@ -66,7 +66,7 @@ int TM1Core::write_rna_score(seqan::CharString const &pMiRNAId) {
 
     for (itPos = sortedMRNAByScore.begin(); itPos != sortedMRNAByScore.end(); ++itPos) {
         mOFile2 << toCString(pMiRNAId) << "\t";
-        mOFile2 << toCString((seqan::CharString) mMRNAIds[uniqRNAPosSet[(*itPos).second]]) << "\t";
+        mOFile2 << toCString((mikan::TCharStr) mMRNAIds[uniqRNAPosSet[(*itPos).second]]) << "\t";
         mOFile2 << scores[(*itPos).second] << "\t";
         mOFile2 << siteNum[(*itPos).second] << "\t";
         mOFile2 << predictions[(*itPos).second];
@@ -76,12 +76,12 @@ int TM1Core::write_rna_score(seqan::CharString const &pMiRNAId) {
     return 0;
 }
 
-int TM1Core::write_alignment(seqan::CharString const &pMiRNAId) {
+int TM1Core::write_alignment(mikan::TCharStr const &pMiRNAId) {
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const mikan::TCharSet &mSeedTypes = mSeedSites.get_seed_types();
 
-    seqan::CharString seedType;
+    mikan::TCharStr seedType;
     int seedStart, seedEnd;
     int count = 0;
 
@@ -97,7 +97,7 @@ int TM1Core::write_alignment(seqan::CharString const &pMiRNAId) {
         std::cout << "### " << count + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
         mSiteScores.write_alignment(i);
         std::cout << "  miRNA:                " << toCString(pMiRNAId) << std::endl;
-        std::cout << "  mRNA:                 " << toCString((seqan::CharString) mMRNAIds[mRNAPos[i]]) << std::endl;
+        std::cout << "  mRNA:                 " << toCString((mikan::TCharStr) mMRNAIds[mRNAPos[i]]) << std::endl;
         std::cout << "  seed type:            " << toCString(seedType) << std::endl;
         std::cout << std::endl;
         std::cout << "  position(seed start): " << seedStart << std::endl;

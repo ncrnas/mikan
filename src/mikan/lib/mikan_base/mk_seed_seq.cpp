@@ -45,7 +45,7 @@ int MKSeedSeqs::create_seed_seqs(mikan::TRNAStr const &pSeq) {
     mMiRNASeq = pSeq;
 
     mikan::TRNAStr seedSeq;
-    CharString seedType;
+    mikan::TCharStr seedType;
 
     int retVal;
 
@@ -223,7 +223,7 @@ int MKSeedSeqs::create_multi_guwobble_seed_seqs(mikan::TRNAStr &pSeedSeq) {
 
 int MKSeedSeqs::create_mismatch_seed_seqs(mikan::TRNAStr &pSeedSeq, bool pIsMMGU, int pGUPos) {
     mikan::TRNAStr seedLPSeq;
-    CharString seedType;
+    mikan::TCharStr seedType;
     nNumNewSeq = 0;
     char ch1 = 0;
     char ch2 = 0;

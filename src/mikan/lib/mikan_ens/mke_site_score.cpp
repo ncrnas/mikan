@@ -23,13 +23,13 @@ void MKESiteScores::clear_scores() {
 void MKESiteScores::add_score_types(
         MKEOptions const &pMKEOpts,
         mikan::MKSiteScores &pSiteScores,
-        seqan::CharString &pPrefix) {
+        mikan::TCharStr &pPrefix) {
 
     const mikan::TCharSet &scoreTypes = pSiteScores.get_score_types();
     const MKEConfig &conf = pMKEOpts.get_conf();
 
     for (unsigned i = 0; i < length(scoreTypes); ++i) {
-        seqan::CharString sType, sTypeC;
+        mikan::TCharStr sType, sTypeC;
         append(sType, pPrefix);
         append(sType, ":");
         append(sType, scoreTypes[i]);
@@ -70,7 +70,7 @@ void MKESiteScores::add_scores(
         mikan::MKSeedSites &pSeedSites,
         MKESeedSites &pMKESeedSites,
         mikan::MKSiteScores &pSiteScores,
-        seqan::CharString &pPrefix) {
+        mikan::TCharStr &pPrefix) {
 
     const mikan::TMRNAPosSet &RNAPos = pSeedSites.get_mrna_pos();
     const mikan::TMRNAPosSet &S1Pos = pSeedSites.get_site_pos_s1();
@@ -78,7 +78,7 @@ void MKESiteScores::add_scores(
     const MKEConfig &conf = pMKEOpts.get_conf();
 
     for (unsigned i = 0; i < length(scoreTypes); ++i) {
-        seqan::CharString sType, sTypeC;
+        mikan::TCharStr sType, sTypeC;
         append(sType, pPrefix);
         append(sType, ":");
         append(sType, scoreTypes[i]);
@@ -140,7 +140,7 @@ void MKESiteScores::combine_scores(MKEOptions const &pMKEOpts) {
 
     resize(weights, mScoreTypeN);
     for (unsigned i = 0; i < mScoreTypeN; ++i) {
-        seqan::CharString sType = mScoreTypes[i];
+        mikan::TCharStr sType = mScoreTypes[i];
         replace(sType, 2, 3, mKeySep.c_str());
         std::string ckey = toCString(sType);
         weights[i] = conf.get_site_weight(ckey);
@@ -184,7 +184,7 @@ void MKESiteScores::print_all_scores(MKEOptions const &pMKEOpts) {
     resize(ubounds, mScoreTypeN);
     resize(is_rev, mScoreTypeN);
     for (unsigned i = 0; i < mScoreTypeN; ++i) {
-        seqan::CharString sType = mScoreTypes[i];
+        mikan::TCharStr sType = mScoreTypes[i];
         replace(sType, 2, 3, mKeySep.c_str());
         std::string ckey = toCString(sType);
         weights[i] = conf.get_site_weight(ckey);

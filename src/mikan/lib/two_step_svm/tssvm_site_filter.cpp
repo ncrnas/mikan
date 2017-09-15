@@ -14,8 +14,8 @@ float TSSVMSiteFilter::get_precedence(
         mikan::MKSeedSites &pSeedSites,
         mikan::MKSiteScores &) {
 
-    StringSet<CharString> const &seedTypes = pSeedSites.get_seed_types();
-    seqan::CharString seedType = seedTypes[pSitePos];
+    mikan::TCharSet const &seedTypes = pSeedSites.get_seed_types();
+    mikan::TCharStr seedType = seedTypes[pSitePos];
     float preced;
 
     if (seedType == "8mer" || seedType == "7mer-A1" || seedType == "7mer-m8") {
@@ -50,7 +50,7 @@ void TSSVMSiteFilter::set_intervals(
         bool &pSearchOverlap) {
 
     String<unsigned> const &sitePos = pSeedSites.get_site_pos();
-    StringSet<CharString> const &seedTypes = pSeedSites.get_seed_types();
+    mikan::TCharSet const &seedTypes = pSeedSites.get_seed_types();
 
     pStartSearch = 0;
     pEndSearch = 0;

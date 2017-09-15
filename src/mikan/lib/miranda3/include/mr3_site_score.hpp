@@ -59,7 +59,7 @@ private:
                                 mikan::TRNAStr &pIMiRNA3pSeq);
 
     void create_input_mrna_seq(mikan::TRNAStr const &pMiRNASeq, mikan::TRNAStr const &pMRNASeq, int pStart, int pEnd,
-                               const seqan::CharString &pSeedType, mikan::TRNAStr &pInputMRNASeq,
+                               const mikan::TCharStr &pSeedType, mikan::TRNAStr &pInputMRNASeq,
                                mikan::TRNAStr &pIMRNASeedSeq,
                                mikan::TRNAStr &pIMRNA3pSeq, bool &pNoMRNA1);
 

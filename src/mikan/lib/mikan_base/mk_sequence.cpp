@@ -10,9 +10,9 @@ namespace mikan {
 //
 // MKSequences methods
 //
-int MKSequences::read_fasta(CharString const &pFasta) {
-    CharString id;
-    CharString seq;
+int MKSequences::read_fasta(mikan::TCharStr const &pFasta) {
+    mikan::TCharStr id;
+    mikan::TCharStr seq;
 
     SequenceStream seqStream(toCString(pFasta));
     if (!isGood(seqStream)) {
