@@ -27,8 +27,8 @@ int MR3AlignScores::calc_scores(
     mikan::TRNAStr iMRNASeq;
     mikan::TRNAStr iMiRNASeedSeq;
     mikan::TRNAStr iMRNASeedSeq;
-    Rna5String iMiRNA3pSeq;
-    Rna5String iMRNA3pSeq;
+    mikan::TRNAStr iMiRNA3pSeq;
+    mikan::TRNAStr iMRNA3pSeq;
     int seqStart = 0;
     int seqEnd = 0;
     int score;
@@ -96,7 +96,7 @@ void MR3AlignScores::create_input_mirna_seq(
         mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNAStr &pIMiRNASeq,
         mikan::TRNAStr &pIMiRNASeedSeq,
-        Rna5String &pIMiRNA3pSeq) {
+        mikan::TRNAStr &pIMiRNA3pSeq) {
     int idxseed = 0;
     int idx3p = 0;
 
@@ -125,7 +125,7 @@ void MR3AlignScores::create_input_mrna_seq(
         const CharString &pSeedType,
         mikan::TRNAStr &pIMRNASeq,
         mikan::TRNAStr &pIMRNASeedSeq,
-        Rna5String &pIMRNA3pSeq,
+        mikan::TRNAStr &pIMRNA3pSeq,
         bool &pNoMRNA1) {
     unsigned idx = 0;
     unsigned seqLen = (unsigned) (pEnd - pStart);

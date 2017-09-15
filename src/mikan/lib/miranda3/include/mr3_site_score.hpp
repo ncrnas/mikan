@@ -56,12 +56,12 @@ private:
 
     void create_input_mirna_seq(mikan::TRNAStr const &pMiRNASeq, mikan::TRNAStr &pInputMiRNASeq,
                                 mikan::TRNAStr &pIMiRNASeedSeq,
-                                seqan::Rna5String &pIMiRNA3pSeq);
+                                mikan::TRNAStr &pIMiRNA3pSeq);
 
     void create_input_mrna_seq(mikan::TRNAStr const &pMiRNASeq, mikan::TRNAStr const &pMRNASeq, int pStart, int pEnd,
                                const seqan::CharString &pSeedType, mikan::TRNAStr &pInputMRNASeq,
                                mikan::TRNAStr &pIMRNASeedSeq,
-                               seqan::Rna5String &pIMRNA3pSeq, bool &pNoMRNA1);
+                               mikan::TRNAStr &pIMRNA3pSeq, bool &pNoMRNA1);
 
 };
 

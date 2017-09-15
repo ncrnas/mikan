@@ -34,7 +34,7 @@ public:
 
     void align_seed(int pIdx, mikan::TRNAStr &pIMiRNASeedSeq, mikan::TRNAStr &pIMRNASeedSeq, int pMMpos);
 
-    void align_3p(int pIdx, seqan::Rna5String &pIMiRNA3pSeq, seqan::Rna5String &pIMRNA3pSeq);
+    void align_3p(int pIdx, mikan::TRNAStr &pIMiRNA3pSeq, mikan::TRNAStr &pIMRNA3pSeq);
 
     void combine_alignments(int pIdx, mikan::TRNAStr const &pMiRNASeq, mikan::TRNAStr const &pMRNASeq, bool noA1);
 

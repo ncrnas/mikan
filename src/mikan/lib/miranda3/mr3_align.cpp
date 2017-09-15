@@ -94,7 +94,7 @@ void MR3Align::init_3p_align(int pIdx) {
     mGapCountMRNA[pIdx] = 0;
 }
 
-void MR3Align::align_3p(int pIdx, seqan::Rna5String &pIMiRNA3pSeq, seqan::Rna5String &pIMRNA3pSeq) {
+void MR3Align::align_3p(int pIdx, mikan::TRNAStr &pIMiRNA3pSeq, mikan::TRNAStr &pIMRNA3pSeq) {
     std::string miSeq = toCString(seqan::CharString(pIMiRNA3pSeq));
     std::string mSeq = toCString(seqan::CharString(pIMRNA3pSeq));
 
