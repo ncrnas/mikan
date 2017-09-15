@@ -8,8 +8,8 @@
 namespace mikan {
 
 typedef seqan::CharString TCharStr;
-typedef seqan::RnaString TRNAStr;
-//typedef seqan::Rna5String TRNAStr;
+//typedef seqan::RnaString TRNAStr;
+typedef seqan::Rna5String TRNAStr;
 
 typedef seqan::StringSet<mikan::TCharStr> TCharSet;
 typedef seqan::StringSet<TRNAStr> TRNASet;
