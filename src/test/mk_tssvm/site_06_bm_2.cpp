@@ -20,7 +20,7 @@ TEST_F(Site06BM2, mir1_bm) {
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
     find_seed_sites(sites);
-    
+
     EXPECT_EQ(8u, sites.get_length());
 
     test_sites(sites, 0, "BM", 1, 25, true, 6);

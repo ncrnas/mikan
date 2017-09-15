@@ -24,7 +24,7 @@ TEST_F(Site02GU2, mir1_6mer_gu) {
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
     find_seed_sites(sites);
-    
+
     EXPECT_EQ(40u, sites.get_length());
 
     test_sites(sites, 0, "6mer", 0, 24, true, 0);
@@ -84,7 +84,7 @@ TEST_F(Site02GU2, mir1_6mer_gu_plus) {
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
     find_seed_sites(sites);
-    
+
     EXPECT_EQ(40u, sites.get_length());
 
     test_sites(sites, 0, "6mer", 0, 24, true, 0);
@@ -144,7 +144,7 @@ TEST_F(Site02GU2, mir1_7mer_gu) {
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
     find_seed_sites(sites);
-    
+
     EXPECT_EQ(20u, sites.get_length());
 
     test_sites(sites, 0, "7mer_GUM", 0, 24, true, 0);
@@ -196,7 +196,7 @@ TEST_F(Site02GU2, mir1_def) {
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
     find_seed_sites(sites);
-    
+
     EXPECT_EQ(36u, sites.get_length());
 
     test_sites(sites, 0, "7mer_GUM", 0, 24, true, 0);

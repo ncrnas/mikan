@@ -15,7 +15,7 @@ protected:
 
 TEST_F(SeedAll, mir124_def) {
     create_seed_seqs(0);
-    
+
     EXPECT_EQ(12u, length(mSeedSeqs.mEffectiveSeeds));
 
     test_seed("AAGGCA", 0, "6mer", true, 0);
@@ -36,7 +36,7 @@ TEST_F(SeedAll, mir124_def) {
 
 TEST_F(SeedAll, mir1_def) {
     create_seed_seqs(1);
-    
+
     EXPECT_EQ(19u, length(mSeedSeqs.mEffectiveSeeds));
 
     test_seed("GGAAUG", 0, "6mer", true, 0);
