@@ -207,7 +207,7 @@ int MR3EnergyScores::calc_scores(
     resize(mEffectiveSites, length(pSeedSites.mEffectiveSites));
     resize(mEnScores, length(pSeedSites.mEffectiveSites));
 
-    mVRws.preppare_fold((int) length(pSeedSites.mEffectiveSites));
+    mVRws.prepare_fold((int) length(pSeedSites.mEffectiveSites));
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
         if (!pSeedSites.mEffectiveSites[i]) {
