@@ -73,12 +73,12 @@ public:
 
     // Row size
     int get_row_size() {
-        return mTabN;
+        return mSeqQN;
     }
 
     // Column size
     int get_col_size() {
-        return mTabM;
+        return mSeqDN;
     }
 
     // Update cell value
