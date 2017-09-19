@@ -94,13 +94,13 @@ int PITACore::write_alignment(mikan::TCharStr const &pMiRNAId) {
     float dGopen;
     float dG0;
     float dG1;
+    int count = 0;
     for (unsigned i = 0; i < length(mRNAWithSites.mEffectiveRNAs); i++) {
         if (!mRNAWithSites.mEffectiveRNAs[i]) {
             continue;
         }
 
         int seedStart;
-        int count = 0;
         float score;
         for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
             if (!mSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
