@@ -100,6 +100,10 @@ void RH2WorkSpace::mainloop(RH2RetValues &pRetVal) {
         }
     }
 
+//    tbl.print_unpaired_left_top();
+//    tbl.print_unpaired_left_bot();
+//    tbl.print_closed();
+
     v2 = tbl.calc_hybrid(0, mTargetLen, 0, mQueryLen);
     if (v2 == 0.0) {
         loopContinue = false;
