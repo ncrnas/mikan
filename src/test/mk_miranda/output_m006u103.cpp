@@ -4,6 +4,8 @@
 
 namespace {
 
+// Upper/lower cases – no tetra loops found in miRanda
+
 class OM006U103 : public TestIOBase {
 protected:
     OM006U103() {

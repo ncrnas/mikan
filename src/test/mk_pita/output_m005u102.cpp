@@ -4,6 +4,8 @@
 
 namespace {
 
+// RNA5 with Ns
+
 class OM005U102 : public TestIOBase {
 protected:
     OM005U102() {

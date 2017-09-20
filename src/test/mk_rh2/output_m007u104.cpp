@@ -4,6 +4,8 @@
 
 namespace {
 
+// One removed letter ('\0' in the end)
+
 class OM007U104 : public TestIOBase {
 protected:
     OM007U104() {
