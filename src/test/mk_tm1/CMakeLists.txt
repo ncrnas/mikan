@@ -40,7 +40,7 @@ add_executable(gtest_mk_tm1 seed_01_all.cpp
 
 add_executable(gtest_mk_tm1_long output_m001u001.cpp output_m001u002.cpp output_m001u003.cpp output_m001u004.cpp
         output_m001u005.cpp output_m001u006.cpp output_m001u007.cpp output_m001u008.cpp output_m001u009.cpp
-        output_m001u010.cpp output_m001u011.cpp output_m008u105.cpp)
+        output_m001u010.cpp output_m001u011.cpp output_m008u105.cpp output_m003u106.cpp)
 
 # Add libraries
 if (NOT TARGET mikantest)
