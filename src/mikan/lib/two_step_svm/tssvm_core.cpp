@@ -99,6 +99,8 @@ int TSSVMCore::write_alignment(mikan::TCharStr const &pMiRNAId) {
 
     seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = mRNAWithSites.get_rna_site_pos_map();
 
+    unsigned count = 0;
+
     for (unsigned i = 0; i < length(mRNAWithSites.mEffectiveRNAs); i++) {
         if (!mRNAWithSites.mEffectiveRNAs[i]) {
             continue;
@@ -115,7 +117,7 @@ int TSSVMCore::write_alignment(mikan::TCharStr const &pMiRNAId) {
                 seedStart += 1;
             }
 
-            std::cout << "### " << (i + j) + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
+            std::cout << "### " << count + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
             mSiteScores.write_alignment(rnaSitePosMap[i][j]);
             std::cout << "  miRNA:                " << toCString(pMiRNAId) << std::endl;
             std::cout << "  mRNA:                 ";
@@ -125,7 +127,7 @@ int TSSVMCore::write_alignment(mikan::TCharStr const &pMiRNAId) {
             std::cout << "  site level score:     " << scores[rnaSitePosMap[i][j]];
             std::cout << std::endl << std::endl;
 
-
+            ++count;
         }
     }
 
