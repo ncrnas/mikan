@@ -26,6 +26,7 @@ void TS5Options::setProgramDescription(seqan::ArgumentParser &parser) {
     // Define Options
     addSection(parser, "TargetScan5 Context Score Options");
     addOption(parser, ArgParseOption("a", "output_align", "Output alignments to standard output."));
+    addOption(parser, ArgParseOption("", "no_gff", "Change output format to tool specific instead of GFF."));
 
     // Add Examples Section
     addTextSection(parser, "Examples");

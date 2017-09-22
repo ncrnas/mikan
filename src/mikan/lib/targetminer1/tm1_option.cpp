@@ -26,6 +26,7 @@ void TM1Options::setProgramDescription(seqan::ArgumentParser &parser) {
     // Define Options
     addSection(parser, "TargetMiner1 Options");
     addOption(parser, ArgParseOption("a", "output_align", "Output alignments to standard output."));
+    addOption(parser, ArgParseOption("", "no_gff", "Change output format to tool specific instead of GFF."));
 
     // Add Examples Section
     addTextSection(parser, "Examples");

@@ -29,6 +29,7 @@ ArgumentParser::ParseResult MKOptions::parseCommandLine(
 
     // Extract options
     mOutputAlign = isSet(parser, "output_align");
+    mNoGff = isSet(parser, "no_gff");
 
     return ArgumentParser::PARSE_OK;
 }
