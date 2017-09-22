@@ -24,7 +24,7 @@ TEST_F(Site04MMGU1, mir124_mmgu) {
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
     find_seed_sites(sites);
-    
+
     EXPECT_EQ(14u, sites.get_length());
 
     test_sites(sites, 0, "6mer", 0, 24, true, 0);
@@ -52,7 +52,7 @@ TEST_F(Site04MMGU1, mir124_def) {
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
     find_seed_sites(sites);
-    
+
     EXPECT_EQ(4u, sites.get_length());
 
 //    test_sites(sites, 0, "7mer", 0, 24, false);

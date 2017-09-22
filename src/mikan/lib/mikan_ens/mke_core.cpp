@@ -44,7 +44,7 @@ void MKECore::init_score_lists() {
         }
         mikan::MKCoreBase &core = get_tool_core(i);
         mikan::MKSiteScores &siteScores = core.get_site_scores();
-        seqan::CharString prefix = mMKEOpts.mToolPrefix[i];
+        mikan::TCharStr prefix = mMKEOpts.mToolPrefix[i];
         mSiteScores.add_score_types(mMKEOpts, siteScores, prefix);
 
         mikan::MKRNAScores &RNAScores = core.get_rna_scores();
@@ -86,7 +86,7 @@ int MKECore::combine_site_pos(unsigned pIdx) {
             return 1;
         }
 
-        seqan::CharString prefix = mMKEOpts.mToolPrefix[i];
+        mikan::TCharStr prefix = mMKEOpts.mToolPrefix[i];
         mikan::MKSeedSites &seedSites = core.get_seed_sites();
         mSeedSites.add_to_set(seedSites, mIdxMap[i], prefix);
     }
@@ -104,7 +104,7 @@ int MKECore::combine_seed_types() {
 
         mikan::MKCoreBase &core = get_tool_core(i);
         mikan::MKSeedSites &seedSites = core.get_seed_sites();
-        seqan::CharString prefix = mMKEOpts.mToolPrefix[i];
+        mikan::TCharStr prefix = mMKEOpts.mToolPrefix[i];
         mSeedSites.add_seed_types(seedSites, mIdxMap[i], prefix);
     }
 
@@ -130,7 +130,7 @@ int MKECore::calc_site_scores(unsigned pIdx) {
 
             mikan::MKSeedSites &seedSites = core.get_seed_sites();
             mikan::MKSiteScores &seedScores = core.get_site_scores();
-            seqan::CharString prefix = mMKEOpts.mToolPrefix[i];
+            mikan::TCharStr prefix = mMKEOpts.mToolPrefix[i];
 
             mSiteScores.add_scores(mMKEOpts, seedSites, mSeedSites, seedScores, prefix);
 
@@ -164,7 +164,7 @@ int MKECore::calc_rna_scores(unsigned pIdx) {
             }
 
             mikan::MKRNAScores &RNAScores = core.get_rna_scores();
-            seqan::CharString prefix = mMKEOpts.mToolPrefix[i];
+            mikan::TCharStr prefix = mMKEOpts.mToolPrefix[i];
             mRNAScores.add_scores(mMKEOpts, mRNAWithSites, RNAScores, prefix);
         }
 
@@ -201,12 +201,12 @@ int MKECore::output_results(unsigned pIdx) {
     return 0;
 }
 
-int MKECore::write_site_score(seqan::CharString const &pMiRNAId) {
+int MKECore::write_site_score(mikan::TCharStr const &pMiRNAId) {
 
-    const seqan::StringSet<seqan::CharString> &seedTypes = mSeedSites.get_seed_types();
+    const mikan::TCharSet &seedTypes = mSeedSites.get_seed_types();
     const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
-    seqan::CharString seedType;
+    mikan::TCharStr seedType;
     unsigned posA1;
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
@@ -217,7 +217,7 @@ int MKECore::write_site_score(seqan::CharString const &pMiRNAId) {
         posA1 = sitePos[i];
 
         mOFile1 << toCString(pMiRNAId) << "\t";
-        mOFile1 << toCString((seqan::CharString) mMRNAIds[mRNAPos[i]]) << "\t";
+        mOFile1 << toCString((mikan::TCharStr) mMRNAIds[mRNAPos[i]]) << "\t";
         mOFile1 << posA1 << "\t";
         mOFile1 << seedTypes[i] << "\t";
         mOFile1 << mSiteScores.get_score(i) << "\t";
@@ -228,7 +228,7 @@ int MKECore::write_site_score(seqan::CharString const &pMiRNAId) {
     return 0;
 }
 
-int MKECore::write_rna_score(seqan::CharString const &pMiRNAId) {
+int MKECore::write_rna_score(mikan::TCharStr const &pMiRNAId) {
 
     const seqan::String<float> &totalScores = mRNAScores.get_scores();
     const seqan::String<int> &mRNAPos = mRNAScores.get_mrna_pos();
@@ -247,7 +247,7 @@ int MKECore::write_rna_score(seqan::CharString const &pMiRNAId) {
 
     for (itPos = sortedMRNAByScore.begin(); itPos != sortedMRNAByScore.end(); ++itPos) {
         mOFile2 << toCString(pMiRNAId) << "\t";
-        mOFile2 << toCString((seqan::CharString) mMRNAIds[mRNAPos[(*itPos).second]]) << "\t";
+        mOFile2 << toCString((mikan::TCharStr) mMRNAIds[mRNAPos[(*itPos).second]]) << "\t";
         mOFile2 << totalScores[(*itPos).second] << "\t";
         mOFile2 << siteNum[(*itPos).second] << "\t";
         mOFile2 << toCString(mRNAScores.get_tool_score((*itPos).second));

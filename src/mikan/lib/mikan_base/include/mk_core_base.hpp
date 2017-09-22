@@ -29,8 +29,8 @@ public:
     bool mOutputRNA;
     bool mOutputAlign;
 
-    seqan::CharString mOFileSite;
-    seqan::CharString mOFileRNA;
+    mikan::TCharStr mOFileSite;
+    mikan::TCharStr mOFileRNA;
 
     // Define methods
     MKCoreBase(mikan::MKOptions const &pOpts,

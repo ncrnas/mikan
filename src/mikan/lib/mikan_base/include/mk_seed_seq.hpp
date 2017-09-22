@@ -44,7 +44,7 @@ public:
 
     mikan::TRNAStr const &get_seed_seq(int pIdx) const { return mSeedSeqs[pIdx]; }
 
-    seqan::CharString const &get_seed_type(int pIdx) const { return mSeedTypes[pIdx]; }
+    mikan::TCharStr const &get_seed_type(int pIdx) const { return mSeedTypes[pIdx]; }
 
     unsigned get_mismatched_pos(int pIdx) { return mMisMatchPos[pIdx]; }
 
@@ -84,13 +84,13 @@ protected:
     bool mFilterRedundant;
     bool mTSSVMMismatch;
 
-    seqan::CharString mNMerLab;
-    seqan::CharString mGUTLab;
-    seqan::CharString mGUMLab;
-    seqan::CharString mMultiGUTLab;
-    seqan::CharString mMultiGUMLab;
-    seqan::CharString mMMGULab;
-    seqan::CharString mMMLab;
+    mikan::TCharStr mNMerLab;
+    mikan::TCharStr mGUTLab;
+    mikan::TCharStr mGUMLab;
+    mikan::TCharStr mMultiGUTLab;
+    mikan::TCharStr mMultiGUMLab;
+    mikan::TCharStr mMMGULab;
+    mikan::TCharStr mMMLab;
 
     unsigned nNumNewSeq;
     mikan::TRNASet mTmpSeedSeqs;

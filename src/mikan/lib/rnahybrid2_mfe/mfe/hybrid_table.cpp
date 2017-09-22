@@ -1,3 +1,4 @@
+#include <iomanip>
 #include "hybrid_energy.hpp"
 #include "hybrid_table.hpp"
 
@@ -443,6 +444,26 @@ void RH2Table::calc_closed(int pTargetPos, int pTargetLen, int pQueryPos, int pQ
     /* ------------------------- assign table entry result ------------------------- */
 
     tbl_closed[pTargetPos][pQueryPos] = v12;
+
+}
+
+void RH2Table::print_tbl(std::vector<std::vector<float> > &pTbl, const char* title) {
+
+    std::cout << "### " << title << " ###" << std::endl;
+    std::cout << "\t";
+    for (unsigned i = 0; i < pTbl[0].size(); ++i) {
+        std::cout <<  std::setw(9) << i << ",";
+    }
+    std::cout << std::endl;
+
+    for (unsigned i = 0; i < pTbl.size(); ++i) {
+        std::cout <<  i << "\t";
+        for (unsigned j = 0; j < pTbl[i].size(); ++j) {
+            std::cout <<  std::setw(9) << pTbl[i][j] << ",";
+        }
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
 
 }
 

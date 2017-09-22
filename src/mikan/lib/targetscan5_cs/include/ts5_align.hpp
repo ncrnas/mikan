@@ -21,10 +21,10 @@ public:
     mikan::TCharSet const &get_align_mirna() const { return mAlignMiRNA; }
 
     // Method prototypes
-    int align_seed(unsigned pMRNAIdx, const seqan::CharString &pSeedType, const mikan::TRNAStr &pMiRNASeq,
+    int align_seed(unsigned pMRNAIdx, const mikan::TCharStr &pSeedType, const mikan::TRNAStr &pMiRNASeq,
                    const mikan::TRNAStr &pMRNASeq, unsigned pSitePos);
 
-    int align_3p_part(unsigned pMRNAIdx, const seqan::CharString &pSeedType, const mikan::TRNAStr &pMiRNAThreePrime,
+    int align_3p_part(unsigned pMRNAIdx, const mikan::TCharStr &pSeedType, const mikan::TRNAStr &pMiRNAThreePrime,
                       mikan::TRNAStr &pMRNAThreePrime, seqan::String<int> &pMatchLen, seqan::String<int> &pMiRNAPos,
                       seqan::String<int> &pMRNAPos, float pScore, unsigned pMatchedIdx);
 

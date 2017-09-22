@@ -96,17 +96,17 @@ protected:
 
     mikan::MKInput seqInput;
 
-    seqan::CharString ifile1;
-    seqan::CharString ifile2;
-    seqan::CharString o1file1;
-    seqan::CharString o1file2;
-    seqan::CharString o2file1;
-    seqan::CharString o2file2;
+    mikan::TCharStr ifile1;
+    mikan::TCharStr ifile2;
+    mikan::TCharStr o1file1;
+    mikan::TCharStr o1file2;
+    mikan::TCharStr o2file1;
+    mikan::TCharStr o2file2;
 
-    seqan::StringSet<seqan::CharString> mirna_ids;
-    seqan::StringSet<seqan::CharString> mrna_ids;
-    seqan::StringSet<seqan::RnaString> mirna_seqs;
-    seqan::StringSet<seqan::RnaString> mrna_seqs;
+    mikan::TCharSet mirna_ids;
+    mikan::TCharSet mrna_ids;
+    mikan::TRNASet mirna_seqs;
+    mikan::TRNASet mrna_seqs;
 };
 
 #endif //MIKAN_TEST_MAIN_IO_HPP_

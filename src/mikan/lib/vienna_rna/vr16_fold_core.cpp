@@ -24,7 +24,7 @@ void VR16FoldWorkSpace::init_workspace() {
     mPairMat.make_pair_matrix(mOpts.mEnergySet, mOpts.mNonStandards, mOpts.mNoGU);
 }
 
-void VR16FoldWorkSpace::preppare_fold(int pSize) {
+void VR16FoldWorkSpace::prepare_fold(int pSize) {
     mFoldRet.init_ret_vals(pSize);
 }
 

@@ -292,7 +292,7 @@ int TM1MRNASeedType::add_features(
         mikan::MKSeedSites &pSeedSites,
         TM1SiteFeatures &pSiteFeatures) {
 
-    CharString seedType;
+    mikan::TCharStr seedType;
 
     for (unsigned i = 0; i < length(pSortedSites); ++i) {
         if (!pSeedSites.mEffectiveSites[pSortedSites[i]]) {
@@ -376,7 +376,7 @@ int TM1MRNAAURich::add_features(
         mikan::MKSeedSites &pSeedSites,
         TM1SiteFeatures &pSiteFeatures) {
 
-    CharString seedType;
+    mikan::TCharStr seedType;
     const TM1FeatAURich &auRich = pSiteFeatures.get_au_rich();
 
     for (unsigned i = 0; i < length(pSortedSites); ++i) {
@@ -433,7 +433,7 @@ int TM1MRNASingleFreq::add_features(
         TM1SiteFeatures &pSiteFeatures) {
 
     const TM1FeatSingleFreq &singleFreq = pSiteFeatures.get_single_freq();
-    CharString seedType;
+    mikan::TCharStr seedType;
     unsigned idx;
     float totalFreqU = 0;
     float totalFreqC = 0;
@@ -569,7 +569,7 @@ int TM1MRNADiFreq::add_features(
         mikan::MKSeedSites &pSeedSites,
         TM1SiteFeatures &pSiteFeatures) {
 
-    const seqan::StringSet<seqan::CharString> &seedTypes = pSeedSites.get_seed_types();
+    const mikan::TCharSet &seedTypes = pSeedSites.get_seed_types();
     const TM1FeatDiFreq &diFreq = pSiteFeatures.get_di_freq();
     unsigned idx;
     float totalFreqUC = 0;

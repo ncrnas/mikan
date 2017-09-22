@@ -187,7 +187,7 @@ int TSSVMFeatSeedTypeNum::add_features(
         TSSVMSiteScores &) {
 
     float maxNum = 38;
-    const StringSet<CharString> &seedTypes = pSeedSites.get_seed_types();
+    const mikan::TCharSet &seedTypes = pSeedSites.get_seed_types();
 
     resize(mSeedTypeNum[pIdx], 9, 0);
 

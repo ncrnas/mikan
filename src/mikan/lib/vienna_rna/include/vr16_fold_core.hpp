@@ -63,7 +63,7 @@ public:
 
     const std::string &get_structure(int pRetIdx) { return mFoldRet.mStructure[pRetIdx]; }
 
-    void preppare_fold(int pSize);
+    void prepare_fold(int pSize);
 
     int calc_fold_energy(int pRetIdx, std::string &pS1);
 

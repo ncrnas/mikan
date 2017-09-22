@@ -65,6 +65,12 @@ public:
 
     float get_closed(int i, int j) { return tbl_closed[i][j]; }
 
+    void print_unpaired_left_top() { print_tbl(tbl_unpaired_left_top, "Unpaired left top"); }
+
+    void print_unpaired_left_bot() { print_tbl(tbl_unpaired_left_bot, "Unpaired left bot"); }
+
+    void print_closed() { print_tbl(tbl_closed, "Closed"); }
+
 private:
     RH2EnergyFunc &en;
 
@@ -80,6 +86,8 @@ private:
     int iloop_upper_limit, bloop_upper_limit;
     int seed_start, seed_end;
     int mQueryHelixStart, mQueryHelixEnd, mTargetHelixStart, mTargetHelixEnd;
+
+    void print_tbl(std::vector<std::vector<float> > &pTbl, const char* title);
 
 };
 

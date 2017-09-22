@@ -23,7 +23,7 @@ protected:
 
 TEST_F(SeedGU, mir124_gu) {
     create_seed_seqs(0);
-    
+
     EXPECT_EQ(3u, length(mSeedSeqs.mEffectiveSeeds));
 
     test_seed("AAGGCA", 0, "6mer", true, 0);
@@ -33,7 +33,7 @@ TEST_F(SeedGU, mir124_gu) {
 
 TEST_F(SeedGU, mir1_gu) {
     create_seed_seqs(1);
-    
+
     EXPECT_EQ(5u, length(mSeedSeqs.mEffectiveSeeds));
 
     test_seed("GGAAUG", 0, "6mer", true, 0);
@@ -46,7 +46,7 @@ TEST_F(SeedGU, mir1_gu) {
 TEST_F(SeedGU, mir124_gu_plus) {
     mSeedDef[3] = "+";
     create_seed_seqs(0);
-    
+
     EXPECT_EQ(4u, length(mSeedSeqs.mEffectiveSeeds));
 
     test_seed("AAGGCA", 0, "6mer", true, 0);
@@ -60,7 +60,7 @@ TEST_F(SeedGU, mir124_gu_plus) {
 TEST_F(SeedGU, mir1_gu_plus) {
     mSeedDef[3] = "+";
     create_seed_seqs(1);
-    
+
     EXPECT_EQ(16u, length(mSeedSeqs.mEffectiveSeeds));
 
     test_seed("GGAAUG", 0, "6mer", true, 0);

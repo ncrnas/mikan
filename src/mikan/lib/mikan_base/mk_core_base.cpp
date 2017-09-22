@@ -48,12 +48,12 @@ int MKCoreBase::calculate_all_scores() {
         retVal = calculate_mirna_scores(i);
         if (retVal != 0) {
             std::cerr << "ERROR: Score calculation failed for ";
-            std::cerr << toCString((seqan::CharString) mMiRNAIds[i]) << "." << std::endl;
+            std::cerr << toCString((mikan::TCharStr) mMiRNAIds[i]) << "." << std::endl;
             return 1;
         }
 
 #if SEQAN_ENABLE_DEBUG
-        std::cout << toCString((seqan::CharString) mMiRNAIds[i]) << ": ";
+        std::cout << toCString((mikan::TCharStr) mMiRNAIds[i]) << ": ";
         std::cout << double(clock() - startTime) / (double) CLOCKS_PER_SEC << " seconds." << std::endl;
 #endif
 

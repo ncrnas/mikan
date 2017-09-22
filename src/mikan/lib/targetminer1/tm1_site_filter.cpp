@@ -14,8 +14,8 @@ float TM1SiteFilter::get_precedence(
         mikan::MKSeedSites &pSeedSites,
         mikan::MKSiteScores &) {
 
-    StringSet<CharString> const &seedTypes = pSeedSites.get_seed_types();
-    seqan::CharString seedType = seedTypes[pSitePos];
+    mikan::TCharSet const &seedTypes = pSeedSites.get_seed_types();
+    mikan::TCharStr seedType = seedTypes[pSitePos];
     float preced;
 
     if (seedType == "8mer") {

@@ -104,20 +104,20 @@ private:
     typedef seqan::Gaps<mikan::TRNAStr, seqan::ArrayGaps> TGap;
 
 private:
-    int set_mirna_seq_for_align(const seqan::CharString &pSeedType, mikan::TRNAStr const &pMiRNASeq,
+    int set_mirna_seq_for_align(const mikan::TCharStr &pSeedType, mikan::TRNAStr const &pMiRNASeq,
                                 mikan::TRNAStr &pMiRNAAlignSeq);
 
-    int set_mrna_seq_for_align(const seqan::CharString &pSeedType, unsigned pSitePos, unsigned pMiRNALen,
+    int set_mrna_seq_for_align(const mikan::TCharStr &pSeedType, unsigned pSitePos, unsigned pMiRNALen,
                                const mikan::TRNAStr &pMRNASeq, mikan::TRNAStr &pMRNAAlignSeq);
 
     int set_addtional_sequences(mikan::TRNAStr &pMiRNAAlignSeq, mikan::TRNAStr &pMRNAAlignSeq);
 
     unsigned get_align_len(TAlign &pAlign);
 
-    int set_align_mrna(TAlign &pAlign, unsigned pAlignLen, const seqan::CharString &pSeedType,
+    int set_align_mrna(TAlign &pAlign, unsigned pAlignLen, const mikan::TCharStr &pSeedType,
                        unsigned pMisMatchPos, unsigned pSitePos, const mikan::TRNAStr &pMRNASeq, int pIdx);
 
-    int set_align_mirna(TAlign &pAlign, unsigned pAlignLen, const seqan::CharString &pSeedType,
+    int set_align_mirna(TAlign &pAlign, unsigned pAlignLen, const mikan::TCharStr &pSeedType,
                         unsigned pMisMatchPos, const mikan::TRNAStr &pMiRNASeq, int pIdx);
 
     int set_align_bars(int pIdx, unsigned pAlignLen);

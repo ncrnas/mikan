@@ -20,7 +20,7 @@ TEST_F(Site01Nmer2, mir1) {
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
     find_seed_sites(sites);
-    
+
     EXPECT_EQ(4u, sites.get_length());
 
     test_sites(sites, 0, "7mer-A1", 1, 25, true, 0);

@@ -14,8 +14,8 @@ namespace mikan {
 class MKInput {
 public:
     // Define variables
-    seqan::CharString mMiRNAFasta;
-    seqan::CharString mMRNAFasta;
+    mikan::TCharStr mMiRNAFasta;
+    mikan::TCharStr mMRNAFasta;
 
     // Define methods
     MKInput() {}
@@ -31,7 +31,7 @@ public:
     // Method prototypes
     int load_seq_from_file();
 
-    void set_file_names(seqan::CharString &pMiRNAFasta, seqan::CharString &pMRNAFasta);
+    void set_file_names(mikan::TCharStr &pMiRNAFasta, mikan::TCharStr &pMRNAFasta);
 
     void set_options(MKOptions &opt);
 

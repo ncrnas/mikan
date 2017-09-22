@@ -34,7 +34,8 @@ endif ()
 # Add executable applications
 add_executable(gtest_mk_common mi_001.cpp mi_002.cpp
         u3_001.cpp u3_002.cpp u3_003.cpp u3_004.cpp u3_005.cpp u3_006.cpp u3_007.cpp u3_008.cpp
-        u3_009.cpp u3_010.cpp u3_011.cpp)
+        u3_009.cpp u3_010.cpp u3_011.cpp
+        u3_101.cpp)
 
 include_directories(${SEQAN_INCLUDE_DIRS} ${gtest_SOURCE_DIR}/include
         ${gtest_SOURCE_DIR} ${MR3_HEADERS} ${MKTEST_HEADERS})

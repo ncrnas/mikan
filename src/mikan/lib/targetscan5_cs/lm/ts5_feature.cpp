@@ -92,8 +92,8 @@ int TS5FeatAURich::add_features(
     const mikan::TMRNAPosSet &mRNAPos = pSeedSites.get_mrna_pos();
     const mikan::TSitePosSet &sitePos = pSeedSites.get_site_pos();
 
-    CharString chrUp = "up";
-    CharString chrDown = "down";
+    mikan::TCharStr chrUp = "up";
+    mikan::TCharStr chrDown = "down";
 
     resize(mAURich, length(effectiveSites));
     startU = 0;
@@ -122,7 +122,7 @@ int TS5FeatAURich::add_features(
 }
 
 void TS5FeatAURich::getUpDownStreamPos(
-        CharString pSeedType,
+        mikan::TCharStr pSeedType,
         int pStartPos,
         int &pStartU,
         int &pStartD) {
@@ -138,8 +138,8 @@ void TS5FeatAURich::getUpDownStreamPos(
 }
 
 void TS5FeatAURich::calcPosScores(
-        const CharString &pSeedType,
-        CharString &pUpOrDown,
+        const mikan::TCharStr &pSeedType,
+        mikan::TCharStr &pUpOrDown,
         const mikan::TRNAStr &pMRNASeq,
         int pStart,
         int pEnd,
@@ -221,7 +221,7 @@ int TS5FeatThreePrimePair::add_features(
 }
 
 void TS5FeatThreePrimePair::getMRNASeq(
-        CharString const &pSeedType,
+        mikan::TCharStr const &pSeedType,
         mikan::TRNAStr const &pMRNASeq,
         int pSitePos,
         mikan::TRNAStr &pMRNAThreePrime) {
@@ -251,7 +251,7 @@ void TS5FeatThreePrimePair::getMRNASeq(
 }
 
 void TS5FeatThreePrimePair::getMiRNASeq(
-        const CharString &pSeedType,
+        const mikan::TCharStr &pSeedType,
         const mikan::TRNAStr &pMiRNASeq,
         mikan::TRNAStr &pMiRNAThreePrime) {
     int startMiRNA = 0;
@@ -280,7 +280,7 @@ float TS5FeatThreePrimePair::findBestMatch(
         unsigned pPosIdx,
         mikan::TSitePosSet const &,
         mikan::TSitePosSet const &pSitePos,
-        const CharString &pSeedType,
+        const mikan::TCharStr &pSeedType,
         const mikan::TRNAStr &pMRNASeq,
         const mikan::TRNAStr &pMiRNASeq) {
     typedef Index<mikan::TRNAStr, IndexQGram<UngappedShape<2> > > TIndexQGram;
@@ -364,7 +364,7 @@ void TS5FeatThreePrimePair::connectMatchedSeq(
 }
 
 float TS5FeatThreePrimePair::calcScore(
-        const CharString &pSeedType,
+        const mikan::TCharStr &pSeedType,
         String<int> &pMatchLen,
         String<int> &pMiRNAPos,
         String<int> &pMRNAPos) {

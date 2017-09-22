@@ -32,14 +32,14 @@ protected:
     }
 
     mikan::MKInput coreInput;
-    
-    seqan::CharString dfile;
-    seqan::CharString ifile1;
-    seqan::CharString ifile2;
-    seqan::StringSet<seqan::CharString> mirna_ids;
-    seqan::StringSet<seqan::CharString> mrna_ids;
-    seqan::StringSet<seqan::RnaString> mirna_seqs;
-    seqan::StringSet<seqan::RnaString> mrna_seqs;
+
+    mikan::TCharStr dfile;
+    mikan::TCharStr ifile1;
+    mikan::TCharStr ifile2;
+    mikan::TCharSet mirna_ids;
+    mikan::TCharSet mrna_ids;
+    mikan::TRNASet mirna_seqs;
+    mikan::TRNASet mrna_seqs;
 };
 
 #endif //MIKAN_TEST_FASTA_HPP_

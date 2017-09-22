@@ -42,11 +42,11 @@ public:
 
 private:
     // Method prototypes
-    virtual bool check_position_1(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType);
+    virtual bool check_position_1(unsigned pMRNAPos, unsigned pSitePos, mikan::TCharStr &pSeedType);
 
     virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
                                    mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
-                                   seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
+                                   mikan::TCharStr &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 
 };
 

@@ -12,5 +12,6 @@ set(MR3_SOURCE
         )
 set(MR3_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/dp
         PARENT_SCOPE
         )

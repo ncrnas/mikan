@@ -6,8 +6,8 @@ namespace mikan {
 //
 // MKInput methods
 //
-void MKInput::set_file_names(seqan::CharString &pMiRNAFasta,
-                             seqan::CharString &pMRNAFasta) {
+void MKInput::set_file_names(mikan::TCharStr &pMiRNAFasta,
+                             mikan::TCharStr &pMRNAFasta) {
     mMiRNAFasta = pMiRNAFasta;
     mMRNAFasta = pMRNAFasta;
 }

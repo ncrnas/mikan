@@ -68,7 +68,7 @@ private:
     seqan::String<float> mNormScores;
     rh2::RH2WorkSpace mRHCore;
     std::vector<rh2::RH2RetValues> mRHRetVals;
-    seqan::CharString mOverlapDef;
+    mikan::TCharStr mOverlapDef;
 
 private:
     void create_rh_seq(mikan::TRNAStr const &pRNASeq, std::vector<char> &pRHSeq);

@@ -30,7 +30,7 @@ void TSSVMSeedSeqs::set_flags() {
 //
 // TSSVMSeedSites methods
 //
-bool TSSVMSeedSites::check_position_1(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType) {
+bool TSSVMSeedSites::check_position_1(unsigned pMRNAPos, unsigned pSitePos, mikan::TCharStr &pSeedType) {
     bool effectiveSite = true;
     unsigned mrnalen;
 
@@ -53,12 +53,12 @@ bool TSSVMSeedSites::set_new_seed_type(
         unsigned pSitePos,
         mikan::TRNAStr &pMiRNASeq,
         mikan::TCharSet &,
-        seqan::CharString &pSeedType,
+        mikan::TCharStr &pSeedType,
         int pMisMatchPos,
         bool pEffectiveSite) {
 
     bool matchM8, matchM2, matchM1, gutMx, gumMx, isAx, isA1, noMx, noM1;
-    CharString newSeedType = "";
+    mikan::TCharStr newSeedType = "";
 
     unsigned s8pos = pSitePos;
     unsigned s1pos = pSitePos;

@@ -22,15 +22,15 @@ public:
     // Method prototypes
     virtual void clear_scores();
 
-    seqan::CharString &get_tool_score(int pIdx) { return mToolScores[pIdx]; }
+    mikan::TCharStr &get_tool_score(int pIdx) { return mToolScores[pIdx]; }
 
     void add_score_types(mkens::MKEOptions const &pMKEOpts, mikan::MKSiteScores &pSiteScores,
-                         seqan::CharString &pPrefix);
+                         mikan::TCharStr &pPrefix);
 
     void init_score_list(MKESeedSites &pMKESeedSites);
 
     void add_scores(MKEOptions const &pMKEOpts, mikan::MKSeedSites &pSeedSites, MKESeedSites &pMKESeedSites,
-                    mikan::MKSiteScores &pSeedScores, seqan::CharString &pPrefix);
+                    mikan::MKSiteScores &pSeedScores, mikan::TCharStr &pPrefix);
 
     void combine_scores(MKEOptions const &pMKEOpts);
 

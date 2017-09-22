@@ -35,7 +35,7 @@ private:
                                unsigned &pStartSearch, unsigned &pEndSearch, unsigned &pStartAdd, unsigned &pEndAdd,
                                bool &pSearchOverlap);
 
-    seqan::CharString mOverlapMethod;
+    mikan::TCharStr mOverlapMethod;
 
 };
 

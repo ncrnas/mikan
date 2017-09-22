@@ -51,9 +51,9 @@ private:
     seqan::String<float> mAURich;
 
 private:
-    void getUpDownStreamPos(seqan::CharString pSeedType, int pStartPos, int &pStartU, int &pStartD);
+    void getUpDownStreamPos(mikan::TCharStr pSeedType, int pStartPos, int &pStartU, int &pStartD);
 
-    void calcPosScores(const seqan::CharString &pSeedType, seqan::CharString &pUpOrDown,
+    void calcPosScores(const mikan::TCharStr &pSeedType, mikan::TCharStr &pUpOrDown,
                        const mikan::TRNAStr &pAURichRNA, int pStart, int pEnd, float &pTotalScore, float &pMaxScore);
 };
 
@@ -81,22 +81,22 @@ private:
     TS5Alignment mAlign;
 
 private:
-    void getUpDownStreamPos(seqan::CharString pSeedType, int pStartPos, int &pStart, int &pEnd);
+    void getUpDownStreamPos(mikan::TCharStr pSeedType, int pStartPos, int &pStart, int &pEnd);
 
-    void getMRNASeq(const seqan::CharString &pSeedType, const mikan::TRNAStr &pMRNASeq, int pSitePos,
+    void getMRNASeq(const mikan::TCharStr &pSeedType, const mikan::TRNAStr &pMRNASeq, int pSitePos,
                     mikan::TRNAStr &pMRNAThreePrime);
 
-    void getMiRNASeq(const seqan::CharString &pSeedType, const mikan::TRNAStr &pMiRNASeq,
+    void getMiRNASeq(const mikan::TCharStr &pSeedType, const mikan::TRNAStr &pMiRNASeq,
                      mikan::TRNAStr &pMiRNAThreePrime);
 
     float findBestMatch(unsigned pPosIdx, mikan::TSitePosSet const &pMRNAPos, mikan::TSitePosSet const &pSitePos,
-                        const seqan::CharString &pSeedType, const mikan::TRNAStr &pMRNASeq,
+                        const mikan::TCharStr &pSeedType, const mikan::TRNAStr &pMRNASeq,
                         const mikan::TRNAStr &pMiRNASeq);
 
     void connectMatchedSeq(seqan::String<int> &pMatchLen, seqan::String<int> &pMiRNAPos,
                            seqan::String<int> &pMRNAPos);
 
-    float calcScore(const seqan::CharString &pSeedType, seqan::String<int> &pMatchLen,
+    float calcScore(const mikan::TCharStr &pSeedType, seqan::String<int> &pMatchLen,
                     seqan::String<int> &pMiRNAPos, seqan::String<int> &pMRNAPos);
 
 };

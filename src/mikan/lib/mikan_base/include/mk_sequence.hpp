@@ -17,7 +17,7 @@ public:
 
     unsigned get_length() const { return length(mSeqIds); }
 
-    seqan::CharString const &get_seq_id(unsigned const pIdx) const { return mSeqIds[pIdx]; }
+    mikan::TCharStr const &get_seq_id(unsigned const pIdx) const { return mSeqIds[pIdx]; }
 
     mikan::TRNAStr const &get_seq(unsigned const pIdx) const { return mSeqs[pIdx]; }
 
@@ -28,7 +28,7 @@ public:
     int get_max_seq_len() { return mMaxLen; }
 
     // Method prototype
-    int read_fasta(seqan::CharString const &pFasta);
+    int read_fasta(mikan::TCharStr const &pFasta);
 
 private:
     // Define variables

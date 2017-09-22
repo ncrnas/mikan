@@ -24,14 +24,14 @@ void TS5Alignment::resize_alignments(unsigned pSize) {
 
 int TS5Alignment::align_seed(
         unsigned pMRNAIdx,
-        CharString const &pSeedType,
+        mikan::TCharStr const &pSeedType,
         mikan::TRNAStr const &pMiRNASeq,
         mikan::TRNAStr const &pMRNASeq,
         unsigned pSitePos) {
     int startUTR = 0;
     int seqLen = 0;
     int startMiRNA = 0;
-    CharString matchBars;
+    mikan::TCharStr matchBars;
 
     if (pSeedType == "8mer" || pSeedType == "7mer-m8") {
         startUTR = pSitePos - 1;
@@ -67,7 +67,7 @@ int TS5Alignment::align_seed(
 
 int TS5Alignment::align_3p_part(
         unsigned pMRNAIdx,
-        const CharString &,
+        const mikan::TCharStr &,
         const mikan::TRNAStr &pMiRNAThreePrime,
         mikan::TRNAStr &pMRNAThreePrime,
         String<int> &pMatchLen,

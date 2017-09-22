@@ -28,7 +28,7 @@ void TM1Alignment::align_all(
     unsigned miLen;
     int a1pos;
     int sitepos;
-    CharString matchBars;
+    mikan::TCharStr matchBars;
 
     const String<unsigned> &mRNAPos = pSeedSites.get_mrna_pos();
 

@@ -39,11 +39,11 @@ public:
     }
 
 private:
-    virtual int write_site_score(seqan::CharString const &pMiRNAId);
+    virtual int write_site_score(mikan::TCharStr const &pMiRNAId);
 
-    virtual int write_rna_score(seqan::CharString const &pMiRNAId);
+    virtual int write_rna_score(mikan::TCharStr const &pMiRNAId);
 
-    virtual int write_alignment(seqan::CharString const &pMiRNAId);
+    virtual int write_alignment(mikan::TCharStr const &pMiRNAId);
 
 };
 

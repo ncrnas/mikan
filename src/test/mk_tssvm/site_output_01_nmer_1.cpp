@@ -18,7 +18,7 @@ protected:
 };
 
 TEST_F(SiteOut01Nmer1, comp_orig_mk) {
-    (void) mikan::MKCoreMain<tssvm::TSSVMOptions, tssvm::TSSVMCore >(argc, (const char **) argv);
+    (void) mikan::MKCoreMain<tssvm::TSSVMOptions, tssvm::TSSVMCore>(argc, (const char **) argv);
     gtest_compare_two_files2(o1file1, o2file1, 5, 100, 1);
 
     // TODO: Test on Win32

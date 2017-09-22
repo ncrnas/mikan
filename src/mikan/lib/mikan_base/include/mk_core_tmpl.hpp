@@ -169,11 +169,11 @@ protected:
     mikan::MKTopNSites mTopNSites;
     TRNAScores mRNAScores;
 
-    virtual int write_site_score(seqan::CharString const &pMiRNAId) = 0;
+    virtual int write_site_score(mikan::TCharStr const &pMiRNAId) = 0;
 
-    virtual int write_rna_score(seqan::CharString const &pMiRNAId) = 0;
+    virtual int write_rna_score(mikan::TCharStr const &pMiRNAId) = 0;
 
-    virtual int write_alignment(seqan::CharString const &pMiRNAId) = 0;
+    virtual int write_alignment(mikan::TCharStr const &pMiRNAId) = 0;
 
 };
 

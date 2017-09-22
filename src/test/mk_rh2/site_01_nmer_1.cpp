@@ -24,7 +24,7 @@ TEST_F(Site01Nmer1, mir124_6mer) {
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
     find_seed_sites(sites);
-    
+
     EXPECT_EQ(53u, sites.get_length());
 
 //    test_sites(sites, 0, "", 0, 0, false);
@@ -91,7 +91,7 @@ TEST_F(Site01Nmer1, mir124_7mer) {
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
     find_seed_sites(sites);
-    
+
     EXPECT_EQ(33u, sites.get_length());
 
 //    test_sites(sites, 0, "", 0, 0, false);
@@ -158,7 +158,7 @@ TEST_F(Site01Nmer1, mir124_def) {
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
     find_seed_sites(sites);
-    
+
     EXPECT_EQ(33u, sites.get_length());
 
 //    test_sites(sites, 0, "", 0, 0, false);

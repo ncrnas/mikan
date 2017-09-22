@@ -18,9 +18,9 @@ namespace rh2mfe {
 //
 // RH2Core methods
 //
-int RH2Core::write_site_score(seqan::CharString const &pMiRNAId) {
+int RH2Core::write_site_score(mikan::TCharStr const &pMiRNAId) {
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
-    const seqan::StringSet<seqan::CharString> &seedTypes = mSeedSites.get_seed_types();
+    const mikan::TCharSet &seedTypes = mSeedSites.get_seed_types();
 
     seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = mRNAWithSites.get_rna_site_pos_map();
     mikan::TMRNAPosSet &uniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
@@ -42,11 +42,11 @@ int RH2Core::write_site_score(seqan::CharString const &pMiRNAId) {
             score = roundf(score * 10.0f) / 10.0f;
 
             mOFile1 << toCString(pMiRNAId) << "\t";
-            mOFile1 << toCString((seqan::CharString) mMRNAIds[uniqRNAPosSet[i]]) << "\t";
+            mOFile1 << toCString((mikan::TCharStr) mMRNAIds[uniqRNAPosSet[i]]) << "\t";
             mOFile1 << seedStart + 1 << "\t";
             mOFile1 << seedStart + 7 << "\t";
             //        mOFile1 << mSiteScores.get_wide_site_start(posIdx) + 1  << "\t";
-            mOFile1 << toCString((seqan::CharString) seedTypes[rnaSitePosMap[i][j]]) << "\t";
+            mOFile1 << toCString((mikan::TCharStr) seedTypes[rnaSitePosMap[i][j]]) << "\t";
             mOFile1 << score << "\t";
             mOFile1 << mSiteScores.get_norm_score(rnaSitePosMap[i][j]);
             mOFile1 << std::endl;
@@ -58,7 +58,7 @@ int RH2Core::write_site_score(seqan::CharString const &pMiRNAId) {
 
 }
 
-int RH2Core::write_rna_score(seqan::CharString const &pMiRNAId) {
+int RH2Core::write_rna_score(mikan::TCharStr const &pMiRNAId) {
     const seqan::String<float> &mfeScores = mRNAScores.get_mfe_minlogtotal();
     const seqan::String<float> &normScores = mRNAScores.get_norm_maxlogtotal();
     const seqan::String<int> &mRNAPos = mRNAScores.get_mrna_pos();
@@ -66,7 +66,7 @@ int RH2Core::write_rna_score(seqan::CharString const &pMiRNAId) {
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
         mOFile2 << toCString(pMiRNAId) << "\t";
-        mOFile2 << toCString((seqan::CharString) mMRNAIds[mRNAPos[i]]) << "\t";
+        mOFile2 << toCString((mikan::TCharStr) mMRNAIds[mRNAPos[i]]) << "\t";
         mOFile2 << mfeScores[i] << "\t";
         mOFile2 << siteNum[i] << "\t";
         mOFile2 << normScores[i] << "\t";
@@ -76,9 +76,9 @@ int RH2Core::write_rna_score(seqan::CharString const &pMiRNAId) {
     return 0;
 }
 
-int RH2Core::write_alignment(seqan::CharString const &pMiRNAId) {
+int RH2Core::write_alignment(mikan::TCharStr const &pMiRNAId) {
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
-    const seqan::StringSet<seqan::CharString> &seedTypes = mSeedSites.get_seed_types();
+    const mikan::TCharSet &seedTypes = mSeedSites.get_seed_types();
 
     seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = mRNAWithSites.get_rna_site_pos_map();
     mikan::TMRNAPosSet &uniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
@@ -103,9 +103,9 @@ int RH2Core::write_alignment(seqan::CharString const &pMiRNAId) {
             std::cout << "### " << count + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
             mSiteScores.write_alignment(rnaSitePosMap[i][j]);
             std::cout << "  miRNA:               " << toCString(pMiRNAId) << std::endl;
-            std::cout << "  mRNA:                " << toCString((seqan::CharString) mMRNAIds[uniqRNAPosSet[i]])
+            std::cout << "  mRNA:                " << toCString((mikan::TCharStr) mMRNAIds[uniqRNAPosSet[i]])
                       << std::endl;
-            std::cout << "  seed type:           " << toCString((seqan::CharString) seedTypes[rnaSitePosMap[i][j]])
+            std::cout << "  seed type:           " << toCString((mikan::TCharStr) seedTypes[rnaSitePosMap[i][j]])
                       << std::endl;
             std::cout << "  position(target 5'): " << mSiteScores.get_wide_site_start(rnaSitePosMap[i][j]) + 1;
             std::cout << std::endl;

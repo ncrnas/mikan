@@ -18,7 +18,7 @@ protected:
 };
 
 TEST_F(SiteOut05BT2, comp_orig_mk) {
-    (void) mikan::MKCoreMain<ts5cs::TS5Options, ts5cs::TS5Core >(argc, (const char **) argv);
+    (void) mikan::MKCoreMain<ts5cs::TS5Options, ts5cs::TS5Core>(argc, (const char **) argv);
     gtest_compare_two_files(o1file1, o2file1);
     gtest_compare_two_files(o1file2, o2file2);
 }

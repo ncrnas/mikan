@@ -37,7 +37,7 @@ public:
 
     int calc_scores(mikan::TRNAStr const &miRNASeq, mikan::TRNASet const &pMRNASeqs, mikan::MKSeedSites &pSeedSites);
 
-    void print_input(seqan::CharString const &pSeedType, std::string &pInputMiRNASeq, std::string &pInputMRNASeq,
+    void print_input(mikan::TCharStr const &pSeedType, std::string &pInputMiRNASeq, std::string &pInputMRNASeq,
                      std::vector<int> &pInputMatchSeq);
 
 private:
@@ -49,7 +49,7 @@ private:
 
     void create_input_mrna_seq(mikan::TRNAStr const &pMRNASeq, int pStart, int pEnd, std::string &pInputMRNASeq);
 
-    void create_input_matched_seq(seqan::CharString const &pSeedType, int pMismatchPos,
+    void create_input_matched_seq(mikan::TCharStr const &pSeedType, int pMismatchPos,
                                   std::vector<int> &pInputMatchSeq);
 };
 
@@ -113,7 +113,7 @@ public:
     virtual float get_score(int pTypeIdx, int pIdx) {
         if (pTypeIdx == 2) {
             return (float) mVRws.get_dg0(pIdx) - (float) mVRws.get_dg1(pIdx);
-        } else if (pTypeIdx == 1)  {
+        } else if (pTypeIdx == 1) {
             return (float) mVRws.get_dgall(pIdx);
         } else {
             return mDDGScores[pIdx];

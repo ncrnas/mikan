@@ -23,7 +23,7 @@ void MKESeedSites::clear_pos() {
 void MKESeedSites::add_to_set(
         mikan::MKSeedSites &pSeedSites,
         unsigned,
-        seqan::CharString &) {
+        mikan::TCharStr &) {
     const mikan::TMRNAPosSet &RNAPos = pSeedSites.get_mrna_pos();
     const mikan::TMRNAPosSet &S1Pos = pSeedSites.get_site_pos_s1();
 
@@ -58,16 +58,16 @@ void MKESeedSites::create_pos_map() {
 void MKESeedSites::add_seed_types(
         mikan::MKSeedSites &pSeedSites,
         unsigned pToolIdx,
-        seqan::CharString &pPrefix) {
+        mikan::TCharStr &pPrefix) {
 
     const mikan::TMRNAPosSet &RNAPos = pSeedSites.get_mrna_pos();
     const mikan::TMRNAPosSet &S1Pos = pSeedSites.get_site_pos_s1();
-    const seqan::StringSet<seqan::CharString> &seedTypes = pSeedSites.get_seed_types();
+    const mikan::TCharSet &seedTypes = pSeedSites.get_seed_types();
 
     resize(mSeedTypeList[pToolIdx], length(mEffectiveSites));
     set_default_seed_type(pToolIdx, pPrefix);
 
-    seqan::CharString prefix;
+    mikan::TCharStr prefix;
     append(prefix, pPrefix);
     append(prefix, ":");
 
@@ -77,7 +77,7 @@ void MKESeedSites::add_seed_types(
         }
 
         unsigned idx = get_idx_from_pos(RNAPos[i], S1Pos[i]);
-        seqan::CharString seedType;
+        mikan::TCharStr seedType;
         append(seedType, pPrefix);
         append(seedType, ":");
         append(seedType, seedTypes[i]);
@@ -86,8 +86,8 @@ void MKESeedSites::add_seed_types(
     }
 }
 
-void MKESeedSites::set_default_seed_type(unsigned pIdx, seqan::CharString &pPrefix) {
-    seqan::CharString defSeedType;
+void MKESeedSites::set_default_seed_type(unsigned pIdx, mikan::TCharStr &pPrefix) {
+    mikan::TCharStr defSeedType;
     append(defSeedType, pPrefix);
     append(defSeedType, ":NA");
 
@@ -103,7 +103,7 @@ void MKESeedSites::combine_seed_types() {
             continue;
         }
 
-        seqan::CharString seedType = "";
+        mikan::TCharStr seedType = "";
         for (unsigned j = 0; j < length(mSeedTypeList); j++) {
             append(seedType, mSeedTypeList[j][i]);
             append(seedType, ",");

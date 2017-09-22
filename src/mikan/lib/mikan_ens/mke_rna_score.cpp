@@ -22,13 +22,13 @@ void MKERNAScores::clear_scores() {
 void MKERNAScores::add_score_types(
         mkens::MKEOptions const &pMKEOpts,
         mikan::MKRNAScores &pRNAScores,
-        seqan::CharString &pPrefix) {
+        mikan::TCharStr &pPrefix) {
 
     const mikan::TCharSet &scoreTypes = pRNAScores.get_score_types();
     const MKEConfig &conf = pMKEOpts.get_conf();
 
     for (unsigned i = 0; i < length(scoreTypes); ++i) {
-        seqan::CharString sType, sTypeC;
+        mikan::TCharStr sType, sTypeC;
         append(sType, pPrefix);
         append(sType, ":");
         append(sType, scoreTypes[i]);
@@ -71,14 +71,14 @@ void MKERNAScores::add_scores(
         MKEOptions const &pMKEOpts,
         mkens::MKERMAWithSites &pRNAWithSites,
         mikan::MKRNAScores &pRNAScores,
-        seqan::CharString &pPrefix) {
+        mikan::TCharStr &pPrefix) {
 
     const mikan::TMRNAPosSet &RNAPos = pRNAScores.get_mrna_pos();
     const mikan::TCharSet &scoreTypes = pRNAScores.get_score_types();
     const MKEConfig &conf = pMKEOpts.get_conf();
 
     for (unsigned i = 0; i < length(scoreTypes); ++i) {
-        seqan::CharString sType, sTypeC;
+        mikan::TCharStr sType, sTypeC;
         append(sType, pPrefix);
         append(sType, ":");
         append(sType, scoreTypes[i]);
@@ -142,7 +142,7 @@ void MKERNAScores::combine_scores(MKEOptions const &pMKEOpts) {
 
     resize(weights, mScoreTypeN);
     for (unsigned i = 0; i < mScoreTypeN; ++i) {
-        seqan::CharString sType = mScoreTypes[i];
+        mikan::TCharStr sType = mScoreTypes[i];
         replace(sType, 2, 3, mKeySep.c_str());
         std::string ckey = toCString(sType);
         weights[i] = conf.get_rna_weight(ckey);
@@ -203,7 +203,7 @@ void MKERNAScores::print_all_scores(MKEOptions const &pMKEOpts) {
     resize(ubounds, mScoreTypeN);
     resize(is_rev, mScoreTypeN);
     for (unsigned i = 0; i < mScoreTypeN; ++i) {
-        seqan::CharString sType = mScoreTypes[i];
+        mikan::TCharStr sType = mScoreTypes[i];
         replace(sType, 2, 3, mKeySep.c_str());
         std::string ckey = toCString(sType);
         weights[i] = conf.get_rna_weight(ckey);

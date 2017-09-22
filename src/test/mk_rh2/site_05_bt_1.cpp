@@ -24,7 +24,7 @@ TEST_F(Site05BT1, mir124_bt) {
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
     find_seed_sites(sites);
-    
+
     EXPECT_EQ(0u, sites.get_length());
 }
 
@@ -35,7 +35,7 @@ TEST_F(Site05BT1, mir124_def) {
     TFin finder(index);
     TSit sites(index, finder, mrna_seqs);
     find_seed_sites(sites);
-    
+
     EXPECT_EQ(0u, sites.get_length());
 }
 

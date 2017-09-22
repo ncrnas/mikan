@@ -79,14 +79,14 @@ protected:
     mikan::TSitePosSet mS8Pos;
 
     // Define method
-    virtual bool check_position_2(unsigned, unsigned, seqan::CharString &) { return true; }
+    virtual bool check_position_2(unsigned, unsigned, mikan::TCharStr &) { return true; }
 
     // Method prototypes
-    virtual bool check_position_1(unsigned pMRNAPos, unsigned pSitePos, seqan::CharString &pSeedType);
+    virtual bool check_position_1(unsigned pMRNAPos, unsigned pSitePos, mikan::TCharStr &pSeedType);
 
     virtual bool set_new_seed_type(unsigned pMRNAPos, unsigned pSitePos,
                                    mikan::TRNAStr &pMiRNASeq, mikan::TCharSet &pSeedTypeDef,
-                                   seqan::CharString &pSeedType, int pMisMatchPos, bool pEffectiveSite);
+                                   mikan::TCharStr &pSeedType, int pMisMatchPos, bool pEffectiveSite);
 
     void set_mx_matches(unsigned pMRNAPos, unsigned pSitePos, mikan::TRNAStr const &pMiRNA, int pMx,
                         bool &pNoMx, bool &pMatchMx, bool &pGutMx, bool &pGumMx, bool &pIsA);
