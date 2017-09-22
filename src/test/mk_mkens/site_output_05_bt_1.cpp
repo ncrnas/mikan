@@ -18,7 +18,7 @@ protected:
 };
 
 TEST_F(SiteOut05BT1, comp_orig_mk) {
-    (void) mikan::MKCoreMain<mkens::MKEOptions, mkens::MKECore>(argc, (const char **) argv);
+    (void) mikan::MKMain<mkens::MKEOptions, mkens::MKECore>(argc, (const char **) argv);
     gtest_compare_two_files4(o1file1, o2file1, 4, 100, 1, 5, 100, 1);
     gtest_compare_two_files2(o1file2, o2file2, 2, 100, 1);
 }

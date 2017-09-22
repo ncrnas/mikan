@@ -1,5 +1,5 @@
-#ifndef MK_CORE_MAIN_HPP_
-#define MK_CORE_MAIN_HPP_
+#ifndef MK_MAIN_HPP_
+#define MK_MAIN_HPP_
 
 #include <seqan/sequence.h>
 #include "mk_typedef.hpp"         // TRNATYPE, TCharSet, TRNASet, TIndexQGram, TFinder
@@ -10,7 +10,7 @@
 namespace mikan {
 
 template<class TOptions, class TCore>
-int MKCoreMain(int argc, char const **argv) {
+int MKMain(int argc, char const **argv) {
     int retVal;
 
     // Parse the command line.
@@ -48,5 +48,5 @@ int MKCoreMain(int argc, char const **argv) {
 
 } // namespace mikan
 
-#endif /* MK_CORE_MAIN_HPP_ */
+#endif /* MK_MAIN_HPP_ */
 

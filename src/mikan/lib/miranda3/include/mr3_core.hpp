@@ -6,7 +6,6 @@
 #include "mk_sequence.hpp"        // MKSequences
 #include "mk_option.hpp"          // MKOptions
 #include "mk_core_tmpl.hpp"       // MKCoreTmpl
-#include "mk_core_main.hpp"       // MKCoreMain
 #include "mr3_option.hpp"         // MR3Options
 #include "mr3_site_score.hpp"     // MR3GGDScores
 #include "mr3_seed_site.hpp"      // MR3SeedSites
