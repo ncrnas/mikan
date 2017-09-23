@@ -66,6 +66,8 @@ public:
 
     int open_output_file();
 
+    void close_output_file();
+
     int calculate_all_scores();
 
     int calculate_mirna_scores(unsigned pIdx);

@@ -31,18 +31,39 @@ void MKERMAWithSites::add_to_set(
     }
 }
 
-void MKERMAWithSites::create_pos_map() {
+void MKERMAWithSites::create_pos_map(mikan::MKSeedSites &pSeedSites) {
+    mikan::TSitePosSet const &sitePos = pSeedSites.get_site_pos();
+
     resize(mUniqRNAPosSet, mUniqSetTemp.size());
+    resize(mRNASitePosMap, mUniqSetTemp.size());
     resize(mEffectiveRNAs, mUniqSetTemp.size(), true);
 
     unsigned idx = 0;
+    TPosMap sortedPos;
     for (TItSet itSet = mUniqSetTemp.begin(); itSet != mUniqSetTemp.end(); ++itSet) {
 
         mUniqRNAPosSet[idx] = *itSet;
         mRNAPosMap[*itSet] = idx;
 
+        TItMapPair itPair = mSiteMapTemp.equal_range(*itSet);
+        sortedPos.clear();
+        unsigned count = 0;
+        for (TItMap itMap = itPair.first; itMap != itPair.second; ++itMap) {
+            sortedPos.insert(TPosPair(static_cast<float>(sitePos[(*itMap).second]),
+                                      (*itMap).second));
+            ++count;
+        }
+
+        resize(mRNASitePosMap[idx], count);
+        int n = 0;
+        for (TItMap itMap = sortedPos.begin(); itMap != sortedPos.end(); ++itMap) {
+            mRNASitePosMap[idx][n] = (*itMap).second;
+            ++n;
+        }
+
         ++idx;
     }
+
 }
 
 } // namespace mkens

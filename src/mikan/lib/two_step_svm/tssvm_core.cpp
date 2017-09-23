@@ -19,12 +19,12 @@ namespace tssvm {
 // TSSVMCore methods
 //
 int TSSVMCore::write_site_score(mikan::TCharStr const &pMiRNAId) {
-    const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
-    const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
+
     const mikan::TCharSet &seedTypes = mSeedSites.get_seed_types();
-    const seqan::String<float> &scores = mSiteScores.get_scores();
+    const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
 
     seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = mRNAWithSites.get_rna_site_pos_map();
+    mikan::TMRNAPosSet &uniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
 
     for (unsigned i = 0; i < length(mRNAWithSites.mEffectiveRNAs); i++) {
         if (!mRNAWithSites.mEffectiveRNAs[i]) {
@@ -42,10 +42,10 @@ int TSSVMCore::write_site_score(mikan::TCharStr const &pMiRNAId) {
                 seedStart += 1;
             }
 
-            float score = scores[rnaSitePosMap[i][j]];
+            float score = mSiteScores.get_score(rnaSitePosMap[i][j]);
             score = roundf(score * 10000.0f) / 10000.0f;
             mOFile1 << toCString(pMiRNAId) << "\t";
-            mOFile1 << toCString((mikan::TCharStr) mMRNAIds[mRNAPos[rnaSitePosMap[i][j]]]) << "\t";
+            mOFile1 << toCString((mikan::TCharStr) mMRNAIds[uniqRNAPosSet[i]]) << "\t";
             mOFile1 << seedStart + 1 << "\t";
             mOFile1 << seedStart + 7 << "\t";
             mOFile1 << toCString((mikan::TCharStr) seedTypes[rnaSitePosMap[i][j]]) << "\t";

@@ -20,8 +20,8 @@ namespace mr3as {
 //
 int MR3Core::write_site_score(mikan::TCharStr const &pMiRNAId) {
 
-    const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const mikan::TCharSet &seedTypes = mSeedSites.get_seed_types();
+    const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
 
     seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = mRNAWithSites.get_rna_site_pos_map();
     mikan::TMRNAPosSet &uniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
@@ -31,13 +31,12 @@ int MR3Core::write_site_score(mikan::TCharStr const &pMiRNAId) {
             continue;
         }
 
-        int seedStart;
         for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
             if (!mSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
                 continue;
             }
 
-            seedStart = sitePos[rnaSitePosMap[i][j]];
+            int seedStart = sitePos[rnaSitePosMap[i][j]];
             float scoreAlign = mSiteScores.get_align_score(rnaSitePosMap[i][j]);
             scoreAlign = roundf(scoreAlign * 100.0f) / 100.0f;
             float scoreEn = mSiteScores.get_energy_score(rnaSitePosMap[i][j]);

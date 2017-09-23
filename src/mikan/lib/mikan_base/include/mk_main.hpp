@@ -41,6 +41,7 @@ int MKMain(int argc, char const **argv) {
     TCore mkCore(options, mMiRNAIds, mMiRNASeqs, mMRNAIds, mMRNASeqs, index, finder);
     mkCore.open_output_file();
     retVal = mkCore.calculate_all_scores();
+    mkCore.close_output_file();
 
     return retVal;
 }

@@ -19,8 +19,9 @@ namespace rh2mfe {
 // RH2Core methods
 //
 int RH2Core::write_site_score(mikan::TCharStr const &pMiRNAId) {
-    const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
+
     const mikan::TCharSet &seedTypes = mSeedSites.get_seed_types();
+    const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
 
     seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = mRNAWithSites.get_rna_site_pos_map();
     mikan::TMRNAPosSet &uniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
@@ -30,15 +31,13 @@ int RH2Core::write_site_score(mikan::TCharStr const &pMiRNAId) {
             continue;
         }
 
-        int seedStart;
-        float score;
         for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
             if (!mSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
                 continue;
             }
 
-            seedStart = sitePos[rnaSitePosMap[i][j]];
-            score = mSiteScores.get_score(rnaSitePosMap[i][j]);
+            int seedStart = sitePos[rnaSitePosMap[i][j]];
+            float score = mSiteScores.get_score(rnaSitePosMap[i][j]);
             score = roundf(score * 10.0f) / 10.0f;
 
             mOFile1 << toCString(pMiRNAId) << "\t";

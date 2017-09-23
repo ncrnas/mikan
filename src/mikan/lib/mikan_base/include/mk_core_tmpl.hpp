@@ -121,18 +121,34 @@ public:
 
         // Write site scores
         if (mOutputSite) {
-            retVal = write_site_score(mMiRNAIds[pIdx]);
-            if (retVal != 0) { ;
-                return 1;
+            if (mOpts.mNoGff) {
+                retVal = write_site_score(mMiRNAIds[pIdx]);
+                if (retVal != 0) { ;
+                    return 1;
+                }
+            } else {
+                retVal = write_site_score(mMiRNAIds[pIdx]);
+                if (retVal != 0) { ;
+                    return 1;
+                }
             }
+
         }
 
         // Write total scores
         if (mOutputRNA) {
-            retVal = write_rna_score(mMiRNAIds[pIdx]);
-            if (retVal != 0) {
-                return 1;
+            if (mOpts.mNoGff) {
+                retVal = write_rna_score(mMiRNAIds[pIdx]);
+                if (retVal != 0) {
+                    return 1;
+                }
+            } else {
+                retVal = write_rna_score(mMiRNAIds[pIdx]);
+                if (retVal != 0) {
+                    return 1;
+                }
             }
+
         }
 
         // Write alignments
@@ -171,7 +187,11 @@ protected:
 
     virtual int write_site_score(mikan::TCharStr const &pMiRNAId) = 0;
 
+    virtual int write_site_score_gff(mikan::TCharStr const &pMiRNAId) = 0;
+
     virtual int write_rna_score(mikan::TCharStr const &pMiRNAId) = 0;
+
+    virtual int write_rna_score_gff(mikan::TCharStr const &pMiRNAId) = 0;
 
     virtual int write_alignment(mikan::TCharStr const &pMiRNAId) = 0;
 

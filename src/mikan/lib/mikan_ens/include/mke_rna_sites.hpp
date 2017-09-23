@@ -21,12 +21,12 @@ public:
 
     void add_to_set(mikan::MKSeedSites &pSeedSites, mikan::MKSiteScores &pSiteScores);
 
-    void create_pos_map();
+    void create_pos_map(mikan::MKSeedSites &pSeedSites);
 
 private:
-    typedef std::map<unsigned, unsigned> TPosMap;
+    typedef std::map<unsigned, unsigned> TPosMapU;
 
-    TPosMap mRNAPosMap;
+    TPosMapU mRNAPosMap;
 
 };
 

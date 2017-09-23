@@ -36,6 +36,18 @@ int MKCoreBase::open_output_file() {
     return 0;
 }
 
+void MKCoreBase::close_output_file() {
+    // Close output file 1
+    if (mOFile1.is_open()) {
+        mOFile1.close();
+    }
+
+    // Close output file 2
+    if (mOFile2.is_open()) {
+        mOFile2.close();
+    }
+}
+
 int MKCoreBase::calculate_all_scores() {
     int retVal;
 

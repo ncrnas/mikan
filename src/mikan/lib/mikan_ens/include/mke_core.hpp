@@ -111,9 +111,13 @@ private:
         }
     }
 
-    int write_site_score(mikan::TCharStr const &pMiRNAId);
+    virtual int write_site_score(mikan::TCharStr const &pMiRNAId);
 
-    int write_rna_score(mikan::TCharStr const &pMiRNAId);
+    virtual int write_site_score_gff(mikan::TCharStr const &) { return 0; }
+
+    virtual int write_rna_score(mikan::TCharStr const &pMiRNAId);
+
+    virtual int write_rna_score_gff(mikan::TCharStr const &) { return 0; }
 
     int combine_site_pos(unsigned pIdx);
 
