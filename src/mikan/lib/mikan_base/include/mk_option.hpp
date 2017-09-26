@@ -23,7 +23,7 @@ public:
     mikan::TCharStr mOFileTotal;
 
     bool mOutputAlign;
-    bool mNoGff;
+    bool mGff;
 
     // MR3 & PITA
     int mMinSeedLen;
@@ -62,7 +62,7 @@ public:
         mProgDate = "July 2017";
 
         mOutputAlign = false;
-        mNoGff = false;
+        mGff = false;
 
         mMaxHits = 0;
 

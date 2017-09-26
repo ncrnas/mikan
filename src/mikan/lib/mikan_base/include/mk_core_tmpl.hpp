@@ -121,7 +121,7 @@ public:
 
         // Write site scores
         if (mOutputSite) {
-            if (mOpts.mNoGff) {
+            if (mOpts.mGff) {
                 retVal = write_site_score(mMiRNAIds[pIdx]);
                 if (retVal != 0) { ;
                     return 1;
@@ -137,7 +137,7 @@ public:
 
         // Write total scores
         if (mOutputRNA) {
-            if (mOpts.mNoGff) {
+            if (mOpts.mGff) {
                 retVal = write_rna_score(mMiRNAIds[pIdx]);
                 if (retVal != 0) {
                     return 1;

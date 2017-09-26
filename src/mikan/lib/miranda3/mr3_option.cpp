@@ -28,7 +28,7 @@ ArgumentParser::ParseResult MR3Options::parseCommandLine(
 
     // Extract options
     mOutputAlign = isSet(parser, "output_align");
-    mNoGff = isSet(parser, "no_gff");
+    mGff = isSet(parser, "gff");
 
     getOptionValue(mMinSeedLen, parser, "seed_min");
     if (mMinSeedLen != 6 && mMinSeedLen != 7 && mMinSeedLen != 8) {
@@ -87,7 +87,7 @@ void MR3Options::setProgramDescription(seqan::ArgumentParser &parser) {
     // Define Options
     addSection(parser, "miRanda3 Options");
     addOption(parser, ArgParseOption("a", "output_align", "Output alignments to standard output."));
-    addOption(parser, ArgParseOption("", "no_gff", "Change output format to tool specific instead of GFF."));
+    addOption(parser, ArgParseOption("", "gff", "Change output format to GFF."));
 
     addOption(parser,
               ArgParseOption("n", "seed_min", "Seed site minimum length [6, 7, 8].", ArgParseOption::INTEGER));

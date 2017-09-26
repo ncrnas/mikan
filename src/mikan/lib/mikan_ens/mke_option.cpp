@@ -28,7 +28,7 @@ ArgumentParser::ParseResult MKEOptions::parseCommandLine(
     }
 
     // Extract options
-    mNoGff = isSet(parser, "no_gff");
+    mGff = isSet(parser, "gff");
     mShowConfig = isSet(parser, "show_config");
 
     getOptionValue(mConfigFile, parser, "config");
@@ -68,7 +68,7 @@ void MKEOptions::setProgramDescription(seqan::ArgumentParser &parser) {
 
     // Define Options
     addSection(parser, "Mikan Ensemble Score Options");
-    addOption(parser, ArgParseOption("", "no_gff", "Change output format to tool specific instead of GFF."));
+    addOption(parser, ArgParseOption("", "gff", "Change output format to GFF."));
 
     addOption(parser, ArgParseOption("c", "config", "Specify a configuration file.",
                                      ArgParseArgument::INPUTFILE));
