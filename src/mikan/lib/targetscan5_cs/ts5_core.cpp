@@ -19,50 +19,57 @@ namespace ts5cs {
 //
 // TS5Core methods
 //
-int TS5Core::write_site_score(mikan::TCharStr const &pMiRNAId) {
+void TS5Core::write_site_score_tab(mikan::TCharStr const &pMiRNAId, unsigned pRNAPosIdx, unsigned pSitePosIdx) {
 
     const mikan::TCharSet &seedTypes = mSeedSites.get_seed_types();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
 
-    seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = mRNAWithSites.get_rna_site_pos_map();
-    mikan::TMRNAPosSet &uniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
-
-    for (unsigned i = 0; i < length(mRNAWithSites.mEffectiveRNAs); i++) {
-        if (!mRNAWithSites.mEffectiveRNAs[i]) {
-            continue;
-        }
-
-        for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
-            if (!mSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
-                continue;
-            }
-
-            int seedStart = sitePos[rnaSitePosMap[i][j]];
-            if (seedTypes[rnaSitePosMap[i][j]] == "7mer-A1") {
-                seedStart += 1;
-            }
-
-            int seedEnd = seedStart + 6;
-            if (seedTypes[rnaSitePosMap[i][j]] == "8mer") {
-                seedEnd += 1;
-            }
-
-            mOFile1 << toCString(pMiRNAId) << "\t";
-            mOFile1 << toCString((mikan::TCharStr) mMRNAIds[uniqRNAPosSet[i]]) << "\t";
-            mOFile1 << seedStart << "\t";
-            mOFile1 << seedEnd << "\t";
-            mOFile1 << toCString((mikan::TCharStr) seedTypes[rnaSitePosMap[i][j]]) << "\t";
-            mOFile1 << mSiteScores.get_score(rnaSitePosMap[i][j]);
-            mOFile1 << std::endl;
-        }
-
+    int seedStart = sitePos[pSitePosIdx];
+    if (seedTypes[pSitePosIdx] == "7mer-A1") {
+        seedStart += 1;
     }
 
-    return 0;
+    int seedEnd = seedStart + 6;
+    if (seedTypes[pSitePosIdx] == "8mer") {
+        seedEnd += 1;
+    }
+
+    mOFile1 << toCString(pMiRNAId) << "\t";
+    mOFile1 << toCString((mikan::TCharStr) mMRNAIds[pRNAPosIdx]) << "\t";
+    mOFile1 << seedStart << "\t";
+    mOFile1 << seedEnd << "\t";
+    mOFile1 << toCString((mikan::TCharStr) seedTypes[pSitePosIdx]) << "\t";
+    mOFile1 << mSiteScores.get_score(pSitePosIdx);
+    mOFile1 << std::endl;
 
 }
 
-int TS5Core::write_rna_score(mikan::TCharStr const &pMiRNAId) {
+void TS5Core::write_site_score_gff(mikan::TCharStr const &pMiRNAId, unsigned pRNAPosIdx, unsigned pSitePosIdx) {
+
+    const mikan::TCharSet &seedTypes = mSeedSites.get_seed_types();
+    const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
+
+    int seedStart = sitePos[pSitePosIdx];
+    if (seedTypes[pSitePosIdx] == "7mer-A1") {
+        seedStart += 1;
+    }
+
+    int seedEnd = seedStart + 6;
+    if (seedTypes[pSitePosIdx] == "8mer") {
+        seedEnd += 1;
+    }
+
+    mOFile1 << toCString(pMiRNAId) << "\t";
+    mOFile1 << toCString((mikan::TCharStr) mMRNAIds[pRNAPosIdx]) << "\t";
+    mOFile1 << seedStart << "\t";
+    mOFile1 << seedEnd << "\t";
+    mOFile1 << toCString((mikan::TCharStr) seedTypes[pSitePosIdx]) << "\t";
+    mOFile1 << mSiteScores.get_score(pSitePosIdx);
+    mOFile1 << std::endl;
+
+}
+
+void TS5Core::write_rna_score_tab(mikan::TCharStr const &pMiRNAId) {
 
     const seqan::String<float> &totalScores = mRNAScores.get_scores();
     const seqan::String<int> &mRNAPos = mRNAScores.get_mrna_pos();
@@ -83,8 +90,6 @@ int TS5Core::write_rna_score(mikan::TCharStr const &pMiRNAId) {
         mOFile2 << siteNum[(*itPos).second];
         mOFile2 << std::endl;
     }
-
-    return 0;
 }
 
 int TS5Core::write_alignment(mikan::TCharStr const &pMiRNAId) {

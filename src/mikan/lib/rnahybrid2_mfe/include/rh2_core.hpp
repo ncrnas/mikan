@@ -38,13 +38,13 @@ public:
     }
 
 private:
-    virtual int write_site_score(mikan::TCharStr const &pMiRNAId);
+    virtual void write_site_score_tab(mikan::TCharStr const &pMiRNAId, unsigned pRNAPosIdx, unsigned pSitePosIdx);
 
-    virtual int write_site_score_gff(mikan::TCharStr const &) { return 0; }
+    virtual void write_site_score_gff(mikan::TCharStr const &pMiRNAId, unsigned pRNAPosIdx, unsigned pSitePosIdx);
 
-    virtual int write_rna_score(mikan::TCharStr const &pMiRNAId);
+    virtual void write_rna_score_tab(mikan::TCharStr const &pMiRNAId);
 
-    virtual int write_rna_score_gff(mikan::TCharStr const &) { return 0; }
+    virtual void write_rna_score_gff(mikan::TCharStr const &) { return; }
 
     virtual int write_alignment(mikan::TCharStr const &pMiRNAId);
 

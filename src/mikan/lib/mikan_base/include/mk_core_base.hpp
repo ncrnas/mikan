@@ -100,6 +100,53 @@ protected:
     std::ofstream mOFile1;
     std::ofstream mOFile2;
 
+    virtual void write_site_score_tab(mikan::TCharStr const &pMiRNAId, unsigned pRNAPosIdx, unsigned pSitePosIdx) = 0;
+
+    virtual void write_site_score_gff(mikan::TCharStr const &pMiRNAId, unsigned pRNAPosIdx, unsigned pSitePosIdx) = 0;
+
+    virtual void write_rna_score_tab(mikan::TCharStr const &pMiRNAId) = 0;
+
+    virtual void write_rna_score_gff(mikan::TCharStr const &pMiRNAId) = 0;
+
+    virtual int write_alignment(mikan::TCharStr const &pMiRNAId) = 0;
+
+    int write_site_score(mikan::TCharStr const &pMiRNAId, mikan::MKSeedSites &pSeedSites,
+                         mikan::MKRMAWithSites &pRNAWithSites) {
+        seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = pRNAWithSites.get_rna_site_pos_map();
+        mikan::TMRNAPosSet &uniqRNAPosSet = pRNAWithSites.get_uniq_mrna_pos_set();
+
+        int retVal = 0;
+        int count = 0;
+        for (unsigned i = 0; i < length(pRNAWithSites.mEffectiveRNAs); i++) {
+            if (!pRNAWithSites.mEffectiveRNAs[i]) {
+                continue;
+            }
+
+            for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
+                if (!pSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
+                    continue;
+                }
+
+                if (mOpts.mGff) {
+                    write_site_score_gff(pMiRNAId, uniqRNAPosSet[i], rnaSitePosMap[i][j]);
+                } else {
+                    write_site_score_tab(pMiRNAId, uniqRNAPosSet[i], rnaSitePosMap[i][j]);
+                }
+            }
+
+            ++count;
+        }
+
+        return retVal;
+    }
+
+    int write_rna_score(mikan::TCharStr const &pMiRNAId) {
+        int retVal = 0;
+
+        write_rna_score_tab(pMiRNAId);
+
+        return retVal;
+    }
 };
 
 } // namespace mikan

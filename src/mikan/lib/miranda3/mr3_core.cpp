@@ -18,47 +18,51 @@ namespace mr3as {
 //
 // MR3Core methods
 //
-int MR3Core::write_site_score(mikan::TCharStr const &pMiRNAId) {
+void MR3Core::write_site_score_tab(mikan::TCharStr const &pMiRNAId, unsigned pRNAPosIdx, unsigned pSitePosIdx) {
 
     const mikan::TCharSet &seedTypes = mSeedSites.get_seed_types();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
 
-    seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = mRNAWithSites.get_rna_site_pos_map();
-    mikan::TMRNAPosSet &uniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
+    int seedStart = sitePos[pSitePosIdx];
+    float scoreAlign = mSiteScores.get_align_score(pSitePosIdx);
+    scoreAlign = roundf(scoreAlign * 100.0f) / 100.0f;
+    float scoreEn = mSiteScores.get_energy_score(pSitePosIdx);
+    scoreEn = roundf(scoreEn * 100.0f) / 100.0f;
 
-    for (unsigned i = 0; i < length(mRNAWithSites.mEffectiveRNAs); i++) {
-        if (!mRNAWithSites.mEffectiveRNAs[i]) {
-            continue;
-        }
-
-        for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
-            if (!mSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
-                continue;
-            }
-
-            int seedStart = sitePos[rnaSitePosMap[i][j]];
-            float scoreAlign = mSiteScores.get_align_score(rnaSitePosMap[i][j]);
-            scoreAlign = roundf(scoreAlign * 100.0f) / 100.0f;
-            float scoreEn = mSiteScores.get_energy_score(rnaSitePosMap[i][j]);
-            scoreEn = roundf(scoreEn * 100.0f) / 100.0f;
-
-            mOFile1 << toCString(pMiRNAId) << "\t";
-            mOFile1 << toCString((mikan::TCharStr) mMRNAIds[uniqRNAPosSet[i]]) << "\t";
-            mOFile1 << seedStart + 1 << "\t";
-            mOFile1 << seedStart + 1 + mikan::SEEDLEN << "\t";
-            mOFile1 << toCString((mikan::TCharStr) seedTypes[rnaSitePosMap[i][j]]) << "\t";
-            mOFile1 << scoreAlign << "\t";
-            mOFile1 << scoreEn << "\t";
-            mOFile1 << std::endl;
-        }
-
-    }
-
-    return 0;
+    mOFile1 << toCString(pMiRNAId) << "\t";
+    mOFile1 << toCString((mikan::TCharStr) mMRNAIds[pRNAPosIdx]) << "\t";
+    mOFile1 << seedStart + 1 << "\t";
+    mOFile1 << seedStart + 1 + mikan::SEEDLEN << "\t";
+    mOFile1 << toCString((mikan::TCharStr) seedTypes[pSitePosIdx]) << "\t";
+    mOFile1 << scoreAlign << "\t";
+    mOFile1 << scoreEn << "\t";
+    mOFile1 << std::endl;
 
 }
 
-int MR3Core::write_rna_score(mikan::TCharStr const &pMiRNAId) {
+void MR3Core::write_site_score_gff(mikan::TCharStr const &pMiRNAId, unsigned pRNAPosIdx, unsigned pSitePosIdx) {
+
+    const mikan::TCharSet &seedTypes = mSeedSites.get_seed_types();
+    const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
+
+    int seedStart = sitePos[pSitePosIdx];
+    float scoreAlign = mSiteScores.get_align_score(pSitePosIdx);
+    scoreAlign = roundf(scoreAlign * 100.0f) / 100.0f;
+    float scoreEn = mSiteScores.get_energy_score(pSitePosIdx);
+    scoreEn = roundf(scoreEn * 100.0f) / 100.0f;
+
+    mOFile1 << toCString(pMiRNAId) << "\t";
+    mOFile1 << toCString((mikan::TCharStr) mMRNAIds[pRNAPosIdx]) << "\t";
+    mOFile1 << seedStart + 1 << "\t";
+    mOFile1 << seedStart + 1 + mikan::SEEDLEN << "\t";
+    mOFile1 << toCString((mikan::TCharStr) seedTypes[pSitePosIdx]) << "\t";
+    mOFile1 << scoreAlign << "\t";
+    mOFile1 << scoreEn << "\t";
+    mOFile1 << std::endl;
+
+}
+
+void MR3Core::write_rna_score_tab(mikan::TCharStr const &pMiRNAId) {
     const seqan::String<float> &alignScores = mRNAScores.get_align_maxlogtotal();
     const seqan::String<float> &enScores = mRNAScores.get_energy_minlogtotal();
     const seqan::String<int> &mRNAPos = mRNAScores.get_mrna_pos();
@@ -73,8 +77,6 @@ int MR3Core::write_rna_score(mikan::TCharStr const &pMiRNAId) {
         mOFile2 << enScores[i] << "\t";
         mOFile2 << std::endl;
     }
-
-    return 0;
 }
 
 int MR3Core::write_alignment(mikan::TCharStr const &pMiRNAId) {

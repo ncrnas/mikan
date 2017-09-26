@@ -121,34 +121,18 @@ public:
 
         // Write site scores
         if (mOutputSite) {
-            if (mOpts.mGff) {
-                retVal = write_site_score(mMiRNAIds[pIdx]);
-                if (retVal != 0) { ;
-                    return 1;
-                }
-            } else {
-                retVal = write_site_score(mMiRNAIds[pIdx]);
-                if (retVal != 0) { ;
-                    return 1;
-                }
+            retVal = write_site_score(mMiRNAIds[pIdx], mSeedSites, mRNAWithSites);
+            if (retVal != 0) { ;
+                return 1;
             }
-
         }
 
         // Write total scores
         if (mOutputRNA) {
-            if (mOpts.mGff) {
-                retVal = write_rna_score(mMiRNAIds[pIdx]);
-                if (retVal != 0) {
-                    return 1;
-                }
-            } else {
-                retVal = write_rna_score(mMiRNAIds[pIdx]);
-                if (retVal != 0) {
-                    return 1;
-                }
+            retVal = write_rna_score(mMiRNAIds[pIdx]);
+            if (retVal != 0) {
+                return 1;
             }
-
         }
 
         // Write alignments
@@ -184,16 +168,6 @@ protected:
     TSiteFilter mSiteFilter;
     mikan::MKTopNSites mTopNSites;
     TRNAScores mRNAScores;
-
-    virtual int write_site_score(mikan::TCharStr const &pMiRNAId) = 0;
-
-    virtual int write_site_score_gff(mikan::TCharStr const &pMiRNAId) = 0;
-
-    virtual int write_rna_score(mikan::TCharStr const &pMiRNAId) = 0;
-
-    virtual int write_rna_score_gff(mikan::TCharStr const &pMiRNAId) = 0;
-
-    virtual int write_alignment(mikan::TCharStr const &pMiRNAId) = 0;
 
 };
 
