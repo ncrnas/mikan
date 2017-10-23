@@ -35,7 +35,7 @@ void MR3Core::write_site_score_tab(mikan::TCharStr const &pMiRNAId, unsigned pRN
     mOFile1 << seedStart + 1 + mikan::SEEDLEN << "\t";
     mOFile1 << toCString((mikan::TCharStr) seedTypes[pSitePosIdx]) << "\t";
     mOFile1 << scoreAlign << "\t";
-    mOFile1 << scoreEn << "\t";
+    mOFile1 << scoreEn;
     mOFile1 << std::endl;
 
 }
@@ -72,9 +72,9 @@ void MR3Core::write_rna_score_tab(mikan::TCharStr const &pMiRNAId) {
 
         mOFile2 << toCString(pMiRNAId) << "\t";
         mOFile2 << toCString((mikan::TCharStr) mMRNAIds[mRNAPos[i]]) << "\t";
-        mOFile2 << alignScores[i] << "\t";
         mOFile2 << siteNum[i] << "\t";
-        mOFile2 << enScores[i] << "\t";
+        mOFile2 << alignScores[i] << "\t";
+        mOFile2 << enScores[i];
         mOFile2 << std::endl;
     }
 }

@@ -29,7 +29,7 @@ void TM1Core::write_site_score_tab(mikan::TCharStr const &pMiRNAId, unsigned pRN
     mOFile1 << seedStart << "\t";
     mOFile1 << seedEnd << "\t";
     mOFile1 << toCString((mikan::TCharStr) seedTypes[pSitePosIdx]) << "\t";
-    mOFile1 << 0;
+    mOFile1 << 0 << "\t";
     mOFile1 << std::endl;
 
 }
@@ -72,8 +72,8 @@ void TM1Core::write_rna_score_tab(mikan::TCharStr const &pMiRNAId) {
     for (itPos = sortedMRNAByScore.begin(); itPos != sortedMRNAByScore.end(); ++itPos) {
         mOFile2 << toCString(pMiRNAId) << "\t";
         mOFile2 << toCString((mikan::TCharStr) mMRNAIds[uniqRNAPosSet[(*itPos).second]]) << "\t";
-        mOFile2 << scores[(*itPos).second] << "\t";
         mOFile2 << siteNum[(*itPos).second] << "\t";
+        mOFile2 << scores[(*itPos).second] << "\t";
         mOFile2 << predictions[(*itPos).second];
         mOFile2 << std::endl;
     }

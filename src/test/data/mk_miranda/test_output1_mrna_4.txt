@@ -1,4 +1,4 @@
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_004817 range=chr9:71059111-71059938 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	140	1	-12.99	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_014481 range=chrX:55050594-55050936 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	146	1	-17.5	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_022365 range=chr10:22085484-22085621 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	152	1	-20.01	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_006410 range=chr11:20361328-20361905 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	145	1	-15.32	
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_004817 range=chr9:71059111-71059938 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	1	140	-12.99
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_014481 range=chrX:55050594-55050936 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	1	146	-17.5
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_022365 range=chr10:22085484-22085621 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1	152	-20.01
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_006410 range=chr11:20361328-20361905 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	1	145	-15.32

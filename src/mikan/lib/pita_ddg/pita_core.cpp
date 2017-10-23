@@ -68,8 +68,8 @@ void PITACore::write_rna_score_tab(mikan::TCharStr const &pMiRNAId) {
 
         mOFile2 << toCString(pMiRNAId) << "\t";
         mOFile2 << toCString((mikan::TCharStr) (mMRNAIds[mRNAPos[i]])) << "\t";
-        mOFile2 << score << "\t";
         mOFile2 << siteNum[i] << "\t";
+        mOFile2 << score << "\t";
         mOFile2 << std::endl;
     }
 }

@@ -1,2 +1,2 @@
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_004339 range=chr21:45093941-45095923 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	-0.45915	1
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_004339 range=chr21:45093941-45095923 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	-0.2375	1
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_004339 range=chr21:45093941-45095923 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1	-0.45915	
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_004339 range=chr21:45093941-45095923 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1	-0.2375	

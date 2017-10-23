@@ -31,7 +31,6 @@ void RH2Core::write_site_score_tab(mikan::TCharStr const &pMiRNAId, unsigned pRN
     mOFile1 << toCString((mikan::TCharStr) mMRNAIds[pRNAPosIdx]) << "\t";
     mOFile1 << seedStart + 1 << "\t";
     mOFile1 << seedStart + 7 << "\t";
-    //        mOFile1 << mSiteScores.get_wide_site_start(posIdx) + 1  << "\t";
     mOFile1 << toCString((mikan::TCharStr) seedTypes[pSitePosIdx]) << "\t";
     mOFile1 << score << "\t";
     mOFile1 << mSiteScores.get_norm_score(pSitePosIdx);
@@ -69,9 +68,9 @@ void RH2Core::write_rna_score_tab(mikan::TCharStr const &pMiRNAId) {
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
         mOFile2 << toCString(pMiRNAId) << "\t";
         mOFile2 << toCString((mikan::TCharStr) mMRNAIds[mRNAPos[i]]) << "\t";
-        mOFile2 << mfeScores[i] << "\t";
         mOFile2 << siteNum[i] << "\t";
-        mOFile2 << normScores[i] << "\t";
+        mOFile2 << mfeScores[i] << "\t";
+        mOFile2 << normScores[i];
         mOFile2 << std::endl;
     }
 
