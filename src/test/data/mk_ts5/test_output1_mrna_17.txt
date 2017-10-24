@@ -1,1 +1,2 @@
-hsa-miR-539-5p*MIMAT0003163	NM_152663*chr1*+*177152117*177155860	3	-0.4634	
+# miRNA name, mRNA name, number of sites, score 1 (context score), score 2 (not used)
+hsa-miR-539-5p*MIMAT0003163	NM_152663*chr1*+*177152117*177155860	3	-0.4634	0

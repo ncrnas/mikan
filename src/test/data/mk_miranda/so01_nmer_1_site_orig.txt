@@ -1,4 +1,4 @@
-# miRNA name, RNA name, start (1-base), end (1-base), seed type, score (alignment), score (MFE)
+# miRNA name, mRNA name, start (1-base), end (1-base), seed type, score 1 (alignment), score 2 (MFE)
 hsa-miR-124 MIMAT0000422	TS_023_7merM8_1_2_7_8	2	8	7mer	140	-9.38
 hsa-miR-124 MIMAT0000422	TS_024_7merM8_13_14_19_20	14	20	7mer	140	-10.62
 hsa-miR-124 MIMAT0000422	TS_025_7merM8_14_15_20_21	15	21	7mer	140	-10.62

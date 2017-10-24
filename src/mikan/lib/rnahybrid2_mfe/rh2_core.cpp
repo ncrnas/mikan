@@ -29,12 +29,12 @@ void RH2Core::write_site_score_tab(mikan::TCharStr const &pMiRNAId, unsigned pRN
 
     if (mPrintSiteHeader) {
         mOFile1 << "# miRNA name, ";
-        mOFile1 << "RNA name, ";
+        mOFile1 << "mRNA name, ";
         mOFile1 << "start (1-base), ";
         mOFile1 << "end (1-base), ";
         mOFile1 << "seed type, ";
-        mOFile1 << "score (MFE), ";
-        mOFile1 << "score (normalized)";
+        mOFile1 << "score 1 (MFE), ";
+        mOFile1 << "score 2 (normalized)";
         mOFile1 << std::endl;
         mPrintSiteHeader = false;
     }
@@ -76,6 +76,16 @@ void RH2Core::write_rna_score_tab(mikan::TCharStr const &pMiRNAId) {
     const seqan::String<float> &normScores = mRNAScores.get_norm_maxlogtotal();
     const seqan::String<int> &mRNAPos = mRNAScores.get_mrna_pos();
     const seqan::String<int> &siteNum = mRNAScores.get_site_num();
+
+    if (mPrintRNAheader) {
+        mOFile2 << "# miRNA name, ";
+        mOFile2 << "mRNA name, ";
+        mOFile2 << "number of sites, ";
+        mOFile2 << "score 1 (MFE), ";
+        mOFile2 << "score 2 (normalized)";
+        mOFile2 << std::endl;
+        mPrintRNAheader = false;
+    }
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
         mOFile2 << toCString(pMiRNAId) << "\t";

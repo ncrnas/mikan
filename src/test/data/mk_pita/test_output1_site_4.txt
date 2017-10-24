@@ -1,15 +1,15 @@
-# miRNA name, RNA name, start (1-base), end (1-base), seed type, score (ddG)
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_004817 range=chr9:71059111-71059938 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	348	354	6mer	-8.03	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_004817 range=chr9:71059111-71059938 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	455	461	7mer	-6.94	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_004817 range=chr9:71059111-71059938 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	471	477	7mer_GUT	-1.37	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_014481 range=chrX:55050594-55050936 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	179	185	7mer	-7.68	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_000183 range=chr2:26366326-26366836 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	398	404	8mer_MM	-15.42	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_022365 range=chr10:22085484-22085621 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	101	107	7mer	-13.13	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_006410 range=chr11:20361328-20361905 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	332	338	8mer_MMGU	12.02	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_006410 range=chr11:20361328-20361905 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	479	485	7mer	-7.69	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_004817 range=chr9:71059111-71059938 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	610	616	8mer_MMGU	-4.57	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_004817 range=chr9:71059111-71059938 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	816	822	8mer_MM	0.22	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_004817 range=chr9:71059111-71059938 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	821	827	8mer_MMGU	-2.24	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_000183 range=chr2:26366326-26366836 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	66	72	8mer_MMGU	-1.05	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_006410 range=chr11:20361328-20361905 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	119	125	8mer_MM	-1.19	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_006410 range=chr11:20361328-20361905 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	512	518	8mer_MMGU	-2.15	
+# miRNA name, mRNA name, start (1-base), end (1-base), seed type, score 1 (ddG), score 2 (not used)
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_004817 range=chr9:71059111-71059938 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	348	354	6mer	-8.03	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_004817 range=chr9:71059111-71059938 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	455	461	7mer	-6.94	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_004817 range=chr9:71059111-71059938 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	471	477	7mer_GUT	-1.37	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_014481 range=chrX:55050594-55050936 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	179	185	7mer	-7.68	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_000183 range=chr2:26366326-26366836 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	398	404	8mer_MM	-15.42	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_022365 range=chr10:22085484-22085621 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	101	107	7mer	-13.13	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_006410 range=chr11:20361328-20361905 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	332	338	8mer_MMGU	12.02	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_006410 range=chr11:20361328-20361905 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	479	485	7mer	-7.69	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_004817 range=chr9:71059111-71059938 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	610	616	8mer_MMGU	-4.57	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_004817 range=chr9:71059111-71059938 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	816	822	8mer_MM	0.22	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_004817 range=chr9:71059111-71059938 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	821	827	8mer_MMGU	-2.24	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_000183 range=chr2:26366326-26366836 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	66	72	8mer_MMGU	-1.05	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_006410 range=chr11:20361328-20361905 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	119	125	8mer_MM	-1.19	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_006410 range=chr11:20361328-20361905 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	512	518	8mer_MMGU	-2.15	0

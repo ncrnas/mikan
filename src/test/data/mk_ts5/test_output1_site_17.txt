@@ -1,4 +1,4 @@
-# miRNA name, RNA name, start (1-base), end (1-base), seed type, score (context score)
-hsa-miR-539-5p*MIMAT0003163	NM_152663*chr1*+*177152117*177155860	545	551	7mer-A1	-0.0332	
-hsa-miR-539-5p*MIMAT0003163	NM_152663*chr1*+*177152117*177155860	1544	1551	8mer	-0.2342	
-hsa-miR-539-5p*MIMAT0003163	NM_152663*chr1*+*177152117*177155860	1958	1964	7mer-m8	-0.196	
+# miRNA name, mRNA name, start (1-base), end (1-base), seed type, score 1 (context score), score 2 (not used)
+hsa-miR-539-5p*MIMAT0003163	NM_152663*chr1*+*177152117*177155860	545	551	7mer-A1	-0.0332	0
+hsa-miR-539-5p*MIMAT0003163	NM_152663*chr1*+*177152117*177155860	1544	1551	8mer	-0.2342	0
+hsa-miR-539-5p*MIMAT0003163	NM_152663*chr1*+*177152117*177155860	1958	1964	7mer-m8	-0.196	0

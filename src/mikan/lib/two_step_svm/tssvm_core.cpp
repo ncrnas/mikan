@@ -25,11 +25,12 @@ void TSSVMCore::write_site_score_tab(mikan::TCharStr const &pMiRNAId, unsigned p
 
     if (mPrintSiteHeader) {
         mOFile1 << "# miRNA name, ";
-        mOFile1 << "RNA name, ";
+        mOFile1 << "mRNA name, ";
         mOFile1 << "start (1-base), ";
         mOFile1 << "end (1-base), ";
         mOFile1 << "seed type, ";
-        mOFile1 << "score";
+        mOFile1 << "score 1 (discriminant value), ";
+        mOFile1 << "score 2 (not used)";
         mOFile1 << std::endl;
         mPrintSiteHeader = false;
     }
@@ -48,6 +49,7 @@ void TSSVMCore::write_site_score_tab(mikan::TCharStr const &pMiRNAId, unsigned p
     mOFile1 << seedStart + 7 << "\t";
     mOFile1 << toCString((mikan::TCharStr) seedTypes[pSitePosIdx]) << "\t";
     mOFile1 << score << "\t";
+    mOFile1 << 0;
     mOFile1 << std::endl;
 
 }
@@ -83,6 +85,16 @@ void TSSVMCore::write_rna_score_tab(mikan::TCharStr const &pMiRNAId) {
     const seqan::String<int> &siteCount = mRNAScores.get_site_num();
     mikan::TMRNAPosSet &uniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
 
+    if (mPrintRNAheader) {
+        mOFile2 << "# miRNA name, ";
+        mOFile2 << "mRNA name, ";
+        mOFile2 << "number of sites, ";
+        mOFile2 << "score 1 (discriminant value), ";
+        mOFile2 << "score 2 (not used)";
+        mOFile2 << std::endl;
+        mPrintRNAheader = false;
+    }
+
     std::multimap<float, unsigned> sortedMRNAByScore;
     for (unsigned i = 0; i < length(mRNAWithSites.mEffectiveRNAs); i++) {
         if (!mRNAWithSites.mEffectiveRNAs[i]) {
@@ -100,6 +112,7 @@ void TSSVMCore::write_rna_score_tab(mikan::TCharStr const &pMiRNAId) {
         mOFile2 << toCString((mikan::TCharStr) mMRNAIds[uniqRNAPosSet[(*itPos).second]]) << "\t";
         mOFile2 << siteCount[(*itPos).second] << "\t";
         mOFile2 << score << "\t";
+        mOFile2 << 0;
         mOFile2 << std::endl;
     }
 }

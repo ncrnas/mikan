@@ -1,29 +1,29 @@
-# miRNA name, RNA name, start (1-base), end (1-base), seed type, score (always 0)
-hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer	16	23	8mer	0	
-hsa-miR-124 MIMAT0000422	hg18_refgene test2_7mer-m8	16	23	7mer-m8	0	
-hsa-miR-124 MIMAT0000422	hg18_refgene test3_7mer-a1	16	23	7mer-A1	0	
-hsa-miR-124 MIMAT0000422	hg18_refgene test5_6mer3	16	23	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test1_8mer	107	114	7mer-m8	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test1_8mer	398	405	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test1_8mer	1218	1225	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test1_8mer	1591	1598	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test2_7mer-m8	107	114	7mer-m8	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test2_7mer-m8	398	405	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test2_7mer-m8	1218	1225	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test2_7mer-m8	1591	1598	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test3_7mer-a1	107	114	7mer-m8	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test3_7mer-a1	398	405	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test3_7mer-a1	1218	1225	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test3_7mer-a1	1591	1598	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test4_6mer1	107	114	7mer-m8	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test4_6mer1	398	405	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test4_6mer1	1218	1225	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test4_6mer1	1591	1598	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer2	107	114	7mer-m8	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer2	398	405	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer2	1218	1225	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer2	1591	1598	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer3	107	114	7mer-m8	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer3	398	405	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer3	1218	1225	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer3	1591	1598	6mer	0	
+# miRNA name, mRNA name, start (1-base), end (1-base), seed type, score 1 (not used), score 2 (not used)
+hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer	16	22	8mer	0	0
+hsa-miR-124 MIMAT0000422	hg18_refgene test2_7mer-m8	16	22	7mer-m8	0	0
+hsa-miR-124 MIMAT0000422	hg18_refgene test3_7mer-a1	16	22	7mer-A1	0	0
+hsa-miR-124 MIMAT0000422	hg18_refgene test5_6mer3	16	22	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test1_8mer	107	113	7mer-m8	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test1_8mer	398	404	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test1_8mer	1218	1224	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test1_8mer	1591	1597	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test2_7mer-m8	107	113	7mer-m8	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test2_7mer-m8	398	404	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test2_7mer-m8	1218	1224	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test2_7mer-m8	1591	1597	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test3_7mer-a1	107	113	7mer-m8	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test3_7mer-a1	398	404	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test3_7mer-a1	1218	1224	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test3_7mer-a1	1591	1597	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test4_6mer1	107	113	7mer-m8	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test4_6mer1	398	404	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test4_6mer1	1218	1224	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test4_6mer1	1591	1597	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer2	107	113	7mer-m8	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer2	398	404	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer2	1218	1224	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer2	1591	1597	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer3	107	113	7mer-m8	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer3	398	404	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer3	1218	1224	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer3	1591	1597	6mer	0	0

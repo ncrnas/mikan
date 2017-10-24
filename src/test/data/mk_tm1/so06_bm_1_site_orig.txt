@@ -1,5 +1,5 @@
-# miRNA name, RNA name, start (1-base), end (1-base), seed type, score (always 0)
-hsa-miR-124 MIMAT0000422	TS_005_BM4_25_25_30_31	27	34	6mer	0	
-hsa-miR-124 MIMAT0000422	TS_006_BM4A1_25_25_30_31	27	34	6mer	0	
-hsa-miR-124 MIMAT0000422	TS_005_BM2_25_25_30_31	27	34	6mer	0	
-hsa-miR-124 MIMAT0000422	TS_006_BM2A1_25_25_30_31	27	34	6mer	0	
+# miRNA name, mRNA name, start (1-base), end (1-base), seed type, score 1 (not used), score 2 (not used)
+hsa-miR-124 MIMAT0000422	TS_005_BM4_25_25_30_31	27	33	6mer	0	0
+hsa-miR-124 MIMAT0000422	TS_006_BM4A1_25_25_30_31	27	33	6mer	0	0
+hsa-miR-124 MIMAT0000422	TS_005_BM2_25_25_30_31	27	33	6mer	0	0
+hsa-miR-124 MIMAT0000422	TS_006_BM2A1_25_25_30_31	27	33	6mer	0	0

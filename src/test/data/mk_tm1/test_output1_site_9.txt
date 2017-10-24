@@ -1,43 +1,43 @@
-# miRNA name, RNA name, start (1-base), end (1-base), seed type, score (always 0)
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	118	125	6mer	0	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	787	794	7mer-A1	0	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1091	1098	6mer	0	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1208	1215	6mer	0	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1434	1441	7mer-m8	0	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1452	1459	6mer	0	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1521	1528	6mer	0	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1534	1541	7mer-m8	0	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1648	1655	7mer-A1	0	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1730	1737	7mer-m8	0	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	2195	2202	6mer	0	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	2456	2463	6mer	0	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	2480	2487	6mer	0	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	5467	5474	6mer	0	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	5734	5741	6mer	0	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	5970	5977	6mer	0	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	6322	6329	6mer	0	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	6351	6358	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	608	615	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	717	724	7mer-A1	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	795	802	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1410	1417	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1479	1486	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	2148	2155	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	2230	2237	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	2404	2411	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	2443	2450	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	2467	2474	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	2508	2515	7mer-m8	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	2516	2523	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	4055	4062	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	4186	4193	7mer-A1	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	4242	4249	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	4498	4505	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	4570	4577	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	4772	4779	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	4982	4989	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	5018	5025	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	5028	5035	8mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	5101	5108	7mer-A1	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	5646	5653	6mer	0	
-hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	5940	5947	6mer	0	
+# miRNA name, mRNA name, start (1-base), end (1-base), seed type, score 1 (not used), score 2 (not used)
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	118	124	6mer	0	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	787	793	7mer-A1	0	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1091	1097	6mer	0	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1208	1214	6mer	0	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1434	1440	7mer-m8	0	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1452	1458	6mer	0	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1521	1527	6mer	0	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1534	1540	7mer-m8	0	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1648	1654	7mer-A1	0	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1730	1736	7mer-m8	0	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	2195	2201	6mer	0	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	2456	2462	6mer	0	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	2480	2486	6mer	0	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	5467	5473	6mer	0	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	5734	5740	6mer	0	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	5970	5976	6mer	0	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	6322	6328	6mer	0	0
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	6351	6357	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	608	614	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	717	723	7mer-A1	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	795	801	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1410	1416	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1479	1485	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	2148	2154	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	2230	2236	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	2404	2410	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	2443	2449	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	2467	2473	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	2508	2514	7mer-m8	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	2516	2522	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	4055	4061	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	4186	4192	7mer-A1	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	4242	4248	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	4498	4504	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	4570	4576	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	4772	4778	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	4982	4988	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	5018	5024	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	5028	5034	8mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	5101	5107	7mer-A1	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	5646	5652	6mer	0	0
+hsa-miR-1 MIMAT0000416	hg18_refGene NM_001259 range=chr7:92072173-92082389 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	5940	5946	6mer	0	0

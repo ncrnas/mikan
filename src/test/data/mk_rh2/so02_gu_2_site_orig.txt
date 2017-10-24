@@ -1,4 +1,4 @@
-# miRNA name, RNA name, start (1-base), end (1-base), seed type, score (MFE), score (normalized)
+# miRNA name, mRNA name, start (1-base), end (1-base), seed type, score 1 (MFE), score 2 (normalized)
 hsa-miR-1 MIMAT0000416	TS_001_7merGUM_24_25_30_31	25	31	7mer_GUM	-25.7	3.91961
 hsa-miR-1 MIMAT0000416	TS_002_7merGUMA1_24_25_30_31	25	31	7mer_GUM	-27.8	4.23989
 hsa-miR-1 MIMAT0000416	TS_003_8merGUM_23_25_30_31	25	31	7mer_GUM	-27.4	4.17888

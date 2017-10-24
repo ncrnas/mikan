@@ -1,1 +1,2 @@
-hsa-miR-124 MIMAT0000422	TS_002_8merA1MMGU_23_25_30_31	1	-0.31605	
+# miRNA name, mRNA name, number of sites, score 1 (context score), score 2 (not used)
+hsa-miR-124 MIMAT0000422	TS_002_8merA1MMGU_23_25_30_31	1	-0.31605	0

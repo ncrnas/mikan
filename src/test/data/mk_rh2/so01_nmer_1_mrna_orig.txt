@@ -1,3 +1,4 @@
+# miRNA name, mRNA name, number of sites, score 1 (MFE), score 2 (normalized)
 hsa-miR-124 MIMAT0000422	TS_023_7merM8_1_2_7_8	1	-16	3.0811
 hsa-miR-124 MIMAT0000422	TS_024_7merM8_13_14_19_20	1	-16.2	2.68201
 hsa-miR-124 MIMAT0000422	TS_025_7merM8_14_15_20_21	1	-16.2	2.66151

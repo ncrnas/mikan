@@ -1,4 +1,4 @@
-# miRNA name, RNA name, start (1-base), end (1-base), seed type, score (MFE), score (normalized)
+# miRNA name, mRNA name, start (1-base), end (1-base), seed type, score 1 (MFE), score 2 (normalized)
 hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer	62	68	7mer	-19.1	2.76501
 hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer	112	118	7mer	-19.1	2.76501
 hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer2	62	68	7mer	-19.1	2.76501

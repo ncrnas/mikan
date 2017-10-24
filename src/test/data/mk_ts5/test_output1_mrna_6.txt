@@ -1,1 +1,2 @@
-hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer	1	-0.1591	
+# miRNA name, mRNA name, number of sites, score 1 (context score), score 2 (not used)
+hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer	1	-0.1591	0

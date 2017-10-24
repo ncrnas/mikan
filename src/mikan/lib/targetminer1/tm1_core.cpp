@@ -22,15 +22,16 @@ void TM1Core::write_site_score_tab(mikan::TCharStr const &pMiRNAId, unsigned pRN
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
 
     int seedStart = sitePos[pSitePosIdx] + 1;
-    int seedEnd = seedStart + 7;
+    int seedEnd = seedStart + 6;
 
     if (mPrintSiteHeader) {
         mOFile1 << "# miRNA name, ";
-        mOFile1 << "RNA name, ";
+        mOFile1 << "mRNA name, ";
         mOFile1 << "start (1-base), ";
         mOFile1 << "end (1-base), ";
         mOFile1 << "seed type, ";
-        mOFile1 << "score (always 0)";
+        mOFile1 << "score 1 (not used), ";
+        mOFile1 << "score 2 (not used)";
         mOFile1 << std::endl;
         mPrintSiteHeader = false;
     }
@@ -41,6 +42,7 @@ void TM1Core::write_site_score_tab(mikan::TCharStr const &pMiRNAId, unsigned pRN
     mOFile1 << seedEnd << "\t";
     mOFile1 << toCString((mikan::TCharStr) seedTypes[pSitePosIdx]) << "\t";
     mOFile1 << 0 << "\t";
+    mOFile1 << 0;
     mOFile1 << std::endl;
 
 }
@@ -72,6 +74,16 @@ void TM1Core::write_rna_score_tab(mikan::TCharStr const &pMiRNAId) {
     typedef std::pair<float, unsigned> TPosPair;
     TItMap itPos;
     std::multimap<double, unsigned> sortedMRNAByScore;
+
+    if (mPrintRNAheader) {
+        mOFile2 << "# miRNA name, ";
+        mOFile2 << "mRNA name, ";
+        mOFile2 << "number of sites, ";
+        mOFile2 << "score 1 (discriminant value), ";
+        mOFile2 << "score 2 (predicted label)";
+        mOFile2 << std::endl;
+        mPrintRNAheader = false;
+    }
 
     for (unsigned i = 0; i < length(mRNAWithSites.mEffectiveRNAs); ++i) {
         if (!mRNAWithSites.mEffectiveRNAs[i]) {
@@ -108,7 +120,7 @@ int TM1Core::write_alignment(mikan::TCharStr const &pMiRNAId) {
 
         seedType = mSeedTypes[i];
         seedStart = sitePos[i] + 1;
-        seedEnd = seedStart + 7;
+        seedEnd = seedStart + 6;
 
         std::cout << "### " << count + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
         mSiteScores.write_alignment(i);

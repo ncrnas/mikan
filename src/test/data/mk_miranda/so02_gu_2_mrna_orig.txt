@@ -1,3 +1,4 @@
+# miRNA name, mRNA name, number of sites, score 1 (alignment), score 2 (MFE)
 hsa-miR-1 MIMAT0000416	TS_001_7merGUM_24_25_30_31	1	160	-20.88
 hsa-miR-1 MIMAT0000416	TS_002_7merGUMA1_24_25_30_31	1	160	-23.56
 hsa-miR-1 MIMAT0000416	TS_003_8merGUM_23_25_30_31	1	168	-23.02

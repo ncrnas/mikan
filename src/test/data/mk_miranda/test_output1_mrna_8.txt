@@ -1,3 +1,4 @@
+# miRNA name, mRNA name, number of sites, score 1 (alignment), score 2 (MFE)
 hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer_7mer-m8_6mer1	1	146	-15.01
 hsa-miR-124 MIMAT0000422	hg18_refgene test2_7mer-m8_8mer_6mer1	1	146	-15.01
 hsa-miR-124 MIMAT0000422	hg18_refgene test3_7mer-A1_8mer_7mer-m8	1	146	-15.01

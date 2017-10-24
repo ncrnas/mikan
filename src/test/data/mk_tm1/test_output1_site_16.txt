@@ -1,7 +1,7 @@
-# miRNA name, RNA name, start (1-base), end (1-base), seed type, score (always 0)
-hsa-miR-124 MIMAT0000422	hg18_refgene_test1_8merx1	62	69	8mer	0	
-hsa-miR-124 MIMAT0000422	hg18_refgene_test1_8mer+7mer-m8	62	69	8mer	0	
-hsa-miR-124 MIMAT0000422	hg18_refgene_test1_8mer+7mer-m8	112	119	7mer-m8	0	
-hsa-miR-124 MIMAT0000422	hg18_refgene_test1_8mer+7mer-m8+6mer	62	69	8mer	0	
-hsa-miR-124 MIMAT0000422	hg18_refgene_test1_8mer+7mer-m8+6mer	112	119	7mer-m8	0	
-hsa-miR-124 MIMAT0000422	hg18_refgene_test1_8mer+7mer-m8+6mer	162	169	6mer	0	
+# miRNA name, mRNA name, start (1-base), end (1-base), seed type, score 1 (not used), score 2 (not used)
+hsa-miR-124 MIMAT0000422	hg18_refgene_test1_8merx1	62	68	8mer	0	0
+hsa-miR-124 MIMAT0000422	hg18_refgene_test1_8mer+7mer-m8	62	68	8mer	0	0
+hsa-miR-124 MIMAT0000422	hg18_refgene_test1_8mer+7mer-m8	112	118	7mer-m8	0	0
+hsa-miR-124 MIMAT0000422	hg18_refgene_test1_8mer+7mer-m8+6mer	62	68	8mer	0	0
+hsa-miR-124 MIMAT0000422	hg18_refgene_test1_8mer+7mer-m8+6mer	112	118	7mer-m8	0	0
+hsa-miR-124 MIMAT0000422	hg18_refgene_test1_8mer+7mer-m8+6mer	162	168	6mer	0	0

@@ -1,3 +1,4 @@
+# miRNA name, mRNA name, number of sites, score 1 (discriminant value), score 2 (predicted label)
 hsa-miR-124 MIMAT0000422	hg18_refgene test3_7mer-A1_8mer_7mer-m8	3	0.263	1
 hsa-miR-124 MIMAT0000422	hg18_refgene test2_7mer-m8_8mer_6mer1	3	0.164	1
 hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer_7mer-m8_6mer1	3	0.139	1

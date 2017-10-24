@@ -1,2 +1,3 @@
-hsa-miR-1 MIMAT0000416	TS_002_7merGUMA1_24_25_30_31	1	-0.36915	
-hsa-miR-1 MIMAT0000416	TS_004_8merGUMA1_22_25_30_31	1	-0.36915	
+# miRNA name, mRNA name, number of sites, score 1 (context score), score 2 (not used)
+hsa-miR-1 MIMAT0000416	TS_002_7merGUMA1_24_25_30_31	1	-0.36915	0
+hsa-miR-1 MIMAT0000416	TS_004_8merGUMA1_22_25_30_31	1	-0.36915	0

@@ -26,11 +26,12 @@ void TS5Core::write_site_score_tab(mikan::TCharStr const &pMiRNAId, unsigned pRN
 
     if (mPrintSiteHeader) {
         mOFile1 << "# miRNA name, ";
-        mOFile1 << "RNA name, ";
+        mOFile1 << "mRNA name, ";
         mOFile1 << "start (1-base), ";
         mOFile1 << "end (1-base), ";
         mOFile1 << "seed type, ";
-        mOFile1 << "score (context score)";
+        mOFile1 << "score 1 (context score), ";
+        mOFile1 << "score 2 (not used)";
         mOFile1 << std::endl;
         mPrintSiteHeader = false;
     }
@@ -51,6 +52,7 @@ void TS5Core::write_site_score_tab(mikan::TCharStr const &pMiRNAId, unsigned pRN
     mOFile1 << seedEnd << "\t";
     mOFile1 << toCString((mikan::TCharStr) seedTypes[pSitePosIdx]) << "\t";
     mOFile1 << mSiteScores.get_score(pSitePosIdx) << "\t";
+    mOFile1 << 0;
     mOFile1 << std::endl;
 
 }
@@ -90,6 +92,16 @@ void TS5Core::write_rna_score_tab(mikan::TCharStr const &pMiRNAId) {
     TItMap itPos;
     std::multimap<double, unsigned> sortedMRNAByScore;
 
+    if (mPrintRNAheader) {
+        mOFile2 << "# miRNA name, ";
+        mOFile2 << "mRNA name, ";
+        mOFile2 << "number of sites, ";
+        mOFile2 << "score 1 (context score), ";
+        mOFile2 << "score 2 (not used)";
+        mOFile2 << std::endl;
+        mPrintRNAheader = false;
+    }
+
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
         sortedMRNAByScore.insert(TPosPair((float) totalScores[i], i));
     }
@@ -99,6 +111,7 @@ void TS5Core::write_rna_score_tab(mikan::TCharStr const &pMiRNAId) {
         mOFile2 << toCString((mikan::TCharStr) mMRNAIds[mRNAPos[(*itPos).second]]) << "\t";
         mOFile2 << siteNum[(*itPos).second] << "\t";
         mOFile2 << totalScores[(*itPos).second] << "\t";
+        mOFile2 << 0;
         mOFile2 << std::endl;
     }
 }

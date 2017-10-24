@@ -1,3 +1,4 @@
+# miRNA name, mRNA name, number of sites, score 1 (discriminant value), score 2 (predicted label)
 hsa-miR-1 MIMAT0000416	TS_004_8merA1_25_26_31_32	1	-0.248	-1
 hsa-miR-1 MIMAT0000416	TS_003_7merM8_25_26_31_32	1	-0.445	-1
 hsa-miR-1 MIMAT0000416	TS_005_8merM8_24_26_31_32	1	-0.449	-1
