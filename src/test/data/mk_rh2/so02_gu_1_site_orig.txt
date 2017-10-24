@@ -1,3 +1,4 @@
+# miRNA name, RNA name, start (1-base), end (1-base), seed type, score (MFE), score (normalized)
 hsa-miR-124 MIMAT0000422	TS_001_7mer_24_25_30_31	25	31	7mer	-28.7	4.44172
 hsa-miR-124 MIMAT0000422	TS_003_GUT7merMM2_24_25_30_31	25	31	7mer_GUT	-26.4	4.08576
 hsa-miR-124 MIMAT0000422	TS_004_GUT7merA1MM2_24_25_30_31	25	31	7mer_GUT	-28.2	4.36433

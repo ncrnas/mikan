@@ -1,3 +1,4 @@
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_005498 range=chr19:10544348-10544741 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	87	93	6mer	0	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_005498 range=chr19:10544348-10544741 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	274	280	7mer-m8	0	
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_005498 range=chr19:10544348-10544741 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	292	298	7mer-A1	0	
+# miRNA name, RNA name, start (1-base), end (1-base), seed type, score (always 0)
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_005498 range=chr19:10544348-10544741 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	88	95	6mer	0	
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_005498 range=chr19:10544348-10544741 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	275	282	7mer-m8	0	
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_005498 range=chr19:10544348-10544741 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	293	300	7mer-A1	0	

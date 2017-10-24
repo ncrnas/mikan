@@ -28,6 +28,8 @@ public:
     bool mOutputSite;
     bool mOutputRNA;
     bool mOutputAlign;
+    bool mPrintSiteHeader;
+    bool mPrintRNAheader;
 
     mikan::TCharStr mOFileSite;
     mikan::TCharStr mOFileRNA;
@@ -52,6 +54,8 @@ public:
             mOutputSite(true),
             mOutputRNA(true),
             mOutputAlign(true),
+            mPrintSiteHeader(true),
+            mPrintRNAheader(true),
             mOpts(pOpts),
             mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs),
             mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs),

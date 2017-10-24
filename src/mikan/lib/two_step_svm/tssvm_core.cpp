@@ -23,6 +23,17 @@ void TSSVMCore::write_site_score_tab(mikan::TCharStr const &pMiRNAId, unsigned p
     const mikan::TCharSet &seedTypes = mSeedSites.get_seed_types();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
 
+    if (mPrintSiteHeader) {
+        mOFile1 << "# miRNA name, ";
+        mOFile1 << "RNA name, ";
+        mOFile1 << "start (1-base), ";
+        mOFile1 << "end (1-base), ";
+        mOFile1 << "seed type, ";
+        mOFile1 << "score";
+        mOFile1 << std::endl;
+        mPrintSiteHeader = false;
+    }
+
     mikan::TCharStr seedType = seedTypes[pSitePosIdx];
     int seedStart = sitePos[pSitePosIdx];
     if (seedType == "7mer-A1") {
@@ -102,6 +113,7 @@ int TSSVMCore::write_alignment(mikan::TCharStr const &pMiRNAId) {
 
     seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = mRNAWithSites.get_rna_site_pos_map();
 
+    unsigned padw = 19;
     unsigned count = 0;
 
     for (unsigned i = 0; i < length(mRNAWithSites.mEffectiveRNAs); i++) {
@@ -122,13 +134,20 @@ int TSSVMCore::write_alignment(mikan::TCharStr const &pMiRNAId) {
 
             std::cout << "### " << count + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
             mSiteScores.write_alignment(rnaSitePosMap[i][j]);
-            std::cout << "  miRNA:                " << toCString(pMiRNAId) << std::endl;
-            std::cout << "  mRNA:                 ";
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "miRNA: " << toCString(pMiRNAId) << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "mRNA: ";
             std::cout << toCString((mikan::TCharStr) mMRNAIds[mRNAPos[rnaSitePosMap[i][j]]]) << std::endl;
-            std::cout << "  seed type:            " << toCString(seedType) << std::endl;
-            std::cout << "  position(seed start): " << seedStart + 1 << std::endl;
-            std::cout << "  site level score:     " << scores[rnaSitePosMap[i][j]];
-            std::cout << std::endl << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "seed type: " << toCString(seedType) << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "start (1-base): " << seedStart + 1 << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "end (1-base): " << seedStart + 7 << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "site level score: " << scores[rnaSitePosMap[i][j]] << std::endl;
+            std::cout << std::endl;
 
             ++count;
         }

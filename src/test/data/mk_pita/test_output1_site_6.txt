@@ -1,3 +1,4 @@
+# miRNA name, RNA name, start (1-base), end (1-base), seed type, score (ddG)
 hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer	720	726	8mer_MMGU	6.38	
 hsa-miR-124 MIMAT0000422	hg18_refgene test2_7mer-m8	720	726	8mer_MMGU	6.38	
 hsa-miR-124 MIMAT0000422	hg18_refgene test3_7mer-a1	720	726	8mer_MMGU	6.38	

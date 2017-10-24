@@ -1,3 +1,4 @@
+# miRNA name, RNA name, start (1-base), end (1-base), seed type, score (ddG)
 hsa-miR-124 MIMAT0000422	TS_001_8merMMGU_23_25_30_31	25	31	6mer	-17.14	
 hsa-miR-124 MIMAT0000422	TS_002_8merA1MMGU_23_25_30_31	25	31	6mer	-17.5	
 hsa-miR-124 MIMAT0000422	TS_003_GUT18merMM-1_23_25_30_31	25	31	8mer_MMGU	-16.11	

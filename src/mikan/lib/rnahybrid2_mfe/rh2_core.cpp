@@ -27,6 +27,18 @@ void RH2Core::write_site_score_tab(mikan::TCharStr const &pMiRNAId, unsigned pRN
     float score = mSiteScores.get_score(pSitePosIdx);
     score = roundf(score * 10.0f) / 10.0f;
 
+    if (mPrintSiteHeader) {
+        mOFile1 << "# miRNA name, ";
+        mOFile1 << "RNA name, ";
+        mOFile1 << "start (1-base), ";
+        mOFile1 << "end (1-base), ";
+        mOFile1 << "seed type, ";
+        mOFile1 << "score (MFE), ";
+        mOFile1 << "score (normalized)";
+        mOFile1 << std::endl;
+        mPrintSiteHeader = false;
+    }
+
     mOFile1 << toCString(pMiRNAId) << "\t";
     mOFile1 << toCString((mikan::TCharStr) mMRNAIds[pRNAPosIdx]) << "\t";
     mOFile1 << seedStart + 1 << "\t";
@@ -83,6 +95,8 @@ int RH2Core::write_alignment(mikan::TCharStr const &pMiRNAId) {
     seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = mRNAWithSites.get_rna_site_pos_map();
     mikan::TMRNAPosSet &uniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
 
+    unsigned padw = 19;
+
     for (unsigned i = 0; i < length(mRNAWithSites.mEffectiveRNAs); i++) {
         if (!mRNAWithSites.mEffectiveRNAs[i]) {
             continue;
@@ -102,17 +116,21 @@ int RH2Core::write_alignment(mikan::TCharStr const &pMiRNAId) {
 
             std::cout << "### " << count + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
             mSiteScores.write_alignment(rnaSitePosMap[i][j]);
-            std::cout << "  miRNA:               " << toCString(pMiRNAId) << std::endl;
-            std::cout << "  mRNA:                " << toCString((mikan::TCharStr) mMRNAIds[uniqRNAPosSet[i]])
-                      << std::endl;
-            std::cout << "  seed type:           " << toCString((mikan::TCharStr) seedTypes[rnaSitePosMap[i][j]])
-                      << std::endl;
-            std::cout << "  position(target 5'): " << mSiteScores.get_wide_site_start(rnaSitePosMap[i][j]) + 1;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "miRNA: " << toCString(pMiRNAId) << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "mRNA: " << toCString((mikan::TCharStr) mMRNAIds[uniqRNAPosSet[i]]) << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "seed type: " << toCString((mikan::TCharStr) seedTypes[rnaSitePosMap[i][j]])  << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "start (1-base): " << seedStart + 1 << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "end (1-base): " << seedStart + 7 << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "mfe: " << score << " kcal/mol" << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "normalized score: " << mSiteScores.get_norm_score(rnaSitePosMap[i][j]) << std::endl;
             std::cout << std::endl;
-            std::cout << "  position(seed):      " << seedStart + 1 << std::endl;
-            std::cout << "  mfe:                 " << score << " kcal/mol" << std::endl;
-            std::cout << "  normalized score:    " << mSiteScores.get_norm_score(rnaSitePosMap[i][j]);
-            std::cout << std::endl << std::endl;
 
             ++count;
         }

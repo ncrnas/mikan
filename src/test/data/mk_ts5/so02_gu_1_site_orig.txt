@@ -1,1 +1,2 @@
+# miRNA name, RNA name, start (1-base), end (1-base), seed type, score (context score)
 hsa-miR-124 MIMAT0000422	TS_001_7mer_24_25_30_31	24	30	7mer-m8	-0.4145	

@@ -21,8 +21,19 @@ void TM1Core::write_site_score_tab(mikan::TCharStr const &pMiRNAId, unsigned pRN
     const mikan::TCharSet &seedTypes = mSeedSites.get_seed_types();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
 
-    int seedStart = sitePos[pSitePosIdx];
-    int seedEnd = seedStart + 6;
+    int seedStart = sitePos[pSitePosIdx] + 1;
+    int seedEnd = seedStart + 7;
+
+    if (mPrintSiteHeader) {
+        mOFile1 << "# miRNA name, ";
+        mOFile1 << "RNA name, ";
+        mOFile1 << "start (1-base), ";
+        mOFile1 << "end (1-base), ";
+        mOFile1 << "seed type, ";
+        mOFile1 << "score (always 0)";
+        mOFile1 << std::endl;
+        mPrintSiteHeader = false;
+    }
 
     mOFile1 << toCString(pMiRNAId) << "\t";
     mOFile1 << toCString((mikan::TCharStr) mMRNAIds[pRNAPosIdx]) << "\t";
@@ -84,6 +95,8 @@ int TM1Core::write_alignment(mikan::TCharStr const &pMiRNAId) {
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
     const mikan::TCharSet &mSeedTypes = mSeedSites.get_seed_types();
 
+    unsigned padw = 17;
+
     mikan::TCharStr seedType;
     int seedStart, seedEnd;
     int count = 0;
@@ -94,18 +107,22 @@ int TM1Core::write_alignment(mikan::TCharStr const &pMiRNAId) {
         }
 
         seedType = mSeedTypes[i];
-        seedStart = sitePos[i];
-        seedEnd = seedStart + 6;
+        seedStart = sitePos[i] + 1;
+        seedEnd = seedStart + 7;
 
         std::cout << "### " << count + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
         mSiteScores.write_alignment(i);
-        std::cout << "  miRNA:                " << toCString(pMiRNAId) << std::endl;
-        std::cout << "  mRNA:                 " << toCString((mikan::TCharStr) mMRNAIds[mRNAPos[i]]) << std::endl;
-        std::cout << "  seed type:            " << toCString(seedType) << std::endl;
+        std::cout << std::right << std::setw(padw) << std::setfill(' ');
+        std::cout << "miRNA: " << toCString(pMiRNAId) << std::endl;
+        std::cout << std::right << std::setw(padw) << std::setfill(' ');
+        std::cout << "mRNA: " << toCString((mikan::TCharStr) mMRNAIds[mRNAPos[i]]) << std::endl;
+        std::cout << std::right << std::setw(padw) << std::setfill(' ');
+        std::cout << "seed type: " << toCString(seedType) << std::endl;
+        std::cout << std::right << std::setw(padw) << std::setfill(' ');
+        std::cout << "start (1-base): " << seedStart << std::endl;
+        std::cout << std::right << std::setw(padw) << std::setfill(' ');
+        std::cout << "end (1-base): " << seedEnd << std::endl;
         std::cout << std::endl;
-        std::cout << "  position(seed start): " << seedStart << std::endl;
-        std::cout << "  position(seed end):   " << seedEnd << std::endl;
-        std::cout << std::endl << std::endl;
 
         ++count;
 

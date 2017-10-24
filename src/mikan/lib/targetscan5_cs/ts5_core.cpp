@@ -24,6 +24,17 @@ void TS5Core::write_site_score_tab(mikan::TCharStr const &pMiRNAId, unsigned pRN
     const mikan::TCharSet &seedTypes = mSeedSites.get_seed_types();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
 
+    if (mPrintSiteHeader) {
+        mOFile1 << "# miRNA name, ";
+        mOFile1 << "RNA name, ";
+        mOFile1 << "start (1-base), ";
+        mOFile1 << "end (1-base), ";
+        mOFile1 << "seed type, ";
+        mOFile1 << "score (context score)";
+        mOFile1 << std::endl;
+        mPrintSiteHeader = false;
+    }
+
     int seedStart = sitePos[pSitePosIdx];
     if (seedTypes[pSitePosIdx] == "7mer-A1") {
         seedStart += 1;
@@ -102,6 +113,8 @@ int TS5Core::write_alignment(mikan::TCharStr const &pMiRNAId) {
     int seedStart, seedEnd;
     int count = 0;
 
+    unsigned padw = 17;
+
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
         if (!mSiteScores.mEffectiveSites[i]) {
             continue;
@@ -119,13 +132,19 @@ int TS5Core::write_alignment(mikan::TCharStr const &pMiRNAId) {
 
         std::cout << "### " << count + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
         alignment.write_alignment(i);
-        std::cout << "  miRNA:                " << toCString(pMiRNAId) << std::endl;
-        std::cout << "  mRNA:                 " << toCString((mikan::TCharStr) mMRNAIds[mRNAPos[i]]) << std::endl;
-        std::cout << "  seed type:            " << seedTypes[i] << std::endl;
-        std::cout << "  position(seed start): " << seedStart << std::endl;
-        std::cout << "  position(seed end):   " << seedEnd << std::endl;
-        std::cout << "  context score:        " << mSiteScores.get_score(i);
-        std::cout << std::endl << std::endl;
+        std::cout << std::right << std::setw(padw) << std::setfill(' ');
+        std::cout << "miRNA: " << toCString(pMiRNAId) << std::endl;
+        std::cout << std::right << std::setw(padw) << std::setfill(' ');
+        std::cout << "mRNA: " << toCString((mikan::TCharStr) mMRNAIds[mRNAPos[i]]) << std::endl;
+        std::cout << std::right << std::setw(padw) << std::setfill(' ');
+        std::cout << "seed type: " << seedTypes[i] << std::endl;
+        std::cout << std::right << std::setw(padw) << std::setfill(' ');
+        std::cout << "start (1-base): " << seedStart << std::endl;
+        std::cout << std::right << std::setw(padw) << std::setfill(' ');
+        std::cout << "end (1-base): " << seedEnd << std::endl;
+        std::cout << std::right << std::setw(padw) << std::setfill(' ');
+        std::cout << "context score: " << mSiteScores.get_score(i) << std::endl;
+        std::cout << std::endl;
 
         ++count;
 

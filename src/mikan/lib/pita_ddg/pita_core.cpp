@@ -27,6 +27,17 @@ void PITACore::write_site_score_tab(mikan::TCharStr const &pMiRNAId, unsigned pR
     float score = mSiteScores.get_score(pSitePosIdx);
     score = roundf(score * 100.0f) / 100.0f;
 
+    if (mPrintSiteHeader) {
+        mOFile1 << "# miRNA name, ";
+        mOFile1 << "RNA name, ";
+        mOFile1 << "start (1-base), ";
+        mOFile1 << "end (1-base), ";
+        mOFile1 << "seed type, ";
+        mOFile1 << "score (ddG)";
+        mOFile1 << std::endl;
+        mPrintSiteHeader = false;
+    }
+
     mOFile1 << toCString(pMiRNAId) << "\t";
     mOFile1 << toCString((mikan::TCharStr) (mMRNAIds[pRNAPosIdx])) << "\t";
     mOFile1 << seedStart + 1 << "\t";
@@ -82,6 +93,7 @@ int PITACore::write_alignment(mikan::TCharStr const &pMiRNAId) {
     seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = mRNAWithSites.get_rna_site_pos_map();
     mikan::TMRNAPosSet &uniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
 
+    unsigned padw = 22;
     mikan::TCharStr seedType;
     float dGduplex;
     float dG5;
@@ -122,21 +134,30 @@ int PITACore::write_alignment(mikan::TCharStr const &pMiRNAId) {
 
             std::cout << "### " << count + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
             mSiteScores.print_alignment(rnaSitePosMap[i][j]);
-            std::cout << "  miRNA:               " << toCString(pMiRNAId) << std::endl;
-            std::cout << "  mRNA:                "
-                      << toCString((mikan::TCharStr) (mMRNAIds[mRNAPos[uniqRNAPosSet[i]]]));
-            std::cout << std::endl;
-            std::cout << "  seed type:           " << toCString((mikan::TCharStr) (seedTypes[rnaSitePosMap[i][j]]))
-                      << std::endl;
-            std::cout << "  position(start):     " << seedStart + 1 << std::endl;
-            std::cout << "  position(end):       " << seedStart + 1 + mikan::SEEDLEN << std::endl;
-            std::cout << "  ddG:                 " << score << std::endl;
-            std::cout << "  dGduplex(dG5 + dG3): " << dGduplex << std::endl;
-            std::cout << "  dG5:                 " << dG5 << std::endl;
-            std::cout << "  dG3:                 " << dG3 << std::endl;
-            std::cout << "  dGopen(dG0 - dG1):   " << dGopen << std::endl;
-            std::cout << "  dG0:                 " << dG0 << std::endl;
-            std::cout << "  dG1:                 " << dG1 << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "miRNA: " << toCString(pMiRNAId) << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "mRNA: " << toCString((mikan::TCharStr) (mMRNAIds[mRNAPos[uniqRNAPosSet[i]]])) << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "seed type: " << toCString((mikan::TCharStr) (seedTypes[rnaSitePosMap[i][j]])) << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "start (1-base): " << seedStart + 1 << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "end (1-base): " << seedStart + 1 + mikan::SEEDLEN << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "ddG: " << score << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "dGduplex(dG5 + dG3): " << dGduplex << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "dG5: " << dG5 << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "dG3: " << dG3 << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "dGopen(dG0 - dG1): " << dGopen << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "dG0: " << dG0 << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "dG1: " << dG1 << std::endl;
             std::cout << std::endl;
 
             ++count;

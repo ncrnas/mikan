@@ -57,6 +57,11 @@ int gtest_compare_two_files2(
             break;
         }
 
+        if (lines1[i][0] == '#' && lines2[i][0] == '#') {
+            EXPECT_STREQ(lines1[i].c_str(), lines2[i].c_str());
+            continue;
+        }
+
         std::vector<std::string> flds1;
         std::vector<std::string> flds2;
         split_line(lines1[i], flds1);
@@ -67,6 +72,9 @@ int gtest_compare_two_files2(
         EXPECT_EQ(flds1.size(), flds2.size());
 
         for (unsigned j = 0; j < flds1.size(); ++j) {
+            if (j >= flds2.size()) {
+                break;
+            }
             if (score_fld != 0 && j == score_fld) {
                 comp_scores(flds1[j], flds2[j], round_dec, ubound);
             } else {
@@ -99,12 +107,20 @@ int gtest_compare_two_files3(
             break;
         }
 
+        if (lines1[i][0] == '#' && lines2[i][0] == '#') {
+            EXPECT_STREQ(lines1[i].c_str(), lines2[i].c_str());
+            continue;
+        }
+
         std::vector<std::string> flds1;
         std::vector<std::string> flds2;
         split_line(lines1[i], flds1);
         split_line(lines2[i], flds2);
 
         for (unsigned j = 0; j < 2; ++j) {
+            if (j >= flds1.size() || j >= flds2.size()) {
+                break;
+            }
             if (uppercase) {
                 std::transform(flds1[j].begin(), flds1[j].end(), flds1[j].begin(), toupper);
                 std::transform(flds2[j].begin(), flds2[j].end(), flds2[j].begin(), toupper);

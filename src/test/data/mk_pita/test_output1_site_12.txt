@@ -1,3 +1,4 @@
+# miRNA name, RNA name, start (1-base), end (1-base), seed type, score (ddG)
 hsa-miR-3612*MIMAT0017989	NM_001256435*chr17_random*-*2420360*2422298*part1	101	107	8mer_MM	-10.68	
 hsa-miR-3612*MIMAT0017989	NM_001256435*chr17_random*-*2420360*2422298*part2	51	57	8mer_MM	-12.88	
 hsa-miR-3612*MIMAT0017989	NM_001256435*chr17_random*-*2420360*2422298*part3	101	107	8mer_MM	-7.53	
