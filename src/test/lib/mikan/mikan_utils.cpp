@@ -57,7 +57,7 @@ int gtest_compare_two_files2(
             break;
         }
 
-        if (lines1[i][0] == '#' && lines2[i][0] == '#') {
+        if (lines1[i][0] == '#' || lines2[i][0] == '#') {
             EXPECT_STREQ(lines1[i].c_str(), lines2[i].c_str());
             continue;
         }
@@ -107,7 +107,7 @@ int gtest_compare_two_files3(
             break;
         }
 
-        if (lines1[i][0] == '#' && lines2[i][0] == '#') {
+        if (lines1[i][0] == '#' || lines2[i][0] == '#') {
             EXPECT_STREQ(lines1[i].c_str(), lines2[i].c_str());
             continue;
         }
@@ -162,16 +162,26 @@ int gtest_compare_two_files4(
             break;
         }
 
+        if (lines1[i][0] == '#' || lines2[i][0] == '#') {
+            EXPECT_STREQ(lines1[i].c_str(), lines2[i].c_str());
+            continue;
+        }
+
         std::vector<std::string> flds1;
         std::vector<std::string> flds2;
         split_line(lines1[i], flds1);
         split_line(lines2[i], flds2);
 
 //        std::cout << lines1[i] << std::endl;
+//        std::cout << lines2[i] << std::endl;
 
         EXPECT_EQ(flds1.size(), flds2.size());
 
         for (unsigned j = 0; j < flds1.size(); ++j) {
+            if (j >= flds2.size()) {
+                break;
+            }
+
             if (score_fld != 0 && j == score_fld) {
                 comp_scores(flds1[j], flds2[j], round_dec, ubound);
             } else if (toolscore_fld2 != 0 && j == toolscore_fld2) {

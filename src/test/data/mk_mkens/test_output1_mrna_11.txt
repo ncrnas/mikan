@@ -1,0 +1,1 @@
+# miRNA name, mRNA name, number of sites, score 1 (mikan), score 2 (all)

@@ -206,9 +206,25 @@ void MKECore::write_site_score_tab(mikan::TCharStr const &pMiRNAId, unsigned pRN
     const mikan::TCharSet &seedTypes = mSeedSites.get_seed_types();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
 
+    if (mPrintSiteHeader) {
+        mOFile1 << "# miRNA name, ";
+        mOFile1 << "mRNA name, ";
+        mOFile1 << "start (1-base), ";
+        mOFile1 << "end (1-base), ";
+        mOFile1 << "seed type, ";
+        mOFile1 << "score 1 (mikan), ";
+        mOFile1 << "score 2 (all)";
+        mOFile1 << std::endl;
+        mPrintSiteHeader = false;
+    }
+
+    unsigned endPos = static_cast<unsigned>(sitePos[pSitePosIdx]) + 1;
+    unsigned startPos = endPos - 6;
+
     mOFile1 << toCString(pMiRNAId) << "\t";
     mOFile1 << toCString((mikan::TCharStr) mMRNAIds[pRNAPosIdx]) << "\t";
-    mOFile1 << static_cast<unsigned>(sitePos[pSitePosIdx]) << "\t";
+    mOFile1 << startPos << "\t";
+    mOFile1 << endPos << "\t";
     mOFile1 << toCString((mikan::TCharStr) seedTypes[pSitePosIdx]) << "\t";
     mOFile1 << mSiteScores.get_score(pSitePosIdx) << "\t";
     mOFile1 << toCString(mSiteScores.get_tool_score(pSitePosIdx));
@@ -241,6 +257,16 @@ void MKECore::write_rna_score_tab(mikan::TCharStr const &pMiRNAId) {
     TItMap itPos;
     std::multimap<double, unsigned> sortedMRNAByScore;
 
+    if (mPrintRNAheader) {
+        mOFile2 << "# miRNA name, ";
+        mOFile2 << "mRNA name, ";
+        mOFile2 << "number of sites, ";
+        mOFile2 << "score 1 (mikan), ";
+        mOFile2 << "score 2 (all)";
+        mOFile2 << std::endl;
+        mPrintRNAheader = false;
+    }
+
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
         if (!mRNAScores.mEffectiveRNAs[i]) {
             continue;
@@ -251,8 +277,8 @@ void MKECore::write_rna_score_tab(mikan::TCharStr const &pMiRNAId) {
     for (itPos = sortedMRNAByScore.begin(); itPos != sortedMRNAByScore.end(); ++itPos) {
         mOFile2 << toCString(pMiRNAId) << "\t";
         mOFile2 << toCString((mikan::TCharStr) mMRNAIds[mRNAPos[(*itPos).second]]) << "\t";
-        mOFile2 << totalScores[(*itPos).second] << "\t";
         mOFile2 << siteNum[(*itPos).second] << "\t";
+        mOFile2 << totalScores[(*itPos).second] << "\t";
         mOFile2 << toCString(mRNAScores.get_tool_score((*itPos).second));
         mOFile2 << std::endl;
     }
