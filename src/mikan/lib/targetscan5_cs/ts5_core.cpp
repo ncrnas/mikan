@@ -58,27 +58,26 @@ void TS5Core::prepare_rna_output(mikan::TCharStr const &pMiRNAId) {
     TItMap itPos;
     std::multimap<double, unsigned> sortedMRNAByScore;
 
-    if (mPrintRNAheader) {
-        mOFile2 << "# miRNA name, ";
-        mOFile2 << "mRNA name, ";
-        mOFile2 << "number of sites, ";
-        mOFile2 << "score 1 (context score), ";
-        mOFile2 << "score 2 (not used)";
-        mOFile2 << std::endl;
-        mPrintRNAheader = false;
-    }
+    std::string miRNAName = toCString(pMiRNAId);
+    std::string score1Name = "context score";
+    std::string score2Name = "not used";
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
         sortedMRNAByScore.insert(TPosPair((float) totalScores[i], i));
     }
 
     for (itPos = sortedMRNAByScore.begin(); itPos != sortedMRNAByScore.end(); ++itPos) {
-        mOFile2 << toCString(pMiRNAId) << "\t";
-        mOFile2 << toCString((mikan::TCharStr) mMRNAIds[mRNAPos[(*itPos).second]]) << "\t";
-        mOFile2 << siteNum[(*itPos).second] << "\t";
-        mOFile2 << totalScores[(*itPos).second] << "\t";
-        mOFile2 << 0;
-        mOFile2 << std::endl;
+        std::stringstream s1;
+        std::string mRNAName = toCString((mikan::TCharStr) mMRNAIds[mRNAPos[(*itPos).second]]);
+        s1 << totalScores[(*itPos).second];
+        std::string score1 = s1.str();
+        std::string score2 = "0";
+
+        if (mOpts.mGff) {
+        } else {
+            write_rna_score_tab(miRNAName, mRNAName, siteNum[(*itPos).second], score1Name, score1, score2Name, score2);
+        }
+
     }
 }
 

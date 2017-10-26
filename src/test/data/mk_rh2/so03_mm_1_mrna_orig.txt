@@ -1,1 +1,0 @@
-# miRNA name, mRNA name, number of sites, score 1 (MFE), score 2 (normalized)

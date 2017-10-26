@@ -47,26 +47,22 @@ void PITACore::prepare_rna_output(mikan::TCharStr const &pMiRNAId) {
     const seqan::String<int> &siteNum = mRNAScores.get_site_num();
     float score;
 
-    if (mPrintRNAheader) {
-        mOFile2 << "# miRNA name, ";
-        mOFile2 << "mRNA name, ";
-        mOFile2 << "number of sites, ";
-        mOFile2 << "score 1 (ddG), ";
-        mOFile2 << "score 2 (not used)";
-        mOFile2 << std::endl;
-        mPrintRNAheader = false;
-    }
+    std::string miRNAName = toCString(pMiRNAId);
+    std::string score1Name = "ddG";
+    std::string score2Name = "not used";
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
-        score = totalScores[i];
-        score = roundf(score * 100.0f) / 100.0f;
+        std::stringstream s1;
+        std::string mRNAName = toCString((mikan::TCharStr) mMRNAIds[mRNAPos[i]]);
+        s1 << roundf(totalScores[i] * 100.0f) / 100.0f;
+        std::string score1 = s1.str();
+        std::string score2 = "0";
 
-        mOFile2 << toCString(pMiRNAId) << "\t";
-        mOFile2 << toCString((mikan::TCharStr) (mMRNAIds[mRNAPos[i]])) << "\t";
-        mOFile2 << siteNum[i] << "\t";
-        mOFile2 << score << "\t";
-        mOFile2 << 0;
-        mOFile2 << std::endl;
+        if (mOpts.mGff) {
+        } else {
+            write_rna_score_tab(miRNAName, mRNAName, siteNum[i], score1Name, score1, score2Name, score2);
+        }
+
     }
 }
 

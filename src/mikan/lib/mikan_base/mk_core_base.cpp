@@ -168,4 +168,41 @@ void MKCoreBase::write_site_score_tab(
 
 }
 
+int MKCoreBase::write_rna_score(mikan::TCharStr const &pMiRNAId) {
+    int retVal = 0;
+
+    prepare_rna_output(pMiRNAId);
+
+    return retVal;
+}
+
+void MKCoreBase::write_rna_score_tab(
+        std::string &pMiRNAName,
+        std::string &pMRNAName,
+        unsigned pSiteNum,
+        std::string &pScore1Name,
+        std::string &pScore1,
+        std::string &pScore2Name,
+        std::string &pScore2) {
+
+    if (mPrintRNAheader) {
+        mOFile2 << "# miRNA name, ";
+        mOFile2 << "mRNA name, ";
+        mOFile2 << "number of sites, ";
+        mOFile2 << "score 1 (" << pScore1Name << "), ";
+        mOFile2 << "score 2 (" << pScore2Name << ")";
+        mOFile2 << std::endl;
+        mPrintRNAheader = false;
+    }
+
+
+    mOFile2 << pMiRNAName << "\t";
+    mOFile2 << pMRNAName << "\t";
+    mOFile2 << pSiteNum << "\t";
+    mOFile2 << pScore1 << "\t";
+    mOFile2 << pScore2;
+    mOFile2 << std::endl;
+
+}
+
 } // namespace mr3as

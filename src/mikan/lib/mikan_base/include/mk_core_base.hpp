@@ -113,15 +113,13 @@ protected:
                               std::string &pSeedType, std::string &pScore1Name, std::string &pScore1,
                               std::string &pScore2Name, std::string &pScore2);
 
-    int write_rna_score(mikan::TCharStr const &pMiRNAId) {
-        int retVal = 0;
-
-        prepare_rna_output(pMiRNAId);
-
-        return retVal;
-    }
+    int write_rna_score(mikan::TCharStr const &pMiRNAId);
 
     virtual void prepare_rna_output(mikan::TCharStr const &pMiRNAId) = 0;
+
+    void write_rna_score_tab(std::string &pMiRNAName, std::string &pMRNAName, unsigned pSiteNum,
+                             std::string &pScore1Name, std::string &pScore1,
+                             std::string &pScore2Name, std::string &pScore2);
 
     virtual int write_alignment(mikan::TCharStr const &pMiRNAId) = 0;
 

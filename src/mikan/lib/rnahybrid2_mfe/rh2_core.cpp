@@ -48,23 +48,23 @@ void RH2Core::prepare_rna_output(mikan::TCharStr const &pMiRNAId) {
     const seqan::String<int> &mRNAPos = mRNAScores.get_mrna_pos();
     const seqan::String<int> &siteNum = mRNAScores.get_site_num();
 
-    if (mPrintRNAheader) {
-        mOFile2 << "# miRNA name, ";
-        mOFile2 << "mRNA name, ";
-        mOFile2 << "number of sites, ";
-        mOFile2 << "score 1 (MFE), ";
-        mOFile2 << "score 2 (normalized)";
-        mOFile2 << std::endl;
-        mPrintRNAheader = false;
-    }
+    std::string miRNAName = toCString(pMiRNAId);
+    std::string score1Name = "MFE";
+    std::string score2Name = "normalized";
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
-        mOFile2 << toCString(pMiRNAId) << "\t";
-        mOFile2 << toCString((mikan::TCharStr) mMRNAIds[mRNAPos[i]]) << "\t";
-        mOFile2 << siteNum[i] << "\t";
-        mOFile2 << mfeScores[i] << "\t";
-        mOFile2 << normScores[i];
-        mOFile2 << std::endl;
+        std::stringstream s1, s2;
+        std::string mRNAName = toCString((mikan::TCharStr) mMRNAIds[mRNAPos[i]]);
+        s1 << mfeScores[i];
+        std::string score1 = s1.str();
+        s2 << normScores[i];
+        std::string score2 = s2.str();
+
+        if (mOpts.mGff) {
+        } else {
+            write_rna_score_tab(miRNAName, mRNAName, siteNum[i], score1Name, score1, score2Name, score2);
+        }
+
     }
 
 }

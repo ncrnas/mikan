@@ -47,20 +47,13 @@ void TSSVMCore::prepare_site_output(mikan::TCharStr const &pMiRNAId, unsigned pR
 void TSSVMCore::prepare_rna_output(mikan::TCharStr const &pMiRNAId) {
     typedef std::multimap<float, unsigned>::reverse_iterator TItMap;
     typedef std::pair<float, unsigned> TPosPair;
-
     const seqan::String<float> &scores = mRNAScores.get_scores();
-    const seqan::String<int> &siteCount = mRNAScores.get_site_num();
+    const seqan::String<int> &siteNum = mRNAScores.get_site_num();
     mikan::TMRNAPosSet &uniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
 
-    if (mPrintRNAheader) {
-        mOFile2 << "# miRNA name, ";
-        mOFile2 << "mRNA name, ";
-        mOFile2 << "number of sites, ";
-        mOFile2 << "score 1 (discriminant value), ";
-        mOFile2 << "score 2 (not used)";
-        mOFile2 << std::endl;
-        mPrintRNAheader = false;
-    }
+    std::string miRNAName = toCString(pMiRNAId);
+    std::string score1Name = "discriminant value";
+    std::string score2Name = "not used";
 
     std::multimap<float, unsigned> sortedMRNAByScore;
     for (unsigned i = 0; i < length(mRNAWithSites.mEffectiveRNAs); i++) {
@@ -72,15 +65,17 @@ void TSSVMCore::prepare_rna_output(mikan::TCharStr const &pMiRNAId) {
     }
 
     for (TItMap itPos = sortedMRNAByScore.rbegin(); itPos != sortedMRNAByScore.rend(); ++itPos) {
-        float score = scores[(*itPos).second];
-        score = roundf(score * 10000.0f) / 10000.0f;
+        std::stringstream s1;
+        std::string mRNAName = toCString((mikan::TCharStr) mMRNAIds[uniqRNAPosSet[(*itPos).second]]);
+        s1 << roundf(scores[(*itPos).second] * 10000.0f) / 10000.0f;
+        std::string score1 = s1.str();
+        std::string score2 = "0";
 
-        mOFile2 << toCString(pMiRNAId) << "\t";
-        mOFile2 << toCString((mikan::TCharStr) mMRNAIds[uniqRNAPosSet[(*itPos).second]]) << "\t";
-        mOFile2 << siteCount[(*itPos).second] << "\t";
-        mOFile2 << score << "\t";
-        mOFile2 << 0;
-        mOFile2 << std::endl;
+        if (mOpts.mGff) {
+        } else {
+            write_rna_score_tab(miRNAName, mRNAName, siteNum[(*itPos).second], score1Name, score1, score2Name, score2);
+        }
+
     }
 }
 

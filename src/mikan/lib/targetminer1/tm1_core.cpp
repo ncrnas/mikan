@@ -47,15 +47,9 @@ void TM1Core::prepare_rna_output(mikan::TCharStr const &pMiRNAId) {
     TItMap itPos;
     std::multimap<double, unsigned> sortedMRNAByScore;
 
-    if (mPrintRNAheader) {
-        mOFile2 << "# miRNA name, ";
-        mOFile2 << "mRNA name, ";
-        mOFile2 << "number of sites, ";
-        mOFile2 << "score 1 (discriminant value), ";
-        mOFile2 << "score 2 (predicted label)";
-        mOFile2 << std::endl;
-        mPrintRNAheader = false;
-    }
+    std::string miRNAName = toCString(pMiRNAId);
+    std::string score1Name = "discriminant value";
+    std::string score2Name = "predicted label";
 
     for (unsigned i = 0; i < length(mRNAWithSites.mEffectiveRNAs); ++i) {
         if (!mRNAWithSites.mEffectiveRNAs[i]) {
@@ -65,12 +59,18 @@ void TM1Core::prepare_rna_output(mikan::TCharStr const &pMiRNAId) {
     }
 
     for (itPos = sortedMRNAByScore.begin(); itPos != sortedMRNAByScore.end(); ++itPos) {
-        mOFile2 << toCString(pMiRNAId) << "\t";
-        mOFile2 << toCString((mikan::TCharStr) mMRNAIds[uniqRNAPosSet[(*itPos).second]]) << "\t";
-        mOFile2 << siteNum[(*itPos).second] << "\t";
-        mOFile2 << scores[(*itPos).second] << "\t";
-        mOFile2 << predictions[(*itPos).second];
-        mOFile2 << std::endl;
+        std::stringstream s1, s2;
+        std::string mRNAName = toCString((mikan::TCharStr) mMRNAIds[uniqRNAPosSet[(*itPos).second]]);
+        s1 << scores[(*itPos).second];
+        std::string score1 = s1.str();
+        s2 << predictions[(*itPos).second];
+        std::string score2 = s2.str();
+
+        if (mOpts.mGff) {
+        } else {
+            write_rna_score_tab(miRNAName, mRNAName, siteNum[(*itPos).second], score1Name, score1, score2Name, score2);
+        }
+
     }
 }
 
