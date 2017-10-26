@@ -111,13 +111,9 @@ private:
         }
     }
 
-    virtual void write_site_score_tab(mikan::TCharStr const &pMiRNAId, unsigned pRNAPosIdx, unsigned pSitePosIdx);
+    virtual void prepare_site_output(mikan::TCharStr const &pMiRNAId, unsigned pRNAPosIdx, unsigned pSitePosIdx);
 
-    virtual void write_site_score_gff(mikan::TCharStr const &pMiRNAId, unsigned pRNAPosIdx, unsigned pSitePosIdx);
-
-    virtual void write_rna_score_tab(mikan::TCharStr const &pMiRNAId);
-
-    virtual void write_rna_score_gff(mikan::TCharStr const &) { return; }
+    virtual void prepare_rna_output(mikan::TCharStr const &pMiRNAId);
 
     virtual int write_alignment(mikan::TCharStr const &) { return 0; }
 

@@ -106,4 +106,66 @@ int MKCoreBase::calculate_mirna_scores(unsigned pIdx) {
     return 0;
 }
 
+int MKCoreBase::write_site_score(
+        mikan::TCharStr const &pMiRNAId,
+        mikan::MKSeedSites &pSeedSites,
+        mikan::MKRMAWithSites &pRNAWithSites) {
+
+    seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = pRNAWithSites.get_rna_site_pos_map();
+    mikan::TMRNAPosSet &uniqRNAPosSet = pRNAWithSites.get_uniq_mrna_pos_set();
+
+    int retVal = 0;
+    int count = 0;
+    for (unsigned i = 0; i < length(pRNAWithSites.mEffectiveRNAs); i++) {
+        if (!pRNAWithSites.mEffectiveRNAs[i]) {
+            continue;
+        }
+
+        for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
+            if (!pSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
+                continue;
+            }
+            prepare_site_output(pMiRNAId, uniqRNAPosSet[i], rnaSitePosMap[i][j]);
+        }
+
+        ++count;
+    }
+
+    return retVal;
+}
+
+void MKCoreBase::write_site_score_tab(
+        std::string &pMiRNAName,
+        std::string &pMRNAName,
+        unsigned pStartPos,
+        unsigned pEndPos,
+        std::string &pSeedType,
+        std::string &pScore1Name,
+        std::string &pScore1,
+        std::string &pScore2Name,
+        std::string &pScore2) {
+
+    if (mPrintSiteHeader) {
+        mOFile1 << "# miRNA name, ";
+        mOFile1 << "mRNA name, ";
+        mOFile1 << "start (1-base), ";
+        mOFile1 << "end (1-base), ";
+        mOFile1 << "seed type, ";
+        mOFile1 << "score 1 (" << pScore1Name << "), ";
+        mOFile1 << "score 2 (" << pScore2Name << ")";
+        mOFile1 << std::endl;
+        mPrintSiteHeader = false;
+    }
+
+    mOFile1 << pMiRNAName << "\t";
+    mOFile1 << pMRNAName << "\t";
+    mOFile1 << pStartPos << "\t";
+    mOFile1 << pEndPos << "\t";
+    mOFile1 << pSeedType << "\t";
+    mOFile1 << pScore1 << "\t";
+    mOFile1 << pScore2;
+    mOFile1 << std::endl;
+
+}
+
 } // namespace mr3as
