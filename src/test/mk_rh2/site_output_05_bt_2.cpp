@@ -18,7 +18,7 @@ protected:
 };
 
 TEST_F(SiteOut05BT2A, comp_orig_mk) {
-    (void) mikan::MKCoreMain<rh2mfe::RH2Options, rh2mfe::RH2Core>(argc, (const char **) argv);
+    (void) mikan::MKMain<rh2mfe::RH2Options, rh2mfe::RH2Core>(argc, (const char **) argv);
     gtest_compare_two_files(o1file1, o2file1);
     gtest_compare_two_files(o1file2, o2file2);
 }
@@ -40,7 +40,7 @@ TEST_F(SiteOut05BT2B, comp_orig_mk) {
     argc = 6;
     argv[5] = (char *) "--overlap=orig";
 
-    (void) mikan::MKCoreMain<rh2mfe::RH2Options, rh2mfe::RH2Core>(argc, (const char **) argv);
+    (void) mikan::MKMain<rh2mfe::RH2Options, rh2mfe::RH2Core>(argc, (const char **) argv);
     gtest_compare_two_files(o1file1, o2file1);
     gtest_compare_two_files(o1file2, o2file2);
 }

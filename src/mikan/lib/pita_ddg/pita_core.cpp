@@ -18,65 +18,58 @@ namespace ptddg {
 //
 // PITACore methods
 //
-int PITACore::write_site_score(mikan::TCharStr const &pMiRNAId) {
-    const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
+void PITACore::prepare_site_output(mikan::TCharStr const &pMiRNAId, unsigned pRNAPosIdx, unsigned pSitePosIdx) {
     const mikan::TCharSet &seedTypes = mSeedSites.get_seed_types();
+    const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
+    std::stringstream s1;
 
-    seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = mRNAWithSites.get_rna_site_pos_map();
-    mikan::TMRNAPosSet &uniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
+    std::string miRNAName = toCString(pMiRNAId);
+    std::string mRNAName = toCString((mikan::TCharStr) mMRNAIds[pRNAPosIdx]);
+    unsigned startPos = sitePos[pSitePosIdx] + 1;
+    unsigned endPos = sitePos[pSitePosIdx] + 7;
+    std::string seedType = toCString((mikan::TCharStr) seedTypes[pSitePosIdx]);
+    std::string score1Name = "ddG";
+    s1 << roundf(mSiteScores.get_score(pSitePosIdx) * 100.0f) / 100.0f;
+    std::string score1 = s1.str();
+    std::string score2Name  = "not used";
+    std::string score2 = "0";
 
-    for (unsigned i = 0; i < length(mRNAWithSites.mEffectiveRNAs); i++) {
-        if (!mRNAWithSites.mEffectiveRNAs[i]) {
-            continue;
-        }
-
-        int seedStart;
-        int count = 0;
-        float score;
-        for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
-            if (!mSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
-                continue;
-            }
-
-            seedStart = sitePos[rnaSitePosMap[i][j]];
-            score = mSiteScores.get_score(rnaSitePosMap[i][j]);
-            score = roundf(score * 100.0f) / 100.0f;
-
-            mOFile1 << toCString(pMiRNAId) << "\t";
-            mOFile1 << toCString((mikan::TCharStr) (mMRNAIds[uniqRNAPosSet[i]])) << "\t";
-            mOFile1 << seedStart + 1 << "\t";
-            mOFile1 << seedStart + 1 + mikan::SEEDLEN << "\t";
-            mOFile1 << toCString((mikan::TCharStr) (seedTypes[rnaSitePosMap[i][j]])) << "\t";
-            mOFile1 << score << "\t";
-            mOFile1 << std::endl;
-
-            ++count;
-        }
-
+    if (mOpts.mGff) {
+        std::string header = "mk-pita site positions and scores - score: alignment, score2: not used";
+        std::string src = "mk-pita";
+        write_site_score_gff(header, src, miRNAName, mRNAName, startPos, endPos, seedType, score1, score2);
+    } else {
+        write_site_score_tab(miRNAName, mRNAName, startPos, endPos, seedType, score1Name, score1, score2Name, score2);
     }
-
-    return 0;
 
 }
 
-int PITACore::write_rna_score(mikan::TCharStr const &pMiRNAId) {
+void PITACore::prepare_rna_output(mikan::TCharStr const &pMiRNAId) {
     const seqan::String<float> &totalScores = mRNAScores.get_scores();
     const seqan::String<int> &mRNAPos = mRNAScores.get_mrna_pos();
     const seqan::String<int> &siteNum = mRNAScores.get_site_num();
-    float score;
+
+    std::string miRNAName = toCString(pMiRNAId);
+    std::string score1Name = "ddG";
+    std::string score2Name = "not used";
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
-        score = totalScores[i];
-        score = roundf(score * 100.0f) / 100.0f;
+        std::stringstream s1;
+        std::string mRNAName = toCString((mikan::TCharStr) mMRNAIds[mRNAPos[i]]);
+        s1 << roundf(totalScores[i] * 100.0f) / 100.0f;
+        std::string score1 = s1.str();
+        std::string score2 = "0";
 
-        mOFile2 << toCString(pMiRNAId) << "\t";
-        mOFile2 << toCString((mikan::TCharStr) (mMRNAIds[mRNAPos[i]])) << "\t";
-        mOFile2 << score << "\t";
-        mOFile2 << siteNum[i] << "\t";
-        mOFile2 << std::endl;
+        if (mOpts.mGff) {
+            std::string header = "mk-pita mRNA level scores - score: ddG, score2: not used";
+            std::string src = "mk-pita";
+            unsigned seq_len = seqan::length(mMRNASeqs[mRNAPos[i]]);
+            write_rna_score_gff(header, src, miRNAName, mRNAName, seq_len, siteNum[i], score1, score2);
+        } else {
+            write_rna_score_tab(miRNAName, mRNAName, siteNum[i], score1Name, score1, score2Name, score2);
+        }
+
     }
-
-    return 0;
 }
 
 int PITACore::write_alignment(mikan::TCharStr const &pMiRNAId) {
@@ -87,6 +80,7 @@ int PITACore::write_alignment(mikan::TCharStr const &pMiRNAId) {
     seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = mRNAWithSites.get_rna_site_pos_map();
     mikan::TMRNAPosSet &uniqRNAPosSet = mRNAWithSites.get_uniq_mrna_pos_set();
 
+    unsigned padw = 22;
     mikan::TCharStr seedType;
     float dGduplex;
     float dG5;
@@ -127,21 +121,30 @@ int PITACore::write_alignment(mikan::TCharStr const &pMiRNAId) {
 
             std::cout << "### " << count + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
             mSiteScores.print_alignment(rnaSitePosMap[i][j]);
-            std::cout << "  miRNA:               " << toCString(pMiRNAId) << std::endl;
-            std::cout << "  mRNA:                "
-                      << toCString((mikan::TCharStr) (mMRNAIds[mRNAPos[uniqRNAPosSet[i]]]));
-            std::cout << std::endl;
-            std::cout << "  seed type:           " << toCString((mikan::TCharStr) (seedTypes[rnaSitePosMap[i][j]]))
-                      << std::endl;
-            std::cout << "  position(start):     " << seedStart + 1 << std::endl;
-            std::cout << "  position(end):       " << seedStart + 1 + mikan::SEEDLEN << std::endl;
-            std::cout << "  ddG:                 " << score << std::endl;
-            std::cout << "  dGduplex(dG5 + dG3): " << dGduplex << std::endl;
-            std::cout << "  dG5:                 " << dG5 << std::endl;
-            std::cout << "  dG3:                 " << dG3 << std::endl;
-            std::cout << "  dGopen(dG0 - dG1):   " << dGopen << std::endl;
-            std::cout << "  dG0:                 " << dG0 << std::endl;
-            std::cout << "  dG1:                 " << dG1 << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "miRNA: " << toCString(pMiRNAId) << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "mRNA: " << toCString((mikan::TCharStr) (mMRNAIds[mRNAPos[uniqRNAPosSet[i]]])) << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "seed type: " << toCString((mikan::TCharStr) (seedTypes[rnaSitePosMap[i][j]])) << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "start (1-base): " << seedStart + 1 << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "end (1-base): " << seedStart + 1 + mikan::SEEDLEN << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "ddG: " << score << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "dGduplex(dG5 + dG3): " << dGduplex << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "dG5: " << dG5 << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "dG3: " << dG3 << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "dGopen(dG0 - dG1): " << dGopen << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "dG0: " << dG0 << std::endl;
+            std::cout << std::right << std::setw(padw) << std::setfill(' ');
+            std::cout << "dG1: " << dG1 << std::endl;
             std::cout << std::endl;
 
             ++count;

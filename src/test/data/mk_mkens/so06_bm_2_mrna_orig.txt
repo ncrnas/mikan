@@ -1,8 +1,9 @@
-hsa-miR-1 MIMAT0000416	TS_008_BM2A1_25_25_30_31	0.2583	3	mr:alg:147,mr:eng:-15.81,pt:ddg:-14.95,rh:mfe:-9,rh:nrm:1.45,tm:svm:-0.52,ts:ctx:0,sv:svm:-0.69,
-hsa-miR-1 MIMAT0000416	TS_007_BM2_25_25_30_31	0.25761	2	mr:alg:147,mr:eng:-15.85,pt:ddg:-14.87,rh:mfe:-9,rh:nrm:1.45,tm:svm:-0.53,ts:ctx:0,sv:svm:-0.72,
-hsa-miR-1 MIMAT0000416	TS_006_BM4A1_25_25_30_31	0.0704479	2	mr:alg:0,mr:eng:0,pt:ddg:0,rh:mfe:-9,rh:nrm:1.45,tm:svm:0,ts:ctx:0,sv:svm:-0.72,
-hsa-miR-1 MIMAT0000416	TS_002_BM6A1_25_25_30_31	0.0700387	2	mr:alg:0,mr:eng:0,pt:ddg:0,rh:mfe:-9,rh:nrm:1.45,tm:svm:0,ts:ctx:0,sv:svm:-0.79,
-hsa-miR-1 MIMAT0000416	TS_004_BM5A1_25_25_30_31	0.0699688	2	mr:alg:0,mr:eng:0,pt:ddg:0,rh:mfe:-9,rh:nrm:1.45,tm:svm:0,ts:ctx:0,sv:svm:-0.8,
-hsa-miR-1 MIMAT0000416	TS_001_BM6_25_25_30_31	0.0271328	1	mr:alg:0,mr:eng:0,pt:ddg:0,rh:mfe:-9,rh:nrm:1.45,tm:svm:0,ts:ctx:0,sv:svm:0,
-hsa-miR-1 MIMAT0000416	TS_003_BM5_25_25_30_31	0.0271328	1	mr:alg:0,mr:eng:0,pt:ddg:0,rh:mfe:-9,rh:nrm:1.45,tm:svm:0,ts:ctx:0,sv:svm:0,
-hsa-miR-1 MIMAT0000416	TS_005_BM4_25_25_30_31	0.0271328	1	mr:alg:0,mr:eng:0,pt:ddg:0,rh:mfe:-9,rh:nrm:1.45,tm:svm:0,ts:ctx:0,sv:svm:0,
+# miRNA name, mRNA name, number of sites, score 1 (mikan), score 2 (all)
+hsa-miR-1 MIMAT0000416	TS_008_BM2A1_25_25_30_31	3	0.2583	mr_alg:147,mr_eng:-15.81,pt_ddg:-14.95,rh_mfe:-9,rh_nrm:1.45,tm_svm:-0.52,ts_ctx:0,sv_svm:-0.69
+hsa-miR-1 MIMAT0000416	TS_007_BM2_25_25_30_31	2	0.25761	mr_alg:147,mr_eng:-15.85,pt_ddg:-14.87,rh_mfe:-9,rh_nrm:1.45,tm_svm:-0.53,ts_ctx:0,sv_svm:-0.72
+hsa-miR-1 MIMAT0000416	TS_006_BM4A1_25_25_30_31	2	0.0704479	mr_alg:0,mr_eng:0,pt_ddg:0,rh_mfe:-9,rh_nrm:1.45,tm_svm:0,ts_ctx:0,sv_svm:-0.72
+hsa-miR-1 MIMAT0000416	TS_002_BM6A1_25_25_30_31	2	0.0700387	mr_alg:0,mr_eng:0,pt_ddg:0,rh_mfe:-9,rh_nrm:1.45,tm_svm:0,ts_ctx:0,sv_svm:-0.79
+hsa-miR-1 MIMAT0000416	TS_004_BM5A1_25_25_30_31	2	0.0699688	mr_alg:0,mr_eng:0,pt_ddg:0,rh_mfe:-9,rh_nrm:1.45,tm_svm:0,ts_ctx:0,sv_svm:-0.8
+hsa-miR-1 MIMAT0000416	TS_001_BM6_25_25_30_31	1	0.0271328	mr_alg:0,mr_eng:0,pt_ddg:0,rh_mfe:-9,rh_nrm:1.45,tm_svm:0,ts_ctx:0,sv_svm:0
+hsa-miR-1 MIMAT0000416	TS_003_BM5_25_25_30_31	1	0.0271328	mr_alg:0,mr_eng:0,pt_ddg:0,rh_mfe:-9,rh_nrm:1.45,tm_svm:0,ts_ctx:0,sv_svm:0
+hsa-miR-1 MIMAT0000416	TS_005_BM4_25_25_30_31	1	0.0271328	mr_alg:0,mr_eng:0,pt_ddg:0,rh_mfe:-9,rh_nrm:1.45,tm_svm:0,ts_ctx:0,sv_svm:0

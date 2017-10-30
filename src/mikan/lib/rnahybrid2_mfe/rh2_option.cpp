@@ -28,6 +28,7 @@ ArgumentParser::ParseResult RH2Options::parseCommandLine(
 
     // Extract options
     mOutputAlign = isSet(parser, "output_align");
+    mGff = isSet(parser, "gff");
 
     mikan::TCharStr seeddef;
     getOptionValue(seeddef, parser, "seed_def");
@@ -71,6 +72,7 @@ void RH2Options::setProgramDescription(seqan::ArgumentParser &parser) {
     // Define Options
     addSection(parser, "RNAhybrid MFE Options");
     addOption(parser, ArgParseOption("a", "output_align", "Output alignments to standard output."));
+    addOption(parser, ArgParseOption("", "gff", "Change output format to GFF."));
 
     addOption(parser,
               ArgParseOption("s", "seed_def", "Seed site definition [6mer, 7mer, 6mGU+, 7mGU+, 6mGU1, 7mGU1].",

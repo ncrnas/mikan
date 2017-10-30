@@ -1,14 +1,15 @@
-hsa-miR-1 MIMAT0000416	TS_001_BM6_25_25_30_31	21	mr:7mer_GU+,pt:NA,rh:7mer_GUT,tm:NA,ts:NA,sv:NA,	0.0411768	mr:alg:0,mr:eng:0,pt:ddg:0,pt:dpx:0,pt:opn:0,rh:mfe:-9,rh:nrm:1.45,ts:ctx:0,sv:svm:0,
-hsa-miR-1 MIMAT0000416	TS_002_BM6A1_25_25_30_31	21	mr:7mer_GU+,pt:NA,rh:7mer_GUT,tm:NA,ts:NA,sv:NA,	0.0411768	mr:alg:0,mr:eng:0,pt:ddg:0,pt:dpx:0,pt:opn:0,rh:mfe:-9,rh:nrm:1.45,ts:ctx:0,sv:svm:0,
-hsa-miR-1 MIMAT0000416	TS_002_BM6A1_25_25_30_31	31	mr:NA,pt:NA,rh:NA,tm:NA,ts:NA,sv:BM,	0.0575857	mr:alg:0,mr:eng:0,pt:ddg:0,pt:dpx:0,pt:opn:0,rh:mfe:0,rh:nrm:0,ts:ctx:0,sv:svm:-0.93,
-hsa-miR-1 MIMAT0000416	TS_003_BM5_25_25_30_31	21	mr:7mer_GU+,pt:NA,rh:7mer_GUT,tm:NA,ts:NA,sv:NA,	0.0411768	mr:alg:0,mr:eng:0,pt:ddg:0,pt:dpx:0,pt:opn:0,rh:mfe:-9,rh:nrm:1.45,ts:ctx:0,sv:svm:0,
-hsa-miR-1 MIMAT0000416	TS_004_BM5A1_25_25_30_31	21	mr:7mer_GU+,pt:NA,rh:7mer_GUT,tm:NA,ts:NA,sv:NA,	0.0411768	mr:alg:0,mr:eng:0,pt:ddg:0,pt:dpx:0,pt:opn:0,rh:mfe:-9,rh:nrm:1.45,ts:ctx:0,sv:svm:0,
-hsa-miR-1 MIMAT0000416	TS_004_BM5A1_25_25_30_31	31	mr:NA,pt:NA,rh:NA,tm:NA,ts:NA,sv:BM,	0.056224	mr:alg:0,mr:eng:0,pt:ddg:0,pt:dpx:0,pt:opn:0,rh:mfe:0,rh:nrm:0,ts:ctx:0,sv:svm:-0.97,
-hsa-miR-1 MIMAT0000416	TS_005_BM4_25_25_30_31	21	mr:7mer_GU+,pt:NA,rh:7mer_GUT,tm:NA,ts:NA,sv:NA,	0.0411768	mr:alg:0,mr:eng:0,pt:ddg:0,pt:dpx:0,pt:opn:0,rh:mfe:-9,rh:nrm:1.45,ts:ctx:0,sv:svm:0,
-hsa-miR-1 MIMAT0000416	TS_006_BM4A1_25_25_30_31	21	mr:7mer_GU+,pt:NA,rh:7mer_GUT,tm:NA,ts:NA,sv:NA,	0.0411768	mr:alg:0,mr:eng:0,pt:ddg:0,pt:dpx:0,pt:opn:0,rh:mfe:-9,rh:nrm:1.45,ts:ctx:0,sv:svm:0,
-hsa-miR-1 MIMAT0000416	TS_006_BM4A1_25_25_30_31	31	mr:NA,pt:NA,rh:NA,tm:NA,ts:NA,sv:BM,	0.0640732	mr:alg:0,mr:eng:0,pt:ddg:0,pt:dpx:0,pt:opn:0,rh:mfe:0,rh:nrm:0,ts:ctx:0,sv:svm:-0.75,
-hsa-miR-1 MIMAT0000416	TS_007_BM2_25_25_30_31	21	mr:7mer_GU+,pt:NA,rh:7mer_GUT,tm:NA,ts:NA,sv:NA,	0.0411768	mr:alg:0,mr:eng:0,pt:ddg:0,pt:dpx:0,pt:opn:0,rh:mfe:-9,rh:nrm:1.45,ts:ctx:0,sv:svm:0,
-hsa-miR-1 MIMAT0000416	TS_007_BM2_25_25_30_31	32	mr:8mer_MM,pt:8mer_MM,rh:NA,tm:6mer,ts:NA,sv:LP,	0.204417	mr:alg:147,mr:eng:-15.85,pt:ddg:-14.87,pt:dpx:-15.3,pt:opn:-0.43,rh:mfe:0,rh:nrm:0,ts:ctx:0,sv:svm:-0.69,
-hsa-miR-1 MIMAT0000416	TS_008_BM2A1_25_25_30_31	21	mr:7mer_GU+,pt:NA,rh:7mer_GUT,tm:NA,ts:NA,sv:NA,	0.0411768	mr:alg:0,mr:eng:0,pt:ddg:0,pt:dpx:0,pt:opn:0,rh:mfe:-9,rh:nrm:1.45,ts:ctx:0,sv:svm:0,
-hsa-miR-1 MIMAT0000416	TS_008_BM2A1_25_25_30_31	31	mr:NA,pt:NA,rh:NA,tm:NA,ts:NA,sv:BM,	0.0678075	mr:alg:0,mr:eng:0,pt:ddg:0,pt:dpx:0,pt:opn:0,rh:mfe:0,rh:nrm:0,ts:ctx:0,sv:svm:-0.64,
-hsa-miR-1 MIMAT0000416	TS_008_BM2A1_25_25_30_31	32	mr:8mer_MM,pt:8mer_MM,rh:NA,tm:6mer,ts:NA,sv:NA,	0.138381	mr:alg:147,mr:eng:-15.81,pt:ddg:-14.95,pt:dpx:-15.3,pt:opn:-0.35,rh:mfe:0,rh:nrm:0,ts:ctx:0,sv:svm:0,
+# miRNA name, mRNA name, start (1-base), end (1-base), seed type, score 1 (mikan), score 2 (all)
+hsa-miR-1 MIMAT0000416	TS_001_BM6_25_25_30_31	16	22	mr:7mer_GU+,pt:NA,rh:7mer_GUT,tm:NA,ts:NA,sv:NA	0.0411768	mr_alg:0,mr_eng:0,pt_ddg:0,pt_dpx:0,pt_opn:0,rh_mfe:-9,rh_nrm:1.45,ts_ctx:0,sv_svm:0
+hsa-miR-1 MIMAT0000416	TS_002_BM6A1_25_25_30_31	16	22	mr:7mer_GU+,pt:NA,rh:7mer_GUT,tm:NA,ts:NA,sv:NA	0.0411768	mr_alg:0,mr_eng:0,pt_ddg:0,pt_dpx:0,pt_opn:0,rh_mfe:-9,rh_nrm:1.45,ts_ctx:0,sv_svm:0
+hsa-miR-1 MIMAT0000416	TS_002_BM6A1_25_25_30_31	26	32	mr:NA,pt:NA,rh:NA,tm:NA,ts:NA,sv:BM	0.0575857	mr_alg:0,mr_eng:0,pt_ddg:0,pt_dpx:0,pt_opn:0,rh_mfe:0,rh_nrm:0,ts_ctx:0,sv_svm:-0.93
+hsa-miR-1 MIMAT0000416	TS_003_BM5_25_25_30_31	16	22	mr:7mer_GU+,pt:NA,rh:7mer_GUT,tm:NA,ts:NA,sv:NA	0.0411768	mr_alg:0,mr_eng:0,pt_ddg:0,pt_dpx:0,pt_opn:0,rh_mfe:-9,rh_nrm:1.45,ts_ctx:0,sv_svm:0
+hsa-miR-1 MIMAT0000416	TS_004_BM5A1_25_25_30_31	16	22	mr:7mer_GU+,pt:NA,rh:7mer_GUT,tm:NA,ts:NA,sv:NA	0.0411768	mr_alg:0,mr_eng:0,pt_ddg:0,pt_dpx:0,pt_opn:0,rh_mfe:-9,rh_nrm:1.45,ts_ctx:0,sv_svm:0
+hsa-miR-1 MIMAT0000416	TS_004_BM5A1_25_25_30_31	26	32	mr:NA,pt:NA,rh:NA,tm:NA,ts:NA,sv:BM	0.056224	mr_alg:0,mr_eng:0,pt_ddg:0,pt_dpx:0,pt_opn:0,rh_mfe:0,rh_nrm:0,ts_ctx:0,sv_svm:-0.97
+hsa-miR-1 MIMAT0000416	TS_005_BM4_25_25_30_31	16	22	mr:7mer_GU+,pt:NA,rh:7mer_GUT,tm:NA,ts:NA,sv:NA	0.0411768	mr_alg:0,mr_eng:0,pt_ddg:0,pt_dpx:0,pt_opn:0,rh_mfe:-9,rh_nrm:1.45,ts_ctx:0,sv_svm:0
+hsa-miR-1 MIMAT0000416	TS_006_BM4A1_25_25_30_31	16	22	mr:7mer_GU+,pt:NA,rh:7mer_GUT,tm:NA,ts:NA,sv:NA	0.0411768	mr_alg:0,mr_eng:0,pt_ddg:0,pt_dpx:0,pt_opn:0,rh_mfe:-9,rh_nrm:1.45,ts_ctx:0,sv_svm:0
+hsa-miR-1 MIMAT0000416	TS_006_BM4A1_25_25_30_31	26	32	mr:NA,pt:NA,rh:NA,tm:NA,ts:NA,sv:BM	0.0640732	mr_alg:0,mr_eng:0,pt_ddg:0,pt_dpx:0,pt_opn:0,rh_mfe:0,rh_nrm:0,ts_ctx:0,sv_svm:-0.75
+hsa-miR-1 MIMAT0000416	TS_007_BM2_25_25_30_31	16	22	mr:7mer_GU+,pt:NA,rh:7mer_GUT,tm:NA,ts:NA,sv:NA	0.0411768	mr_alg:0,mr_eng:0,pt_ddg:0,pt_dpx:0,pt_opn:0,rh_mfe:-9,rh_nrm:1.45,ts_ctx:0,sv_svm:0
+hsa-miR-1 MIMAT0000416	TS_007_BM2_25_25_30_31	27	33	mr:8mer_MM,pt:8mer_MM,rh:NA,tm:6mer,ts:NA,sv:LP	0.204417	mr_alg:147,mr_eng:-15.85,pt_ddg:-14.87,pt_dpx:-15.3,pt_opn:-0.43,rh_mfe:0,rh_nrm:0,ts_ctx:0,sv_svm:-0.69
+hsa-miR-1 MIMAT0000416	TS_008_BM2A1_25_25_30_31	16	22	mr:7mer_GU+,pt:NA,rh:7mer_GUT,tm:NA,ts:NA,sv:NA	0.0411768	mr_alg:0,mr_eng:0,pt_ddg:0,pt_dpx:0,pt_opn:0,rh_mfe:-9,rh_nrm:1.45,ts_ctx:0,sv_svm:0
+hsa-miR-1 MIMAT0000416	TS_008_BM2A1_25_25_30_31	26	32	mr:NA,pt:NA,rh:NA,tm:NA,ts:NA,sv:BM	0.0678075	mr_alg:0,mr_eng:0,pt_ddg:0,pt_dpx:0,pt_opn:0,rh_mfe:0,rh_nrm:0,ts_ctx:0,sv_svm:-0.64
+hsa-miR-1 MIMAT0000416	TS_008_BM2A1_25_25_30_31	27	33	mr:8mer_MM,pt:8mer_MM,rh:NA,tm:6mer,ts:NA,sv:NA	0.138381	mr_alg:147,mr_eng:-15.81,pt_ddg:-14.95,pt_dpx:-15.3,pt_opn:-0.35,rh_mfe:0,rh_nrm:0,ts_ctx:0,sv_svm:0

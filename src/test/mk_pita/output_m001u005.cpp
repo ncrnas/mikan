@@ -18,12 +18,12 @@ protected:
 };
 
 TEST_F(OM001U005, comp_site) {
-    (void) mikan::MKCoreMain<ptddg::PITAOptions, ptddg::PITACore>(argc, (const char **) argv);
+    (void) mikan::MKMain<ptddg::PITAOptions, ptddg::PITACore>(argc, (const char **) argv);
     gtest_compare_two_files(o1file1, o2file1);
 }
 
 TEST_F(OM001U005, comp_mrna) {
-    (void) mikan::MKCoreMain<ptddg::PITAOptions, ptddg::PITACore>(argc, (const char **) argv);
+    (void) mikan::MKMain<ptddg::PITAOptions, ptddg::PITACore>(argc, (const char **) argv);
     gtest_compare_two_files(o1file2, o2file2);
 }
 }

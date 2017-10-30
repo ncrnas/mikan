@@ -1,2 +1,3 @@
-hsa-miR-1 MIMAT0000416	TS_007_BM2_25_25_30_31	-14.87	1	
-hsa-miR-1 MIMAT0000416	TS_008_BM2A1_25_25_30_31	-14.95	1	
+# miRNA name, mRNA name, number of sites, score 1 (ddG), score 2 (not used)
+hsa-miR-1 MIMAT0000416	TS_007_BM2_25_25_30_31	1	-14.87	0
+hsa-miR-1 MIMAT0000416	TS_008_BM2A1_25_25_30_31	1	-14.95	0

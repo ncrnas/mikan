@@ -1,1 +1,2 @@
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_005498 range=chr19:10544348-10544741 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	0.493948	2	mr:alg:150,mr:eng:-18.2,pt:ddg:-6.84,rh:mfe:-22.1,rh:nrm:3.2,tm:svm:0.2,ts:ctx:-0.2,sv:svm:1.66,
+# miRNA name, mRNA name, number of sites, score 1 (mikan), score 2 (all)
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_005498 range=chr19:10544348-10544741 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	2	0.493948	mr_alg:150,mr_eng:-18.2,pt_ddg:-6.84,rh_mfe:-22.1,rh_nrm:3.2,tm_svm:0.2,ts_ctx:-0.2,sv_svm:1.66

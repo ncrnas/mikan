@@ -1,3 +1,4 @@
+# miRNA name, mRNA name, start (1-base), end (1-base), seed type, score 1 (MFE), score 2 (normalized)
 hsa-miR-124 MIMAT0000422	hg18_refGene NM_004817 range=chr9:71059111-71059938 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	455	461	7mer	-22.5	3.25721
 hsa-miR-124 MIMAT0000422	hg18_refGene NM_004817 range=chr9:71059111-71059938 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	471	477	7mer_GUT	-22.5	3.25721
 hsa-miR-124 MIMAT0000422	hg18_refGene NM_014481 range=chrX:55050594-55050936 5'pad=0 3'pad=0 revComp=FALSE strand=+ repeatMasking=none	179	185	7mer	-21.6	3.12692

@@ -1,4 +1,5 @@
-hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer_7mer-m8_6mer1	-0.1351	1
-hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer_6mer1_7mer-m8	-0.1351	1
-hsa-miR-124 MIMAT0000422	hg18_refgene test2_7mer-m8_8mer_6mer1	-0.1261	1
-hsa-miR-124 MIMAT0000422	hg18_refgene test3_7mer-A1_8mer_7mer-m8	-0.1261	1
+# miRNA name, mRNA name, number of sites, score 1 (context score), score 2 (not used)
+hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer_7mer-m8_6mer1	1	-0.1351	0
+hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer_6mer1_7mer-m8	1	-0.1351	0
+hsa-miR-124 MIMAT0000422	hg18_refgene test2_7mer-m8_8mer_6mer1	1	-0.1261	0
+hsa-miR-124 MIMAT0000422	hg18_refgene test3_7mer-A1_8mer_7mer-m8	1	-0.1261	0

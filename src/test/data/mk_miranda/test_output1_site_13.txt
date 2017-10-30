@@ -1,1 +1,2 @@
-hsa-miR-4293*MIMAT0016848	NM_020342*chr2*+*196308010*196310671 part	24	30	7mer	140	-15.49	
+# miRNA name, mRNA name, start (1-base), end (1-base), seed type, score 1 (alignment), score 2 (MFE)
+hsa-miR-4293*MIMAT0016848	NM_020342*chr2*+*196308010*196310671 part	24	30	7mer	140	-15.49

@@ -57,6 +57,11 @@ int gtest_compare_two_files2(
             break;
         }
 
+        if (lines1[i][0] == '#' || lines2[i][0] == '#') {
+            EXPECT_STREQ(lines1[i].c_str(), lines2[i].c_str());
+            continue;
+        }
+
         std::vector<std::string> flds1;
         std::vector<std::string> flds2;
         split_line(lines1[i], flds1);
@@ -67,6 +72,9 @@ int gtest_compare_two_files2(
         EXPECT_EQ(flds1.size(), flds2.size());
 
         for (unsigned j = 0; j < flds1.size(); ++j) {
+            if (j >= flds2.size()) {
+                break;
+            }
             if (score_fld != 0 && j == score_fld) {
                 comp_scores(flds1[j], flds2[j], round_dec, ubound);
             } else {
@@ -99,12 +107,20 @@ int gtest_compare_two_files3(
             break;
         }
 
+        if (lines1[i][0] == '#' || lines2[i][0] == '#') {
+            EXPECT_STREQ(lines1[i].c_str(), lines2[i].c_str());
+            continue;
+        }
+
         std::vector<std::string> flds1;
         std::vector<std::string> flds2;
         split_line(lines1[i], flds1);
         split_line(lines2[i], flds2);
 
         for (unsigned j = 0; j < 2; ++j) {
+            if (j >= flds1.size() || j >= flds2.size()) {
+                break;
+            }
             if (uppercase) {
                 std::transform(flds1[j].begin(), flds1[j].end(), flds1[j].begin(), toupper);
                 std::transform(flds2[j].begin(), flds2[j].end(), flds2[j].begin(), toupper);
@@ -146,16 +162,26 @@ int gtest_compare_two_files4(
             break;
         }
 
+        if (lines1[i][0] == '#' || lines2[i][0] == '#') {
+            EXPECT_STREQ(lines1[i].c_str(), lines2[i].c_str());
+            continue;
+        }
+
         std::vector<std::string> flds1;
         std::vector<std::string> flds2;
         split_line(lines1[i], flds1);
         split_line(lines2[i], flds2);
 
 //        std::cout << lines1[i] << std::endl;
+//        std::cout << lines2[i] << std::endl;
 
         EXPECT_EQ(flds1.size(), flds2.size());
 
         for (unsigned j = 0; j < flds1.size(); ++j) {
+            if (j >= flds2.size()) {
+                break;
+            }
+
             if (score_fld != 0 && j == score_fld) {
                 comp_scores(flds1[j], flds2[j], round_dec, ubound);
             } else if (toolscore_fld2 != 0 && j == toolscore_fld2) {
@@ -278,13 +304,17 @@ static void comp_toolscores(const std::string &score1, const std::string &score2
     split_line2(score2, sflds2, ",");
 
     for (unsigned i = 0; i < sflds1.size(); ++i) {
+        if (i >= sflds2.size()) {
+            break;
+        }
+
         std::vector<std::string> ssflds1;
         std::vector<std::string> ssflds2;
         split_line2(sflds1[i], ssflds1, ":");
         split_line2(sflds2[i], ssflds2, ":");
 
-        double ds1 = ::atof(ssflds1[2].c_str());
-        double ds2 = ::atof(ssflds2[2].c_str());
+        double ds1 = ::atof(ssflds1[1].c_str());
+        double ds2 = ::atof(ssflds2[1].c_str());
 
         int s1 = static_cast<int>(ds1 * round_dec);
         int s2 = static_cast<int>(ds2 * round_dec);
@@ -298,12 +328,12 @@ static void comp_toolscores(const std::string &score1, const std::string &score2
         EXPECT_TRUE(lbound <= diff && diff <= ubound)
                             << "score1: "
                             << ssflds1[0].c_str()
-                            << ":" << ssflds1[1].c_str()
+                            << "_" << ssflds1[1].c_str()
                             << ":" << ssflds1[2].c_str()
                             << std::endl
                             << "score2: "
                             << ssflds2[0].c_str()
-                            << ":" << ssflds2[1].c_str()
+                            << "_" << ssflds2[1].c_str()
                             << ":" << ssflds2[2].c_str();
     }
 

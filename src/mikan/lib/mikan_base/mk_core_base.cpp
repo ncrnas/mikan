@@ -36,6 +36,18 @@ int MKCoreBase::open_output_file() {
     return 0;
 }
 
+void MKCoreBase::close_output_file() {
+    // Close output file 1
+    if (mOFile1.is_open()) {
+        mOFile1.close();
+    }
+
+    // Close output file 2
+    if (mOFile2.is_open()) {
+        mOFile2.close();
+    }
+}
+
 int MKCoreBase::calculate_all_scores() {
     int retVal;
 
@@ -92,6 +104,191 @@ int MKCoreBase::calculate_mirna_scores(unsigned pIdx) {
     clear_all();
 
     return 0;
+}
+
+int MKCoreBase::write_site_score(
+        mikan::TCharStr const &pMiRNAId,
+        mikan::MKSeedSites &pSeedSites,
+        mikan::MKRMAWithSites &pRNAWithSites) {
+
+    seqan::StringSet<seqan::String<unsigned> > &rnaSitePosMap = pRNAWithSites.get_rna_site_pos_map();
+    mikan::TMRNAPosSet &uniqRNAPosSet = pRNAWithSites.get_uniq_mrna_pos_set();
+
+    int retVal = 0;
+    int count = 0;
+    for (unsigned i = 0; i < length(pRNAWithSites.mEffectiveRNAs); i++) {
+        if (!pRNAWithSites.mEffectiveRNAs[i]) {
+            continue;
+        }
+
+        for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
+            if (!pSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
+                continue;
+            }
+            prepare_site_output(pMiRNAId, uniqRNAPosSet[i], rnaSitePosMap[i][j]);
+        }
+
+        ++count;
+    }
+
+    return retVal;
+}
+
+void MKCoreBase::write_site_score_tab(
+        std::string &pMiRNAName,
+        std::string &pMRNAName,
+        unsigned pStartPos,
+        unsigned pEndPos,
+        std::string &pSeedType,
+        std::string &pScore1Name,
+        std::string &pScore1,
+        std::string &pScore2Name,
+        std::string &pScore2) {
+
+    if (mPrintSiteHeader) {
+        mOFile1 << "# miRNA name, ";
+        mOFile1 << "mRNA name, ";
+        mOFile1 << "start (1-base), ";
+        mOFile1 << "end (1-base), ";
+        mOFile1 << "seed type, ";
+        mOFile1 << "score 1 (" << pScore1Name << "), ";
+        mOFile1 << "score 2 (" << pScore2Name << ")";
+        mOFile1 << std::endl;
+        mPrintSiteHeader = false;
+    }
+
+    mOFile1 << pMiRNAName << "\t";
+    mOFile1 << pMRNAName << "\t";
+    mOFile1 << pStartPos << "\t";
+    mOFile1 << pEndPos << "\t";
+    mOFile1 << pSeedType << "\t";
+    mOFile1 << pScore1 << "\t";
+    mOFile1 << pScore2;
+    mOFile1 << std::endl;
+
+}
+
+void MKCoreBase::write_site_score_gff(
+        std::string &pHeader,
+        std::string &pSrc,
+        std::string &pMiRNAName,
+        std::string &pMRNAName,
+        unsigned pStartPos,
+        unsigned pEndPos,
+        std::string &pSeedType,
+        std::string &pScore1,
+        std::string &pScore2) {
+
+    if (mPrintSiteHeader) {
+        mOFile1 << "##gff-version 3" << std::endl;
+        mOFile1 << "# SO:0000934 (miRNA_target_site)" << std::endl;
+        if (pHeader != "") {
+            mOFile1 << "# " << pHeader << std::endl;
+        }
+        if (pSrc == "mikan") {
+            mOFile1 << "# mr: miRanda, ";
+            mOFile1 << "pt: PITA, ";
+            mOFile1 << "rh: RNAhybrid, ";
+            mOFile1 << "ts: TargetScan, ";
+            mOFile1 << "sv: two-step SVM";
+            mOFile1 << std::endl;
+        }
+        mPrintSiteHeader = false;
+    }
+
+    mOFile1 << pMRNAName << "\t";
+    mOFile1 << pSrc << "\t";
+    mOFile1 << "SO:0000934" << "\t";
+    mOFile1 << pStartPos << "\t";
+    mOFile1 << pEndPos << "\t";
+    mOFile1 << pScore1 << "\t";
+    mOFile1 << "." << "\t";
+    mOFile1 << "." <<  "\t";
+    mOFile1 << "Name=" << pMiRNAName << ";";
+    if (pSrc == "mikan") {
+        mOFile1 << "Note={\"score2\":{" << pScore2 << "},\"seed_type\":{" << pSeedType << "}};";
+    } else {
+        mOFile1 << "Note={\"score2\":" << pScore2 << ",\"seed_type\":\"" << pSeedType << "\"};";
+    }
+    mOFile1 << std::endl;
+
+}
+
+int MKCoreBase::write_rna_score(mikan::TCharStr const &pMiRNAId) {
+    int retVal = 0;
+
+    prepare_rna_output(pMiRNAId);
+
+    return retVal;
+}
+
+void MKCoreBase::write_rna_score_tab(
+        std::string &pMiRNAName,
+        std::string &pMRNAName,
+        unsigned pSiteNum,
+        std::string &pScore1Name,
+        std::string &pScore1,
+        std::string &pScore2Name,
+        std::string &pScore2) {
+
+    if (mPrintRNAheader) {
+        mOFile2 << "# miRNA name, ";
+        mOFile2 << "mRNA name, ";
+        mOFile2 << "number of sites, ";
+        mOFile2 << "score 1 (" << pScore1Name << "), ";
+        mOFile2 << "score 2 (" << pScore2Name << ")";
+        mOFile2 << std::endl;
+        mPrintRNAheader = false;
+    }
+
+
+    mOFile2 << pMiRNAName << "\t";
+    mOFile2 << pMRNAName << "\t";
+    mOFile2 << pSiteNum << "\t";
+    mOFile2 << pScore1 << "\t";
+    mOFile2 << pScore2;
+    mOFile2 << std::endl;
+
+}
+
+void MKCoreBase::write_rna_score_gff(
+        std::string &pHeader, std::string &pSrc, std::string &pMiRNAName, std::string &pMRNAName,
+        unsigned pMRNALen, unsigned pSiteNum, std::string &pScore1, std::string &pScore2) {
+
+    if (mPrintRNAheader) {
+        mOFile2 << "##gff-version 3" << std::endl;
+        mOFile2 << "# SO:0000934 (miRNA_target_site)" << std::endl;
+        if (pHeader != "") {
+            mOFile2 << "# " << pHeader << std::endl;
+        }
+        if (pSrc == "mikan") {
+            mOFile2 << "# mr: miRanda, ";
+            mOFile2 << "pt: PITA, ";
+            mOFile2 << "rh: RNAhybrid, ";
+            mOFile2 << "tm: TargetMiner, ";
+            mOFile2 << "ts: TargetScan, ";
+            mOFile2 << "sv: two-step SVM";
+            mOFile2 << std::endl;
+        }
+        mPrintRNAheader = false;
+    }
+
+    mOFile2 << pMRNAName << "\t";
+    mOFile2 << pSrc << "\t";
+    mOFile2 << "SO:0000934" << "\t";
+    mOFile2 << 1 << "\t";
+    mOFile2 << pMRNALen << "\t";
+    mOFile2 << pScore1 << "\t";
+    mOFile2 << "." << "\t";
+    mOFile2 << "." <<  "\t";
+    mOFile2 << "Name=" << pMiRNAName << ";";
+    if (pSrc == "mikan") {
+        mOFile2 << "Note={\"score2\":{" << pScore2 << "},\"site_count\":" << pSiteNum << "};";
+    } else {
+        mOFile2 << "Note={\"score2\":" << pScore2 << ",\"site_count\":" << pSiteNum << "};";
+    }
+    mOFile2 << std::endl;
+
 }
 
 } // namespace mr3as

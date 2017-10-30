@@ -18,7 +18,7 @@ protected:
 };
 
 TEST_F(SiteOut03MM1, comp_orig_mk) {
-    (void) mikan::MKCoreMain<rh2mfe::RH2Options, rh2mfe::RH2Core>(argc, (const char **) argv);
+    (void) mikan::MKMain<rh2mfe::RH2Options, rh2mfe::RH2Core>(argc, (const char **) argv);
     gtest_compare_two_files(o1file1, o2file1);
     gtest_compare_two_files(o1file2, o2file2);
 }

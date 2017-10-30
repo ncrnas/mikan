@@ -19,43 +19,39 @@ namespace ts5cs {
 //
 // TS5Core methods
 //
-int TS5Core::write_site_score(mikan::TCharStr const &pMiRNAId) {
-
+void TS5Core::prepare_site_output(mikan::TCharStr const &pMiRNAId, unsigned pRNAPosIdx, unsigned pSitePosIdx) {
     const mikan::TCharSet &seedTypes = mSeedSites.get_seed_types();
-    const seqan::String<unsigned> &mRNAPos = mSeedSites.get_mrna_pos();
     const seqan::String<unsigned> &sitePos = mSeedSites.get_site_pos();
-    mikan::TCharStr seedType;
-    int seedStart, seedEnd;
+    std::stringstream s1;
 
+    std::string miRNAName = toCString(pMiRNAId);
+    std::string mRNAName = toCString((mikan::TCharStr) mMRNAIds[pRNAPosIdx]);
+    unsigned startPos = sitePos[pSitePosIdx];
+    if (seedTypes[pSitePosIdx] == "7mer-A1") {
+        startPos += 1;
+    }
+    unsigned endPos = startPos + 6;
+    if (seedTypes[pSitePosIdx] == "8mer") {
+        endPos += 1;
+    }
+    std::string seedType = toCString((mikan::TCharStr) seedTypes[pSitePosIdx]);
+    std::string score1Name = "context score";
+    s1 << mSiteScores.get_score(pSitePosIdx);
+    std::string score1 = s1.str();
+    std::string score2Name  = "not used";
+    std::string score2 = "0";
 
-    for (unsigned i = 0; i < length(mRNAPos); ++i) {
-        if (!mSiteScores.mEffectiveSites[i]) {
-            continue;
-        }
-
-        seedStart = sitePos[i];
-        if (seedTypes[i] == "7mer-A1") {
-            seedStart += 1;
-        }
-
-        seedEnd = seedStart + 6;
-        if (seedTypes[i] == "8mer") {
-            seedEnd += 1;
-        }
-
-        mOFile1 << toCString(pMiRNAId) << "\t";
-        mOFile1 << toCString((mikan::TCharStr) mMRNAIds[mRNAPos[i]]) << "\t";
-        mOFile1 << seedStart << "\t";
-        mOFile1 << seedEnd << "\t";
-        mOFile1 << seedTypes[i] << "\t";
-        mOFile1 << mSiteScores.get_score(i);
-        mOFile1 << std::endl;
+    if (mOpts.mGff) {
+        std::string header = "mk-targetscan site positions and scores - score: context score, score2: not used";
+        std::string src = "mk-targetscan";
+        write_site_score_gff(header, src, miRNAName, mRNAName, startPos, endPos, seedType, score1, score2);
+    } else {
+        write_site_score_tab(miRNAName, mRNAName, startPos, endPos, seedType, score1Name, score1, score2Name, score2);
     }
 
-    return 0;
 }
 
-int TS5Core::write_rna_score(mikan::TCharStr const &pMiRNAId) {
+void TS5Core::prepare_rna_output(mikan::TCharStr const &pMiRNAId) {
 
     const seqan::String<float> &totalScores = mRNAScores.get_scores();
     const seqan::String<int> &mRNAPos = mRNAScores.get_mrna_pos();
@@ -65,19 +61,31 @@ int TS5Core::write_rna_score(mikan::TCharStr const &pMiRNAId) {
     TItMap itPos;
     std::multimap<double, unsigned> sortedMRNAByScore;
 
+    std::string miRNAName = toCString(pMiRNAId);
+    std::string score1Name = "context score";
+    std::string score2Name = "not used";
+
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
         sortedMRNAByScore.insert(TPosPair((float) totalScores[i], i));
     }
 
     for (itPos = sortedMRNAByScore.begin(); itPos != sortedMRNAByScore.end(); ++itPos) {
-        mOFile2 << toCString(pMiRNAId) << "\t";
-        mOFile2 << toCString((mikan::TCharStr) mMRNAIds[mRNAPos[(*itPos).second]]) << "\t";
-        mOFile2 << totalScores[(*itPos).second] << "\t";
-        mOFile2 << siteNum[(*itPos).second];
-        mOFile2 << std::endl;
-    }
+        std::stringstream s1;
+        std::string mRNAName = toCString((mikan::TCharStr) mMRNAIds[mRNAPos[(*itPos).second]]);
+        s1 << totalScores[(*itPos).second];
+        std::string score1 = s1.str();
+        std::string score2 = "0";
 
-    return 0;
+        if (mOpts.mGff) {
+            std::string header = "mk-targetscan mRNA level scores - score: context score, score2: not used";
+            std::string src = "mk-targetscan";
+            unsigned seq_len = seqan::length(mMRNASeqs[mRNAPos[(*itPos).second]]);
+            write_rna_score_gff(header, src, miRNAName, mRNAName, seq_len, siteNum[(*itPos).second], score1, score2);
+        } else {
+            write_rna_score_tab(miRNAName, mRNAName, siteNum[(*itPos).second], score1Name, score1, score2Name, score2);
+        }
+
+    }
 }
 
 int TS5Core::write_alignment(mikan::TCharStr const &pMiRNAId) {
@@ -89,6 +97,8 @@ int TS5Core::write_alignment(mikan::TCharStr const &pMiRNAId) {
     mikan::TCharStr seedType;
     int seedStart, seedEnd;
     int count = 0;
+
+    unsigned padw = 17;
 
     for (unsigned i = 0; i < length(mRNAPos); ++i) {
         if (!mSiteScores.mEffectiveSites[i]) {
@@ -107,13 +117,19 @@ int TS5Core::write_alignment(mikan::TCharStr const &pMiRNAId) {
 
         std::cout << "### " << count + 1 << ": " << toCString(pMiRNAId) << " ###" << std::endl;
         alignment.write_alignment(i);
-        std::cout << "  miRNA:                " << toCString(pMiRNAId) << std::endl;
-        std::cout << "  mRNA:                 " << toCString((mikan::TCharStr) mMRNAIds[mRNAPos[i]]) << std::endl;
-        std::cout << "  seed type:            " << seedTypes[i] << std::endl;
-        std::cout << "  position(seed start): " << seedStart << std::endl;
-        std::cout << "  position(seed end):   " << seedEnd << std::endl;
-        std::cout << "  context score:        " << mSiteScores.get_score(i);
-        std::cout << std::endl << std::endl;
+        std::cout << std::right << std::setw(padw) << std::setfill(' ');
+        std::cout << "miRNA: " << toCString(pMiRNAId) << std::endl;
+        std::cout << std::right << std::setw(padw) << std::setfill(' ');
+        std::cout << "mRNA: " << toCString((mikan::TCharStr) mMRNAIds[mRNAPos[i]]) << std::endl;
+        std::cout << std::right << std::setw(padw) << std::setfill(' ');
+        std::cout << "seed type: " << seedTypes[i] << std::endl;
+        std::cout << std::right << std::setw(padw) << std::setfill(' ');
+        std::cout << "start (1-base): " << seedStart << std::endl;
+        std::cout << std::right << std::setw(padw) << std::setfill(' ');
+        std::cout << "end (1-base): " << seedEnd << std::endl;
+        std::cout << std::right << std::setw(padw) << std::setfill(' ');
+        std::cout << "context score: " << mSiteScores.get_score(i) << std::endl;
+        std::cout << std::endl;
 
         ++count;
 

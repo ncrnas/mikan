@@ -38,7 +38,7 @@ public:
 
     void create_pos_map();
 
-    void combine_seed_types();
+    void combine_seed_types(MKEOptions const &pMKEOpts);
 
 private:
     // Define types

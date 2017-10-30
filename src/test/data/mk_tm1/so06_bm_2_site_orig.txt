@@ -1,2 +1,3 @@
-hsa-miR-1 MIMAT0000416	TS_008_BM2A1_25_25_30_31	26	32	6mer	0
-hsa-miR-1 MIMAT0000416	TS_007_BM2_25_25_30_31	26	32	6mer	0
+# miRNA name, mRNA name, start (1-base), end (1-base), seed type, score 1 (not used), score 2 (not used)
+hsa-miR-1 MIMAT0000416	TS_007_BM2_25_25_30_31	27	33	6mer	0	0
+hsa-miR-1 MIMAT0000416	TS_008_BM2A1_25_25_30_31	27	33	6mer	0	0

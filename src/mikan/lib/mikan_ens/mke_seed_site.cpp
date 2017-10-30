@@ -97,7 +97,7 @@ void MKESeedSites::set_default_seed_type(unsigned pIdx, mikan::TCharStr &pPrefix
 
 }
 
-void MKESeedSites::combine_seed_types() {
+void MKESeedSites::combine_seed_types(MKEOptions const &pMKEOpts) {
     for (unsigned i = 0; i < length(mEffectiveSites); i++) {
         if (!mEffectiveSites[i]) {
             continue;
@@ -105,8 +105,18 @@ void MKESeedSites::combine_seed_types() {
 
         mikan::TCharStr seedType = "";
         for (unsigned j = 0; j < length(mSeedTypeList); j++) {
-            append(seedType, mSeedTypeList[j][i]);
-            append(seedType, ",");
+            mikan::TCharStr tSeedType = mSeedTypeList[j][i];
+            if (pMKEOpts.mGff) {
+                append(seedType, "\"");
+                replace(tSeedType, 2, 3, "\":\"");
+                append(seedType, tSeedType);
+                append(seedType, "\"");
+            } else {
+                append(seedType, tSeedType);
+            }
+            if (j != length(mSeedTypeList) - 1) {
+                append(seedType, ",");
+            }
         }
 
         mSeedTypes[i] = seedType;

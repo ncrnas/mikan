@@ -1,3 +1,4 @@
-hsa-miR-1 MIMAT0000416	TS_001_7merA1	26	32	7mer-A1	-0.013
-hsa-miR-1 MIMAT0000416	TS_002_7merM8	25	31	7mer-m8	-0.011
-hsa-miR-1 MIMAT0000416	TS_003_8mer	25	32	8mer	-0.218
+# miRNA name, mRNA name, start (1-base), end (1-base), seed type, score 1 (context score), score 2 (not used)
+hsa-miR-1 MIMAT0000416	TS_001_7merA1	26	32	7mer-A1	-0.013	0
+hsa-miR-1 MIMAT0000416	TS_002_7merM8	25	31	7mer-m8	-0.011	0
+hsa-miR-1 MIMAT0000416	TS_003_8mer	25	32	8mer	-0.218	0

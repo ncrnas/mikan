@@ -121,7 +121,7 @@ public:
 
         // Write site scores
         if (mOutputSite) {
-            retVal = write_site_score(mMiRNAIds[pIdx]);
+            retVal = write_site_score(mMiRNAIds[pIdx], mSeedSites, mRNAWithSites);
             if (retVal != 0) { ;
                 return 1;
             }
@@ -168,12 +168,6 @@ protected:
     TSiteFilter mSiteFilter;
     mikan::MKTopNSites mTopNSites;
     TRNAScores mRNAScores;
-
-    virtual int write_site_score(mikan::TCharStr const &pMiRNAId) = 0;
-
-    virtual int write_rna_score(mikan::TCharStr const &pMiRNAId) = 0;
-
-    virtual int write_alignment(mikan::TCharStr const &pMiRNAId) = 0;
 
 };
 

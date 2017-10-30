@@ -28,7 +28,8 @@ ArgumentParser::ParseResult MKEOptions::parseCommandLine(
     }
 
     // Extract options
-    mShowConfig = isSet(parser, "show-config");
+    mGff = isSet(parser, "gff");
+    mShowConfig = isSet(parser, "show_config");
 
     getOptionValue(mConfigFile, parser, "config");
     if (mConfigFile != "") {
@@ -67,12 +68,14 @@ void MKEOptions::setProgramDescription(seqan::ArgumentParser &parser) {
 
     // Define Options
     addSection(parser, "Mikan Ensemble Score Options");
+    addOption(parser, ArgParseOption("", "gff", "Change output format to GFF."));
+
     addOption(parser, ArgParseOption("c", "config", "Specify a configuration file.",
                                      ArgParseArgument::INPUTFILE));
     setDefaultValue(parser, "config", "");
 
-    addOption(parser, ArgParseOption("", "show-config", "Show the content of the specified configuration file."));
-    hideOption(parser, "show-config");
+    addOption(parser, ArgParseOption("", "show_config", "Show the content of the specified configuration file."));
+    hideOption(parser, "show_config");
 
     // Add Examples Section
     addTextSection(parser, "Examples");

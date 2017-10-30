@@ -1,10 +1,11 @@
-hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer_7mer-m8_6mer1	62	68	7mer	146	-15.01	
-hsa-miR-124 MIMAT0000422	hg18_refgene test2_7mer-m8_8mer_6mer1	112	118	7mer	146	-15.01	
-hsa-miR-124 MIMAT0000422	hg18_refgene test3_7mer-A1_8mer_7mer-m8	112	118	7mer	146	-15.01	
-hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer_6mer1_7mer-m8	62	68	7mer	146	-15.01	
-hsa-miR-1 MIMAT0000416	hg18_refgene test1_8mer_7mer-m8_6mer1	292	298	8mer_GUT	152	-13.39	
-hsa-miR-1 MIMAT0000416	hg18_refgene test2_7mer-m8_8mer_6mer1	292	298	8mer_GUT	152	-13.39	
-hsa-miR-1 MIMAT0000416	hg18_refgene test3_7mer-A1_8mer_7mer-m8	292	298	8mer_GUT	152	-13.39	
-hsa-miR-1 MIMAT0000416	hg18_refgene test4_6mer1_6mer2_6mer3	292	298	8mer_GUT	152	-13.39	
-hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer1_6mer3_6mer2	292	298	8mer_GUT	152	-13.39	
-hsa-miR-1 MIMAT0000416	hg18_refgene test1_8mer_6mer1_7mer-m8	292	298	8mer_GUT	152	-13.39	
+# miRNA name, mRNA name, start (1-base), end (1-base), seed type, score 1 (alignment), score 2 (MFE)
+hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer_7mer-m8_6mer1	62	68	7mer	146	-15.01
+hsa-miR-124 MIMAT0000422	hg18_refgene test2_7mer-m8_8mer_6mer1	112	118	7mer	146	-15.01
+hsa-miR-124 MIMAT0000422	hg18_refgene test3_7mer-A1_8mer_7mer-m8	112	118	7mer	146	-15.01
+hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer_6mer1_7mer-m8	62	68	7mer	146	-15.01
+hsa-miR-1 MIMAT0000416	hg18_refgene test1_8mer_7mer-m8_6mer1	292	298	8mer_GUT	152	-13.39
+hsa-miR-1 MIMAT0000416	hg18_refgene test2_7mer-m8_8mer_6mer1	292	298	8mer_GUT	152	-13.39
+hsa-miR-1 MIMAT0000416	hg18_refgene test3_7mer-A1_8mer_7mer-m8	292	298	8mer_GUT	152	-13.39
+hsa-miR-1 MIMAT0000416	hg18_refgene test4_6mer1_6mer2_6mer3	292	298	8mer_GUT	152	-13.39
+hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer1_6mer3_6mer2	292	298	8mer_GUT	152	-13.39
+hsa-miR-1 MIMAT0000416	hg18_refgene test1_8mer_6mer1_7mer-m8	292	298	8mer_GUT	152	-13.39

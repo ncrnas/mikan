@@ -1,12 +1,13 @@
-hsa-miR-124 MIMAT0000422	hg18_refgene test3_7mer-A1_8mer_7mer-m8	0.263	3	1
-hsa-miR-124 MIMAT0000422	hg18_refgene test2_7mer-m8_8mer_6mer1	0.164	3	1
-hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer_7mer-m8_6mer1	0.139	3	1
-hsa-miR-124 MIMAT0000422	hg18_refgene test4_6mer1_6mer2_6mer3	0.139	3	1
-hsa-miR-124 MIMAT0000422	hg18_refgene test5_6mer1_6mer3_6mer2	0.139	3	1
-hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer_6mer1_7mer-m8	0.116	3	1
-hsa-miR-1 MIMAT0000416	hg18_refgene test1_8mer_7mer-m8_6mer1	0.01	4	1
-hsa-miR-1 MIMAT0000416	hg18_refgene test2_7mer-m8_8mer_6mer1	0.01	4	1
-hsa-miR-1 MIMAT0000416	hg18_refgene test3_7mer-A1_8mer_7mer-m8	0.01	4	1
-hsa-miR-1 MIMAT0000416	hg18_refgene test4_6mer1_6mer2_6mer3	0.01	4	1
-hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer1_6mer3_6mer2	0.01	4	1
-hsa-miR-1 MIMAT0000416	hg18_refgene test1_8mer_6mer1_7mer-m8	0.01	4	1
+# miRNA name, mRNA name, number of sites, score 1 (discriminant value), score 2 (predicted label)
+hsa-miR-124 MIMAT0000422	hg18_refgene test3_7mer-A1_8mer_7mer-m8	3	0.263	1
+hsa-miR-124 MIMAT0000422	hg18_refgene test2_7mer-m8_8mer_6mer1	3	0.164	1
+hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer_7mer-m8_6mer1	3	0.139	1
+hsa-miR-124 MIMAT0000422	hg18_refgene test4_6mer1_6mer2_6mer3	3	0.139	1
+hsa-miR-124 MIMAT0000422	hg18_refgene test5_6mer1_6mer3_6mer2	3	0.139	1
+hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer_6mer1_7mer-m8	3	0.116	1
+hsa-miR-1 MIMAT0000416	hg18_refgene test1_8mer_7mer-m8_6mer1	4	0.01	1
+hsa-miR-1 MIMAT0000416	hg18_refgene test2_7mer-m8_8mer_6mer1	4	0.01	1
+hsa-miR-1 MIMAT0000416	hg18_refgene test3_7mer-A1_8mer_7mer-m8	4	0.01	1
+hsa-miR-1 MIMAT0000416	hg18_refgene test4_6mer1_6mer2_6mer3	4	0.01	1
+hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer1_6mer3_6mer2	4	0.01	1
+hsa-miR-1 MIMAT0000416	hg18_refgene test1_8mer_6mer1_7mer-m8	4	0.01	1

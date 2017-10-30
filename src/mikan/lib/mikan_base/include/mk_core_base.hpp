@@ -28,6 +28,8 @@ public:
     bool mOutputSite;
     bool mOutputRNA;
     bool mOutputAlign;
+    bool mPrintSiteHeader;
+    bool mPrintRNAheader;
 
     mikan::TCharStr mOFileSite;
     mikan::TCharStr mOFileRNA;
@@ -52,6 +54,8 @@ public:
             mOutputSite(true),
             mOutputRNA(true),
             mOutputAlign(true),
+            mPrintSiteHeader(true),
+            mPrintRNAheader(true),
             mOpts(pOpts),
             mMiRNAIds(pMiRNAIds), mMiRNASeqs(pMiRNASeqs),
             mMRNAIds(pMRNAIds), mMRNASeqs(pMRNASeqs),
@@ -65,6 +69,8 @@ public:
     virtual void init_from_args(mikan::MKOptions const &opts);
 
     int open_output_file();
+
+    void close_output_file();
 
     int calculate_all_scores();
 
@@ -97,6 +103,33 @@ protected:
 
     std::ofstream mOFile1;
     std::ofstream mOFile2;
+
+    int write_site_score(mikan::TCharStr const &pMiRNAId, mikan::MKSeedSites &pSeedSites,
+                         mikan::MKRMAWithSites &pRNAWithSites);
+
+    virtual void prepare_site_output(mikan::TCharStr const &pMiRNAId, unsigned pRNAPosIdx, unsigned pSitePosIdx) = 0;
+
+    void write_site_score_tab(std::string &pMiRNAName, std::string &pMRNAName, unsigned pStartPos, unsigned pEndPos,
+                              std::string &pSeedType, std::string &pScore1Name, std::string &pScore1,
+                              std::string &pScore2Name, std::string &pScore2);
+
+    void write_site_score_gff(std::string &pHeader, std::string &pSrc, std::string &pMiRNAName, std::string &pMRNAName,
+                              unsigned pStartPos, unsigned pEndPos, std::string &pSeedType,
+                              std::string &pScore1, std::string &pScore2);
+
+    int write_rna_score(mikan::TCharStr const &pMiRNAId);
+
+    virtual void prepare_rna_output(mikan::TCharStr const &pMiRNAId) = 0;
+
+    void write_rna_score_tab(std::string &pMiRNAName, std::string &pMRNAName, unsigned pSiteNum,
+                             std::string &pScore1Name, std::string &pScore1,
+                             std::string &pScore2Name, std::string &pScore2);
+
+    void write_rna_score_gff(std::string &pHeader, std::string &pSrc, std::string &pMiRNAName, std::string &pMRNAName,
+                             unsigned pMRNALen, unsigned pSiteNum, std::string &pScore1, std::string &pScore2);
+
+    virtual int write_alignment(mikan::TCharStr const &pMiRNAId) = 0;
+
 
 };
 

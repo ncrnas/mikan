@@ -157,11 +157,21 @@ void MKESiteScores::combine_scores(MKEOptions const &pMKEOpts) {
         std::stringstream stream;
         float score = 0;
         for (unsigned j = 0; j < mScoreTypeN; ++j) {
-            stream << mScoreTypes[j] << ":";
+            mikan::TCharStr tScoreType = mScoreTypes[j];
+            replace(tScoreType, 2, 3, "_");
+            if (pMKEOpts.mGff) {
+                stream << "\"" << tScoreType << "\":";
+            } else {
+                stream << tScoreType << ":";
+            }
+
             float tscore = mSiteRawScoreList[j][i];
             tscore = roundf(tscore * 100.0f) / 100.0f;
-            stream << tscore << ",";
+            stream << tscore;
 
+            if (j != mScoreTypeN - 1) {
+                stream << ",";
+            }
             score += weights[j] * mSiteNormScoreList[j][i];
         }
 

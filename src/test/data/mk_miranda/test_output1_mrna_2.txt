@@ -1,1 +1,2 @@
-hsa-miR-124 MIMAT0000422	hg18_refGene NM_005498 range=chr19:10544348-10544741 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	150	1	-18.2	
+# miRNA name, mRNA name, number of sites, score 1 (alignment), score 2 (MFE)
+hsa-miR-124 MIMAT0000422	hg18_refGene NM_005498 range=chr19:10544348-10544741 5'pad=0 3'pad=0 revComp=TRUE strand=- repeatMasking=none	1	150	-18.2
