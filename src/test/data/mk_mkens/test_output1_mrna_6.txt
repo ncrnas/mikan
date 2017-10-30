@@ -1,13 +1,13 @@
 # miRNA name, mRNA name, number of sites, score 1 (mikan), score 2 (all)
-hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer	2	0.418528	mr:alg:146,mr:eng:-15.01,pt:ddg:6.38,rh:mfe:-19.1,rh:nrm:3.12,tm:svm:-0.11,ts:ctx:-0.16,sv:svm:-0,
-hsa-miR-124 MIMAT0000422	hg18_refgene test2_7mer-m8	2	0.209402	mr:alg:0,mr:eng:0,pt:ddg:6.38,rh:mfe:-14.9,rh:nrm:2.43,tm:svm:0.24,ts:ctx:0,sv:svm:0,
-hsa-miR-124 MIMAT0000422	hg18_refgene test5_6mer3	1	0.165335	mr:alg:0,mr:eng:0,pt:ddg:6.38,rh:mfe:0,rh:nrm:0,tm:svm:0.25,ts:ctx:0,sv:svm:0,
-hsa-miR-124 MIMAT0000422	hg18_refgene test3_7mer-a1	1	0.164779	mr:alg:0,mr:eng:0,pt:ddg:6.38,rh:mfe:0,rh:nrm:0,tm:svm:0.25,ts:ctx:0,sv:svm:0,
-hsa-miR-124 MIMAT0000422	hg18_refgene test4_6mer1	1	0.0504736	mr:alg:0,mr:eng:0,pt:ddg:6.38,rh:mfe:0,rh:nrm:0,tm:svm:0,ts:ctx:0,sv:svm:0,
-hsa-miR-124 MIMAT0000422	hg18_refgene test5_6mer2	1	0.0504736	mr:alg:0,mr:eng:0,pt:ddg:6.38,rh:mfe:0,rh:nrm:0,tm:svm:0,ts:ctx:0,sv:svm:0,
-hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer2	11	0.323873	mr:alg:152,mr:eng:-13.39,pt:ddg:-8.45,rh:mfe:-21.55,rh:nrm:4.35,tm:svm:0.01,ts:ctx:0,sv:svm:-0.83,
-hsa-miR-1 MIMAT0000416	hg18_refgene test4_6mer1	11	0.32387	mr:alg:152,mr:eng:-13.39,pt:ddg:-8.45,rh:mfe:-21.55,rh:nrm:4.35,tm:svm:0.01,ts:ctx:0,sv:svm:-0.83,
-hsa-miR-1 MIMAT0000416	hg18_refgene test2_7mer-m8	11	0.323868	mr:alg:152,mr:eng:-13.39,pt:ddg:-8.45,rh:mfe:-21.55,rh:nrm:4.35,tm:svm:0.01,ts:ctx:0,sv:svm:-0.83,
-hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer3	11	0.323868	mr:alg:152,mr:eng:-13.39,pt:ddg:-8.45,rh:mfe:-21.55,rh:nrm:4.35,tm:svm:0.01,ts:ctx:0,sv:svm:-0.83,
-hsa-miR-1 MIMAT0000416	hg18_refgene test1_8mer	11	0.323868	mr:alg:152,mr:eng:-13.39,pt:ddg:-8.45,rh:mfe:-21.55,rh:nrm:4.35,tm:svm:0.01,ts:ctx:0,sv:svm:-0.83,
-hsa-miR-1 MIMAT0000416	hg18_refgene test3_7mer-a1	11	0.323868	mr:alg:152,mr:eng:-13.39,pt:ddg:-8.45,rh:mfe:-21.55,rh:nrm:4.35,tm:svm:0.01,ts:ctx:0,sv:svm:-0.83,
+hsa-miR-124 MIMAT0000422	hg18_refgene test1_8mer	2	0.418528	mr_alg:146,mr_eng:-15.01,pt_ddg:6.38,rh_mfe:-19.1,rh_nrm:3.12,tm_svm:-0.11,ts_ctx:-0.16,sv_svm:-0
+hsa-miR-124 MIMAT0000422	hg18_refgene test2_7mer-m8	2	0.209402	mr_alg:0,mr_eng:0,pt_ddg:6.38,rh_mfe:-14.9,rh_nrm:2.43,tm_svm:0.24,ts_ctx:0,sv_svm:0
+hsa-miR-124 MIMAT0000422	hg18_refgene test5_6mer3	1	0.165335	mr_alg:0,mr_eng:0,pt_ddg:6.38,rh_mfe:0,rh_nrm:0,tm_svm:0.25,ts_ctx:0,sv_svm:0
+hsa-miR-124 MIMAT0000422	hg18_refgene test3_7mer-a1	1	0.164779	mr_alg:0,mr_eng:0,pt_ddg:6.38,rh_mfe:0,rh_nrm:0,tm_svm:0.25,ts_ctx:0,sv_svm:0
+hsa-miR-124 MIMAT0000422	hg18_refgene test4_6mer1	1	0.0504736	mr_alg:0,mr_eng:0,pt_ddg:6.38,rh_mfe:0,rh_nrm:0,tm_svm:0,ts_ctx:0,sv_svm:0
+hsa-miR-124 MIMAT0000422	hg18_refgene test5_6mer2	1	0.0504736	mr_alg:0,mr_eng:0,pt_ddg:6.38,rh_mfe:0,rh_nrm:0,tm_svm:0,ts_ctx:0,sv_svm:0
+hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer2	11	0.323873	mr_alg:152,mr_eng:-13.39,pt_ddg:-8.45,rh_mfe:-21.55,rh_nrm:4.35,tm_svm:0.01,ts_ctx:0,sv_svm:-0.83
+hsa-miR-1 MIMAT0000416	hg18_refgene test4_6mer1	11	0.32387	mr_alg:152,mr_eng:-13.39,pt_ddg:-8.45,rh_mfe:-21.55,rh_nrm:4.35,tm_svm:0.01,ts_ctx:0,sv_svm:-0.83
+hsa-miR-1 MIMAT0000416	hg18_refgene test2_7mer-m8	11	0.323868	mr_alg:152,mr_eng:-13.39,pt_ddg:-8.45,rh_mfe:-21.55,rh_nrm:4.35,tm_svm:0.01,ts_ctx:0,sv_svm:-0.83
+hsa-miR-1 MIMAT0000416	hg18_refgene test5_6mer3	11	0.323868	mr_alg:152,mr_eng:-13.39,pt_ddg:-8.45,rh_mfe:-21.55,rh_nrm:4.35,tm_svm:0.01,ts_ctx:0,sv_svm:-0.83
+hsa-miR-1 MIMAT0000416	hg18_refgene test1_8mer	11	0.323868	mr_alg:152,mr_eng:-13.39,pt_ddg:-8.45,rh_mfe:-21.55,rh_nrm:4.35,tm_svm:0.01,ts_ctx:0,sv_svm:-0.83
+hsa-miR-1 MIMAT0000416	hg18_refgene test3_7mer-a1	11	0.323868	mr_alg:152,mr_eng:-13.39,pt_ddg:-8.45,rh_mfe:-21.55,rh_nrm:4.35,tm_svm:0.01,ts_ctx:0,sv_svm:-0.83

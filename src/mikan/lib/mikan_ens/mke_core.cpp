@@ -108,7 +108,7 @@ int MKECore::combine_seed_types() {
         mSeedSites.add_seed_types(seedSites, mIdxMap[i], prefix);
     }
 
-    mSeedSites.combine_seed_types();
+    mSeedSites.combine_seed_types(mMKEOpts);
 
     return 0;
 }
@@ -218,6 +218,9 @@ void MKECore::prepare_site_output(mikan::TCharStr const &pMiRNAId, unsigned pRNA
     std::string score2 = toCString(mSiteScores.get_tool_score(pSitePosIdx));
 
     if (mOpts.mGff) {
+        std::string header = "mikan site positions and scores - score: mikan ensemble, score2: individual scores";
+        std::string src = "mikan";
+        write_site_score_gff(header, src, miRNAName, mRNAName, startPos, endPos, seedType, score1, score2);
     } else {
         write_site_score_tab(miRNAName, mRNAName, startPos, endPos, seedType, score1Name, score1, score2Name, score2);
     }
@@ -253,6 +256,10 @@ void MKECore::prepare_rna_output(mikan::TCharStr const &pMiRNAId) {
         std::string score2 = toCString(mRNAScores.get_tool_score((*itPos).second));
 
         if (mOpts.mGff) {
+            std::string header = "mikan mRNA level scores - score: mikan ensemble, score2: individual scores";
+            std::string src = "mikan";
+            unsigned seq_len = seqan::length(mMRNASeqs[mRNAPos[(*itPos).second]]);
+            write_rna_score_gff(header, src, miRNAName, mRNAName, seq_len, siteNum[(*itPos).second], score1, score2);
         } else {
             write_rna_score_tab(miRNAName, mRNAName, siteNum[(*itPos).second], score1Name, score1, score2Name, score2);
         }

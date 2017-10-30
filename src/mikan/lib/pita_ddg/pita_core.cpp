@@ -35,6 +35,9 @@ void PITACore::prepare_site_output(mikan::TCharStr const &pMiRNAId, unsigned pRN
     std::string score2 = "0";
 
     if (mOpts.mGff) {
+        std::string header = "mk-pita site positions and scores - score: alignment, score2: not used";
+        std::string src = "mk-pita";
+        write_site_score_gff(header, src, miRNAName, mRNAName, startPos, endPos, seedType, score1, score2);
     } else {
         write_site_score_tab(miRNAName, mRNAName, startPos, endPos, seedType, score1Name, score1, score2Name, score2);
     }
@@ -45,7 +48,6 @@ void PITACore::prepare_rna_output(mikan::TCharStr const &pMiRNAId) {
     const seqan::String<float> &totalScores = mRNAScores.get_scores();
     const seqan::String<int> &mRNAPos = mRNAScores.get_mrna_pos();
     const seqan::String<int> &siteNum = mRNAScores.get_site_num();
-    float score;
 
     std::string miRNAName = toCString(pMiRNAId);
     std::string score1Name = "ddG";
@@ -59,6 +61,10 @@ void PITACore::prepare_rna_output(mikan::TCharStr const &pMiRNAId) {
         std::string score2 = "0";
 
         if (mOpts.mGff) {
+            std::string header = "mk-pita mRNA level scores - score: ddG, score2: not used";
+            std::string src = "mk-pita";
+            unsigned seq_len = seqan::length(mMRNASeqs[mRNAPos[i]]);
+            write_rna_score_gff(header, src, miRNAName, mRNAName, seq_len, siteNum[i], score1, score2);
         } else {
             write_rna_score_tab(miRNAName, mRNAName, siteNum[i], score1Name, score1, score2Name, score2);
         }

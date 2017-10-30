@@ -42,6 +42,9 @@ void TS5Core::prepare_site_output(mikan::TCharStr const &pMiRNAId, unsigned pRNA
     std::string score2 = "0";
 
     if (mOpts.mGff) {
+        std::string header = "mk-targetscan site positions and scores - score: context score, score2: not used";
+        std::string src = "mk-targetscan";
+        write_site_score_gff(header, src, miRNAName, mRNAName, startPos, endPos, seedType, score1, score2);
     } else {
         write_site_score_tab(miRNAName, mRNAName, startPos, endPos, seedType, score1Name, score1, score2Name, score2);
     }
@@ -74,6 +77,10 @@ void TS5Core::prepare_rna_output(mikan::TCharStr const &pMiRNAId) {
         std::string score2 = "0";
 
         if (mOpts.mGff) {
+            std::string header = "mk-targetscan mRNA level scores - score: context score, score2: not used";
+            std::string src = "mk-targetscan";
+            unsigned seq_len = seqan::length(mMRNASeqs[mRNAPos[(*itPos).second]]);
+            write_rna_score_gff(header, src, miRNAName, mRNAName, seq_len, siteNum[(*itPos).second], score1, score2);
         } else {
             write_rna_score_tab(miRNAName, mRNAName, siteNum[(*itPos).second], score1Name, score1, score2Name, score2);
         }

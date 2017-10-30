@@ -36,6 +36,9 @@ void MR3Core::prepare_site_output(mikan::TCharStr const &pMiRNAId, unsigned pRNA
     std::string score2 = s2.str();
 
     if (mOpts.mGff) {
+        std::string header = "mk-miranda site positions and scores - score: alignment, score2: MFE";
+        std::string src = "mk-miranda";
+        write_site_score_gff(header, src, miRNAName, mRNAName, startPos, endPos, seedType, score1, score2);
     } else {
         write_site_score_tab(miRNAName, mRNAName, startPos, endPos, seedType, score1Name, score1, score2Name, score2);
     }
@@ -61,6 +64,10 @@ void MR3Core::prepare_rna_output(mikan::TCharStr const &pMiRNAId) {
         std::string score2 = s2.str();
 
         if (mOpts.mGff) {
+            std::string header = "mk-miranda mRNA level scores - score: alignment, score2: MFE";
+            std::string src = "mk-miranda";
+            unsigned seq_len = seqan::length(mMRNASeqs[mRNAPos[i]]);
+            write_rna_score_gff(header, src, miRNAName, mRNAName, seq_len, siteNum[i], score1, score2);
         } else {
             write_rna_score_tab(miRNAName, mRNAName, siteNum[i], score1Name, score1, score2Name, score2);
         }
@@ -81,7 +88,7 @@ int MR3Core::write_alignment(mikan::TCharStr const &pMiRNAId) {
             continue;
         }
 
-        for (unsigned j = 0; j < length(rnaSitePosMap[i]); ++j) {
+        for (unsigned j = 0; j < seqan::length(rnaSitePosMap[i]); ++j) {
             if (!mSeedSites.mEffectiveSites[rnaSitePosMap[i][j]]) {
                 continue;
             }

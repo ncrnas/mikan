@@ -113,6 +113,10 @@ protected:
                               std::string &pSeedType, std::string &pScore1Name, std::string &pScore1,
                               std::string &pScore2Name, std::string &pScore2);
 
+    void write_site_score_gff(std::string &pHeader, std::string &pSrc, std::string &pMiRNAName, std::string &pMRNAName,
+                              unsigned pStartPos, unsigned pEndPos, std::string &pSeedType,
+                              std::string &pScore1, std::string &pScore2);
+
     int write_rna_score(mikan::TCharStr const &pMiRNAId);
 
     virtual void prepare_rna_output(mikan::TCharStr const &pMiRNAId) = 0;
@@ -120,6 +124,9 @@ protected:
     void write_rna_score_tab(std::string &pMiRNAName, std::string &pMRNAName, unsigned pSiteNum,
                              std::string &pScore1Name, std::string &pScore1,
                              std::string &pScore2Name, std::string &pScore2);
+
+    void write_rna_score_gff(std::string &pHeader, std::string &pSrc, std::string &pMiRNAName, std::string &pMRNAName,
+                             unsigned pMRNALen, unsigned pSiteNum, std::string &pScore1, std::string &pScore2);
 
     virtual int write_alignment(mikan::TCharStr const &pMiRNAId) = 0;
 

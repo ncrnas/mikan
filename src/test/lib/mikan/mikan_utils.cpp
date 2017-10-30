@@ -304,13 +304,17 @@ static void comp_toolscores(const std::string &score1, const std::string &score2
     split_line2(score2, sflds2, ",");
 
     for (unsigned i = 0; i < sflds1.size(); ++i) {
+        if (i >= sflds2.size()) {
+            break;
+        }
+
         std::vector<std::string> ssflds1;
         std::vector<std::string> ssflds2;
         split_line2(sflds1[i], ssflds1, ":");
         split_line2(sflds2[i], ssflds2, ":");
 
-        double ds1 = ::atof(ssflds1[2].c_str());
-        double ds2 = ::atof(ssflds2[2].c_str());
+        double ds1 = ::atof(ssflds1[1].c_str());
+        double ds2 = ::atof(ssflds2[1].c_str());
 
         int s1 = static_cast<int>(ds1 * round_dec);
         int s2 = static_cast<int>(ds2 * round_dec);
@@ -324,12 +328,12 @@ static void comp_toolscores(const std::string &score1, const std::string &score2
         EXPECT_TRUE(lbound <= diff && diff <= ubound)
                             << "score1: "
                             << ssflds1[0].c_str()
-                            << ":" << ssflds1[1].c_str()
+                            << "_" << ssflds1[1].c_str()
                             << ":" << ssflds1[2].c_str()
                             << std::endl
                             << "score2: "
                             << ssflds2[0].c_str()
-                            << ":" << ssflds2[1].c_str()
+                            << "_" << ssflds2[1].c_str()
                             << ":" << ssflds2[2].c_str();
     }
 

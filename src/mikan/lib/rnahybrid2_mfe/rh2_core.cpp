@@ -36,6 +36,9 @@ void RH2Core::prepare_site_output(mikan::TCharStr const &pMiRNAId, unsigned pRNA
     std::string score2 = s2.str();
 
     if (mOpts.mGff) {
+        std::string header = "mk-rnahybrid site positions and scores - score: MFE, score2: normalized";
+        std::string src = "mk-rnahybrid";
+        write_site_score_gff(header, src, miRNAName, mRNAName, startPos, endPos, seedType, score1, score2);
     } else {
         write_site_score_tab(miRNAName, mRNAName, startPos, endPos, seedType, score1Name, score1, score2Name, score2);
     }
@@ -61,6 +64,10 @@ void RH2Core::prepare_rna_output(mikan::TCharStr const &pMiRNAId) {
         std::string score2 = s2.str();
 
         if (mOpts.mGff) {
+            std::string header = "mk-rnahybrid mRNA level scores - score: MFE, score2: normalized";
+            std::string src = "mk-rnahybrid";
+            unsigned seq_len = seqan::length(mMRNASeqs[mRNAPos[i]]);
+            write_rna_score_gff(header, src, miRNAName, mRNAName, seq_len, siteNum[i], score1, score2);
         } else {
             write_rna_score_tab(miRNAName, mRNAName, siteNum[i], score1Name, score1, score2Name, score2);
         }
