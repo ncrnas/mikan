@@ -11,7 +11,7 @@ ArgumentParser::ParseResult MR3Options::parseCommandLine(
         int argc,
         char const **argv) {
     // Setup ArgumentParser
-    ArgumentParser parser("mirnada3");
+    ArgumentParser parser(toCString(mProgName));
     setProgramDescription(parser);
 
     // Parse command line
@@ -76,16 +76,16 @@ void MR3Options::setProgramDescription(seqan::ArgumentParser &parser) {
 
     // Define usage line and long description
     addUsageLine(parser,
-                 "[\\fIOPTIONS\\fP] \"\\fIMIRNA FILE\\fP\" \"\\fIMRNA FILE\\fP\" "
-                         "\"\\fIOUT_DDG FILE\\fP\" \"\\fIOUT_TOTAL FILE\\fP\"");
+                 "[\\fIOPTIONS\\fP] \\fImirna_fasta_file\\fP \\fImrna_fasta_file\\fP "
+                         "\\fIsite_output_file\\fP \\fIrna_output_file\\fP");
     addDescription(parser,
-                   "This program calculates miRanda scores and summarizes them for miRNA:mRNA pairs.");
+                   "This program calculates miRanda scores for candidates of miRNA targets.");
 
     // Define Arguments
     addIOArgs(parser);
 
     // Define Options
-    addSection(parser, "miRanda3 Options");
+    addSection(parser, "Options");
     addOption(parser, ArgParseOption("a", "output_align", "Output alignments to standard output."));
     addOption(parser, ArgParseOption("", "gff", "Change output format to GFF."));
 
@@ -118,11 +118,17 @@ void MR3Options::setProgramDescription(seqan::ArgumentParser &parser) {
     // Add Examples Section
     addTextSection(parser, "Examples");
     addListItem(parser,
-                "\\fBmirnada3\\fP \\fImirna_fasta\\fP \\fImrna_fasta\\fP "
-                        "\\fIoutput_txt1\\fP \\fIoutput_txt2\\fP",
-                "calculate miRanda alignment and energy scores of \\fImiRNAs\\fP in \\fImRNA\\fP regions "
-                        "and write them to \\fIoutput1\\fP and total scores to \\fIoutput2\\fP.");
-
+                "\\fBmk-mirnada\\fP \\fImirna.fasta\\fP \\fImrna.fasta\\fP "
+                        "\\fIsite_output.txt\\fP \\fIrna_output.txt\\fP",
+                "read two input files and write miRanda scores in two output files.");
+    addListItem(parser,
+                "\\fBmk-mirnada\\fP -a \\fImirna.fasta\\fP \\fImrna.fasta\\fP "
+                        "\\fIsite_output.txt\\fP \\fIrna_output.txt\\fP",
+                "output alignments to standard output in addition.");
+    addListItem(parser,
+                "\\fBmk-mirnada\\fP --gff \\fImirna.fasta\\fP \\fImrna.fasta\\fP "
+                        "\\fIsite_output.txt\\fP \\fIrna_output.txt\\fP",
+                "change output format to GFF.");
 }
 
 } // namespace mr3as

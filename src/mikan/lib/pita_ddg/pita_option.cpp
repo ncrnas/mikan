@@ -11,7 +11,7 @@ ArgumentParser::ParseResult PITAOptions::parseCommandLine(
         int argc,
         char const **argv) {
     // Setup ArgumentParser
-    ArgumentParser parser("pita_ddg_all");
+    ArgumentParser parser(toCString(mProgName));
     setProgramDescription(parser);
 
     // Parse command line
@@ -64,22 +64,22 @@ ArgumentParser::ParseResult PITAOptions::parseCommandLine(
 
 void PITAOptions::setProgramDescription(seqan::ArgumentParser &parser) {
     // Set short description, version, and date
-    setShortDescription(parser, "Calculate PITA ddG values.");
+    setShortDescription(parser, "Calculate PITA scores.");
     setVersion(parser, toCString(mProgVer));
     setDate(parser, toCString(mProgDate));
 
     // Define usage line and long description
     addUsageLine(parser,
-                 "[\\fIOPTIONS\\fP] \"\\fIMIRNA FILE\\fP\" \"\\fIMRNA FILE\\fP\" "
-                         "\"\\fIOUT_DDG FILE\\fP\" \"\\fIOUT_TOTAL FILE\\fP\"");
+                 "[\\fIOPTIONS\\fP] \\fImirna_fasta_file\\fP \\fImrna_fasta_file\\fP "
+                         "\\fIsite_output_file\\fP \\fIrna_output_file\\fP");
     addDescription(parser,
-                   "This program calculates PITA ddG scores and summarizes them for miRNA:mRNA pairs.");
+                   "This program calculates PITA scores for candidates of miRNA targets.");
 
     // Define Arguments
     addIOArgs(parser);
 
     // Define Options
-    addSection(parser, "PITA ddG Options");
+    addSection(parser, "Options");
     addOption(parser, ArgParseOption("a", "output_align", "Output alignments to standard output."));
     addOption(parser, ArgParseOption("", "gff", "Change output format to GFF."));
 
@@ -114,11 +114,17 @@ void PITAOptions::setProgramDescription(seqan::ArgumentParser &parser) {
     // Add Examples Section
     addTextSection(parser, "Examples");
     addListItem(parser,
-                "\\fBpita_ddg_all\\fP \\fImirna_fasta\\fP \\fImrna_fasta\\fP "
-                        "\\fIoutput_txt1\\fP \\fIoutput_txt2\\fP",
-                "calculate PITA ddG scores of \\fImiRNAs\\fP in \\fImRNA\\fP regions "
-                        "and write them to \\fIoutput1\\fP and total scores to \\fIoutput2\\fP.");
-
+                "\\fBmk-pita\\fP \\fImirna.fasta\\fP \\fImrna.fasta\\fP "
+                        "\\fIsite_output.txt\\fP \\fIrna_output.txt\\fP",
+                "read two input files and write PITA scores in two output files.");
+    addListItem(parser,
+                "\\fBmk-pita\\fP -a \\fImirna.fasta\\fP \\fImrna.fasta\\fP "
+                        "\\fIsite_output.txt\\fP \\fIrna_output.txt\\fP",
+                "output alignments to standard output in addition.");
+    addListItem(parser,
+                "\\fBmk-pita\\fP --gff \\fImirna.fasta\\fP \\fImrna.fasta\\fP "
+                        "\\fIsite_output.txt\\fP \\fIrna_output.txt\\fP",
+                "change output format to GFF.");
 }
 
 } // namespace ptddg
