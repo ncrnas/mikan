@@ -34,10 +34,15 @@ public:
             mikan::TFinder &pFinder) :
             TM1CoreBase(pOpts, pMiRNAIds, pMiRNASeqs, pMRNAIds, pMRNASeqs, pRNAIdx, pFinder) {
 
-        mClusterSites2 = false;
+        mFindSeedSites = true;
+        mFilterSites = true;
+        mCalcSiteScore = true;
+        mClusterSites1 = true;
         mFilterSiteScores = false;
+        mClusterSites2 = false;
         mSelectTopSites = false;
         mClusterSites3 = false;
+        mCalcRNAScore = true;
 
     }
 

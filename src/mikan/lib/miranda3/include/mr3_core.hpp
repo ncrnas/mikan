@@ -31,11 +31,15 @@ public:
             mikan::TFinder &pFinder) :
             MR3CoreBase(pOpts, pMiRNAIds, pMiRNASeqs, pMRNAIds, pMRNASeqs, pRNAIdx, pFinder) {
 
-        mClusterSites1 = false;
+        mFindSeedSites = true;
         mFilterSites = false;
+        mCalcSiteScore = true;
+        mClusterSites1 = false;
+        mFilterSiteScores = true;
+        mClusterSites2 = true;
         mSelectTopSites = false;
         mClusterSites3 = false;
-
+        mCalcRNAScore = true;
     }
 
 private:

@@ -31,9 +31,15 @@ public:
             mikan::TFinder &pFinder) :
             RH2CoreBase(pOpts, pMiRNAIds, pMiRNASeqs, pMRNAIds, pMRNASeqs, pRNAIdx, pFinder) {
 
-        mClusterSites1 = false;
+        mFindSeedSites = true;
         mFilterSites = false;
+        mCalcSiteScore = true;
+        mClusterSites1 = false;
+        mFilterSiteScores = true;
+        mClusterSites2 = true;
+        mSelectTopSites = true;
         mClusterSites3 = false;
+        mCalcRNAScore = true;
 
     }
 
