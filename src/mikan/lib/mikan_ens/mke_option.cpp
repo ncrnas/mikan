@@ -58,16 +58,16 @@ void MKEOptions::setProgramDescription(seqan::ArgumentParser &parser) {
 
     // Define usage line and long description
     addUsageLine(parser,
-                 "[\\fIOPTIONS\\fP] \"\\fIMIRNA FILE\\fP\" \"\\fIMRNA FILE\\fP\" "
-                         "\"\\fIOUT_SCORE1 FILE\\fP\" \"\\fIOUT_SCORE2 FILE\\fP\"");
+                 "[\\fIOPTIONS\\fP] \\fImirna_fasta_file\\fP \\fImrna_fasta_file\\fP "
+                         "\\fIsite_output_file\\fP \\fIrna_output_file\\fP");
     addDescription(parser,
-                   "This program calculates mikan ensemble scores and summarizes them for miRNA:mRNA pairs.");
+                   "This program calculates mikan ensemble scores for candidates of miRNA targets.");
 
     // Define Arguments
     addIOArgs(parser);
 
     // Define Options
-    addSection(parser, "Mikan Ensemble Score Options");
+    addSection(parser, "Options");
     addOption(parser, ArgParseOption("", "gff", "Change output format to GFF."));
 
     addOption(parser, ArgParseOption("c", "config", "Specify a configuration file.",
@@ -80,10 +80,18 @@ void MKEOptions::setProgramDescription(seqan::ArgumentParser &parser) {
     // Add Examples Section
     addTextSection(parser, "Examples");
     addListItem(parser,
-                "\\fBmikan\\fP \\fImirna_fasta\\fP \\fImrna_fasta\\fP "
-                        "\\fIoutput_file1\\fP \\fIoutput_file2\\fP",
-                "calculate context scores of \\fImiRNAs\\fP in \\fImRNA\\fP regions "
-                        "and write the scores to \\fIoutput1\\fP and the total scores to \\fIoutput2\\fP");
+                "\\fBmikan\\fP \\fImirna.fasta\\fP \\fImrna.fasta\\fP "
+                        "\\fIsite_output.txt\\fP \\fIrna_output.txt\\fP",
+                "read two input files and write mikan ensemble scores in two output files.");
+    addListItem(parser,
+                "\\fBfBmikan\\fP --gff \\fImirna.fasta\\fP \\fImrna.fasta\\fP "
+                        "\\fIsite_output.txt\\fP \\fIrna_output.txt\\fP",
+                "change output format to GFF.");
+    addListItem(parser,
+                "\\fBfBmikan\\fP -c \\fImikan.conf\\fP \\fImirna.fasta\\fP \\fImrna.fasta\\fP "
+                        "\\fIsite_output.txt\\fP \\fIrna_output.txt\\fP",
+                "specify a configuration file.");
+
 }
 
 
