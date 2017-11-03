@@ -15,28 +15,33 @@ void TSSVMOptions::setProgramDescription(seqan::ArgumentParser &parser) {
 
     // Define usage line and long description
     addUsageLine(parser,
-                 "[\\fIOPTIONS\\fP] \"\\fIMIRNA FILE\\fP\" \"\\fIMRNA FILE\\fP\" "
-                         "\"\\fIOUT_TARGETSITE FILE\\fP\" \"\\fIOUT_MRNA\\fP\"");
+                 "[\\fIOPTIONS\\fP] \\fImirna_fasta_file\\fP \\fImrna_fasta_file\\fP "
+                         "\\fIsite_output_file\\fP \\fIrna_output_file\\fP");
     addDescription(parser,
-                   "This program calculates Two-step SVM scores for both target-site and mRNA levels.");
+                   "This program calculates Two-step SVM scores for candidates of miRNA targets.");
 
     // Define Arguments
     addIOArgs(parser);
 
     // Define Options
-    addSection(parser, "Two-step SVM Options");
+    addSection(parser, "Options");
     addOption(parser, ArgParseOption("a", "output_align", "Output alignments to standard output."));
     addOption(parser, ArgParseOption("", "gff", "Change output format to GFF."));
 
     // Add Examples Section
     addTextSection(parser, "Examples");
     addListItem(parser,
-                "\\fBtwo_step_svm\\fP \\fImirna_fasta\\fP \\fImrna_fasta\\fP "
-                        "\\fIoutput_file1\\fP \\fIoutput_file2\\fP",
-                "calculate Two-step SVM scores of \\fImiRNAs\\fP in \\fImRNA\\fP regions "
-                        "by using models in \\fImodel_path\\fP folder "
-                        "and write the target-site level scores to \\fIoutput1\\fP "
-                        "and mRNA level scores to \\fIoutput2\\fP");
+                "\\fBmk-twostep-svm\\fP \\fImirna.fasta\\fP \\fImrna.fasta\\fP "
+                        "\\fIsite_output.txt\\fP \\fIrna_output.txt\\fP",
+                "read two input files and write Two-step SVM scores in two output files.");
+    addListItem(parser,
+                "\\fBmk-twostep-svm\\fP -a \\fImirna.fasta\\fP \\fImrna.fasta\\fP "
+                        "\\fIsite_output.txt\\fP \\fIrna_output.txt\\fP",
+                "output alignments to standard output in addition.");
+    addListItem(parser,
+                "\\fBmk-twostep-svm\\fP --gff \\fImirna.fasta\\fP \\fImrna.fasta\\fP "
+                        "\\fIsite_output.txt\\fP \\fIrna_output.txt\\fP",
+                "change output format to GFF.");
 }
 
 } // namespace tssvm

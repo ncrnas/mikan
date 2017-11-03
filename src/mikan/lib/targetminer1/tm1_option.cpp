@@ -15,26 +15,33 @@ void TM1Options::setProgramDescription(seqan::ArgumentParser &parser) {
 
     // Define usage line and long description
     addUsageLine(parser,
-                 "[\\fIOPTIONS\\fP] \"\\fIMIRNA FILE\\fP\" \"\\fIMRNA FILE\\fP\" "
-                         "\"\\fIOUT_SCORE1 FILE\\fP\" \"\\fIOUT_SCORE2 FILE\\fP\"");
+                 "[\\fIOPTIONS\\fP] \\fImirna_fasta_file\\fP \\fImrna_fasta_file\\fP "
+                         "\\fIsite_output_file\\fP \\fIrna_output_file\\fP");
     addDescription(parser,
-                   "This program calculates TargetMiner scores for miRNA:mRNA pairs.");
+                   "This program calculates TargetMiner scores for candidates of miRNA targets.");
 
     // Define Arguments
     addIOArgs(parser);
 
     // Define Options
-    addSection(parser, "TargetMiner1 Options");
+    addSection(parser, "Options");
     addOption(parser, ArgParseOption("a", "output_align", "Output alignments to standard output."));
     addOption(parser, ArgParseOption("", "gff", "Change output format to GFF."));
 
     // Add Examples Section
     addTextSection(parser, "Examples");
     addListItem(parser,
-                "\\fBtargetminer1\\fP \\fImirna_fasta\\fP \\fImrna_fasta\\fP "
-                        "\\fIoutput_file1\\fP \\fIoutput_file2\\fP",
-                "calculate TargetMinder scores of miRNA:mRNA pairs specified in \\fImiRNAs\\fP and \\fImRNA\\fP "
-                        "and write the site data to \\fIoutput1\\fP and the scores to \\fIoutput2\\fP");
+                "\\fBmk-targetminer\\fP \\fImirna.fasta\\fP \\fImrna.fasta\\fP "
+                        "\\fIsite_output.txt\\fP \\fIrna_output.txt\\fP",
+                "read two input files and write TargetMiner scores in two output files.");
+    addListItem(parser,
+                "\\fBmk-targetminer\\fP -a \\fImirna.fasta\\fP \\fImrna.fasta\\fP "
+                        "\\fIsite_output.txt\\fP \\fIrna_output.txt\\fP",
+                "output alignments to standard output in addition.");
+    addListItem(parser,
+                "\\fBmk-targetminer\\fP --gff \\fImirna.fasta\\fP \\fImrna.fasta\\fP "
+                        "\\fIsite_output.txt\\fP \\fIrna_output.txt\\fP",
+                "change output format to GFF.");
 }
 
 

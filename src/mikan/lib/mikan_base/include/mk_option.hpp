@@ -58,8 +58,8 @@ public:
     // Define method
     MKOptions() {
         mProgName = "mikan";
-        mProgVer = "1.0";
-        mProgDate = "July 2017";
+        mProgVer = "0.2";
+        mProgDate = "Nov 2017";
 
         mOutputAlign = false;
         mGff = false;

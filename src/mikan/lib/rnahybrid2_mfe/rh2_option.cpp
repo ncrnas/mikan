@@ -11,7 +11,7 @@ ArgumentParser::ParseResult RH2Options::parseCommandLine(
         int argc,
         char const **argv) {
     // Setup ArgumentParser
-    ArgumentParser parser("rnahybrid2_mfe");
+    ArgumentParser parser(toCString(mProgName));
     setProgramDescription(parser);
 
     // Parse command line
@@ -55,22 +55,22 @@ ArgumentParser::ParseResult RH2Options::parseCommandLine(
 
 void RH2Options::setProgramDescription(seqan::ArgumentParser &parser) {
     // Set short description, version, and date
-    setShortDescription(parser, "Calculate RNAhybrid MFE values.");
+    setShortDescription(parser, "Calculate RNAhybrid scores.");
     setVersion(parser, toCString(mProgVer));
     setDate(parser, toCString(mProgDate));
 
     // Define usage line and long description
     addUsageLine(parser,
-                 "[\\fIOPTIONS\\fP] \"\\fIMIRNA FILE\\fP\" \"\\fIMRNA FILE\\fP\" "
-                         "\"\\fIOUT_MFE FILE\\fP\" \"\\fIOUT_TOTAL FILE\\fP\"");
+                 "[\\fIOPTIONS\\fP] \\fImirna_fasta_file\\fP \\fImrna_fasta_file\\fP "
+                         "\\fIsite_output_file\\fP \\fIrna_output_file\\fP");
     addDescription(parser,
-                   "This program calculates MFE scores and summarizes them for miRNA:mRNA pairs.");
+                   "This program calculates RNAhybrid scores for candidates of miRNA targets.");
 
     // Define Arguments
     addIOArgs(parser);
 
     // Define Options
-    addSection(parser, "RNAhybrid MFE Options");
+    addSection(parser, "Options");
     addOption(parser, ArgParseOption("a", "output_align", "Output alignments to standard output."));
     addOption(parser, ArgParseOption("", "gff", "Change output format to GFF."));
 
@@ -97,14 +97,22 @@ void RH2Options::setProgramDescription(seqan::ArgumentParser &parser) {
     // Add Examples Section
     addTextSection(parser, "Examples");
     addListItem(parser,
-                "\\fBrnahybrid2_mfe\\fP \\fImirna_fasta\\fP \\fImrna_fasta\\fP "
-                        "\\fIoutput_txt1\\fP \\fIoutput_txt2\\fP",
-                "calculate MFE scores of \\fImiRNAs\\fP in \\fImRNA\\fP regions "
-                        "and write them to \\fIoutput1\\fP and total scores to \\fIoutput2\\fP.");
+                "\\fBmk-rnahybrid\\fP \\fImirna.fasta\\fP \\fImrna.fasta\\fP "
+                        "\\fIsite_output.txt\\fP \\fIrna_output.txt\\fP",
+                "read two input files and write RNAhybrid scores in two output files.");
     addListItem(parser,
-                "\\fBrnahybrid2_mfe\\fP \\fB-s 7mer\\fP \\fImirna_fasta\\fP \\fImrna_fasta\\fP "
-                        "\\fIoutput_txt1\\fP \\fIoutput_txt2\\fP",
-                "calculate MFE scores for targets with at least one 7mer seed site.");
+                "\\fBmk-rnahybrid\\fP -a \\fImirna.fasta\\fP \\fImrna.fasta\\fP "
+                        "\\fIsite_output.txt\\fP \\fIrna_output.txt\\fP",
+                "output alignments to standard output in addition.");
+    addListItem(parser,
+                "\\fBmk-rnahybrid\\fP --gff \\fImirna.fasta\\fP \\fImrna.fasta\\fP "
+                        "\\fIsite_output.txt\\fP \\fIrna_output.txt\\fP",
+                "change output format to GFF.");
+
+//    addListItem(parser,
+//                "\\fBrnahybrid2_mfe\\fP \\fB-s 7mer\\fP \\fImirna_fasta\\fP \\fImrna_fasta\\fP "
+//                        "\\fIoutput_txt1\\fP \\fIoutput_txt2\\fP",
+//                "calculate MFE scores for targets with at least one 7mer seed site.");
 //    addListItem(parser,
 //                "\\fBrnahybrid2_mfe\\fP \\fB-no\\fP \\fImirna_fasta\\fP \\fImrna_fasta\\fP "
 //                "\\fIoutput_txt1\\fP \\fIoutput_txt2\\fP",
