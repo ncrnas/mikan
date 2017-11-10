@@ -1,0 +1,2 @@
+# miRNA name, mRNA name, number of sites, score 1 (discriminant value), score 2 (predicted label)
+hsa-miR-4282*MIMAT0016912	NM_001193360*chr14*+*68777570*68780490	17	0.659	1

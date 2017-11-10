@@ -248,7 +248,7 @@ int TM1MRNAFeatures::add_features(
     mScaledFeats.scale_features(pRNAWithSites, mSeedTypes, mAURich, mSingleFreqs, mSingleFreqFlanks,
                                 mDiFreqs, mDiFreqFlanks, mSingleMatches, mTwoMatches);
 
-//    print_features(pSortedSites);
+//    print_features(pRNAWithSites);
 
     return 0;
 }
