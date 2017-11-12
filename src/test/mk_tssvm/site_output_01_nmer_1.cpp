@@ -24,7 +24,7 @@ TEST_F(SiteOut01Nmer1, comp_orig_mk) {
     // TODO: Test on Win32
     // orig: hsa-miR-124 MIMAT0000422	TS_043_8merA1_33_34_39_40	0.7516	1
     // mk  : hsa-miR-124 MIMAT0000422	TS_043_8merA1_33_34_39_40	0.7789	1
-    gtest_compare_two_files2(o1file2, o2file2, 2, 100, 2);
+    gtest_compare_two_files2(o1file2, o2file2, 3, 100, 2);
 
 }
 }
